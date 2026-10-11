@@ -15,7 +15,8 @@ python recommend.py examples/recommendation/baseline.json --format text
 当前进入[推荐质量评审阶段](docs/recommendation-quality-review.md)：先评审具体报告，
 补齐控制／驱散／免疫交互，再冻结策略并用未参与调参的案例验证。现有6个案例属于开发集，
 242项测试通过不能代替这一质量出口。实现位于本地 `feat/lineup-contracts / 47b8f7f`，
-尚未进入远端main；当前仅本地开发，不自动推送或合并。
+尚未进入远端main；本轮用户已授权整体检查后推送该分支，不合并main。
+本次交付检查见[验证记录](docs/validation-and-delivery.md#github推送前整体检查2026-10-11)。
 
 ## 已有回放与训练基础设施
 
