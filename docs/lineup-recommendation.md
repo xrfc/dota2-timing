@@ -112,5 +112,9 @@ CLI 输出 `coach-lineup-analysis/1`：
 预先冻结评审问题与门槛，比较简单固定路线基线，逐条复核不合理建议及未覆盖交互。
 当前不报告推荐准确率、提高胜率或概率置信度。
 
+下一轮按[质量评审流程](recommendation-quality-review.md)执行：先评现有报告，补齐控制/
+驱散/免疫交互，再冻结策略与未参与调参的最终集。本轮文档更新只确认执行计划，
+不调整候选或权重、不将开发案例转为盲评案例。
+
 源码：`recommendation/knowledge.py`（数据契约）、`files.py`（来源验证）、`engine.py`
 （需求/硬约束/排序）、`report.py`（纯渲染）、`cli.py`（入口编排）。

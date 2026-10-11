@@ -1,12 +1,18 @@
 # 文档索引
 
-文档更新：**2026-10-09**；包版本 **0.4.0**，代码基线 **main / 725f35c**。全部开发分支已整合，包括真实数据验收、上下文、训练准入与缓存/身份追踪修复。本文索引工程文档；全部学习资料与可视化入口见 [learning/](../learning/README.md)。实际模型训练仍为下一阶段。
+文档更新：**2026-10-11**；本地推荐实现基线 **feat/lineup-contracts / 47b8f7f**，
+包版本 **0.4.0**。工程闭环可运行，当前主线是推荐质量评审，真实模型训练仍未开始。
+远端main为 `c6a5e1f`（本日只读核对），不包含本地推荐改动；尚未推送或合并。
+学习资料与可视化入口见 [learning/](../learning/README.md)，其任务页尚不展示M阶段。
 
 ## 按任务阅读
 
 | 你要做什么 | 文档 |
 |---|---|
 | 先判断项目做到了哪里 | [完成度与验证证据](project-status.md) |
+| 运行主宰推荐、理解范围及全英雄/全位置扩展方式 | [本地阵容推荐](lineup-recommendation.md) |
+| 核对阵容输入及推荐结果格式 | [推荐契约](recommendation-contracts.md) |
+| 评审具体报告、补齐交互、安排未参与调参的案例验证 | [推荐质量评审流程](recommendation-quality-review.md) |
 | 查看全英雄机制资料与选人评估范围 | [英雄能力知识](../knowledge/README.md) |
 | 判断知识如何用于冷启动训练 | [知识与训练候选](knowledge-cold-start.md) |
 | 查资料迁移、外部证据与仓库维护路径 | [知识维护与路径清单](knowledge-maintenance.md) |
@@ -29,6 +35,8 @@
 ## 文档职责
 
 - `project-status.md` 统一回答完成度，不使用缺乏分母的完成百分比。
+- `lineup-recommendation.md` 维护推荐入口、范围及扩展方法；`recommendation-contracts.md` 维护契约。
+- `recommendation-quality-review.md` 维护质量评审顺序、证据要求与独立评估约束，不代替实际评审结果。
 - `data-contracts.md` 描述代码当前接受和输出的格式；规划中的格式单独注明。
 - `coach-workflow.md` 维护命令和适配器用法；`workflow.md` 维护运营与恢复。
 - `long-term-roadmap.md` 解释选择、成本和升级条件；`roadmap.md` 维护任务状态与验收要求。

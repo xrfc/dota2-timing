@@ -1,5 +1,37 @@
 # 验证与交付
 
+## 推荐质量阶段文档维护检查（2026-10-11）
+
+本轮仅修改13份Markdown文档，基于本地实现 `47b8f7f` 同步状态与质量评审流程：
+
+- 扫描164份已跟踪或新增Markdown，检查2005处本地链接目标，无缺失；57处外部链接和3处锚点未在本次链接检查中验证。
+- 核对原推荐验收记录中的9个代码/测试文件及知识、策略文件，共11项SHA-256全部匹配；未修改旧收据。
+- 重建 `learning/output/index.html` 及清单；执行 `python3 scripts/check.py --scope learning`，10项学习Python、12项知识和6项JavaScript测试全部通过。
+- 冒烟执行质量评审页列出的4个文本报告命令，均返回0并生成非空报告；这只证明命令可用，不是报告质量评审。
+- `git diff --check` 通过。本轮未重跑全量工程测试、浏览器验收或游戏客户端核验；下方242项是上一轮记录。
+
+生成的学习页面仍独立维护学习任务，不将M阶段或流程计划计为个人学习完成。
+
+## 本地推荐实现与证据归属（2026-10-11）
+
+实现位于本地 `feat/lineup-contracts / 47b8f7f582c6ca81de8baf53fbf0b6cf01082983`，
+未推送或合并。该实现上一轮运行的统一检查为214项工程、10项学习Python、12项知识、
+6项JavaScript测试，共242项，另有Ruff、demo/doctor、安装入口和依赖检查。
+结果及文件身份见[固定验收记录](acceptance/lineup-2026-10-11.json)；本次文档维护不冒充重新执行全量工程测试。
+
+该收据的 `base_commit=112056a…` 是验收时未提交改动的父提交；逐文件哈希对应最终
+`47b8f7f`，应同时检查文件身份，不能仅凭base_commit认为当时只有契约实现。
+6个已运行案例属于开发回归；HTML生成与转义已检查，浏览器视觉检查、客户端机制核验和
+独立推荐质量评估尚未完成。下一阶段出口以[质量评审流程](recommendation-quality-review.md)为准。
+
+本日只读核对：远端main为 `c6a5e1ff5eaa597d6c68567ef00f3acc973a64c9`；
+[PR #6](https://github.com/xrfc/dota2-timing/pull/6)仍开放，base为main，head为
+`f4feae798d7d660755c37f1f192dbaf652f4e5a3`（`docs/741f-development-mainline`）。
+其[检查](https://github.com/xrfc/dota2-timing/actions/runs/38065310259)成功，
+但对象是该文档PR，不包含本地推荐器，不能用作本地提交的远程CI证明。
+
+推荐入口复现见[使用说明](lineup-recommendation.md)；以下按日期保留原基础设施证据。
+
 ## 知识迁入与冷启动候选检查（2026-10-10）
 
 本轮检出基线 `d0be282`；以下属于迁移后的本地检查，不冒充远端 CI 或真实语义核验：
@@ -12,7 +44,7 @@
 
 本轮改动不触碰新比赛采集／固定回放回归的配置触发路径。远端合并结果与 CI 以本轮 [PR #5](https://github.com/xrfc/dota2-timing/pull/5) 及精确提交的 Actions 为准；知识说明和训练用途见[冷启动文档](knowledge-cold-start.md)。
 
-## 当前主干验证（2026-10-09）
+## 历史主干验证（2026-10-09）
 
 代码基线：[main / 725f35c](https://github.com/xrfc/dota2-timing/commit/725f35c25d74243a8ca52b17e7956107fd9dfa40)。PR #2 → #1 → [#3](https://github.com/xrfc/dota2-timing/pull/3) 依次合并，主干文件树与已验证的修复提交 `942ebfd` 一致；包版本仍为 0.4.0。
 
@@ -76,6 +108,7 @@ Windows 的解释器路径为 `.venv/Scripts/python.exe`。只核对 JSON 工作
 
 新增工程测试范围：
 
+- [推荐契约](../tests/test_recommendation_contracts.py)及[推荐引擎](../tests/test_recommendation_engine.py)：输入与引用、支持范围、阵容替换、知识损坏、离线运行、报告转义；不证明独立推荐质量。
 - [缓存与身份](../tests/test_cache_identity.py)：双输出完整性、热缓存来源、新 catalog 追踪、raw 玩家与别名绑定。
 - [数据准备](../tests/test_data_preparation.py)：清洗、缺失与任务 mask、样本快照和 train-only 预处理。
 - [真实验收](../tests/test_real_acceptance.py)：采集/审计规则与隔离；不能替代独立游戏画面对照。

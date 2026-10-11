@@ -64,7 +64,8 @@ print(request.fingerprint())
 
 `Recommendation` 的版本为 `coach-lineup-recommendation/1`，必须绑定完整请求及其
 `input_fingerprint`，并提供知识/规则版本与各自 SHA-256、引擎版本和非空局限说明。
-知识/规则哈希的格式被校验，但文件内容与哈希的一致性须由未来调用层核验。
+本层校验哈希格式；现有 `files.load_bundle()` 核验来源字节/引用/版本关联，并计算知识与
+规则文件身份。它不能证明手工整理的战术解释正确，质量要求见[评审流程](recommendation-quality-review.md)。
 
 - `coverage`：十位英雄各一条，不可重复、缺失或混入阵容外英雄。
   `verified` 必须引用事实，`unknown` / `conflict` 不得携带已验证事实列表。
@@ -73,7 +74,8 @@ print(request.fingerprint())
   `hero_id=None` 可表达装备或通用事实；本层不核验来源文件是否存在或审核是否真实。
 - `candidates`：装备 key 全局唯一；含 `core` / `situational` / `alternative` 分类、
   `early` / `mid` / `late` 阶段、理由、可选条件、非空代价、规则 ID 和事实 ID。
-  事实引用必须解析到证据；规则 ID 的存在性留给未来规则包校验。
+  事实引用必须解析到证据；现有 `Bundle` 检查配置引用，推荐核心从所选规则生成规则ID。
+  单独解析一个 `Recommendation` 仍不检查规则包是否存在。
 - `score_components`：可选的具名分数组成，名称唯一、值有限；允许负分，
   不代表概率、胜率或已校准的推荐质量。
 - `empty_reason`：无候选时必填，有候选时必须为空。
