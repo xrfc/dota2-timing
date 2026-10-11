@@ -1,0 +1,1432 @@
+{
+  "schema_version": "coach-recommendation-knowledge/1",
+  "patch": "7.41f",
+  "version": "7.41f-curated/1",
+  "binding": {
+    "method": "official_current_crosscheck",
+    "observed_at_utc": "2026-10-11T04:07:02.837820+00:00",
+    "patch_list_source": "patch-list",
+    "patch_notes_source": "patch-notes",
+    "catalog_source": "catalog",
+    "anchors": [
+      {
+        "source_id": "item-bfury",
+        "pointer": "/result/data/items/0/special_values/13/values_float/0",
+        "expected": 3,
+        "patch_note_pointer": "/items/1/ability_notes/0/note",
+        "patch_note_quote": "Chop Tree cooldown decreased from 4s to 3s"
+      },
+      {
+        "source_id": "item-manta",
+        "pointer": "/result/data/items/0/special_values/12/values_float/0",
+        "expected": 25,
+        "patch_note_pointer": "/items/9/ability_notes/0/note",
+        "patch_note_quote": "Mirror Image ranged images damage decreased from 28% to 25%"
+      },
+      {
+        "source_id": "item-satanic",
+        "pointer": "/result/data/items/0/special_values/2/values_float/0",
+        "expected": 25,
+        "patch_note_pointer": "/items/13/ability_notes/0/note",
+        "patch_note_quote": "Lifesteal bonus decreased from +30% to +25%"
+      }
+    ],
+    "limitations": [
+      "来源版本通过官方当前补丁表及狂战/幻影斧/撒旦改动锚点交叉关联；详情接口本身无补丁字段，未做游戏客户端核验。",
+      "verified仅指本次文字摘录及版本关联已核对，不表示人工实战验收、完整英雄覆盖或训练准入。",
+      "本知识包只覆盖12位英雄的少量机制，其余英雄保留未知；未覆盖技能、升级及交互不能视为不存在。"
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "patch-list",
+      "file": "sources/patch-list.json",
+      "sha256": "9ec57bde0c37aee9b782bd7190cc0c18b68310d90b6cba0b9f9dd3b196bd29ea",
+      "url": "https://www.dota2.com/datafeed/patchnoteslist"
+    },
+    {
+      "source_id": "patch-notes",
+      "file": "sources/patch-notes.json",
+      "sha256": "f9cd855b7b77dc8a6025f875ef21b539f539b44d832d7dfd80bbb087f745fc26",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.41f&language=english"
+    },
+    {
+      "source_id": "catalog",
+      "file": "sources/catalog.json",
+      "sha256": "520a3ae33260593f54d5d749a92022d7d5af0ed60d8bebec8e81ff7eb12104ad",
+      "url": "https://raw.githubusercontent.com/odota/dotaconstants/bf193a550f778dec35debf4d71d05a86bebcc418/build/heroes.json"
+    },
+    {
+      "source_id": "hero-8",
+      "file": "sources/hero-8.json",
+      "sha256": "a1d7fa42b8d02fd1ba35e1f76d4e220d1f409bb4963a9b712b1b3cb971d9878c",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=8"
+    },
+    {
+      "source_id": "hero-6",
+      "file": "sources/hero-6.json",
+      "sha256": "73204dd32fc78fa741e23c5205859dc9bb0b314cd87ddd16c1db05743ab448eb",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=6"
+    },
+    {
+      "source_id": "hero-44",
+      "file": "sources/hero-44.json",
+      "sha256": "7ac1694bbbaaed259cf6f66436a1bc978cb60216e5f7bc3c85e1f33d09afecc9",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=44"
+    },
+    {
+      "source_id": "hero-12",
+      "file": "sources/hero-12.json",
+      "sha256": "7052f4f9b4487fa48d7a8b066e1b520c00f0acbe042a3d8c22c1538f91ee0eeb",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=12"
+    },
+    {
+      "source_id": "hero-2",
+      "file": "sources/hero-2.json",
+      "sha256": "47f5fa1582c0ca8249449c9bc36cecee039dc6cc16fdc096d23fef64328134bb",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=2"
+    },
+    {
+      "source_id": "hero-25",
+      "file": "sources/hero-25.json",
+      "sha256": "4f044b61a25a83718b4443849159778830223ca4f746ae5ead81dad7441c23f2",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=25"
+    },
+    {
+      "source_id": "hero-26",
+      "file": "sources/hero-26.json",
+      "sha256": "0e1f7f5a241f1ca82facfc2a20cc4dce909c0b59932190f1db3b2564e8a4a384",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=26"
+    },
+    {
+      "source_id": "hero-5",
+      "file": "sources/hero-5.json",
+      "sha256": "0e76a4701afbab6b34a34b809cd969aeedf87bf663c3e6f156f6e344398f15f0",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=5"
+    },
+    {
+      "source_id": "hero-23",
+      "file": "sources/hero-23.json",
+      "sha256": "822a544e7c5f4a7b8f49af98ffb5ac9ae2732aa2143550c451246ff02a9b199f",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=23"
+    },
+    {
+      "source_id": "hero-27",
+      "file": "sources/hero-27.json",
+      "sha256": "140257a291c4f0b74cbce9b3b4dff48c6986a5bc7099032d243cb8e06f39f916",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=27"
+    },
+    {
+      "source_id": "hero-39",
+      "file": "sources/hero-39.json",
+      "sha256": "9d942ec86974a0b16b0d4eeba88d3ee69a34bba4ebbbca839aef88702d105f92",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=39"
+    },
+    {
+      "source_id": "hero-50",
+      "file": "sources/hero-50.json",
+      "sha256": "2bd5ac58af625745a1947cd01cea64b6f47dd03bc0b3956e9ce8f806982a9c15",
+      "url": "https://www.dota2.com/datafeed/herodata?language=english&hero_id=50"
+    },
+    {
+      "source_id": "item-power_treads",
+      "file": "sources/item-power_treads.json",
+      "sha256": "e5ed8a6583d8569381823ea314566bf1740c0a5dbb78c934387917b92e7b03b6",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=63"
+    },
+    {
+      "source_id": "item-bfury",
+      "file": "sources/item-bfury.json",
+      "sha256": "bc56a541e55ab0fe5a43dd598e62f4022413d8c3a59ecf0aea40b84e922410fb",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=145"
+    },
+    {
+      "source_id": "item-maelstrom",
+      "file": "sources/item-maelstrom.json",
+      "sha256": "d39557184d895f5a619544b49e2262e9dcccce8b2c4a6a8959ad3a2c683272c1",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=166"
+    },
+    {
+      "source_id": "item-manta",
+      "file": "sources/item-manta.json",
+      "sha256": "3c6800e7d158024983089fd85647223cb357d6413d638484a96f21676a54f2e8",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=147"
+    },
+    {
+      "source_id": "item-black_king_bar",
+      "file": "sources/item-black_king_bar.json",
+      "sha256": "d96e7999d7d8988b213d1dc1494626197bba9d23c291d715fde3f7f25c259be6",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=116"
+    },
+    {
+      "source_id": "item-monkey_king_bar",
+      "file": "sources/item-monkey_king_bar.json",
+      "sha256": "38118339af6c2c9e7e670a6461476d7d52e1c95df1a8fc4567ab3c24c52752c5",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=135"
+    },
+    {
+      "source_id": "item-butterfly",
+      "file": "sources/item-butterfly.json",
+      "sha256": "b692716a25d5737e59fdaa415914ac53b2eb72db0b87e7c6379095fcda59cc61",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=139"
+    },
+    {
+      "source_id": "item-basher",
+      "file": "sources/item-basher.json",
+      "sha256": "1242ada8bef98f2e53ec85b843c211b1e527d58f186b6875fa9c6a8ffeec4cf5",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=143"
+    },
+    {
+      "source_id": "item-skadi",
+      "file": "sources/item-skadi.json",
+      "sha256": "48d549f03cdfd9ecb97c151d378a4c8284c988a8f49420b1ec2197e27f1d3f7f",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=160"
+    },
+    {
+      "source_id": "item-satanic",
+      "file": "sources/item-satanic.json",
+      "sha256": "bba834763f2afb5347f4dc18a638facd6b60bf98fd1e86ce87fca714d59d81b3",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=156"
+    },
+    {
+      "source_id": "item-blink",
+      "file": "sources/item-blink.json",
+      "sha256": "a0ac62a244668777d18f843f2ff051c6b445c2314259ad5805396022a693a2ad",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=1"
+    },
+    {
+      "source_id": "item-magic_wand",
+      "file": "sources/item-magic_wand.json",
+      "sha256": "1ece48aeaa2b3c52e8f4a52a63257e6e6c50318abac9bebf77ee319d5be9d35f",
+      "url": "https://www.dota2.com/datafeed/itemdata?language=english&item_id=36"
+    }
+  ],
+  "heroes": [
+    {
+      "hero_id": 1,
+      "name": "敌法师",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 2,
+      "name": "斧王",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 3,
+      "name": "祸乱之源",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 4,
+      "name": "血魔",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 5,
+      "name": "水晶室女",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 6,
+      "name": "卓尔游侠",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 7,
+      "name": "撼地者",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 8,
+      "name": "主宰",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 9,
+      "name": "米拉娜",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 10,
+      "name": "变体精灵",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 11,
+      "name": "影魔",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 12,
+      "name": "幻影长矛手",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 13,
+      "name": "帕克",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 14,
+      "name": "帕吉",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 15,
+      "name": "雷泽",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 16,
+      "name": "沙王",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 17,
+      "name": "风暴之灵",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 18,
+      "name": "斯温",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 19,
+      "name": "小小",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 20,
+      "name": "复仇之魂",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 21,
+      "name": "风行者",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 22,
+      "name": "宙斯",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 23,
+      "name": "昆卡",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 25,
+      "name": "莉娜",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 26,
+      "name": "莱恩",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 27,
+      "name": "暗影萨满",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 28,
+      "name": "斯拉达",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 29,
+      "name": "潮汐猎人",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 30,
+      "name": "巫医",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 31,
+      "name": "巫妖",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 32,
+      "name": "力丸",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 33,
+      "name": "谜团",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 34,
+      "name": "修补匠",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 35,
+      "name": "狙击手",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 36,
+      "name": "瘟疫法师",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 37,
+      "name": "术士",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 38,
+      "name": "兽王",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 39,
+      "name": "痛苦女王",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 40,
+      "name": "剧毒术士",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 41,
+      "name": "虚空假面",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 42,
+      "name": "冥魂大帝",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 43,
+      "name": "死亡先知",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 44,
+      "name": "幻影刺客",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 45,
+      "name": "帕格纳",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 46,
+      "name": "圣堂刺客",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 47,
+      "name": "冥界亚龙",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 48,
+      "name": "露娜",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 49,
+      "name": "龙骑士",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 50,
+      "name": "戴泽",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 51,
+      "name": "发条技师",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 52,
+      "name": "拉席克",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 53,
+      "name": "自然先知",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 54,
+      "name": "噬魂鬼",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 55,
+      "name": "黑暗贤者",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 56,
+      "name": "克林克兹",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 57,
+      "name": "全能骑士",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 58,
+      "name": "魅惑魔女",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 59,
+      "name": "哈斯卡",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 60,
+      "name": "暗夜魔王",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 61,
+      "name": "育母蜘蛛",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 62,
+      "name": "赏金猎人",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 63,
+      "name": "编织者",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 64,
+      "name": "杰奇洛",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 65,
+      "name": "蝙蝠骑士",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 66,
+      "name": "陈",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 67,
+      "name": "幽鬼",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 68,
+      "name": "远古冰魄",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 69,
+      "name": "末日使者",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 70,
+      "name": "熊战士",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 71,
+      "name": "裂魂人",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 72,
+      "name": "矮人直升机",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 73,
+      "name": "炼金术士",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 74,
+      "name": "祈求者",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 75,
+      "name": "沉默术士",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 76,
+      "name": "殁境神蚀者",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 77,
+      "name": "狼人",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 78,
+      "name": "酒仙",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 79,
+      "name": "暗影恶魔",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 80,
+      "name": "独行德鲁伊",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 81,
+      "name": "混沌骑士",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 82,
+      "name": "米波",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 83,
+      "name": "树精卫士",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 84,
+      "name": "食人魔魔法师",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 85,
+      "name": "不朽尸王",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 86,
+      "name": "拉比克",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 87,
+      "name": "干扰者",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 88,
+      "name": "司夜刺客",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 89,
+      "name": "娜迦海妖",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 90,
+      "name": "光之守卫",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 91,
+      "name": "艾欧",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 92,
+      "name": "维萨吉",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 93,
+      "name": "斯拉克",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 94,
+      "name": "美杜莎",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 95,
+      "name": "巨魔战将",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 96,
+      "name": "半人马战行者",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 97,
+      "name": "马格纳斯",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 98,
+      "name": "伐木机",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 99,
+      "name": "钢背兽",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 100,
+      "name": "巨牙海民",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 101,
+      "name": "天怒法师",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 102,
+      "name": "亚巴顿",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 103,
+      "name": "上古巨神",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 104,
+      "name": "军团指挥官",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 105,
+      "name": "工程师",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 106,
+      "name": "灰烬之灵",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 107,
+      "name": "大地之灵",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 108,
+      "name": "孽主",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 109,
+      "name": "恐怖利刃",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 110,
+      "name": "凤凰",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 111,
+      "name": "神谕者",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 112,
+      "name": "寒冬飞龙",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 113,
+      "name": "天穹守望者",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 114,
+      "name": "齐天大圣",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 119,
+      "name": "邪影芳灵",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 120,
+      "name": "石鳞剑士",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 121,
+      "name": "天涯墨客",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 123,
+      "name": "森海飞霞",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 126,
+      "name": "虚无之灵",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 128,
+      "name": "电炎绝手",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 129,
+      "name": "玛尔斯",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 131,
+      "name": "百戏大王",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 135,
+      "name": "破晓辰星",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 136,
+      "name": "玛西",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 137,
+      "name": "獸",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 138,
+      "name": "琼英碧灵",
+      "attack_type": "Ranged"
+    },
+    {
+      "hero_id": 145,
+      "name": "凯",
+      "attack_type": "Melee"
+    },
+    {
+      "hero_id": 155,
+      "name": "朗戈",
+      "attack_type": "Melee"
+    }
+  ],
+  "facts": [
+    {
+      "fact_id": "juggernaut_blade_dance-attack",
+      "hero_id": 8,
+      "item_key": null,
+      "tag": "attack",
+      "status": "verified",
+      "source_id": "hero-8",
+      "pointer": "/result/data/heroes/0/abilities/2/desc_loc",
+      "quote": "Gives Juggernaut a chance to deal critical damage with Blade Fury and on each attack.",
+      "summary": "剑舞涉及普通攻击暴击，支持评估攻击装备；不据此证明最优路线。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "juggernaut_blade_fury-self_protection",
+      "hero_id": 8,
+      "item_key": null,
+      "tag": "self_protection",
+      "status": "verified",
+      "source_id": "hero-8",
+      "pointer": "/result/data/heroes/0/abilities/0/desc_loc",
+      "quote": "Causes a bladestorm of destructive force around Juggernaut, rendering him debuff immune with %immunity_resist%%% magic resistance and dealing damage every %blade_fury_damage_tick%s to nearby enemy units. Applies a strong dispel at the end of the spin.",
+      "summary": "剑刃风暴具备减益免疫与结束时强驱散；不据此视为永久安全。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "juggernaut_healing_ward-healing",
+      "hero_id": 8,
+      "item_key": null,
+      "tag": "healing",
+      "status": "verified",
+      "source_id": "hero-8",
+      "pointer": "/result/data/heroes/0/abilities/1/desc_loc",
+      "quote": "Summons a Healing Ward which heals all nearby allied units, based on their max health.  The Healing Ward moves at %healing_ward_movespeed_tooltip% movement speed after being summoned.  Lasts %abilityduration% seconds.",
+      "summary": "治疗守卫提供恢复，依赖守卫存活与站位。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "drow_ranger_wave_of_silence-silence",
+      "hero_id": 6,
+      "item_key": null,
+      "tag": "silence",
+      "status": "verified",
+      "source_id": "hero-6",
+      "pointer": "/result/data/heroes/0/abilities/1/desc_loc",
+      "quote": "Releases a wave that silences and knocks back and reveals invisible enemy units. Knockback distance is relative to how close they are to Drow.",
+      "summary": "狂风具有沉默与击退；沉默应对需区分能否驱散。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "phantom_assassin_immaterial-evasion",
+      "hero_id": 44,
+      "item_key": null,
+      "tag": "evasion",
+      "status": "verified",
+      "source_id": "hero-44",
+      "pointer": "/result/data/heroes/0/abilities/4/desc_loc",
+      "quote": "Phantom Assassin focuses inward, increasing her ability to evade enemy attacks.\n\nStacks diminishingly with other sources of Evasion.",
+      "summary": "无形提供闪避潜力。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "phantom_lancer_juxtapose-illusions",
+      "hero_id": 12,
+      "item_key": null,
+      "tag": "illusions",
+      "status": "verified",
+      "source_id": "hero-12",
+      "pointer": "/result/data/heroes/0/abilities/4/desc_loc",
+      "quote": "Phantom Lancer has a chance to fracture his presence on an attack, creating an illusion of himself. Illusions also have a chance to fracture further. Illusions created from Phantom Lancer last for %illusion_duration% seconds, while illusions created from other illusions last %illusion_from_illusion_duration% seconds.",
+      "summary": "并列可产生并衍生幻象，需考虑多目标处理。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "axe_berserkers_call-control",
+      "hero_id": 2,
+      "item_key": null,
+      "tag": "control",
+      "status": "verified",
+      "source_id": "hero-2",
+      "pointer": "/result/data/heroes/0/abilities/0/desc_loc",
+      "quote": "Axe taunts nearby enemy units, forcing them to attack him while he gains bonus armor during the duration.",
+      "summary": "狂战士之吼强迫附近敌人攻击；免疫与驱散例外未由本摘录证明。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "lina_light_strike_array-control",
+      "hero_id": 25,
+      "item_key": null,
+      "tag": "control",
+      "status": "verified",
+      "source_id": "hero-25",
+      "pointer": "/result/data/heroes/0/abilities/1/desc_loc",
+      "quote": "Summons a column of flames that damages and stuns enemies.",
+      "summary": "光击阵有眩晕，能否命中与当前等级未知。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "lion_impale-control",
+      "hero_id": 26,
+      "item_key": null,
+      "tag": "control",
+      "status": "verified",
+      "source_id": "hero-26",
+      "pointer": "/result/data/heroes/0/abilities/0/desc_loc",
+      "quote": "Rock spikes burst from the earth along a straight path. Enemy units are hurled into the air, then are stunned and take damage when they fall.",
+      "summary": "裂地尖刺提供控制潜力，不保证队友实际承担。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "crystal_maiden_frostbite-root",
+      "hero_id": 5,
+      "item_key": null,
+      "tag": "root",
+      "status": "verified",
+      "source_id": "hero-5",
+      "pointer": "/result/data/heroes/0/abilities/1/desc_loc",
+      "quote": "Encases an enemy unit in ice, prohibiting movement and attack, while dealing damage over time. Deals %creep_multiplier%x damage to non-ancient creeps.",
+      "summary": "冰封禁制限制移动与攻击；不把它当作普通眩晕。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "kunkka_torrent-control",
+      "hero_id": 23,
+      "item_key": null,
+      "tag": "control",
+      "status": "verified",
+      "source_id": "hero-23",
+      "pointer": "/result/data/heroes/0/abilities/0/desc_loc",
+      "quote": "Summons a rising torrent that, after a short delay, hurls enemy units into the sky, stunning, dealing damage and slowing movement speed.",
+      "summary": "洪流在延迟后提供范围控制。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "shadow_shaman_shackles-control",
+      "hero_id": 27,
+      "item_key": null,
+      "tag": "control",
+      "status": "verified",
+      "source_id": "hero-27",
+      "pointer": "/result/data/heroes/0/abilities/2/desc_loc",
+      "quote": "CHANNELED - Magically binds an enemy unit so that it cannot move or attack, absorbing their life energy over time.",
+      "summary": "枷锁需要持续施法，提供控制潜力。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "queenofpain_blink-mobility",
+      "hero_id": 39,
+      "item_key": null,
+      "tag": "mobility",
+      "status": "verified",
+      "source_id": "hero-39",
+      "pointer": "/result/data/heroes/0/abilities/1/desc_loc",
+      "quote": "Short distance teleportation that allows Queen of Pain to move in and out of combat.",
+      "summary": "闪烁提供短距离位移潜力，考虑接近与留人。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "dazzle_shadow_wave-healing",
+      "hero_id": 50,
+      "item_key": null,
+      "tag": "healing",
+      "status": "verified",
+      "source_id": "hero-50",
+      "pointer": "/result/data/heroes/0/abilities/2/desc_loc",
+      "quote": "Sends out a bolt of power that arcs between allies, healing them while damaging any enemy units standing nearby.  Dazzle is always healed by Shadow Wave.",
+      "summary": "暗影波可治疗友方单位，考虑攻击中的恢复抑制。",
+      "conditions": [
+        "英雄能力潜力，不表示已学技能、当前冷却或能实际命中。"
+      ]
+    },
+    {
+      "fact_id": "item-power_treads",
+      "hero_id": null,
+      "item_key": "power_treads",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-power_treads",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Active: Switch Attribute</h1>Switches between +%bonus_stat% Strength, +%bonus_stat% Agility, or +%bonus_stat% Intelligence.\nMovement speed bonuses from multiple pairs of boots do not stack.",
+      "summary": "动力鞋：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "属性切换需操作；多双鞋移速不叠加。"
+      ]
+    },
+    {
+      "fact_id": "item-bfury",
+      "hero_id": null,
+      "item_key": "bfury",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-bfury",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Active: Chop Tree</h1> Destroy a target tree. \n\n<h1>Passive: Quell</h1> Increases attack damage against non-hero units by %quelling_bonus% for melee heroes, and %quelling_bonus_ranged% for ranged. \n\n<h1>Passive: Cleave</h1> Deals %cleave_damage_percent%%% of attack damage as physical damage in a cone up to %cleave_distance% around the target. Deals %cleave_damage_percent_creep%%% against creeps. (Melee Only)",
+      "summary": "狂战斧：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "分裂效果仅近战生效；需要能够持续攻击并获得发育空间。"
+      ]
+    },
+    {
+      "fact_id": "item-maelstrom",
+      "hero_id": null,
+      "item_key": "maelstrom",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-maelstrom",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Passive: Chain Lightning</h1>Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between %chain_strikes% targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion.",
+      "summary": "漩涡：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "连锁闪电依赖攻击概率触发，不等于每次攻击必定命中或清掉幻象。"
+      ]
+    },
+    {
+      "fact_id": "item-manta",
+      "hero_id": null,
+      "item_key": "manta",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-manta",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Active: Mirror Image</h1>Creates %images_count% images of your hero that last %illusion_duration% seconds. <br><br>Melee images deal %tooltip_damage_outgoing_melee%%% damage, while Ranged images deal %tooltip_damage_outgoing_ranged%%%. Illusions take %tooltip_damage_incoming_total_pct%%% damage. <br><br>Dispel Type: <span class=\"GameplayValues GameplayVariable\">Basic Dispel</span>",
+      "summary": "幻影斧：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "仅讨论基本驱散可处理的效果；被限制使用物品或效果不可基本驱散时不能据此自救。",
+        "幻象输出与带线价值是战术假设，不代表实际存活收益。"
+      ]
+    },
+    {
+      "fact_id": "item-black_king_bar",
+      "hero_id": null,
+      "item_key": "black_king_bar",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-black_king_bar",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Active: Avatar</h1> Applies a basic dispel. Grants %spell_reduce%%% magic resistance and immunity to reflected and pure damage. For the duration of the effect, any negative effect from enemy spells has no effect. <br><br>Duration: %duration%s <br>Dispel Type: <span class=\"GameplayValues GameplayVariable\">Basic Dispel</span>",
+      "summary": "黑皇杖：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "具体穿透减益免疫的控制与持续时间交互仍需专门核验。"
+      ]
+    },
+    {
+      "fact_id": "item-monkey_king_bar",
+      "hero_id": null,
+      "item_key": "monkey_king_bar",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-monkey_king_bar",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Passive: Pierce</h1>Grants each attack a %bonus_chance%%% chance to pierce through evasion and deal %bonus_chance_damage% bonus magical damage.",
+      "summary": "金箍棒：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "穿透闪避为概率效果，不承诺所有攻击必中。"
+      ]
+    },
+    {
+      "fact_id": "item-butterfly",
+      "hero_id": null,
+      "item_key": "butterfly",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-butterfly",
+      "pointer": "/result/data/items/0/notes_loc/0",
+      "quote": "Stacks diminishingly with other sources of Evasion.",
+      "summary": "蝴蝶：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "对手装备、必中攻击及闪避收益未全面核验。"
+      ]
+    },
+    {
+      "fact_id": "item-basher",
+      "hero_id": null,
+      "item_key": "basher",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-basher",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Passive: Bash</h1> Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus physical damage.  Bash chance for ranged heroes is %bash_chance_ranged%%%.",
+      "summary": "碎颅锤：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "先能攻击到目标才能概率触发；不是可靠先手或确定控制。"
+      ]
+    },
+    {
+      "fact_id": "item-skadi",
+      "hero_id": null,
+      "item_key": "skadi",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-skadi",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Passive: Cold Attack</h1> Attacks lower enemy movement by %cold_slow_melee%%% if they are melee and %cold_slow_ranged%%% if they are ranged. Attacks also lower enemy attack speed by %cold_attack_slow_melee%%% and Health Restoration by %restoration_reduction%%%. Lasts for %cold_duration% seconds.",
+      "summary": "斯嘉蒂之眼：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "必须攻击到目标才能施加恢复抑制与减速。"
+      ]
+    },
+    {
+      "fact_id": "item-satanic",
+      "hero_id": null,
+      "item_key": "satanic",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-satanic",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Active: Unholy Rage</h1>Increases Lifesteal percentage to %unholy_lifesteal_total_tooltip%%% for %unholy_duration% seconds. <br><br>Dispel Type: <span class=\"GameplayValues GameplayVariable\">Basic Dispel</span> \n\n<h1>Passive: Lifesteal</h1>Heals the attacker for a percentage of physical damage dealt.",
+      "summary": "撒旦之邪力：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "恢复依赖能够造成物理攻击伤害；被控制、缴械或限制治疗时收益受限。"
+      ]
+    },
+    {
+      "fact_id": "item-blink",
+      "hero_id": null,
+      "item_key": "blink",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-blink",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Active: Blink</h1> Teleport to a target point up to %blink_range% units away. <br><br>Blink Dagger cannot be used for %blink_damage_cooldown% seconds after taking damage from an enemy hero or Roshan.",
+      "summary": "闪烁匕首：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "受到敌方英雄或肉山伤害后有禁用窗口；不可当作稳定受击逃生。"
+      ]
+    },
+    {
+      "fact_id": "item-magic_wand",
+      "hero_id": null,
+      "item_key": "magic_wand",
+      "tag": "item_effect",
+      "status": "verified",
+      "source_id": "item-magic_wand",
+      "pointer": "/result/data/items/0/desc_loc",
+      "quote": "<h1>Active: Energy Charge</h1>Instantly restores %restore_per_charge% health and mana per charge stored. <br><br>Max %max_charges% charges. Gains a charge whenever a visible enemy within %charge_radius% range uses an ability.",
+      "summary": "魔杖：仅采用所引用的官方文字效果。",
+      "conditions": [
+        "需要可见敌方在范围内施法积累充能；没有对线信息时只列条件备选。"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "item_key": "power_treads",
+      "name": "动力鞋",
+      "fact_ids": [
+        "item-power_treads"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": null,
+      "conditions": [
+        "属性切换需操作；多双鞋移速不叠加。"
+      ],
+      "tradeoffs": [
+        "基础攻速/属性路线选择，不涵盖其他鞋类对比。"
+      ]
+    },
+    {
+      "item_key": "bfury",
+      "name": "狂战斧",
+      "fact_ids": [
+        "item-bfury"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": true,
+      "excluded_hero_ids": [],
+      "choice_group": "首件发育大件",
+      "conditions": [
+        "分裂效果仅近战生效；需要能够持续攻击并获得发育空间。"
+      ],
+      "tradeoffs": [
+        "发育投资可能推迟生存或参战装备；与漩涡作为首版替代路线比较。"
+      ]
+    },
+    {
+      "item_key": "maelstrom",
+      "name": "漩涡",
+      "fact_ids": [
+        "item-maelstrom"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": "首件发育大件",
+      "conditions": [
+        "连锁闪电依赖攻击概率触发，不等于每次攻击必定命中或清掉幻象。"
+      ],
+      "tradeoffs": [
+        "概率范围伤害不能代替生存；可能需要后续升级，首版未评估升级路线。"
+      ]
+    },
+    {
+      "item_key": "manta",
+      "name": "幻影斧",
+      "fact_ids": [
+        "item-manta"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": null,
+      "conditions": [
+        "仅讨论基本驱散可处理的效果；被限制使用物品或效果不可基本驱散时不能据此自救。",
+        "幻象输出与带线价值是战术假设，不代表实际存活收益。"
+      ],
+      "tradeoffs": [
+        "基本驱散不能解决全部控制；占用金币与操作注意力。"
+      ]
+    },
+    {
+      "item_key": "black_king_bar",
+      "name": "黑皇杖",
+      "fact_ids": [
+        "item-black_king_bar"
+      ],
+      "enabled": false,
+      "held_reason": "证据范围不足，暂不启用；不因已有剑刃风暴就断言无需黑皇杖。",
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": null,
+      "conditions": [
+        "具体穿透减益免疫的控制与持续时间交互仍需专门核验。"
+      ],
+      "tradeoffs": [
+        "证据范围不足，暂不启用；不因已有剑刃风暴就断言无需黑皇杖。"
+      ]
+    },
+    {
+      "item_key": "monkey_king_bar",
+      "name": "金箍棒",
+      "fact_ids": [
+        "item-monkey_king_bar"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": null,
+      "conditions": [
+        "穿透闪避为概率效果，不承诺所有攻击必中。"
+      ],
+      "tradeoffs": [
+        "输出/命中投资不直接补充生存或主动接近。"
+      ]
+    },
+    {
+      "item_key": "butterfly",
+      "name": "蝴蝶",
+      "fact_ids": [
+        "item-butterfly"
+      ],
+      "enabled": false,
+      "held_reason": "被必中手段削弱的风险待扩展，暂不启用。",
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": null,
+      "conditions": [
+        "对手装备、必中攻击及闪避收益未全面核验。"
+      ],
+      "tradeoffs": [
+        "被必中手段削弱的风险待扩展，暂不启用。"
+      ]
+    },
+    {
+      "item_key": "basher",
+      "name": "碎颅锤",
+      "fact_ids": [
+        "item-basher"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": false,
+      "excluded_hero_ids": [
+        28,
+        41,
+        81,
+        145
+      ],
+      "choice_group": null,
+      "conditions": [
+        "先能攻击到目标才能概率触发；不是可靠先手或确定控制。"
+      ],
+      "tradeoffs": [
+        "概率触发，不解决被风筝而无法接触目标的问题。"
+      ]
+    },
+    {
+      "item_key": "skadi",
+      "name": "斯嘉蒂之眼",
+      "fact_ids": [
+        "item-skadi"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": null,
+      "conditions": [
+        "必须攻击到目标才能施加恢复抑制与减速。"
+      ],
+      "tradeoffs": [
+        "后期昂贵投资；没有经济输入，不能承诺能及时完成。"
+      ]
+    },
+    {
+      "item_key": "satanic",
+      "name": "撒旦之邪力",
+      "fact_ids": [
+        "item-satanic"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": null,
+      "conditions": [
+        "恢复依赖能够造成物理攻击伤害；被控制、缴械或限制治疗时收益受限。"
+      ],
+      "tradeoffs": [
+        "需输出窗口；不推导未核验的数值总吸血率或生存保证。"
+      ]
+    },
+    {
+      "item_key": "blink",
+      "name": "闪烁匕首",
+      "fact_ids": [
+        "item-blink"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": null,
+      "conditions": [
+        "受到敌方英雄或肉山伤害后有禁用窗口；不可当作稳定受击逃生。"
+      ],
+      "tradeoffs": [
+        "不直接增加持续输出或生命值；需要进入时机与队友配合。"
+      ]
+    },
+    {
+      "item_key": "magic_wand",
+      "name": "魔杖",
+      "fact_ids": [
+        "item-magic_wand"
+      ],
+      "enabled": true,
+      "held_reason": null,
+      "melee_only": false,
+      "excluded_hero_ids": [],
+      "choice_group": null,
+      "conditions": [
+        "需要可见敌方在范围内施法积累充能；没有对线信息时只列条件备选。"
+      ],
+      "tradeoffs": [
+        "充能与收益取决于对线和施法频率，阵容不足以确认收益。"
+      ]
+    }
+  ]
+}

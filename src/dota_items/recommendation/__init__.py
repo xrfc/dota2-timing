@@ -1,1 +1,1 @@
-"""Independent lineup recommendation contracts; no recommendation engine yet."""
+"""Offline lineup recommendation with versioned evidence and explicit support profiles."""
