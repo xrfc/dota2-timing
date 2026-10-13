@@ -1,14 +1,16 @@
 # 文档索引
 
-文档更新：**2026-10-11**；本地推荐实现基线 **feat/lineup-contracts / 47b8f7f**，
-包版本 **0.4.0**。工程闭环可运行，当前主线是推荐质量评审，真实模型训练仍未开始。
-远端main为 `c6a5e1f`（本日只读核对），不包含推荐改动；本轮已获授权检查后推送推荐分支，不合并main。
-学习资料与可视化入口见 [learning/](../learning/README.md)，其任务页尚不展示M阶段。
+文档同步：**2026-10-13**；包版本0.4.0，开发分支 `feat/lineup-contracts`。
+最新进度统一见[项目状态](project-status.md)，本次交付检查与推送见[验证记录](validation-and-delivery.md)。
+当前重点是数据/标签语义证据与ML准备，同时保留规则推荐质量待验收事项；尚无真实训练模型。
 
 ## 按任务阅读
 
 | 你要做什么 | 文档 |
 |---|---|
+| 固定采样、离线诊断和补丁时间核验 | [数据可行性审计](data-feasibility.md) |
+| 理解位置估算、购买汇总和成装标签限制 | [语义核验](data-semantics.md) |
+| 规划首个真实ML实验与防泄漏要求 | [ML实验设计](ml-first-experiment.md) |
 | 先判断项目做到了哪里 | [完成度与验证证据](project-status.md) |
 | 运行主宰推荐、理解范围及全英雄/全位置扩展方式 | [本地阵容推荐](lineup-recommendation.md) |
 | 核对阵容输入及推荐结果格式 | [推荐契约](recommendation-contracts.md) |

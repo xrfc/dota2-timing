@@ -1,5 +1,9 @@
 # Demo 到训练样本的数据管线
 
+## 2026-10-13 进度同步
+
+新增[独立审计器v3](data-feasibility.md)与[语义核验](data-semantics.md)，不改变下方coach-features/1或已有购买任务定义；新阵容ML实验正式标签仍待冻结。
+
 更新：**2026-10-09 / main 725f35c / 0.4**，清洗版本 `coach-preparation/3`。新增 context 与 observer JSONL，使用方法和边界见[上下文接入](observer-context.md)；原 X 数组保持原定义。本页描述已实现的数据准备；[8 场真实验收](real-data-acceptance.md)已完成机械检查，游戏语义仍有未解决项。入口是本地文件/目录，网页上传尚未实现。
 
 ## 最短使用路径

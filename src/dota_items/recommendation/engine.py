@@ -16,7 +16,7 @@ from dota_items.recommendation.contracts import (
 )
 from dota_items.recommendation.knowledge import Bundle
 
-ENGINE_VERSION = "lineup-rules/1"
+ENGINE_VERSION = "lineup-rules/2"
 
 
 class Need(Contract):
@@ -157,6 +157,9 @@ def recommend(request: LineupRequest, bundle: Bundle) -> Analysis:
                         reason=rule.reason,
                     )
                 )
+            # Every cited fact carries its own limitations, including profile
+            # prerequisites and item facts not reached through a need rule.
+            conditions.update(c for ref in refs for c in facts[ref].conditions)
             # Baseline vs matchup category is explicit; stages are policy hints,
             # not elapsed minutes, purchase order or inventory completion.
             strongest = max(rules, key=lambda r: (r.weight, r.rule_id))

@@ -4,6 +4,8 @@
 
 新增实践：[一场回放、一次魔瓶购买的完整追踪](exercises/event-lineage/9031371970/README.md)。英雄机制资料统一维护在[知识区](../knowledge/README.md)，避免在学习区复制另一套英雄表；[路径与证据恢复](../docs/knowledge-maintenance.md)说明如何在不同机器重现。统一 learning scope 同时执行知识边界测试，但学习理解、知识准入与正式训练结果仍分别记录。
 
+2026-10-13工程练习入口：[固定采样与数据审计](../docs/data-feasibility.md)、[字段语义与标签限制](../docs/data-semantics.md)、[ML实验设计](../docs/ml-first-experiment.md)。工程305项测试不代表L01–L12已完成，个人学习任务状态不变。
+
 ## 打开可视化学习
 
 只需 Python 3.11+，无需安装项目依赖：

@@ -234,6 +234,42 @@ def test_rendering_escapes_markup_and_contains_trace_not_new_scores(bundle):
     assert "黑皇杖" in text and "暂不启用" in text
 
 
+@pytest.mark.parametrize("fact_id", ["item-manta", "juggernaut_blade_fury-self_protection"])
+def test_referenced_fact_conditions_reach_candidates_without_manual_duplication(bundle, fact_id):
+    # A future knowledge revision must not silently lose a newly documented limitation.
+    payload = bundle.model_dump()
+    condition = "独立事实条件：<只有满足前置条件时适用>"
+    fact = next(f for f in payload["knowledge"]["facts"] if f["fact_id"] == fact_id)
+    fact["conditions"] = (*fact["conditions"], condition)
+    extended = Bundle.model_validate(payload)
+    result = recommend(request(), extended)
+    original = candidate_map(recommend(request(), bundle))
+    for candidate in result.recommendation.candidates:
+        assert (condition in candidate.conditions) == (fact_id in candidate.fact_ids)
+        assert candidate.score_components == original[candidate.item_key].score_components
+    assert condition in render_text(result, extended)
+    html = render_html(result, extended).split("<details>")[0]
+    assert "&lt;只有满足前置条件时适用&gt;" in html
+    assert "<只有满足前置条件时适用>" not in html
+
+
+def test_html_risk_summary_keeps_conditions_visible_without_opening_details(bundle):
+    result = recommend(request(), bundle)
+    html = render_html(result, bundle).split("<details>")[0]
+    for need in result.needs:
+        for condition in need.conditions:
+            assert condition in html
+    assert "具体控制例外未全量核验" in html
+
+
+def test_partial_text_names_missing_heroes_before_candidates(bundle):
+    result = recommend(request("unknown-hero-knowledge"), bundle)
+    text = render_text(result, bundle)
+    opening = text.split("适用范围与局限")[0]
+    assert "知识缺失或冲突：祈求者" in opening
+    assert "不能据此忽略这些英雄的威胁" in opening
+
+
 @pytest.mark.parametrize(
     "case,exit_code,status",
     [

@@ -1,5 +1,12 @@
 # 工程设计：阵容推荐与回放基础设施
 
+## 新增审计链路（2026-10-13）
+
+`audit_data.py → feasibility_cli → feasibility + semantic_review` 复用normalize和OpenDota读取器。
+`feasibility_sampling`绑定发现顺序与配置，`patch_time`验证官方快照并判断发布时间区间。
+输出仅诊断，不接入训练准入；实现/契约见[审计说明](data-feasibility.md)和[语义核验](data-semantics.md)。
+推荐引擎现为 `lineup-rules/2`，新增条件传递/展示修正；下方2026-10-11是原链路设计背景。
+
 ## 当前推荐链路（2026-10-11 / 本地47b8f7f）
 
 一号位主宰的实验规则链路已独立于回放管线实现，不等待模型训练：
@@ -14,7 +21,7 @@
 英雄/位置与权重规则由配置选择，当前仅启用 `(8, 1)`；新组合需补事实与案例验收，
 不直接复制主宰策略。使用及详细扩展说明见[本地推荐](lineup-recommendation.md)。
 
-当前不继续扩建框架，先执行[推荐质量评审](recommendation-quality-review.md)。
+规则质量仍按[评审流程](recommendation-quality-review.md)推进；当前开发优先数据/标签语义证据。
 本链路不导入Gem、workflow或训练框架；不改变下方旧回放/模型契约。
 
 ## 已有回放架构与历史设计

@@ -1,5 +1,9 @@
 # 日常操作、迁移与恢复
 
+## 2026-10-13 进度同步
+
+新增只读诊断入口 `python audit_data.py`：本地JSON、固定采样计划、离线缓存与失败记录；命令见[审计说明](data-feasibility.md)。诊断退出码0不代表训练准入，原始玩家JSON不提交Git。
+
 > v0.4 数据准备更新：`prepare` 已实现单文件清洗/特征/标签；`build-samples` 输出固定 split 的训练数组和 train-only 预处理。输入、错误策略、任务 mask 和操作示例以[数据管线](data-pipeline.md)为准。实际模型与真实字段验收仍待完成。
 
 基线：v0.3。首次使用及模型接入命令见[教练工作流](coach-workflow.md)；本文件维护日常操作、旧入口衔接与真实回放核验。

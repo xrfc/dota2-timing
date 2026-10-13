@@ -20,10 +20,21 @@ def render_text(analysis: Analysis, bundle: Bundle) -> str:
         f"状态：{statuses[result.status]}",
         "天辉：" + "、".join(heroes[h] for h in request.radiant),
         "夜魇：" + "、".join(heroes[h] for h in request.dire),
-        "",
-        "适用范围与局限",
-        *(f"- {limit}" for limit in result.limitations),
     ]
+    missing = [heroes[row.hero_id] for row in result.coverage if row.status != "verified"]
+    if missing:
+        lines.append(
+            "知识缺失或冲突："
+            + "、".join(missing)
+            + "。以下仅为部分分析，不能据此忽略这些英雄的威胁。"
+        )
+    lines.extend(
+        [
+            "",
+            "适用范围与局限",
+            *(f"- {limit}" for limit in result.limitations),
+        ]
+    )
     if result.empty_reason:
         lines.extend(["", "没有输出候选：" + result.empty_reason])
     lines.extend(["", "阵容需求与风险（队友能力不代表实际承担）"])
@@ -111,7 +122,10 @@ def render_html(analysis: Analysis, bundle: Bundle) -> str:
     if result.empty_reason:
         sections.append('<p class="notice">' + escape(result.empty_reason) + "</p>")
     sections.append("<h2>阵容需求与风险</h2><ul>")
-    sections.extend("<li>" + escape(need.title) + "</li>" for need in analysis.needs)
+    for need in analysis.needs:
+        sections.append("<li><b>" + escape(need.title) + "</b><ul>")
+        sections.extend("<li>" + escape(c) + "</li>" for c in need.conditions)
+        sections.append("</ul></li>")
     sections.append("</ul>")
     for stage, name in (("early", "早期"), ("mid", "中期"), ("late", "后期")):
         rows = [c for c in result.candidates if c.stage == stage]

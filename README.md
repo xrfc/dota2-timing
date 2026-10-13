@@ -1,6 +1,19 @@
 # DOTA2 AI 教练基础设施
 
-## 当前本地主线：7.41f 阵容装备建议
+## 当前进度（2026-10-13）
+
+已有回放数据管线、一号位主宰规则推荐闭环和数据可行性/语义审计CLI；**还没有训练好的模型**。
+
+- 规则引擎 `lineup-rules/2`：完成首轮内部报告审查、条件传递与未知覆盖展示修正；独立质量验收仍待做。
+- 审计器 `purchase-feasibility/3`：固定采样、补丁时间证据、离线审计及位置/购买字段一致性检查。
+- 累计13场真实公开JSON，7场同时满足补丁时间一致与30分钟时长覆盖；7场位置均为估算、均缺库存日志，0场获准训练。
+- 本地全量305项测试通过；详细交付、分支推送与CI状态见[验证记录](docs/validation-and-delivery.md)。不合并main、不创建发布。
+
+下一步追踪解析器成装事件来源、补独立位置证据，再冻结标签与样本契约，进入频率/线性基线和Embedding/MLP。
+参见[项目状态](docs/project-status.md)、[审计使用](docs/data-feasibility.md)、[语义核验](docs/data-semantics.md)、[ML设计](docs/ml-first-experiment.md)。
+下方带日期段落是历史交付背景，旧测试数字与当时的“未推送”不代表最新状态。
+
+## 已有本地主线：7.41f 阵容装备建议
 
 2026-10-11 已实现**一号位主宰的实验规则闭环**：十英雄输入、来源校验、阵容需求、
 候选排序与 JSON/文本/HTML 报告。全英雄/全位置通过范围配置扩展，不代表当前均已支持。
@@ -12,7 +25,7 @@ python recommend.py examples/recommendation/baseline.json --format text
 
 使用、来源边界及扩展方式见[本地阵容推荐](docs/lineup-recommendation.md)。
 
-当前进入[推荐质量评审阶段](docs/recommendation-quality-review.md)：先评审具体报告，
+2026-10-11进入[推荐质量评审阶段](docs/recommendation-quality-review.md)：先评审具体报告，
 补齐控制／驱散／免疫交互，再冻结策略并用未参与调参的案例验证。现有6个案例属于开发集，
 242项测试通过不能代替这一质量出口。实现位于本地 `feat/lineup-contracts / 47b8f7f`，
 尚未进入远端main；本轮用户已授权整体检查后推送该分支，不合并main。

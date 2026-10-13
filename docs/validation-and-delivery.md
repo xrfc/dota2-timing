@@ -1,5 +1,48 @@
 # 验证与交付
 
+## 2026-10-13 整体检查与分支交付
+
+用户明确授权检查项目、同步文档并推送。开发分支 `feat/lineup-contracts`，起点 `1a78aad`；
+本轮fetch实查起点与origin同分支一致，远端main为 `c6a5e1f`。不合并main、不创建发布。
+
+- 全量 `PYTHONPATH=src python3 scripts/check.py` 通过：工程277、学习Python 10、知识12、JS 6，共305项；Ruff和格式检查通过。
+- 六个推荐开发案例复跑：四例正常输出，两例不支持范围返回3；仍不是M06独立质量验收。
+- 新隔离工作区demo/doctor通过：6场合成比赛，doctor.errors为空；pip check通过。
+- 学习页面重建成功（12项学习任务仍0项验收）；全仓169份Markdown本地链接检查通过。
+- 暂存检查仅有3份上游来源文本的末尾空行提示，保留原快照与哈希；排除blank-at-eof后差异空白检查通过。
+- 文档统一最新范围、累计13场/聚焦7场、语义限制与下一步；不覆盖历史验收收据，不改学习任务验收状态。
+- 新增公开源码快照保留来源/时间/哈希与MIT许可；原比赛JSON、账号、回放、reports、工作区和密钥不提交。
+- 本轮没有重解析真实回放、客户端验证、浏览器视觉验收或训练模型。历史CI通过不代表本次远端CI。
+
+交付包含此前本地未提交的报告修正、审计v1–v3、测试、脱敏证据与文档同步。
+推送结果以本节后续交付条目及Git远端为准；下方各轮“未推送”仅描述该轮历史状态。
+
+## 数据可行性审计检查（2026-10-13，后续轮次）
+
+新增审计CLI、只读诊断模块及23项专项测试。`PYTHONPATH=src python3 scripts/check.py`
+通过：工程241、学习Python 10、知识12、JavaScript 6，共269项；Ruff/237文件格式通过。
+实际获取公开主宰列表后固定前三场，3次详情获取均成功；真实审计中3场均有日志且均不足30分钟。
+来源/选择/文件哈希见[机器记录](acceptance/data-feasibility-2026-10-13.json)，
+可运行命令和语义边界见[使用说明](data-feasibility.md)。
+首次网络读取遇到环境NO_PROXY的IPv6条目解析问题，仅对子进程设置
+`NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1` 后重试成功，未修改全局配置。
+未训练、未客户端核验、未推送/合并或运行远端CI；原数据准入保持held。
+
+## 本地报告修正检查（2026-10-13）
+
+起点 `feat/lineup-contracts / 1a78aad`；仅本地修改，无提交、推送或合并。
+先复现原版本全量242项通过；新增4条条件传递/报告回归在修复前失败，修复后通过。
+最终运行 `PYTHONPATH=src python3 scripts/check.py`，工程218、学习Python 10、
+知识12、JavaScript 6，共246项通过；Ruff与233个文件的格式检查通过。
+本环境没有 `python` 命令，且已有venv未提供可用的项目可编辑导入，故使用
+`python3` 和显式 `PYTHONPATH=src`；启动器本身能够加载src，无需为本轮修改全局环境。
+
+六个开发案例与Git起点引擎逐字段比较，仅 `engine_version` 变化；知识和策略未修改。
+18份报告存于 `reports/review-2026-10-13/`，身份/哈希见
+[机器记录](acceptance/lineup-review-2026-10-13.json)，发现与处理见
+[内部审查](acceptance/recommendation-review-2026-10-13.md)。
+不构成M06独立质量验证；未做浏览器视觉检查、真实回放重解析、训练或远端CI。
+
 ## GitHub推送前整体检查（2026-10-11）
 
 用户授权整体检查后推送GitHub；目标为 `xrfc/dota2-timing` 的 `feat/lineup-contracts`，

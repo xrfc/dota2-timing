@@ -1,5 +1,17 @@
 # 数据与模型接口契约
 
+## 新增审计契约（2026-10-13）
+
+| 对象 | 版本 | 校验/含义 |
+|---|---|---|
+| 审计配置 | purchase-feasibility-config/1 | 严格AuditConfig，窗口和候选检查 |
+| 采样计划 | purchase-feasibility-plan/1 | 严格SamplingPlan，重新计算切片及发现哈希 |
+| 补丁来源收据 | patch-time-evidence/1 | 严格PatchReceipt，快照哈希/时区/边界检查 |
+| 审计报告 | purchase-feasibility-report/1 | 程序生成字典，auditor_version为purchase-feasibility/3；非完整Pydantic输出Schema |
+| 语义核验 | purchase-semantics/1 | 程序生成字典，比较状态与位置线索；training_allowed固定false |
+
+上述不修改旧样本/模型Schema，不是训练标签契约。字段和复现见[审计](data-feasibility.md)、[语义](data-semantics.md)。
+
 > v0.4 数据准备更新：`prepare` 已实现单文件清洗/特征/标签；`build-samples` 输出固定 split 的训练数组和 train-only 预处理。输入、错误策略、任务 mask 和操作示例以[数据管线](data-pipeline.md)为准。实际模型与真实字段验收仍待完成。
 
 基线：**0.4.0 / main 725f35c / 2026-10-09**。本文件描述已实现格式。派生样本和任务资格见[数据管线](data-pipeline.md)；完整来源修订和真实语义资格仍待补足。
