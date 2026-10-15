@@ -1,0 +1,881 @@
+{
+  "schema_version": "purchase-log-baseline/1",
+  "training_executed": true,
+  "task": {
+    "actual_purchase_ground_truth": false,
+    "candidate_items": [
+      "bfury",
+      "maelstrom",
+      "manta",
+      "black_king_bar",
+      "skadi"
+    ],
+    "negative_means": "absent_from_valid_source_log_only",
+    "scope": "retained Juggernaut matches, not independently verified position-1",
+    "target": "source_purchase_log_key_presence",
+    "window": [
+      0,
+      1800
+    ]
+  },
+  "protocol": {
+    "C_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "bootstrap": {
+      "interval": "paired percentile 95%, conditional on fitted models",
+      "repeats": 500,
+      "seed": 20261015,
+      "unit": "whole player group"
+    },
+    "class_weight": null,
+    "fit_split": "train",
+    "selection_metric": "minimum per-item Brier; ties prefer smaller C",
+    "selection_split": "validation",
+    "test": "exploratory grouped holdout; no test tuning",
+    "threshold_tuning": false,
+    "validation_intervals": "descriptive only; validation used for model selection"
+  },
+  "modeled_items": [
+    "bfury",
+    "maelstrom",
+    "manta",
+    "skadi"
+  ],
+  "excluded_items": [
+    "black_king_bar"
+  ],
+  "evaluations": {
+    "bfury": {
+      "test": {
+        "all": {
+          "frequency": {
+            "average_precision": 0.9263157894736842,
+            "brier": 0.06850736725232652,
+            "negative": 14,
+            "observed": 190,
+            "positive": 176,
+            "positive_rate": 0.9263157894736842,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.9441691571531168,
+            "brier": 0.07740206539987171,
+            "negative": 14,
+            "observed": 190,
+            "positive": 176,
+            "positive_rate": 0.9263157894736842,
+            "roc_auc": 0.5787337662337663
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.04375851087446092,
+              "low": -0.010841845424745214,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.01742604280999547,
+              "low": -0.0002728416151652016,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.2126614528276956,
+              "low": -0.056679607846585746,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        },
+        "estimated_carry": {
+          "frequency": {
+            "average_precision": 0.9312169312169312,
+            "brier": 0.06417273226048809,
+            "negative": 13,
+            "observed": 189,
+            "positive": 176,
+            "positive_rate": 0.9312169312169312,
+            "roc_auc": 0.5
+          },
+          "groups": 125,
+          "linear": {
+            "average_precision": 0.9444248064280338,
+            "brier": 0.07429732583878346,
+            "negative": 13,
+            "observed": 189,
+            "positive": 176,
+            "positive_rate": 0.9312169312169312,
+            "roc_auc": 0.5502622377622378
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.0362861816040643,
+              "low": -0.014075606623767951,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.01837635993965326,
+              "low": 0.0021623449932326607,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.18199223915497498,
+              "low": -0.09401191977211168,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        }
+      },
+      "validation": {
+        "all": {
+          "frequency": {
+            "average_precision": 0.8743455497382199,
+            "brier": 0.11447053899735185,
+            "negative": 24,
+            "observed": 191,
+            "positive": 167,
+            "positive_rate": 0.8743455497382199,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.8597412460268679,
+            "brier": 0.11210687573848839,
+            "negative": 24,
+            "observed": 191,
+            "positive": 167,
+            "positive_rate": 0.8743455497382199,
+            "roc_auc": 0.4787924151696607
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.038071649785780565,
+              "low": -0.05598408257745581,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.008188183580402695,
+              "low": -0.012457499045912509,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.10536314059199121,
+              "low": -0.141605966635082,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        },
+        "estimated_carry": {
+          "frequency": {
+            "average_precision": 0.8783068783068783,
+            "brier": 0.1109670872860165,
+            "negative": 23,
+            "observed": 189,
+            "positive": 166,
+            "positive_rate": 0.8783068783068783,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.8651508585290264,
+            "brier": 0.10942281616089505,
+            "negative": 23,
+            "observed": 189,
+            "positive": 166,
+            "positive_rate": 0.8783068783068783,
+            "roc_auc": 0.4884756416972237
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.03944828792339566,
+              "low": -0.05499636937080275,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.0083650105852432,
+              "low": -0.011251999511166776,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.1086583945479651,
+              "low": -0.13955094385368214,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        }
+      }
+    },
+    "maelstrom": {
+      "test": {
+        "all": {
+          "frequency": {
+            "average_precision": 0.07368421052631578,
+            "brier": 0.06856609412539169,
+            "negative": 176,
+            "observed": 190,
+            "positive": 14,
+            "positive_rate": 0.07368421052631578,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.08385797912989378,
+            "brier": 0.06875281829249676,
+            "negative": 176,
+            "observed": 190,
+            "positive": 14,
+            "positive_rate": 0.07368421052631578,
+            "roc_auc": 0.5113636363636365
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.09709735972636538,
+              "low": -0.010262861543168965,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.0019662696343866865,
+              "low": -0.0018511370662681332,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.17289806584773126,
+              "low": -0.12114065091210612,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        },
+        "estimated_carry": {
+          "frequency": {
+            "average_precision": 0.06878306878306878,
+            "brier": 0.06421429226229848,
+            "negative": 176,
+            "observed": 189,
+            "positive": 13,
+            "positive_rate": 0.06878306878306878,
+            "roc_auc": 0.5
+          },
+          "groups": 125,
+          "linear": {
+            "average_precision": 0.06858735343913747,
+            "brier": 0.0649790542808585,
+            "negative": 176,
+            "observed": 189,
+            "positive": 13,
+            "positive_rate": 0.06878306878306878,
+            "roc_auc": 0.4777097902097902
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.051128759655918975,
+              "low": -0.01366413875583207,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.00224469254704477,
+              "low": -0.0009449942874566075,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.13927560751869283,
+              "low": -0.1607496870230317,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        }
+      },
+      "validation": {
+        "all": {
+          "frequency": {
+            "average_precision": 0.11518324607329843,
+            "brier": 0.1054137491557248,
+            "negative": 169,
+            "observed": 191,
+            "positive": 22,
+            "positive_rate": 0.11518324607329843,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.13673277323625477,
+            "brier": 0.10384517767921492,
+            "negative": 169,
+            "observed": 191,
+            "positive": 22,
+            "positive_rate": 0.11518324607329843,
+            "roc_auc": 0.5252824098977945
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.14918848040327895,
+              "low": -0.011871229785981076,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.0009230317061883984,
+              "low": -0.0048999720138623816,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.22076414743112432,
+              "low": -0.10448290277076602,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        },
+        "estimated_carry": {
+          "frequency": {
+            "average_precision": 0.1164021164021164,
+            "brier": 0.10649600354576107,
+            "negative": 167,
+            "observed": 189,
+            "positive": 22,
+            "positive_rate": 0.1164021164021164,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.13759474790128118,
+            "brier": 0.1048968708798495,
+            "negative": 167,
+            "observed": 189,
+            "positive": 22,
+            "positive_rate": 0.1164021164021164,
+            "roc_auc": 0.5239520958083832
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.14912362860746406,
+              "low": -0.012336920650720458,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.0009335394874709544,
+              "low": -0.004979780400716444,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.22195271075815648,
+              "low": -0.10738429892747306,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        }
+      }
+    },
+    "manta": {
+      "test": {
+        "all": {
+          "frequency": {
+            "average_precision": 0.7842105263157895,
+            "brier": 0.16934287728424208,
+            "negative": 41,
+            "observed": 190,
+            "positive": 149,
+            "positive_rate": 0.7842105263157895,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.7890290355200018,
+            "brier": 0.17317002652567684,
+            "negative": 41,
+            "observed": 190,
+            "positive": 149,
+            "positive_rate": 0.7842105263157895,
+            "roc_auc": 0.48256670486167946
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.047447491936448385,
+              "low": -0.03684567497679841,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.012500118137531107,
+              "low": -0.004640842514040186,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.07410217402610911,
+              "low": -0.10735912788151596,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        },
+        "estimated_carry": {
+          "frequency": {
+            "average_precision": 0.7883597883597884,
+            "brier": 0.16689401334583995,
+            "negative": 40,
+            "observed": 189,
+            "positive": 149,
+            "positive_rate": 0.7883597883597884,
+            "roc_auc": 0.5
+          },
+          "groups": 125,
+          "linear": {
+            "average_precision": 0.7890848376779106,
+            "brier": 0.17154188566504697,
+            "negative": 40,
+            "observed": 189,
+            "positive": 149,
+            "positive_rate": 0.7883597883597884,
+            "roc_auc": 0.4699664429530202
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.04538596260669166,
+              "low": -0.04191079026575284,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.013251281233222665,
+              "low": -0.0031709640260691317,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.06724228248736745,
+              "low": -0.12372672856944382,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        }
+      },
+      "validation": {
+        "all": {
+          "frequency": {
+            "average_precision": 0.8010471204188482,
+            "brier": 0.1594060432864649,
+            "negative": 38,
+            "observed": 191,
+            "positive": 153,
+            "positive_rate": 0.8010471204188482,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.7999865500835879,
+            "brier": 0.16593637420242585,
+            "negative": 38,
+            "observed": 191,
+            "positive": 153,
+            "positive_rate": 0.8010471204188482,
+            "roc_auc": 0.47402820777433774
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.04707700818455769,
+              "low": -0.05041070094444229,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.015151014687283153,
+              "low": -0.001841969218455361,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.06283880528955767,
+              "low": -0.13521974777247117,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        },
+        "estimated_carry": {
+          "frequency": {
+            "average_precision": 0.798941798941799,
+            "brier": 0.16064858853649217,
+            "negative": 38,
+            "observed": 189,
+            "positive": 151,
+            "positive_rate": 0.798941798941799,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.7961561730959624,
+            "brier": 0.1669231738282498,
+            "negative": 38,
+            "observed": 189,
+            "positive": 151,
+            "positive_rate": 0.798941798941799,
+            "roc_auc": 0.47246427326594637
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.043558293326959485,
+              "low": -0.050582418827272345,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.015027487200970356,
+              "low": -0.002356656052201567,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.06513883412151068,
+              "low": -0.13460462305165855,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        }
+      }
+    },
+    "skadi": {
+      "test": {
+        "all": {
+          "frequency": {
+            "average_precision": 0.031578947368421054,
+            "brier": 0.031180159937909,
+            "negative": 184,
+            "observed": 190,
+            "positive": 6,
+            "positive_rate": 0.031578947368421054,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.07950605680868839,
+            "brier": 0.03189645710547153,
+            "negative": 184,
+            "observed": 190,
+            "positive": 6,
+            "positive_rate": 0.031578947368421054,
+            "roc_auc": 0.7318840579710144
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.17022055780778556,
+              "low": 0.010980823551077325,
+              "valid_replicates": 498
+            },
+            "brier": {
+              "high": 0.0021496107720432554,
+              "low": -0.0009057008160895875,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.4062673288648414,
+              "low": 0.01854315179165477,
+              "valid_replicates": 498
+            }
+          },
+          "unknown": 0
+        },
+        "estimated_carry": {
+          "frequency": {
+            "average_precision": 0.031746031746031744,
+            "brier": 0.031328516819605357,
+            "negative": 183,
+            "observed": 189,
+            "positive": 6,
+            "positive_rate": 0.031746031746031744,
+            "roc_auc": 0.5
+          },
+          "groups": 125,
+          "linear": {
+            "average_precision": 0.08232155989477495,
+            "brier": 0.032010268249538884,
+            "negative": 183,
+            "observed": 189,
+            "positive": 6,
+            "positive_rate": 0.031746031746031744,
+            "roc_auc": 0.7358834244080146
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.1745903724145446,
+              "low": 0.011806958458264252,
+              "valid_replicates": 498
+            },
+            "brier": {
+              "high": 0.0020872642078726892,
+              "low": -0.0010491690624061562,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.4133119982854025,
+              "low": 0.03850062314255583,
+              "valid_replicates": 498
+            }
+          },
+          "unknown": 0
+        }
+      },
+      "validation": {
+        "all": {
+          "frequency": {
+            "average_precision": 0.05235602094240838,
+            "brier": 0.049628454687491434,
+            "negative": 181,
+            "observed": 191,
+            "positive": 10,
+            "positive_rate": 0.05235602094240838,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.08702591626290321,
+            "brier": 0.04970395745282789,
+            "negative": 181,
+            "observed": 191,
+            "positive": 10,
+            "positive_rate": 0.05235602094240838,
+            "roc_auc": 0.643646408839779
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.1424025475691503,
+              "low": 0.007214731087692332,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.0016184591133659425,
+              "low": -0.0020875278705932533,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.3288220081135902,
+              "low": -0.014135624756656367,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        },
+        "estimated_carry": {
+          "frequency": {
+            "average_precision": 0.05291005291005291,
+            "brier": 0.05012038850114429,
+            "negative": 179,
+            "observed": 189,
+            "positive": 10,
+            "positive_rate": 0.05291005291005291,
+            "roc_auc": 0.5
+          },
+          "groups": 126,
+          "linear": {
+            "average_precision": 0.08984743448424659,
+            "brier": 0.050139120874011296,
+            "negative": 179,
+            "observed": 189,
+            "positive": 10,
+            "positive_rate": 0.05291005291005291,
+            "roc_auc": 0.6469273743016759
+          },
+          "paired_delta_linear_minus_frequency_ci95": {
+            "average_precision": {
+              "high": 0.14953677985420658,
+              "low": 0.00812724635195176,
+              "valid_replicates": 500
+            },
+            "brier": {
+              "high": 0.001595724927682184,
+              "low": -0.0021482506014728732,
+              "valid_replicates": 500
+            },
+            "roc_auc": {
+              "high": 0.3286043245361902,
+              "low": -0.009594298245614015,
+              "valid_replicates": 500
+            }
+          },
+          "unknown": 0
+        }
+      }
+    }
+  },
+  "macro": {
+    "test": {
+      "all": {
+        "frequency": {
+          "average_precision": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.45394736842105265
+          },
+          "brier": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.08439912464996732
+          },
+          "roc_auc": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.5
+          }
+        },
+        "linear": {
+          "average_precision": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.47414055715292514
+          },
+          "brier": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.08780534183087921
+          },
+          "roc_auc": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.5761370413575242
+          }
+        }
+      },
+      "estimated_carry": {
+        "frequency": {
+          "average_precision": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.455026455026455
+          },
+          "brier": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.08165238867205796
+          },
+          "roc_auc": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.5
+          }
+        },
+        "linear": {
+          "average_precision": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.47110463935996416
+          },
+          "brier": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.08570713350855695
+          },
+          "roc_auc": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.5584554738332657
+          }
+        }
+      }
+    },
+    "validation": {
+      "all": {
+        "frequency": {
+          "average_precision": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.4607329842931937
+          },
+          "brier": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.10722969653175825
+          },
+          "roc_auc": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.5
+          }
+        },
+        "linear": {
+          "average_precision": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.4708716214024034
+          },
+          "brier": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.10789809626823926
+          },
+          "roc_auc": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.5304373604203929
+          }
+        }
+      },
+      "estimated_carry": {
+        "frequency": {
+          "average_precision": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.46164021164021163
+          },
+          "brier": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.10705801696735351
+          },
+          "roc_auc": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.5
+          }
+        },
+        "linear": {
+          "average_precision": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.47218730350262916
+          },
+          "brier": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.10784549543575142
+          },
+          "roc_auc": {
+            "defined_items": 4,
+            "required_items": 4,
+            "value": 0.5329548462683074
+          }
+        }
+      }
+    }
+  },
+  "provenance": {
+    "implementation_sha256": {
+      "/home/node/.openclaw/workspace/work/dota2-timing/scripts/train_purchase_baseline.py": "fae9185df0e10316f8df0d61206dc7b11dd9e54881e5e7adc0758e741d657b66",
+      "src/dota_items/modeling/purchase_baseline.py": "926e1482e9eb6d23b73e4df993ad745e00939f3969cd6abcf3ea48fce5fc7b64"
+    },
+    "snapshot_sha256": "f666e52d1748811997bb1652b1cb35b283f942a199bc65c5c8aff84732c12096",
+    "source_reconstruction_verified": true,
+    "summary_sha256": "2ea8231ba932d8b48873149e1c917bfadf3a8c1eb1a771885d96a13e8ffe0560",
+    "versions": {
+      "numpy": "2.5.4",
+      "python": "3.12.3",
+      "scikit_learn": "1.9.1"
+    }
+  },
+  "limitations": [
+    "Labels describe this source log, not complete actual purchases or optimal builds.",
+    "Given account IDs are disjoint; this is not proof of independent people.",
+    "Cohort already inspected; test is an exploratory grouped holdout.",
+    "Large connected groups may dominate train; report group sizes and distribution shift.",
+    "Bootstrap does not include retraining or hyperparameter selection uncertainty.",
+    "Per-item intervals lack multiplicity correction; sparse support is unstable.",
+    "No optimal-build, actual-purchase completeness, or completed-item timing claim."
+  ],
+  "report_sha256": "acb0a767e2d85cf679b6839500d46ffa5ef13e0435148a11e40c2df1aab4e2f1",
+  "checks": {
+    "pytest_passed": 355,
+    "new_tests": 6,
+    "ruff": "passed",
+    "format": "passed"
+  }
+}

@@ -1,5 +1,9 @@
 # 主宰购买标签可行性审计
 
+## 2026-10-14 续接
+
+2026-10-14新增 `--preflight` 离线预演模式，要求plan/discovery/patch-receipt，退出码4表示训练held；原普通审计退出码不变。参见[完整训练前检查](pretraining-readiness.md)。
+
 2026-10-13新增，当前审计器版本 `purchase-feasibility/3`。它审查OpenDota形状的比赛JSON，
 **不生成训练集，不训练，也不签发训练准入**。复用现有购买规范化和OpenDota读取器，
 不依赖Gem、pandas或GPU。

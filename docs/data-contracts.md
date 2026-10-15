@@ -1,5 +1,11 @@
 # 数据与模型接口契约
 
+2026-10-14后续：预演输出升级 `lineup-preflight/2`，新增 `player-overlap/1` 诊断。只导出比赛ID与计数，不导出账号/哈希；配置版本不变，旧训练入口仍拒绝预演。
+
+## 2026-10-14 续接
+
+2026-10-14新增 `lineup-preflight-config/1`（严格配置）与 `lineup-preflight/1`（程序生成的诊断字典，非正式样本契约）；全部训练mask=false，旧训练入口拒绝。字段见[预检说明](pretraining-readiness.md)。
+
 ## 新增审计契约（2026-10-13）
 
 | 对象 | 版本 | 校验/含义 |

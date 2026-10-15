@@ -1,8 +1,14 @@
 # 文档索引
 
-文档同步：**2026-10-13**；包版本0.4.0，开发分支 `feat/lineup-contracts`。
+文档同步：**2026-10-15**；包版本0.4.0，开发分支 `feat/lineup-contracts`。
 最新进度统一见[项目状态](project-status.md)，本次交付检查与推送见[验证记录](validation-and-delivery.md)。
-当前重点是数据/标签语义证据与ML准备，同时保留规则推荐质量待验收事项；尚无真实训练模型。
+2026-10-15已完成952场源日志观测任务的频率/逻辑回归基线，尚未证明线性模型整体胜出。见[首轮实验](purchase-log-baseline-2026-10-15.md)；规则推荐和实际购买语义验收仍保留边界。
+
+2026-10-15续接：[验证集误差与分布诊断](purchase-log-diagnostics-2026-10-15.md)已完成，359项pytest通过；未重训练或重新分析测试集。
+
+新增采集：[再收集1,000场（去重/限流/自动等待）](collection-additional-1000-2026-10-15.md)。
+
+当前开发：[截距与正则化对照方案](purchase-log-sensitivity-plan-2026-10-15.md)已实现，真实实验待确认；不评估新增数据。
 
 ## 按任务阅读
 
@@ -11,6 +17,7 @@
 | 固定采样、离线诊断和补丁时间核验 | [数据可行性审计](data-feasibility.md) |
 | 理解位置估算、购买汇总和成装标签限制 | [语义核验](data-semantics.md) |
 | 规划首个真实ML实验与防泄漏要求 | [ML实验设计](ml-first-experiment.md) |
+| 检查训练前数据处理是否就绪 | [预检与阻塞清单](pretraining-readiness.md) |
 | 先判断项目做到了哪里 | [完成度与验证证据](project-status.md) |
 | 运行主宰推荐、理解范围及全英雄/全位置扩展方式 | [本地阵容推荐](lineup-recommendation.md) |
 | 核对阵容输入及推荐结果格式 | [推荐契约](recommendation-contracts.md) |

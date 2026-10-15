@@ -1,0 +1,179 @@
+{
+  "constant_train_items": [
+    "black_king_bar"
+  ],
+  "feature_columns": 254,
+  "group_counts": {
+    "test": 126,
+    "train": 53,
+    "validation": 126
+  },
+  "limitations": [
+    "Labels describe this source log, not complete actual purchases or optimal builds.",
+    "Given account IDs are disjoint; this is not proof of independent people.",
+    "Cohort already inspected; test is an exploratory grouped holdout.",
+    "Large connected groups may dominate train; report group sizes and distribution shift."
+  ],
+  "offline_source_reconstruction_verified": true,
+  "player_disjoint_verified": true,
+  "player_split_pairs": [
+    {
+      "shared_known_players": 0,
+      "shared_known_targets": 0,
+      "splits": [
+        "train",
+        "validation"
+      ],
+      "target_to_any_shared_players": 0
+    },
+    {
+      "shared_known_players": 0,
+      "shared_known_targets": 0,
+      "splits": [
+        "train",
+        "test"
+      ],
+      "target_to_any_shared_players": 0
+    },
+    {
+      "shared_known_players": 0,
+      "shared_known_targets": 0,
+      "splits": [
+        "validation",
+        "test"
+      ],
+      "target_to_any_shared_players": 0
+    }
+  ],
+  "related_tests_passed": 63,
+  "schema_version": "purchase-log-snapshot-acceptance/1",
+  "snapshot_sha256": "f666e52d1748811997bb1652b1cb35b283f942a199bc65c5c8aff84732c12096",
+  "split_counts": {
+    "test": 190,
+    "train": 571,
+    "validation": 191
+  },
+  "summary_sha256": "2ea8231ba932d8b48873149e1c917bfadf3a8c1eb1a771885d96a13e8ffe0560",
+  "support": {
+    "test": {
+      "bfury": {
+        "both_classes_present": true,
+        "negative": 14,
+        "positive": 176,
+        "unknown": 0
+      },
+      "black_king_bar": {
+        "both_classes_present": false,
+        "negative": 190,
+        "positive": 0,
+        "unknown": 0
+      },
+      "maelstrom": {
+        "both_classes_present": true,
+        "negative": 176,
+        "positive": 14,
+        "unknown": 0
+      },
+      "manta": {
+        "both_classes_present": true,
+        "negative": 41,
+        "positive": 149,
+        "unknown": 0
+      },
+      "skadi": {
+        "both_classes_present": true,
+        "negative": 184,
+        "positive": 6,
+        "unknown": 0
+      }
+    },
+    "train": {
+      "bfury": {
+        "both_classes_present": true,
+        "negative": 33,
+        "positive": 538,
+        "unknown": 0
+      },
+      "black_king_bar": {
+        "both_classes_present": false,
+        "negative": 571,
+        "positive": 0,
+        "unknown": 0
+      },
+      "maelstrom": {
+        "both_classes_present": true,
+        "negative": 539,
+        "positive": 32,
+        "unknown": 0
+      },
+      "manta": {
+        "both_classes_present": true,
+        "negative": 117,
+        "positive": 454,
+        "unknown": 0
+      },
+      "skadi": {
+        "both_classes_present": true,
+        "negative": 539,
+        "positive": 32,
+        "unknown": 0
+      }
+    },
+    "validation": {
+      "bfury": {
+        "both_classes_present": true,
+        "negative": 24,
+        "positive": 167,
+        "unknown": 0
+      },
+      "black_king_bar": {
+        "both_classes_present": false,
+        "negative": 191,
+        "positive": 0,
+        "unknown": 0
+      },
+      "maelstrom": {
+        "both_classes_present": true,
+        "negative": 169,
+        "positive": 22,
+        "unknown": 0
+      },
+      "manta": {
+        "both_classes_present": true,
+        "negative": 38,
+        "positive": 153,
+        "unknown": 0
+      },
+      "skadi": {
+        "both_classes_present": true,
+        "negative": 181,
+        "positive": 10,
+        "unknown": 0
+      }
+    }
+  },
+  "task": {
+    "actual_purchase_ground_truth": false,
+    "candidate_items": [
+      "bfury",
+      "maelstrom",
+      "manta",
+      "black_king_bar",
+      "skadi"
+    ],
+    "negative_means": "absent_from_valid_source_log_only",
+    "scope": "retained Juggernaut matches, not independently verified position-1",
+    "target": "source_purchase_log_key_presence",
+    "window": [
+      0,
+      1800
+    ]
+  },
+  "train_model_items": [
+    "bfury",
+    "maelstrom",
+    "manta",
+    "skadi"
+  ],
+  "training_executed": false
+}

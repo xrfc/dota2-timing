@@ -29,8 +29,21 @@ def main(argv=None):
     parser.add_argument("--take", type=int, default=10)
     parser.add_argument("--offline", action="store_true", help="plan execution uses cache only")
     parser.add_argument("--patch-receipt", type=Path, help="hash-bound official release snapshot")
+    parser.add_argument(
+        "--preflight",
+        action="store_true",
+        help="offline, masked sample rehearsal; exits 4 when held",
+    )
     parser.add_argument("--output", type=Path, help="new JSON file only; default stdout")
+    parser.add_argument(
+        "--verify-preflight", type=Path, help="replay a saved preview offline; remains held"
+    )
     args = parser.parse_args(argv)
+    if args.verify_preflight:
+        if args.preflight or not (args.plan and args.offline and args.patch_receipt):
+            parser.error("verification requires plan/offline/patch-receipt, without --preflight")
+    if args.preflight and not (args.plan and args.offline and args.patch_receipt):
+        parser.error("preflight requires --plan, --offline and --patch-receipt")
     if not args.inputs and not args.match_id and not args.plan and not args.freeze_plan:
         parser.error("supply local inputs or --match-id")
     if args.plan or args.freeze_plan:
@@ -77,6 +90,20 @@ def main(argv=None):
         parser.error(
             "invalid config, plan, evidence or existing output; check input files and paths"
         )
+    if args.preflight or args.verify_preflight:
+        from dota_items.data.lineup_preflight import build_preflight, verify_preflight
+
+        try:
+            sources = (args.plan, args.discovery, args.cache, args.patch_receipt)
+            report = (
+                verify_preflight(args.verify_preflight, *sources)
+                if args.verify_preflight
+                else build_preflight(*sources)
+            )
+            _emit(report, args.output)
+        except (OSError, ValueError):
+            parser.error("preflight failed; check evidence and choose a new output path")
+        return 4  # Preparation preview remains held, never training admission.
     paths, failures, expected_ids = list(args.inputs), [], {}
     for mid in args.match_id:
         from dota_items.sources.opendota import fetch_match
@@ -106,12 +133,7 @@ def main(argv=None):
             key=lambda row: order[row.get("requested_match_id", row["match_id"])]
         )
     try:
-        if args.output:
-            args.output.parent.mkdir(parents=True, exist_ok=True)
-            with args.output.open("xb") as stream:
-                stream.write(json_bytes(report))
-        else:
-            print(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False))
+        _emit(report, args.output)
     except OSError:
         parser.error("could not write report; existing files are never overwritten")
     # A held report is successful diagnostics, not successful training admission.
@@ -120,3 +142,12 @@ def main(argv=None):
         if any(r["status"] in {"invalid", "unavailable", "conflict"} for r in report["results"])
         else 0
     )
+
+
+def _emit(report, output):
+    if output:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        with output.open("xb") as stream:
+            stream.write(json_bytes(report))
+    else:
+        print(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False))

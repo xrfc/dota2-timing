@@ -1,0 +1,1522 @@
+{
+  "audit_config": {
+    "candidate_items": [
+      "bfury",
+      "maelstrom",
+      "manta",
+      "black_king_bar",
+      "skadi"
+    ],
+    "hero_id": 8,
+    "requested_patch": "7.41f",
+    "requested_role": 1,
+    "schema_version": "purchase-feasibility-config/1",
+    "window_end": 1800,
+    "window_start": 0
+  },
+  "audit_summary": {
+    "attempted_inputs": 10,
+    "candidate_observed_match_counts": {
+      "bfury": 9,
+      "black_king_bar": 0,
+      "maelstrom": 0,
+      "manta": 8,
+      "skadi": 0
+    },
+    "full_window_matches": 8,
+    "inspectable_unique_matches": 10,
+    "patch_time_counts": {
+      "outside_interval": 1,
+      "time_consistent": 9
+    },
+    "purchase_log_present_matches": 10,
+    "reason_counts": {
+      "completion_semantics_unverified": 10,
+      "high_skill_unverified": 10,
+      "patch_time_outside_interval": 1,
+      "patch_unverified": 10,
+      "purchase_coverage_unverified": 10,
+      "right_censored": 2,
+      "role_unverified": 10
+    },
+    "status_counts": {
+      "inspectable": 10
+    },
+    "training_admitted_matches": 0,
+    "unique_match_ids": 10
+  },
+  "blockers": [
+    "label_contract_not_admitted",
+    "independent_scope_evidence_missing",
+    "event_completion_and_coverage_unverified",
+    "player_overlap_not_audited",
+    "cohort_is_exploratory_not_independent_evaluation"
+  ],
+  "config": {
+    "schema_version": "lineup-preflight-config/1",
+    "seed": 20261014,
+    "test_fraction": 0.2,
+    "validation_fraction": 0.2
+  },
+  "exclusions": [
+    {
+      "reasons": [
+        "right_censored"
+      ],
+      "requested_match_id": 9037706769
+    },
+    {
+      "reasons": [
+        "right_censored"
+      ],
+      "requested_match_id": 9014046952
+    },
+    {
+      "reasons": [
+        "patch_time_not_consistent"
+      ],
+      "requested_match_id": 8997487287
+    }
+  ],
+  "full_local_report_sha256": "40def102ab8ac1474fa77cef5aa16fd2e965dc8e350853a25b23240e4f283abb",
+  "implementation_sha256": {
+    "data/contracts.py": "698065954afa3b4df31db241642b4e37400038880509b47cdcd7d010f7d54269",
+    "data/feasibility.py": "a0900bc3f20fd16fd83ed26218f4b9feb9ee7da7abf86f6614b9010aa9a716d2",
+    "data/feasibility_cli.py": "0dacd11e7acfb29d7ccb33fed592a43f2e9169a6ae2f78ad04cfc6271f3eb787",
+    "data/feasibility_sampling.py": "37b31a07c318fe36a68adfa6ff3ff91db86e57098d35f358431cae02153b6f69",
+    "data/lineup_preflight.py": "d81cbfdca3c6087fe8b00139082ed01f8d9c2991b347cff2f45c0bb5f591aa7c",
+    "data/patch_time.py": "fe4de45a797a77f66613c98143edd47a29ef694c0759006249108050009842d8",
+    "data/semantic_review.py": "c8cbce2fb39c37c76cf74abc0a59e16823af9952971ab62d35e9b29fb759d0e8",
+    "domain.py": "4a78c82bbba7933b8dbb99090ef5e11a8b2d132bdb6b06590d4fbe084a8ce0d0",
+    "normalize.py": "607eb2978fc284434c275b190b44c36c82337f96e04036508892dd8dd48e3213",
+    "storage.py": "bafb163eae7a2a9bcfc7a606cb54ffdc339b5f7e32bbe0f8d89b2bf9cb58fe45"
+  },
+  "input_identity": {
+    "discovery_sha256": "353fc427052ecdc43f715499a83490b5de6b9b82b5f44e0d6bb0d77396e4a023",
+    "patch_receipt_sha256": "a90c01608bc2b2ca1248c0cfba74aee5a7295d6af3f8cef1074126d3bf1089f0",
+    "plan_sha256": "664daed960f19a57aaf44fdb283be8090d217b69c95862d10909851fd1097474"
+  },
+  "intended_task": "pregame_lineup_to_equipment (definition pending semantic admission)",
+  "limitations": [
+    "Preview split is not an independent evaluation or a sample-size guarantee.",
+    "Observed purchases are not completed items or valid negative labels.",
+    "Do not pass this schema to legacy training; all supervision is masked."
+  ],
+  "preprocessing": {
+    "columns": [
+      "ally_2",
+      "ally_3",
+      "ally_7",
+      "ally_8",
+      "ally_9",
+      "ally_12",
+      "ally_17",
+      "ally_30",
+      "ally_33",
+      "ally_37",
+      "ally_43",
+      "ally_55",
+      "ally_60",
+      "ally_62",
+      "ally_64",
+      "ally_68",
+      "ally_69",
+      "ally_70",
+      "ally_71",
+      "ally_77",
+      "ally_86",
+      "ally_87",
+      "ally_90",
+      "ally_95",
+      "ally_96",
+      "ally_100",
+      "ally_106",
+      "ally_107",
+      "ally_109",
+      "ally_110",
+      "ally_112",
+      "ally_119",
+      "ally_120",
+      "ally_121",
+      "ally_123",
+      "ally_128",
+      "ally_131",
+      "ally_136",
+      "ally_145",
+      "ally_unknown_count",
+      "enemy_2",
+      "enemy_3",
+      "enemy_7",
+      "enemy_8",
+      "enemy_9",
+      "enemy_12",
+      "enemy_17",
+      "enemy_30",
+      "enemy_33",
+      "enemy_37",
+      "enemy_43",
+      "enemy_55",
+      "enemy_60",
+      "enemy_62",
+      "enemy_64",
+      "enemy_68",
+      "enemy_69",
+      "enemy_70",
+      "enemy_71",
+      "enemy_77",
+      "enemy_86",
+      "enemy_87",
+      "enemy_90",
+      "enemy_95",
+      "enemy_96",
+      "enemy_100",
+      "enemy_106",
+      "enemy_107",
+      "enemy_109",
+      "enemy_110",
+      "enemy_112",
+      "enemy_119",
+      "enemy_120",
+      "enemy_121",
+      "enemy_123",
+      "enemy_128",
+      "enemy_131",
+      "enemy_136",
+      "enemy_145",
+      "enemy_unknown_count"
+    ],
+    "fit_split": "train",
+    "hero_vocabulary": [
+      2,
+      3,
+      7,
+      8,
+      9,
+      12,
+      17,
+      30,
+      33,
+      37,
+      43,
+      55,
+      60,
+      62,
+      64,
+      68,
+      69,
+      70,
+      71,
+      77,
+      86,
+      87,
+      90,
+      95,
+      96,
+      100,
+      106,
+      107,
+      109,
+      110,
+      112,
+      119,
+      120,
+      121,
+      123,
+      128,
+      131,
+      136,
+      145
+    ],
+    "role_estimates_in_features": false
+  },
+  "samples": [
+    {
+      "blockers": [
+        "completion_semantics_unverified",
+        "hero_catalog_version_unverified",
+        "high_skill_unverified",
+        "label_contract_not_admitted",
+        "patch_unverified",
+        "purchase_coverage_unverified",
+        "role_unverified"
+      ],
+      "encoded_features": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": {
+        "ally_hero_ids": [
+          8,
+          30,
+          96,
+          107,
+          119
+        ],
+        "enemy_hero_ids": [
+          9,
+          69,
+          70,
+          106,
+          123
+        ],
+        "target_hero_id": 8
+      },
+      "label_mask": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "labels": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "match_id": 9037578078,
+      "observations": [
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[5].purchase_log[19]"
+          ],
+          "event_times": [
+            777.0
+          ],
+          "item_key": "bfury",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "maelstrom",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[5].purchase_log[25]"
+          ],
+          "event_times": [
+            1236.0
+          ],
+          "item_key": "manta",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "black_king_bar",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "skadi",
+          "observation": "unknown"
+        }
+      ],
+      "sample_id": "9037578078:128:pregame",
+      "source_sha256": "869bcf22903001403d65d23ab3b3158267080a6c6f72ea04a6657b29113e6cf2",
+      "split": "train",
+      "target_slot": 128,
+      "training_allowed": false
+    },
+    {
+      "blockers": [
+        "completion_semantics_unverified",
+        "hero_catalog_version_unverified",
+        "high_skill_unverified",
+        "label_contract_not_admitted",
+        "patch_unverified",
+        "purchase_coverage_unverified",
+        "role_unverified"
+      ],
+      "encoded_features": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "features": {
+        "ally_hero_ids": [
+          2,
+          8,
+          9,
+          30,
+          128
+        ],
+        "enemy_hero_ids": [
+          12,
+          55,
+          68,
+          121,
+          136
+        ],
+        "target_hero_id": 8
+      },
+      "label_mask": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "labels": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "match_id": 9016945136,
+      "observations": [
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[5].purchase_log[19]"
+          ],
+          "event_times": [
+            865.0
+          ],
+          "item_key": "bfury",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "maelstrom",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[5].purchase_log[26]"
+          ],
+          "event_times": [
+            1246.0
+          ],
+          "item_key": "manta",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "black_king_bar",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "skadi",
+          "observation": "unknown"
+        }
+      ],
+      "sample_id": "9016945136:128:pregame",
+      "source_sha256": "f5f1ceead05454303694ce63e438d99f8d2feafd5d3eae07a703981194c01bc4",
+      "split": "train",
+      "target_slot": 128,
+      "training_allowed": false
+    },
+    {
+      "blockers": [
+        "completion_semantics_unverified",
+        "hero_catalog_version_unverified",
+        "high_skill_unverified",
+        "label_contract_not_admitted",
+        "patch_unverified",
+        "purchase_coverage_unverified",
+        "role_unverified"
+      ],
+      "encoded_features": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ],
+      "features": {
+        "ally_hero_ids": [
+          8,
+          34,
+          47,
+          63,
+          119
+        ],
+        "enemy_hero_ids": [
+          17,
+          59,
+          101,
+          111,
+          155
+        ],
+        "target_hero_id": 8
+      },
+      "label_mask": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "labels": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "match_id": 9013108339,
+      "observations": [
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[7].purchase_log[18]"
+          ],
+          "event_times": [
+            750.0
+          ],
+          "item_key": "bfury",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "maelstrom",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[7].purchase_log[26]"
+          ],
+          "event_times": [
+            1166.0
+          ],
+          "item_key": "manta",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "black_king_bar",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "skadi",
+          "observation": "unknown"
+        }
+      ],
+      "sample_id": "9013108339:130:pregame",
+      "source_sha256": "0e506a50d50f6185fb7eb1c56da47fd2ed7cbaba43233e883d5d1e284410f66e",
+      "split": "validation",
+      "target_slot": 130,
+      "training_allowed": false
+    },
+    {
+      "blockers": [
+        "completion_semantics_unverified",
+        "hero_catalog_version_unverified",
+        "high_skill_unverified",
+        "label_contract_not_admitted",
+        "patch_unverified",
+        "purchase_coverage_unverified",
+        "role_unverified"
+      ],
+      "encoded_features": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "features": {
+        "ally_hero_ids": [
+          8,
+          30,
+          71,
+          99,
+          137
+        ],
+        "enemy_hero_ids": [
+          21,
+          49,
+          55,
+          68,
+          121
+        ],
+        "target_hero_id": 8
+      },
+      "label_mask": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "labels": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "match_id": 9011805832,
+      "observations": [
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[0].purchase_log[22]"
+          ],
+          "event_times": [
+            991.0
+          ],
+          "item_key": "bfury",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "maelstrom",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "manta",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "black_king_bar",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "skadi",
+          "observation": "unknown"
+        }
+      ],
+      "sample_id": "9011805832:0:pregame",
+      "source_sha256": "5d1f17efd192ef6087f2c01750451bd32956750f132e7946f6650db1b4b447aa",
+      "split": "test",
+      "target_slot": 0,
+      "training_allowed": false
+    },
+    {
+      "blockers": [
+        "completion_semantics_unverified",
+        "hero_catalog_version_unverified",
+        "high_skill_unverified",
+        "label_contract_not_admitted",
+        "patch_unverified",
+        "purchase_coverage_unverified",
+        "role_unverified"
+      ],
+      "encoded_features": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": {
+        "ally_hero_ids": [
+          8,
+          87,
+          90,
+          120,
+          131
+        ],
+        "enemy_hero_ids": [
+          7,
+          43,
+          68,
+          100,
+          109
+        ],
+        "target_hero_id": 8
+      },
+      "label_mask": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "labels": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "match_id": 9011095081,
+      "observations": [
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[4].purchase_log[18]"
+          ],
+          "event_times": [
+            917.0
+          ],
+          "item_key": "bfury",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "maelstrom",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[4].purchase_log[24]"
+          ],
+          "event_times": [
+            1487.0
+          ],
+          "item_key": "manta",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "black_king_bar",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "skadi",
+          "observation": "unknown"
+        }
+      ],
+      "sample_id": "9011095081:4:pregame",
+      "source_sha256": "eb67e0a875edbfa5c635faed925617cae227e6c5cb2bfbbebc881d6e474d35c8",
+      "split": "train",
+      "target_slot": 4,
+      "training_allowed": false
+    },
+    {
+      "blockers": [
+        "completion_semantics_unverified",
+        "hero_catalog_version_unverified",
+        "high_skill_unverified",
+        "label_contract_not_admitted",
+        "patch_unverified",
+        "purchase_coverage_unverified",
+        "role_unverified"
+      ],
+      "encoded_features": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": {
+        "ally_hero_ids": [
+          7,
+          8,
+          60,
+          86,
+          112
+        ],
+        "enemy_hero_ids": [
+          64,
+          71,
+          77,
+          95,
+          128
+        ],
+        "target_hero_id": 8
+      },
+      "label_mask": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "labels": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "match_id": 9011086940,
+      "observations": [
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[0].purchase_log[16]"
+          ],
+          "event_times": [
+            744.0
+          ],
+          "item_key": "bfury",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "maelstrom",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[0].purchase_log[23]"
+          ],
+          "event_times": [
+            1097.0
+          ],
+          "item_key": "manta",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "black_king_bar",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "skadi",
+          "observation": "unknown"
+        }
+      ],
+      "sample_id": "9011086940:0:pregame",
+      "source_sha256": "353bd3c13332450bfeffc6e5bea1ddd13ca93d9b3d6b7508f65b4f518f4dd2fc",
+      "split": "train",
+      "target_slot": 0,
+      "training_allowed": false
+    },
+    {
+      "blockers": [
+        "completion_semantics_unverified",
+        "hero_catalog_version_unverified",
+        "high_skill_unverified",
+        "label_contract_not_admitted",
+        "patch_unverified",
+        "purchase_coverage_unverified",
+        "role_unverified"
+      ],
+      "encoded_features": [
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "features": {
+        "ally_hero_ids": [
+          3,
+          8,
+          9,
+          33,
+          120
+        ],
+        "enemy_hero_ids": [
+          17,
+          37,
+          62,
+          110,
+          145
+        ],
+        "target_hero_id": 8
+      },
+      "label_mask": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "labels": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "match_id": 9007700576,
+      "observations": [
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[0].purchase_log[16]"
+          ],
+          "event_times": [
+            743.0
+          ],
+          "item_key": "bfury",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "maelstrom",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [
+            "players[0].purchase_log[22]"
+          ],
+          "event_times": [
+            1172.0
+          ],
+          "item_key": "manta",
+          "observation": "observed_purchase"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "black_king_bar",
+          "observation": "unknown"
+        },
+        {
+          "completion_label_available": false,
+          "event_refs": [],
+          "event_times": [],
+          "item_key": "skadi",
+          "observation": "unknown"
+        }
+      ],
+      "sample_id": "9007700576:0:pregame",
+      "source_sha256": "4074f3f7ff5efad4d64140c940d775c331688cd56f67da88d0f32993c034d45f",
+      "split": "train",
+      "target_slot": 0,
+      "training_allowed": false
+    }
+  ],
+  "schema_version": "lineup-preflight/1",
+  "source_evidence": {
+    "limitations": "Pinned upstream code, not verified deployed version of the sampled matches.",
+    "recorded_at": "2026-10-14T02:50:07.227268+00:00",
+    "representation": "GitHub contents API raw bytes at explicit commit",
+    "sources": [
+      {
+        "commit": "5934586999f8799e4ea1ffa6b3773028b26df5bf",
+        "path": "Parse.java.txt",
+        "sha256": "406d0b6bae12812c4103b533375f206ee5f93f61ca3249ddabcacb34225139d1",
+        "source_url": "https://github.com/odota/parser/blob/5934586999f8799e4ea1ffa6b3773028b26df5bf/src/main/java/opendota/Parse.java"
+      },
+      {
+        "commit": "5934586999f8799e4ea1ffa6b3773028b26df5bf",
+        "path": "CreateParsedDataBlob.java.txt",
+        "sha256": "a6c6d5574132e7de48420bed8c0ae2274db813e035d723d788c5a886e7c565bc",
+        "source_url": "https://github.com/odota/parser/blob/5934586999f8799e4ea1ffa6b3773028b26df5bf/src/main/java/opendota/CreateParsedDataBlob.java"
+      },
+      {
+        "commit": "5934586999f8799e4ea1ffa6b3773028b26df5bf",
+        "path": "LICENSE.txt",
+        "sha256": "13d8ee5053b6b9da5448fa298ff1af56cc3994b945e9739a5a38821ea7463abf",
+        "source_url": "https://github.com/odota/parser/blob/5934586999f8799e4ea1ffa6b3773028b26df5bf/LICENSE"
+      }
+    ]
+  },
+  "split_method": "sha256(seed,match_id), ordered then fixed counts; rehearsal only",
+  "splits": {
+    "test": [
+      9011805832
+    ],
+    "train": [
+      9011086940,
+      9007700576,
+      9016945136,
+      9037578078,
+      9011095081
+    ],
+    "validation": [
+      9013108339
+    ]
+  },
+  "summary": {
+    "attempted_matches": 10,
+    "blocker_counts": {
+      "completion_semantics_unverified": 7,
+      "hero_catalog_version_unverified": 7,
+      "high_skill_unverified": 7,
+      "label_contract_not_admitted": 7,
+      "patch_unverified": 7,
+      "purchase_coverage_unverified": 7,
+      "role_unverified": 7
+    },
+    "excluded_matches": 3,
+    "preview_samples": 7,
+    "split_counts": {
+      "test": 1,
+      "train": 5,
+      "validation": 1
+    },
+    "training_admitted_matches": 0
+  },
+  "training_allowed": false,
+  "validation": {
+    "exact_offline_reproduction": true,
+    "source_hashes_verified": true
+  }
+}
