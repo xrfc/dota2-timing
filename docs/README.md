@@ -1,5 +1,7 @@
 # 文档索引
 
+评估API新增输入边界与mask处理说明见[模型基础](model-foundation.md)的“离线评估输入契约”；软件回归不是效果证据。
+
 ## 只读审查入口 — 2026-10-18
 
 - [数据准备进度](data-prep-progress.md)：审计JSON转Markdown的API、CLI、拒绝策略和证据边界。

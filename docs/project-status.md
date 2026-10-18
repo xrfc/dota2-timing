@@ -1,5 +1,11 @@
 # 项目完成度与验证证据
 
+## 2026-10-18 续接：评估模块输入校验
+
+已核实8cf8640对应[CI 39096921356](https://github.com/xrfc/dota2-timing/actions/runs/39096921356)全部成功（Linux Python3.11/3.12、Windows，3.12含浏览器检查）。
+本轮完善独立evaluation的非法输入拒绝、mask保护、整组抽样和历史数值parity回归；只用合成数据，不真实训练或评估。
+API与边界见[模型基础](model-foundation.md)，验收及推送证据见[验证记录](validation-and-delivery.md)和本轮交付回复。
+
 ## 2026-10-18 只读审查与串行集成
 
 数据侧新增已有审计转Markdown报告，模型侧新增只读inspect，分别维护质量分母、连通风险与模型支持数/来源解释。

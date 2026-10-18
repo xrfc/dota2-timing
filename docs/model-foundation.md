@@ -1,5 +1,25 @@
 # 模型基础闭环（2026-10-16）
 
+## 离线评估输入契约 — 2026-10-18续接
+
+依据维护指南的独立evaluation职责，完善现有指标/整玩家组bootstrap的输入校验；不是新研究方案或真实效果评估。
+API仍为metrics(y, p)、group_draws(groups, repeats, seed)、paired_intervals(y, baseline, linear, groups, repeats=500, seed=20261015)。
+
+- y为已观测的一维0/1数值，概率为同长度一维有限[0,1]数值；拒绝bool、文本、None、NaN/Inf、复数及二维输入。
+- 不接受MaskedArray，防止np.asarray悄悄丢弃mask。调用者须按每个目标的既有mask同步筛选y、两组概率和group；未知不填0。
+- groups只接受同类型整数ID或非空字符串ID；拒绝浮点、bool、混合类型、未知身份和空白ID，不能据此推断现实身份独立。
+- repeats为正整数，seed为非负整数；空数据也先校验参数。空metrics保留null指标，空paired_intervals保留0个有效重复/null区间，空group_draws不产生抽样。
+- 列表及NumPy数组均可用；不修改输入。大整数ID保持精确，整组有放回抽样保留重复副本和全部组内行。
+- 固定原95%百分位区间及linear-baseline差值方向：AP/AUC增大通常更好，Brier减小更好。单类别的AUC、无正例的AP仍为null；valid_replicates按指标分别计数。
+- 合法历史数值结果用合成parity回归约束，冻结purchase_baseline不修改；不自动选split、模型、阈值或真实数据。
+- evaluation不属于当前训练制品实现清单，本轮不改模型schema、训练参数、数据来源或旧哈希。
+
+合成测试命令：
+~~~bash
+PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_model_evaluation.py tests/test_modular_maintenance.py
+~~~
+这些校验只能识别结构/数值错误，不能识别同长度但错序的数据或认证研究许可；调用者仍须保证行对齐和数据用途。
+
 ## 模块化更新 — 2026-10-17
 
 语义仍以本页为准，结构见[维护指南](modular-maintenance.md)。输入适配在batch，固定任务/特征在specs，拟合在training/estimators，制品在artifacts，预测在inference；foundation兼容旧API。

@@ -1,5 +1,7 @@
 # DOTA2 AI 教练基础设施
 
+2026-10-18续接：独立评估模块增加标签/概率/mask/分组参数校验及合成parity回归；[API和局限](docs/model-foundation.md)、[验收记录](docs/validation-and-delivery.md)。不执行真实评估或训练。
+
 ## 只读审查工具 — 2026-10-18
 
 - [数据质量报告](docs/data-prep-progress.md)：已有队列审计JSON转Markdown，检查分母和玩家连通风险，不重算或改变研究用途。

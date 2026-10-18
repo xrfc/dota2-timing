@@ -1,5 +1,17 @@
 # 验证与交付
 
+## 2026-10-18 续接：评估输入契约
+
+- 起点8cf8640c3823bfc4945dfc4272641bf63fa4c6e9；[前轮CI](https://github.com/xrfc/dota2-timing/actions/runs/39096921356)三个任务均success，含Linux3.12浏览器验收。
+- 当前单执行者，无其他开发/测试任务；私人memory保留不暂存。
+- 新增52项纯合成评估回归，连同模块化13项专项共65 passed；无真实数据读取、拟合或效果评估。
+- 全量scripts/check.py退出0：827 pytest + 10学习Python + 12知识Python + 6 JavaScript = **855项通过**；Ruff及342文件格式检查通过。
+- 首轮稳定窗口832项Git可见文件和7,710项既存data/reports文件SHA-256一致。
+- 验证标签/概率/组/参数边界、mask拒绝、空值语义、列表支持、大整数组ID及历史指标/整组bootstrap数值parity。
+- 不改冻结purchase_baseline、模型schema、训练制品实现清单或数据生产者；测试自动纳入modeling scope。
+- 本地收据与日志：reports/evaluation-validation-2026-10-18/；文档记录补齐后再跑最终稳定窗口。
+- 发布仅feat/purchase-data-prep，不合并main；新提交和CI证据在本轮交付回复中提供。未改账号/认证配置、安装依赖或改变研究用途。
+
 ## 2026-10-18 串行集成验收与开发分支交付
 
 用户指定父会话为协调者，并授权测试通过后同步GitHub。两侧开发者已确认停止全部仓库写入和产物任务。
