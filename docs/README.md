@@ -1,6 +1,26 @@
 # 文档索引
 
-文档同步：**2026-10-15**；包版本0.4.0，开发分支 `feat/lineup-contracts`。
+## 只读审查入口 — 2026-10-18
+
+- [数据准备进度](data-prep-progress.md)：审计JSON转Markdown的API、CLI、拒绝策略和证据边界。
+- [模型基础闭环](model-foundation.md)：只读inspect、支持数分母与历史实现指纹说明。
+- [验证与交付](validation-and-delivery.md)：本轮串行验收和开发分支发布范围。
+
+## 公共接口最新入口
+
+[公共来源读取与生产者迁移](public-source-reader.md)说明public-reader/1收尾、严格默认校验和新交接目录；
+[数据交接协议](handoff/purchase-data-interface.md)维护面向模型侧的接口。此前凌晨重构记录保留历史。
+
+
+## 当前维护入口 — 2026-10-17
+
+[单模块维护指南](modular-maintenance.md)维护当前架构、扩展接口、兼容边界和检查命令。
+[模型基础闭环](model-foundation.md)、[交接协议](handoff/purchase-data-interface.md)维护对应语义；
+[验证记录](validation-and-delivery.md)维护实际验收。下方10/16及更早进度为历史。
+
+结构入口同步：**2026-10-16**；包版本0.4.0，共享开发分支 `feat/purchase-data-prep`。
+双方向职责、依赖边界和扩展约定见[架构审查](architecture-2026-10-16.md)；
+唯一工作区规则见[单目录交接](handoff/single-workspace-2026-10-16.md)。下方为分日期进度。
 最新进度统一见[项目状态](project-status.md)，本次交付检查与推送见[验证记录](validation-and-delivery.md)。
 2026-10-15已完成952场源日志观测任务的频率/逻辑回归基线，尚未证明线性模型整体胜出。见[首轮实验](purchase-log-baseline-2026-10-15.md)；规则推荐和实际购买语义验收仍保留边界。
 

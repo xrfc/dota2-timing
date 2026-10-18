@@ -7,7 +7,8 @@ from typing import Literal
 from pydantic import Field
 
 from dota_items.data.contracts import StrictContract
-from dota_items.data.feasibility import AuditConfig, _parse, _read_bytes
+from dota_items.data.feasibility import AuditConfig
+from dota_items.data.source_io import parse_source_json, read_source_bytes
 from dota_items.storage import now
 
 
@@ -26,8 +27,8 @@ class SamplingPlan(StrictContract):
 def freeze_plan(discovery: Path, config: AuditConfig, *, skip: int, take: int) -> SamplingPlan:
     if type(skip) is not int or skip < 0 or type(take) is not int or not 1 <= take <= 100:
         raise ValueError("invalid sampling slice")
-    contents = _read_bytes(discovery)
-    rows = _parse(contents)
+    contents = read_source_bytes(discovery)
+    rows = parse_source_json(contents)
     if not isinstance(rows, list) or skip + take > len(rows):
         raise ValueError("discovery has fewer rows than requested slice")
     selected = rows[skip : skip + take]
@@ -51,7 +52,7 @@ def freeze_plan(discovery: Path, config: AuditConfig, *, skip: int, take: int) -
 
 
 def verify_plan(plan_path: Path, discovery: Path) -> tuple[SamplingPlan, str]:
-    contents = _read_bytes(plan_path)
+    contents = read_source_bytes(plan_path)
     plan = SamplingPlan.model_validate_json(contents)
     rebuilt = freeze_plan(discovery, plan.audit_config, skip=plan.skip, take=plan.take)
     # Creation time is metadata; selection and every config value remain bound.

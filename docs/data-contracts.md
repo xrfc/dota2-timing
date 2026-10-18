@@ -1,5 +1,18 @@
 # 数据与模型接口契约
 
+## 公共读取契约收尾 — 2026-10-17
+
+source_io提供read_source_bytes/parse_source_json，保持来源解析原行为，不等同严格制品解码。
+交接/快照schema不变，新包与审计一致声明public-reader/1迁移；模型输入语义不变。
+详见[接口与迁移规范](public-source-reader.md)。
+
+
+## 模块接口更新 — 2026-10-17
+
+源日志快照仍为purchase-log-modeling-snapshot/1，模型仍为purchase-foundation-model/1，预测语义未变。读取/适配分别位于handoff.bundle、modeling.batch。
+任务与特征约束集中于modeling.specs，当前不接受任意英雄/窗口；新旧实现指纹清单规则见[指南](modular-maintenance.md)。
+coach-context/1格式不变，纯实现下沉contracts.replay_context。完整性/语义检查不是训练许可。
+
 2026-10-14后续：预演输出升级 `lineup-preflight/2`，新增 `player-overlap/1` 诊断。只导出比赛ID与计数，不导出账号/哈希；配置版本不变，旧训练入口仍拒绝预演。
 
 ## 2026-10-14 续接

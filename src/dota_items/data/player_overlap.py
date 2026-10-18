@@ -5,7 +5,7 @@ from collections import Counter
 from itertools import combinations
 
 from dota_items.data.contracts import SLOTS
-from dota_items.data.feasibility import _parse, _read_bytes
+from dota_items.data.source_io import parse_source_json, read_source_bytes
 
 SPLITS = ("train", "validation", "test")
 
@@ -47,10 +47,10 @@ def audit_player_overlap(rows, paths, splits):
 
     for row in sorted(rows, key=lambda r: r["match_id"]):
         mid = row["match_id"]
-        contents = _read_bytes(paths[mid])
+        contents = read_source_bytes(paths[mid])
         if hashlib.sha256(contents).hexdigest() != row["sha256"]:
             raise ValueError("Player-overlap source changed after feasibility audit")
-        raw = _parse(contents)
+        raw = parse_source_json(contents)
         players = raw.get("players", [])
         if (
             raw.get("match_id") != mid

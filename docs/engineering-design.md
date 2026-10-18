@@ -1,5 +1,18 @@
 # 工程设计：阵容推荐与回放基础设施
 
+## 公共读取更新 — 2026-10-17
+
+来源文件I/O与解析归data.source_io（标准库），审计/采样/玩家关联复用同一实现。
+producer_migration只处理明确登记的实现身份差异，不忽略任意hash，也不改变数据语义。
+边界及接口见[公共读取说明](public-source-reader.md)。
+
+
+## 当前设计 — 2026-10-17
+
+当前拓扑见[模块维护指南](modular-maintenance.md)。modeling分为batch/specs、training/estimators、artifacts、inference和evaluation，foundation为兼容门面。
+data.validation持有来源校验，workflow.validation兼容导出；sources不再导入data。contracts提供纯上下文格式，handoff.bundle独立读取。
+recommendation仍为人工规则，不能把源日志概率当最佳出装效用。以下内容保留历史设计。
+
 ## 新增审计链路（2026-10-13）
 
 `audit_data.py → feasibility_cli → feasibility + semantic_review` 复用normalize和OpenDota读取器。

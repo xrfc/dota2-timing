@@ -13,9 +13,17 @@ def main():
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--output", type=Path)
     mode.add_argument("--verify", type=Path)
+    parser.add_argument(
+        "--allow-producer-migration",
+        action="store_true",
+        help="Explicit public-reader/1 compatibility replay; not ignore-hashes",
+    )
     args = parser.parse_args()
+    options = {"allow_producer_migration": True} if args.allow_producer_migration else {}
     snapshot = (
-        verify_snapshot(args.verify, args.summary) if args.verify else build_snapshot(args.summary)
+        verify_snapshot(args.verify, args.summary, **options)
+        if args.verify
+        else build_snapshot(args.summary, **options)
     )
     if args.output:
         with args.output.open("xb") as stream:

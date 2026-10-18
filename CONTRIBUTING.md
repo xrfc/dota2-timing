@@ -1,5 +1,11 @@
 # 开发与贡献
 
+## 单模块维护 — 2026-10-17
+
+先读[维护指南](docs/modular-maintenance.md)，定位模块再改动；复用现有环境。新增算法在estimators，来源校验在data.validation，workflow负责组合，handoff只读，contracts不引入业务层。
+使用scripts/check.py对应modeling/data/recommendation scope，最终串行全量验收；新增测试核对scope归属，脚本和公共文件仍需all检查。
+冻结生产者的兼容副本是有parity测试的例外，不为消除重复破坏历史证据。首次安装示例不授权覆盖现有环境；提交和推送须明确许可。
+
 当前重点是[真实数据与标签语义核验](docs/data-semantics.md)及[ML实验准备](docs/ml-first-experiment.md)，
 并保留[规则质量评审](docs/recommendation-quality-review.md)未完成项。规则权重不是模型，汇总一致不是成装认证。
 默认本地开发；仅在用户明确授权时提交/推送指定分支，不自动合并或发布。本次授权见交付记录。

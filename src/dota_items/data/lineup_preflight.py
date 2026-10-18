@@ -11,10 +11,13 @@ from dota_items.data.feasibility import audit_paths
 from dota_items.data.feasibility_sampling import verify_plan
 from dota_items.data.patch_time import load_patch_window
 from dota_items.data.player_overlap import audit_player_overlap
+from dota_items.data.producer_migration import compare_replay
 from dota_items.storage import digest, file_hash, json_bytes, read_json
 
 
-def verify_preflight(report_path, plan_path, discovery, cache, patch_receipt):
+def verify_preflight(
+    report_path, plan_path, discovery, cache, patch_receipt, *, allow_producer_migration=False
+):
     """Replay from explicit local sources; verification is never training admission.
 
     Compare canonical bytes, not Python equality (True == 1). Source and code
@@ -27,11 +30,19 @@ def verify_preflight(report_path, plan_path, discovery, cache, patch_receipt):
         raise ValueError("Missing preflight config")
     config = PreflightConfig.model_validate(saved["config"])
     rebuilt = build_preflight(plan_path, discovery, cache, patch_receipt, config)
-    if json_bytes(saved) != json_bytes(rebuilt):
+    migration = None
+    if allow_producer_migration:
+        migration = compare_replay(
+            saved,
+            rebuilt,
+            metadata_paths=(("implementation_sha256",), ("audit", "implementation_sha256")),
+        )
+    elif json_bytes(saved) != json_bytes(rebuilt):
         raise ValueError("Preflight differs from offline replay; sources or implementation changed")
     return {
         "schema_version": "lineup-preflight-verification/1",
-        "status": "reproduced",
+        "status": "compatible_replay" if migration else "reproduced",
+        **({"producer_migration": migration} if migration else {}),
         "report_sha256": file_hash(report_path),
         "training_allowed": False,
         "summary": rebuilt["summary"],

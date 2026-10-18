@@ -1,5 +1,57 @@
 # 验证与交付
 
+## 2026-10-18 串行集成验收与开发分支交付
+
+用户指定父会话为协调者，并授权测试通过后同步GitHub。两侧开发者已确认停止全部仓库写入和产物任务。
+
+- 全量`scripts/check.py`退出0：775 pytest + 10学习Python + 12知识Python + 6 JavaScript = **803项通过**。
+- 全库Ruff、341个文件格式检查及JS语法检查通过；`git diff --check`通过。
+- 验收窗口831项Git可见文件（含未跟踪文件）SHA-256前后一致；7,705项既存data/reports文件不变。
+- 父会话此前独立复跑236项专项通过，与全量重叠，不额外计入总数；新增两侧测试共81项。
+- 数据报告只读渲染既有审计；模型inspect只校验制品与展示摘要，不执行真实训练、预测或效果评估。
+- 发布范围含本地10/16–10/17模块化/公共读取成果及10/18只读审查工具；共享文档同步。
+- 目标仅`origin/feat/purchase-data-prep`，不合并main、不创建Release；原始数据、模型运行产物、reports和私人memory不发布。
+- 发布文件凭据模式检查未发现命中；这不是全面安全审计。远端CI与实际推送结果以本轮交付回复为准，不能沿用af239e9的绿色结果。
+
+本地日志与保护收据：`reports/integration-2026-10-18/`。验收说明补入后再次执行全量稳定窗口检查。
+没有安装依赖、改变标签/划分/新增1,038场用途、真实训练、选模、补采或客户端核验。以下为历史验收。
+
+## 2026-10-17 公共读取收尾验收
+
+- 全量scripts/check.py退出0：694 pytest + 10学习Python + 12知识Python + 6 JavaScript = **722项通过**。
+- Ruff、335文件格式检查和JS语法通过；数据scope 431项通过（与全量重复，不另加总）。
+- 验收期间Git可见文件含未跟踪文件的SHA-256前后一致；7,684项既存data/reports文件原字节不变。
+- 旧952快照兼容重建仅7项登记实现指纹变化，其余字段、类型和列表顺序一致；划分571/191/190不变。
+- 新队列审计业务字段完全一致，来源证据核验通过；新包与旧快照/摘要原字节一致。
+- 模型侧train/validation只读适配成功，不执行fit、选模或test效果评估。
+- 新增来源读取、迁移拒绝、声明一致性回归；默认严格校验仍拒绝旧实现，显式迁移不冒充精确旧源码复现。
+
+当前接口见[公共读取与迁移](public-source-reader.md)，交接目录reports/public-reader-2026-10-17/handoff/。
+本地证据：reports/public-reader-2026-10-17/中的check-final.log、verification.json、
+acceptance-before/after.json、snapshot-migration.json、audit-comparison.json、handoff-verification.json。
+下面凌晨679项等为历史阶段验收。未真实训练、采集、改数据用途/划分，未安装依赖、提交或推送。
+
+
+## 2026-10-17 模块化维护验收（本地）
+
+- 全量入口scripts/check.py退出0：**651 pytest + 10学习Python + 12知识Python + 6 JavaScript = 679项通过**。
+  Ruff、330文件格式检查及JavaScript语法检查通过，无本次测试跳过。
+- 模块scope分别通过：data 388、modeling 186、recommendation 115；三者包含重复公共回归，不能相加作独立测试总数。
+- 验收窗口记录全部Git可见文件（含未跟踪文件）前后SHA-256，结果一致；详情见本地verification.json与acceptance-before/after.json。
+- 7,656项既存data/reports文件保持原字节；旧952快照绑定的13项实现指纹不变。
+- 新旧频率/逻辑回归参数、任务、预处理及18条合成预测逐字节一致；历史合成制品仍可加载预测，且原文件哈希不变。
+- 新cohort审计相对10/16兼容审计仅生产者哈希一项变化。新包通过来源重建与包完整性验证，snapshot与旧包/原快照原字节一致。
+- 已盘点189份Git可见Markdown，相对链接目标检查0失效；这不等于对所有历史内容重新做事实认证或外链可用性验证。
+
+证据目录：reports/refactor-2026-10-17/，包括check-final.log、check-data/modeling/recommendation.log、
+verification.json、preservation.json、document-audit.json、audit-differences.json及新handoff/。
+源码保全归档source-before.tar.gz覆盖当时src/scripts/tests/docs/configs/.github与根文件；学习开发指南原文另存learning-development-before.md。
+当前结构及剩余兼容债务见[维护指南](modular-maintenance.md)，机器可读摘要见[验收摘要](acceptance/modular-maintenance-2026-10-17.json)。
+
+不真实训练、不选模、不改标签/划分/数据用途，不联网采集，不真实demo重解析或客户端核验；
+无安装依赖、提交、推送、合并。未运行浏览器截图或远端CI，软件通过不代替真实语义/效果验收。
+
+
 ## 2026-10-16 本地报告校验增量
 
 `PYTHONPATH=src .venv/bin/python scripts/check.py`通过：380项pytest、22项学习/知识测试、6项JavaScript测试，共408项；Ruff、289文件格式检查、JS语法检查通过。`git diff --check`通过。

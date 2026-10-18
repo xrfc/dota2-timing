@@ -1,5 +1,11 @@
 # 模型搭建agent提示词
 
+> **2026-10-17更新**：先读[单模块维护指南](../modular-maintenance.md)。foundation已拆分，data.validation及handoff.bundle为新维护入口；旧API兼容。下方独立worktree和验收属于历史。本轮单执行者，未来恢复并行仍须协调。
+
+> **现行协作规则（2026-10-16）**：先读[并行开发与串行集成协议](parallel-development.md)。两侧专属文件可并行开发；共享文件、依赖变更和最终全量验收串行协调。最终验收期间双方暂停仓库写入，指定单一执行者；下文历史验证不是本轮验收结果。
+
+> **已被单目录方案取代（2026-10-16）**：下文的双worktree路径和隔离环境规则仅作历史。当前统一在`dota2-timing`，数据与模型模块并列；请先读[最新协作入口](single-workspace-2026-10-16.md)。
+
 你接手dota2-timing模型初步搭建分支。请在`/home/node/.openclaw/workspace/work/dota2-timing-model`工作，核对分支为`feat/purchase-model-foundation`及git status；不要切换或修改数据worktree。
 
 先完整阅读`AGENTS.md`、`docs/handoff/2026-10-16-context.md`和其中模型/快照文档，再读src/dota_items/data/purchase_snapshot.py、lineup_preflight.py及modeling下的baseline/sensitivity模块。

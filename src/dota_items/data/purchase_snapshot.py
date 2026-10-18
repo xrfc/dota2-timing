@@ -6,6 +6,7 @@ from dota_items.data.feasibility import AuditConfig, audit_paths
 from dota_items.data.lineup_preflight import encode_lineup, fit_vocabulary, lineup_features
 from dota_items.data.patch_time import load_patch_window
 from dota_items.data.player_overlap import audit_player_overlap
+from dota_items.data.producer_migration import compare_replay
 from dota_items.data.purchase_observation import observe_purchases
 from dota_items.storage import digest, file_hash, json_bytes, read_json
 
@@ -42,7 +43,7 @@ def class_support(samples, items):
     return result
 
 
-def build_snapshot(summary_path):
+def build_snapshot(summary_path, *, allow_producer_migration=False):
     summary = read_json(summary_path)
     if summary["schema_version"] != "purchase-collection-summary/1":
         raise ValueError("Wrong summary schema")
@@ -61,7 +62,9 @@ def build_snapshot(summary_path):
         patch_window=load_patch_window(receipt, config.requested_patch),
         expected_ids={path: mid for mid, path in paths.items()},
     )
-    if json_bytes(audit) != json_bytes(summary["audit"]):
+    if allow_producer_migration:
+        compare_replay(summary["audit"], audit)
+    elif json_bytes(audit) != json_bytes(summary["audit"]):
         raise ValueError("Audit summary no longer reproduces from sources")
     rows = audit["results"]
     initial = {"train": list(paths), "validation": [], "test": []}
@@ -177,9 +180,16 @@ def build_snapshot(summary_path):
     }
 
 
-def verify_snapshot(snapshot_path, summary_path):
+def verify_snapshot(snapshot_path, summary_path, *, allow_producer_migration=False):
     saved = read_json(snapshot_path)
-    fresh = build_snapshot(summary_path)
+    fresh = (
+        build_snapshot(summary_path, allow_producer_migration=True)
+        if allow_producer_migration
+        else build_snapshot(summary_path)
+    )
+    if allow_producer_migration:
+        compare_replay(saved, fresh)
+        return saved
     if json_bytes(saved) != json_bytes(fresh):
         raise ValueError("Snapshot differs from offline source reconstruction")
     return fresh

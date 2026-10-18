@@ -18,6 +18,7 @@ def clean_match(raw: Any, config: PreparationConfig) -> tuple[dict, dict]:
         "gem-adapter/2.1",
         "gem-adapter/2.2",
         "gem-adapter/3.0",
+        "gem-adapter/3.1",
     ):
         raise ValueError("Unsupported normalized input schema; raw Gem exports need the adapter")
     for name in ("match_id", "duration"):

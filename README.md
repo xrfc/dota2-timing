@@ -1,5 +1,32 @@
 # DOTA2 AI 教练基础设施
 
+## 只读审查工具 — 2026-10-18
+
+- [数据质量报告](docs/data-prep-progress.md)：已有队列审计JSON转Markdown，检查分母和玩家连通风险，不重算或改变研究用途。
+- [模型制品检查](docs/model-foundation.md)：`model_foundation.py inspect --model PATH`展示任务、支持数与实现来源，不训练或预测。
+- 当前协调者统一处理共享文档、全量验收及开发分支交付；结果见[验证记录](docs/validation-and-delivery.md)。
+- 下方“本地未发布/不推送”为对应日期历史状态；本轮获准测试通过后推送`feat/purchase-data-prep`，不合并main。
+
+## 公共数据接口收尾 — 2026-10-17
+
+来源读取统一到data.source_io；新公共交接目录为reports/public-reader-2026-10-17/handoff/。
+旧快照和模型输入语义不变，生产者兼容重建必须显式启用。API、命令及保护边界见[公共读取接口](docs/public-source-reader.md)。
+
+
+## 当前结构 — 2026-10-17
+
+模型职责已拆分，数据/来源反向依赖已清理，交接读取已独立。当前入口：[单模块维护指南](docs/modular-maintenance.md)。
+使用现有.venv运行scripts/check.py --scope modeling、--scope data或--scope recommendation；集成仍须全量检查。
+本轮工程与合成回归、既有审计重建不改变数据用途，不真实训练、不提交或推送。以下带日期章节保留历史。
+
+## 双方向开发结构 — 2026-10-16
+
+当前在同一工作区、`feat/purchase-data-prep` 分支协作：`data/` 负责数据与冻结交接，
+`modeling/` 负责模型与评估，新增 `contracts/` 提供轻量共享编码接口。
+架构边界、已知耦合与扩展约定见[双方向架构审查](docs/architecture-2026-10-16.md)，
+操作规则见[单目录交接](docs/handoff/single-workspace-2026-10-16.md)。
+本轮改动仅本地，未运行真实训练或推送；下方授权和状态均为各自日期的历史记录。
+
 ## 当前交付范围 — 2026-10-15
 
 - 新增采集已完成：16批、1,600场处理，1,038场通过初筛、562场排除；代理采集状态为done，进程已结束。

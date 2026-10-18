@@ -1,5 +1,10 @@
 # 日常操作、迁移与恢复
 
+## 当前开发入口 — 2026-10-17
+
+复用现有.venv。scripts/check.py支持modeling、data、recommendation专项scope；最终仍运行全量。见[维护指南](modular-maintenance.md)。
+下方bootstrap是首次环境配置示例，不是覆盖当前环境的指令；真实训练、数据划分和解析核验仍单独授权。
+
 ## 2026-10-13 进度同步
 
 新增只读诊断入口 `python audit_data.py`：本地JSON、固定采样计划、离线缓存与失败记录；命令见[审计说明](data-feasibility.md)。诊断退出码0不代表训练准入，原始玩家JSON不提交Git。

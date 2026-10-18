@@ -1,7 +1,6 @@
 """Read-only purchase-label feasibility diagnostics, never training admission."""
 
 import hashlib
-import json
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Annotated, Literal
@@ -11,16 +10,21 @@ from pydantic import Field, model_validator
 from dota_items.data.contracts import SLOTS, PreparationConfig, StrictContract
 from dota_items.data.patch_time import classify_patch_time
 from dota_items.data.semantic_review import review_semantics
+from dota_items.data.source_io import (
+    MAX_BYTES as MAX_BYTES,
+)
+from dota_items.data.source_io import (
+    AuditInputError as AuditInputError,
+)
+from dota_items.data.source_io import (
+    parse_source_json,
+    read_source_bytes,
+)
 from dota_items.normalize import normalize_match
 from dota_items.storage import digest, file_hash
 
 AUDITOR_VERSION = "purchase-feasibility/3"
-MAX_BYTES = 64 * 1024 * 1024
 MAX_EVENTS = 200_000
-
-
-class AuditInputError(ValueError):
-    """Safe diagnostic strings authored here, never raw payload or credentials."""
 
 
 class AuditConfig(StrictContract):
@@ -46,21 +50,14 @@ def _positive_int(value):
     return type(value) is int and value > 0
 
 
-def _reject_constant(value):
-    raise ValueError("non-finite JSON number")
-
-
 def _read_bytes(path: Path):
-    # Bound reads even when the file grows after stat().
-    with path.open("rb") as stream:
-        contents = stream.read(MAX_BYTES + 1)
-    if len(contents) > MAX_BYTES:
-        raise AuditInputError("input exceeds 64 MiB limit")
-    return contents
+    """Compatibility wrapper; new consumers use source_io directly."""
+    return read_source_bytes(path, max_bytes=MAX_BYTES)
 
 
 def _parse(contents):
-    return json.loads(contents, parse_constant=_reject_constant)
+    """Compatibility wrapper with unchanged parsing behavior."""
+    return parse_source_json(contents)
 
 
 def audit_file(path: Path, config: AuditConfig) -> dict:
@@ -273,6 +270,8 @@ def audit_paths(
             name: file_hash(Path(__file__).resolve().parents[1] / name)
             for name in (
                 "data/feasibility.py",
+                "data/source_io.py",
+                "data/producer_migration.py",
                 "data/feasibility_cli.py",
                 "data/feasibility_sampling.py",
                 "data/patch_time.py",

@@ -1,5 +1,10 @@
 # Demo 到训练样本的数据管线
 
+## 模块位置更新 — 2026-10-17
+
+来源校验归data.validation，旧workflow.validation仍兼容；pipeline不再依赖workflow。上下文纯格式在contracts.replay_context，清洗/外部证据核验在data.context。
+适配器gem-adapter/3.1覆盖新实现指纹，清洗兼容3.0/3.1；本轮未真实重解析。检查及冻结保护见[指南](modular-maintenance.md)。
+
 ## 2026-10-13 进度同步
 
 新增[独立审计器v3](data-feasibility.md)与[语义核验](data-semantics.md)，不改变下方coach-features/1或已有购买任务定义；新阵容ML实验正式标签仍待冻结。

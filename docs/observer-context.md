@@ -1,5 +1,10 @@
 # 视野、战斗与英雄状态接入
 
+## 实现下沉 — 2026-10-17
+
+格式、导出和纯校验移入contracts.replay_context，data.context旧入口兼容。Gem适配器3.1指纹覆盖新模块及contracts.numeric，context schema仍为coach-context/1。
+清洗兼容3.0/3.1；旧缓存不能冒充新解析实现。本轮仅软件回归，未真实demo/客户端语义复验，详见[指南](modular-maintenance.md)。
+
 ## 2026-10-13 进度同步
 
 新[公开JSON语义核验](data-semantics.md)与本页Gem上下文通道分别验收；7场JSON缺inventory_log不意味着Gem库存通道不存在，也不证明Gem通道已获语义认证。
