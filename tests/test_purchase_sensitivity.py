@@ -1,4 +1,8 @@
 import copy
+import importlib.util
+import json
+import sys
+from pathlib import Path
 
 import pytest
 
@@ -20,6 +24,106 @@ def fixture():
             for i in range(10)
         ],
     }
+
+
+def _cli_module():
+    path = Path(__file__).resolve().parents[1] / "scripts/compare_purchase_sensitivity.py"
+    spec = importlib.util.spec_from_file_location("sensitivity_cli", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.mark.parametrize("migration", [False, True])
+def test_cli_verifies_before_synthetic_fit_and_records_migration(tmp_path, monkeypatch, migration):
+    cli = _cli_module()
+    summary, snapshot, output = [tmp_path / name for name in ("summary", "snapshot", "result")]
+    summary.write_text("synthetic-summary")
+    snapshot.write_text("synthetic-snapshot")
+    events = []
+
+    def verify(actual_snapshot, actual_summary, **options):
+        assert (actual_snapshot, actual_summary) == (snapshot, summary)
+        assert options == ({"allow_producer_migration": True} if migration else {})
+        events.append("verified")
+        return fixture()
+
+    def synthetic_compare(value):
+        assert events == ["verified"]
+        events.append("synthetic-fit")
+        return compare(value)
+
+    monkeypatch.setattr(cli, "verify_snapshot", verify)
+    monkeypatch.setattr(cli, "compare", synthetic_compare)
+    args = [
+        "compare",
+        "--summary",
+        str(summary),
+        "--snapshot",
+        str(snapshot),
+        "--output",
+        str(output),
+    ]
+    monkeypatch.setattr(sys, "argv", args + (["--allow-producer-migration"] if migration else []))
+    cli.main()
+    result = json.loads(output.read_text())
+    assert events == ["verified", "synthetic-fit"]
+    assert result["test_evaluated"] is False
+    provenance = result["provenance"]
+    assert provenance["producer_migration"] == ("public-reader/1" if migration else None)
+    assert provenance["reconstruction_mode"] == (
+        "registered-producer-compatible" if migration else "strict"
+    )
+    assert summary.read_text() == "synthetic-summary"
+    assert snapshot.read_text() == "synthetic-snapshot"
+    before = output.read_bytes()
+    with pytest.raises(SystemExit):
+        cli.main()
+    assert output.read_bytes() == before
+    assert events == ["verified", "synthetic-fit"]
+
+
+@pytest.mark.parametrize("migration", [False, True])
+def test_cli_reconstruction_failure_never_trains_or_writes(tmp_path, monkeypatch, migration):
+    cli = _cli_module()
+    output = tmp_path / "result"
+
+    def reject(*args, **kwargs):
+        raise ValueError("Replay differs outside registered producer metadata")
+
+    def forbidden(*args):
+        pytest.fail("Training must not run after failed source verification")
+
+    monkeypatch.setattr(cli, "verify_snapshot", reject)
+    monkeypatch.setattr(cli, "compare", forbidden)
+    args = ["compare", "--summary", "unused", "--snapshot", "unused", "--output", str(output)]
+    monkeypatch.setattr(sys, "argv", args + (["--allow-producer-migration"] if migration else []))
+    with pytest.raises(ValueError, match="Replay differs"):
+        cli.main()
+    assert not output.exists()
+
+
+def test_cli_dangling_output_link_rejected_before_training(tmp_path, monkeypatch):
+    cli = _cli_module()
+    output = tmp_path / "result"
+    try:
+        output.symlink_to(tmp_path / "missing")
+    except OSError:
+        pytest.skip("Symlink creation unavailable")
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("Existing link must fail before verification or training")
+
+    monkeypatch.setattr(cli, "verify_snapshot", forbidden)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["compare", "--summary", "unused", "--snapshot", "unused", "--output", str(output)],
+    )
+    with pytest.raises(SystemExit):
+        cli.main()
+    assert output.is_symlink()
+    assert not (tmp_path / "missing").exists()
 
 
 def test_test_payload_is_never_read():

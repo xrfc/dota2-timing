@@ -1,5 +1,14 @@
 # 验证与交付
 
+## 2026-10-18 截距/正则化对照就绪核查
+
+- 不运行真实对照；禁止fit的只读核验已确认旧952场来源、公共交接包及当前train/validation适配兼容，原摘要/快照哈希不变。
+- 唯一必要修复是compare_purchase_sensitivity.py接通显式public-reader/1；默认严格不变，不改候选、指标或选择规则。
+- 5项新CLI合成回归，连同原敏感性及生产者迁移共30 passed；修改文件Ruff/格式通过。
+- 全量稳定窗口日志与前后保护收据保存于reports/sensitivity-readiness-2026-10-18/；最终结果及提交/CI在交付回复核实。
+- 方案、唯一实验入口、验收条件及真实运行待确认项见[敏感性方案](purchase-log-sensitivity-plan-2026-10-15.md)。
+- 保持旧952输入及新增1038用途不变；不真实训练/评估、不改认证、不上传运行产物、不合并main。
+
 ## 2026-10-18 续接：评估输入契约
 
 - 起点8cf8640c3823bfc4945dfc4272641bf63fa4c6e9；[前轮CI](https://github.com/xrfc/dota2-timing/actions/runs/39096921356)三个任务均success，含Linux3.12浏览器验收。

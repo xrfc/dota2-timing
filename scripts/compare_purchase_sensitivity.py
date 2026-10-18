@@ -12,21 +12,33 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("summary", "snapshot", "output"):
         parser.add_argument(f"--{name}", type=Path, required=True)
+    parser.add_argument(
+        "--allow-producer-migration",
+        action="store_true",
+        help="Explicit public-reader/1 compatibility replay; not training authorization",
+    )
     args = parser.parse_args()
-    if args.output.exists():
+    if args.output.exists() or args.output.is_symlink():
         parser.error("Refusing to overwrite experiment evidence")
-    snapshot = verify_snapshot(args.snapshot, args.summary)
+    options = {"allow_producer_migration": True} if args.allow_producer_migration else {}
+    snapshot = verify_snapshot(args.snapshot, args.summary, **options)
     result = compare(snapshot)
     result["provenance"] = {
         "summary_sha256": file_hash(args.summary),
         "snapshot_sha256": file_hash(args.snapshot),
         "source_reconstruction_verified": True,
+        "producer_migration": "public-reader/1" if args.allow_producer_migration else None,
+        "reconstruction_mode": (
+            "registered-producer-compatible" if args.allow_producer_migration else "strict"
+        ),
         "implementation": {
             str(p): file_hash(p)
             for p in [
                 Path(__file__),
                 Path("src/dota_items/modeling/purchase_sensitivity.py"),
                 Path("src/dota_items/modeling/purchase_baseline.py"),
+                Path("src/dota_items/data/purchase_snapshot.py"),
+                Path("src/dota_items/data/producer_migration.py"),
             ]
         },
     }

@@ -1,5 +1,57 @@
 # 截距与正则化对照：实现已完成，真实实验待确认
 
+## 2026-10-18 真实对照前就绪核查（未运行实验）
+
+**下一步是用户确认后运行一次既定截距/正则化对照，不再新增模型或通用基础设施。**
+基线和误差诊断已完成；研究问题仍是线性模型的概率偏差能否改善，允许频率胜出。
+本次只修复实验CLI未接通public-reader/1的问题，不改变compare、历史metrics、候选或选模规则。
+模型新evaluation/batch接口不强行替换历史对照计算，避免在修复入口时改变实验定义。
+
+### 只读核查证据
+
+- 当前旧summary在默认严格模式下重建失败：Audit summary no longer reproduces from sources；原因是已登记的生产者实现变化。
+- 显式allow_producer_migration=True重建通过，所有非实现字段保持完全一致；返回原冻结快照，不写回旧证据。
+- 公共handoff读取结果与冻结快照canonical JSON一致；当前batch适配train/validation通过：571×254、191×254。
+- 仍为952场、571/191/190固定划分、126英雄词表和254列；可拟合目标bfury/maelstrom/manta/skadi，BKB保持单类别跳过。
+- 摘要SHA-256：2ea8231ba932d8b48873149e1c917bfadf3a8c1eb1a771885d96a13e8ffe0560。
+- 快照SHA-256：f666e52d1748811997bb1652b1cb35b283f942a199bc65c5c8aff84732c12096。
+- 两文件核验前后哈希一致；核查进程将LogisticRegression.fit替换为禁止调用，未运行真实训练或评估。
+- CLI新增显式--allow-producer-migration，默认仍严格；报告记录迁移名称/重建模式及核验入口源码哈希，不冒充旧源码精确复现。
+- 来源重建可能核验190场test缓存，但compare先排除test行，test特征/标签/概率不进入拟合、选择或诊断。新增1038场完全不参与本实验。
+- 5项新增CLI合成回归覆盖默认/显式参数、先核验再拟合、失败不训练不写结果、拒绝覆盖及悬空链接；与来源迁移回归共30项通过。
+
+### 获准后唯一实验入口（本次未执行）
+
+从仓库根目录执行；输出路径必须不存在，不在失败后自动更换参数或重跑：
+~~~bash
+PYTHONPATH=src .venv/bin/python scripts/compare_purchase_sensitivity.py \
+  --summary reports/purchase-952-summary-2026-10-14.json \
+  --snapshot reports/purchase-log-snapshot-952-2026-10-14.json \
+  --allow-producer-migration \
+  --output reports/purchase-log-sensitivity-952-approved-v1.json
+
+PYTHONPATH=src .venv/bin/python scripts/render_purchase_sensitivity.py \
+  --input reports/purchase-log-sensitivity-952-approved-v1.json \
+  --output reports/purchase-log-sensitivity-952-approved-v1.md
+~~~
+迁移开关只是显式兼容核验，不是授权开关；真正运行仍须用户确认。
+结果含逐场比赛ID，仅本地保存；若交付GitHub摘要，只发布聚合统计，不上传原报告或原数据。
+
+### 预先固定的验收条件
+
+1. 来源及前述输入哈希匹配；固定特征/标签/mask/split不变，训练只571、选择只191，不接触旧test计算与新增1038场。
+2. 每个训练双类别目标恰好9候选：频率1、liblinear和lbfgs各4，C=[0.01,0.1,1,10]；max_iter=2000、random_state=0、class_weight=None。无标准化、重采样、阈值调优或校准拟合。
+3. 四目标均有完整train/validation分母、AP/Brier/可定义AUC、平均概率偏差、参数与收敛信息；BKB显式跳过。任一收敛警告/异常即失败，不删除坏候选后宣称实验成功。
+4. 逐装备按验证Brier最小选择；精确并列按既有顺序，频率可赢。报告比较所选与频率的ΔBrier，以及原liblinear候选与lbfgs的偏差变化；不只挑最好看的装备。
+5. **软件验收不要求模型改善**。若Brier不改善、频率胜出或偏差减少但Brier变差，均如实交付；平均偏差接近0不等于全面校准。
+6. 验证集重复选模，结论仅开发敏感性诊断；求解器与截距惩罚同时变化，不能宣称截距因果效应、独立泛化提升或最优出装。
+7. 输出新文件、旧数据和报告不变；核对test_evaluated=false及来源/实现身份后再只读导出。失败则停下分析，不扩大C网格或改划分。
+
+**待确认：是否按以上固定方案运行旧952场中571训练/191验证的一次真实对照，并仅保存本地JSON与Markdown？**
+无需现在决定更复杂模型；先看频率是否仍更可靠，再讨论必要的模型扩展。
+
+以下10/15实现命令和历史验证数字保留历史；当前运行使用上述显式迁移入口。
+
 ## 状态与授权边界
 
 2026-10-15用户要求继续开发，暂不急于测试新增数据。
