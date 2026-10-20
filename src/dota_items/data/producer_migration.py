@@ -23,6 +23,15 @@ LEGACY_SHA256 = {
     "data/purchase_snapshot.py": "028b38bb4b0fb4e326e3d716a6b939a26d9db7fdd9e57b5a0b125192aeadd56c",
 }
 
+# Additional explicitly reviewed predecessors; never accept arbitrary old hashes.
+# normalize_match (the audit path) is unchanged by the timeline evidence fix.
+COMPATIBLE_SHA256 = {
+    "normalize.py": {"607eb2978fc284434c275b190b44c36c82337f96e04036508892dd8dd48e3213"},
+    "data/producer_migration.py": {
+        "296a40d4ca1cdd37e18c874eb9ceec77243b53f55792160f2320a13e2fd85fdd"
+    },
+}
+
 
 def _relative(name):
     return (
@@ -53,11 +62,12 @@ def compare_replay(saved, rebuilt, *, metadata_paths=(("implementation_sha256",)
             if name in old and old[name] == new[name]:
                 continue
             relative = _relative(name)
-            if name in old and (
-                relative not in LEGACY_SHA256 or old[name] != LEGACY_SHA256[relative]
-            ):
+            accepted = COMPATIBLE_SHA256.get(relative, set()) | (
+                {LEGACY_SHA256[relative]} if relative in LEGACY_SHA256 else set()
+            )
+            if name in old and old[name] not in accepted:
                 raise ValueError("Unregistered historical producer hash")
-            if relative not in LEGACY_SHA256 and relative not in ADDED:
+            if relative not in LEGACY_SHA256 and relative not in ADDED | COMPATIBLE_SHA256.keys():
                 raise ValueError("Unregistered producer path")
             if new[name] != file_hash(ROOT / relative):
                 raise ValueError("Rebuilt producer hash differs from current implementation")

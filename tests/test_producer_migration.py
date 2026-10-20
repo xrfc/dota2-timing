@@ -4,7 +4,13 @@ import copy
 
 import pytest
 
-from dota_items.data.producer_migration import ADDED, LEGACY_SHA256, ROOT, compare_replay
+from dota_items.data.producer_migration import (
+    ADDED,
+    COMPATIBLE_SHA256,
+    LEGACY_SHA256,
+    ROOT,
+    compare_replay,
+)
 from dota_items.storage import file_hash, json_bytes
 
 
@@ -76,6 +82,17 @@ def test_nested_preflight_metadata_is_explicit_not_recursively_ignored():
     assert compare_replay(
         old, new, metadata_paths=(("implementation_sha256",), ("audit", "implementation_sha256"))
     )
+
+
+@pytest.mark.parametrize("name", list(COMPATIBLE_SHA256))
+def test_reviewed_normalizer_fix_requires_exact_predecessor(name):
+    old, new = pair()
+    old["implementation_sha256"][name] = next(iter(COMPATIBLE_SHA256[name]))
+    new["implementation_sha256"][name] = file_hash(ROOT / name)
+    assert compare_replay(old, new)["changes"]
+    old["implementation_sha256"][name] = "f" * 64
+    with pytest.raises(ValueError, match="historical producer"):
+        compare_replay(old, new)
 
 
 def test_snapshot_strict_default_and_opt_in_returns_original(tmp_path, monkeypatch):

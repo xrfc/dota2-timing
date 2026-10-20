@@ -1,13 +1,14 @@
 """Explicit implementation manifests; old /1 bundles remain readable."""
 
 SCHEMA = "purchase-foundation-model/1"
+TASK_SCHEMA = "purchase-foundation-model/2"
 LEGACY_IMPLEMENTATION_FILES = (
     "src/dota_items/modeling/foundation.py",
     "src/dota_items/contracts/lineup.py",
     "src/dota_items/modeling/purchase_baseline.py",
     "src/dota_items/storage.py",
 )
-IMPLEMENTATION_FILES = (
+PRE_TASK_IMPLEMENTATION_FILES = (
     "src/dota_items/modeling/foundation.py",
     "src/dota_items/contracts/lineup.py",
     "src/dota_items/storage.py",
@@ -21,4 +22,8 @@ IMPLEMENTATION_FILES = (
     "src/dota_items/modeling/estimators/__init__.py",
     "src/dota_items/modeling/estimators/frequency.py",
     "src/dota_items/modeling/estimators/logistic.py",
+)
+IMPLEMENTATION_FILES = (
+    *PRE_TASK_IMPLEMENTATION_FILES,
+    "src/dota_items/contracts/tasks.py",
 )

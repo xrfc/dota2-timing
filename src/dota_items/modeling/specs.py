@@ -1,30 +1,12 @@
 """Supported task and feature definitions, not research authorization."""
 
-from dataclasses import dataclass
-
 from dota_items.contracts.lineup import columns
+from dota_items.contracts.tasks import FEATURES, TASK, validate_task_contract
+from dota_items.contracts.tasks import FeatureSpec as FeatureSpec
+from dota_items.contracts.tasks import TaskSpec as TaskSpec
 
 from ._validation import _mapping
 
-
-@dataclass(frozen=True)
-class TaskSpec:
-    target: str = "source_purchase_log_key_presence"
-    target_hero_id: int = 8
-    items: tuple[str, ...] = ("bfury", "maelstrom", "manta", "black_king_bar", "skadi")
-    window: tuple[int, int] = (0, 1800)
-    negative_means: str = "absent_from_valid_source_log_only"
-
-
-@dataclass(frozen=True)
-class FeatureSpec:
-    encoding: str = "lineup-multihot/1"
-    fit_split: str = "train"
-    unknown: str = "per-side-count"
-
-
-TASK = TaskSpec()
-FEATURES = FeatureSpec()
 ITEMS = list(TASK.items)
 C_GRID = (0.01, 0.1, 1.0, 10.0)
 
@@ -64,6 +46,8 @@ def check_lineup(features):
 
 def check_task(task):
     _mapping(task, ("window",), "task")
+    if "contract" in task:
+        validate_task_contract(task["contract"])
     window = task["window"]
     if (
         task.get("target") != TASK.target

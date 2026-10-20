@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from dota_items.contracts.lineup import encode_lineup, fit_vocabulary
+from dota_items.contracts.tasks import validate_task_envelope
 
 from ._validation import _mapping
 from .specs import ITEMS, check_lineup, check_preprocessing, check_task
@@ -30,8 +31,12 @@ def adapt_snapshot(snapshot, split="train"):
     _mapping(snapshot, ("task", "preprocessing", "splits", "samples"), "snapshot")
     if "synthetic" in snapshot and type(snapshot["synthetic"]) is not bool:
         raise ValueError("Invalid synthetic marker")
-    if snapshot.get("schema_version") != "purchase-log-modeling-snapshot/1":
-        raise ValueError("Unsupported snapshot schema")
+    validate_task_envelope(
+        snapshot["task"],
+        snapshot.get("schema_version"),
+        "purchase-log-modeling-snapshot/1",
+        "purchase-log-modeling-snapshot/2",
+    )
     if snapshot.get("modeling_ready") is not True:
         raise ValueError("Snapshot not modeling ready")
     check_task(snapshot["task"])

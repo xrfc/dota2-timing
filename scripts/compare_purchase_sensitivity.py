@@ -1,11 +1,31 @@
 """Run the proposed train/validation comparison after approving its research protocol."""
 
 import argparse
+import platform
+import subprocess
+from importlib.metadata import version
 from pathlib import Path
 
 from dota_items.data.purchase_snapshot import verify_snapshot
 from dota_items.modeling.purchase_sensitivity import compare
 from dota_items.storage import file_hash, json_bytes
+
+
+def code_state():
+    root = Path(__file__).resolve().parents[1]
+    try:
+        revision = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=False
+        )
+        status = subprocess.run(
+            ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=False
+        )
+    except OSError:
+        return {"revision": None, "dirty": None}
+    return {
+        "revision": revision.stdout.strip() if revision.returncode == 0 else None,
+        "dirty": bool(status.stdout) if status.returncode == 0 else None,
+    }
 
 
 def main():
@@ -24,6 +44,12 @@ def main():
     snapshot = verify_snapshot(args.snapshot, args.summary, **options)
     result = compare(snapshot)
     result["provenance"] = {
+        "code": code_state(),
+        "versions": {
+            "python": platform.python_version(),
+            "numpy": version("numpy"),
+            "scikit_learn": version("scikit-learn"),
+        },
         "summary_sha256": file_hash(args.summary),
         "snapshot_sha256": file_hash(args.snapshot),
         "source_reconstruction_verified": True,

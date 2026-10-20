@@ -12,8 +12,8 @@ from dota_items.storage import digest, file_hash
 from ._validation import _sha256, _text
 from .artifacts import validate_model
 from .estimators import get_estimator
-from .provenance import IMPLEMENTATION_FILES, SCHEMA
-from .specs import C_GRID, ITEMS, check_preprocessing, check_task
+from .provenance import IMPLEMENTATION_FILES, SCHEMA, TASK_SCHEMA
+from .specs import C_GRID, ITEMS, TASK, check_preprocessing, check_task
 
 
 def fit_model(
@@ -61,8 +61,8 @@ def fit_model(
         or np.any(ally + enemy > 1)
         or np.any(counts)
         or not np.all((ally + enemy).any(axis=0))
-        or not np.all(ally[:, batch.preprocessing["vocabulary"].index(8)] == 1)
-        or not np.all(enemy[:, batch.preprocessing["vocabulary"].index(8)] == 0)
+        or not np.all(ally[:, batch.preprocessing["vocabulary"].index(TASK.target_hero_id)] == 1)
+        or not np.all(enemy[:, batch.preprocessing["vocabulary"].index(TASK.target_hero_id)] == 0)
     ):
         raise ValueError("Invalid lineup feature values")
     if not _sha256(source_sha256) or not _text(code_revision):
@@ -101,7 +101,7 @@ def fit_model(
         for name in IMPLEMENTATION_FILES
     }
     artifact = {
-        "schema_version": SCHEMA,
+        "schema_version": TASK_SCHEMA if "contract" in batch.task else SCHEMA,
         "synthetic": batch.synthetic,
         "task": copy.deepcopy(batch.task),
         "preprocessing": copy.deepcopy(batch.preprocessing),

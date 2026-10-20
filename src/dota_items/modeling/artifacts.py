@@ -4,10 +4,17 @@ import json
 import math
 from pathlib import Path
 
+from dota_items.contracts.tasks import validate_task_contract, validate_task_envelope
 from dota_items.storage import digest, json_bytes
 
 from ._validation import _mapping, _number, _sha256, _text
-from .provenance import IMPLEMENTATION_FILES, LEGACY_IMPLEMENTATION_FILES, SCHEMA
+from .provenance import (
+    IMPLEMENTATION_FILES,
+    LEGACY_IMPLEMENTATION_FILES,
+    PRE_TASK_IMPLEMENTATION_FILES,
+    SCHEMA,
+    TASK_SCHEMA,
+)
 from .specs import C_GRID, ITEMS, check_preprocessing, check_task
 
 
@@ -35,7 +42,7 @@ def _validate_model(artifact):
         ),
         "model artifact",
     )
-    if artifact["schema_version"] != SCHEMA or artifact["family"] not in (
+    if artifact["schema_version"] not in (SCHEMA, TASK_SCHEMA) or artifact["family"] not in (
         "frequency",
         "logistic",
     ):
@@ -44,6 +51,7 @@ def _validate_model(artifact):
         raise ValueError("Missing data kind marker")
     if not _text(artifact["meaning"]):
         raise ValueError("Missing prediction meaning")
+    validate_task_envelope(artifact["task"], artifact["schema_version"], SCHEMA, TASK_SCHEMA)
     check_task(artifact["task"])
     check_preprocessing(artifact["preprocessing"])
     if not isinstance(artifact["models"], list) or [m["item"] for m in artifact["models"]] != ITEMS:
@@ -63,13 +71,24 @@ def _validate_model(artifact):
         raise ValueError("Missing dependency version")
     # Optional paired extension: schema /1 artifacts predating this bundle still load.
     fingerprint_keys = {"implementation_files_sha256", "implementation_bundle_sha256"}
+    if artifact["schema_version"] == TASK_SCHEMA and (
+        not fingerprint_keys <= provenance.keys()
+        or not isinstance(provenance["implementation_files_sha256"], dict)
+        or set(provenance["implementation_files_sha256"]) != set(IMPLEMENTATION_FILES)
+    ):
+        raise ValueError("Versioned task requires complete implementation fingerprint")
     if fingerprint_keys & provenance.keys():
         if not fingerprint_keys <= provenance.keys():
             raise ValueError("Incomplete implementation fingerprint")
         files = provenance["implementation_files_sha256"]
         if (
             not isinstance(files, dict)
-            or set(files) not in (set(IMPLEMENTATION_FILES), set(LEGACY_IMPLEMENTATION_FILES))
+            or set(files)
+            not in (
+                set(IMPLEMENTATION_FILES),
+                set(PRE_TASK_IMPLEMENTATION_FILES),
+                set(LEGACY_IMPLEMENTATION_FILES),
+            )
             or any(not _sha256(value) for value in files.values())
             or provenance["implementation_sha256"] != files[IMPLEMENTATION_FILES[0]]
             or provenance["implementation_bundle_sha256"] != digest(files)
@@ -167,7 +186,7 @@ def _json_constant(value):
     raise ValueError(f"Non-finite JSON value: {value}")
 
 
-def load_model(path, *, expected_preprocessing=None):
+def load_model(path, *, expected_preprocessing=None, expected_task_contract=None):
     envelope = json.loads(
         Path(path).read_text(encoding="utf-8"),
         object_pairs_hook=_json_object,
@@ -180,6 +199,10 @@ def load_model(path, *, expected_preprocessing=None):
     if envelope["sha256"] != digest(artifact):
         raise ValueError("Model checksum mismatch")
     validate_model(artifact)
+    if expected_task_contract is not None:
+        validate_task_contract(expected_task_contract)
+        if artifact["task"].get("contract") != expected_task_contract:
+            raise ValueError("Task compatibility mismatch; legacy scope cannot be inferred")
     if expected_preprocessing is not None and artifact["preprocessing"] != expected_preprocessing:
         raise ValueError("Feature compatibility mismatch")
     return artifact

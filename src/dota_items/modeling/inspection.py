@@ -40,6 +40,7 @@ def inspect_model(path):
     # Select fields explicitly: do not echo arbitrary extra metadata or raw samples.
     task = artifact["task"]
     return {
+        **({"task_contract": task["contract"]} if "contract" in task else {}),
         "schema_version": artifact["schema_version"],
         "family": artifact["family"],
         "synthetic": artifact["synthetic"],

@@ -1,5 +1,9 @@
 # 数据接口交接（2026-10-16）
 
+2026-10-20：新增独立的[任务绑定 /2 快照接口](../task-contracts.md)，经显式
+`--task-id` 生成并由模型适配器检查。现有 handoff/1 包继续使用冻结 /1 快照，
+不自动迁移、补写范围声明或放宽来源指纹检查。
+
 ## 当前公共接口：public-reader/1迁移（2026-10-17收尾）
 
 当前交接目录更新为reports/public-reader-2026-10-17/handoff/。读取入口仍为dota_items.handoff.bundle.verify_bundle。

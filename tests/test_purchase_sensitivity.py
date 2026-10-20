@@ -1,7 +1,9 @@
 import copy
 import importlib.util
 import json
+import platform
 import sys
+from importlib.metadata import version
 from pathlib import Path
 
 import pytest
@@ -70,6 +72,12 @@ def test_cli_verifies_before_synthetic_fit_and_records_migration(tmp_path, monke
     assert events == ["verified", "synthetic-fit"]
     assert result["test_evaluated"] is False
     provenance = result["provenance"]
+    assert provenance["versions"] == {
+        "python": platform.python_version(),
+        "numpy": version("numpy"),
+        "scikit_learn": version("scikit-learn"),
+    }
+    assert set(provenance["code"]) == {"revision", "dirty"}
     assert provenance["producer_migration"] == ("public-reader/1" if migration else None)
     assert provenance["reconstruction_mode"] == (
         "registered-producer-compatible" if migration else "strict"

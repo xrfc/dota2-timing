@@ -9,6 +9,31 @@ from .context import clean_context
 from .contracts import ECONOMY, SLOTS, Coverage, PreparationConfig
 
 
+def _prior_purchase_loss(raw, slot):
+    """Honor pre-fix cleaned imports that retained only their cleaning audit."""
+    audit = raw.get("cleaning_audit")
+    seen = set()
+    while isinstance(audit, dict):
+        if id(audit) in seen:
+            raise ValueError("Cyclic historical cleaning audit")
+        seen.add(id(audit))
+        channels = audit.get("channels", {})
+        if not isinstance(channels, dict):
+            raise ValueError("Invalid historical cleaning channels")
+        player = channels.get(str(slot), {})
+        if not isinstance(player, dict) or not isinstance(player.get("purchase_log", {}), dict):
+            raise ValueError("Invalid historical purchase quality")
+        stats = player.get("purchase_log", {})
+        invalid = stats.get("invalid_rows", 0)
+        held = stats.get("supervision_held", False)
+        if type(invalid) is not int or invalid < 0 or type(held) is not bool:
+            raise ValueError("Invalid historical purchase quality")
+        if invalid or held:
+            return True
+        audit = audit.get("source_cleaning_audit")
+    return False
+
+
 def clean_match(raw: Any, config: PreparationConfig) -> tuple[dict, dict]:
     if not isinstance(raw, dict):
         raise ValueError("Expected a normalized match object, not raw Gem JSON")
@@ -54,6 +79,8 @@ def clean_match(raw: Any, config: PreparationConfig) -> tuple[dict, dict]:
         if type(hero) is not int or hero <= 0:
             raise ValueError("hero_id must be a positive integer")
         slots.add(slot)
+        if type(player.get("purchase_log_quarantined", False)) is not bool:
+            raise ValueError("purchase_log_quarantined must be boolean")
         stats = {}
         for channel in ("purchase_log", "position_log", "economy_log"):
             rows = player.get(channel)
@@ -140,8 +167,17 @@ def clean_match(raw: Any, config: PreparationConfig) -> tuple[dict, dict]:
             coverage = Coverage.model_validate(coverage).model_dump()
             if not coverage["start_seconds"] <= coverage["end_seconds"] <= raw["duration"]:
                 raise ValueError("purchase_coverage is outside match duration")
-        # Any lost purchase event invalidates absence/next-event supervision for this player.
-        if stats["purchase_log"]["invalid_rows"] or not stats["purchase_log"]["available"]:
+        # Persist known loss through prepare -> import -> clean again. Unknown
+        # coverage alone still permits the next observed event in an intact log.
+        held = (
+            player.get("purchase_log_quarantined", False)
+            or bool(stats["purchase_log"]["invalid_rows"])
+            or _prior_purchase_loss(raw, slot)
+        )
+        if held:
+            player["purchase_log_quarantined"] = True
+        stats["purchase_log"]["supervision_held"] = held
+        if held or not stats["purchase_log"]["available"]:
             coverage = None
         player["purchase_coverage"] = coverage
         quality["channels"][str(slot)] = stats

@@ -5,6 +5,7 @@ import json
 import subprocess
 from pathlib import Path
 
+from dota_items.contracts.tasks import TASK_ID, task_contract
 from dota_items.modeling.inspection import inspect_model
 
 
@@ -14,9 +15,11 @@ def main():
     demo = commands.add_parser("demo", help="Fabricated data only; no real-data training input")
     demo.add_argument("--output", type=Path, required=True)
     demo.add_argument("--family", choices=["frequency", "logistic"], default="frequency")
+    demo.add_argument("--task-id", choices=[TASK_ID], help="Synthetic task-bound /2 demo")
     predict = commands.add_parser("predict")
     predict.add_argument("--model", type=Path, required=True)
     predict.add_argument("--lineup", type=Path, required=True)
+    predict.add_argument("--task-id", choices=[TASK_ID], help="Require matching task-bound model")
     inspect = commands.add_parser("inspect", help="Read-only validated metadata; no prediction")
     inspect.add_argument("--model", type=Path, required=True)
     args = parser.parse_args()
@@ -38,6 +41,9 @@ def main():
         if args.output.exists():
             parser.error("Output already exists")
         snapshot = synthetic_snapshot()
+        if args.task_id:
+            snapshot["schema_version"] = "purchase-log-modeling-snapshot/2"
+            snapshot["task"]["contract"] = task_contract(args.task_id)
         root = Path(__file__).resolve().parents[1]
         revision = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=root, text=True
@@ -54,10 +60,13 @@ def main():
         result = predict_lineup(loaded, snapshot["samples"][0]["features"])
         print(json.dumps({"synthetic": True, "performance_evidence": False, **result}, indent=2))
     else:
+        expected = task_contract(args.task_id) if args.task_id else None
         print(
             json.dumps(
                 predict_lineup(
-                    load_model(args.model), json.loads(args.lineup.read_text(encoding="utf-8"))
+                    load_model(args.model, expected_task_contract=expected),
+                    json.loads(args.lineup.read_text(encoding="utf-8")),
+                    expected_task_contract=expected,
                 ),
                 indent=2,
             )

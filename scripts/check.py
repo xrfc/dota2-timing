@@ -25,7 +25,7 @@ def module_paths(scope):
     all_tests = sorted(path.name for path in (ROOT / "tests").glob("test_*.py"))
     recommendation = {name for name in all_tests if name.startswith("test_recommendation_")}
     model_tests = MODEL_TESTS | {name for name in all_tests if name.startswith("test_model_")}
-    shared = {"test_architecture.py", "test_check_scopes.py"}
+    shared = {"test_architecture.py", "test_check_scopes.py", "test_task_contracts.py"}
     selected = {
         "modeling": model_tests | shared,
         "recommendation": recommendation | shared,
