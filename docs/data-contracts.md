@@ -1,5 +1,36 @@
 # 数据与模型接口契约
 
+## 公共读取契约收尾 — 2026-10-17
+
+source_io提供read_source_bytes/parse_source_json，保持来源解析原行为，不等同严格制品解码。
+交接/快照schema不变，新包与审计一致声明public-reader/1迁移；模型输入语义不变。
+详见[接口与迁移规范](public-source-reader.md)。
+
+
+## 模块接口更新 — 2026-10-17
+
+源日志快照仍为purchase-log-modeling-snapshot/1，模型仍为purchase-foundation-model/1，预测语义未变。读取/适配分别位于handoff.bundle、modeling.batch。
+任务与特征约束集中于modeling.specs，当前不接受任意英雄/窗口；新旧实现指纹清单规则见[指南](modular-maintenance.md)。
+coach-context/1格式不变，纯实现下沉contracts.replay_context。完整性/语义检查不是训练许可。
+
+2026-10-14后续：预演输出升级 `lineup-preflight/2`，新增 `player-overlap/1` 诊断。只导出比赛ID与计数，不导出账号/哈希；配置版本不变，旧训练入口仍拒绝预演。
+
+## 2026-10-14 续接
+
+2026-10-14新增 `lineup-preflight-config/1`（严格配置）与 `lineup-preflight/1`（程序生成的诊断字典，非正式样本契约）；全部训练mask=false，旧训练入口拒绝。字段见[预检说明](pretraining-readiness.md)。
+
+## 新增审计契约（2026-10-13）
+
+| 对象 | 版本 | 校验/含义 |
+|---|---|---|
+| 审计配置 | purchase-feasibility-config/1 | 严格AuditConfig，窗口和候选检查 |
+| 采样计划 | purchase-feasibility-plan/1 | 严格SamplingPlan，重新计算切片及发现哈希 |
+| 补丁来源收据 | patch-time-evidence/1 | 严格PatchReceipt，快照哈希/时区/边界检查 |
+| 审计报告 | purchase-feasibility-report/1 | 程序生成字典，auditor_version为purchase-feasibility/3；非完整Pydantic输出Schema |
+| 语义核验 | purchase-semantics/1 | 程序生成字典，比较状态与位置线索；training_allowed固定false |
+
+上述不修改旧样本/模型Schema，不是训练标签契约。字段和复现见[审计](data-feasibility.md)、[语义](data-semantics.md)。
+
 > v0.4 数据准备更新：`prepare` 已实现单文件清洗/特征/标签；`build-samples` 输出固定 split 的训练数组和 train-only 预处理。输入、错误策略、任务 mask 和操作示例以[数据管线](data-pipeline.md)为准。实际模型与真实字段验收仍待完成。
 
 基线：**0.4.0 / main 725f35c / 2026-10-09**。本文件描述已实现格式。派生样本和任务资格见[数据管线](data-pipeline.md)；完整来源修订和真实语义资格仍待补足。

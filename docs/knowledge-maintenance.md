@@ -1,5 +1,9 @@
 # 知识维护、路径映射与证据恢复
 
+## 2026-10-13 进度同步
+
+新增 `knowledge/evidence/feasibility-2026-10-13/` 保存补丁快照、采样计划与OpenDota源码文本/许可/哈希；原比赛JSON仅存忽略的data目录，脱敏报告位于docs/acceptance。参见[语义核验](data-semantics.md)。
+
 2026-10-10 用户要求：本轮所有持久化资料和路径记录纳入 `xrfc/dota2-timing`，后续开发持续同步维护仓库。仓库是可发布成果的规范位置；临时输出与外部大文件另行保存。这是后续工作的维护约定，不代表已创建后台定时任务。
 
 ## 路径迁移清单
@@ -14,6 +18,16 @@
 | 原始 ZIP 与 `.dem.bz2` | 外部证据目录，以 `--evidence-root` 传入 | 大文件不进 Git；恢复后按收据验证 |
 | 本次新增冷启动候选 | [knowledge/hero-capabilities/cold-start/](../knowledge/hero-capabilities/cold-start/manifest.json) | 可复现、冻结的公开事实提取候选，未准入 |
 | 新追踪运行结果 | `learning/output/event-lineage/9031371970/trace-result.json` | 默认忽略；不覆盖已提交的历史结果 |
+
+2026-10-11新增本地推荐路径：
+
+| 规范位置 | 内容与边界 |
+|---|---|
+| [knowledge/recommendation/](../knowledge/recommendation/README.md) | 独立版本化机制/策略与27份来源，不改旧官网学习快照的审核状态 |
+| [examples/recommendation/](../examples/recommendation/cases.json) | 6个开发者构造的阵容；已用于开发，不能充当独立最终集 |
+| [docs/acceptance/lineup-2026-10-11.json](acceptance/lineup-2026-10-11.json) | 固定工程验收记录、代码与知识/规则身份，不是推荐质量评分 |
+| [质量评审流程](recommendation-quality-review.md) | 后续报告评审、交互补齐与独立案例冻结要求；实际结果另存acceptance目录 |
+| `reports/lineup-*.html` / `reports/lineup-*.json` | 本地可再生报告，Git忽略；不作为唯一持久化证据 |
 
 这次维护时，仓库本地检出位于 `/home/node/.openclaw/workspace/tmp/dota2-timing-audit-20261009`；外部证据位于 `/home/node/.openclaw/workspace/artifacts/dota2-timing-evidence/7.41f-2026-10-06`。这两项是历史环境记录，不是运行程序的硬编码依赖。克隆到其他位置时使用相对仓库路径和显式参数。
 
@@ -44,6 +58,6 @@ Windows 使用 `.venv/Scripts/python.exe`。该脚本不重解析二进制；结
 - 每项解释区分官方事实、检索线索、来源核对、共同认可的机制、决策监督；未知不写成不存在。
 - 不以资料覆盖、候选条数或 CI 通过宣称全英雄理解、训练准入或模型效果。
 - 不删除来源分支或旧证据；需要改变状态时保留历史日期和依据。
-- 通过开发分支与 PR 发布，检查精确提交上的 CI；按授权合入 main 后同步本地。大型回放、个人资料、环境、密钥、模型产物继续不进 Git。
+- 当前只在本地开发分支提交，不自动推送、创建PR或合并。未来获得发布授权后再检查精确提交上的CI；大型回放、个人资料、环境、密钥、模型产物继续不进Git。
 
 维护全链条的检查入口：`python scripts/check.py`。知识模块边界测试已纳入 learning scope，因此 Linux 和 Windows CI 都会执行，不需要额外采集或大模型 API。

@@ -1,0 +1,158 @@
+{
+  "schema_version": "lineup-development-verification/1",
+  "observed_at_utc": "2026-10-11T04:18:39.912593+00:00",
+  "base_commit": "112056aae2e6b97f52296c4beaf5657c1087b852",
+  "code_identity": {
+    "recommend.py": "629a3c07a22b9b31b72ad4ea2e093ffc97b59e2076e23e70eddb6ce1b117ee77",
+    "src/dota_items/recommendation/__init__.py": "fad303f3c82546a4c428d7e8e2231c093c89220d9e35f507d3b2ecb2470b3c64",
+    "src/dota_items/recommendation/cli.py": "a9d9cc113a28c1dce41ba20fea6c0505a4d3010ba0754a3e583a6464405810f2",
+    "src/dota_items/recommendation/contracts.py": "618899f8c5644cc186be361c74fe4d2e25360006ba04bfe2f53097e4794eefeb",
+    "src/dota_items/recommendation/engine.py": "278b89aa9e5d59a056dbbdd4f4e3d5b4fb0dc1c8d81dbee752fdb1be401c18a0",
+    "src/dota_items/recommendation/files.py": "c2cbca0dd939752013c70e0de382660469ad4c138b255c53f35815bdb34ad9f6",
+    "src/dota_items/recommendation/knowledge.py": "56e548516235d03db3f5ce6ccf5934ab1d2bd0dd046455a10ce9ab4e27dfd78b",
+    "src/dota_items/recommendation/report.py": "d0f63bfa7a02be2bfe7c2d206ff5dfc694095ee2f21ca615359744c3f97bef91",
+    "tests/test_recommendation_engine.py": "4676ce751a0102b4b480591b2b1c3cacf286a537234eb4ba3a940f9710ee241f"
+  },
+  "knowledge_sha256": "45939b95675b173ab3690086924f09074fa531fe031aa054a9eece37d3b085a4",
+  "rules_sha256": "88b627fb2175f845ed96cdc61fc81c9b3c13a0f88f76b2f5ae9c71650d7df76e",
+  "checks": {
+    "engineering_pytest_passed": 214,
+    "new_engine_tests_passed": 29,
+    "learning_python_passed": 10,
+    "knowledge_tests_passed": 12,
+    "javascript_tests_passed": 6,
+    "ruff_check": "passed",
+    "ruff_format": "passed",
+    "legacy_demo_doctor": "passed",
+    "learning_page_build": "passed",
+    "installed_console_entry": "passed",
+    "pip_check": "passed",
+    "local_markdown_links": "passed"
+  },
+  "cases": [
+    {
+      "case": "baseline",
+      "origin": "synthetic_author_constructed",
+      "input_sha256": "de479687acc2613175f14fec9531822056290c3a58aab3d18539087dccf634bb",
+      "status": "supported",
+      "candidate_keys": [
+        "monkey_king_bar",
+        "manta",
+        "skadi",
+        "bfury",
+        "maelstrom",
+        "power_treads",
+        "blink",
+        "magic_wand",
+        "satanic"
+      ],
+      "need_keys": [
+        "accuracy",
+        "ally-setup",
+        "antiheal",
+        "control-warning",
+        "dispel",
+        "growth"
+      ],
+      "result_sha256": "fcdc432874603c9f06c43bed8c65e1b16f1b850614ca23548b48f06c60f97ebe"
+    },
+    {
+      "case": "no-evasion",
+      "origin": "synthetic_author_constructed",
+      "input_sha256": "35dbaf08f2761e4ef75e64f52b542a00fadbf07beb3f342cc83172ef44345a8e",
+      "status": "supported",
+      "candidate_keys": [
+        "manta",
+        "skadi",
+        "bfury",
+        "power_treads",
+        "maelstrom",
+        "blink",
+        "magic_wand",
+        "satanic"
+      ],
+      "need_keys": [
+        "ally-setup",
+        "antiheal",
+        "control-warning",
+        "dispel",
+        "growth"
+      ],
+      "result_sha256": "c9e16916c327b0cfb194fb6f1898c327f86c8815827d22be3c4c6a98d3c18ec0"
+    },
+    {
+      "case": "illusions",
+      "origin": "synthetic_author_constructed",
+      "input_sha256": "bee204bd7265224ca57132b8be2bf362182b245946d662d04bdb8e39c83e27c0",
+      "status": "supported",
+      "candidate_keys": [
+        "maelstrom",
+        "monkey_king_bar",
+        "skadi",
+        "bfury",
+        "power_treads",
+        "manta",
+        "blink",
+        "magic_wand",
+        "satanic"
+      ],
+      "need_keys": [
+        "accuracy",
+        "ally-setup",
+        "antiheal",
+        "control-warning",
+        "growth",
+        "waveclear"
+      ],
+      "result_sha256": "ded62f61ce7b8257a8c53739ff3db9cda7a8352be63b56e5a02bce6d326696c9"
+    },
+    {
+      "case": "unknown-hero-knowledge",
+      "origin": "synthetic_author_constructed",
+      "input_sha256": "27771f4891b16600194ed0241b0da6e74a2973913638d223f0cdb7146015d93c",
+      "status": "partial",
+      "candidate_keys": [
+        "manta",
+        "skadi",
+        "bfury",
+        "power_treads",
+        "maelstrom",
+        "blink",
+        "magic_wand",
+        "satanic"
+      ],
+      "need_keys": [
+        "ally-setup",
+        "antiheal",
+        "control-warning",
+        "dispel",
+        "growth"
+      ],
+      "result_sha256": "64300c7f52510e1772e5a5bfa4ad99442ff9f62360b04ea60fa5bec8bfcf0a67"
+    },
+    {
+      "case": "unsupported-role",
+      "origin": "synthetic_author_constructed",
+      "input_sha256": "72b981a8b4210db0e63228d5ad17dae2532cb4ee05e3a190e99a44d7607dc95e",
+      "status": "unsupported",
+      "candidate_keys": [],
+      "need_keys": [],
+      "result_sha256": "5d27dc946bb428c5ff57abe7ffc228c147194907cb50c0f723c735994c396bd5"
+    },
+    {
+      "case": "unsupported-target",
+      "origin": "synthetic_author_constructed",
+      "input_sha256": "2749ea0cd4102fddd33f0005e97f494f29debccf5c07342cd7519d60e651775f",
+      "status": "unsupported",
+      "candidate_keys": [],
+      "need_keys": [],
+      "result_sha256": "5b4ac26d374b6a2d9c44bf947a1d549b354fb35bcff094bb2bf8b8bedb3de31d"
+    }
+  ],
+  "limitations": [
+    "Developer regression cases, not a held-out quality evaluation.",
+    "No game-client verification or real replay parsing in this run.",
+    "HTML rendering generated and escaping tested; browser visual inspection not performed.",
+    "No remote CI, push, merge, training or deployment."
+  ]
+}

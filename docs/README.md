@@ -1,37 +1,33 @@
-# 文档索引
+# 文档入口
 
-文档更新：**2026-10-09**；包版本 **0.4.0**，代码基线 **main / 725f35c**。全部开发分支已整合，包括真实数据验收、上下文、训练准入与缓存/身份追踪修复。本文索引工程文档；全部学习资料与可视化入口见 [learning/](../learning/README.md)。实际模型训练仍为下一阶段。
+2026-10-22整理：只维护三份流程／开发主文档；其余作为接口、手册、历史证据或学习材料。
 
-## 按任务阅读
+## 三份主文档
 
-| 你要做什么 | 文档 |
+| 目的 | 唯一入口 |
 |---|---|
-| 先判断项目做到了哪里 | [完成度与验证证据](project-status.md) |
-| 查看全英雄机制资料与选人评估范围 | [英雄能力知识](../knowledge/README.md) |
-| 判断知识如何用于冷启动训练 | [知识与训练候选](knowledge-cold-start.md) |
-| 查资料迁移、外部证据与仓库维护路径 | [知识维护与路径清单](knowledge-maintenance.md) |
-| 安装、导入、标注、固定数据集、预留模型接入 | [教练工作流](coach-workflow.md) |
-| 日常操作、旧命令迁移、备份、故障恢复、人工核验 | [操作指南](workflow.md) |
-| 了解模块边界和数据流 | [工程设计](engineering-design.md) |
-| 一份 demo 到清洗、特征、标签与训练数组 | [数据管线](data-pipeline.md) |
-| 采集 7.41f 高分候选、复现真实回放验收 | [真实数据准入](real-data-acceptance.md) |
-| 核对视野、装备、技能、战斗字段及教练任务缺口 | [教练字段核查](coach-field-audit.md) |
-| 使用新增上下文、玩家视角与真实重解析检查 | [上下文接入](observer-context.md) |
-| 核对真实训练准入及桌面交接 | [训练准入](training-admission.md) |
-| 实现训练器或预测器 | [数据契约](data-contracts.md) |
-| 理解技术选择和后续性能优化 | [技术选型与优化路线](long-term-roadmap.md) |
-| 安排下一轮开发 | [任务清单](roadmap.md) |
-| 复核已知限制与历史问题 | [风险复核](project-review.md) |
-| 重现检查、区分工程验证和模型效果 | [验证与交付](validation-and-delivery.md) |
-| 修改代码或文档 | [贡献指南](../CONTRIBUTING.md) |
-| 查版本变化 | [变更记录](../CHANGELOG.md) |
+| 整体目标、两侧依赖及优先级 | [项目总开发路线](roadmap.md) |
+| 来源、采集、筛选、标签、划分、交接及数据任务 | [数据流程与开发](data-prep-progress.md) |
+| 输入、训练、评估、诊断、结论及模型任务 | [模型流程与开发](model-foundation.md) |
 
-## 文档职责
+## 按需参考（不另维护路线）
 
-- `project-status.md` 统一回答完成度，不使用缺乏分母的完成百分比。
-- `data-contracts.md` 描述代码当前接受和输出的格式；规划中的格式单独注明。
-- `coach-workflow.md` 维护命令和适配器用法；`workflow.md` 维护运营与恢复。
-- `long-term-roadmap.md` 解释选择、成本和升级条件；`roadmap.md` 维护任务状态与验收要求。
-- `validation-and-delivery.md` 维护测试证据及其边界；合成数据通过不等于真实回放语义通过。
+- 协作／结构：[并行协议](handoff/parallel-development.md)、[单目录](handoff/single-workspace-2026-10-16.md)、[模块维护](modular-maintenance.md)。
+- 接口：[公共读取](public-source-reader.md)、[任务契约](task-contracts.md)、[数据交接](handoff/purchase-data-interface.md)。
+- 数据证据：[随机v2](random-cohort-v2-2026-10-21.md)、[整局11装备](whole-log-task-2026-10-21.md)。
+- 模型证据：[固定基线](whole-log-baseline-2026-10-21.md)、[校准诊断](whole-log-calibration-2026-10-21.md)。
+- 操作／质量：[工作流](workflow.md)、[教练命令](coach-workflow.md)、[推荐评审](recommendation-quality-review.md)、[验证记录](validation-and-delivery.md)。
+- 学习：[个人任务](../learning/docs/roadmap.md)、[基线练习](../learning/docs/whole-log-baseline-lab.md)、[诊断练习](../learning/docs/calibration-lab.md)。
+- 历史：[原文快照与哈希](archive/2026-10-22/INDEX.md)、[原完整索引](archive/2026-10-22/README.md)。其他按日期文档保留，不把旧“当前／下一步”当新指令。
 
-出现冲突时，先核对[实现](../src/dota_items/workflow/)和[测试](../tests/)，修正文档并注明验证范围。生成到工作区的 JSON Schema 来自代码；部分运行清单只有版本字段和程序校验，并没有对应的完整 Pydantic Schema。
+## 更新规则
+
+数据流程、决策和DATA任务只改数据主文档；模型流程、决策和MODEL任务只改模型主文档；跨侧出口及产品优先级只改总路线。
+长实验日志和验收可另存并引用，不再新增按日期的开发路线。历史文档不删除；数据、模型和reports不因整理改写。
+
+- [整局实验层维护](experiment-maintenance.md)：当前／历史CLI、模块API、兼容与结构整理验收。
+
+- [两组C真实对照](whole-log-regularization-2026-10-22.md)：固定正则化结果、逐装备诊断与只读复验证据。
+
+- 录像证据：[试点](replay-pilot-2026-10-22.md)、[兼容解析](replay-pilot-compat-results-2026-10-22.md)、[语义](replay-semantics-2026-10-22.md)、[实体/地标](replay-identity-2026-10-22.md)、[突跳事件](replay-jump-events-2026-10-23.md)。仅限定离线审计，不代表训练准入。
+- [2026-10-23近期交付摘要](recent-progress-2026-10-23.md)：本轮已完成事项与交付范围；持续路线仍以上述三份主文档为准。

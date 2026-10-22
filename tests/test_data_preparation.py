@@ -145,6 +145,65 @@ class PreparationTests(unittest.TestCase):
         self.assertEqual(len(cleaned["players"][0]["purchase_log"]), 3)
         self.assertEqual(quality["quarantined"], 2)
 
+    def test_known_purchase_loss_holds_labels_after_recleaning(self):
+        raw = fixture()
+        raw["players"][0]["purchase_log"].append({"time": 20, "key": None})
+        cleaned, quality = clean_match(raw, self.config)
+        self.assertTrue(cleaned["players"][0]["purchase_log_quarantined"])
+        for _ in range(2):
+            _, labels, _ = extract_samples(cleaned, quality, self.config)
+            self.assertFalse(any(row["item_mask"] for row in labels))
+            self.assertEqual(labels[0]["item_reason"], "invalid_purchase_log")
+            self.assertTrue(any(row["route_mask"] for row in labels))
+            cleaned, quality = clean_match(cleaned, self.config)
+            self.assertTrue(quality["channels"]["0"]["purchase_log"]["supervision_held"])
+
+    def test_purchase_loss_survives_prepare_import_build_samples(self):
+        for mid in (701, 702, 703):
+            raw = fixture(mid)
+            raw["players"][0]["purchase_log"].append({"time": float("nan"), "key": "boots"})
+            source = self.root / f"{mid}.json"
+            source.write_text(json.dumps(raw), encoding="utf-8")
+            prepare_one(self.workspace, source, self.config)
+            self.workspace.annotate(
+                mid,
+                Labels(
+                    tier="synthetic",
+                    patch="7.41f",
+                    role=1,
+                    player_slots=[0],
+                    label_source="synthetic regression fixture",
+                ),
+            )
+        dataset = build_dataset(self.workspace, patch="7.41f", role=1, allow_synthetic=True)
+        built = build_samples(self.workspace, dataset["dataset_id"], self.config)
+        _, folder = self.workspace.dataset(built["dataset_id"])
+        for split in ("train", "validation", "test"):
+            rows = [
+                json.loads(line)
+                for line in (folder / f"{split}.labels.jsonl").read_text().splitlines()
+            ]
+            self.assertFalse(any(row["item_mask"] for row in rows))
+            self.assertTrue(any(row["route_mask"] for row in rows))
+
+    def test_quarantine_marker_is_strict_and_does_not_hold_intact_logs(self):
+        raw = fixture()
+        raw["players"][0]["purchase_log_quarantined"] = "false"
+        with self.assertRaises(ValueError):
+            clean_match(raw, self.config)
+        raw["players"][0]["purchase_log_quarantined"] = False
+        self.assertTrue(samples(raw)[1][0]["item_mask"])
+
+    def test_pre_fix_import_quality_is_honored_without_new_marker(self):
+        raw = fixture()
+        old_audit = {"channels": {"0": {"purchase_log": {"invalid_rows": 1}}}}
+        raw["cleaning_audit"] = {"source_cleaning_audit": old_audit}
+        cleaned, quality = clean_match(raw, self.config)
+        self.assertTrue(cleaned["players"][0]["purchase_log_quarantined"])
+        self.assertFalse(
+            any(row["item_mask"] for row in extract_samples(cleaned, quality, self.config)[1])
+        )
+
     def test_simultaneous_different_purchases_are_ambiguous(self):
         raw = fixture()
         raw["players"][0]["purchase_log"].append({"time": 60, "key": "desolator"})

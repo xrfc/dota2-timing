@@ -9,8 +9,8 @@ from pydantic import Field
 
 from ..sources.gem_observations import number
 from ..storage import inside, read_json, verify_files
-from ..workflow.validation import resolve_ref, validate_match
 from .contracts import ECONOMY, SLOTS, StrictContract
+from .validation import resolve_ref, validate_match
 
 
 class AcceptanceConfig(StrictContract):

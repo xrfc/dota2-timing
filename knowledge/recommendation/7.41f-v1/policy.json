@@ -1,0 +1,274 @@
+{
+  "schema_version": "coach-recommendation-policy/1",
+  "patch": "7.41f",
+  "version": "juggernaut-carry-rules/1",
+  "profiles": [
+    {
+      "hero_id": 8,
+      "role": 1,
+      "required_fact_ids": [
+        "juggernaut_blade_dance-attack",
+        "juggernaut_blade_fury-self_protection"
+      ],
+      "item_keys": [
+        "power_treads",
+        "bfury",
+        "maelstrom",
+        "manta",
+        "black_king_bar",
+        "monkey_king_bar",
+        "butterfly",
+        "basher",
+        "skadi",
+        "satanic",
+        "blink",
+        "magic_wand"
+      ],
+      "rationale": "用户确认首版仅支持一号位主宰；英雄/位置能力与候选白名单通过配置扩展。",
+      "item_rule_ids": [
+        "item-power_treads-growth",
+        "item-bfury-growth",
+        "item-maelstrom-growth",
+        "item-manta-growth",
+        "item-satanic-growth",
+        "item-magic_wand-growth",
+        "item-manta-dispel",
+        "item-monkey_king_bar-accuracy",
+        "item-maelstrom-accuracy",
+        "item-bfury-waveclear",
+        "item-maelstrom-waveclear",
+        "item-basher-catch",
+        "item-blink-catch",
+        "item-skadi-catch",
+        "item-skadi-antiheal",
+        "item-blink-ally-setup"
+      ]
+    }
+  ],
+  "need_rules": [
+    {
+      "rule_id": "need-growth",
+      "side": "self",
+      "tag": "attack",
+      "need_key": "growth",
+      "title": "建立普通攻击输出与发育路线",
+      "condition": "位置策略偏好，不是官方最佳出装结论；无经济/库存信息。"
+    },
+    {
+      "rule_id": "need-dispel",
+      "side": "enemy",
+      "tag": "silence",
+      "need_key": "dispel",
+      "title": "评估沉默下的基本驱散选项",
+      "condition": "仅为条件备选；须确认具体效果可基本驱散且能够使用物品。"
+    },
+    {
+      "rule_id": "need-accuracy",
+      "side": "enemy",
+      "tag": "evasion",
+      "need_key": "accuracy",
+      "title": "提高应对闪避的攻击可靠性",
+      "condition": "敌方具备闪避潜力，不表示已知实际等级或最终闪避率。"
+    },
+    {
+      "rule_id": "need-waveclear",
+      "side": "enemy",
+      "tag": "illusions",
+      "need_key": "waveclear",
+      "title": "考虑多目标与幻象处理",
+      "condition": "不能从英雄身份推定当前幻象数量或经济强弱。"
+    },
+    {
+      "rule_id": "need-catch",
+      "side": "enemy",
+      "tag": "mobility",
+      "need_key": "catch",
+      "title": "评估接近与留人手段",
+      "condition": "必须先能接触目标；概率控制不当作可靠先手。"
+    },
+    {
+      "rule_id": "need-antiheal",
+      "side": "enemy",
+      "tag": "healing",
+      "need_key": "antiheal",
+      "title": "评估压低敌方恢复",
+      "condition": "恢复能力需要施法窗口；不是始终生效的生命收益。"
+    },
+    {
+      "rule_id": "need-control-warning",
+      "side": "enemy",
+      "tag": "control",
+      "need_key": "control-warning",
+      "title": "保留敌方控制风险",
+      "condition": "不机械套用基本驱散或减益免疫；具体控制例外未全量核验。"
+    },
+    {
+      "rule_id": "need-root-warning",
+      "side": "enemy",
+      "tag": "root",
+      "need_key": "root-warning",
+      "title": "保留禁锢/攻击限制风险",
+      "condition": "禁锢不等同眩晕，不声称任何驱散一定可解。"
+    },
+    {
+      "rule_id": "need-ally-setup",
+      "side": "ally",
+      "tag": "control",
+      "need_key": "ally-setup",
+      "title": "利用队友控制窗口进行跟进",
+      "condition": "队友有能力不等于能实际承担，不降低自身生存需求。"
+    }
+  ],
+  "item_rules": [
+    {
+      "rule_id": "item-power_treads-growth",
+      "item_key": "power_treads",
+      "need_key": "growth",
+      "weight": 3.0,
+      "reason": "可切换属性的基础鞋类候选；本规则偏好普通攻击路线。",
+      "category": "core",
+      "stage": "early"
+    },
+    {
+      "rule_id": "item-bfury-growth",
+      "item_key": "bfury",
+      "need_key": "growth",
+      "weight": 3.0,
+      "reason": "近战分裂支持发育方向，前提是有持续攻击和发育空间。",
+      "category": "core",
+      "stage": "mid"
+    },
+    {
+      "rule_id": "item-maelstrom-growth",
+      "item_key": "maelstrom",
+      "need_key": "growth",
+      "weight": 2.0,
+      "reason": "概率连锁伤害作为另一条攻击发育路线。",
+      "category": "alternative",
+      "stage": "mid"
+    },
+    {
+      "rule_id": "item-manta-growth",
+      "item_key": "manta",
+      "need_key": "growth",
+      "weight": 2.0,
+      "reason": "幻象与基本驱散作为中期条件工具，不承诺固定顺序。",
+      "category": "core",
+      "stage": "mid"
+    },
+    {
+      "rule_id": "item-satanic-growth",
+      "item_key": "satanic",
+      "need_key": "growth",
+      "weight": 1.0,
+      "reason": "有物理攻击输出窗口时评估吸血续航。",
+      "category": "alternative",
+      "stage": "late"
+    },
+    {
+      "rule_id": "item-magic_wand-growth",
+      "item_key": "magic_wand",
+      "need_key": "growth",
+      "weight": 1.0,
+      "reason": "若对线可获得充能，可作为小件恢复备选。",
+      "category": "alternative",
+      "stage": "early"
+    },
+    {
+      "rule_id": "item-manta-dispel",
+      "item_key": "manta",
+      "need_key": "dispel",
+      "weight": 5.0,
+      "reason": "发现敌方沉默潜力，提高基本驱散选项的评估优先级；仅在该效果可驱散时适用。",
+      "category": "situational",
+      "stage": "mid"
+    },
+    {
+      "rule_id": "item-monkey_king_bar-accuracy",
+      "item_key": "monkey_king_bar",
+      "need_key": "accuracy",
+      "weight": 8.0,
+      "reason": "敌方具备闪避，金箍棒的概率穿透闪避机制与命中需求相关。",
+      "category": "situational",
+      "stage": "late"
+    },
+    {
+      "rule_id": "item-maelstrom-accuracy",
+      "item_key": "maelstrom",
+      "need_key": "accuracy",
+      "weight": 1.0,
+      "reason": "连锁闪电触发时具有穿透闪避说明，但不能替代稳定命中方案。",
+      "category": "situational",
+      "stage": "mid"
+    },
+    {
+      "rule_id": "item-bfury-waveclear",
+      "item_key": "bfury",
+      "need_key": "waveclear",
+      "weight": 2.0,
+      "reason": "近战分裂可覆盖附近多目标，效果依赖站位与攻击窗口。",
+      "category": "situational",
+      "stage": "mid"
+    },
+    {
+      "rule_id": "item-maelstrom-waveclear",
+      "item_key": "maelstrom",
+      "need_key": "waveclear",
+      "weight": 5.0,
+      "reason": "连锁闪电可跳跃多个目标，列为幻象处理的候选方向而非保证克制。",
+      "category": "situational",
+      "stage": "mid"
+    },
+    {
+      "rule_id": "item-basher-catch",
+      "item_key": "basher",
+      "need_key": "catch",
+      "weight": 5.0,
+      "reason": "能够接近目标时，概率击晕可补充留人。",
+      "category": "situational",
+      "stage": "late"
+    },
+    {
+      "rule_id": "item-blink-catch",
+      "item_key": "blink",
+      "need_key": "catch",
+      "weight": 3.0,
+      "reason": "主动位移可评估为接近手段，但受伤禁用且不直接提供控制。",
+      "category": "situational",
+      "stage": "mid"
+    },
+    {
+      "rule_id": "item-skadi-catch",
+      "item_key": "skadi",
+      "need_key": "catch",
+      "weight": 2.0,
+      "reason": "攻击减速可辅助持续贴近，不阻止所有位移技能。",
+      "category": "situational",
+      "stage": "late"
+    },
+    {
+      "rule_id": "item-skadi-antiheal",
+      "item_key": "skadi",
+      "need_key": "antiheal",
+      "weight": 6.0,
+      "reason": "攻击附带恢复抑制，与敌方治疗潜力相关。",
+      "category": "situational",
+      "stage": "late"
+    },
+    {
+      "rule_id": "item-blink-ally-setup",
+      "item_key": "blink",
+      "need_key": "ally-setup",
+      "weight": 1.0,
+      "reason": "队友存在控制潜力，可评估用位移跟进；不假设其一定命中。",
+      "category": "alternative",
+      "stage": "mid"
+    }
+  ],
+  "limitations": [
+    "所有权重为未校准启发式策略；不是胜率、概率、职业共识或质量验收结果。",
+    "没有当前经济、库存、等级、技能冷却、对线分配或队友位置输入，不推断精确购买时间与下一件必买装备。",
+    "列表为条件候选及备选，不是要求全部购买；阶段提示不构成完整购买顺序。",
+    "未核验的控制/免疫交互只记录风险；黑皇杖和蝴蝶暂缓启用，不表示这两件装备不值得购买。"
+  ]
+}

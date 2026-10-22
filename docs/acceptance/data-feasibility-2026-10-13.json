@@ -1,0 +1,611 @@
+{
+  "artifact_sha256": {
+    "data/feasibility-2026-10-13/audit-final.json": "6b02638ae0ce6228790060564955c36009bd371306a65bf2a7b386ce871b94d3",
+    "data/feasibility-2026-10-13/discovery-receipt.json": "04354aecb1e90c6a4abe23efa6e2764fb4c9189b42ac6af761b82907ad56f8ef",
+    "data/feasibility-2026-10-13/fetch-results.json": "432d4e760fd023704af0aec65b245ac56ea3613d566330097a2e69b95cc82205",
+    "data/feasibility-2026-10-13/sampling-plan.json": "b32e2c2d0081de14d34a16c2a1ff12c90fcaa2aa61669c79c191813eea8a549a"
+  },
+  "audit": {
+    "auditor_version": "purchase-feasibility/1",
+    "config": {
+      "candidate_items": [
+        "bfury",
+        "maelstrom",
+        "manta",
+        "black_king_bar",
+        "skadi"
+      ],
+      "hero_id": 8,
+      "requested_patch": "7.41f",
+      "requested_role": 1,
+      "schema_version": "purchase-feasibility-config/1",
+      "window_end": 1800,
+      "window_start": 0
+    },
+    "implementation_sha256": {
+      "data/contracts.py": "698065954afa3b4df31db241642b4e37400038880509b47cdcd7d010f7d54269",
+      "data/feasibility.py": "11d25a7476f227bf4788ac2444516ef0d6be6069fb04fd168efad7e182515bf4",
+      "domain.py": "4a78c82bbba7933b8dbb99090ef5e11a8b2d132bdb6b06590d4fbe084a8ce0d0",
+      "normalize.py": "607eb2978fc284434c275b190b44c36c82337f96e04036508892dd8dd48e3213",
+      "storage.py": "bafb163eae7a2a9bcfc7a606cb54ffdc339b5f7e32bbe0f8d89b2bf9cb58fe45"
+    },
+    "limitations": [
+      "Inspectable means structural diagnostics only, not verified 7.41f carry data.",
+      "Window is exploratory [start,end); absence is unknown, never a negative label.",
+      "Purchase records and final inventory do not prove completion or delivery.",
+      "Candidate keys are an experiment allowlist, not a verified item catalog."
+    ],
+    "results": [
+      {
+        "additional_item_fields_present": [
+          "item_usage",
+          "purchase_time"
+        ],
+        "candidates": [
+          {
+            "completion_label_available": false,
+            "event_refs": [
+              "players[5].purchase_log[22]"
+            ],
+            "event_times": [
+              1003.0
+            ],
+            "item_key": "bfury",
+            "observation": "observed_purchase"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "maelstrom",
+            "observation": "unknown"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "manta",
+            "observation": "unknown"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "black_king_bar",
+            "observation": "unknown"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "skadi",
+            "observation": "unknown"
+          }
+        ],
+        "content_sha256": "a666592701187f24204afcc81fc6fc85b628c9d392e6f449b3ca8e55fb9eb324",
+        "duration_seconds": 1687,
+        "exact_duplicate_event_rows": 1,
+        "final_inventory_fields_present": 6,
+        "input": "data/feasibility-2026-10-13/matches/9042638644.json",
+        "invalid_purchase_rows": 0,
+        "lineup": [
+          {
+            "hero_id": 145,
+            "player_slot": 0
+          },
+          {
+            "hero_id": 76,
+            "player_slot": 1
+          },
+          {
+            "hero_id": 120,
+            "player_slot": 2
+          },
+          {
+            "hero_id": 72,
+            "player_slot": 3
+          },
+          {
+            "hero_id": 105,
+            "player_slot": 4
+          },
+          {
+            "hero_id": 8,
+            "player_slot": 128
+          },
+          {
+            "hero_id": 97,
+            "player_slot": 129
+          },
+          {
+            "hero_id": 79,
+            "player_slot": 130
+          },
+          {
+            "hero_id": 25,
+            "player_slot": 131
+          },
+          {
+            "hero_id": 123,
+            "player_slot": 132
+          }
+        ],
+        "match_id": 9042638644,
+        "noncandidate_rows_in_window": 26,
+        "observed_keys_in_window": {
+          "basher": 1,
+          "belt_of_strength": 1,
+          "bfury": 1,
+          "blade_of_alacrity": 1,
+          "blades_of_attack": 1,
+          "boots": 1,
+          "boots_of_elves": 1,
+          "broadsword": 2,
+          "chainmail": 1,
+          "clarity": 3,
+          "claymore": 1,
+          "flask": 1,
+          "magic_stick": 1,
+          "mithril_hammer": 1,
+          "pers": 1,
+          "phase_boots": 1,
+          "ring_of_health": 1,
+          "tpscroll": 4,
+          "void_stone": 1,
+          "wraith_band": 1,
+          "yasha": 1
+        },
+        "patch_id_observed": 60,
+        "purchase_log_status": "present",
+        "purchase_time_range": [
+          -89.0,
+          1578.0
+        ],
+        "quality_flags": [],
+        "raw_purchase_rows": 33,
+        "reasons": [
+          "patch_unverified",
+          "role_unverified",
+          "high_skill_unverified",
+          "purchase_coverage_unverified",
+          "completion_semantics_unverified",
+          "right_censored"
+        ],
+        "recipe_rows_in_window": 0,
+        "scope": {
+          "high_skill": "unverified",
+          "note": "Numeric patch ID, lane_role and league/rank hints do not certify scope.",
+          "patch": "unverified",
+          "role": "unverified"
+        },
+        "scope_hints": {
+          "lane_role": 1,
+          "leagueid": 20359,
+          "rank_tier": 80,
+          "start_time": 1791866627
+        },
+        "sha256": "0cf79be07c5a48beb6adb9d4acc8b39133a7810d52c279891dd3ebe746878c25",
+        "simultaneous_distinct_item_times": [
+          435.0,
+          629.0,
+          1003.0,
+          1411.0
+        ],
+        "source_receipt": {
+          "fetched_at": "2026-10-13T09:07:41.410579+00:00",
+          "sha256": "52291dbd6e467ca97873cc2f964690afc2297d3f4fa2e6ae3e7f8e136f66289a",
+          "source": "opendota"
+        },
+        "status": "inspectable",
+        "synthetic_marker_present": false,
+        "target_slot": 128,
+        "training_allowed": false,
+        "valid_purchase_rows": 33,
+        "window_complete_in_duration": false
+      },
+      {
+        "additional_item_fields_present": [
+          "item_usage",
+          "purchase_time"
+        ],
+        "candidates": [
+          {
+            "completion_label_available": false,
+            "event_refs": [
+              "players[5].purchase_log[19]"
+            ],
+            "event_times": [
+              1003.0
+            ],
+            "item_key": "bfury",
+            "observation": "observed_purchase"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "maelstrom",
+            "observation": "unknown"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "manta",
+            "observation": "unknown"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "black_king_bar",
+            "observation": "unknown"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "skadi",
+            "observation": "unknown"
+          }
+        ],
+        "content_sha256": "ae1cffddbd70664ae71a16a42faafc76fc9115d81ef39009aebe06feabc6d911",
+        "duration_seconds": 1079,
+        "exact_duplicate_event_rows": 2,
+        "final_inventory_fields_present": 6,
+        "input": "data/feasibility-2026-10-13/matches/9041226872.json",
+        "invalid_purchase_rows": 0,
+        "lineup": [
+          {
+            "hero_id": 109,
+            "player_slot": 0
+          },
+          {
+            "hero_id": 131,
+            "player_slot": 1
+          },
+          {
+            "hero_id": 78,
+            "player_slot": 2
+          },
+          {
+            "hero_id": 85,
+            "player_slot": 3
+          },
+          {
+            "hero_id": 106,
+            "player_slot": 4
+          },
+          {
+            "hero_id": 8,
+            "player_slot": 128
+          },
+          {
+            "hero_id": 88,
+            "player_slot": 129
+          },
+          {
+            "hero_id": 29,
+            "player_slot": 130
+          },
+          {
+            "hero_id": 43,
+            "player_slot": 131
+          },
+          {
+            "hero_id": 9,
+            "player_slot": 132
+          }
+        ],
+        "match_id": 9041226872,
+        "noncandidate_rows_in_window": 14,
+        "observed_keys_in_window": {
+          "bfury": 1,
+          "boots": 1,
+          "boots_of_elves": 1,
+          "broadsword": 2,
+          "gloves": 1,
+          "magic_wand": 1,
+          "pers": 1,
+          "power_treads": 1,
+          "ring_of_health": 1,
+          "tango": 1,
+          "tpscroll": 2,
+          "void_stone": 1,
+          "wind_lace": 1
+        },
+        "patch_id_observed": 60,
+        "purchase_log_status": "present",
+        "purchase_time_range": [
+          -89.0,
+          1005.0
+        ],
+        "quality_flags": [],
+        "raw_purchase_rows": 21,
+        "reasons": [
+          "patch_unverified",
+          "role_unverified",
+          "high_skill_unverified",
+          "purchase_coverage_unverified",
+          "completion_semantics_unverified",
+          "right_censored"
+        ],
+        "recipe_rows_in_window": 0,
+        "scope": {
+          "high_skill": "unverified",
+          "note": "Numeric patch ID, lane_role and league/rank hints do not certify scope.",
+          "patch": "unverified",
+          "role": "unverified"
+        },
+        "scope_hints": {
+          "lane_role": 1,
+          "leagueid": 20359,
+          "rank_tier": 80,
+          "start_time": 1791789643
+        },
+        "sha256": "f555a00741c13e927baf6599d67e9fb3be964c2f3364458c5e85e93c06faf3ca",
+        "simultaneous_distinct_item_times": [
+          234.0
+        ],
+        "source_receipt": {
+          "fetched_at": "2026-10-13T09:07:42.830145+00:00",
+          "sha256": "14f515ea63dfb0eff6142256c840ef68a22b6ae41d20f4f6f71512a5d4cf1598",
+          "source": "opendota"
+        },
+        "status": "inspectable",
+        "synthetic_marker_present": false,
+        "target_slot": 128,
+        "training_allowed": false,
+        "valid_purchase_rows": 21,
+        "window_complete_in_duration": false
+      },
+      {
+        "additional_item_fields_present": [
+          "item_usage",
+          "purchase_time"
+        ],
+        "candidates": [
+          {
+            "completion_label_available": false,
+            "event_refs": [
+              "players[6].purchase_log[18]"
+            ],
+            "event_times": [
+              797.0
+            ],
+            "item_key": "bfury",
+            "observation": "observed_purchase"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "maelstrom",
+            "observation": "unknown"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [
+              "players[6].purchase_log[25]"
+            ],
+            "event_times": [
+              1129.0
+            ],
+            "item_key": "manta",
+            "observation": "observed_purchase"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "black_king_bar",
+            "observation": "unknown"
+          },
+          {
+            "completion_label_available": false,
+            "event_refs": [],
+            "event_times": [],
+            "item_key": "skadi",
+            "observation": "unknown"
+          }
+        ],
+        "content_sha256": "82a153738660f9aceaa4834ab32e9b20658158d0cc006a8e7793563a04eae361",
+        "duration_seconds": 1608,
+        "exact_duplicate_event_rows": 1,
+        "final_inventory_fields_present": 6,
+        "input": "data/feasibility-2026-10-13/matches/9038875358.json",
+        "invalid_purchase_rows": 0,
+        "lineup": [
+          {
+            "hero_id": 85,
+            "player_slot": 0
+          },
+          {
+            "hero_id": 47,
+            "player_slot": 1
+          },
+          {
+            "hero_id": 110,
+            "player_slot": 2
+          },
+          {
+            "hero_id": 88,
+            "player_slot": 3
+          },
+          {
+            "hero_id": 53,
+            "player_slot": 4
+          },
+          {
+            "hero_id": 135,
+            "player_slot": 128
+          },
+          {
+            "hero_id": 8,
+            "player_slot": 129
+          },
+          {
+            "hero_id": 49,
+            "player_slot": 130
+          },
+          {
+            "hero_id": 86,
+            "player_slot": 131
+          },
+          {
+            "hero_id": 30,
+            "player_slot": 132
+          }
+        ],
+        "match_id": 9038875358,
+        "noncandidate_rows_in_window": 25,
+        "observed_keys_in_window": {
+          "bfury": 1,
+          "blade_of_alacrity": 2,
+          "blades_of_attack": 1,
+          "boots": 1,
+          "boots_of_elves": 1,
+          "broadsword": 2,
+          "butterfly": 1,
+          "chainmail": 2,
+          "claymore": 1,
+          "diadem": 1,
+          "dust": 1,
+          "eagle": 1,
+          "magic_wand": 1,
+          "manta": 1,
+          "pers": 1,
+          "phase_boots": 1,
+          "point_booster": 1,
+          "ring_of_health": 1,
+          "staff_of_wizardry": 1,
+          "talisman_of_evasion": 1,
+          "tango": 1,
+          "void_stone": 1,
+          "wind_lace": 1,
+          "yasha": 1
+        },
+        "patch_id_observed": 60,
+        "purchase_log_status": "present",
+        "purchase_time_range": [
+          -89.0,
+          1589.0
+        ],
+        "quality_flags": [],
+        "raw_purchase_rows": 33,
+        "reasons": [
+          "patch_unverified",
+          "role_unverified",
+          "high_skill_unverified",
+          "purchase_coverage_unverified",
+          "completion_semantics_unverified",
+          "right_censored"
+        ],
+        "recipe_rows_in_window": 0,
+        "scope": {
+          "high_skill": "unverified",
+          "note": "Numeric patch ID, lane_role and league/rank hints do not certify scope.",
+          "patch": "unverified",
+          "role": "unverified"
+        },
+        "scope_hints": {
+          "lane_role": 1,
+          "leagueid": 20334,
+          "rank_tier": 80,
+          "start_time": 1791662674
+        },
+        "sha256": "e7063e1588c79bc037c577a6f60432b07700526ea0ddb3e7b925e162a41e71c1",
+        "simultaneous_distinct_item_times": [
+          797.0,
+          1437.0
+        ],
+        "source_receipt": {
+          "fetched_at": "2026-10-13T09:07:45.262313+00:00",
+          "sha256": "90851d571c582664c5afede2618c190fb0c668b9fee1d0b9598655f4353d8c76",
+          "source": "opendota"
+        },
+        "status": "inspectable",
+        "synthetic_marker_present": false,
+        "target_slot": 129,
+        "training_allowed": false,
+        "valid_purchase_rows": 33,
+        "window_complete_in_duration": false
+      }
+    ],
+    "schema_version": "purchase-feasibility-report/1",
+    "summary": {
+      "attempted_inputs": 3,
+      "candidate_observed_match_counts": {
+        "bfury": 3,
+        "black_king_bar": 0,
+        "maelstrom": 0,
+        "manta": 1,
+        "skadi": 0
+      },
+      "full_window_matches": 0,
+      "inspectable_unique_matches": 3,
+      "purchase_log_present_matches": 3,
+      "reason_counts": {
+        "completion_semantics_unverified": 3,
+        "high_skill_unverified": 3,
+        "patch_unverified": 3,
+        "purchase_coverage_unverified": 3,
+        "right_censored": 3,
+        "role_unverified": 3
+      },
+      "status_counts": {
+        "inspectable": 3
+      },
+      "training_admitted_matches": 0,
+      "unique_match_ids": 3
+    },
+    "training_allowed": false
+  },
+  "discovery_receipt": {
+    "fetched_at": "2026-10-13T09:06:41.437432+00:00",
+    "sha256": "353fc427052ecdc43f715499a83490b5de6b9b82b5f44e0d6bb0d77396e4a023",
+    "status": 200,
+    "url": "https://api.opendota.com/api/heroes/8/matches"
+  },
+  "entrypoint_sha256": {
+    "audit_data.py": "3c1463b1421ebbb513f4a2b5467de924eebc975f24b0f13020df450cf589662c",
+    "src/dota_items/data/feasibility_cli.py": "39a44f20963ec17a26075a28fdef815c2ef37ca219247edec03761ca23f0c093",
+    "src/dota_items/sources/opendota.py": "7ec036a6b22a09f7853455d6ae9b6f5f5931093455af6cc074807c0f5d781012"
+  },
+  "fetch_results": [
+    {
+      "file": "data/feasibility-2026-10-13/matches/9042638644.json",
+      "match_id": 9042638644,
+      "sha256": "0cf79be07c5a48beb6adb9d4acc8b39133a7810d52c279891dd3ebe746878c25",
+      "status": "downloaded"
+    },
+    {
+      "file": "data/feasibility-2026-10-13/matches/9041226872.json",
+      "match_id": 9041226872,
+      "sha256": "f555a00741c13e927baf6599d67e9fb3be964c2f3364458c5e85e93c06faf3ca",
+      "status": "downloaded"
+    },
+    {
+      "file": "data/feasibility-2026-10-13/matches/9038875358.json",
+      "match_id": 9038875358,
+      "sha256": "e7063e1588c79bc037c577a6f60432b07700526ea0ddb3e7b925e162a41e71c1",
+      "status": "downloaded"
+    }
+  ],
+  "limitations": [
+    "Three convenience-sampled public matches, not a representative or independent evaluation cohort.",
+    "No patch, position-1, high-skill or completion-label semantic certification. No training."
+  ],
+  "recorded_on": "2026-10-13",
+  "sampling": {
+    "discovery_sha256": "353fc427052ecdc43f715499a83490b5de6b9b82b5f44e0d6bb0d77396e4a023",
+    "match_ids": [
+      9042638644,
+      9041226872,
+      9038875358
+    ],
+    "selected_at": "2026-10-13T09:07:40.254149+00:00",
+    "selection": "first three rows in discovery response, before detail inspection; exploratory convenience sample"
+  },
+  "schema_version": "purchase-feasibility-acceptance/1"
+}
