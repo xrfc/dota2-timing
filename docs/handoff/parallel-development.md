@@ -64,3 +64,7 @@ examples/model-foundation-lineup.json、docs/model-foundation.md。
 ## 2026-10-17补充
 
 用户确认本轮仅一个执行者，允许顺序处理跨模块重构；这不是以后永久独占授权。当前接口与专项检查见[维护指南](../modular-maintenance.md)，模块scope不代替全量窗口。
+
+## 2026-10-22整局实验模块补充
+
+`src/dota_items/experiments/`为跨模块编排，按共享范围串行协调；`modeling/whole_log_comparison.py`为模型专属纯计算。整局实验脚本只保留CLI／兼容导出。用户已确认本轮无其他开发者，由当前执行者串行整理；此确认不构成未来永久独占授权。入口与专项范围见[实验层维护](../experiment-maintenance.md)。

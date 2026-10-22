@@ -13,7 +13,7 @@ from ._validation import _sha256, _text
 from .artifacts import validate_model
 from .estimators import get_estimator
 from .provenance import IMPLEMENTATION_FILES, SCHEMA, TASK_SCHEMA
-from .specs import C_GRID, ITEMS, TASK, check_preprocessing, check_task
+from .specs import C_GRID, TASK, check_preprocessing, check_task, task_items
 
 
 def fit_model(
@@ -28,6 +28,7 @@ def fit_model(
         raise ValueError("C must use existing grid")
     check_preprocessing(batch.preprocessing)
     check_task(batch.task)
+    items = task_items(batch.task)
     if type(batch.synthetic) is not bool:
         raise ValueError("Invalid synthetic marker")
     if any(
@@ -38,7 +39,7 @@ def fit_model(
     n = len(batch.x)
     if (
         batch.x.shape != (n, len(batch.preprocessing["columns"]))
-        or batch.y.shape != (n, len(ITEMS))
+        or batch.y.shape != (n, len(items))
         or batch.mask.shape != batch.y.shape
         or batch.mask.dtype != bool
         or batch.x.dtype.kind not in "fiu"
@@ -69,7 +70,7 @@ def fit_model(
         raise ValueError("Source hash and code revision required")
     estimator = get_estimator(family)
     models = []
-    for j, item in enumerate(ITEMS):
+    for j, item in enumerate(items):
         keep = batch.mask[:, j]
         labels = batch.y[keep, j]
         support = {

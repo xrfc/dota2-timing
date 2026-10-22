@@ -25,8 +25,33 @@ FEATURES = FeatureSpec()
 TASK_ID = "juggernaut-source-log-7.41f-30m/1"
 
 
+WHOLE_LOG_TASK_ID = "juggernaut-source-log-7.41f-whole-11/1"
+WHOLE_LOG_ITEMS = (
+    "bfury",
+    "maelstrom",
+    "mjollnir",
+    "manta",
+    "sange_and_yasha",
+    "butterfly",
+    "blink",
+    "ultimate_scepter",
+    "monkey_king_bar",
+    "diffusal_blade",
+    "skadi",
+)
+
+
 def task_contract(task_id=TASK_ID):
-    """Return an independent JSON value for the only currently supported task."""
+    """Return an independent JSON value from the closed task registry."""
+    if type(task_id) is str and task_id == WHOLE_LOG_TASK_ID:
+        contract = task_contract()
+        contract["task_id"] = WHOLE_LOG_TASK_ID
+        contract["window"] = None
+        contract["labels"]["candidate_items"] = list(WHOLE_LOG_ITEMS)
+        contract["labels"]["scope"] = "whole_available_source_log"
+        contract["labels"]["time_policy"] = "all_finite_times_including_negative"
+        contract["labels"]["complete_actual_purchases_verified"] = False
+        return contract
     if type(task_id) is not str or task_id != TASK_ID:
         raise ValueError("Unregistered task ID")
     return {

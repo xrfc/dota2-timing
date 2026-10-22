@@ -41,7 +41,7 @@ def test_track_boundaries(area):
         "modeling": ("data", "sources", "workflow", "recommendation"),
         "contracts": ("data", "sources", "workflow", "recommendation", "modeling", "handoff"),
         "handoff": ("data", "sources", "workflow", "recommendation", "modeling"),
-    }[area]
+    }[area] + ("experiments",)
     violations = []
     for path in (PACKAGE / area).rglob("*.py"):
         for name in module_imports(path):

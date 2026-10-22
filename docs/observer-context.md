@@ -1,5 +1,9 @@
 # 视野、战斗与英雄状态接入
 
+## 原始录像试点 — 2026-10-22
+
+3场录像已下载、保留原始与解压哈希；Gem 0.10.0均提前终止，0场可用轨迹/视野，身份解码亦不匹配。未修改依赖或训练输入；下一步是解析兼容性诊断，不是扩大采集。详见[试点报告](replay-pilot-2026-10-22.md)。
+
 ## 实现下沉 — 2026-10-17
 
 格式、导出和纯校验移入contracts.replay_context，data.context旧入口兼容。Gem适配器3.1指纹覆盖新模块及contracts.numeric，context schema仍为coach-context/1。

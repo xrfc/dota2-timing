@@ -1,5 +1,10 @@
 # 版本化任务契约（2026-10-20）
 
+## 2026-10-21 新登记任务
+
+新增 `juggernaut-source-log-7.41f-whole-11/1`，整份有效源日志11装备，`window=null`、`labels.scope=whole_available_source_log`，所有有限事件时间含赛前时间。旧30分钟ID、默认值和旧产物保持不变。沿用契约/1及快照/2容器，靠明确task_id与完整登记字段区分，不接受任意目标名单。
+新生产入口、继承成员、数据限制及完整验收见[整局11装备任务](whole-log-task-2026-10-21.md)。`modeling.batch`、训练与模型制品验证按已登记任务确定5或11列；`model_foundation.py demo/predict --task-id`支持两个ID，demo仅合成数据。新任务不自动授权真实训练。下文“唯一登记”属于10/20历史。
+
 ## 范围与决定
 
 用户授权建立共享任务契约，并确认本轮只有一个执行者操作 Windows 副本。

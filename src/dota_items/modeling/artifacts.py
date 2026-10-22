@@ -15,7 +15,7 @@ from .provenance import (
     SCHEMA,
     TASK_SCHEMA,
 )
-from .specs import C_GRID, ITEMS, check_preprocessing, check_task
+from .specs import C_GRID, check_preprocessing, check_task, task_items
 
 
 def validate_model(artifact):
@@ -53,8 +53,9 @@ def _validate_model(artifact):
         raise ValueError("Missing prediction meaning")
     validate_task_envelope(artifact["task"], artifact["schema_version"], SCHEMA, TASK_SCHEMA)
     check_task(artifact["task"])
+    items = task_items(artifact["task"])
     check_preprocessing(artifact["preprocessing"])
-    if not isinstance(artifact["models"], list) or [m["item"] for m in artifact["models"]] != ITEMS:
+    if not isinstance(artifact["models"], list) or [m["item"] for m in artifact["models"]] != items:
         raise ValueError("Model label order mismatch")
     provenance = artifact["provenance"]
     _mapping(

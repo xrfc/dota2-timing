@@ -17,6 +17,11 @@ MODEL_TESTS = {
     "test_purchase_diagnostics.py",
     "test_purchase_sensitivity.py",
     "test_modular_maintenance.py",
+    "test_whole_log_experiment.py",
+    "test_whole_log_regularization.py",
+    "test_whole_log_handoff.py",
+    "test_whole_log_diagnostics.py",
+    "test_experiment_structure.py",
 }
 
 
@@ -32,7 +37,11 @@ def module_paths(scope):
         "data": (set(all_tests) - model_tests - recommendation) | shared,
     }[scope]
     source = {
-        "modeling": ["src/dota_items/modeling", "src/dota_items/contracts"],
+        "modeling": [
+            "src/dota_items/modeling",
+            "src/dota_items/contracts",
+            "src/dota_items/experiments",
+        ],
         "data": [
             "src/dota_items/data",
             "src/dota_items/sources",

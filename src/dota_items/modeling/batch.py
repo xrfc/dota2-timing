@@ -9,7 +9,7 @@ from dota_items.contracts.lineup import encode_lineup, fit_vocabulary
 from dota_items.contracts.tasks import validate_task_envelope
 
 from ._validation import _mapping
-from .specs import ITEMS, check_lineup, check_preprocessing, check_task
+from .specs import check_lineup, check_preprocessing, check_task, task_items
 
 
 @dataclass
@@ -40,6 +40,7 @@ def adapt_snapshot(snapshot, split="train"):
     if snapshot.get("modeling_ready") is not True:
         raise ValueError("Snapshot not modeling ready")
     check_task(snapshot["task"])
+    items = task_items(snapshot["task"])
     prep = snapshot["preprocessing"]
     vocabulary = check_preprocessing(prep)
     splits = snapshot["splits"]
@@ -95,8 +96,8 @@ def adapt_snapshot(snapshot, split="train"):
         if (
             not isinstance(labels, list)
             or not isinstance(mask, list)
-            or len(labels) != len(ITEMS)
-            or len(mask) != len(ITEMS)
+            or len(labels) != len(items)
+            or len(mask) != len(items)
         ):
             raise ValueError("Label dimension mismatch")
         if any(type(m) is not bool for m in mask):

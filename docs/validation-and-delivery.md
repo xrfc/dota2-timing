@@ -352,3 +352,35 @@ Windows 的解释器路径为 `.venv/Scripts/python.exe`。只核对 JSON 工作
 5. 完成度、任务状态、接口版本、CI 证据保持一致；已知缺口不写成已实现。
 
 运行行为变更时按相关风险增加有意义的正反例测试，并执行项目要求的静态/自动检查。数据/schema 变化需说明迁移与回退；提交到开发分支，不把 CI 通过等同自动发布或合并。
+
+
+## 2026-10-22：整局实验编排层结构整理
+
+用户确认本轮仅一个执行者，串行完成跨模块整理；未安装依赖、未真实训练、未提交或推送。
+当前入口及API见[实验层维护](experiment-maintenance.md)。旧CLI兼容，研究协议与历史产物不变。
+
+- 最终全量：1043 pytest＋22学习/知识＋6 JS＝1071项通过，Ruff及406文件格式检查通过。
+- 前后865份源码／文档指纹一致；2014份旧输入／交接文件不变。
+- 真实只读准入通过，training_executed=false，交接身份不变。
+- 首轮既存采集测试格式问题已仅格式化修复，AST无语义差异；最终全量重跑退出码0。
+- 日志与指纹：reports/experiment-refactor-2026-10-22/。验收后只补文档，不改源码；再查链接与代码指纹。
+
+历史验收条目继续保留，不代表本轮结果。
+
+## 2026-10-23 近期开发统一交付验收
+
+用户已明确确认本轮统一整理全部近期改动、其他开发暂停，授权提交、推送和创建PR；不自动合并。
+保持唯一目录、feat/purchase-data-prep及现有.venv，没有切分支、安装依赖、重采或重训。
+
+- `.venv/bin/python scripts/check.py`退出0：1096项pytest工程测试、10项学习unittest、12项知识unittest、6项JavaScript测试，共1124项通过。
+- Ruff check通过；430个Python文件format --check通过；JavaScript语法检查通过。
+- 919个tracked/untracked交付范围文件在全量检查前后SHA-256一致，集合无变化；排除本地memory和ignored产物。
+- 6份本轮入口/主文档共81个相对路径目标存在；未穷尽验证所有锚点和外链。历史归档5份字节哈希与manifest一致。
+- 录像上一轮70项专项属于本次工程套件覆盖，不再与1124重复相加。真实模型实验结果是既有证据，本次未重跑真实训练。
+
+本地验收日志和指纹：`reports/github-delivery-2026-10-23/{check.log,pre-check.json,post-check.json}`，不上传真实数据或本地运行制品。
+全量检查结束后仅追加本验收文字及日期摘要链接，不改受测代码；提交前复查受测代码指纹和diff空白检查。
+
+本轮更新内容见[近期摘要](recent-progress-2026-10-23.md)。GitHub提交目标为`xrfc/dota2-timing`的
+`feat/purchase-data-prep`，PR面向`main`，包含此前未合入main的开发提交。实际提交SHA、PR及CI状态以GitHub为准；本地通过不冒称远端CI已通过。
+保留旧PR #6，不自动关闭/合并；data/reports链接是本地证据路径，在GitHub可能不可访问。

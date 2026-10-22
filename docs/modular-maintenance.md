@@ -14,6 +14,9 @@
 登记迁移和公共交接的新入口见[公共读取接口](public-source-reader.md)。下方凌晨验收为历史阶段。
 
 
+2026-10-22：整局实验脚本已拆为experiments.whole_log与modeling纯统计，
+命令兼容、维护边界和验收见[实验层维护](experiment-maintenance.md)。
+
 本文是当前工程结构入口，替代10/16架构审查中的“待拆分”描述；旧文档保留历史验收。
 用户本轮授权按顺序重构并维护相关文档，确认当前仅一个执行者操作仓库。
 保持单仓库、单Python包、现有环境和分支；不新增真实训练、选模、数据用途或划分授权。
@@ -21,7 +24,8 @@
 ## 1. 模块职责与依赖
 
 ~~~text
-CLI / scripts / workflow（编排）
+CLI / scripts（参数与兼容）→ experiments.whole_log（整局实验编排）
+workflow（其他任务编排）
   ├─ data（清洗、证据验证、审计、冻结快照）→ sources / contracts / storage
   ├─ handoff.bundle（只读包完整性检查，标准库，无审计依赖）
   └─ modeling
@@ -144,3 +148,9 @@ Windows使用.venv/Scripts/python.exe。
 
 全量679项通过，模块scope分别data388/modeling186/recommendation115（含重复公共测试）。
 7,656项旧产物不变，新旧合成模型一致，文档链接检查0失效；完整边界见[验证记录](validation-and-delivery.md)。
+
+## 8. 整局实验编排（2026-10-22）
+
+experiments位于data/modeling之上，可协调两者；data、modeling、sources、contracts、handoff、recommendation均不得反向依赖experiments。scripts只提供整局实验CLI及旧导入兼容，业务实现不回调scripts。通用I/O辅助不统一不同任务的收据schema，完成顺序仍由各流程严格控制。
+
+新整局实验测试归入modeling scope，纯统计、编排源码及架构回归同查；最终仍以串行全量检查为准。旧§7的679项是历史记录，不代表本轮结果。

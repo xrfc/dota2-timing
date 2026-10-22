@@ -1,6 +1,8 @@
 # 独立学习区
 
-这里保存可视化学习页面、L01–L12 计划、任务模板、教学实验与相关测试。正式管线在 `src/`，工程验收在 `docs/`；学习工具不作为 Python 工程包或 CLI 的一部分发布。
+2026-10-21学习更新：[当前路线L13–L17](docs/roadmap.md)进入频率基线、逻辑回归、概率评价、误差诊断和静态推荐质量；[本轮动手练习](docs/whole-log-baseline-lab.md)附可运行复算。L01–L12保留作基础查漏，不自动勾选个人完成。新版离线页面将额外显示新增任务。
+
+这里只保存可视化学习页面、L01–L17个人任务、模板、教学实验与测试，不独立维护项目开发路线。工程方向统一见[总路线](../docs/roadmap.md)，细节见[数据](../docs/data-prep-progress.md)和[模型](../docs/model-foundation.md)。正式管线在 `src/`，工程验收在 `docs/`；学习工具不作为 Python 工程包或 CLI 的一部分发布。
 
 新增实践：[一场回放、一次魔瓶购买的完整追踪](exercises/event-lineage/9031371970/README.md)。英雄机制资料统一维护在[知识区](../knowledge/README.md)，避免在学习区复制另一套英雄表；[路径与证据恢复](../docs/knowledge-maintenance.md)说明如何在不同机器重现。统一 learning scope 同时执行知识边界测试，但学习理解、知识准入与正式训练结果仍分别记录。
 
@@ -65,7 +67,7 @@ python scripts/check.py --scope learning
 
 Python 检查仅使用标准库；安装 Node.js 22+ 时同时检查界面脚本语法和教学算法，CI 固定执行这两类检查。Ubuntu / Python 3.12 的 CI 另执行 Chromium 验收，检查导航、笔记、进度隔离、三个实验、导入/导出与 390px 布局，并保存 `learning-preview` 截图。源码说明或样式变更后也应人工检查截图。
 
-从 [L01 任务计划](docs/roadmap.md) 开始，按[开发流程](docs/development-workflow.md)使用[任务记录](templates/task-record.md)和[数据审计](templates/data-audit.md)模板留下实践证据。
+当前从 [L13–L16个人任务](docs/roadmap.md) 学习基线和诊断；L01–L12仅按需补学，按[开发流程](docs/development-workflow.md)使用[任务记录](templates/task-record.md)和[数据审计](templates/data-audit.md)模板留下实践证据。
 
 可选地在本地执行同一浏览器检查；Playwright 仅供学习测试使用：
 

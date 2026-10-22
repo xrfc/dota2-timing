@@ -1,7 +1,7 @@
 """Supported task and feature definitions, not research authorization."""
 
 from dota_items.contracts.lineup import columns
-from dota_items.contracts.tasks import FEATURES, TASK, validate_task_contract
+from dota_items.contracts.tasks import FEATURES, TASK, WHOLE_LOG_TASK_ID, validate_task_contract
 from dota_items.contracts.tasks import FeatureSpec as FeatureSpec
 from dota_items.contracts.tasks import TaskSpec as TaskSpec
 
@@ -48,6 +48,18 @@ def check_task(task):
     _mapping(task, ("window",), "task")
     if "contract" in task:
         validate_task_contract(task["contract"])
+        if task["contract"]["task_id"] == WHOLE_LOG_TASK_ID:
+            contract = task["contract"]
+            if (
+                task.get("target") != contract["labels"]["target"]
+                or task["window"] is not None
+                or task.get("candidate_items") != contract["labels"]["candidate_items"]
+                or task.get("negative_means") != contract["labels"]["negative_means"]
+                or task.get("scope") != "whole_available_source_log"
+                or task.get("actual_purchase_ground_truth") is not False
+            ):
+                raise ValueError("Unsupported whole-log task or label order")
+            return
     window = task["window"]
     if (
         task.get("target") != TASK.target
@@ -59,3 +71,9 @@ def check_task(task):
         or task.get("actual_purchase_ground_truth") is not False
     ):
         raise ValueError("Unsupported task or label order")
+
+
+def task_items(task):
+    """Return target order only after validating the closed registry."""
+    check_task(task)
+    return list(task["candidate_items"])
