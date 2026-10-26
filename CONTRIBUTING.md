@@ -6,7 +6,7 @@
 使用scripts/check.py对应modeling/data/recommendation scope，最终串行全量验收；新增测试核对scope归属，脚本和公共文件仍需all检查。
 冻结生产者的兼容副本是有parity测试的例外，不为消除重复破坏历史证据。首次安装示例不授权覆盖现有环境；提交和推送须明确许可。
 
-当前重点是[真实数据与标签语义核验](docs/data-semantics.md)及[ML实验准备](docs/ml-first-experiment.md)，
+当前进度以[总路线](docs/roadmap.md)、[数据](docs/data-prep-progress.md)、[模型](docs/model-foundation.md)三份主文档为准；已有真实购买日志模型与原型，录像语义仍受限定，
 并保留[规则质量评审](docs/recommendation-quality-review.md)未完成项。规则权重不是模型，汇总一致不是成装认证。
 默认本地开发；仅在用户明确授权时提交/推送指定分支，不自动合并或发布。本次授权见交付记录。
 新增审计功能需保持：缺失不转负例、固定采样不换场、来源表示方式明确、诊断不解除训练门禁。
@@ -33,7 +33,7 @@ CI 在 Ubuntu Python 3.11/3.12 执行完整检查；Windows Python 3.12 执行�
 ```text
 src/dota_items/       正式工程包、数据源适配与工作流
 tests/              工程回归测试
-scripts/            环境准备与统一检查入口
+scripts/            CLI、采集、审计与检查入口（见scripts/README.md）
 docs/               工程设计、契约、操作、验收与 ToDo
 learning/           全部学习资料、可视化、实验、模板和学习测试
 knowledge/          公开知识快照、来源记录、待核验解释与冷启动候选
@@ -42,7 +42,7 @@ examples/           明确标注的公开合成输入
 coach.py            自动使用 venv 的工程启动入口
 ```
 
-新增文件按职责放入现有目录；不保留手工复制的模块、文档副本或空占位目录。正式包只从 `src/` 构建，工程测试放 `tests/`，学习生成器测试放 `learning/tests/`，知识模块的来源／解释／候选边界测试随模块维护并由统一 learning scope 执行。每份文档维护一项主职责，相同命令和验收状态通过链接引用；历史实现通过 Git 查看，不维护版本名副本。
+新增文件按职责放入现有目录；不保留手工复制的模块、文档副本或空占位目录。正式包只从 `src/` 构建，工程测试放 `tests/`，学习生成器测试放 `learning/tests/`，知识模块的来源／解释／候选边界测试随模块维护并由统一 learning scope 执行。每份文档维护一项主职责，相同命令和验收状态通过链接引用；历史实现通过 Git 查看；文档整理前的必要原文快照允许放docs/archive并附哈希，不作为活跃文档维护。
 
 `build/`、`dist/`、缓存和环境属于可再生输出；`coach-workspace/`、`data/`、`reports/` 是工程数据/产物，`learning/output/` 是学习产物，均不提交。清理时可删除已确认的构建和缓存；用户回放、工作区、模型和笔记需先备份，不当作缓存删除。不要创建另一个源码目录来保存生成产物。
 

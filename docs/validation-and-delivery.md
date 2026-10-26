@@ -384,3 +384,27 @@ Windows 的解释器路径为 `.venv/Scripts/python.exe`。只核对 JSON 工作
 本轮更新内容见[近期摘要](recent-progress-2026-10-23.md)。GitHub提交目标为`xrfc/dota2-timing`的
 `feat/purchase-data-prep`，PR面向`main`，包含此前未合入main的开发提交。实际提交SHA、PR及CI状态以GitHub为准；本地通过不冒称远端CI已通过。
 保留旧PR #6，不自动关闭/合并；data/reports链接是本地证据路径，在GitHub可能不可访问。
+
+## 2026-10-26 结构导航、近期功能与PR统一交付
+
+用户本轮明确确认其他开发者暂停写入，由当前执行者统一整理、全量验收、提交推送并更新既有PR #7；不自动合并。没有切分支、创建worktree、安装依赖、真实训练或执行新采集。
+
+### 整理范围
+
+- 根README替换历史状态堆叠，原文逐字节保存在`docs/archive/2026-10-26/`，附SHA-256。
+- docs索引覆盖全部非归档Markdown，scripts导航覆盖全部Python入口；保留旧文件/CLI路径，不移动冻结指纹绑定的源码或制品。
+- 同步三份主文档、结构/贡献指南和CHANGELOG，区分前瞻采集已冻结但等待窗口、模型原型已实现但推荐质量未证实、13场录像完成限定对齐但未获训练准入。
+- 纳入近期未提交的评估审计/采集入口、阵容分析/A-B原型及测试、录像扩量/通道导出/大文件恢复/地标和tick对齐。两个阵容测试归入modeling scope；本地memory加入忽略，不发布。
+
+### 本地实测
+
+- `.venv/bin/python scripts/check.py`退出0：**1205 pytest + 10学习 + 12知识 + 6 JS = 1233项通过**，本地无跳过。
+- Ruff check通过；462个Python文件format --check通过；JS语法检查通过。
+- 955份tracked及可发布untracked文件在全量检查前后集合和SHA-256完全一致。
+- 全仓230份Markdown路径审计：2358个仓库链接目标、32个本地制品链接存在；8份归档文档按原文基址豁免，6份历史原文哈希一致。外链和锚点未穷尽检查，不称所有文档语义均获认证。
+- 阵容原型部分测试需要私有本地冻结模型，CI干净克隆将跳过相关项；当地真实制品验证不冒充远端等量覆盖。其他合成推理/契约测试继续保留。
+- 检查后仅追加本验收文字，再复核文档路径与受测代码哈希；没有修改受测源码。
+
+日志和前后指纹：`reports/github-delivery-2026-10-26/`。data/reports、原始录像、玩家明细、模型、环境和memory不上传；这些本地证据链接不能在GitHub直接打开。
+
+PR目标：[现有PR #7](https://github.com/xrfc/dota2-timing/pull/7)，`feat/purchase-data-prep` → `main`。PR仍包含此前未合入main的开发提交，不只本轮整理；本地通过不代表最新提交的远端CI已通过。提交SHA、推送与CI终态以GitHub实际状态为准，不关闭旧PR #6、不自动合并。

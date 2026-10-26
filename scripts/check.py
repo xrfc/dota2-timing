@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 MODEL_TESTS = {
+    "test_lineup_analysis.py",
+    "test_lineup_comparison.py",
     "test_model_foundation.py",
     "test_model_foundation_validation.py",
     "test_purchase_baseline.py",

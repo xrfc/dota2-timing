@@ -154,3 +154,13 @@ Windows使用.venv/Scripts/python.exe。
 experiments位于data/modeling之上，可协调两者；data、modeling、sources、contracts、handoff、recommendation均不得反向依赖experiments。scripts只提供整局实验CLI及旧导入兼容，业务实现不回调scripts。通用I/O辅助不统一不同任务的收据schema，完成顺序仍由各流程严格控制。
 
 新整局实验测试归入modeling scope，纯统计、编排源码及架构回归同查；最终仍以串行全量检查为准。旧§7的679项是历史记录，不代表本轮结果。
+
+## 9. 当前维护入口（2026-10-26）
+
+- `data.tick_alignment`：纯tick关联，保守输出全知与阵营行；不读文件、不训练。
+- `modeling.lineup_analysis` / `lineup_comparison`：只读冻结模型分析与A/B贡献；HTTP/HTML命令在scripts，不改推理或训练协议。
+- [脚本导航](../scripts/README.md)：现有入口按用途分组，保持路径兼容；固定审计脚本暂保留其证据编排，不为目录美观搬迁哈希绑定实现。
+- 新增两个阵容测试归入modeling scope，避免默认落入data。公共检查和最终集成仍运行all。
+- [全部文档分类](README.md)：主流程、接口、操作、日期证据、历史快照分层；旧源码/文档路径不批量移动，不触碰冻结输入。
+
+本轮只有文档导航、归属和忽略规则整理；不声称完成所有脚本业务下沉。复杂脚本后续如重构，应单独处理兼容入口与生产者指纹迁移。
