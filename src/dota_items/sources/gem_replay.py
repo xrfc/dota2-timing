@@ -22,7 +22,7 @@ MAX_DEMO_BYTES = 2 * 1024**3
 CHUNK_BYTES = 1024**2
 DEMO_MAGIC = b"PBDEMS2"
 ZSTD_MAGIC = b"\x28\xb5\x2f\xfd"
-ADAPTER_VERSION = "gem-adapter/3.0"
+ADAPTER_VERSION = "gem-adapter/3.1"
 
 
 def adapter_fingerprint():
@@ -31,7 +31,8 @@ def adapter_fingerprint():
         "sources/gem_replay.py",
         "sources/gem_capture.py",
         "sources/gem_observations.py",
-        "data/context.py",
+        "contracts/replay_context.py",
+        "contracts/numeric.py",
     )
     return hashlib.sha256("".join(file_hash(root / name) for name in paths).encode()).hexdigest()
 
@@ -317,7 +318,7 @@ def ingest_demo(source: Path, data_dir: Path, *, force: bool = False) -> dict[st
     raw_path = folder / "raw-gem.json"
     normalized_path = folder / "normalized.json"
     manifest_path = folder / "manifest.json"
-    from ..data.context import export_context
+    from ..contracts.replay_context import export_context
 
     payload = json.loads(gem.to_json(match))
     payload["coach_state_snapshots"] = states

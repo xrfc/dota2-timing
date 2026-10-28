@@ -1,0 +1,656 @@
+{
+  "schema_version": "lineup-internal-review/1",
+  "reviewed_on": "2026-10-13",
+  "reviewer": "development assistant (AI internal review)",
+  "base_commit": "1a78aadac9618f8350bb7686507960dae22afaab",
+  "engine_version": "lineup-rules/2",
+  "knowledge_version": "7.41f-curated/1",
+  "knowledge_sha256": "45939b95675b173ab3690086924f09074fa531fe031aa054a9eece37d3b085a4",
+  "rules_version": "juggernaut-carry-rules/1",
+  "rules_sha256": "88b627fb2175f845ed96cdc61fc81c9b3c13a0f88f76b2f5ae9c71650d7df76e",
+  "code_sha256": {
+    "src/dota_items/recommendation/engine.py": "3634abb87a7b31820c0eb94f04f880daee471e24e90b7b9ae4a6f589fea3a1f9",
+    "src/dota_items/recommendation/report.py": "85440de4f76900ce864a83f275408018507216c986bd9da0a62b4f8efc5b87bb",
+    "tests/test_recommendation_engine.py": "222e72e309c77a0069f17d18aaa0a027203248405c3a24ad296b09e90563acdf"
+  },
+  "scope": "Existing synthetic development cases; not independent quality validation. No new mechanism certification or training admission.",
+  "cases": [
+    {
+      "case_id": "baseline",
+      "origin": "synthetic_author_constructed",
+      "input_file": "examples/recommendation/baseline.json",
+      "input_sha256": "de479687acc2613175f14fec9531822056290c3a58aab3d18539087dccf634bb",
+      "input_fingerprint": "678428b20e86368413b99a63504faa09b1ae1dd030d55c1d2dc6c1abc2bb33d4",
+      "status": "supported",
+      "need_keys": [
+        "accuracy",
+        "ally-setup",
+        "antiheal",
+        "control-warning",
+        "dispel",
+        "growth"
+      ],
+      "candidates": [
+        {
+          "item_key": "monkey_king_bar",
+          "score": 8.0,
+          "category": "situational",
+          "fact_ids": [
+            "item-monkey_king_bar",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection",
+            "phantom_assassin_immaterial-evasion"
+          ],
+          "rule_ids": [
+            "item-monkey_king_bar-accuracy",
+            "need-accuracy"
+          ]
+        },
+        {
+          "item_key": "manta",
+          "score": 7.0,
+          "category": "situational",
+          "fact_ids": [
+            "drow_ranger_wave_of_silence-silence",
+            "item-manta",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-manta-dispel",
+            "item-manta-growth",
+            "need-dispel",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "skadi",
+          "score": 6.0,
+          "category": "situational",
+          "fact_ids": [
+            "dazzle_shadow_wave-healing",
+            "item-skadi",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-skadi-antiheal",
+            "need-antiheal"
+          ]
+        },
+        {
+          "item_key": "bfury",
+          "score": 3.0,
+          "category": "core",
+          "fact_ids": [
+            "item-bfury",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-bfury-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "maelstrom",
+          "score": 3.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-maelstrom",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection",
+            "phantom_assassin_immaterial-evasion"
+          ],
+          "rule_ids": [
+            "item-maelstrom-accuracy",
+            "item-maelstrom-growth",
+            "need-accuracy",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "power_treads",
+          "score": 3.0,
+          "category": "core",
+          "fact_ids": [
+            "item-power_treads",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-power_treads-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "blink",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-blink",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection",
+            "kunkka_torrent-control",
+            "lion_impale-control"
+          ],
+          "rule_ids": [
+            "item-blink-ally-setup",
+            "need-ally-setup"
+          ]
+        },
+        {
+          "item_key": "magic_wand",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-magic_wand",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-magic_wand-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "satanic",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-satanic",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-satanic-growth",
+            "need-growth"
+          ]
+        }
+      ],
+      "same_analysis_except_engine_version": true,
+      "artifacts_sha256": {
+        "reports/review-2026-10-13/baseline.json": "3d2ff3f8a8e116285ed62eab1f09bc8fe95754c63ef2bfd519a729f768d11600",
+        "reports/review-2026-10-13/baseline.txt": "837c93f0cc48ba99235af6f22ae2edd0b8e81ab9ccce9dfe98b2975f3b4f4cbb",
+        "reports/review-2026-10-13/baseline.html": "7fa46f4587fbdf6852a74572c25d84b571ed1b429d1e0875a659d067a66823a2"
+      }
+    },
+    {
+      "case_id": "no-evasion",
+      "origin": "synthetic_author_constructed",
+      "input_file": "examples/recommendation/no-evasion.json",
+      "input_sha256": "35dbaf08f2761e4ef75e64f52b542a00fadbf07beb3f342cc83172ef44345a8e",
+      "input_fingerprint": "f139f97e18a66b57912802710873142c96534f37d02e0c042ddb8362542ef56a",
+      "status": "supported",
+      "need_keys": [
+        "ally-setup",
+        "antiheal",
+        "control-warning",
+        "dispel",
+        "growth"
+      ],
+      "candidates": [
+        {
+          "item_key": "manta",
+          "score": 7.0,
+          "category": "situational",
+          "fact_ids": [
+            "drow_ranger_wave_of_silence-silence",
+            "item-manta",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-manta-dispel",
+            "item-manta-growth",
+            "need-dispel",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "skadi",
+          "score": 6.0,
+          "category": "situational",
+          "fact_ids": [
+            "dazzle_shadow_wave-healing",
+            "item-skadi",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-skadi-antiheal",
+            "need-antiheal"
+          ]
+        },
+        {
+          "item_key": "bfury",
+          "score": 3.0,
+          "category": "core",
+          "fact_ids": [
+            "item-bfury",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-bfury-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "power_treads",
+          "score": 3.0,
+          "category": "core",
+          "fact_ids": [
+            "item-power_treads",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-power_treads-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "maelstrom",
+          "score": 2.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-maelstrom",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-maelstrom-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "blink",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-blink",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection",
+            "kunkka_torrent-control",
+            "lion_impale-control"
+          ],
+          "rule_ids": [
+            "item-blink-ally-setup",
+            "need-ally-setup"
+          ]
+        },
+        {
+          "item_key": "magic_wand",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-magic_wand",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-magic_wand-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "satanic",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-satanic",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-satanic-growth",
+            "need-growth"
+          ]
+        }
+      ],
+      "same_analysis_except_engine_version": true,
+      "artifacts_sha256": {
+        "reports/review-2026-10-13/no-evasion.json": "f8a1ce91e707e4e64b282c145457302ab4fab51bb6f4620527de108eb8011015",
+        "reports/review-2026-10-13/no-evasion.txt": "f32b2cd5953dc0eacc7ad94d20d95364dbaf0bb8a885fc45a8bb17ae9f44eaec",
+        "reports/review-2026-10-13/no-evasion.html": "bc4f96453c69658a4f370e6952979c9935a1f3731866c7dda0f143105f7b61ea"
+      }
+    },
+    {
+      "case_id": "illusions",
+      "origin": "synthetic_author_constructed",
+      "input_file": "examples/recommendation/illusions.json",
+      "input_sha256": "bee204bd7265224ca57132b8be2bf362182b245946d662d04bdb8e39c83e27c0",
+      "input_fingerprint": "494c407a708d415af65870cc316f1df284f3eac63905abaa767d32a81aee8223",
+      "status": "supported",
+      "need_keys": [
+        "accuracy",
+        "ally-setup",
+        "antiheal",
+        "control-warning",
+        "growth",
+        "waveclear"
+      ],
+      "candidates": [
+        {
+          "item_key": "maelstrom",
+          "score": 8.0,
+          "category": "situational",
+          "fact_ids": [
+            "item-maelstrom",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection",
+            "phantom_assassin_immaterial-evasion",
+            "phantom_lancer_juxtapose-illusions"
+          ],
+          "rule_ids": [
+            "item-maelstrom-accuracy",
+            "item-maelstrom-growth",
+            "item-maelstrom-waveclear",
+            "need-accuracy",
+            "need-growth",
+            "need-waveclear"
+          ]
+        },
+        {
+          "item_key": "monkey_king_bar",
+          "score": 8.0,
+          "category": "situational",
+          "fact_ids": [
+            "item-monkey_king_bar",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection",
+            "phantom_assassin_immaterial-evasion"
+          ],
+          "rule_ids": [
+            "item-monkey_king_bar-accuracy",
+            "need-accuracy"
+          ]
+        },
+        {
+          "item_key": "skadi",
+          "score": 6.0,
+          "category": "situational",
+          "fact_ids": [
+            "dazzle_shadow_wave-healing",
+            "item-skadi",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-skadi-antiheal",
+            "need-antiheal"
+          ]
+        },
+        {
+          "item_key": "bfury",
+          "score": 5.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-bfury",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection",
+            "phantom_lancer_juxtapose-illusions"
+          ],
+          "rule_ids": [
+            "item-bfury-growth",
+            "item-bfury-waveclear",
+            "need-growth",
+            "need-waveclear"
+          ]
+        },
+        {
+          "item_key": "power_treads",
+          "score": 3.0,
+          "category": "core",
+          "fact_ids": [
+            "item-power_treads",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-power_treads-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "manta",
+          "score": 2.0,
+          "category": "core",
+          "fact_ids": [
+            "item-manta",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-manta-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "blink",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-blink",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection",
+            "kunkka_torrent-control",
+            "lion_impale-control"
+          ],
+          "rule_ids": [
+            "item-blink-ally-setup",
+            "need-ally-setup"
+          ]
+        },
+        {
+          "item_key": "magic_wand",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-magic_wand",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-magic_wand-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "satanic",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-satanic",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-satanic-growth",
+            "need-growth"
+          ]
+        }
+      ],
+      "same_analysis_except_engine_version": true,
+      "artifacts_sha256": {
+        "reports/review-2026-10-13/illusions.json": "e71f4bc894979ab76d6045e122155307ca857e3a566e81e4a28339603c7cf575",
+        "reports/review-2026-10-13/illusions.txt": "6e863df2b661b70b99b503fa9554ac4cd7ca770b6116d0fb5e323ff5e8c6d2c3",
+        "reports/review-2026-10-13/illusions.html": "b308ca32598b45610059fbe47b88c804dff4b218fc677843f87883c25f241882"
+      }
+    },
+    {
+      "case_id": "unknown-hero-knowledge",
+      "origin": "synthetic_author_constructed",
+      "input_file": "examples/recommendation/unknown-hero-knowledge.json",
+      "input_sha256": "27771f4891b16600194ed0241b0da6e74a2973913638d223f0cdb7146015d93c",
+      "input_fingerprint": "427035b182ae27c709bffbfc5b227a7ad10cfac080d8c11b60d2dccdeda4b544",
+      "status": "partial",
+      "need_keys": [
+        "ally-setup",
+        "antiheal",
+        "control-warning",
+        "dispel",
+        "growth"
+      ],
+      "candidates": [
+        {
+          "item_key": "manta",
+          "score": 7.0,
+          "category": "situational",
+          "fact_ids": [
+            "drow_ranger_wave_of_silence-silence",
+            "item-manta",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-manta-dispel",
+            "item-manta-growth",
+            "need-dispel",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "skadi",
+          "score": 6.0,
+          "category": "situational",
+          "fact_ids": [
+            "dazzle_shadow_wave-healing",
+            "item-skadi",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-skadi-antiheal",
+            "need-antiheal"
+          ]
+        },
+        {
+          "item_key": "bfury",
+          "score": 3.0,
+          "category": "core",
+          "fact_ids": [
+            "item-bfury",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-bfury-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "power_treads",
+          "score": 3.0,
+          "category": "core",
+          "fact_ids": [
+            "item-power_treads",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-power_treads-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "maelstrom",
+          "score": 2.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-maelstrom",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-maelstrom-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "blink",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-blink",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection",
+            "kunkka_torrent-control",
+            "lion_impale-control"
+          ],
+          "rule_ids": [
+            "item-blink-ally-setup",
+            "need-ally-setup"
+          ]
+        },
+        {
+          "item_key": "magic_wand",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-magic_wand",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-magic_wand-growth",
+            "need-growth"
+          ]
+        },
+        {
+          "item_key": "satanic",
+          "score": 1.0,
+          "category": "alternative",
+          "fact_ids": [
+            "item-satanic",
+            "juggernaut_blade_dance-attack",
+            "juggernaut_blade_fury-self_protection"
+          ],
+          "rule_ids": [
+            "item-satanic-growth",
+            "need-growth"
+          ]
+        }
+      ],
+      "same_analysis_except_engine_version": true,
+      "artifacts_sha256": {
+        "reports/review-2026-10-13/unknown-hero-knowledge.json": "49cc9b4b536c62bd77d95ef905482eb88a4d01ed539ee397f3f0830e1fcd22c8",
+        "reports/review-2026-10-13/unknown-hero-knowledge.txt": "040b3b70aaefdfc4203175241e25affdbd36efecc5410927cd4e70e9302043b0",
+        "reports/review-2026-10-13/unknown-hero-knowledge.html": "b10818f84111670769e8d43662c551983215f53e6119a7f9d9c3d3a08240903b"
+      }
+    },
+    {
+      "case_id": "unsupported-role",
+      "origin": "synthetic_author_constructed",
+      "input_file": "examples/recommendation/unsupported-role.json",
+      "input_sha256": "72b981a8b4210db0e63228d5ad17dae2532cb4ee05e3a190e99a44d7607dc95e",
+      "input_fingerprint": "1c679fc84a503f9663360fb83a6e8de4571524f8bf21890c14608dec03d652f5",
+      "status": "unsupported",
+      "need_keys": [],
+      "candidates": [],
+      "same_analysis_except_engine_version": true,
+      "artifacts_sha256": {
+        "reports/review-2026-10-13/unsupported-role.json": "0578263a9347220957f8ea8f4714772b2a480cc4a8e1c4c1218effb70af0ab66",
+        "reports/review-2026-10-13/unsupported-role.txt": "ec004946b3c56e88340f3168687311ca4e6fee21a6388d38f4e4217f6448210a",
+        "reports/review-2026-10-13/unsupported-role.html": "c23a6db998ffdc36349c8b3ef40b20b9aaa434f18860f5d5869d81da64724e15"
+      }
+    },
+    {
+      "case_id": "unsupported-target",
+      "origin": "synthetic_author_constructed",
+      "input_file": "examples/recommendation/unsupported-target.json",
+      "input_sha256": "2749ea0cd4102fddd33f0005e97f494f29debccf5c07342cd7519d60e651775f",
+      "input_fingerprint": "ecf68e54d560e199bffb814ac209b69a1b63ee5649f48a3615767ae65d4399ea",
+      "status": "unsupported",
+      "need_keys": [],
+      "candidates": [],
+      "same_analysis_except_engine_version": true,
+      "artifacts_sha256": {
+        "reports/review-2026-10-13/unsupported-target.json": "40ad2b3b4b46f74778045343ce114cbae48f8a6e0a38a8a5e443bb3d04e17ed3",
+        "reports/review-2026-10-13/unsupported-target.txt": "e5d2321bd6d750274828b3e6ac67a1d1b3fc6ed5203f8dc836a3b23420a28b7a",
+        "reports/review-2026-10-13/unsupported-target.html": "74444a8d7c79034cef8bed05337f0fa8976f5c61a84d4abcb086272fd7f2dd3a"
+      }
+    }
+  ]
+}

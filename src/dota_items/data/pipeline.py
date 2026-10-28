@@ -9,12 +9,12 @@ from pathlib import Path
 
 from ..sources.gem_replay import ingest_demo
 from ..storage import digest, file_hash, hashes, inside, now, read_json, write_json, writer_lock
-from ..workflow.validation import validate_match
 from .cleaning import clean_match
 from .contracts import FEATURE_SCHEMA, PIPELINE_VERSION, PreparationConfig
 from .features import extract_samples
 from .observer import OBSERVER_SCHEMA, observer_samples
 from .preprocessing import fit_preprocessor, save_arrays
+from .validation import validate_match
 
 MAX_JSON_BYTES = 256 * 1024**2
 

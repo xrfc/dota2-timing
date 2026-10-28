@@ -1,6 +1,35 @@
 # 数据与模型接口契约
 
-**文档定位（2026-10-10）**：本页维护既有回放/训练基础设施或其历史证据；当前开发优先级统一见[7.41f 主线](development-mainline.md)，新推荐模块约束见[模块边界](module-boundaries.md)。既有通用格式不因此改成仅支持7.41f；历史核验与 held 状态不变。
+## 公共读取契约收尾 — 2026-10-17
+
+source_io提供read_source_bytes/parse_source_json，保持来源解析原行为，不等同严格制品解码。
+交接/快照schema不变，新包与审计一致声明public-reader/1迁移；模型输入语义不变。
+详见[接口与迁移规范](public-source-reader.md)。
+
+
+## 模块接口更新 — 2026-10-17
+
+源日志快照仍为purchase-log-modeling-snapshot/1，模型仍为purchase-foundation-model/1，预测语义未变。读取/适配分别位于handoff.bundle、modeling.batch。
+任务与特征约束集中于modeling.specs，当前不接受任意英雄/窗口；新旧实现指纹清单规则见[指南](modular-maintenance.md)。
+coach-context/1格式不变，纯实现下沉contracts.replay_context。完整性/语义检查不是训练许可。
+
+2026-10-14后续：预演输出升级 `lineup-preflight/2`，新增 `player-overlap/1` 诊断。只导出比赛ID与计数，不导出账号/哈希；配置版本不变，旧训练入口仍拒绝预演。
+
+## 2026-10-14 续接
+
+2026-10-14新增 `lineup-preflight-config/1`（严格配置）与 `lineup-preflight/1`（程序生成的诊断字典，非正式样本契约）；全部训练mask=false，旧训练入口拒绝。字段见[预检说明](pretraining-readiness.md)。
+
+## 新增审计契约（2026-10-13）
+
+| 对象 | 版本 | 校验/含义 |
+|---|---|---|
+| 审计配置 | purchase-feasibility-config/1 | 严格AuditConfig，窗口和候选检查 |
+| 采样计划 | purchase-feasibility-plan/1 | 严格SamplingPlan，重新计算切片及发现哈希 |
+| 补丁来源收据 | patch-time-evidence/1 | 严格PatchReceipt，快照哈希/时区/边界检查 |
+| 审计报告 | purchase-feasibility-report/1 | 程序生成字典，auditor_version为purchase-feasibility/3；非完整Pydantic输出Schema |
+| 语义核验 | purchase-semantics/1 | 程序生成字典，比较状态与位置线索；training_allowed固定false |
+
+上述不修改旧样本/模型Schema，不是训练标签契约。字段和复现见[审计](data-feasibility.md)、[语义](data-semantics.md)。
 
 > v0.4 数据准备更新：`prepare` 已实现单文件清洗/特征/标签；`build-samples` 输出固定 split 的训练数组和 train-only 预处理。输入、错误策略、任务 mask 和操作示例以[数据管线](data-pipeline.md)为准。实际模型与真实字段验收仍待完成。
 
@@ -31,7 +60,7 @@
 | 复盘状态 | coach-review/1 | reviews 程序管理 |
 | 旧购买时间线/分析结果 | 0.1 | domain.py 中的事实模型 |
 
-`init` 导出的 6 个 Schema（含 admission） 位于工作区 `contracts/`。Pydantic 契约拒绝额外字段及非有限浮点数，但并非所有字段都启用严格类型模式，部分输入可被转换。其余 JSON 对象不应假定拥有同样的完整 Schema 校验。
+`init` 导出的 5 个 Schema 位于工作区 `contracts/`。Pydantic 契约拒绝额外字段及非有限浮点数，但并非所有字段都启用严格类型模式，部分输入可被转换。其余 JSON 对象不应假定拥有同样的完整 Schema 校验。
 
 所有受控 JSON 使用 UTF-8；指纹序列化采用排序键、2 空格缩进和末尾换行。文件哈希为文件字节 SHA-256；身份哈希为上述 JSON 序列化的 SHA-256，ID 截取前 24 个十六进制字符。
 
@@ -82,7 +111,7 @@ Gem 用暂停感知的 `game_clock.game_seconds_at(tick)` 转换时间，位置/
 
 购买缺失、空数组、非法记录含义不同：缺失可导入但有警告；空数组记为 present 并有空日志提示；非法购买会被新工作区拒绝。因而 present 不保证真的发生过购买，也不保证日志完整。
 
-自定义 JSON 的位置/经济校验以 0 作为时间排序初值，拒绝负观测时间，并检查不超过比赛时长。校验器不会重建 raw 的 game_clock 逐项验证导出的秒数，不能仅凭数值引用通过宣称时间语义已完全核验。
+自定义 JSON 的位置/经济校验目前以 -1 作为时间排序初值，可能接受 [-1, 0) 的记录；这是待收紧的验证边界。新生成的数据应遵循非负观测时间。校验器不会重建 raw 的 game_clock 逐项验证导出的秒数，不能仅凭数值引用通过宣称时间语义已完全核验。
 
 ## 3. 证据引用
 
@@ -149,10 +178,10 @@ manifest 包含 schema_version、observation_schema、config、filters、matches
 - 最少 3 场，6 场默认划分为 train 4 / validation 1 / test 1。
 - require_spatial 仅要求位置数和可用经济行数都大于 0。
 - ID 计算排除 dataset_id 和 created_at，包含其余清单内容及文件哈希。
-- 筛选的 excluded 列表同时写入 manifest 和命令结果，包含被排除比赛及原因。
+- 筛选的 excluded 列表仅随命令结果返回，尚未保存到 manifest；需要留档时保存 stdout。
 - 所选槽位是使用约定，快照没有物理剔除其他玩家或未来数据。
 
-已有 coach-features/1、coach-samples/1 和 PreparationConfig，定义历史特征、购买/位移标签及窗口；详见数据管线。地图语义分区与阵容推荐契约仍未实现。
+目前没有 features、labels、窗口长度、地图分区或动作词表的正式模型输入契约。
 
 ## 6. 训练器协议和模型描述
 
@@ -230,4 +259,4 @@ Gem 导入缓存使用 `demo-import/1.1`：清单保存 `source_sha256`（输入
 
 当前不会自动迁移 schema 或合并同比赛的多个解析修订。升级导致内容变化时，新建工作区重导入并保留旧数据集。旧缓存版本、绝对路径和 OpenDota 缓存策略见[操作指南](workflow.md)。
 
-下一阶段应先定义独立来源身份、解析版本、质量资格及标注修订，在已有窗口/购买/位移契约上扩展经核验的新任务和评估输入。不要把这些规划字段写入现有 Pydantic 对象；extra=forbid 会拒绝未知字段。
+下一阶段应先定义独立来源身份、解析版本、质量资格及标注修订，再定义严格截止时间的训练窗口、动作/标签与评估输入。不要把这些规划字段写入现有 Pydantic 对象；extra=forbid 会拒绝未知字段。

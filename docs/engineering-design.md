@@ -1,10 +1,48 @@
-# 工程设计：v0.3
+# 工程设计：阵容推荐与回放基础设施
 
-**文档定位（2026-10-10）**：本页维护既有回放/训练基础设施或其历史证据；当前开发优先级统一见[7.41f 主线](development-mainline.md)，新推荐模块约束见[模块边界](module-boundaries.md)。既有通用格式不因此改成仅支持7.41f；历史核验与 held 状态不变。
+## 公共读取更新 — 2026-10-17
+
+来源文件I/O与解析归data.source_io（标准库），审计/采样/玩家关联复用同一实现。
+producer_migration只处理明确登记的实现身份差异，不忽略任意hash，也不改变数据语义。
+边界及接口见[公共读取说明](public-source-reader.md)。
+
+
+## 当前设计 — 2026-10-17
+
+当前拓扑见[模块维护指南](modular-maintenance.md)。modeling分为batch/specs、training/estimators、artifacts、inference和evaluation，foundation为兼容门面。
+data.validation持有来源校验，workflow.validation兼容导出；sources不再导入data。contracts提供纯上下文格式，handoff.bundle独立读取。
+recommendation仍为人工规则，不能把源日志概率当最佳出装效用。以下内容保留历史设计。
+
+## 新增审计链路（2026-10-13）
+
+`audit_data.py → feasibility_cli → feasibility + semantic_review` 复用normalize和OpenDota读取器。
+`feasibility_sampling`绑定发现顺序与配置，`patch_time`验证官方快照并判断发布时间区间。
+输出仅诊断，不接入训练准入；实现/契约见[审计说明](data-feasibility.md)和[语义核验](data-semantics.md)。
+推荐引擎现为 `lineup-rules/2`，新增条件传递/展示修正；下方2026-10-11是原链路设计背景。
+
+## 当前推荐链路（2026-10-11 / 本地47b8f7f）
+
+一号位主宰的实验规则链路已独立于回放管线实现，不等待模型训练：
+
+```text
+阵容JSON → CLI输入校验 → 已核验字节与引用的知识/策略值对象
+        → 需求分析 → 候选硬约束 → 确定性排序 → JSON/文本/HTML报告
+```
+
+实现位于 [recommendation/](../src/dota_items/recommendation/)，`knowledge.py`定义不可变值对象，
+`files.py`负责I/O及来源验证，`engine.py`处理纯逻辑，`report.py`只渲染，`cli.py`组合调用。
+英雄/位置与权重规则由配置选择，当前仅启用 `(8, 1)`；新组合需补事实与案例验收，
+不直接复制主宰策略。使用及详细扩展说明见[本地推荐](lineup-recommendation.md)。
+
+规则质量仍按[评审流程](recommendation-quality-review.md)推进；当前开发优先数据/标签语义证据。
+本链路不导入Gem、workflow或训练框架；不改变下方旧回放/模型契约。
+
+## 已有回放架构与历史设计
 
 > v0.4 数据准备更新：`prepare` 已实现单文件清洗/特征/标签；`build-samples` 输出固定 split 的训练数组和 train-only 预处理。输入、错误策略、任务 mask 和操作示例以[数据管线](data-pipeline.md)为准。实际模型与真实字段验收仍待完成。
 
-基线日期：2026-10-02。功能状态见[完成度](project-status.md)，选型理由见[技术选型](long-term-roadmap.md)。本文描述现有结构；文末单列规划。
+下方架构以2026-10-02的v0.3为历史起点，包含后续数据准备增量；它不是新推荐链路。
+最新功能状态见[完成度](project-status.md)，选型理由见[技术选型](long-term-roadmap.md)。
 
 ## 系统边界
 
@@ -68,7 +106,7 @@ flowchart TD
 ## 导入与一致性
 
 1. 解压流按实际格式处理；zip 只接受一个 demo，读取成员内容而不按成员路径落盘。
-2. 解析并保留原始 JSON；适配器导出 `gem-adapter/3.0`。
+2. 解析并保留原始 JSON；适配器导出 `gem-adapter/2.2`。
 3. 校验输入，在同文件系统的 `.staging` 复制证据、规范数据和质量记录，再校验一次。
 4. 计算数据包文件哈希，重命名发布目录，原子替换 catalog。
 5. 发布后、catalog 更新前若中断，相同输入再次导入可识别已发布数据包并补上索引。
@@ -99,6 +137,6 @@ flowchart TD
 
 HTML 文本转义、无需 CDN。当前没有地图、路线轨迹、库存状态、敌方可见性或因果决策价值模型。事实报告模板的标题仍保留 v0.1 字样，已列为 UI 待修项，不能据此判断包版本。
 
-## 下一阶段的结构变化
+## 回放支线后续结构变化
 
-优先补齐原回放/解析环境追踪、真实字段验证、完整性与覆盖率、解析资源限制和故障恢复。窗口/标签层已有 data 模块初版；未来按模块边界逐步分离纯变换与编排，不重复开发已交付能力。Parquet、统一 SQLite catalog、任务队列和 Web 界面均需满足[选型路线](long-term-roadmap.md)中的实际触发条件后再引入。
+优先补齐原回放/解析环境追踪、真实字段验证、完整性与覆盖率、解析资源限制和故障恢复。窗口/标签层应在快照与训练器之间显式建立。Parquet、统一 SQLite catalog、任务队列和 Web 界面均需满足[选型路线](long-term-roadmap.md)中的实际触发条件后再引入。

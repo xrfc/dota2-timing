@@ -1,6 +1,13 @@
 # 日常操作、迁移与恢复
 
-**文档定位（2026-10-10）**：本页维护既有回放/训练基础设施或其历史证据；当前开发优先级统一见[7.41f 主线](development-mainline.md)，新推荐模块约束见[模块边界](module-boundaries.md)。既有通用格式不因此改成仅支持7.41f；历史核验与 held 状态不变。
+## 当前开发入口 — 2026-10-17
+
+复用现有.venv。scripts/check.py支持modeling、data、recommendation专项scope；最终仍运行全量。见[维护指南](modular-maintenance.md)。
+下方bootstrap是首次环境配置示例，不是覆盖当前环境的指令；真实训练、数据划分和解析核验仍单独授权。
+
+## 2026-10-13 进度同步
+
+新增只读诊断入口 `python audit_data.py`：本地JSON、固定采样计划、离线缓存与失败记录；命令见[审计说明](data-feasibility.md)。诊断退出码0不代表训练准入，原始玩家JSON不提交Git。
 
 > v0.4 数据准备更新：`prepare` 已实现单文件清洗/特征/标签；`build-samples` 输出固定 split 的训练数组和 train-only 预处理。输入、错误策略、任务 mask 和操作示例以[数据管线](data-pipeline.md)为准。实际模型与真实字段验收仍待完成。
 
@@ -37,7 +44,7 @@ python coach.py --workspace coach-workspace/real annotate 8822520406 --tier pro 
 python coach.py --workspace coach-workspace/real build-dataset --patch 7.xx --role 1 --hero-id 44 --require-spatial
 ```
 
-替换比赛 ID、补丁、槽位和来源；构建至少需要 3 场符合条件的不同比赛。excluded 已自动存入快照 manifest，并随命令返回；如需额外保存操作收据，可将 stdout 重定向到工作区文件：
+替换比赛 ID、补丁、槽位和来源；构建至少需要 3 场符合条件的不同比赛。输出中的 excluded 尚未自动存入快照，如需保留可把本次 stdout 重定向到工作区文件：
 
 ```bash
 python coach.py --workspace coach-workspace/real build-dataset --patch 7.xx --role 1 --hero-id 44 --require-spatial > coach-workspace/real/dataset-selection.json

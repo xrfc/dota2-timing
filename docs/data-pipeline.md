@@ -1,6 +1,13 @@
 # Demo 到训练样本的数据管线
 
-**文档定位（2026-10-10）**：本页维护既有回放/训练基础设施或其历史证据；当前开发优先级统一见[7.41f 主线](development-mainline.md)，新推荐模块约束见[模块边界](module-boundaries.md)。既有通用格式不因此改成仅支持7.41f；历史核验与 held 状态不变。
+## 模块位置更新 — 2026-10-17
+
+来源校验归data.validation，旧workflow.validation仍兼容；pipeline不再依赖workflow。上下文纯格式在contracts.replay_context，清洗/外部证据核验在data.context。
+适配器gem-adapter/3.1覆盖新实现指纹，清洗兼容3.0/3.1；本轮未真实重解析。检查及冻结保护见[指南](modular-maintenance.md)。
+
+## 2026-10-13 进度同步
+
+新增[独立审计器v3](data-feasibility.md)与[语义核验](data-semantics.md)，不改变下方coach-features/1或已有购买任务定义；新阵容ML实验正式标签仍待冻结。
 
 更新：**2026-10-09 / main 725f35c / 0.4**，清洗版本 `coach-preparation/3`。新增 context 与 observer JSONL，使用方法和边界见[上下文接入](observer-context.md)；原 X 数组保持原定义。本页描述已实现的数据准备；[8 场真实验收](real-data-acceptance.md)已完成机械检查，游戏语义仍有未解决项。入口是本地文件/目录，网页上传尚未实现。
 

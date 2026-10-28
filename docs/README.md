@@ -1,39 +1,116 @@
 # 文档索引
 
-**先读：[主线开发流程](development-mainline.md) → [模块与耦合约束](module-boundaries.md) → [任务清单](roadmap.md)。** 全量文件职责、审阅边界及本轮修正见[文档盘点](documentation-inventory.md)。
+更新：2026-10-26。流程与当前任务只维护三份主文档：**总路线、数据、模型**；其他文档是接口/操作参考、日期证据或历史快照，不另设竞争路线。
 
-文档更新：**2026-10-10**；包版本 **0.4.0**，实现核对基线 **main / c6a5e1f**。全部开发分支已整合，包括真实数据验收、上下文、训练准入与缓存/身份追踪修复。本文索引工程文档；全部学习资料与可视化入口见 [learning/](../learning/README.md)。实际模型训练仍为下一阶段。
+新读者：[项目简介](../README.md) → [总路线](roadmap.md) → [数据](data-prep-progress.md)/[模型](model-foundation.md)。开发者另读[贡献指南](../CONTRIBUTING.md)、[模块维护](modular-maintenance.md)、[脚本导航](../scripts/README.md)。
 
-## 按任务阅读
+## 如何理解状态与链接
 
-| 你要做什么 | 文档 |
-|---|---|
-| 先判断项目做到了哪里 | [完成度与验证证据](project-status.md) |
-| 查看全英雄机制资料与选人评估范围 | [英雄能力知识](../knowledge/README.md) |
-| 判断知识如何用于冷启动训练 | [知识与训练候选](knowledge-cold-start.md) |
-| 查资料迁移、外部证据与仓库维护路径 | [知识维护与路径清单](knowledge-maintenance.md) |
-| 安装、导入、标注、固定数据集、预留模型接入 | [教练工作流](coach-workflow.md) |
-| 日常操作、旧命令迁移、备份、故障恢复、人工核验 | [操作指南](workflow.md) |
-| 了解模块边界和数据流 | [工程设计](engineering-design.md) |
-| 一份 demo 到清洗、特征、标签与训练数组 | [数据管线](data-pipeline.md) |
-| 采集 7.41f 高分候选、复现真实回放验收 | [真实数据准入](real-data-acceptance.md) |
-| 核对视野、装备、技能、战斗字段及教练任务缺口 | [教练字段核查](coach-field-audit.md) |
-| 使用新增上下文、玩家视角与真实重解析检查 | [上下文接入](observer-context.md) |
-| 核对真实训练准入及桌面交接 | [训练准入](training-admission.md) |
-| 实现训练器或预测器 | [数据契约](data-contracts.md) |
-| 理解技术选择和后续性能优化 | [技术选型与优化路线](long-term-roadmap.md) |
-| 安排下一轮开发 | [任务清单](roadmap.md) |
-| 复核已知限制与历史问题 | [风险复核](project-review.md) |
-| 重现检查、区分工程验证和模型效果 | [验证与交付](validation-and-delivery.md) |
-| 修改代码或文档 | [贡献指南](../CONTRIBUTING.md) |
-| 查版本变化 | [变更记录](../CHANGELOG.md) |
+- 日期报告中的“本轮/未推送/待确认”只对其记录时刻有效，当前状态查主文档；训练、推送、合并分别记录。
+- `data/`、`reports/`、`coach-workspace/`链接指本地冻结证据，GitHub不分发这些文件。公开文档含汇总与复现条件，不声称干净克隆拥有原始数据/模型。
+- `archive/`原文快照保持字节与哈希，内部旧相对链接按原位置解释。只从下方索引进入，不批量修改历史授权/数值。
+- 学习材料见[learning](../learning/README.md)，知识来源维护见[knowledge维护](knowledge-maintenance.md)；不自动勾选个人任务。
+- 本目录全部非归档Markdown均列在下方；归档原文由各INDEX及manifest管理。无物理搬迁，旧链接继续兼容。
 
-## 文档职责
+## 主流程与导航
 
-- `project-status.md` 统一回答完成度，不使用缺乏分母的完成百分比。
-- `data-contracts.md` 描述代码当前接受和输出的格式；规划中的格式单独注明。
-- `coach-workflow.md` 维护命令和适配器用法；`workflow.md` 维护运营与恢复。
-- `long-term-roadmap.md` 解释选择、成本和升级条件；`roadmap.md` 维护任务状态与验收要求。
-- `validation-and-delivery.md` 维护测试证据及其边界；合成数据通过不等于真实回放语义通过。
+- [数据流程与开发](data-prep-progress.md)
+- [模型流程与开发](model-foundation.md)
+- [项目状态入口](project-status.md)
+- [项目总开发路线](roadmap.md)
 
-出现冲突时，先核对[实现](../src/dota_items/workflow/)和[测试](../tests/)，修正文档并注明验证范围。生成到工作区的 JSON Schema 来自代码；部分运行清单只有版本字段和程序校验，并没有对应的完整 Pydantic Schema。
+## 架构、接口与操作
+
+- [教练任务字段核查：视野、装备、技能与战斗](coach-field-audit.md)
+- [教练工作流：训练前后基础设施（v0.3）](coach-workflow.md)
+- [数据与模型接口契约](data-contracts.md)
+- [Demo 到训练样本的数据管线](data-pipeline.md)
+- [主宰位置与装备标签语义核验](data-semantics.md)
+- [工程设计：阵容推荐与回放基础设施](engineering-design.md)
+- [整局实验层维护（2026-10-22）](experiment-maintenance.md)
+- [英雄知识能否作为训练冷启动？](knowledge-cold-start.md)
+- [知识维护、路径映射与证据恢复](knowledge-maintenance.md)
+- [长期产品目标：赛前准备与赛后复盘教练](long-term-coach-goals.md)
+- [技术选型与优化路线](long-term-roadmap.md)
+- [单模块维护与长期扩展（2026-10-17）](modular-maintenance.md)
+- [工程风险复核](project-review.md)
+- [公共来源读取接口与生产者迁移（2026-10-17）](public-source-reader.md)
+- [购买日志观测契约 v1](purchase-observation-contract.md)
+- [7.41f 阵容推荐契约（M01 首个切片）](recommendation-contracts.md)
+- [版本化任务契约（2026-10-20）](task-contracts.md)
+- [训练准入与桌面核验交接](training-admission.md)
+- [验证与交付](validation-and-delivery.md)
+- [日常操作、迁移与恢复](workflow.md)
+
+## 录像、地图与观察证据
+
+- [地图资料获取与地标对照（2026-10-26）](map-reference-2026-10-26.md)
+- [视野、战斗与英雄状态接入](observer-context.md)
+- [位置与可见性数据扩量（2026-10-26）](replay-expansion-2026-10-26.md)
+- [录像坐标直接实体来源与原生地标（2026-10-22）](replay-identity-2026-10-22.md)
+- [三场突跳与技能、物品、复活事件核对（2026-10-23）](replay-jump-events-2026-10-23.md)
+- [原始录像轨迹与视野试点（2026-10-22）](replay-pilot-2026-10-22.md)
+- [原始录像兼容修复与轨迹、视野续报（2026-10-22）](replay-pilot-compat-results-2026-10-22.md)
+- [录像质量补齐、地图校准与阵营时间线（2026-10-26）](replay-quality-2026-10-26.md)
+- [三场录像语义审计（2026-10-22）](replay-semantics-2026-10-22.md)
+
+## 模型、阵容与实验记录
+
+- [2026-10-13 推荐报告内部审查](acceptance/recommendation-review-2026-10-13.md)
+- [主宰阵容分析原型（2026-10-25）](lineup-analysis-prototype-2026-10-25.md)
+- [主宰A/B阵容对比：功能与案例复盘](lineup-comparison-review-2026-10-25.md)
+- [本地阵容推荐：一号位主宰](lineup-recommendation.md)
+- [首个机器学习实验：先证明数据能支持任务](ml-first-experiment.md)
+- [首轮源购买日志机器学习基线（2026-10-15）](purchase-log-baseline-2026-10-15.md)
+- [购买日志基线：验证集误差与分布诊断（2026-10-15）](purchase-log-diagnostics-2026-10-15.md)
+- [日志观测建模快照与玩家分组评估](purchase-log-modeling-snapshot.md)
+- [截距与正则化对照：实现已完成，真实实验待确认](purchase-log-sensitivity-plan-2026-10-15.md)
+- [推荐质量评审：从可运行到建议合理](recommendation-quality-review.md)
+- [整局11装备：固定频率与阵容逻辑回归对照](whole-log-baseline-2026-10-21.md)
+- [整局固定预测：校准与训练/验证差距诊断](whole-log-calibration-2026-10-21.md)
+- [整局两组C真实对照（2026-10-22）](whole-log-regularization-2026-10-22.md)
+- [开局阵容 → 整局11装备源日志任务（2026-10-21）](whole-log-task-2026-10-21.md)
+
+## 采集、资格与独立评估
+
+- [双方向架构审查（2026-10-16）](architecture-2026-10-16.md)
+- [代码审查修复与复审（2026-10-18）](code-review-fixes-2026-10-18.md)
+- [队列v2整组划分可行性：实际分析](cohort-v2-feasibility-2026-10-18.md)
+- [1,000场购买行为候选采集任务](collection-1000-2026-10-14.md)
+- [新增1,000场候选采集（2026-10-15）](collection-additional-1000-2026-10-15.md)
+- [下一批主宰采集准备（2026-10-19，未启动网络采集）](collection-next-batch-plan-2026-10-19.md)
+- [主宰购买标签可行性审计](data-feasibility.md)
+- [数据脚本审查修复（2026-10-20）](data-review-fixes-2026-10-20.md)
+- [前瞻独立评估：已确认执行参数（保留设计理由）](evaluation-execution-proposal-2026-10-23.md)
+- [独立评估离线可行性与采集400排查（2026-10-23）](evaluation-feasibility-2026-10-23.md)
+- [独立评估来源小预算复测（2026-10-23）](evaluation-source-probe-2026-10-23.md)
+- [开发分支同步检查（2026-10-20）](github-sync-2026-10-20.md)
+- [较晚同补丁评估：研究口径设计（DATA-02 / MODEL-07）](independent-evaluation-design-2026-10-23.md)
+- [训练前数据准备与阻塞清单](pretraining-readiness.md)
+- [现有952场离线处理](purchase-952-processing-2026-10-14.md)
+- [新队列 v2 接入方案（2026-10-18，待研究选择确认）](purchase-cohort-v2-plan-2026-10-18.md)
+- [v2 比赛级随机划分与模型输入（2026-10-21）](random-cohort-v2-2026-10-21.md)
+- [真实回放采集与准入](real-data-acceptance.md)
+- [近期开发进度与交付摘要（截至2026-10-23）](recent-progress-2026-10-23.md)
+
+## 协作与交接
+
+- [双分支交接：对话上下文与共同协议（2026-10-16）](handoff/2026-10-16-context.md)
+- [数据准备agent提示词](handoff/data-agent-prompt.md)
+- [模型搭建agent提示词](handoff/model-agent-prompt.md)
+- [并行开发与串行集成协议](handoff/parallel-development.md)
+- [数据接口交接（2026-10-16）](handoff/purchase-data-interface.md)
+- [单目录整合与模型agent接续（2026-10-16）](handoff/single-workspace-2026-10-16.md)
+
+## 历史快照索引
+
+- [整理前原文快照（2026-10-22）](archive/2026-10-22/INDEX.md)
+- [2026-10-26整理前入口](archive/2026-10-26/INDEX.md)
+
+## 历史设计归档（不替代当前入口）
+
+- [2026-10-10阵容推荐规划](development-mainline.md)：历史范围与设计理由。
+- [2026-10-10模块边界](module-boundaries.md)：保留依赖方向与扩展原则，不把建议目录当成当前结构。
+- [2026-10-10文档盘点](documentation-inventory.md)：当时的清单与核对范围，不是当前文件数量。
+
+当前已存在 recommendation 契约/规则原型、modeling 模型接口与阵容页面；实现存在不等于推荐质量或真实语义认证。状态继续由 roadmap、data-prep-progress、model-foundation 维护，结构见 modular-maintenance；此归档不扩大训练或数据用途授权。

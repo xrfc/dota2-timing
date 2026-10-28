@@ -1,6 +1,8 @@
-# 主线开发流程：7.41f 阵容出装推荐
+# 历史（2026-10-10）：主线开发流程：7.41f 阵容出装推荐
 
-更新：2026-10-10。核对基线：[main c6a5e1f](https://github.com/xrfc/dota2-timing/commit/c6a5e1ff5eaa597d6c68567ef00f3acc973a64c9)。本文是**开发顺序与产品范围的唯一入口**；任务状态归 [roadmap](roadmap.md)，实际交付归 [project-status](project-status.md)，依赖约束归 [模块边界](module-boundaries.md)。新推荐接口和模块均为设计，尚未实现。
+> **历史设计，已由后续实现和流程替代（2026-10-29整理）。** 下文的“当前”、“尚未实现”、任务状态和验收数字均指2026-10-10基线，不是当前项目结论，也不恢复历史授权。当前顺序与状态以 [roadmap](roadmap.md)、[数据进度](data-prep-progress.md)、[模型基础](model-foundation.md) 为准；结构以 [模块维护](modular-maintenance.md) 为准。保留本页用于追溯架构理由，不另立开发入口。
+
+更新：2026-10-10。核对基线：[main c6a5e1f](https://github.com/xrfc/dota2-timing/commit/c6a5e1ff5eaa597d6c68567ef00f3acc973a64c9)。本文是**当时的规划入口（已替代）**；任务状态归 [roadmap](roadmap.md)，实际交付归 [project-status](project-status.md)，依赖约束归 [模块边界](module-boundaries.md)。新推荐接口和模块均为设计，尚未实现。
 
 ## 1. 目标与范围
 
@@ -28,7 +30,7 @@
 
 ## 3. 主线阶段与出口
 
-任务状态仅维护在 [M01–M07](roadmap.md#当前主线741f-阵容推荐)，下表定义依赖与出口。
+任务状态仅维护在 [M01–M07](roadmap.md)，下表定义依赖与出口。
 
 | 阶段 | 交付 | 出口 |
 |---|---|---|
@@ -67,7 +69,7 @@
 
 交付必须包含限定范围、输入输出例子、实现位置、正反例、版本/兼容、证据/缺陷和复现命令。无模型不报模型指标，无客户端核验不写语义通过。
 
-## 6. 文档使用
+## 6. 当时的文档使用（不再作为当前入口）
 
 阅读：本文 → [模块边界](module-boundaries.md) → [任务清单](roadmap.md) → [当前状态](project-status.md) → 按需查看契约、操作、知识专题。
 

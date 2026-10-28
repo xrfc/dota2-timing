@@ -46,6 +46,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - run: python -m pytest tests/test_coach_workflow.py tests/test_data_preparation.py -q
+      - run: >-
+          python -m pytest tests/test_coach_workflow.py tests/test_data_preparation.py
+          tests/test_adapter_processes.py tests/test_report_evidence.py
+          tests/test_task_contracts.py tests/test_cohort_split_feasibility.py -q
+      - name: Prototype UTF-8 IO without private model assets
+        env:
+          PYTHONUTF8: "0"
+        run: python -m pytest tests/test_model_lineup_encoding.py -q
       - run: python scripts/check.py --scope learning
       - run: python coach.py --workspace coach-workspace/ci demo
