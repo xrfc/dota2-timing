@@ -6,6 +6,7 @@
 - [能力评估定义](hero-capabilities/ASSESSMENT.md)：作用对象、条件、限制和升级要求。
 - [选人评估与维护命令](hero-capabilities/README.md)：双阵容证据清单，不输出强度或胜率。
 - [冷启动候选清单](hero-capabilities/cold-start/manifest.json)：734 条官方说明提取候选，尚未准入训练。
+- [新审计与上游语义证据](evidence/feasibility-2026-10-13/README.md)：补丁、固定采样、源码哈希和MIT许可，不含原玩家JSON。
 - [公开证据元数据](evidence/7.41f-2026-10-06/README.md)：来源、哈希与历史核验收据；不含回放本体。
 - [路径与维护记录](../docs/knowledge-maintenance.md)、[冷启动训练用途](../docs/knowledge-cold-start.md)。
 

@@ -101,6 +101,7 @@ def parse_with_state(path):
     smoke.attach(parser)
     modifiers.attach(parser)
     parser.parse()
+    require_complete_parse(parser)
     draft.finalize()
     wards.finalize()
     match = build_parsed_match(
@@ -122,3 +123,12 @@ def parse_with_state(path):
         entity_visibility_events=visibility.entity_events,
     )
     return match, players.coach_states
+
+
+def require_complete_parse(parser):
+    """Do not turn Gem's swallowed stream exceptions into valid partial outputs."""
+    if parser.parse_error is not None:
+        raise ValueError(
+            f"Incomplete Gem parse at tick {parser.truncated_at_tick}: "
+            f"{type(parser.parse_error).__name__}: {parser.parse_error}"
+        ) from parser.parse_error

@@ -1,0 +1,16 @@
+{
+  "schema_version": "lineup-comparison-cases/1",
+  "status": "assistant hypotheses recorded before running these comparisons; not user-validated answers",
+  "scope": "handwritten exploratory lineups; not independent evaluation or causal interventions",
+  "base": {"target_hero_id": 8, "ally_hero_ids": [8,22,96,26,30], "enemy_hero_ids": [1,2,14,25,5]},
+  "cases": [
+    {"id":"illusions_pl", "replace_enemy":1, "with_enemy":12, "question":"敌方敌法师换成幻影长矛手，清理幻象相关装备的购买倾向如何变化？", "watch_items":["bfury","maelstrom","mjollnir"], "expectation":"探索性假设：应关注范围伤害选择，但不预设三件装备都上升；它们存在路线替代。英雄更换同时改变多种能力，不能当纯幻象效应。"},
+    {"id":"evasion_pa", "replace_enemy":1, "with_enemy":44, "question":"敌方敌法师换成幻影刺客，金箍棒倾向是否上升？", "watch_items":["monkey_king_bar"], "expectation":"机制待版本核验的方向假设：面对闪避时关注命中方案；不据此断言必出金箍棒，也不将下降直接判成模型错误。"},
+    {"id":"illusions_tb", "replace_enemy":1, "with_enemy":109, "question":"敌方敌法师换成恐怖利刃，范围伤害与冰眼方向是否不同于幻影长矛手？", "watch_items":["bfury","mjollnir","skadi"], "expectation":"开放问题：同为可能涉及幻象的英雄，不能压缩成同一个出装规则；不预设概率方向。"},
+    {"id":"mana_medusa", "replace_enemy":1, "with_enemy":94, "question":"敌方敌法师换成美杜莎，散失之刃的购买倾向如何变化？", "watch_items":["diffusal_blade"], "expectation":"机制待版本核验的方向假设：关注法力交互；护盾、消蓝和升级装备在目标补丁的实际效果需另核验，不预设必出。"},
+    {"id":"sustain_slark", "replace_enemy":1, "with_enemy":93, "question":"敌方敌法师换成斯拉克，冰眼与分身斧方向如何变化？", "watch_items":["skadi","manta"], "expectation":"开放问题：持续作战、恢复与脱离能力的价值不等于任一装备必须上升；不假定所有控制都可用分身解除。"},
+    {"id":"physical_spec", "replace_enemy":1, "with_enemy":67, "question":"敌方敌法师换成幽鬼，蝴蝶与散夜对剑方向如何变化？", "watch_items":["butterfly","sange_and_yasha"], "expectation":"开放问题：生存与持续输出的取舍需要具体机制、成型期和经济背景，仅有英雄身份不够；不预设方向。"}
+  ],
+  "mechanical_checks": ["permuting positions on the same side must not change probabilities", "unknown hero must be flagged; it is not evidence of understanding the new hero"],
+  "known_task_gap": "BKB is outside the frozen 11-item task; this comparison cannot evaluate BKB responses to control-heavy compositions. Do not relabel or retrain automatically."
+}

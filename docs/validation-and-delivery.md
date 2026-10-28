@@ -1,5 +1,222 @@
 # 验证与交付
 
+## 2026-10-18 截距/正则化对照就绪核查
+
+- 不运行真实对照；禁止fit的只读核验已确认旧952场来源、公共交接包及当前train/validation适配兼容，原摘要/快照哈希不变。
+- 唯一必要修复是compare_purchase_sensitivity.py接通显式public-reader/1；默认严格不变，不改候选、指标或选择规则。
+- 5项新CLI合成回归，连同原敏感性及生产者迁移共30 passed；修改文件Ruff/格式通过。
+- 全量稳定窗口日志与前后保护收据保存于reports/sensitivity-readiness-2026-10-18/；最终结果及提交/CI在交付回复核实。
+- 方案、唯一实验入口、验收条件及真实运行待确认项见[敏感性方案](purchase-log-sensitivity-plan-2026-10-15.md)。
+- 保持旧952输入及新增1038用途不变；不真实训练/评估、不改认证、不上传运行产物、不合并main。
+
+## 2026-10-18 续接：评估输入契约
+
+- 起点8cf8640c3823bfc4945dfc4272641bf63fa4c6e9；[前轮CI](https://github.com/xrfc/dota2-timing/actions/runs/39096921356)三个任务均success，含Linux3.12浏览器验收。
+- 当前单执行者，无其他开发/测试任务；私人memory保留不暂存。
+- 新增52项纯合成评估回归，连同模块化13项专项共65 passed；无真实数据读取、拟合或效果评估。
+- 全量scripts/check.py退出0：827 pytest + 10学习Python + 12知识Python + 6 JavaScript = **855项通过**；Ruff及342文件格式检查通过。
+- 首轮稳定窗口832项Git可见文件和7,710项既存data/reports文件SHA-256一致。
+- 验证标签/概率/组/参数边界、mask拒绝、空值语义、列表支持、大整数组ID及历史指标/整组bootstrap数值parity。
+- 不改冻结purchase_baseline、模型schema、训练制品实现清单或数据生产者；测试自动纳入modeling scope。
+- 本地收据与日志：reports/evaluation-validation-2026-10-18/；文档记录补齐后再跑最终稳定窗口。
+- 发布仅feat/purchase-data-prep，不合并main；新提交和CI证据在本轮交付回复中提供。未改账号/认证配置、安装依赖或改变研究用途。
+
+## 2026-10-18 串行集成验收与开发分支交付
+
+用户指定父会话为协调者，并授权测试通过后同步GitHub。两侧开发者已确认停止全部仓库写入和产物任务。
+
+- 全量`scripts/check.py`退出0：775 pytest + 10学习Python + 12知识Python + 6 JavaScript = **803项通过**。
+- 全库Ruff、341个文件格式检查及JS语法检查通过；`git diff --check`通过。
+- 验收窗口831项Git可见文件（含未跟踪文件）SHA-256前后一致；7,705项既存data/reports文件不变。
+- 父会话此前独立复跑236项专项通过，与全量重叠，不额外计入总数；新增两侧测试共81项。
+- 数据报告只读渲染既有审计；模型inspect只校验制品与展示摘要，不执行真实训练、预测或效果评估。
+- 发布范围含本地10/16–10/17模块化/公共读取成果及10/18只读审查工具；共享文档同步。
+- 目标仅`origin/feat/purchase-data-prep`，不合并main、不创建Release；原始数据、模型运行产物、reports和私人memory不发布。
+- 发布文件凭据模式检查未发现命中；这不是全面安全审计。远端CI与实际推送结果以本轮交付回复为准，不能沿用af239e9的绿色结果。
+
+本地日志与保护收据：`reports/integration-2026-10-18/`。验收说明补入后再次执行全量稳定窗口检查。
+没有安装依赖、改变标签/划分/新增1,038场用途、真实训练、选模、补采或客户端核验。以下为历史验收。
+
+## 2026-10-17 公共读取收尾验收
+
+- 全量scripts/check.py退出0：694 pytest + 10学习Python + 12知识Python + 6 JavaScript = **722项通过**。
+- Ruff、335文件格式检查和JS语法通过；数据scope 431项通过（与全量重复，不另加总）。
+- 验收期间Git可见文件含未跟踪文件的SHA-256前后一致；7,684项既存data/reports文件原字节不变。
+- 旧952快照兼容重建仅7项登记实现指纹变化，其余字段、类型和列表顺序一致；划分571/191/190不变。
+- 新队列审计业务字段完全一致，来源证据核验通过；新包与旧快照/摘要原字节一致。
+- 模型侧train/validation只读适配成功，不执行fit、选模或test效果评估。
+- 新增来源读取、迁移拒绝、声明一致性回归；默认严格校验仍拒绝旧实现，显式迁移不冒充精确旧源码复现。
+
+当前接口见[公共读取与迁移](public-source-reader.md)，交接目录reports/public-reader-2026-10-17/handoff/。
+本地证据：reports/public-reader-2026-10-17/中的check-final.log、verification.json、
+acceptance-before/after.json、snapshot-migration.json、audit-comparison.json、handoff-verification.json。
+下面凌晨679项等为历史阶段验收。未真实训练、采集、改数据用途/划分，未安装依赖、提交或推送。
+
+
+## 2026-10-17 模块化维护验收（本地）
+
+- 全量入口scripts/check.py退出0：**651 pytest + 10学习Python + 12知识Python + 6 JavaScript = 679项通过**。
+  Ruff、330文件格式检查及JavaScript语法检查通过，无本次测试跳过。
+- 模块scope分别通过：data 388、modeling 186、recommendation 115；三者包含重复公共回归，不能相加作独立测试总数。
+- 验收窗口记录全部Git可见文件（含未跟踪文件）前后SHA-256，结果一致；详情见本地verification.json与acceptance-before/after.json。
+- 7,656项既存data/reports文件保持原字节；旧952快照绑定的13项实现指纹不变。
+- 新旧频率/逻辑回归参数、任务、预处理及18条合成预测逐字节一致；历史合成制品仍可加载预测，且原文件哈希不变。
+- 新cohort审计相对10/16兼容审计仅生产者哈希一项变化。新包通过来源重建与包完整性验证，snapshot与旧包/原快照原字节一致。
+- 已盘点189份Git可见Markdown，相对链接目标检查0失效；这不等于对所有历史内容重新做事实认证或外链可用性验证。
+
+证据目录：reports/refactor-2026-10-17/，包括check-final.log、check-data/modeling/recommendation.log、
+verification.json、preservation.json、document-audit.json、audit-differences.json及新handoff/。
+源码保全归档source-before.tar.gz覆盖当时src/scripts/tests/docs/configs/.github与根文件；学习开发指南原文另存learning-development-before.md。
+当前结构及剩余兼容债务见[维护指南](modular-maintenance.md)，机器可读摘要见[验收摘要](acceptance/modular-maintenance-2026-10-17.json)。
+
+不真实训练、不选模、不改标签/划分/数据用途，不联网采集，不真实demo重解析或客户端核验；
+无安装依赖、提交、推送、合并。未运行浏览器截图或远端CI，软件通过不代替真实语义/效果验收。
+
+
+## 2026-10-16 本地报告校验增量
+
+`PYTHONPATH=src .venv/bin/python scripts/check.py`通过：380项pytest、22项学习/知识测试、6项JavaScript测试，共408项；Ruff、289文件格式检查、JS语法检查通过。`git diff --check`通过。
+新增7项回归仅为合成数据软件验证，不是模型效果评估。真实对照未运行、新增数据未评估；本轮未提交、推送、合并或上传数据。
+
+## 2026-10-15 只读报告续接（本地）
+
+新增敏感性结果Markdown导出与指标学习说明，不改变研究口径。
+统一检查通过：373项pytest、学习10项、知识12项、JS6项，共401项；Ruff及289文件格式检查通过。
+合成数据CLI冒烟及拒绝覆盖检查通过；没有读取真实比赛或运行真实对照训练。
+回归验证原JSON不被修改、ΔBrier方向、来源哈希展示及拒绝测试集评估结果。
+本次未推送；上轮fa6719a的GitHub Actions 38716941522已核验success。
+
+## 2026-10-15 开发快照交付
+
+用户明确授权维护文档并推送当前开发；目标为`xrfc/dota2-timing`的`feat/lineup-contracts`，不合并main、不创建Release。
+已核验GitHub账号xrfc与仓库所有者一致；fetch后原本地分支与远程分支一致。
+
+- 统一入口`PYTHONPATH=src .venv/bin/python scripts/check.py`通过：372项pytest、学习Python10项、知识12项、JavaScript6项，共400项；Ruff与287文件格式检查通过。
+- 汇总采集收据记录新增1,038场候选；原始JSON、CSV、模型运行目录受.gitignore排除，不是本次GitHub数据备份。
+- 包含旧952场观测快照/基线/诊断实现、采集预算和去重、逐场表格导出、训练/验证对照模块及测试。
+- 未运行真实敏感性对照，未对新增数据建模评估；没有客户端、浏览器或真实回放重解析验证。
+- 暂存JSON解析与敏感凭据模式检查通过，未发现原始玩家账号数值字段；差异空白检查仅命中上游Parse.java源码快照的6处尾空格，为保持来源哈希未改写，其他文件通过。
+- 本地检查不代表远端CI通过；推送结果由交付回复提供准确提交链接。
+
+以下为历史交付记录。
+
+## 2026-10-15 验证集诊断（本地，未发布）
+
+359项pytest、全仓Ruff及276文件格式检查通过；原缓存重建与确定性重算一致。
+4项新增回归覆盖隔离、身份、概率、mask及分母。未重训练、未补采、未推送或合并。
+见[诊断报告](purchase-log-diagnostics-2026-10-15.md)与[验收摘要](acceptance/purchase-log-diagnostics-952-2026-10-15.json)。
+
+## 2026-10-14 玩家重叠增量（本地）
+
+新增12项测试，全项目329项通过；Ruff/格式检查通过。固定7场重跑并精确复现，
+来源哈希与诊断不输出账号检查通过。train/validation重叠9人、train/test重叠4人，
+已接入阻塞而非修改原划分。未提交、推送或训练。详见[就绪清单](pretraining-readiness.md)。
+
+## 2026-10-14 训练前预检（本地）
+
+新增12项测试，全量317项通过（工程289、学习Python10、知识12、JS6），Ruff与格式通过。
+固定10场离线预检保留7场预演、3场排除，split=5/1/1、39英雄词表、80列，全标签未知。
+重复离线结果精确一致，来源/代码哈希核对通过；旧训练入口拒绝预演文件的回归通过。
+固定上游解析器源码证据不等于部署版本或真实成装认证；完整待办见[训练前就绪清单](pretraining-readiness.md)。
+未提交、推送或训练；以下10月13日交付仍为当时远端状态。
+
+## 2026-10-13 整体检查与分支交付
+
+用户明确授权检查项目、同步文档并推送。开发分支 `feat/lineup-contracts`，起点 `1a78aad`；
+本轮fetch实查起点与origin同分支一致，远端main为 `c6a5e1f`。不合并main、不创建发布。
+
+- 全量 `PYTHONPATH=src python3 scripts/check.py` 通过：工程277、学习Python 10、知识12、JS 6，共305项；Ruff和格式检查通过。
+- 六个推荐开发案例复跑：四例正常输出，两例不支持范围返回3；仍不是M06独立质量验收。
+- 新隔离工作区demo/doctor通过：6场合成比赛，doctor.errors为空；pip check通过。
+- 学习页面重建成功（12项学习任务仍0项验收）；全仓169份Markdown本地链接检查通过。
+- 暂存检查仅有3份上游来源文本的末尾空行提示，保留原快照与哈希；排除blank-at-eof后差异空白检查通过。
+- 文档统一最新范围、累计13场/聚焦7场、语义限制与下一步；不覆盖历史验收收据，不改学习任务验收状态。
+- 新增公开源码快照保留来源/时间/哈希与MIT许可；原比赛JSON、账号、回放、reports、工作区和密钥不提交。
+- 本轮没有重解析真实回放、客户端验证、浏览器视觉验收或训练模型。历史CI通过不代表本次远端CI。
+
+交付包含此前本地未提交的报告修正、审计v1–v3、测试、脱敏证据与文档同步。
+代码与文档提交 [`9e1a067`](https://github.com/xrfc/dota2-timing/commit/9e1a067) 已成功推送至开发分支。
+首次Git缺少凭据助手；使用托管xrfc身份与单命令gh凭据助手完成，未修改全局配置。
+本段为推送后收据；本次远端CI未在本地测试结果中冒充通过。
+下方各轮“未推送”仅描述该轮历史状态。
+
+## 数据可行性审计检查（2026-10-13，后续轮次）
+
+新增审计CLI、只读诊断模块及23项专项测试。`PYTHONPATH=src python3 scripts/check.py`
+通过：工程241、学习Python 10、知识12、JavaScript 6，共269项；Ruff/237文件格式通过。
+实际获取公开主宰列表后固定前三场，3次详情获取均成功；真实审计中3场均有日志且均不足30分钟。
+来源/选择/文件哈希见[机器记录](acceptance/data-feasibility-2026-10-13.json)，
+可运行命令和语义边界见[使用说明](data-feasibility.md)。
+首次网络读取遇到环境NO_PROXY的IPv6条目解析问题，仅对子进程设置
+`NO_PROXY=localhost,127.0.0.1 no_proxy=localhost,127.0.0.1` 后重试成功，未修改全局配置。
+未训练、未客户端核验、未推送/合并或运行远端CI；原数据准入保持held。
+
+## 本地报告修正检查（2026-10-13）
+
+起点 `feat/lineup-contracts / 1a78aad`；仅本地修改，无提交、推送或合并。
+先复现原版本全量242项通过；新增4条条件传递/报告回归在修复前失败，修复后通过。
+最终运行 `PYTHONPATH=src python3 scripts/check.py`，工程218、学习Python 10、
+知识12、JavaScript 6，共246项通过；Ruff与233个文件的格式检查通过。
+本环境没有 `python` 命令，且已有venv未提供可用的项目可编辑导入，故使用
+`python3` 和显式 `PYTHONPATH=src`；启动器本身能够加载src，无需为本轮修改全局环境。
+
+六个开发案例与Git起点引擎逐字段比较，仅 `engine_version` 变化；知识和策略未修改。
+18份报告存于 `reports/review-2026-10-13/`，身份/哈希见
+[机器记录](acceptance/lineup-review-2026-10-13.json)，发现与处理见
+[内部审查](acceptance/recommendation-review-2026-10-13.md)。
+不构成M06独立质量验证；未做浏览器视觉检查、真实回放重解析、训练或远端CI。
+
+## GitHub推送前整体检查（2026-10-11）
+
+用户授权整体检查后推送GitHub；目标为 `xrfc/dota2-timing` 的 `feat/lineup-contracts`，
+不合并main、不发布版本。检查起点 `05ef781`，包含契约 `112056a`、规则闭环 `47b8f7f`
+及文档同步；后续只补交付记录，不修改代码、知识或策略。
+
+- 远端main仍为 `c6a5e1f`；[PR #6](https://github.com/xrfc/dota2-timing/pull/6)仍是另一个文档分支，不是本次推荐实现。
+- `python3 scripts/check.py`：214项工程、10项学习Python、12项知识、6项JavaScript，共242项通过；Ruff检查和231个文件格式检查通过。
+- 6个推荐输入的退出码、支持状态及候选顺序与原收据一致；11项代码/知识/规则哈希未变。
+- 164份Markdown的2005处本地链接目标均存在；外链与锚点未在此项检查中验证。
+- 学习页面重建、依赖 `pip check`、独立合成工作区的demo及doctor通过；6场合成数据机械验证通过，没有真实解析或训练。
+- 静态复核推荐契约、文件加载、规则核心、报告及CLI边界和对应引擎测试，未发现阻塞本次分支推送的问题；不是全库逐行审计或机制质量认证。
+- 推送前差异为64个文件，最大文件约123KB；未包含回放、模型、环境或凭据文件。未改动两项真实回放workflow的配置触发路径。
+
+本地检查结论：可作为**实验规则分支**交付。远端CI以推送后精确提交的
+[Actions记录](https://github.com/xrfc/dota2-timing/actions?query=branch%3Afeat%2Flineup-contracts)为准，
+不借用PR #6的通过结果。客户端机制核验、推荐HTML视觉检查、独立案例质量评审仍未完成。
+下方“未推送”等措辞描述各历史检查轮次，不覆盖本次明确授权。
+
+## 推荐质量阶段文档维护检查（2026-10-11）
+
+本轮仅修改13份Markdown文档，基于本地实现 `47b8f7f` 同步状态与质量评审流程：
+
+- 扫描164份已跟踪或新增Markdown，检查2005处本地链接目标，无缺失；57处外部链接和3处锚点未在本次链接检查中验证。
+- 核对原推荐验收记录中的9个代码/测试文件及知识、策略文件，共11项SHA-256全部匹配；未修改旧收据。
+- 重建 `learning/output/index.html` 及清单；执行 `python3 scripts/check.py --scope learning`，10项学习Python、12项知识和6项JavaScript测试全部通过。
+- 冒烟执行质量评审页列出的4个文本报告命令，均返回0并生成非空报告；这只证明命令可用，不是报告质量评审。
+- `git diff --check` 通过。本轮未重跑全量工程测试、浏览器验收或游戏客户端核验；下方242项是上一轮记录。
+
+生成的学习页面仍独立维护学习任务，不将M阶段或流程计划计为个人学习完成。
+
+## 本地推荐实现与证据归属（2026-10-11）
+
+实现位于本地 `feat/lineup-contracts / 47b8f7f582c6ca81de8baf53fbf0b6cf01082983`，
+未推送或合并。该实现上一轮运行的统一检查为214项工程、10项学习Python、12项知识、
+6项JavaScript测试，共242项，另有Ruff、demo/doctor、安装入口和依赖检查。
+结果及文件身份见[固定验收记录](acceptance/lineup-2026-10-11.json)；本次文档维护不冒充重新执行全量工程测试。
+
+该收据的 `base_commit=112056a…` 是验收时未提交改动的父提交；逐文件哈希对应最终
+`47b8f7f`，应同时检查文件身份，不能仅凭base_commit认为当时只有契约实现。
+6个已运行案例属于开发回归；HTML生成与转义已检查，浏览器视觉检查、客户端机制核验和
+独立推荐质量评估尚未完成。下一阶段出口以[质量评审流程](recommendation-quality-review.md)为准。
+
+本日只读核对：远端main为 `c6a5e1ff5eaa597d6c68567ef00f3acc973a64c9`；
+[PR #6](https://github.com/xrfc/dota2-timing/pull/6)仍开放，base为main，head为
+`f4feae798d7d660755c37f1f192dbaf652f4e5a3`（`docs/741f-development-mainline`）。
+其[检查](https://github.com/xrfc/dota2-timing/actions/runs/38065310259)成功，
+但对象是该文档PR，不包含本地推荐器，不能用作本地提交的远程CI证明。
+
+推荐入口复现见[使用说明](lineup-recommendation.md)；以下按日期保留原基础设施证据。
+
 ## 知识迁入与冷启动候选检查（2026-10-10）
 
 本轮检出基线 `d0be282`；以下属于迁移后的本地检查，不冒充远端 CI 或真实语义核验：
@@ -12,7 +229,7 @@
 
 本轮改动不触碰新比赛采集／固定回放回归的配置触发路径。远端合并结果与 CI 以本轮 [PR #5](https://github.com/xrfc/dota2-timing/pull/5) 及精确提交的 Actions 为准；知识说明和训练用途见[冷启动文档](knowledge-cold-start.md)。
 
-## 当前主干验证（2026-10-09）
+## 历史主干验证（2026-10-09）
 
 代码基线：[main / 725f35c](https://github.com/xrfc/dota2-timing/commit/725f35c25d74243a8ca52b17e7956107fd9dfa40)。PR #2 → #1 → [#3](https://github.com/xrfc/dota2-timing/pull/3) 依次合并，主干文件树与已验证的修复提交 `942ebfd` 一致；包版本仍为 0.4.0。
 
@@ -76,6 +293,7 @@ Windows 的解释器路径为 `.venv/Scripts/python.exe`。只核对 JSON 工作
 
 新增工程测试范围：
 
+- [推荐契约](../tests/test_recommendation_contracts.py)及[推荐引擎](../tests/test_recommendation_engine.py)：输入与引用、支持范围、阵容替换、知识损坏、离线运行、报告转义；不证明独立推荐质量。
 - [缓存与身份](../tests/test_cache_identity.py)：双输出完整性、热缓存来源、新 catalog 追踪、raw 玩家与别名绑定。
 - [数据准备](../tests/test_data_preparation.py)：清洗、缺失与任务 mask、样本快照和 train-only 预处理。
 - [真实验收](../tests/test_real_acceptance.py)：采集/审计规则与隔离；不能替代独立游戏画面对照。
@@ -134,3 +352,59 @@ Windows 的解释器路径为 `.venv/Scripts/python.exe`。只核对 JSON 工作
 5. 完成度、任务状态、接口版本、CI 证据保持一致；已知缺口不写成已实现。
 
 运行行为变更时按相关风险增加有意义的正反例测试，并执行项目要求的静态/自动检查。数据/schema 变化需说明迁移与回退；提交到开发分支，不把 CI 通过等同自动发布或合并。
+
+
+## 2026-10-22：整局实验编排层结构整理
+
+用户确认本轮仅一个执行者，串行完成跨模块整理；未安装依赖、未真实训练、未提交或推送。
+当前入口及API见[实验层维护](experiment-maintenance.md)。旧CLI兼容，研究协议与历史产物不变。
+
+- 最终全量：1043 pytest＋22学习/知识＋6 JS＝1071项通过，Ruff及406文件格式检查通过。
+- 前后865份源码／文档指纹一致；2014份旧输入／交接文件不变。
+- 真实只读准入通过，training_executed=false，交接身份不变。
+- 首轮既存采集测试格式问题已仅格式化修复，AST无语义差异；最终全量重跑退出码0。
+- 日志与指纹：reports/experiment-refactor-2026-10-22/。验收后只补文档，不改源码；再查链接与代码指纹。
+
+历史验收条目继续保留，不代表本轮结果。
+
+## 2026-10-23 近期开发统一交付验收
+
+用户已明确确认本轮统一整理全部近期改动、其他开发暂停，授权提交、推送和创建PR；不自动合并。
+保持唯一目录、feat/purchase-data-prep及现有.venv，没有切分支、安装依赖、重采或重训。
+
+- `.venv/bin/python scripts/check.py`退出0：1096项pytest工程测试、10项学习unittest、12项知识unittest、6项JavaScript测试，共1124项通过。
+- Ruff check通过；430个Python文件format --check通过；JavaScript语法检查通过。
+- 919个tracked/untracked交付范围文件在全量检查前后SHA-256一致，集合无变化；排除本地memory和ignored产物。
+- 6份本轮入口/主文档共81个相对路径目标存在；未穷尽验证所有锚点和外链。历史归档5份字节哈希与manifest一致。
+- 录像上一轮70项专项属于本次工程套件覆盖，不再与1124重复相加。真实模型实验结果是既有证据，本次未重跑真实训练。
+
+本地验收日志和指纹：`reports/github-delivery-2026-10-23/{check.log,pre-check.json,post-check.json}`，不上传真实数据或本地运行制品。
+全量检查结束后仅追加本验收文字及日期摘要链接，不改受测代码；提交前复查受测代码指纹和diff空白检查。
+
+本轮更新内容见[近期摘要](recent-progress-2026-10-23.md)。GitHub提交目标为`xrfc/dota2-timing`的
+`feat/purchase-data-prep`，PR面向`main`，包含此前未合入main的开发提交。实际提交SHA、PR及CI状态以GitHub为准；本地通过不冒称远端CI已通过。
+保留旧PR #6，不自动关闭/合并；data/reports链接是本地证据路径，在GitHub可能不可访问。
+
+## 2026-10-26 结构导航、近期功能与PR统一交付
+
+用户本轮明确确认其他开发者暂停写入，由当前执行者统一整理、全量验收、提交推送并更新既有PR #7；不自动合并。没有切分支、创建worktree、安装依赖、真实训练或执行新采集。
+
+### 整理范围
+
+- 根README替换历史状态堆叠，原文逐字节保存在`docs/archive/2026-10-26/`，附SHA-256。
+- docs索引覆盖全部非归档Markdown，scripts导航覆盖全部Python入口；保留旧文件/CLI路径，不移动冻结指纹绑定的源码或制品。
+- 同步三份主文档、结构/贡献指南和CHANGELOG，区分前瞻采集已冻结但等待窗口、模型原型已实现但推荐质量未证实、13场录像完成限定对齐但未获训练准入。
+- 纳入近期未提交的评估审计/采集入口、阵容分析/A-B原型及测试、录像扩量/通道导出/大文件恢复/地标和tick对齐。两个阵容测试归入modeling scope；本地memory加入忽略，不发布。
+
+### 本地实测
+
+- `.venv/bin/python scripts/check.py`退出0：**1205 pytest + 10学习 + 12知识 + 6 JS = 1233项通过**，本地无跳过。
+- Ruff check通过；462个Python文件format --check通过；JS语法检查通过。
+- 955份tracked及可发布untracked文件在全量检查前后集合和SHA-256完全一致。
+- 全仓230份Markdown路径审计：2358个仓库链接目标、32个本地制品链接存在；8份归档文档按原文基址豁免，6份历史原文哈希一致。外链和锚点未穷尽检查，不称所有文档语义均获认证。
+- 阵容原型部分测试需要私有本地冻结模型，CI干净克隆将跳过相关项；当地真实制品验证不冒充远端等量覆盖。其他合成推理/契约测试继续保留。
+- 检查后仅追加本验收文字，再复核文档路径与受测代码哈希；没有修改受测源码。
+
+日志和前后指纹：`reports/github-delivery-2026-10-26/`。data/reports、原始录像、玩家明细、模型、环境和memory不上传；这些本地证据链接不能在GitHub直接打开。
+
+PR目标：[现有PR #7](https://github.com/xrfc/dota2-timing/pull/7)，`feat/purchase-data-prep` → `main`。PR仍包含此前未合入main的开发提交，不只本轮整理；本地通过不代表最新提交的远端CI已通过。提交SHA、推送与CI终态以GitHub实际状态为准，不关闭旧PR #6、不自动合并。

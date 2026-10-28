@@ -68,6 +68,12 @@ def extract_samples(match: dict, quality: dict, config: PreparationConfig, slots
         purchases = player["purchase_log"] or []
         purchase_times = [r["time"] for r in purchases]
         coverage = player["purchase_coverage"]
+        purchase_quality = quality["channels"][str(slot)]["purchase_log"]
+        held = (
+            player.get("purchase_log_quarantined", False)
+            or purchase_quality.get("supervision_held", False)
+            or bool(purchase_quality["invalid_rows"])
+        )
         for i, time in enumerate(times):
             sample_id = f"{match['match_id']}:{slot}:{time}"
             end = time + config.horizon_seconds
@@ -115,7 +121,9 @@ def extract_samples(match: dict, quality: dict, config: PreparationConfig, slots
                     and coverage["start_seconds"] <= time
                     and end <= coverage["end_seconds"]
                 )
-                if future or covered:
+                if held:
+                    target["item_reason"] = "invalid_purchase_log"
+                elif future or covered:
                     # Multiple different items bought at the first timestamp have no known order.
                     first = [r for r in future if r["time"] == future[0]["time"]] if future else []
                     keys = {r["key"] for r in first}

@@ -6,6 +6,7 @@ import math
 from typing import Any
 
 from .domain import ItemEvent, PlayerTimeline
+from .storage import file_hash, inside
 
 
 def normalize_match(
@@ -87,15 +88,22 @@ def load_timeline(path: Any, player_slot: int) -> PlayerTimeline:
     if not isinstance(raw, dict):
         raise ValueError("Match JSON must be an object")
     evidence_source = raw.get("evidence_source")
-    source = (
-        evidence_source if isinstance(evidence_source, str) and evidence_source else file_path.name
-    )
     evidence_hash = raw.get("evidence_sha256")
-    if not (
-        isinstance(evidence_hash, str)
-        and len(evidence_hash) == 64
-        and all(character in "0123456789abcdef" for character in evidence_hash)
-    ):
+    source = file_path.name
+    if evidence_source is not None or evidence_hash is not None:
+        if (
+            not isinstance(evidence_source, str)
+            or not evidence_source
+            or not isinstance(evidence_hash, str)
+            or len(evidence_hash) != 64
+            or any(character not in "0123456789abcdef" for character in evidence_hash)
+        ):
+            raise ValueError("External evidence requires a relative path and SHA-256")
+        evidence_path = inside(file_path.parent, evidence_source)
+        if file_hash(evidence_path) != evidence_hash:
+            raise ValueError("Raw evidence fingerprint mismatch")
+        source = evidence_source
+    else:
         evidence_hash = hashlib.sha256(contents).hexdigest()
     return normalize_match(
         raw,

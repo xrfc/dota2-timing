@@ -3,7 +3,6 @@
 import importlib.metadata
 import math
 import shutil
-import subprocess
 import sys
 import tempfile
 import uuid
@@ -22,6 +21,7 @@ from ..storage import (
 )
 from .admission import check_admission
 from .contracts import ModelOutput
+from .processes import run_adapter
 from .workspace import Workspace
 
 
@@ -59,17 +59,14 @@ def run_program(script: Path, arguments: list[str], folder: Path, timeout: float
     )
     shutil.copyfile(script, folder / "adapter.py")
     with (folder / "process.log").open("w", encoding="utf-8") as log:
-        completed = subprocess.run(
+        returncode = run_adapter(
             command,
             cwd=script.resolve().parent,
             stdout=log,
-            stderr=subprocess.STDOUT,
-            stdin=subprocess.DEVNULL,
             timeout=timeout,
-            check=False,
         )
-    if completed.returncode:
-        raise ValueError(f"Adapter exited {completed.returncode}; inspect {folder / 'process.log'}")
+    if returncode:
+        raise ValueError(f"Adapter exited {returncode}; inspect {folder / 'process.log'}")
     return command
 
 
