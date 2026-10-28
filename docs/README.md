@@ -106,3 +106,11 @@
 
 - [整理前原文快照（2026-10-22）](archive/2026-10-22/INDEX.md)
 - [2026-10-26整理前入口](archive/2026-10-26/INDEX.md)
+
+## 历史设计归档（不替代当前入口）
+
+- [2026-10-10阵容推荐规划](development-mainline.md)：历史范围与设计理由。
+- [2026-10-10模块边界](module-boundaries.md)：保留依赖方向与扩展原则，不把建议目录当成当前结构。
+- [2026-10-10文档盘点](documentation-inventory.md)：当时的清单与核对范围，不是当前文件数量。
+
+当前已存在 recommendation 契约/规则原型、modeling 模型接口与阵容页面；实现存在不等于推荐质量或真实语义认证。状态继续由 roadmap、data-prep-progress、model-foundation 维护，结构见 modular-maintenance；此归档不扩大训练或数据用途授权。
