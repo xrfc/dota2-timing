@@ -170,9 +170,9 @@ def run_cases(output, inputs):
     if (output / "results.json").exists() or (output / "started.json").exists():
         raise ValueError("Case output already used; never overwrite")
     started = dict(plan_sha256=file_hash(frozen), started_at=datetime.now(UTC).isoformat())
-    with (output / "started.json").open("x") as f:
+    with (output / "started.json").open("x", encoding="utf-8") as f:
         json.dump(started, f)
-    plan = json.loads(frozen.read_text())
+    plan = json.loads(frozen.read_text(encoding="utf-8"))
     results = []
     body = [
         "<p>六组预先记录的探索性案例；假设未经用户或补丁机制核验，不作正确率打分。页面包含全部11装备结果，未按成绩挑选案例。</p>",
@@ -210,12 +210,14 @@ def run_cases(output, inputs):
         human_judgment="pending",
         training_executed=False,
     )
-    (output / "results.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2))
-    (output / "index.html").write_text(document("".join(body)))
+    (output / "results.json").write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    (output / "index.html").write_text(document("".join(body)), encoding="utf-8")
     if file_hash(frozen) != started["plan_sha256"] or file_hash(CASES) != started["plan_sha256"]:
         raise ValueError("Plan drift during comparison")
     payload_hashes = {p.name: file_hash(p) for p in sorted(output.iterdir()) if p.is_file()}
-    with (output / "complete.json").open("x") as f:
+    with (output / "complete.json").open("x", encoding="utf-8") as f:
         json.dump(
             dict(
                 sha256=payload_hashes,
@@ -246,7 +248,7 @@ def main():
     if args.serve:
         if args.output:
             parser.error("Use serve or export, not both")
-        plan = json.loads(CASES.read_text())
+        plan = json.loads(CASES.read_text(encoding="utf-8"))
         print(f"Open http://127.0.0.1:{args.port}", flush=True)
         with HTTPServer(("127.0.0.1", args.port), handler(inputs, plan)) as server:
             server.serve_forever()

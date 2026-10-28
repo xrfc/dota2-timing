@@ -32,7 +32,7 @@ def load_inputs():
     contract = task_contract(WHOLE_LOG_TASK_ID)
     model = load_model(MODEL, expected_task_contract=contract)
     baseline = load_model(BASELINE, expected_task_contract=contract)
-    snapshot = json.loads(SNAPSHOT.read_text())
+    snapshot = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
     if digest(snapshot) != model["provenance"]["source_sha256"]:
         raise ValueError("Training snapshot does not match model provenance")
     if snapshot["preprocessing"] != model["preprocessing"]:
@@ -41,7 +41,7 @@ def load_inputs():
         raise ValueError("Snapshot task mismatch")
     names = {}
     for path in (ROOT / "knowledge/hero-capabilities/heroes").glob("*.json"):
-        hero = json.loads(path.read_text())
+        hero = json.loads(path.read_text(encoding="utf-8"))
         names[hero["hero_id"]] = hero["name_zh"]
     samples = [r for r in snapshot["samples"] if r["split"] == "train"]
     if len(samples) != 1592:
@@ -196,11 +196,15 @@ def main():
     else:
         if not args.output:
             parser.error("--output required for export")
-        lineup = json.loads(args.lineup.read_text()) if args.lineup else DEFAULT
+        lineup = json.loads(args.lineup.read_text(encoding="utf-8")) if args.lineup else DEFAULT
         result = analyze(lineup, *inputs[:3])
         args.output.mkdir(parents=True, exist_ok=False)
-        (args.output / "analysis.json").write_text(json.dumps(result, ensure_ascii=False, indent=2))
-        (args.output / "index.html").write_text(page(lineup, result, inputs[3], interactive=False))
+        (args.output / "analysis.json").write_text(
+            json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        (args.output / "index.html").write_text(
+            page(lineup, result, inputs[3], interactive=False), encoding="utf-8"
+        )
         print(args.output / "index.html")
 
 
