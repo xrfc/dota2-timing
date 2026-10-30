@@ -147,8 +147,8 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | 任务 | 内容 |
 |---|---|
 | M2b-T0 | 装备登记表（U14，已完成） |
-| M2b-T1 | 问Q8：用户确认每个英雄的针对装清单（助手按数据给草案）；冻结任务定义：给定敌方阵容，预测该英雄35分钟内是否出某件针对装 |
-| M2b-T2 | 特征设计：用`knowledge/hero-capabilities/hero-registry.json`的`published_role_labels`（Carry/Disabler/Nuker/Escape等）统计敌方各定位人数，并保留少量高频英雄one-hot；写入`docs/m2b-design.md`并冻结评估协议（含**最小效果量**门槛，见§8），训练前完成 |
+| M2b-T1 | 问Q8/Q9：用户确认针对装清单（U15）与标签（U16：出过针对装的局里第一件选哪件，6选1）；辅助暂不建模（U17） |
+| M2b-T2 | 特征设计：用`knowledge/hero-capabilities/hero-registry.json`的`published_role_labels`与`capability_review_signals`统计敌方各定位/机制人数（不用逐英雄one-hot）；写入`docs/m2b-design.md`并冻结评估协议（含**最小效果量**门槛，见§8），训练前完成 |
 | M2b-T3 | 训练（须用户授权，Q7）：基线=该英雄该装备平均出现率；模型=训练集内分组CV选正则的逻辑回归；复用M1快照与`item_timing`的CV工具 |
 | M2b-T4 | 评估与诊断：Brier、区间、效果量；可解释系数（哪些敌方定位让某装备更可能） |
 | M2b-T5 | 8780外壳新增“赛前 · 针对装”页：输入敌方阵容，显示各针对装相对平均的倾向与依据；样本不足拒答；真实浏览器验收 |
