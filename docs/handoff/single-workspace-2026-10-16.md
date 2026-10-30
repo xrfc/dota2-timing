@@ -1,5 +1,7 @@
 # 单目录整合与模型agent接续（2026-10-16）
 
+> **2026-10-30现行入口**：当前单工作区已切回`main`；旧数据/模型分支均已合并并清理，不再保留分支引用。下方基准、迁移收据及提示词仅作10/16历史。当前任务读[总路线](../roadmap.md)，Git结构及恢复见[维护记录](../git-maintenance-2026-10-30.md)；协作规则仍读AGENTS及并行协议。
+
 > **2026-10-17更新**：先读[单模块维护指南](../modular-maintenance.md)。foundation已拆分，data.validation及handoff.bundle为新维护入口；旧API兼容。下方独立worktree和验收属于历史。本轮单执行者，未来恢复并行仍须协调。
 
 > **现行协作规则（2026-10-16）**：先读[并行开发与串行集成协议](parallel-development.md)。两侧专属文件可并行开发；共享文件、依赖变更和最终全量验收串行协调。2026-10-28起取消其他开发者停写确认门禁，当前执行者串行验收并检查源码漂移；下文历史验证不是本轮验收结果。
@@ -7,7 +9,7 @@
 用户明确要求全部整合到一个dota2-timing目录，模型与数据管线并列；确认模型agent停止写入后授权执行。
 本方案取代旧双worktree协作方式，但不改变研究协议。
 
-## 当前唯一工作目录
+## 2026-10-16迁移时的唯一工作目录（历史）
 
 /home/node/.openclaw/workspace/work/dota2-timing
 
@@ -50,7 +52,7 @@ src/dota_items/modeling/synthetic_foundation.py、tests/test_model_foundation.py
 原数据、冻结快照、标签、划分及三个遗留数据文件均未修改。
 共享文件修改仅AGENTS.md和三份旧handoff文档的历史标记；新增本入口。
 
-## 给模型agent的提示词
+## 2026-10-16给模型agent的提示词（历史，不直接照搬执行）
 
 项目已改为单工作区协作，请停止使用旧dota2-timing-model路径。
 唯一目录是/home/node/.openclaw/workspace/work/dota2-timing，当前分支feat/purchase-data-prep。
