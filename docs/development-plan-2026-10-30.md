@@ -277,8 +277,8 @@ M2b-T0～T4已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`**未�
 
 ### 运行与交接备注
 
-- 提交身份：本环境无git身份配置，提交用`git -c user.name=xrfc -c user.email=147353817+xrfc@users.noreply.github.com`；均为本地提交，未推送（推送须用户授权）。
-- 2026-10-31收工：已推送至`origin/main`（U19）；8780服务已停止。下次开始先按§6.1检查，再向用户确认`docs/m2b-results.md`§4的决定。
+- Git（2026-10-31起）：本仓库已设本地提交身份`xrfc <147353817+xrfc@users.noreply.github.com>`，直接`git commit`即可；GitHub CLI已登录`xrfc`并经`gh auth setup-git`接管HTTPS凭据，`git push origin main`无需手动输入。凭据可用不等于自动推送：仍在用户要求时推送（如“推送”“收工”）。
+- 2026-10-31收工：已推送至`origin/main`（U19，远端与本地一致）；8780服务已停止。下次开始先按§6.1检查，再向用户确认`docs/m2b-results.md`§4的决定。
 - 8780默认未运行；重启：`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`（启动时校验`reports/m2-item-timing-2026-10-30-r2`哈希）。
 - 浏览器验收：Windows Chrome无头+临时配置：`"/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --remote-debugging-port=9229 --user-data-dir='C:\Windows\Temp\dota-review-cdp' about:blank &`，再`NO_PROXY='*' node scripts/acceptance/coach_app_browser.cjs NEWDIR`，结束后通过CDP `Browser.close`关闭。WSL为mirrored网络，可直接访问127.0.0.1。
 - 8770旧评审页已停止；需要时：`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-team-2026-10-30-v2 --serve --port 8770`。
