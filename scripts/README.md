@@ -116,3 +116,9 @@
 ### 英雄集中状态展示（2026-10-27）
 
 `decision_review_assets`已加入地图点选／名单切换及集中状态面板；仍用上节followup-v1启动命令及8769，无新HTTP字段、采集或依赖。修改静态页须重启本地评审服务后刷新；先下载内存草稿。专项沿用`node --test tests/test_decision_review_ui.cjs`。见[面板与验证](../docs/decision-comparison-2026-10-27.md#地图选中英雄与集中状态面板2026-10-27)。
+
+### 修复蓝量接入（2026-10-30，R1）
+
+`scripts/attach_decision_mana.py --base reports/decision-review-followup-2026-10-27-v1 --repair reports/decision-mana-repair-2026-10-28-v1 --output NEWDIR`只替换状态卡决策时点蓝量，生成新目录，基础包不变。当前页面：`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-mana-2026-10-30-v2 --serve --port 8770`，替代8769的followup-v1。见[接入记录](../docs/decision-mana-integration-2026-10-30.md)。
+
+全队状态（方案A）：`scripts/probe_team_state.py --freeze-plan FILE`后`--plan FILE --match ID --output NEWDIR`离线抓两场10名英雄决策时点状态；`scripts/attach_team_state.py --base reports/decision-review-mana-2026-10-30-v2 --probe reports/decision-team-state-2026-10-30-v1 --output NEWDIR`生成新包。当前8770服务包为`reports/decision-review-team-2026-10-30-v2`。

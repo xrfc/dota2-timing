@@ -29,7 +29,9 @@ function renderHeroState(){
  const isDecision=frame.tick===d.tick,visible=p.visibility==='visible';
  const rows=isDecision&&visible&&x?.comparison_card?.tick===frame.tick?x.comparison_card.team_state.filter(r=>r.player_slot===p.player_slot&&r.hero_id===p.hero_id&&r.visibility==='visible'):[];
  const row=rows?.length===1?rows[0]:null;
- const live=isDecision&&visible&&p.player_slot===selected.case.slot&&x?.live_state_card?.tick===frame.tick?x.live_state_card:null;
+ const teamRows=isDecision&&visible&&x?.team_live_state?.tick===frame.tick?x.team_live_state.cards.filter(c=>c.player_slot===p.player_slot&&c.hero_id===p.hero_id):[];
+ const live=isDecision&&visible&&p.player_slot===selected.case.slot&&x?.live_state_card?.tick===frame.tick?x.live_state_card:teamRows.length===1?teamRows[0]:null;
+ const cdWithheld=live?.cooldowns==='withheld_enemy_visibility_unverified';
  const friendly=(selected.case.view||'radiant')==='radiant'?p.player_slot<128:p.player_slot>=128;
  parent.append(el('h3',`${hero(p.hero_id)} · ${friendly?'友方':'敌方'}${row?.level!=null||live?.level!=null?` · 等级 ${row?.level??live.level}`:''}`));
  paragraph(parent,'采样',`${time(frame.time)} · tick ${frame.tick}${isDecision?' · 决策时点':' · 历史位置采样（无同刻战力卡）'}`);
@@ -38,12 +40,15 @@ function renderHeroState(){
  const hp=row?.health||live?.health;
  paragraph(parent,'血量',hp?`${hp.current??'未知'} / ${hp.max??'未知'}（同刻来源观测）`:'未知 · 没有该采样可用的可见血量证据');
  if(hp&&Number.isFinite(hp.current)&&Number.isFinite(hp.max)&&hp.max>0){const bar=el('progress');bar.max=hp.max;bar.value=Math.max(0,Math.min(hp.current,hp.max));bar.setAttribute('aria-label',`${hero(p.hero_id)}血量 ${hp.current}/${hp.max}`);parent.append(bar);}
- paragraph(parent,'蓝量',live?'未认证 · 已定位解码范围异常，旧读数不作为游戏蓝量或施放依据':'未知 · 没有该采样已认证蓝量');
+ const mana=live?.mana,redecoded=Number.isFinite(mana?.current)&&Number.isFinite(mana?.max)&&mana.max>0;
+ paragraph(parent,'蓝量',redecoded?`${Math.round(mana.current)} / ${Math.round(mana.max)}（按真实补丁版本重新解码的同刻来源观测；游戏单位未独立认证，不代表能施放）`:live?'未认证 · 已定位解码范围异常，旧读数不作为游戏蓝量或施放依据':'未知 · 没有该采样已认证蓝量');
+ if(redecoded){const bar=el('progress');bar.className='mana';bar.max=mana.max;bar.value=Math.max(0,Math.min(mana.current,mana.max));bar.setAttribute('aria-label',`${hero(p.hero_id)}蓝量 ${Math.round(mana.current)}/${Math.round(mana.max)}`);parent.append(bar);}
  parent.append(el('h4','技能与 TP'));
- const abilities=live?.abilities.filter(a=>!a.name.startsWith('special_bonus_'))||[];
+ const abilities=cdWithheld?[]:live?.abilities.filter(a=>!a.name.startsWith('special_bonus_'))||[];
  for(const a of abilities){const n=el('div');n.className='hero-entry';n.append(el('strong',`${abilityNames[a.name]||a.name} · 等级 ${a.level??'未知'}`),el('small',`${a.hidden?'隐藏技能；':a.level===0?'未学习；':''}${cooldown(a)}`));parent.append(n);}
- if(!abilities.length)paragraph(parent,'技能 CD','未知 · 当前没有该英雄同刻技能冷却取证，不能用技能等级或过去施法代替');
- paragraph(parent,'TP',live?.tp?`${cooldown(live.tp)}；卷轴充能源读数 ${live.tp.charges??'未知'}`:'CD / 充能未知；持有卷轴不代表能立刻 TP');
+ if(cdWithheld)paragraph(parent,'技能 / TP CD','不显示 · 敌方冷却在游戏内的可知程度未核实，按方案A只显示可见敌人的蓝量');
+ else if(!abilities.length)paragraph(parent,'技能 CD','未知 · 当前没有该英雄同刻技能冷却取证，不能用技能等级或过去施法代替');
+ if(!cdWithheld)paragraph(parent,'TP',live?.tp?`${cooldown(live.tp)}；卷轴充能源读数 ${live.tp.charges??'未知'}`:'CD / 充能未知；持有卷轴不代表能立刻 TP');
  paragraph(parent,'施放条件','CD 为 0 不等于能施放；蓝量、控制/禁用、目标与落点等条件尚未完整核验。');
  parent.append(el('h4','装备 · 按槽位'));
  const inventory=row?.inventory||(isDecision&&visible&&p.player_slot===selected.case.slot?d.inventory:null);
@@ -57,7 +62,7 @@ function renderHeroState(){
   }parent.append(grid);
   paragraph(parent,'装备边界','持有不等于主动可用；背包/特殊槽不冒充主槽。未计算被动收益，空储备槽折叠省略。');
  }else paragraph(parent,'装备',!isDecision?'未知 · 历史地图没有同刻装备卡':!friendly?'未知 · 未建立敌方装备检查证据，不读取隐藏库存':'未知 · 同刻库存缺失或未通过核验');
- const details=el('details');details.append(el('summary','该英雄的来源与未认证原始读数'));details.append(el('pre',JSON.stringify({tick:frame.tick,position_source:p.source_tick??frame.tick,state_ref:row?.source_ref??null,live_state:live||null},null,2)));parent.append(details);
+ const details=el('details');details.append(el('summary','该英雄的来源与未认证原始读数'));details.append(el('pre',JSON.stringify({tick:frame.tick,position_source:p.source_tick??frame.tick,state_ref:row?.source_ref??null,live_state:live?(cdWithheld?{...live,abilities:[],items:[],tp:null}:live):null},null,2)));parent.append(details);
 }
 $('hero-select').addEventListener('change',()=>selectHero(Number($('hero-select').value)));
 $('map').addEventListener('click',event=>{
@@ -87,7 +92,8 @@ function renderComparison(parent,x,cs){
  paragraph(parent,'到场拆解',x.arrival.formula);
  paragraph(parent,'TP冷却等待源读数',x.arrival.tp_cooldown_wait_source_seconds===null?'未知':`${x.arrival.tp_cooldown_wait_source_seconds.toFixed(2)}秒；不是总到场时间`);
  paragraph(parent,'到场区间',x.arrival.warning);
- paragraph(parent,'蓝量取证','两例原生网络范围上限65536被早期补丁改为8192（schema时build=0，随后为6965）；旧值未修正，不能用于耗蓝或可施放判断。');
+ const mana=selected.enhancement.live_state_card?.mana;
+ paragraph(parent,'蓝量取证',Number.isFinite(mana?.current)?`已改用10-28按补丁6965重新解码的决策时点读数 ${Math.round(mana.current)} / ${Math.round(mana.max)}（旧读数 ${Number(mana.replaced_reading?.raw).toFixed(1)} 因范围误用8192作废）；仍是来源观测，未独立认证游戏单位或可施放。`:'两例原生网络范围上限65536被早期补丁改为8192（schema时build=0，随后为6965）；旧值未修正，不能用于耗蓝或可施放判断。');
  for(const a of x.alternatives){const section=el('article');section.append(el('h4',a.name));for(const [label,key] of [['成立条件','requirements'],['潜在贡献','potential_benefit'],['机会成本','opportunity_cost'],['重新判断条件','stop']])paragraph(section,label,a[key]);parent.append(section);}
  paragraph(parent,'仍缺关键事实',x.blocking_unknowns.join('；'));
  const draft=reviewDrafts.get(cs.id)||JSON.parse(JSON.stringify(x.annotation));reviewDrafts.set(cs.id,draft);

@@ -189,3 +189,40 @@ test('wrong-tick live state is withheld and outcome reveal never changes the cur
  assert.equal(content(s.elements['hero-state']),before);
  assert.deepEqual(s.requests,['/api/cases','/api/first-after.json']);
 });
+test('redecoded mana shows value only at the decision tick and stays out of past samples',async()=>{
+ const s=boot();await flush();addHeroes(s);
+ const c=s.data.cards[0];c.past_frames=[{tick:0,time:0,players:c.evidence.decision_input.positions}];
+ c.enhancement.live_state_card.mana={current:567.0005,max:567.0005,replaced_reading:{raw:70.875},status:'redecoded_source_observation_not_independent_gameplay_certification',can_cast:null};
+ s.elements.cases.children[0].click();
+ let text=content(s.elements['hero-state']);
+ assert.match(text,/567 \/ 567/);assert.match(text,/未独立认证/);assert.ok(!text.includes('解码范围异常'));
+ s.elements.history.children[0].click();
+ text=content(s.elements['hero-state']);assert.ok(!text.includes('567'));assert.match(text,/没有该采样已认证蓝量/);
+ c.enhancement.live_state_card.tick=60;s.elements.history.children[1].click();
+ assert.ok(!content(s.elements['hero-state']).includes('567'));
+ assert.deepEqual(s.requests,['/api/cases']);
+});
+test('team state: ally gets cooldowns, visible enemy mana only, hidden enemy nothing',async()=>{
+ const s=boot();await flush();addHeroes(s);
+ const x=s.data.cards[0].enhancement;
+ x.team_live_state={tick:30,cards:[
+  {player_slot:1,hero_id:14,relation:'ally',health:{current:900,max:1000},mana:{current:250,max:400},level:12,abilities:[{name:'pudge_meat_hook',level:4,cooldown_source_value:7.5,past_countdown_consistent:true}],items:[],tp:{cooldown_source_value:0,charges:1},cooldowns:'source_observed'},
+  {player_slot:128,hero_id:114,relation:'enemy',health:{current:1,max:2},mana:{current:333,max:444},level:15,abilities:[{name:'leak',level:1,cooldown_source_value:9}],items:[],tp:null,cooldowns:'withheld_enemy_visibility_unverified'}]};
+ s.elements['hero-select'].value='1';s.elements['hero-select'].listeners.change();
+ let text=content(s.elements['hero-state']);
+ assert.match(text,/250 \/ 400/);assert.match(text,/pudge_meat_hook/);assert.match(text,/7\.5 秒/);assert.match(text,/卷轴充能源读数 1/);
+ // Hero 114 is hidden at the decision tick: the card must not render.
+ s.elements['hero-select'].value='128';s.elements['hero-select'].listeners.change();
+ text=content(s.elements['hero-state']);assert.ok(!text.includes('333'));assert.ok(!text.includes('leak'));
+ // Make it visible: mana shows, cooldowns stay withheld.
+ const enemy=s.data.cards[0].evidence.decision_input.positions.find(p=>p.player_slot===128);
+ Object.assign(enemy,{visibility:'visible',position_status:'available',current_position:{x:18000,y:18000}});
+ s.elements['hero-select'].listeners.change();
+ text=content(s.elements['hero-state']);
+ assert.match(text,/333 \/ 444/);assert.match(text,/不显示 · 敌方冷却/);assert.ok(!text.includes('leak'));assert.ok(!/TP：/.test(text));
+ s.data.cards[0].past_frames=[{tick:0,time:0,players:s.data.cards[0].evidence.decision_input.positions}];
+ s.elements.cases.children[0].click();s.elements.history.children[0].click();
+ s.elements['hero-select'].value='1';s.elements['hero-select'].listeners.change();
+ assert.ok(!content(s.elements['hero-state']).includes('250'));
+ assert.deepEqual(s.requests,['/api/cases']);
+});

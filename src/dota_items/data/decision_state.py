@@ -39,6 +39,44 @@ def state_card(capture, decision, original_state):
         and r["player_id"] == pid
         and (r["hero"]["entity_index"], r["hero"]["entity_serial"]) == identity
     ]
+    items, abilities = entries(row, prior)
+    tp = [i for i in items if i["name"] == "item_tpscroll"]
+    return {
+        "schema": "decision-state-card/1",
+        "tick": tick,
+        "health": {
+            "current": values.get("m_iHealth"),
+            "max": values.get("m_iMaxHealth"),
+            "status": "live_and_frozen_source_consistent",
+        },
+        "mana": {
+            "raw": values.get("m_flMana"),
+            "raw_max": values.get("m_flMaxMana"),
+            "status": "source_consistent_units_not_independently_certified",
+            "scale_correction_applied": False,
+        },
+        "level": row["level"],
+        "items": items,
+        "abilities": abilities,
+        "tp": tp[0] if len(tp) == 1 else None,
+        "enemy_equipment_and_cd": None,
+        "tp_destination": None,
+        "arrival_seconds": None,
+        "support_expected_gain": None,
+        "alternative_farm_gain": None,
+        "limitations": [
+            "Cooldown field zero is not sufficient evidence of castability.",
+            "Countdown check uses only the past sample; tolerance .05s/1% is diagnostic.",
+            "Mana range/bit metadata do not independently certify gameplay units.",
+            "Enemy hidden state, legal landing points, paths and resource value not filled.",
+        ],
+        "training_allowed": False,
+    }
+
+
+def entries(row, prior):
+    """Item/ability source cooldowns at row; only the latest earlier sample checks countdown."""
+    tick = row["tick"]
     latest = max((r["tick"] for r in prior), default=-1)
     prior = [r for r in prior if r["tick"] == latest]
     prior = prior[0] if len(prior) == 1 else None
@@ -88,35 +126,4 @@ def state_card(capture, decision, original_state):
                 "source_ref": f"capture.rows[tick={tick}].{channel}[slot={item['slot']}]",
             }
             result.append(entry)
-    tp = [i for i in items if i["name"] == "item_tpscroll"]
-    return {
-        "schema": "decision-state-card/1",
-        "tick": tick,
-        "health": {
-            "current": values.get("m_iHealth"),
-            "max": values.get("m_iMaxHealth"),
-            "status": "live_and_frozen_source_consistent",
-        },
-        "mana": {
-            "raw": values.get("m_flMana"),
-            "raw_max": values.get("m_flMaxMana"),
-            "status": "source_consistent_units_not_independently_certified",
-            "scale_correction_applied": False,
-        },
-        "level": row["level"],
-        "items": items,
-        "abilities": abilities,
-        "tp": tp[0] if len(tp) == 1 else None,
-        "enemy_equipment_and_cd": None,
-        "tp_destination": None,
-        "arrival_seconds": None,
-        "support_expected_gain": None,
-        "alternative_farm_gain": None,
-        "limitations": [
-            "Cooldown field zero is not sufficient evidence of castability.",
-            "Countdown check uses only the past sample; tolerance .05s/1% is diagnostic.",
-            "Mana range/bit metadata do not independently certify gameplay units.",
-            "Enemy hidden state, legal landing points, paths and resource value not filled.",
-        ],
-        "training_allowed": False,
-    }
+    return items, abilities

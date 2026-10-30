@@ -121,6 +121,62 @@ def compare_captures(old, new):
     }
 
 
+CURRENT_STATUS = "redecoded_source_observation_not_independent_gameplay_certification"
+REPAIR_PRODUCER = "decision-build-first/1"
+
+
+def attach_current_mana(live_card, resource, capture, comparison, source_ref):
+    """Replace a state card's audited old mana reading with the redecoded CURRENT one.
+
+    Only the decision-tick resource enters the card; capture and comparison rows
+    are cross-checks at that same tick, so later samples can never leak in.
+    """
+    tick = live_card["tick"]
+    if (
+        resource["tick"] != tick
+        or resource["status"] != CURRENT_STATUS
+        or resource["training_allowed"] is not False
+        or capture["decision_tick"] != tick
+        or comparison["decision_tick"] != tick
+        or not resource["match_id"] == capture["match_id"] == comparison["match_id"]
+    ):
+        raise ValueError("Resource does not describe this decision tick")
+    if capture["producer"] != REPAIR_PRODUCER or capture["build"] != 6965:
+        raise ValueError("Unaudited mana producer")
+    rows = [r for r in capture["rows"] if r["tick"] == tick]
+    if len(rows) != 1:
+        raise ValueError("Missing or duplicate capture row")
+    values, health = rows[0]["hero"]["values"], live_card["health"]
+    if (values["m_iHealth"], values["m_iMaxHealth"]) != (health["current"], health["max"]):
+        raise ValueError("Capture hero does not match state card")
+    mana, maximum = resource["mana"], resource["max_mana"]
+    if (values["m_flMana"], values["m_flMaxMana"]) != (mana, maximum):
+        raise ValueError("Current resource differs from capture")
+    if not (_number(mana) and _number(maximum) and 0 <= mana <= maximum):
+        raise ValueError("Invalid current resource")
+    paired = [p for p in comparison["paired_samples"] if p["tick"] == tick]
+    if len(paired) != 1:
+        raise ValueError("Missing paired old reading")
+    old = {r["field"]: r["old"] for r in paired[0]["resources"]}
+    stale = live_card["mana"]
+    if stale.get("scale_correction_applied") is not False or (stale["raw"], stale["raw_max"]) != (
+        old["m_flMana"],
+        old["m_flMaxMana"],
+    ):
+        raise ValueError("State card mana is not the audited old reading")
+    card = copy.deepcopy(live_card)
+    card["mana"] = {
+        "current": mana,
+        "max": maximum,
+        "status": CURRENT_STATUS,
+        "producer": REPAIR_PRODUCER,
+        "source_ref": source_ref,
+        "replaced_reading": copy.deepcopy(stale),
+        "can_cast": None,
+    }
+    return card
+
+
 def current_resource(comparison):
     """Project one CURRENT diagnostic observation, excluding temporal summaries.
 
