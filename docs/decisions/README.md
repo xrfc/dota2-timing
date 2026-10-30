@@ -22,3 +22,4 @@
 | U16 | [M2b标签：第一件针对装（Q9方案C）](2026-10-31-m2b-label.md) |
 | U17 | [术语“针对装”；辅助暂不建模](2026-10-31-terminology-and-support-scope.md) |
 | U18 | [授权M2b-T3训练](2026-10-31-m2b-training.md) |
+| U19 | [推送到远端GitHub](2026-10-31-push.md) |

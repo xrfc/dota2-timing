@@ -47,6 +47,7 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | U3 | 三个产品目标A/B/C如§1 | 2026-10-30 |
 | U4 | 采用本计划；主玩1/5号位优势路、传奇段位 | 2026-10-30 |
 | U5 | 标注方式：客观标签自动生成；判断类由助手先标、用户抽查约1/3；定义类用户拍板 | 2026-10-30 |
+| U19 | 2026-10-31推送全部本地提交到origin/main；当日收工 | 2026-10-31 |
 | U18 | 授权M2b-T3本次训练 | 2026-10-31 |
 | U17 | 术语统一为“针对装”；辅助针对装暂不建模，只显示出现率（以后再做） | 2026-10-31 |
 | U16 | Q9＝C：标签为“第一件针对装选哪件”（6选1，散魂剑并入净魂之刃路线） | 2026-10-31 |
@@ -277,7 +278,8 @@ M2b-T0～T4已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`**未�
 ### 运行与交接备注
 
 - 提交身份：本环境无git身份配置，提交用`git -c user.name=xrfc -c user.email=147353817+xrfc@users.noreply.github.com`；均为本地提交，未推送（推送须用户授权）。
-- 8780可能仍在后台运行；重启：`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`（启动时校验`reports/m2-item-timing-2026-10-30-r2`哈希）。
+- 2026-10-31收工：已推送至`origin/main`（U19）；8780服务已停止。下次开始先按§6.1检查，再向用户确认`docs/m2b-results.md`§4的决定。
+- 8780默认未运行；重启：`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`（启动时校验`reports/m2-item-timing-2026-10-30-r2`哈希）。
 - 浏览器验收：Windows Chrome无头+临时配置：`"/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --remote-debugging-port=9229 --user-data-dir='C:\Windows\Temp\dota-review-cdp' about:blank &`，再`NO_PROXY='*' node scripts/acceptance/coach_app_browser.cjs NEWDIR`，结束后通过CDP `Browser.close`关闭。WSL为mirrored网络，可直接访问127.0.0.1。
 - 8770旧评审页已停止；需要时：`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-team-2026-10-30-v2 --serve --port 8770`。
 - 每次真实训练与联网采集都须用户单独授权（Q7）；用户画像与账号ID见`configs/user.local.json`（未跟踪，勿提交）。
