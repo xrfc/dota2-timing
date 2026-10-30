@@ -228,8 +228,9 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | 里程碑 | 状态 | 开始 | 完成 |
 |---|---|---|---|
 | M0 | 已完成 | 2026-10-30 | 2026-10-30 |
-| M1 | 进行中 | 2026-10-30 | |
-| M2–M6 | 未开始 | | |
+| M1 | 已完成 | 2026-10-30 | 2026-10-30 |
+| M2 | 进行中 | 2026-10-30 | |
+| M3–M6 | 未开始 | | |
 
 M0（已完成）：T1分批提交（7a42c25、4d39ad8、8a03509、edf3f5c）；T2 R1评审通过（U6）；T3–T5完成。
 
@@ -237,13 +238,25 @@ M1任务：
 - [x] M1-T1 数据清单（`reports/m1-inventory-2026-10-30-v1/inventory.json`；命令`scripts/build_match_table.py inventory --output NEWDIR`）
 - [x] M1-T2 match_table模块（`player_rows`/`purchase_rows`/`FIELD_AVAILABILITY`；实数据1993场→19930行、879200条购买，仅rank_tier缺147）
 - [x] M1-T3 位置推断（U8；`assign_positions`；实数据1号位/5号位各3849，覆盖96.6%队伍侧；collapsed_carry 209，占1号位5.4%）
-- [ ] M1-T4 时序可知性测试
-- [ ] M1-T5 划分
+- [x] M1-T4 时序可知性测试（`availability`/`pre_game_view`）
+- [x] M1-T5 划分（`time_split`：最新20%验证，1595/398）
 - [x] M1-T6 段位不匹配处理：U7不补采，数据卡注明高分段参照
-- [ ] M1-T7 冻结快照与--verify
-- [ ] M1-T8 数据卡
+- [x] M1-T7 冻结快照与--verify（`reports/m1-match-table-2026-10-30-v1`，verify ok）
+- [x] M1-T8 数据卡（`docs/m1-data-card.md`）
 
-本周目标：M1-T1、M1-T2；到T3前问用户Q2。
+M1出口：快照verify一致；全库检查1369项通过、源码指纹不变。
+
+M2任务：
+- [ ] M2-T1 英雄范围（先问Q3）与任务定义
+- [ ] M2-T2 冻结评估协议（`docs/m2-design.md`）
+- [ ] M2-T3 模型
+- [ ] M2-T4 开发集评估与诊断
+- [ ] M2-T5 统一前端外壳＋赛前出装页
+- [ ] M2-T6 用户评审5套阵容
+
+Q3参考（M1训练集，1号位不含collapsed_carry）：1号位59个英雄，主宰1458人次占50%（每场必有主宰），其余≥100仅露娜143、噬魂鬼139、卓尔119、敌法100；5号位86个英雄，≥100的7个（莱恩197、巫妖165、巫医163、暗影萨满160、水晶室女154、干扰者151、拉比克113）。
+
+本周目标：M2-T1（已向用户提出Q3）。
 
 M1-T1发现（2026-10-30，已告知用户，影响Q1）：
 - 2551场中仅1993场有完整解析（10人均有purchase_log等）；558场（全在additional批次）无任何解析字段，M1不可用。

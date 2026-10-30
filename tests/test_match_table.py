@@ -165,3 +165,87 @@ def test_non_pair_safelane_is_unknown_and_input_untouched():
     result = assign_positions(rows)
     assert all(r["position"] is None for r in result if r["is_radiant"])
     assert rows == before
+
+
+def test_every_column_has_availability_and_pre_game_view_ignores_later_fields():
+    from dota_items.data.match_table import (
+        assign_positions,
+        availability,
+        player_rows,
+        pre_game_view,
+    )
+
+    rows = assign_positions(player_rows(parsed_match()))
+    for row in rows:
+        for column in row:
+            assert availability(column) in {
+                "identifier",
+                "pre_game",
+                "lane_end",
+                "minute_15",
+                "post_game",
+            }
+    original = pre_game_view(rows[0])
+    later = {k: v for k, v in rows[0].items() if k not in original}
+    assert {"lh_10", "win", "position", "duration_s"} <= set(later)
+    perturbed = {**rows[0], **{k: "changed" for k in later}}
+    assert pre_game_view(perturbed) == original
+
+
+def test_time_split_is_by_whole_match_and_newest_validate():
+    from dota_items.data.match_table import time_split
+
+    starts = {10: 500, 11: 100, 12: 300, 13: 300, 14: 900}
+    split = time_split(starts, 0.4)
+    assert split["validation"] == [10, 14]
+    assert split["train"] == [11, 12, 13]
+    assert split["train_last_start"] < split["validation_first_start"]
+    assert not set(split["train"]) & set(split["validation"])
+
+
+def snapshot_repo(tmp_path):
+    import importlib.util
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("bmt", root / "scripts/build_match_table.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    repo = tmp_path / "repo"
+    data = repo / "data/src"
+    for match_id, start in ((21, 300), (22, 100), (23, 200), (24, 400), (25, 500)):
+        match = parsed_match()
+        match.pop("match_id")
+        store(data, match_id, {**match, "start_time": start})
+    store(data, 26, {"start_time": 50, "players": [player(1, purchase_log=None)] * 10})
+    for name in module.IMPLEMENTATION:
+        (repo / name).parent.mkdir(parents=True, exist_ok=True)
+        (repo / name).write_text("fixture")
+    return module, repo
+
+
+def test_snapshot_verify_roundtrip_and_drift_detection(tmp_path):
+    module, repo = snapshot_repo(tmp_path)
+    out = repo / "reports/snap"
+    result = module.run_snapshot(out, ("data/src",), repo)
+    assert result == {
+        "matches": 5,
+        "player_rows": 50,
+        "purchase_rows": 10,
+        "train": 4,
+        "validation": 1,
+    }
+    manifest = json.loads((out / "manifest.json").read_text())
+    assert manifest["excluded_unparsed_match_ids"] == [26]
+    assert json.loads((out / "split.json").read_text())["validation"] == [25]
+    header = (out / "players.csv").read_text().splitlines()[0].split(",")
+    assert {"position", "collapsed_carry", "lh_15"} <= set(header)
+    assert module.run_verify(out, repo) == {"snapshot": str(out), "ok": True, "problems": []}
+    (out / "split.json").write_text("{}")
+    extra = {k: v for k, v in parsed_match().items() if k != "match_id"}
+    store(repo / "data/src", 27, {**extra, "start_time": 600})
+    problems = module.run_verify(out, repo)["problems"]
+    assert "stored_output_changed:split.json" in problems
+    assert "inputs_changed" in problems
+    with pytest.raises(ValueError, match="exists"):
+        module.run_snapshot(out, ("data/src",), repo)

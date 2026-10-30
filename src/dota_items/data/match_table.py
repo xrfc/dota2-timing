@@ -224,3 +224,43 @@ def assign_positions(rows):
         )
         result.append({**row, "position": position, "collapsed_carry": collapsed})
     return result
+
+
+# Columns added by assign_positions; position reflects the role actually played.
+DERIVED_AVAILABILITY = {"position": "minute_15", "collapsed_carry": "lane_end"}
+PURCHASE_AVAILABILITY = {
+    "match_id": "identifier",
+    "player_slot": "pre_game",
+    "hero_id": "pre_game",
+    "time_s": "at_event_time",
+    "item": "at_event_time",
+}
+
+
+def availability(column):
+    return {**FIELD_AVAILABILITY, **DERIVED_AVAILABILITY}[column]
+
+
+def pre_game_view(row):
+    """The only player columns a pre-game product may read as inputs."""
+    return {k: v for k, v in row.items() if availability(k) in ("identifier", "pre_game")}
+
+
+def time_split(start_times, validation_fraction=0.2):
+    """Whole-match split by start time: earliest matches develop, latest validate.
+
+    start_times maps match_id -> start_time; ties break by match_id. The
+    validation share is the newest floor(N * fraction) matches.
+    """
+    ordered = sorted(start_times, key=lambda m: (start_times[m], m))
+    cut = len(ordered) - int(len(ordered) * validation_fraction)
+    train, validation = ordered[:cut], ordered[cut:]
+    return {
+        "schema": "m1-time-split/1",
+        "rule": "sort by (start_time, match_id); newest floor(N*fraction) -> validation",
+        "validation_fraction": validation_fraction,
+        "train": sorted(train),
+        "validation": sorted(validation),
+        "train_last_start": start_times[train[-1]] if train else None,
+        "validation_first_start": start_times[validation[0]] if validation else None,
+    }
