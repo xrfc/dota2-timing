@@ -130,3 +130,11 @@
 案例1追加反馈与四项具体评审问题已纳入当前对照页，含最后可见22秒核对和未证实路线边界。 详见[对照包追加反馈](decision-comparison-2026-10-27.md)。
 
 - [地图选中英雄与集中状态面板](decision-comparison-2026-10-27.md#地图选中英雄与集中状态面板2026-10-27)：8769交互、同刻状态连接、隐藏/历史隔离、现有字段边界与新UI验收。
+
+## 历史设计归档（不替代当前入口）
+
+- [2026-10-10阵容推荐规划](development-mainline.md)：历史范围与设计理由。
+- [2026-10-10模块边界](module-boundaries.md)：保留依赖方向与扩展原则，不把建议目录当成当前结构。
+- [2026-10-10文档盘点](documentation-inventory.md)：当时的清单与核对范围，不是当前文件数量。
+
+当前已存在 recommendation 契约/规则原型、modeling 模型接口与阵容页面；实现存在不等于推荐质量或真实语义认证。状态继续由 roadmap、data-prep-progress、model-foundation 维护，结构见 modular-maintenance；此归档不扩大训练或数据用途授权。
