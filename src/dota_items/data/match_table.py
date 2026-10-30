@@ -100,6 +100,9 @@ def inventory(matches):
 
 
 LANE_MINUTE = 10
+POSITION_MINUTE = 15
+POSITION_MIN_GAP = 25  # U8: last-hit gap below this -> position unknown
+COLLAPSED_CARRY_LH_10 = 35  # U8: user-chosen threshold
 
 # When each column is knowable. Pre-game products (A/B) may only consume
 # "pre_game" inputs; "lane_end" columns are labels or post-lane context.
@@ -116,6 +119,7 @@ FIELD_AVAILABILITY = {
     "lane_role": "lane_end",
     "is_roaming": "lane_end",
     "lh_10": "lane_end",
+    "lh_15": "minute_15",
     "dn_10": "lane_end",
     "gold_10": "lane_end",
     "xp_10": "lane_end",
@@ -163,6 +167,7 @@ def player_rows(match):
                 "lane_role": p.get("lane_role"),
                 "is_roaming": p.get("is_roaming"),
                 "lh_10": _at_minute(p.get("lh_t"), LANE_MINUTE),
+                "lh_15": _at_minute(p.get("lh_t"), POSITION_MINUTE),
                 "dn_10": _at_minute(p.get("dn_t"), LANE_MINUTE),
                 "gold_10": _at_minute(p.get("gold_t"), LANE_MINUTE),
                 "xp_10": _at_minute(p.get("xp_t"), LANE_MINUTE),
@@ -191,3 +196,31 @@ def purchase_rows(match):
         for p in match["players"]
         for e in p["purchase_log"]
     ]
+
+
+def assign_positions(rows):
+    """U8 safelane rule. Adds ``position`` (1, 5 or None) and ``collapsed_carry``.
+
+    Position comes from 15-minute last hits, i.e. the role actually played;
+    it is a lane_end-or-later fact, not pre-game data. Rows are not mutated.
+    """
+    teams = {}
+    for row in rows:
+        if row["lane_role"] == 1:
+            teams.setdefault((row["match_id"], row["is_radiant"]), []).append(row)
+    positions = {}
+    for safelane in teams.values():
+        if len(safelane) != 2 or any(r["lh_15"] is None for r in safelane):
+            continue
+        high, low = sorted(safelane, key=lambda r: -r["lh_15"])
+        if high["lh_15"] - low["lh_15"] >= POSITION_MIN_GAP:
+            positions[(high["match_id"], high["player_slot"])] = 1
+            positions[(low["match_id"], low["player_slot"])] = 5
+    result = []
+    for row in rows:
+        position = positions.get((row["match_id"], row["player_slot"]))
+        collapsed = (
+            position == 1 and row["lh_10"] is not None and row["lh_10"] < COLLAPSED_CARRY_LH_10
+        )
+        result.append({**row, "position": position, "collapsed_carry": collapsed})
+    return result

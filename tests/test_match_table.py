@@ -116,3 +116,52 @@ def test_unparsed_match_rejected():
     assert not fully_parsed(match)
     with pytest.raises(ValueError):
         player_rows(match)
+
+
+def safelane_rows(radiant_lh, dire_lh=((100, 50), (10, 5))):
+    rows = []
+    for radiant, pair in ((True, radiant_lh), (False, dire_lh)):
+        for i, (lh15, lh10) in enumerate(pair):
+            rows.append(
+                {
+                    "match_id": 1,
+                    "is_radiant": radiant,
+                    "player_slot": i if radiant else 128 + i,
+                    "lane_role": 1,
+                    "lh_15": lh15,
+                    "lh_10": lh10,
+                }
+            )
+    rows.append(
+        {
+            "match_id": 1,
+            "is_radiant": True,
+            "player_slot": 2,
+            "lane_role": 2,
+            "lh_15": 150,
+            "lh_10": 80,
+        }
+    )
+    return rows
+
+
+def test_positions_by_15_minute_last_hits_with_gap_and_collapse():
+    from dota_items.data.match_table import assign_positions
+
+    rows = assign_positions(safelane_rows([(10, 5), (95, 34)], [(60, 40), (36, 20)]))
+    got = {r["player_slot"]: (r["position"], r["collapsed_carry"]) for r in rows}
+    assert got[1] == (1, True)  # 34 < 35 at minute 10: collapsed but still position 1
+    assert got[0] == (5, False)
+    assert got[128] == got[129] == (None, False)  # gap 24 < 25 -> unknown
+    assert got[2] == (None, False)  # mid is out of scope
+
+
+def test_non_pair_safelane_is_unknown_and_input_untouched():
+    from dota_items.data.match_table import assign_positions
+
+    rows = safelane_rows([(100, 50), (10, 5)])
+    rows.append({**rows[0], "player_slot": 3})
+    before = [dict(r) for r in rows]
+    result = assign_positions(rows)
+    assert all(r["position"] is None for r in result if r["is_radiant"])
+    assert rows == before
