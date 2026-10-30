@@ -8,3 +8,5 @@
 | U2 | [状态面板方案A](2026-10-30-team-state-option-a.md) |
 | U3 | [三个产品目标](2026-10-30-product-goals.md) |
 | U4 | [采用M0–M6计划与用户画像](2026-10-30-adopt-plan.md) |
+| U5 | [标注方式：助手先标、用户抽查](2026-10-30-labeling-mode.md) |
+| U6 | [R1评审结论与页面重构授权](2026-10-30-r1-review.md) |
