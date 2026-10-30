@@ -18,3 +18,4 @@
 | U12 | [M2改进实验与展示决定](2026-10-30-m2-revision.md) |
 | U13 | [产品A重新定义：赛前看“出什么”，时间移到复盘](2026-10-30-product-a-redefined.md) |
 | U14 | [本地装备登记表（M2b-T0）](2026-10-31-item-registry.md) |
+| U15 | [看局装清单（Q8）](2026-10-31-situational-items.md) |
