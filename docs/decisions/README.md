@@ -13,3 +13,4 @@
 | U7 | [不补采低分段数据（Q1）](2026-10-30-no-low-rank-collection.md) |
 | U8 | [优势路1/5号位推断与对线崩盘标记（Q2）](2026-10-30-position-rule.md) |
 | U9 | [产品A英雄范围（Q3）](2026-10-30-hero-scope.md) |
+| U10 | [产品A关键装备清单](2026-10-30-key-items.md) |
