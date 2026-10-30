@@ -234,7 +234,7 @@ M0（已完成）：T1分批提交（7a42c25、4d39ad8、8a03509、edf3f5c）；
 
 M1任务：
 - [x] M1-T1 数据清单（`reports/m1-inventory-2026-10-30-v1/inventory.json`；命令`scripts/build_match_table.py inventory --output NEWDIR`）
-- [ ] M1-T2 match_table模块
+- [x] M1-T2 match_table模块（`player_rows`/`purchase_rows`/`FIELD_AVAILABILITY`；实数据1993场→19930行、879200条购买，仅rank_tier缺147）
 - [ ] M1-T3 位置推断（先问Q2）
 - [ ] M1-T4 时序可知性测试
 - [ ] M1-T5 划分
@@ -249,6 +249,7 @@ M1-T1发现（2026-10-30，已告知用户，影响Q1）：
 - 原采集筛选：含主宰、时长≥30分钟、天梯全英雄（lobby 7/mode 22）、平均段位≥70（超凡+）。因此数据**只含30分钟以上的比赛**（中位38.5分钟），碾压局缺失，会使出装时间偏慢、对线结果偏均衡。
 - 玩家段位：冠绝12032、超凡10739、万古2175、传奇288、更低<100、未知195。
 - 127个英雄出现；样本≥200人次的英雄45个、≥100的86个。
+- Q2参考：优势路（lane_role=1）每队恰好2人的占97.2%（3874/3986）；两人10分钟补刀差中位45，差<15仅1%，差<25为5.3%；高者中位52、低者中位7。
 
 提交身份：本环境无git身份配置，提交时用`git -c user.name=xrfc -c user.email=147353817+xrfc@users.noreply.github.com`，与仓库历史一致，不改全局配置。均为本地提交，未推送。
 

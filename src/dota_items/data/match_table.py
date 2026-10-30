@@ -97,3 +97,97 @@ def inventory(matches):
         "hero_player_counts": {str(k): v for k, v in sorted(counts["hero_id"].items())},
         "missing_player_fields": dict(sorted(missing.items())),
     }
+
+
+LANE_MINUTE = 10
+
+# When each column is knowable. Pre-game products (A/B) may only consume
+# "pre_game" inputs; "lane_end" columns are labels or post-lane context.
+FIELD_AVAILABILITY = {
+    "match_id": "identifier",
+    "start_time": "pre_game",
+    "patch": "pre_game",
+    "avg_rank_tier": "pre_game",
+    "player_slot": "pre_game",
+    "is_radiant": "pre_game",
+    "hero_id": "pre_game",
+    "rank_tier": "pre_game",
+    "lane": "lane_end",
+    "lane_role": "lane_end",
+    "is_roaming": "lane_end",
+    "lh_10": "lane_end",
+    "dn_10": "lane_end",
+    "gold_10": "lane_end",
+    "xp_10": "lane_end",
+    "kills_10": "lane_end",
+    "deaths_10": "lane_end",
+    "lane_efficiency_pct": "lane_end",
+    "duration_s": "post_game",
+    "win": "post_game",
+}
+
+
+def fully_parsed(match):
+    players = match.get("players") or []
+    return len(players) == 10 and all(p.get("purchase_log") is not None for p in players)
+
+
+def _at_minute(series, minute):
+    return series[minute] if isinstance(series, list) and len(series) > minute else None
+
+
+def _count_before(log, seconds):
+    return None if log is None else sum(1 for e in log if e["time"] < seconds)
+
+
+def player_rows(match):
+    """One row per player; columns are exactly FIELD_AVAILABILITY's keys."""
+    if not fully_parsed(match):
+        raise ValueError("Match is not fully parsed")
+    tiers = [p["rank_tier"] for p in match["players"] if p.get("rank_tier")]
+    avg_tier = round(sum(tiers) / len(tiers), 1) if tiers else None
+    seconds = LANE_MINUTE * 60
+    rows = []
+    for p in match["players"]:
+        rows.append(
+            {
+                "match_id": match["match_id"],
+                "start_time": match["start_time"],
+                "patch": match["patch"],
+                "avg_rank_tier": avg_tier,
+                "player_slot": p["player_slot"],
+                "is_radiant": p["player_slot"] < 128,
+                "hero_id": p["hero_id"],
+                "rank_tier": p.get("rank_tier"),
+                "lane": p.get("lane"),
+                "lane_role": p.get("lane_role"),
+                "is_roaming": p.get("is_roaming"),
+                "lh_10": _at_minute(p.get("lh_t"), LANE_MINUTE),
+                "dn_10": _at_minute(p.get("dn_t"), LANE_MINUTE),
+                "gold_10": _at_minute(p.get("gold_t"), LANE_MINUTE),
+                "xp_10": _at_minute(p.get("xp_t"), LANE_MINUTE),
+                "kills_10": _count_before(p.get("kills_log"), seconds),
+                "deaths_10": _count_before(p.get("deaths_log"), seconds),
+                "lane_efficiency_pct": p.get("lane_efficiency_pct"),
+                "duration_s": match["duration"],
+                "win": bool(p.get("win")),
+            }
+        )
+    return rows
+
+
+def purchase_rows(match):
+    """Every logged purchase (including pre-horn negative times) in log order."""
+    if not fully_parsed(match):
+        raise ValueError("Match is not fully parsed")
+    return [
+        {
+            "match_id": match["match_id"],
+            "player_slot": p["player_slot"],
+            "hero_id": p["hero_id"],
+            "time_s": e["time"],
+            "item": e["key"],
+        }
+        for p in match["players"]
+        for e in p["purchase_log"]
+    ]
