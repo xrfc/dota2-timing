@@ -120,6 +120,8 @@ def main() -> int:
                     [node, "--test", "tests/test_replay_viewer_ui.cjs"],
                     [node, "--check", "scripts/decision_review_assets/app.js"],
                     [node, "--test", "tests/test_decision_review_ui.cjs"],
+                    [node, "--check", "scripts/coach_app_assets/app.js"],
+                    [node, "--test", "tests/test_coach_app_ui.cjs"],
                 ]
             )
         else:

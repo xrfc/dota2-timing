@@ -255,12 +255,12 @@ M2任务：
 - [x] M2-T2 冻结评估协议（`docs/m2-design.md`，冻结时未训练）
 - [x] M2-T3 模型（U11授权；`scripts/train_item_timing.py`，`reports/m2-item-timing-2026-10-30-v1`）
 - [x] M2-T4 开发集评估与诊断（`docs/m2-results.md`：阵容模型整体不优于基线）
-- [ ] M2-T5 统一前端外壳＋赛前出装页
+- [x] M2-T5 统一前端外壳＋赛前出装页（`scripts/coach_app.py`，8780；浏览器验收15项`reports/coach-app-acceptance-2026-10-30-v2`；模型卡`docs/m2-model-card.md`）
 - [ ] M2-T6 用户评审5套阵容
 
 Q3参考（M1训练集，1号位不含collapsed_carry）：1号位59个英雄，主宰1458人次占50%（每场必有主宰），其余≥100仅露娜143、噬魂鬼139、卓尔119、敌法100；5号位86个英雄，≥100的7个（莱恩197、巫妖165、巫医163、暗影萨满160、水晶室女154、干扰者151、拉比克113）。
 
-本周目标：M2-T5统一前端外壳＋赛前出装页（修订2已完成，见`docs/m2-results.md`§6：整体≈基线，主宰蝴蝶30分钟有初步阵容效应）。
+本周目标：M2-T6——用户在8780评审5套真实阵容（建议用自己最近的对局），意见写决策记录后M2完成，进入M3（M3-T1先问Q4打法与优势定义）。
 
 M1-T1发现（2026-10-30，已告知用户，影响Q1）：
 - 2551场中仅1993场有完整解析（10人均有purchase_log等）；558场（全在additional批次）无任何解析字段，M1不可用。
@@ -271,7 +271,7 @@ M1-T1发现（2026-10-30，已告知用户，影响Q1）：
 
 提交身份：本环境无git身份配置，提交时用`git -c user.name=xrfc -c user.email=147353817+xrfc@users.noreply.github.com`，与仓库历史一致，不改全局配置。均为本地提交，未推送。
 
-交接备注：8770评审服务已随上一会话停止；需要时重启：
+交接备注：8780赛前页可能仍在运行（`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`）。8770评审服务已停止；需要时重启：
 `PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-team-2026-10-30-v2 --serve --port 8770`
 
 ---|---|---|---|

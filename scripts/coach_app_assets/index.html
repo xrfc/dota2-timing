@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dota 复盘助手</title>
+<link rel="stylesheet" href="/style.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark" aria-hidden="true"></span>Dota 复盘助手</div>
+  <nav class="tabs" aria-label="功能">
+    <button class="tab" data-view="items" aria-current="page">赛前 · 出装节奏</button>
+    <button class="tab" data-view="lane" disabled title="M3 开发中">赛前 · 对线打法<span class="soon">开发中</span></button>
+    <button class="tab" data-view="review" disabled title="M5 开发中">赛后 · 复盘<span class="soon">开发中</span></button>
+  </nav>
+</header>
+
+<main id="view-items" class="layout">
+  <aside class="panel setup" aria-label="对局设置">
+    <h2>对局设置</h2>
+    <fieldset>
+      <legend>我的英雄</legend>
+      <div id="my-heroes" class="segmented" role="group"></div>
+    </fieldset>
+    <fieldset>
+      <legend>我方阵营</legend>
+      <div class="segmented" role="group">
+        <button type="button" class="seg" data-radiant="1" aria-pressed="true">天辉</button>
+        <button type="button" class="seg" data-radiant="0" aria-pressed="false">夜魇</button>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>敌方阵容 <span id="enemy-count" class="muted"></span></legend>
+      <div id="enemies" class="enemies"></div>
+      <datalist id="hero-list"></datalist>
+      <button type="button" id="clear-enemies" class="link">清空敌方</button>
+    </fieldset>
+    <p id="input-error" class="error" role="alert"></p>
+  </aside>
+
+  <section class="panel result" aria-live="polite">
+    <div class="result-head">
+      <div>
+        <h1 id="result-title">出装节奏</h1>
+        <p id="result-status" class="muted"></p>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span class="swatch s-low"></span>少
+        <span class="swatch s-high"></span>多
+        <span class="badge model">阵容调整 · 初步</span>
+      </div>
+    </div>
+    <table class="timing">
+      <caption>第 N 分钟前已做出的比例（高分段）</caption>
+      <thead><tr id="timing-head"><th scope="col">装备</th></tr></thead>
+      <tbody id="timing-body"></tbody>
+    </table>
+    <p class="hint">“通常完成”= 比例首次过半的时间点。格子带圆点表示该格按你的敌方阵容调整过；悬停可看与高分段平均的差别。</p>
+    <details class="notes">
+      <summary>数据与局限</summary>
+      <ul id="notes"></ul>
+      <p class="muted" id="run"></p>
+    </details>
+  </section>
+</main>
+<p id="fatal" class="error fatal" role="alert"></p>
+</body>
+</html>

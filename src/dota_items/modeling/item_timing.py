@@ -274,3 +274,56 @@ def monotone(probabilities):
         best = max(best, p)
         out.append(best)
     return out
+
+
+def timing_view(model_doc, result_rows, spec, enemies, is_radiant):
+    """Per-item display rows for the pre-game page.
+
+    A cell uses the lineup model only when the frozen display rule chose it and a
+    full five-hero enemy lineup is given; otherwise the high-rank base rate.
+    """
+    if spec not in HERO_ITEMS:
+        raise ValueError("Unsupported hero/position")
+    if model_doc["vocab"].get("sides") != ["enemies"]:
+        raise ValueError("Page expects the enemy-only model (revision 2)")
+    shown = {(r["hero_id"], r["position"], r["item"], r["minute"]): r for r in result_rows}
+    sample = {"inputs": {"allies": [], "enemies": list(enemies), "is_radiant": is_radiant}}
+    x = features([sample], model_doc["vocab"])
+    full_lineup = len(enemies) == 5
+    items = []
+    for item in HERO_ITEMS[spec]:
+        cells = []
+        for minute in MINUTES:
+            entry = model_doc["entries"][f"{spec[0]}:{spec[1]}|{item}|{minute}"]
+            row = shown.get((spec[0], spec[1], item, minute))
+            use_model = (
+                full_lineup
+                and entry["model"] is not None
+                and row is not None
+                and row["display"] == "model"
+            )
+            cells.append(
+                {
+                    "minute": minute,
+                    "probability": float(predict(entry, x)[0]) if use_model else entry["base_rate"],
+                    "base_rate": entry["base_rate"],
+                    "source": "model" if use_model else "baseline",
+                    "improvement": row["brier_improvement"] if use_model else None,
+                    "improvement_ci95": row["brier_improvement_ci95"] if use_model else None,
+                }
+            )
+        shown_p = monotone([c["probability"] for c in cells])
+        for cell, p in zip(cells, shown_p, strict=True):
+            cell["display_probability"] = p
+        typical = next((c["minute"] for c in cells if c["display_probability"] >= 0.5), None)
+        first = model_doc["entries"][f"{spec[0]}:{spec[1]}|{item}|{MINUTES[0]}"]
+        items.append(
+            {
+                "item": item,
+                "cells": cells,
+                "typical_minute": typical,
+                "train_n": first["n"],
+                "any_model": any(c["source"] == "model" for c in cells),
+            }
+        )
+    return {"spec": list(spec), "full_lineup": full_lineup, "items": items}

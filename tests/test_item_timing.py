@@ -129,3 +129,35 @@ def test_cv_choice_uses_training_rows_only_and_prefers_strong_regularization_on_
         c_grid=(0.001, 1.0),
     )
     assert signal[((8, 1), "bfury", 15)]["C"] == 1.0
+
+
+def test_timing_view_uses_model_only_where_rule_allows_and_full_lineup():
+    players, purchases = dataset(400, True)
+    samples = it.build_samples(players, purchases)
+    vocab = it.fit_vocab(samples, sides=("enemies",), min_count=1)
+    models = it.fit(samples, vocab)
+    doc = {
+        "vocab": vocab,
+        "entries": {f"{s[0]}:{s[1]}|{i}|{m}": e for (s, i, m), e in models.items()},
+    }
+    rows = [
+        {
+            "hero_id": 8,
+            "position": 1,
+            "item": "bfury",
+            "minute": 15,
+            "display": "model",
+            "brier_improvement": 0.1,
+            "brier_improvement_ci95": [0.05, 0.15],
+        }
+    ]
+    lineup = [50, 51, 52, 53, 54]
+    view = it.timing_view(doc, rows, (8, 1), lineup, True)
+    bfury = next(i for i in view["items"] if i["item"] == "bfury")
+    sources = {c["minute"]: c["source"] for c in bfury["cells"]}
+    assert sources[15] == "model" and sources[20] == "baseline"
+    assert bfury["cells"][1]["probability"] > 0.8  # enemy 50 -> early bfury
+    probs = [c["display_probability"] for c in bfury["cells"]]
+    assert probs == sorted(probs)
+    partial = it.timing_view(doc, rows, (8, 1), lineup[:4], True)
+    assert not any(i["any_model"] for i in partial["items"])

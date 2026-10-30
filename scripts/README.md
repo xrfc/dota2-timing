@@ -122,3 +122,7 @@
 `scripts/attach_decision_mana.py --base reports/decision-review-followup-2026-10-27-v1 --repair reports/decision-mana-repair-2026-10-28-v1 --output NEWDIR`只替换状态卡决策时点蓝量，生成新目录，基础包不变。当前页面：`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-mana-2026-10-30-v2 --serve --port 8770`，替代8769的followup-v1。见[接入记录](../docs/decision-mana-integration-2026-10-30.md)。
 
 全队状态（方案A）：`scripts/probe_team_state.py --freeze-plan FILE`后`--plan FILE --match ID --output NEWDIR`离线抓两场10名英雄决策时点状态；`scripts/attach_team_state.py --base reports/decision-review-mana-2026-10-30-v2 --probe reports/decision-team-state-2026-10-30-v1 --output NEWDIR`生成新包。当前8770服务包为`reports/decision-review-team-2026-10-30-v2`。
+
+### 统一前端：赛前出装节奏（2026-10-30，M2）
+
+`scripts/train_item_timing.py --snapshot reports/m1-match-table-2026-10-30-v1 --output NEWDIR [--revision 2]`训练并按冻结协议评估（每次真实训练须用户授权）。`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`启动统一前端（当前只有赛前出装页，绑定`reports/m2-item-timing-2026-10-30-r2`并核对哈希）。M1数据表：`scripts/build_match_table.py inventory|snapshot|verify`。见[模型卡](../docs/m2-model-card.md)、[M1数据卡](../docs/m1-data-card.md)。
