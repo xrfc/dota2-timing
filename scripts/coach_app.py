@@ -9,6 +9,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
+from dota_items.data.item_registry import display_name, load_registry
 from dota_items.data.source_io import parse_source_json, read_source_bytes
 from dota_items.modeling import item_timing
 from dota_items.storage import file_hash
@@ -17,22 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ASSETS = Path(__file__).resolve().parent / "coach_app_assets"
 REGISTRY = "knowledge/hero-capabilities/hero-registry.json"
 DEFAULT_RUN = "reports/m2-item-timing-2026-10-30-r2"
-ITEM_NAMES = {
-    "magic_wand": "魔杖",
-    "power_treads": "动力鞋",
-    "bfury": "狂战斧",
-    "yasha": "夜叉",
-    "manta": "分身斧",
-    "butterfly": "蝴蝶",
-    "blink": "跳刀",
-    "ultimate_scepter": "阿哈利姆神杖",
-    "arcane_boots": "秘法鞋",
-    "glimmer_cape": "微光披风",
-    "aghanims_shard": "阿哈利姆魔晶",
-    "ghost": "幽魂权杖",
-    "cyclone": "Eul的神圣法杖",
-    "aether_lens": "以太透镜",
-}
+ITEM_REGISTRY = "knowledge/items/item-registry.json"
 NOTES = [
     "数据：超凡及以上段位、30分钟以上的比赛（2026-10-12至13，补丁7.41），节奏快于传奇段常见对局（U7）。",
     "主宰排除10分钟补刀<35的对线崩盘局（U8）。",
@@ -58,6 +44,7 @@ def load_state(run=DEFAULT_RUN, repo=ROOT):
         ({"id": h["hero_id"], "name": h["name_zh"]} for h in registry["heroes"]),
         key=lambda h: h["id"],
     )
+    items = load_registry(repo / ITEM_REGISTRY)
     model = _read(run / "model.json")
     rows = _read(run / "results.json")["rows"]
     hero_names = {h["id"]: h["name"] for h in heroes}
@@ -66,7 +53,11 @@ def load_state(run=DEFAULT_RUN, repo=ROOT):
         "my_heroes": [
             {"hero_id": h, "position": p, "name": hero_names[h]} for h, p in item_timing.HERO_ITEMS
         ],
-        "item_names": ITEM_NAMES,
+        "item_names": {
+            item: display_name(items, item)
+            for item_list in item_timing.HERO_ITEMS.values()
+            for item in item_list
+        },
         "minutes": list(item_timing.MINUTES),
         "notes": NOTES,
         "run": str(run.relative_to(repo)),

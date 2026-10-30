@@ -32,6 +32,11 @@ def fixture_repo(tmp_path, revision=2):
     registry = repo / "knowledge/hero-capabilities/hero-registry.json"
     registry.parent.mkdir(parents=True)
     registry.write_text(json.dumps({"heroes": heroes}))
+    item_registry = repo / "knowledge/items/item-registry.json"
+    item_registry.parent.mkdir(parents=True)
+    item_registry.write_text(
+        json.dumps({"schema": "item-registry/1", "items": {"bfury": {"name_zh": "狂战斧"}}})
+    )
     vocab = {"sides": ["enemies"], "heroes": [1, 2, 3, 4, 5], "min_count": 30}
     entries = {
         f"{s[0]}:{s[1]}|{i}|{m}": {"n": 100, "positives": 50, "base_rate": 0.5, "model": None}
@@ -68,6 +73,8 @@ def test_load_state_rejects_tampered_or_wrong_revision(tmp_path):
     module = load()
     repo = fixture_repo(tmp_path)
     state = module.load_state("reports/run", repo)
+    assert state["meta"]["item_names"]["bfury"] == "狂战斧"
+    assert state["meta"]["item_names"]["blink"] == "blink"  # unknown -> raw key, never guessed
     assert [h["name"] for h in state["meta"]["my_heroes"]] == [
         "英雄8",
         "英雄30",
