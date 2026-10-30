@@ -220,13 +220,15 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | M1–M6 | 未开始 | | |
 
 M0任务：
-- [ ] M0-T1 分批本地提交
+- [x] M0-T1 分批本地提交
 - [ ] M0-T2 R1评审结论
-- [ ] M0-T3 决策记录U1–U4
-- [ ] M0-T4 本地账号配置
-- [ ] M0-T5 入口文档指向本计划
+- [x] M0-T3 决策记录U1–U4
+- [x] M0-T4 本地账号配置
+- [x] M0-T5 入口文档指向本计划
 
-本周目标：完成M0。
+本周目标：完成M0。剩余M0-T2：等待用户评审8770两个案例；结论写`docs/decisions/`，通过即M0完成、M1开始（先问Q2位置规则时再推进到M1-T3）。
+
+M0-T1提交：7a42c25、4d39ad8、8a03509（本地，未推送）。本环境无git身份配置，提交时用`git -c user.name=xrfc -c user.email=147353817+xrfc@users.noreply.github.com`，与仓库历史一致，不改全局配置。
 
 交接备注：8770评审服务（`reports/decision-review-team-2026-10-30-v2`）可能仍在运行；未运行则用§4 M0-T2前的启动命令重启：
 `PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-team-2026-10-30-v2 --serve --port 8770`
