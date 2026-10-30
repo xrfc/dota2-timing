@@ -102,3 +102,30 @@ def test_class_floor_falls_back_to_baseline():
 
 def test_monotone_display():
     assert it.monotone([0.1, 0.4, 0.3, 0.8]) == [0.1, 0.4, 0.4, 0.8]
+
+
+def test_enemy_only_vocab_merges_rare_heroes():
+    train = [
+        {"inputs": {"allies": [1], "enemies": [5, 6], "is_radiant": False}},
+        {"inputs": {"allies": [1], "enemies": [5, 7], "is_radiant": True}},
+    ]
+    vocab = it.fit_vocab(train, sides=("enemies",), min_count=2)
+    assert vocab["heroes"] == [5]  # ally 1 ignored, rare 6/7 merged
+    x = it.features(train, vocab)
+    assert x.tolist() == [[1, 1, 0], [1, 1, 1]]
+
+
+def test_cv_choice_uses_training_rows_only_and_prefers_strong_regularization_on_noise():
+    players, purchases = dataset(300, False)
+    samples = it.build_samples(players, purchases)
+    vocab = it.fit_vocab(samples, sides=("enemies",), min_count=1)
+    models = it.fit(samples, vocab, c_grid=(0.001, 1.0))
+    cell = models[((8, 1), "bfury", 15)]
+    assert set(cell["cv_brier"]) == {"0.001", "1.0"}
+    assert cell["C"] == 0.001
+    signal = it.fit(
+        it.build_samples(*dataset(300, True)),
+        it.fit_vocab(it.build_samples(*dataset(300, True)), sides=("enemies",), min_count=1),
+        c_grid=(0.001, 1.0),
+    )
+    assert signal[((8, 1), "bfury", 15)]["C"] == 1.0

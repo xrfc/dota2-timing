@@ -68,7 +68,7 @@ def summarize(results):
     return heroes
 
 
-def run(snapshot, output, repo=ROOT):
+def run(snapshot, output, revision=1, repo=ROOT):
     snapshot, output = Path(snapshot), Path(output)
     if output.exists():
         raise ValueError("Output exists")
@@ -78,8 +78,15 @@ def run(snapshot, output, repo=ROOT):
     train_ids, valid_ids = set(split["train"]), set(split["validation"])
     train = [s for s in samples if s["match_id"] in train_ids]
     valid = [s for s in samples if s["match_id"] in valid_ids]
-    vocab = item_timing.fit_vocab(train)
-    models = item_timing.fit(train, vocab)
+    if revision == 1:
+        vocab = item_timing.fit_vocab(train)
+        models = item_timing.fit(train, vocab)
+    elif revision == 2:
+        r2 = item_timing.REVISION_2
+        vocab = item_timing.fit_vocab(train, sides=r2["sides"], min_count=r2["min_count"])
+        models = item_timing.fit(train, vocab, c_grid=r2["c_grid"], folds=r2["folds"])
+    else:
+        raise ValueError("Unknown protocol revision")
     results = item_timing.evaluate(models, valid, vocab)
     if {name: file_hash(repo / name) for name in IMPLEMENTATION} != implementation:
         raise ValueError("Implementation changed during training")
@@ -106,16 +113,23 @@ def run(snapshot, output, repo=ROOT):
             ).hexdigest(),
             "train_samples": len(train),
             "validation_samples": len(valid),
-            "protocol": "docs/m2-design.md (frozen 2026-10-30; U11 amendment before training)",
+            "protocol_revision": revision,
+            "protocol": "docs/m2-design.md"
+            + (
+                " §7 revision 2: second look after validation results (U12)"
+                if revision == 2
+                else ""
+            ),
             "settings": {
                 "C": item_timing.C,
                 "min_class_count": item_timing.MIN_CLASS_COUNT,
                 "bootstrap": item_timing.BOOTSTRAP,
                 "seed": item_timing.SEED,
+                "revision_2": item_timing.REVISION_2 if revision == 2 else None,
             },
             "implementation": implementation,
             "outputs": outputs,
-            "authorization": "U11 (user 2026-10-30): this M2-T3 run only",
+            "authorization": {1: "U11", 2: "U12"}[revision] + " (user 2026-10-30): this run only",
         },
     )
     return {"train": len(train), "validation": len(valid), "entries": len(models)}
@@ -125,5 +139,6 @@ if __name__ == "__main__":
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("--snapshot", required=True)
     cli.add_argument("--output", required=True)
+    cli.add_argument("--revision", type=int, choices=(1, 2), default=1)
     args = cli.parse_args()
-    print(json.dumps(run(args.snapshot, args.output)))
+    print(json.dumps(run(args.snapshot, args.output, args.revision)))

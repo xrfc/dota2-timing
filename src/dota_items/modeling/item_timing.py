@@ -8,6 +8,7 @@ import math
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import StratifiedGroupKFold
 
 # U9/U10/U11. (hero_id, position) -> key items.
 HERO_ITEMS = {
@@ -45,6 +46,13 @@ MIN_CLASS_COUNT = 10
 C = 1.0
 BOOTSTRAP = 1000
 SEED = 0
+# Revision 2 (U12): enemy-only inputs, rare heroes merged, C chosen by grouped CV.
+REVISION_2 = {
+    "sides": ("enemies",),
+    "min_count": 30,
+    "c_grid": (0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1.0),
+    "folds": 5,
+}
 
 
 def build_samples(players, purchases):
@@ -90,31 +98,62 @@ def label(sample, item, minute):
     return int(t is not None and t < minute * 60)
 
 
-def fit_vocab(train_samples):
-    heroes = sorted(
-        {h for s in train_samples for side in ("allies", "enemies") for h in s["inputs"][side]}
-    )
-    return {"heroes": heroes}
+def fit_vocab(train_samples, sides=("allies", "enemies"), min_count=0):
+    """Training-only vocabulary; heroes seen fewer than ``min_count`` times become unknown."""
+    counts = {}
+    for s in train_samples:
+        for side in sides:
+            for h in s["inputs"][side]:
+                counts[h] = counts.get(h, 0) + 1
+    heroes = sorted(h for h, n in counts.items() if n >= min_count)
+    return {"sides": list(sides), "heroes": heroes, "min_count": min_count}
 
 
 def features(samples, vocab):
-    """[ally one-hot | enemy one-hot | ally unknown | enemy unknown | radiant]."""
+    """[one-hot per side | unknown count per side | radiant]."""
+    sides = vocab.get("sides", ["allies", "enemies"])
     index = {h: i for i, h in enumerate(vocab["heroes"])}
     width = len(index)
-    x = np.zeros((len(samples), 2 * width + 3))
+    x = np.zeros((len(samples), len(sides) * (width + 1) + 1))
     for row, s in enumerate(samples):
-        for side, offset, unknown in (("allies", 0, 2 * width), ("enemies", width, 2 * width + 1)):
+        for k, side in enumerate(sides):
             for h in s["inputs"][side]:
                 if h in index:
-                    x[row, offset + index[h]] = 1
+                    x[row, k * width + index[h]] = 1
                 else:
-                    x[row, unknown] += 1
+                    x[row, len(sides) * width + k] += 1
         x[row, -1] = 1 if s["inputs"]["is_radiant"] else 0
     return x
 
 
-def fit(train_samples, vocab):
-    """Return {(spec, item, minute): model dict}; baseline-only below class floor."""
+def _logistic(c):
+    return LogisticRegression(C=c, max_iter=1000, solver="lbfgs")
+
+
+def choose_c(x, y, groups, c_grid, folds):
+    """Grouped stratified CV on training rows only; lowest mean Brier wins (ties: smaller C)."""
+    splitter = StratifiedGroupKFold(n_splits=folds, shuffle=True, random_state=SEED)
+    splits = list(splitter.split(x, y, groups))
+    scores = {}
+    for c in c_grid:
+        losses = []
+        for train_idx, test_idx in splits:
+            if len(set(y[train_idx])) < 2:
+                losses.append(brier(y[test_idx], np.full(len(test_idx), y[train_idx].mean())))
+                continue
+            p = _logistic(c).fit(x[train_idx], y[train_idx]).predict_proba(x[test_idx])[:, 1]
+            losses.append(brier(y[test_idx], p))
+        scores[c] = float(np.mean(losses))
+    best = min(c_grid, key=lambda c: (scores[c], c))
+    return best, scores
+
+
+def fit(train_samples, vocab, c_grid=None, folds=5):
+    """Return {(spec, item, minute): model dict}; baseline-only below class floor.
+
+    Without ``c_grid`` every model uses the fixed C (revision 1); with it, C is
+    chosen per cell by ``choose_c`` on training rows only (revision 2).
+    """
     models = {}
     for spec, items in HERO_ITEMS.items():
         group = [s for s in train_samples if s["spec"] == spec]
@@ -132,7 +171,13 @@ def fit(train_samples, vocab):
                     "model": None,
                 }
                 if min(positives, len(y) - positives) >= MIN_CLASS_COUNT:
-                    clf = LogisticRegression(C=C, max_iter=1000, solver="lbfgs")
+                    c = C
+                    if c_grid:
+                        groups = np.array([s["match_id"] for s in group])
+                        c, scores = choose_c(x, y, groups, c_grid, folds)
+                        entry["cv_brier"] = {str(k): v for k, v in scores.items()}
+                    entry["C"] = c
+                    clf = _logistic(c)
                     clf.fit(x, y)
                     if clf.n_iter_[0] >= clf.max_iter:
                         raise ValueError(f"Not converged: {spec} {item} {minute}")
