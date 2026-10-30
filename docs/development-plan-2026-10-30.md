@@ -47,6 +47,7 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | U3 | 三个产品目标A/B/C如§1 | 2026-10-30 |
 | U4 | 采用本计划；主玩1/5号位优势路、传奇段位 | 2026-10-30 |
 | U5 | 标注方式：客观标签自动生成；判断类由助手先标、用户抽查约1/3；定义类用户拍板 | 2026-10-30 |
+| U18 | 授权M2b-T3本次训练 | 2026-10-31 |
 | U17 | 术语统一为“针对装”；辅助针对装暂不建模，只显示出现率（以后再做） | 2026-10-31 |
 | U16 | Q9＝C：标签为“第一件针对装选哪件”（6选1，散魂剑并入净魂之刃路线） | 2026-10-31 |
 | U15 | Q8：主宰针对装＝金箍棒/斯嘉蒂之眼/碎颅锤/散夜对剑/净魂之刃/否决坠饰/散魂剑；神谕者保留圣洁吊坠 | 2026-10-31 |
@@ -262,9 +263,7 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 
 ### 下一步（接手从这里开始）
 
-M2b-T0、T1（U14–U17）、T2（`docs/m2b-design.md`协议已冻结，未训练）已完成。**当前：M2b-T3——须先获用户对本次真实训练的授权（Q7）**，获准后实现`src/dota_items/modeling/situational_items.py`与`scripts/train_situational_items.py`，按冻结协议训练与评估一次（M2b-T4），结果写`docs/m2b-results.md`。
-
-要点：6选1多分类（金箍棒/斯嘉蒂之眼/碎颅锤/散夜对剑/否决坠饰/净魂之刃路线），只在出过针对装的主宰对局（训练约840、验证约240）；输入为敌方定位计数＋机制信号计数（英雄登记表）；通过条件为对数损失改善区间下限>0且改善≥0.01。
+M2b-T0～T4已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`**未通过**（对数损失改善0.042≥0.01，但区间[−0.007, 0.087]下限<0），见`docs/m2b-results.md`。**当前：等用户决定`docs/m2b-results.md`§4**（建议：M2b-T5先上线基线“针对装参照”页并进入M3；把冻结模型列为M4独立评估候选；可选人工核对机制信号后另行预注册）。不得在同一验证集上调参重跑。
 
 ### 已完成记录
 
@@ -291,6 +290,8 @@ M2b-T0、T1（U14–U17）、T2（`docs/m2b-design.md`协议已冻结，未训�
 - 旧蓝量修复脚本`scripts/repair_decision_mana.py`的计划指纹因`data/decision_mana.py`新增函数而失配，重跑前需登记迁移。
 - `tests/test_decision_review.py`在有代理的shell中需`NO_PROXY`，可考虑在测试内清除代理环境变量。
 - 辅助（巫医/干扰者/神谕者）针对装建模（U17：以后再做，需更多数据，如M4补采后）。
+- M4候选：M2b冻结模型（`reports/m2b-situational-2026-10-31-v1`）在新数据上评估一次。
+- 机制信号（`capability_review_signals`）人工核对后可作为更干净的特征（需新决策与预注册）。
 - M4评估协议须加“最小效果量”门槛（M2展示规则只看区间>0，导致改善≈0也通过）。
 - 文档数量多（80+份），M0后逐步归档过时日期文档到`docs/archive/`。
 
