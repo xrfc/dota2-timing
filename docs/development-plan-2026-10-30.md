@@ -26,7 +26,7 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 
 | 产品 | 输入 | 输出 |
 |---|---|---|
-| A 赛前·出装预测 | 双方阵容、我的英雄与位置 | 我和关键敌人的出装顺序与大致分钟；样本不足时提示 |
+| A 赛前·看局装（U13重定义） | 敌方阵容、我的英雄与位置 | 这局看局装（如金箍棒、否决、冰眼）更该出哪件及依据；样本不足时提示。出装**时间**不在赛前预测，移到产品C按本局线上表现对照 |
 | B 赛前·对线打法 | 优势路对线组合（我方1+5对敌方3+4） | 压制/击杀型与稳定补刀型哪种更常取得10分钟优势，附样本量、置信区间、相关≠因果提示 |
 | C 赛后·复盘 | 一场比赛（v0：match ID；v1：demo） | 出装节奏、补刀效率、死亡与关键决策点，3–5条可执行改进 |
 
@@ -47,6 +47,7 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | U3 | 三个产品目标A/B/C如§1 | 2026-10-30 |
 | U4 | 采用本计划；主玩1/5号位优势路、传奇段位 | 2026-10-30 |
 | U5 | 标注方式：客观标签自动生成；判断类由助手先标、用户抽查约1/3；定义类用户拍板 | 2026-10-30 |
+| U13 | 产品A改为赛前看局装（M2b）；出装时间移到复盘M5按10分钟经济/补刀对照；8780保留为高分段节奏参照；M2时间预测结案 | 2026-10-30 |
 | U12 | 神谕者3项按基线；一次改进实验（CV选C、敌方英雄、合并少见英雄）；结束后进M2-T5 | 2026-10-30 |
 | U11 | 神谕者加回以太透镜（训练前）；授权M2-T3本次训练；每个任务附学习讲解 | 2026-10-30 |
 | U10 | 关键装备清单（主宰8件；巫医6；干扰者5；神谕者6含吹风仅报频率）；首批只做“我的英雄” | 2026-10-30 |
@@ -62,6 +63,7 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | ~~Q1~~ | 已决（U7）：不补采低分段 | — | — |
 | ~~Q2~~ | 已决（U8） | — | — |
 | ~~Q3~~ | 已决（U9、U10） | — | — |
+| Q8 | 各英雄“看局装”清单（M2b标签） | M2b-T1 | 见§7草案 |
 | Q4 | 对线“打法”和“10分钟优势”的定义 | M3-T1 | 见M3-T1候选 |
 | Q5 | 独立评估采集参数（窗口、规模、请求预算；是否去掉≥30分钟与含主宰限制，段位仍限高分段） | M4-T1 | 7天窗口，超凡+约500场，不限时长与英雄 |
 | Q6 | M6任务定义（危险预测／强玩家行为对照）与录像规模 | M6开始 | 沿用原COACH-03草案 |
@@ -120,7 +122,9 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 
 不做：训练；联网采集；修改旧1990场快照。
 
-### M2 出装时间预测——产品A（约2周）
+### M2 出装时间预测——已结案（U13）
+
+结论：阵容不能可靠预测出装时间（`docs/m2-results.md`）；时间主要由自己10分钟经济决定（R²≈0.61）。产出保留：M1数据管线、`modeling/item_timing.py`、8780统一前端外壳与“高分段出装节奏参照”页。M2-T6由U13替代。原任务表（历史）：
 
 | 任务 | 内容 |
 |---|---|
@@ -131,9 +135,22 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | M2-T5 | **统一前端外壳（U6授权助手按自己理解完全重构）**：新建单页应用外壳与设计规范（导航、英雄选择器、证据展开、未知/样本不足状态、深浅色），先承载“赛前准备·出装”页；后续M3、M5、M6页面在此外壳内扩展，旧8768/8769/8770页面保留为历史。服务端沿用本地回环+路由白名单的安全模式，不引入新依赖（如需框架须先获同意） |
 | M2-T6 | 用户评审5套真实阵容；记录意见 |
 
-出口：协议先于结果冻结；对基线的改善与不改善都如实报告；页面真实浏览器验收通过；用户评审完成；模型卡`docs/m2-model-card.md`。
+出口（历史）：协议先于结果冻结；如实报告；页面验收；模型卡`docs/m2-model-card.md`。
 
-不做：调参搜索超出协议；用验证集选模型后再称“独立”；深度模型。
+### M2b 赛前看局装——产品A（约2周，U13）
+
+| 任务 | 内容 |
+|---|---|
+| M2b-T1 | 问Q8：用户确认每个英雄的看局装清单（助手按数据给草案）；冻结任务定义：给定敌方阵容，预测该英雄35分钟内是否出某件看局装 |
+| M2b-T2 | 特征设计：用`knowledge/hero-capabilities/hero-registry.json`的`published_role_labels`（Carry/Disabler/Nuker/Escape等）统计敌方各定位人数，并保留少量高频英雄one-hot；写入`docs/m2b-design.md`并冻结评估协议（含**最小效果量**门槛，见§8），训练前完成 |
+| M2b-T3 | 训练（须用户授权，Q7）：基线=该英雄该装备平均出现率；模型=训练集内分组CV选正则的逻辑回归；复用M1快照与`item_timing`的CV工具 |
+| M2b-T4 | 评估与诊断：Brier、区间、效果量；可解释系数（哪些敌方定位让某装备更可能） |
+| M2b-T5 | 8780外壳新增“赛前 · 看局装”页：输入敌方阵容，显示各看局装相对平均的倾向与依据；样本不足拒答；真实浏览器验收 |
+| M2b-T6 | 用户用5套真实阵容评审 |
+
+出口：清单经用户确认；协议先于结果冻结；如实报告；页面验收；用户评审；模型卡`docs/m2b-model-card.md`。
+
+不做：预测出装时间；把“高分段常出”说成“该出”；深度模型。
 
 ### M3 对线打法画像——产品B（约3周）
 
@@ -157,7 +174,7 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | M4-T1 | 问Q5并获采集授权；协议（窗口、规模、段位分层、预算、停止条件）在采集前冻结 |
 | M4-T2 | 采集：复用`scripts/collect_evaluation_cohort.py`的预算/收据/恢复机制，按新协议另起目录；不复用已取消的10/31协议 |
 | M4-T3 | 用M1同一代码生成评估快照（只读，不并入训练） |
-| M4-T4 | M2/M3冻结模型各评估一次；按段位分层报告 |
+| M4-T4 | M2b/M3冻结模型各评估一次；按段位分层报告 |
 | M4-T5 | 结论：通过／不通过／需改进项进§8；不再调参后重测同一评估集 |
 
 出口：评估报告`docs/m4-evaluation.md`；结果不论好坏如实记录。
@@ -167,7 +184,7 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | 任务 | 内容 |
 |---|---|
 | M5-T1 | 输入match ID，经OpenDota获取解析数据（联网，需授权；默认用户本人比赛，账号ID读本地配置） |
-| M5-T2 | 报告：①出装节奏对比M2预测；②10分钟补刀/经济对比同段位同英雄分布与`benchmarks`；③死亡清单（时间、击杀者、当时经济差）；④对线结果对比M3 |
+| M5-T2 | 报告：①出装时间对照——按本局10分钟经济/补刀分层，给出高分段同水平的关键装备中位时间，区分“对线问题”与“经济转化问题”（U13）；②10分钟补刀/经济对比同段位同英雄分布与`benchmarks`；③死亡清单（时间、击杀者、当时经济差）；④对线结果对比M3 |
 | M5-T3 | 生成3–5条改进建议，每条附证据与适用条件；证据不足不出建议 |
 | M5-T4 | 报告页面（在M2-T5统一外壳内）；真实浏览器验收 |
 | M5-T5 | 用户用自己3场比赛试用并反馈 |
@@ -231,66 +248,39 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 
 | 里程碑 | 状态 | 开始 | 完成 |
 |---|---|---|---|
-| M0 | 已完成 | 2026-10-30 | 2026-10-30 |
-| M1 | 已完成 | 2026-10-30 | 2026-10-30 |
-| M2 | 进行中 | 2026-10-30 | |
+| M0 基线与治理 | 已完成 | 2026-10-30 | 2026-10-30 |
+| M1 多英雄数据底座 | 已完成 | 2026-10-30 | 2026-10-30 |
+| M2 出装时间预测 | 已结案（U13） | 2026-10-30 | 2026-10-30 |
+| **M2b 赛前看局装** | **进行中** | 2026-10-30 | |
 | M3–M6 | 未开始 | | |
 
-M0（已完成）：T1分批提交（7a42c25、4d39ad8、8a03509、edf3f5c）；T2 R1评审通过（U6）；T3–T5完成。
+### 下一步（接手从这里开始）
 
-M1任务：
-- [x] M1-T1 数据清单（`reports/m1-inventory-2026-10-30-v1/inventory.json`；命令`scripts/build_match_table.py inventory --output NEWDIR`）
-- [x] M1-T2 match_table模块（`player_rows`/`purchase_rows`/`FIELD_AVAILABILITY`；实数据1993场→19930行、879200条购买，仅rank_tier缺147）
-- [x] M1-T3 位置推断（U8；`assign_positions`；实数据1号位/5号位各3849，覆盖96.6%队伍侧；collapsed_carry 209，占1号位5.4%）
-- [x] M1-T4 时序可知性测试（`availability`/`pre_game_view`）
-- [x] M1-T5 划分（`time_split`：最新20%验证，1595/398）
-- [x] M1-T6 段位不匹配处理：U7不补采，数据卡注明高分段参照
-- [x] M1-T7 冻结快照与--verify（`reports/m1-match-table-2026-10-30-v1`，verify ok）
-- [x] M1-T8 数据卡（`docs/m1-data-card.md`）
+**M2b-T1：向用户确认看局装清单（Q8）。** 先用下面草案询问，用户确认后写决策记录U14与`docs/m2b-design.md`，再做M2b-T2。不要在用户确认前训练。
 
-M1出口：快照verify一致；全库检查1369项通过、源码指纹不变。
+草案（M1训练集，35分钟内出现率；主宰排除对线崩盘局）：
+- 主宰（1458人）：金箍棒15%、冰眼9%、碎颅锤8%、散夜对剑8%、大电锤8%、否决4%、散失4%（BKB仅1%，因剑刃风暴自带魔免）。固定装（蝴蝶60%、跳刀57%、A杖38%）不算看局装。
+- 巫医（163人）：灵魂之戒22%（spirit_vessel）、精华蒸馏器7%、推推杖7%、宝石4%、坚韧球4%、梅肯斯姆4%、卫士胫甲4%、压制之刃4%、圣洁护符3%、清莲宝珠3%、圣洁吊坠3%。
+- 干扰者（151人）：推推杖10%、宝石4%、精华蒸馏器3%、迈达斯之手3%。
+- 神谕者（84人）：梅肯斯姆14%、圣洁吊坠11%、卫士胫甲10%、推推杖10%、坚韧球6%、压制之刃5%、宝石5%、清莲宝珠4%、永恒之盘4%。
+- 统计口径：35分钟内首次购买，出现率3%–50%的成品装，排除配件、消耗品和U10固定装。
+- **样本警示**：辅助看局装正例极少（如干扰者推推杖约15人、宝石约6人），多数达不到建模下限（每类≥10且需要足够区分度）。助手建议：M2b模型只做主宰（及巫医灵魂之戒，约36人），其余辅助装只显示“高分段出现率”不建模；向用户说明并确认。
 
-M2任务：
-- [x] M2-T1 英雄范围与任务定义（U9、U10）
-- [x] M2-T2 冻结评估协议（`docs/m2-design.md`，冻结时未训练）
-- [x] M2-T3 模型（U11授权；`scripts/train_item_timing.py`，`reports/m2-item-timing-2026-10-30-v1`）
-- [x] M2-T4 开发集评估与诊断（`docs/m2-results.md`：阵容模型整体不优于基线）
-- [x] M2-T5 统一前端外壳＋赛前出装页（`scripts/coach_app.py`，8780；浏览器验收15项`reports/coach-app-acceptance-2026-10-30-v2`；模型卡`docs/m2-model-card.md`）
-- [ ] M2-T6 用户评审5套阵容
+### 已完成记录
 
-Q3参考（M1训练集，1号位不含collapsed_carry）：1号位59个英雄，主宰1458人次占50%（每场必有主宰），其余≥100仅露娜143、噬魂鬼139、卓尔119、敌法100；5号位86个英雄，≥100的7个（莱恩197、巫妖165、巫医163、暗影萨满160、水晶室女154、干扰者151、拉比克113）。
+- M0：提交7a42c25、4d39ad8、8a03509、edf3f5c、6fcd223；R1评审通过（U6）；决策记录目录`docs/decisions/`。
+- M1：`reports/m1-match-table-2026-10-30-v1`（1993场、19930行、87.9万条购买；训练1595/验证398；verify一致）；数据卡`docs/m1-data-card.md`；关键事实：只含≥30分钟、超凡+约90%、每场有主宰、跨约15.5小时、与旧1990场队列重合（非独立）。位置规则U8（1/5号位各3849；collapsed_carry 209）。
+- M2：英雄U9、装备U10/U11；协议`docs/m2-design.md`；修订1（`reports/m2-item-timing-2026-10-30-v1`）过拟合、整体差于基线；修订2（`...-r2`，U12，CV选C）≈基线，仅主宰30分钟蝴蝶有效应；结果`docs/m2-results.md`，模型卡`docs/m2-model-card.md`。用户指出时间取决于线上表现，验证成立（U13）。
+- 前端：`scripts/coach_app.py`（8780）当前只有“出装节奏参照”页（高分段基线，无阵容输入）；验收`reports/coach-app-acceptance-2026-10-30-v3`（11项通过）；脚本`scripts/acceptance/coach_app_browser.cjs`。
+- 学习讲解：`learning/docs/project-ml-notes.md`（M1、M2、修订2、推理服务、U13的问题重构）。
 
-本周目标：M2-T6——用户在8780评审5套真实阵容（建议用自己最近的对局），意见写决策记录后M2完成，进入M3（M3-T1先问Q4打法与优势定义）。
+### 运行与交接备注
 
-M1-T1发现（2026-10-30，已告知用户，影响Q1）：
-- 2551场中仅1993场有完整解析（10人均有purchase_log等）；558场（全在additional批次）无任何解析字段，M1不可用。
-- 原采集筛选：含主宰、时长≥30分钟、天梯全英雄（lobby 7/mode 22）、平均段位≥70（超凡+）。因此数据**只含30分钟以上的比赛**（中位38.5分钟），碾压局缺失，会使出装时间偏慢、对线结果偏均衡。
-- 玩家段位：冠绝12032、超凡10739、万古2175、传奇288、更低<100、未知195。
-- 127个英雄出现；样本≥200人次的英雄45个、≥100的86个。
-- Q2参考：优势路（lane_role=1）每队恰好2人的占97.2%（3874/3986）；两人10分钟补刀差中位45，差<15仅1%，差<25为5.3%；高者中位52、低者中位7。
-
-提交身份：本环境无git身份配置，提交时用`git -c user.name=xrfc -c user.email=147353817+xrfc@users.noreply.github.com`，与仓库历史一致，不改全局配置。均为本地提交，未推送。
-
-交接备注：8780赛前页可能仍在运行（`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`）。8770评审服务已停止；需要时重启：
-`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-team-2026-10-30-v2 --serve --port 8770`
-
----|---|---|---|
-| M0 | 进行中 | 2026-10-30 | |
-| M1–M6 | 未开始 | | |
-
-M0任务：
-- [x] M0-T1 分批本地提交
-- [ ] M0-T2 R1评审结论
-- [x] M0-T3 决策记录U1–U4
-- [x] M0-T4 本地账号配置
-- [x] M0-T5 入口文档指向本计划
-
-本周目标：完成M0。剩余M0-T2：等待用户评审8770两个案例；结论写`docs/decisions/`，通过即M0完成、M1开始（先问Q2位置规则时再推进到M1-T3）。
-
-M0-T1提交：7a42c25、4d39ad8、8a03509（本地，未推送）。本环境无git身份配置，提交时用`git -c user.name=xrfc -c user.email=147353817+xrfc@users.noreply.github.com`，与仓库历史一致，不改全局配置。
-
-交接备注：8770评审服务（`reports/decision-review-team-2026-10-30-v2`）可能仍在运行；未运行则用§4 M0-T2前的启动命令重启：
-`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-team-2026-10-30-v2 --serve --port 8770`
+- 提交身份：本环境无git身份配置，提交用`git -c user.name=xrfc -c user.email=147353817+xrfc@users.noreply.github.com`；均为本地提交，未推送（推送须用户授权）。
+- 8780可能仍在后台运行；重启：`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`（启动时校验`reports/m2-item-timing-2026-10-30-r2`哈希）。
+- 浏览器验收：Windows Chrome无头+临时配置：`"/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --remote-debugging-port=9229 --user-data-dir='C:\Windows\Temp\dota-review-cdp' about:blank &`，再`NO_PROXY='*' node scripts/acceptance/coach_app_browser.cjs NEWDIR`，结束后通过CDP `Browser.close`关闭。WSL为mirrored网络，可直接访问127.0.0.1。
+- 8770旧评审页已停止；需要时：`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-team-2026-10-30-v2 --serve --port 8770`。
+- 每次真实训练与联网采集都须用户单独授权（Q7）；用户画像与账号ID见`configs/user.local.json`（未跟踪，勿提交）。
 
 ---
 

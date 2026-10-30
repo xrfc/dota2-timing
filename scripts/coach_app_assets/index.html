@@ -11,7 +11,8 @@
 <header class="topbar">
   <div class="brand"><span class="brand-mark" aria-hidden="true"></span>Dota 复盘助手</div>
   <nav class="tabs" aria-label="功能">
-    <button class="tab" data-view="items" aria-current="page">赛前 · 出装节奏</button>
+    <button class="tab" data-view="items" aria-current="page">出装节奏参照</button>
+    <button class="tab" data-view="situational" disabled title="M2b 开发中">赛前 · 看局装<span class="soon">开发中</span></button>
     <button class="tab" data-view="lane" disabled title="M3 开发中">赛前 · 对线打法<span class="soon">开发中</span></button>
     <button class="tab" data-view="review" disabled title="M5 开发中">赛后 · 复盘<span class="soon">开发中</span></button>
   </nav>
@@ -24,19 +25,7 @@
       <legend>我的英雄</legend>
       <div id="my-heroes" class="segmented" role="group"></div>
     </fieldset>
-    <fieldset>
-      <legend>我方阵营</legend>
-      <div class="segmented" role="group">
-        <button type="button" class="seg" data-radiant="1" aria-pressed="true">天辉</button>
-        <button type="button" class="seg" data-radiant="0" aria-pressed="false">夜魇</button>
-      </div>
-    </fieldset>
-    <fieldset>
-      <legend>敌方阵容 <span id="enemy-count" class="muted"></span></legend>
-      <div id="enemies" class="enemies"></div>
-      <datalist id="hero-list"></datalist>
-      <button type="button" id="clear-enemies" class="link">清空敌方</button>
-    </fieldset>
+    <p class="muted side-note">出装时间主要由你和队友的线上经济决定，与敌方阵容关系不大。这里是高分段平均节奏；按你本局表现的时间参照会在“赛后 · 复盘”中提供。敌方阵容决定“出什么”（看局装），开发中。</p>
     <p id="input-error" class="error" role="alert"></p>
   </aside>
 
@@ -49,7 +38,6 @@
       <div class="legend" aria-hidden="true">
         <span class="swatch s-low"></span>少
         <span class="swatch s-high"></span>多
-        <span class="badge model">阵容调整 · 初步</span>
       </div>
     </div>
     <table class="timing">
@@ -57,7 +45,7 @@
       <thead><tr id="timing-head"><th scope="col">装备</th></tr></thead>
       <tbody id="timing-body"></tbody>
     </table>
-    <p class="hint">“通常完成”= 比例首次过半的时间点。格子带圆点表示该格按你的敌方阵容调整过；悬停可看与高分段平均的差别。</p>
+    <p class="hint">“通常完成”= 比例首次过半的时间点。高分段（超凡及以上）平均，不随阵容变化。</p>
     <details class="notes">
       <summary>数据与局限</summary>
       <ul id="notes"></ul>

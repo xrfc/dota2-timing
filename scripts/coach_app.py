@@ -36,7 +36,8 @@ ITEM_NAMES = {
 NOTES = [
     "数据：超凡及以上段位、30分钟以上的比赛（2026-10-12至13，补丁7.41），节奏快于传奇段常见对局（U7）。",
     "主宰排除10分钟补刀<35的对线崩盘局（U8）。",
-    "阵容调整只来自一次“看过验证集后的第二次尝试”，标为初步；独立评估在M4。",
+    "出装时间主要取决于自己和队友的线上经济，而不是敌方阵容（U13，10分钟经济可解释狂战斧时间的61%）；按你本局表现的时间参照将在赛后复盘中提供。",
+    "敌方阵容影响的是“出什么”（看局装），该功能开发中（M2b）。",
 ]
 
 
@@ -73,28 +74,21 @@ def load_state(run=DEFAULT_RUN, repo=ROOT):
     return {"meta": meta, "model": model, "rows": rows, "hero_ids": set(hero_names)}
 
 
-def parse_timing_query(query, hero_ids):
-    """Strict validation: exactly one of each parameter, known ids, distinct enemies."""
+def parse_timing_query(query):
+    """Strict validation: exactly hero and position, a supported pair, nothing else.
+
+    U13: the page is a high-rank baseline reference; lineup inputs are not accepted.
+    """
     params = parse_qs(query, keep_blank_values=True, strict_parsing=bool(query))
-    if set(params) - {"hero", "position", "radiant", "enemies"} or any(
-        len(v) != 1 for v in params.values()
-    ):
+    if set(params) != {"hero", "position"} or any(len(v) != 1 for v in params.values()):
         raise ValueError("Bad parameters")
     try:
         spec = (int(params["hero"][0]), int(params["position"][0]))
-        radiant = {"1": True, "0": False}[params["radiant"][0]]
-        raw = params.get("enemies", [""])[0]
-        enemies = [int(v) for v in raw.split(",")] if raw else []
-    except (KeyError, ValueError) as error:
+    except ValueError as error:
         raise ValueError("Bad parameters") from error
-    if (
-        spec not in item_timing.HERO_ITEMS
-        or len(enemies) > 5
-        or len(set(enemies)) != len(enemies)
-        or any(e not in hero_ids or e == spec[0] for e in enemies)
-    ):
+    if spec not in item_timing.HERO_ITEMS:
         raise ValueError("Bad parameters")
-    return spec, radiant, enemies
+    return spec
 
 
 def make_handler(state):
@@ -141,13 +135,11 @@ def make_handler(state):
                 return
             if url.path == "/api/item-timing":
                 try:
-                    spec, radiant, enemies = parse_timing_query(url.query, state["hero_ids"])
+                    spec = parse_timing_query(url.query)
                 except ValueError:
                     self.send_error(400)
                     return
-                view = item_timing.timing_view(
-                    state["model"], state["rows"], spec, enemies, radiant
-                )
+                view = item_timing.timing_view(state["model"], state["rows"], spec, [], True)
                 body = json.dumps(view, ensure_ascii=False).encode()
                 self._send(200, "application/json; charset=utf-8", body)
                 return

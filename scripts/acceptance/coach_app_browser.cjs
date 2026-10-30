@@ -39,27 +39,11 @@ const CDP = 'http://127.0.0.1:9229';
   await send('Page.reload'); await wait(1500);
 
   record('initial_render', (await ev(`document.querySelectorAll('#timing-body tr').length`)) === 8, await ev(`document.getElementById('result-title').textContent`));
-  record('baseline_without_lineup', /未填满 5 人/.test(await status()), await status());
+  record('baseline_reference_title', /高分段出装节奏/.test(await ev(`document.getElementById('result-title').textContent`)));
   record('bfury_baseline_row', /狂战斧[\s\S]*64%[\s\S]*91%/.test(await rowText('狂战斧')), await rowText('狂战斧'));
+  record('no_lineup_inputs_or_badges', (await ev(`document.querySelectorAll('#enemies input, [data-radiant], .badge.model, td.cell.model').length`)) === 0);
+  record('explains_timing_vs_lineup', /线上经济/.test(await ev(`document.querySelector('.side-note').textContent`)));
   await shot('items-baseline.png');
-
-  const enemies = ['天怒法师', '斧王', '军团指挥官', '水晶室女', '幽鬼'];
-  for (const [i, name] of enemies.entries()) {
-    await ev(`(()=>{const el=document.querySelectorAll('#enemies input')[${i}];el.value='${name}';el.dispatchEvent(new Event('change'))})()`);
-    await wait(150);
-  }
-  await wait(600);
-  record('lineup_adjusts', /已按敌方阵容调整/.test(await status()), await status());
-  const butterfly = await rowText('蝴蝶');
-  record('butterfly_model_cell', /阵容调整/.test(butterfly) && (await ev(`!!document.querySelector('#timing-body td.cell.model')`)), butterfly);
-  record('butterfly_tooltip_shows_baseline', /高分段平均 47%/.test(await ev(`[...document.querySelectorAll('#timing-body td.cell.model')].map(c=>c.title).join('|')`)), await ev(`[...document.querySelectorAll('#timing-body td.cell.model')].map(c=>c.title).join('|')`));
-  record('near_zero_model_cell_not_badged', !/阵容调整/.test(await rowText('阿哈利姆神杖')), await rowText('阿哈利姆神杖'));
-  record('enemy_count', (await ev(`document.getElementById('enemy-count').textContent`)) === '5/5');
-  await shot('items-lineup.png');
-
-  await ev(`(()=>{const el=document.querySelectorAll('#enemies input')[1];el.value='天怒法师';el.dispatchEvent(new Event('change'))})()`); await wait(500);
-  record('duplicate_enemy_flagged', /重复/.test(await ev(`document.getElementById('input-error').textContent`)) && /未填满/.test(await status()), await ev(`document.getElementById('input-error').textContent`));
-  await ev(`(()=>{const el=document.querySelectorAll('#enemies input')[1];el.value='斧王';el.dispatchEvent(new Event('change'))})()`); await wait(500);
 
   await ev(`[...document.querySelectorAll('#my-heroes button')].find(b=>b.textContent.startsWith('神谕者')).click()`); await wait(700);
   const oracle = await ev(`document.getElementById('timing-body').innerText`);

@@ -48,25 +48,20 @@ def fixture_repo(tmp_path, revision=2):
     return repo
 
 
-def test_query_validation():
+def test_query_validation_accepts_only_hero_and_position():
     module = load()
-    ids = {8, 30, 1, 2, 3, 4, 5, 6}
-    ok = module.parse_timing_query("hero=8&position=1&radiant=0&enemies=1,2,3", ids)
-    assert ok == ((8, 1), False, [1, 2, 3])
-    assert module.parse_timing_query("hero=30&position=5&radiant=1&enemies=", ids)[2] == []
+    assert module.parse_timing_query("hero=8&position=1") == (8, 1)
     for bad in (
-        "hero=8&position=5&radiant=1&enemies=1",  # unsupported spec
-        "hero=8&position=1&radiant=2&enemies=1",
-        "hero=8&position=1&radiant=1&enemies=1,1",  # duplicate
-        "hero=8&position=1&radiant=1&enemies=8",  # own hero
-        "hero=8&position=1&radiant=1&enemies=99",  # unknown hero
-        "hero=8&position=1&radiant=1&enemies=1,2,3,4,5,6",
-        "hero=8&position=1&radiant=1&enemies=1&extra=1",
-        "hero=8&hero=8&position=1&radiant=1&enemies=1",
-        "hero=x&position=1&radiant=1&enemies=1",
+        "hero=8&position=5",  # unsupported spec
+        "hero=8&position=1&enemies=1,2",  # U13: lineup no longer accepted
+        "hero=8&position=1&radiant=1",
+        "hero=8&hero=8&position=1",
+        "hero=x&position=1",
+        "position=1",
+        "",
     ):
         with pytest.raises(ValueError):
-            module.parse_timing_query(bad, ids)
+            module.parse_timing_query(bad)
 
 
 def test_load_state_rejects_tampered_or_wrong_revision(tmp_path):
@@ -96,12 +91,10 @@ def test_http_routes(tmp_path):
         for route in ("/", "/app.js", "/style.css", "/api/meta"):
             assert OPENER.open(base + route).status == 200
         assert OPENER.open(base + "/favicon.ico").status == 204
-        body = json.loads(
-            OPENER.open(base + "/api/item-timing?hero=8&position=1&radiant=1&enemies=1,2").read()
-        )
+        body = json.loads(OPENER.open(base + "/api/item-timing?hero=8&position=1").read())
         assert body["full_lineup"] is False and len(body["items"]) == 8
         for route, code in (
-            ("/api/item-timing?hero=8&position=1&radiant=1&enemies=99", 400),
+            ("/api/item-timing?hero=8&position=1&enemies=1", 400),
             ("/../knowledge/hero-capabilities/hero-registry.json", 404),
             ("/api/meta?x=1", 404),
             ("/model.json", 404),
