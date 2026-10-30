@@ -1,5 +1,8 @@
 # 数据与模型接口契约
 
+
+> 2026-10-27目标同步：决策复盘新接口尚待实现：必须携带比赛/英雄/观察阵营/决策tick、字段可知性、时间/采样年龄、来源引用与未知原因；时点输入与事后结果分区。购买、持有、交付和实际可用装备不可互换。现有schema不被文档更新隐式扩展；计划见[数据](data-prep-progress.md)§19。
+
 ## 公共读取契约收尾 — 2026-10-17
 
 source_io提供read_source_bytes/parse_source_json，保持来源解析原行为，不等同严格制品解码。
@@ -260,3 +263,7 @@ Gem 导入缓存使用 `demo-import/1.1`：清单保存 `source_sha256`（输入
 当前不会自动迁移 schema 或合并同比赛的多个解析修订。升级导致内容变化时，新建工作区重导入并保留旧数据集。旧缓存版本、绝对路径和 OpenDota 缓存策略见[操作指南](workflow.md)。
 
 下一阶段应先定义独立来源身份、解析版本、质量资格及标注修订，再定义严格截止时间的训练窗口、动作/标签与评估输入。不要把这些规划字段写入现有 Pydantic 对象；extra=forbid 会拒绝未知字段。
+
+## 2026-10-27专用状态卡边界
+
+新增decision-live-probe/1和decision-state-card/1仅用于本地离线取证/展示，不登记ML task_id，不变更标准库contracts/handoff或既有observer/1。完整API、字段、哈希与未知语义见[状态卡交付](decision-state-card-2026-10-27.md)；当前卡在enhancement.live_state_card，原decision_input保留。禁止用未来样本、敌方隐藏真实CD或零值填补缺失。

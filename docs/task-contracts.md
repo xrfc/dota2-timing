@@ -1,5 +1,8 @@
 # 版本化任务契约（2026-10-20）
 
+
+> 2026-10-27目标同步：注意地图与走位倾向的新任务尚未注册，COACH-01～06只是开发编号，不是可运行task_id。待案例评审确认英雄/角色/补丁、决策tick、窗口、标签、可知字段与划分后单独版本化；旧购买任务不改名或扩用途。新研究流程见[模型](model-foundation.md)§13。
+
 ## 2026-10-21 新登记任务
 
 新增 `juggernaut-source-log-7.41f-whole-11/1`，整份有效源日志11装备，`window=null`、`labels.scope=whole_available_source_log`，所有有限事件时间含赛前时间。旧30分钟ID、默认值和旧产物保持不变。沿用契约/1及快照/2容器，靠明确task_id与完整登记字段区分，不接受任意目标名单。
@@ -121,3 +124,7 @@ python scripts/model_foundation.py inspect --model MODEL.json
   未完成 Ruff 检查及完整环境下的全量验收。CI 配置已补测试，但未推送运行。
 - `git diff --check` 通过；历史 `data/purchase_snapshot.py` 无差异。
 - 没有运行真实数据生成或训练，没有变更划分、旧快照或模型产物，没有提交或推送。
+
+## 2026-10-27专用取证schema非训练任务
+
+decision-live-probe/1和decision-state-card/1是[状态卡](decision-state-card-2026-10-27.md)的专用展示/取证结构，不是新增task_id；既有任务注册、默认校验及训练授权不变。候选行动任务、范围、标签、划分、窗口与收益口径仍依草案待确认。

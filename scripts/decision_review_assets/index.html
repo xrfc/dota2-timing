@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>决策复盘 · 案例评审</title><link rel="stylesheet" href="/style.css"></head>
+<body><header><p>离线复盘 · 人工案例原型</p><h1>当时知道什么，可以怎么做</h1><p>先看当时信息和建议，再主动展开后续。不是模型预测或已认证的最佳行动。</p></header>
+<main><nav id="cases" aria-label="选择复盘案例"></nav><p id="error" role="status">正在校验并读取案例…</p>
+<section id="review" hidden><h2 id="title"></h2><p id="identity"></p><p id="case-status" class="warning"></p>
+<div class="columns"><section><h3>当时可知地图</h3><label>地图过滤：<select id="focus"><option value="all">全部英雄</option></select></label><canvas id="map" width="1100" height="1035" aria-label="决策时点阵营可知位置，点击英雄查看状态；也可用右侧英雄名单选择"></canvas><p>点击英雄查看右侧状态。绿：友方；红：敌方；实心：当前可靠位置；虚线：最后可见，非当前位置。白圈：案例主角；青圈：当前选中。</p><div id="history"></div><p id="map-time"></p><p>切换过去采样会同步状态面板，不沿用决策时点的血量或CD。折叠的行动建议仍针对指定决策时点；不插值、不显示隐藏真实位置。</p></section>
+<article aria-label="英雄状态与复盘建议"><section id="hero-inspector" aria-label="选中英雄状态"><label for="hero-select">查看英雄（重叠或无坐标时也可选择）</label><select id="hero-select"></select><div id="hero-state" aria-live="polite" aria-atomic="true"></div></section><details><summary>主宰行动建议 · 指定决策时点</summary><h3>注意与行动分开判断</h3><div id="advice"></div></details><details><summary>原始主宰装备证据 · 指定决策时点</summary><p id="inventory-warning"></p><ul id="inventory"></ul></details><details><summary>全体位置与信息年龄 · 指定决策时点</summary><ul id="positions"></ul></details><details><summary>来源、缺失与核验边界</summary><div id="missing"></div><pre id="provenance"></pre></details></article></div>
+<section id="enhancements" hidden aria-label="增强证据与行动比较"></section>
+<section class="after"><h3>事后核对（与建议输入隔离）</h3><p>后续死亡或存活不能直接证明建议正确。此处仅展示后30游戏秒中的三个采样，不是完整战斗审计。</p><button id="reveal">展开后续采样</button><div id="outcome" hidden></div></section>
+<section><h3>围绕这个时点，具体评四件事</h3><ol id="review-questions"></ol><p>任选你能判断的部分，按案例编号回答即可；信息不足可以直说，不要求替我们补数据或给固定阈值。反馈不会自动变成训练真值。</p></section></section></main>
+<script src="/app.js"></script></body></html>

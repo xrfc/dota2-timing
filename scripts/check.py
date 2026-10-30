@@ -57,6 +57,12 @@ def module_paths(scope):
     return source, tests
 
 
+def module_check_paths(scope):
+    """Include orchestration scripts in static checks without executing them."""
+    source, tests = module_paths(scope)
+    return [*source, *tests, "scripts"]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -78,8 +84,8 @@ def main() -> int:
             ]
         )
     if args.scope in ("data", "modeling", "recommendation"):
-        source, tests = module_paths(args.scope)
-        paths = [*source, *tests, "scripts/check.py"]
+        _, tests = module_paths(args.scope)
+        paths = module_check_paths(args.scope)
         commands.extend(
             [
                 [python, "-m", "ruff", "check", "--output-format", "full", *paths],
@@ -105,6 +111,19 @@ def main() -> int:
                 "Node.js unavailable: JavaScript checks skipped; CI runs them with Node 22.",
                 flush=True,
             )
+    if args.scope in ("all", "engineering", "data"):
+        node = shutil.which("node")
+        if node:
+            commands.extend(
+                [
+                    [node, "--check", "scripts/replay_viewer_assets/app.js"],
+                    [node, "--test", "tests/test_replay_viewer_ui.cjs"],
+                    [node, "--check", "scripts/decision_review_assets/app.js"],
+                    [node, "--test", "tests/test_decision_review_ui.cjs"],
+                ]
+            )
+        else:
+            print("Node.js unavailable: replay viewer UI logic checks skipped.", flush=True)
     # A moved checkout may retain an editable install pointing to its old path.
     # Test this checkout, including subprocesses, without reinstalling shared deps.
     env = os.environ.copy()

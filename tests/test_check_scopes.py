@@ -23,3 +23,12 @@ def test_model_scope_contains_all_model_suites():
     _, tests = check.module_paths("modeling")
     assert set("tests/" + name for name in check.MODEL_TESTS) <= set(tests)
     assert "tests/test_purchase_collection.py" not in tests
+
+
+def test_module_checks_include_script_static_analysis():
+    for scope in ("data", "modeling", "recommendation"):
+        paths = check.module_check_paths(scope)
+        sources, tests = check.module_paths(scope)
+        assert set(sources + tests) <= set(paths)
+        assert "scripts" in paths
+        assert all((ROOT / path).exists() for path in paths)

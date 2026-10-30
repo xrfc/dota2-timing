@@ -1,5 +1,9 @@
 # 脚本职责导航
 
+> 2026-10-27对照包增量：当前8769改为两例[支援/刷钱对照与试标草稿](../docs/decision-comparison-2026-10-27.md)，新增双方同刻可见血量、队友库存、TP到场条件拆解与草稿下载。蓝量已定位schema版本初始化导致范围65536→8192的问题，但未修正旧数据/生产者；敌方装备/CD、完整施放、合法落点/路径及数值收益仍未齐。旧包/旧结果保留，非盲评、非正式标签，不授权训练；后文旧状态按原阶段解释。
+
+> 2026-10-27目标同步：当前主线见[总路线](../docs/roadmap.md)。replay_viewer.py仅供证据复盘，尚无保守/激进建议CLI；不能以旧训练脚本直接启动新任务。时点证据、案例、契约与模型按阶段开发，旧命令/冻结输入不变。
+
 保留现有CLI路径，不为分类搬迁哈希绑定的生产者。正式业务模块在`src/dota_items/`；部分固定审计脚本仍包含编排实现，不声称已经全部薄CLI化。
 
 从仓库根目录执行，复用`.venv`。一般使用`PYTHONPATH=src .venv/bin/python scripts/名称.py --help`；Windows先设置`$env:PYTHONPATH = "src"`，再用`.venv\Scripts\python.exe`。`--help`不是执行真实任务许可；少数历史批处理入口没有通用help，先阅读相应说明和脚本。
@@ -48,6 +52,8 @@
 
 ### 录像采集、解析与审计
 
+- [replay_viewer.py](replay_viewer.py)：本地地图播放器；[说明](../docs/replay-viewer.md)。静态页面在`replay_viewer_assets/`。
+
 - [accept_replays.py](accept_replays.py)
 - [align_replay_ticks.py](align_replay_ticks.py)
 - [audit_replay_identity.py](audit_replay_identity.py)
@@ -86,3 +92,27 @@
 - [report_purchase_cohorts.py](report_purchase_cohorts.py)
 - [run_purchase_additional.py](run_purchase_additional.py)
 - [summarize_purchase_collection.py](summarize_purchase_collection.py)
+
+### 人工决策复盘案例（2026-10-27）
+
+`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-2026-10-27-v2 --serve --port 8768`。生成新包须加`--build`并使用不存在的目录，不覆盖冻结证据。提供时点证据和人工建议/独立事后对照，不训练。Windows及字段限制见[数据侧说明](../docs/data-decision-cases-2026-10-27.md)。
+
+### 两例增强与字段来源核查（2026-10-27）
+
+`scripts/enhance_decision_cases.py --output reports/decision-enhanced-new`复用原包/反馈，生成新目录；不覆盖、不采集或训练。查看最终包：`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-enhanced-2026-10-27-v3 --serve --port 8769`。原五例仍在8768。字段/分母/Windows操作见[字段清单](../docs/decision-field-readiness-2026-10-27.md)。
+
+### 决策状态探针与状态卡（2026-10-27）
+
+- scripts/probe_decision_state.py：--freeze-plan FILE冻结原两场，或--plan FILE --match ID --output NEWDIR独立离线读取；仅允许固定ID和tick，禁止覆盖，源码/输入变化拒绝执行。
+- scripts/build_decision_state_cards.py --output NEWDIR：只读完整探针收据和增强v3，保持原decision_input及历史后续文件。
+- 当前页面：`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-state-cards-2026-10-27-v1 --serve --port 8769`。
+
+示例、Windows、来源边界与恢复见[状态卡说明](../docs/decision-state-card-2026-10-27.md)。未扩大为任意比赛解析或训练入口。
+
+## 2026-10-27评审追补
+
+`scripts/revise_decision_review.py --revision examples/decision-review-followup-2026-10-27.json --output reports/decision-review-followup-new`在新目录应用绑定基础包的文本/具体问题修订，拒绝改身份和不实最后可见断言。命令前加`PYTHONPATH=src .venv/bin/python`，Windows沿用既有解释器说明。当前8769服务包为`reports/decision-review-followup-2026-10-27-v1`，不改原始输入/后续/空白模板，不训练。见[案例追补](../docs/decision-comparison-2026-10-27.md)。
+
+### 英雄集中状态展示（2026-10-27）
+
+`decision_review_assets`已加入地图点选／名单切换及集中状态面板；仍用上节followup-v1启动命令及8769，无新HTTP字段、采集或依赖。修改静态页须重启本地评审服务后刷新；先下载内存草稿。专项沿用`node --test tests/test_decision_review_ui.cjs`。见[面板与验证](../docs/decision-comparison-2026-10-27.md#地图选中英雄与集中状态面板2026-10-27)。

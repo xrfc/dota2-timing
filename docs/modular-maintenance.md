@@ -1,5 +1,28 @@
 # 单模块维护与长期扩展（2026-10-17）
 
+## 2026-10-28架构整理原则
+
+保持模块化单体，不拆微服务、不按文件行数机械搬迁。当前职责分为：
+
+| 层 | 现有位置 | 边界 |
+|---|---|---|
+| 来源提取 | sources | 解析实体与版本；不反向依赖data |
+| 证据/投影 | data | 时序、身份、可知性、质量；不负责行动策略/训练 |
+| 契约/传输 | contracts、handoff | 版本与只读包校验；不隐式执行审计/训练 |
+| 学习/推理 | modeling | 消费批准快照；预测不加载训练依赖 |
+| 用例编排 | workflow、experiments | 协调下层；整局实验已下沉，决策打包仍有脚本债务 |
+| 展示/入口 | scripts及其assets | CLI/HTTP/展示；不把页面完成写成模型完成 |
+
+`decision_review.py`的build与make_handler目前仍同文件，不声称已完成业务下沉。后续拆分先设计兼容导出、实现指纹清单与测试替身迁移，再迁移用例；旧包和旧哈希不回写。新代码不得继续向该脚本增加训练或策略。`data.replay_viewer`为只读证据投影，HTTP留在scripts。
+
+模块scope现在对整个scripts目录做静态lint/格式检查（不执行脚本），避免跨模块编排漏检；pytest仍按既有归属运行，全量检查仍是最终工程门禁。
+状态只在总路线/数据/模型三份主文档维护；其他长期文档不再粘贴每轮状态广播。日期证据保留原时点语义。
+
+---
+
+
+> 2026-10-27目标同步：新工作围绕位置＋装备决策复盘，但不把data.replay_viewer扩成训练或最优策略引擎。data负责可知证据与质量原因，modeling负责学习，应用层负责卡片和事后解释隔离，contracts的新增版本需先确认。任务顺序见[总路线](roadmap.md)。
+
 2026-10-20：任务/特征默认定义移至标准库 `contracts.tasks`，`modeling.specs`
 保留兼容导出与模型校验。新增 `data.task_snapshot`，不改历史 /1 生产者。
 共享任务回归同时加入模块专项；接口和 /2 兼容规则见[任务契约](task-contracts.md)。
@@ -18,7 +41,7 @@
 命令兼容、维护边界和验收见[实验层维护](experiment-maintenance.md)。
 
 本文是当前工程结构入口，替代10/16架构审查中的“待拆分”描述；旧文档保留历史验收。
-用户本轮授权按顺序重构并维护相关文档，确认当前仅一个执行者操作仓库。
+下列10/17重构授权与验收为历史记录；当前协作按AGENTS和并行协议执行，不再要求其他开发者停写确认。
 保持单仓库、单Python包、现有环境和分支；不新增真实训练、选模、数据用途或划分授权。
 
 ## 1. 模块职责与依赖
@@ -131,7 +154,7 @@ TaskSpec固定记录当前英雄、标签语义、装备顺序、时间窗；Fea
 Windows使用.venv/Scripts/python.exe。
 模块scope包含对应源码/测试的lint、格式检查、pytest及架构测试；data包含回放/workflow集成。
 脚本和公共文件的完整检查仍以all为准。测试归属维护于scripts/check.py，新增测试应检查所属scope。
-专项不是全量验收；全量时暂停写入，比较源码（含未跟踪文件）前后指纹。
+专项不是全量验收；全量串行执行并比较源码（含未跟踪文件）前后指纹，不需其他开发者停写确认。
 架构检查覆盖绝对、相对、函数内import；独立进程阻断验证推理不加载训练库、读取不加载审计。
 静态检查不能识别任意动态导入，模块测试也不能代替集成验证。
 
@@ -164,3 +187,19 @@ experiments位于data/modeling之上，可协调两者；data、modeling、sourc
 - [全部文档分类](README.md)：主流程、接口、操作、日期证据、历史快照分层；旧源码/文档路径不批量移动，不触碰冻结输入。
 
 本轮只有文档导航、归属和忽略规则整理；不声称完成所有脚本业务下沉。复杂脚本后续如重构，应单独处理兼容入口与生产者指纹迁移。
+
+### 数据侧地图回放器
+
+`data.replay_viewer`只读校验及视角隔离帧投影；`scripts/replay_viewer.py`为HTTP入口，`scripts/replay_viewer_assets/`为前端。依赖现有data.source_io，不依赖workflow/modeling。API与局限见[回放器说明](replay-viewer.md)。
+
+### 数据侧决策案例证据（2026-10-27）
+
+data.replay_status为纯展示分类；data.decision_evidence提供只读同tick、同身份友方库存与阵营位置证据，不含行动策略或训练。scripts/decision_review.py及decision_review_assets消费固定人工案例并提供独立本地评审页，后续文件仅主动展开。接口、命令、专项和未完成验收见[交付说明](data-decision-cases-2026-10-27.md)；新Python测试按既有默认归属data，新Node检查在统一检查集成补丁中登记。
+
+### 增强案例来源附录（2026-10-27）
+
+data.decision_context为纯投影，不读文件或实现行动策略，严格排除未来事件、敌方隐藏眼/雾和完整团战结果。scripts/enhance_decision_cases.py复用公共读取及DecisionEvidenceStore，校验来源/旧包/时钟字节，把未认证附录与原decision_input隔离。行动条件来自独立人工修订，不进入data策略；增强页复用兼容的decision_review_assets。新测试按既有默认归data；不改共享contracts/handoff。操作、API边界及研究未决项见[字段清单](decision-field-readiness-2026-10-27.md)与[任务草案](decision-training-task-draft-2026-10-27.md)。
+
+### 独立现场探针与状态卡（2026-10-27）
+
+sources.decision_state_capture只依赖标准库和传入的解析器实体；不依赖data/workflow，不修改历史gem_capture或默认缓存键。data.decision_state为纯投影，按唯一原生tick和实体身份对照旧raw，丢弃未来样本；sources不反向依赖它。scripts/probe_decision_state负责冻结原两场计划、fresh-process兼容解析器与完整收据，scripts/build_decision_state_cards负责只读打包。专用/1 schema不是共享contracts或ML task_id，未改数据/模型交接协议。完整API、操作和验证见[状态卡交付](decision-state-card-2026-10-27.md)。
