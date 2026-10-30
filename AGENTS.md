@@ -4,7 +4,7 @@
 
 - 唯一工作目录：`/home/node/.openclaw/workspace/work/dota2-timing`。
 - `src/dota_items/data/`与`src/dota_items/modeling/`为并列模块；不再使用独立`dota2-timing-model` worktree。
-- 当前共享工作分支为`feat/purchase-data-prep`；模型分支保留历史引用，不自动切换分支或重建worktree。
+- 2026-10-30按用户要求清理已合并分支后，当前共享分支为`main`，跟踪`origin/main`；旧数据/模型分支已合并并删除。保留单worktree，不自动切分支或重建worktree；清理证据见`docs/git-maintenance-2026-10-30.md`。
 - 数据agent维护data模块、数据脚本/测试；模型agent维护modeling模块、模型脚本/测试。共享文件改动须协调，禁止覆盖其他agent未提交文件。
 - Git index、工作目录与环境现已共享：不并行执行切分支、提交、清理、依赖安装或全库自动格式化。
 - 复用现有`.venv`，先检查依赖，不按旧独立工作区说明重建/覆盖环境。
@@ -51,3 +51,9 @@
 - 来源读取统一使用data.source_io；不得新增对feasibility私有读取函数的依赖。
 - 生产者迁移只接受登记的旧指纹到当前实现，非实现字段须完全相同；不能冒充精确旧源码重现。
 - 当前公共交接入口及命令见docs/public-source-reader.md；模型输入、数据用途及训练授权不因此改变。
+
+## 当前执行计划（2026-10-30 用户确认）
+
+- 唯一执行计划：`docs/development-plan-2026-10-30.md`（M0–M6）。接手先读其§0与§7，只做当前里程碑的下一个未勾选任务。
+- 用户决定记录在`docs/decisions/`；计划§2“待决”项必须先问用户。
+- 账号ID只在未跟踪的`configs/user.local.json`，不得写入跟踪文件或推送。

@@ -1,5 +1,7 @@
 # 文档索引
 
+**当前执行计划：[开发全流程计划 M0–M6](development-plan-2026-10-30.md)；[决策记录](decisions/README.md)。**
+
 
 > 2026-10-27目标同步：当前产品主线是根据位置与当时可用装备，解释什么时候注意地图、保守或激进走位。开发顺序与阶段出口唯一维护在[总路线](roadmap.md)；[数据](data-prep-progress.md)§19、[模型](model-foundation.md)§13分别负责证据与学习流程。回放器是工具，不是最终决策交付。日期证据、冻结协议和归档不因目标调整而重写。
 
@@ -24,8 +26,11 @@
 
 ## 架构、接口与操作
 
+- [Git结构与已合并分支清理（2026-10-30）](git-maintenance-2026-10-30.md)
+
 - [架构与分步任务审查（2026-10-28）](architecture-review-2026-10-28.md)
 - [蓝量独立修复与证据边界](decision-mana-repair-2026-10-28.md)
+- [R1：修复蓝量接入新版本评审包（8770）](decision-mana-integration-2026-10-30.md)
 - [数据质量与X/y学习练习](data-quality-ml-lab-2026-10-28.md)
 
 - [教练任务字段核查：视野、装备、技能与战斗](coach-field-audit.md)
