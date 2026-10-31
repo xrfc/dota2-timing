@@ -75,3 +75,31 @@ def test_real_label_file_matches_the_registry():
     traits = ht.load_traits(labels, registry["heroes"])
     assert 44 in traits["evasion"] and traits["evasion"][44]["subtype"] == "self_evasion"
     assert 26 in traits["targeted_spells"]  # Lion: rule-based
+
+
+def test_text_candidates_ignore_engine_fields_and_substring_hits():
+    plain = ability(
+        "普通",
+        values=[("AbilityManaCost", [100]), ("AbilityCharges", [2])],
+        text="Moves towards the target and pushes it forward. Stores 2 charges.",
+    )
+    c = ht.candidates({"hero_id": 2, "name_zh": "乙", "abilities": [plain]})
+    for trait in ("mana_dependent", "illusions_summons", "mobility"):
+        assert not c[trait]["candidate"], trait
+    hits = [
+        ability("冲", text="Charges at an enemy."),
+        ability("眼", text="Places an observer ward."),
+        ability("法", text="Deals damage based on current mana."),
+    ]
+    c = ht.candidates({"hero_id": 3, "name_zh": "丙", "abilities": hits})
+    assert c["mobility"]["evidence"] == ["冲"]
+    assert c["illusions_summons"]["evidence"] == ["眼"]
+    assert c["mana_dependent"]["evidence"] == ["法"]
+
+
+def test_mana_dependent_also_flags_high_total_mana_cost():
+    costly = [ability(f"技{i}", values=[("AbilityManaCost", [100, 250])]) for i in range(3)]
+    c = ht.candidates({"hero_id": 4, "name_zh": "丁", "abilities": costly})
+    assert c["mana_dependent"]["candidate"]
+    assert c["mana_dependent"]["evidence"] == ["技0 250", "技1 250", "技2 250"]
+    assert "total 750" in c["mana_dependent"]["rule"]

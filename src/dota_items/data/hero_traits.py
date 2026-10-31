@@ -22,20 +22,27 @@ TRAITS = {
 PASSIVE, UNIT_TARGET = 2, 8
 ENEMY_TEAMS = {2, 3, 4}
 BURST_TYPES = {2, 4}
+# Word boundaries avoid substring hits such as "towards"/"forward" (ward) or "uproot".
+# "charge" only counts as movement ("charges at/toward", "Charge of ..."), not ability charges.
 TEXT_PATTERNS = {
-    "evasion": r"evasion|miss chance|chance to miss|blind",
-    "sustain": r"lifesteal|heal|health regen|restores? .{0,20}health",
+    "evasion": r"\bevasion|miss chance|chance to miss|\bblind",
+    "sustain": r"lifesteal|\bheal|health regen|restores? .{0,20}health",
     "mobility": (
-        r"blink|teleport|leap|dash|jump|charge|invisib|fade|phase|burrow|surge"
+        r"\bblink|teleport|\bleap|\bdash|\bjump|\bcharge\b(?! (?:restore|count))"
+        r"|\bcharges (?:at|toward)|invisib|\bfade|\bphase|\bburrow|\bsurge"
         r"|movement speed bonus"
     ),
-    "disables": r"\bstun|silence|root|hex|fear|taunt|sleep|cyclone|banish|disable",
+    "disables": r"\bstun|\bsilence|\broot|\bhex\b|\bfear|\btaunt|\bsleep|cyclone|banish|disable",
     "dispellable_save": r"invulnerab|untargetable|damage reduction|shield|barrier|absorb|immune to",
-    "illusions_summons": r"illusion|summon|spawn|ward|creates? .{0,30}(unit|copy|copies)",
-    "mana_dependent": r"mana",
+    "illusions_summons": r"illusion|summon|\bspawn|\bwards?\b|creates? .{0,30}(unit|copy|copies)",
+    "mana_dependent": r"\bmana\b",
 }
+# Generic Valve engine fields (AbilityManaCost, AbilityCharges, ...) exist on almost
+# every ability; their names say nothing about the hero's kit, so they are not text.
+ENGINE_FIELD = re.compile(r"^Ability[A-Z]")
 TARGETED_MIN = 2
 BURST_MIN = 700.0
+MANA_COST_MIN = 700.0
 
 
 def _base_kit(abilities):
@@ -50,7 +57,11 @@ def _mech(a):
 
 def _text(a):
     parts = [a.get("description_en") or "", *(a.get("notes_en") or [])]
-    parts += [s["name"].replace("_", " ") for s in a.get("special_values") or []]
+    parts += [
+        s["name"].replace("_", " ")
+        for s in a.get("special_values") or []
+        if not ENGINE_FIELD.match(s["name"])
+    ]
     return " ".join(parts)
 
 
@@ -83,12 +94,37 @@ def burst(abilities):
     return out
 
 
+def mana_costs(abilities):
+    """Base-kit abilities with their maximum AbilityManaCost."""
+    out = []
+    for a in _base_kit(abilities):
+        values = [
+            v
+            for s in a.get("special_values") or []
+            if s["name"] == "AbilityManaCost"
+            for v in s.get("values_float") or []
+        ]
+        if values and max(values) > 0:
+            out.append((a["name_zh"], max(values)))
+    return out
+
+
 def candidates(hero):
     """Trait -> {"candidate": bool, "evidence": [...], "rule": str} for one hero."""
     out = {}
     for trait, pattern in TEXT_PATTERNS.items():
         hits = [a["name_zh"] for a in hero["abilities"] if re.search(pattern, _text(a), re.I)]
         out[trait] = {"candidate": bool(hits), "evidence": hits, "rule": f"text:{pattern}"}
+    # Mana dependence is mostly about cost, not wording: union with a cost rule.
+    costs = mana_costs(hero["abilities"])
+    total_cost = sum(v for _, v in costs)
+    if total_cost >= MANA_COST_MIN:
+        mana = out["mana_dependent"]
+        mana["candidate"] = True
+        mana["evidence"] += [f"{n} {v:g}" for n, v in costs if n not in mana["evidence"]]
+    out["mana_dependent"]["rule"] += (
+        f" or base-kit max mana cost sum >= {MANA_COST_MIN:g} (total {total_cost:g})"
+    )
     spells = targeted(hero["abilities"])
     out["targeted_spells"] = {
         "candidate": len(spells) >= TARGETED_MIN or any(ult for _, ult in spells),

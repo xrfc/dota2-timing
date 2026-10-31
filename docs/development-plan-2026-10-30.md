@@ -305,7 +305,11 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 - M4候选：M2b冻结模型（`reports/m2b-situational-2026-10-31-v1`）在新数据上评估一次。
 - 机制信号（`capability_review_signals`）人工核对后可作为更干净的特征（需新决策与预注册）。
 - M4评估协议须加“最小效果量”门槛（M2展示规则只看区间>0，导致改善≈0也通过）。
-- 文档数量多（80+份），M0后逐步归档过时日期文档到`docs/archive/`。
+- 文档数量多（80+份），M0后逐步归档过时日期文档到`docs/archive/`。（2026-10-31审查：`docs/`根目录已94份。）
+- 2026-10-31代码审查（共享/工程范围，待用户决定）：
+  - `scripts/train_situational_items.py`、`build_situational_reference.py`、`hero_trait_crosscheck.py`用importlib加载`scripts/train_item_timing.py`的`load_snapshot`/`write`；应下沉到`src`（data或modeling.batch），改动影响各脚本IMPLEMENTATION指纹，须按登记迁移处理。
+  - `pyproject.toml`未声明numpy（modeling直接import，仅靠sklearn/pandas间接安装）；`scripts/export_raw_replay_channels.py`依赖`[replay]`的gem-dota，只装`.[dev,data]`时pytest在收集阶段报错退出而非跳过。
+  - 版本号不一致：`pyproject.toml`为0.4.0，git标签只有v0.1.0、v0.2.0。
 
 ---
 
