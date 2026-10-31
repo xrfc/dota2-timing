@@ -57,3 +57,8 @@
 - 唯一执行计划：`docs/development-plan-2026-10-30.md`（M0–M6）。接手先读其§0与§7，只做当前里程碑的下一个未勾选任务。
 - 用户决定记录在`docs/decisions/`；计划§2“待决”项必须先问用户。
 - 账号ID只在未跟踪的`configs/user.local.json`，不得写入跟踪文件或推送。
+
+## 文档维护与云端会话（2026-10-31用户要求，U24）
+
+- 所有改动都要同步维护文档：相关入口/分析文档、计划§7或§8、`CHANGELOG.md`；用户决定写入`docs/decisions/`；学习点写入`learning/docs/project-ml-notes.md`。
+- 云端会话仓库位于`/home/user/dota2-timing`，提交身份为`Claude <noreply@anthropic.com>`；容器临时、无`data/`与`reports/`，细节见计划§7“运行与交接备注”。推送仍只在用户要求时进行。
