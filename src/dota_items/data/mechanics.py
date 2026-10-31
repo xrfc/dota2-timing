@@ -41,6 +41,40 @@ def load_enums(doc, registry_heroes):
     return out
 
 
+TEXT_EVIDENCE = {"official_text", "manual"}
+RAW_FIELDS = {"behavior", "target_type", "immunity", "mana_costs", "cooldowns", "cast_ranges"}
+
+
+def load_vocabulary(doc, enums):
+    """Validate the mechanism vocabulary (layer 1 terms); return {id: entry}.
+
+    Evidence kinds: official_text, manual, enum:<decoded field>, field:<raw field>.
+    """
+    if doc.get("schema") != "mechanics-vocabulary/1":
+        raise ValueError("Unsupported mechanics vocabulary schema")
+    categories = set(doc["categories"])
+    out = {}
+    for entry in doc["mechanisms"]:
+        mid = entry["id"]
+        if mid in out:
+            raise ValueError(f"Duplicate mechanism: {mid}")
+        if entry["category"] not in categories:
+            raise ValueError(f"{mid}: unknown category {entry['category']}")
+        if not entry.get("zh") or not entry.get("definition") or not entry.get("evidence"):
+            raise ValueError(f"{mid}: needs zh, definition and evidence")
+        for kind in entry["evidence"]:
+            prefix, _, name = kind.partition(":")
+            ok = (
+                kind in TEXT_EVIDENCE
+                or (prefix == "enum" and name in enums)
+                or (prefix == "field" and name in RAW_FIELDS)
+            )
+            if not ok:
+                raise ValueError(f"{mid}: unknown evidence {kind}")
+        out[mid] = entry
+    return out
+
+
 def decode(enums, field, value):
     """Meaning (zh) of one raw value; raises KeyError for undecoded fields/values."""
     return enums[field][int(value)]["zh"]

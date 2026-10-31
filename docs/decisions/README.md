@@ -30,3 +30,4 @@
 | U24 | [云端会话推送审查修复；所有改动同步维护文档](2026-10-31-push-and-docs.md) |
 | U25 | [AI临时分支`<ai名>-temp`，经PR进main](2026-10-31-ai-temp-branch.md) |
 | U26 | [建立最小机制知识框架（三层）](2026-10-31-knowledge-framework.md) |
+| U27 | [知识框架扩为完整版：新里程碑MK](2026-10-31-complete-knowledge-framework.md) |

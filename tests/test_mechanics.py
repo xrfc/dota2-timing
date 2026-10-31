@@ -56,3 +56,46 @@ def test_real_table_matches_registry():
     enums = mx.load_enums(table, registry["heroes"])
     assert set(enums) == {"dispellable", "target_team", "damage", "type"}
     assert mx.decode(enums, "dispellable", 3) == "不可驱散"
+
+
+def vocab(*mechanisms):
+    return {
+        "schema": "mechanics-vocabulary/1",
+        "categories": {"c": "类"},
+        "mechanisms": list(mechanisms),
+    }
+
+
+def term(mid, evidence=("official_text",), category="c"):
+    return {
+        "id": mid,
+        "zh": "词",
+        "category": category,
+        "definition": "定义",
+        "evidence": list(evidence),
+    }
+
+
+def test_vocabulary_checks_ids_categories_and_evidence_kinds():
+    enums = {"dispellable": {}}
+    terms = [term("a"), term("b", ["enum:dispellable", "field:mana_costs"])]
+    assert set(mx.load_vocabulary(vocab(*terms), enums)) == {"a", "b"}
+    for bad, message in (
+        ([term("a"), term("a")], "Duplicate"),
+        ([term("a", category="x")], "unknown category"),
+        ([term("a", ["enum:immunity"])], "unknown evidence"),
+        ([term("a", ["guess"])], "unknown evidence"),
+        ([{**term("a"), "definition": ""}], "needs zh"),
+    ):
+        with pytest.raises(ValueError, match=message):
+            mx.load_vocabulary(vocab(*bad), enums)
+
+
+def test_real_vocabulary_is_valid():
+    registry = json.loads((ROOT / "knowledge/hero-capabilities/hero-registry.json").read_text())
+    enums = mx.load_enums(
+        json.loads((ROOT / "knowledge/mechanics/enums-v1.json").read_text()), registry["heroes"]
+    )
+    doc = json.loads((ROOT / "knowledge/mechanics/vocabulary-v1.json").read_text())
+    terms = mx.load_vocabulary(doc, enums)
+    assert {"applies_break", "break_sensitive", "effect_dispellability"} <= set(terms)
