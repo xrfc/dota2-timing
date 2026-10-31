@@ -42,6 +42,7 @@
 - [整局实验层维护（2026-10-22）](experiment-maintenance.md)
 - [英雄知识能否作为训练冷启动？](knowledge-cold-start.md)
 - [知识维护、路径映射与证据恢复](knowledge-maintenance.md)
+- [机制知识框架（U26）：事实层→机制规则层→推导层](knowledge-framework.md)
 - [长期产品目标：赛前准备与赛后复盘教练](long-term-coach-goals.md)
 - [技术选型与优化路线](long-term-roadmap.md)
 - [单模块维护与长期扩展（2026-10-17）](modular-maintenance.md)

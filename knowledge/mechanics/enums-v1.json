@@ -1,0 +1,51 @@
+{
+ "schema": "mechanics-enums/1",
+ "version": "v1-draft-2026-10-31",
+ "decision": "U26",
+ "layer": "facts",
+ "status": "draft_pending_user_confirmation",
+ "source": "knowledge/hero-capabilities/hero-registry.json abilities[].raw_mechanics (Valve datafeed raw enums, stored opaque by build_profiles.py)",
+ "basis": "含义按Valve引擎枚举定义顺序推断，并用已知技能逐值核对；confirmed=true表示用户已确认。数据快照未核对补丁（patch_verified=false）。",
+ "fields": {
+  "dispellable": {
+   "zh": "技能施加的效果能否被驱散",
+   "values": {
+    "0": {"valve": "SPELL_DISPELLABLE_NONE", "zh": "不产生可驱散的效果（被动、位移、施加驱散的一方等）", "examples": ["antimage_mana_break", "antimage_blink", "largo_catchy_lick"], "confirmed": false},
+    "1": {"valve": "SPELL_DISPELLABLE_YES_STRONG", "zh": "只有强驱散能驱散", "examples": ["lion_voodoo", "shadow_shaman_voodoo", "earthshaker_fissure", "bane_fiends_grip"], "confirmed": false},
+    "2": {"valve": "SPELL_DISPELLABLE_YES", "zh": "弱驱散即可驱散", "examples": ["windrunner_windrun", "abaddon_aphotic_shield", "lich_frost_shield"], "confirmed": false},
+    "3": {"valve": "SPELL_DISPELLABLE_NO", "zh": "不可驱散", "examples": ["dazzle_shallow_grave", "abaddon_borrowed_time", "legion_commander_duel", "faceless_void_chronosphere", "doom_bringer_doom"], "confirmed": false}
+   }
+  },
+  "target_team": {
+   "zh": "技能作用的阵营",
+   "values": {
+    "0": {"valve": "DOTA_UNIT_TARGET_TEAM_NONE", "zh": "无指定阵营（自身、无目标、被动）", "examples": ["antimage_blink", "antimage_mana_break"], "confirmed": false},
+    "1": {"valve": "DOTA_UNIT_TARGET_TEAM_FRIENDLY", "zh": "友方", "examples": ["lich_frost_shield", "crystal_maiden_brilliance_aura"], "confirmed": false},
+    "2": {"valve": "DOTA_UNIT_TARGET_TEAM_ENEMY", "zh": "敌方", "examples": ["antimage_mana_void", "axe_culling_blade"], "confirmed": false},
+    "3": {"valve": "DOTA_UNIT_TARGET_TEAM_BOTH", "zh": "敌友均可", "examples": ["bane_nightmare", "kunkka_x_marks_the_spot"], "confirmed": false},
+    "4": {"valve": "DOTA_UNIT_TARGET_TEAM_CUSTOM", "zh": "自定义（技能自带的特殊目标规则）", "examples": ["vengefulspirit_nether_swap", "tiny_toss"], "confirmed": false}
+   }
+  },
+  "damage": {
+   "zh": "伤害类型",
+   "values": {
+    "0": {"valve": "DAMAGE_TYPE_NONE", "zh": "无伤害", "examples": ["antimage_blink"], "confirmed": false},
+    "1": {"valve": "DAMAGE_TYPE_PHYSICAL", "zh": "物理", "examples": ["juggernaut_swift_slash", "drow_ranger_multishot"], "confirmed": false},
+    "2": {"valve": "DAMAGE_TYPE_MAGICAL", "zh": "魔法", "examples": ["crystal_maiden_crystal_nova", "antimage_mana_void"], "confirmed": false},
+    "4": {"valve": "DAMAGE_TYPE_PURE", "zh": "纯粹", "examples": ["axe_culling_blade", "bane_brain_sap"], "confirmed": false}
+   }
+  },
+  "type": {
+   "zh": "技能类别",
+   "values": {
+    "0": {"valve": "ABILITY_TYPE_BASIC", "zh": "普通技能", "examples": ["antimage_blink"], "confirmed": false},
+    "1": {"valve": "ABILITY_TYPE_ULTIMATE", "zh": "大招", "examples": ["antimage_mana_void", "bane_fiends_grip"], "confirmed": false}
+   }
+  }
+ },
+ "not_decoded": {
+  "immunity": "取值0–5的含义（与技能免疫/减益免疫的交互）未能用已知技能稳定核对，暂不解码、不使用。",
+  "behavior": "位掩码；代码只使用位2＝被动、位8＝单位目标（见dota_items.data.hero_traits），其余位暂不解码。",
+  "target_type": "位掩码，暂不使用。"
+ }
+}

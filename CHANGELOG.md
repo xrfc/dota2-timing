@@ -1,5 +1,17 @@
 # 变更记录
 
+## 2026-10-31 完整知识框架里程碑MK（U27）
+
+- 决策U27：知识框架扩为完整版（全英雄含A杖/魔晶＋全部可购买装备，中立物品与天赋以后），新里程碑MK先于M2b剩余任务；M2b暂停于T6c（并入MK-T2）。计划§4新增MK-T0～T6，§7状态表更新。
+- MK-T1草稿：机制词表`knowledge/mechanics/vocabulary-v1.json`（42项、9类，含破坏、隐身/真视、沉默、减益免疫/穿透等v1缺失机制），`dota_items.data.mechanics.load_vocabulary`校验编号、类别与依据类型。定义待用户拍板，4个待答问题见`docs/knowledge-framework.md`§5。
+
+## 2026-10-31 机制知识框架第1层（U26）
+
+- 新增三层机制知识框架设计`docs/knowledge-framework.md`：事实层→机制规则层→推导层，只覆盖主宰6件与辅助9件针对装。
+- 第1层草稿`knowledge/mechanics/enums-v1.json`：解码官方`dispellable`、`target_team`、`damage`、`type`枚举，每个取值附核对例子技能；`dota_items.data.mechanics.load_enums`校验例子与登记表一致、所有出现的取值都有解释。全部`confirmed=false`，待用户确认。
+- 记录用户抽查反馈（`docs/hero-traits-analysis.md`§6）：朗戈证据技能错误；守护天使、虚妄之诺、折光为不可驱散，v1标注错误。v1不改，于v2吸收。
+- 计划M2b新增T6c/T6d/T6e，原T7（Q10）并入T6d。
+
 ## 2026-10-31 代码审查（云端会话）
 
 - 全量检查通过（ruff、1379项pytest通过/17项因本地冻结产物不在git而跳过、学习与前端测试）。
