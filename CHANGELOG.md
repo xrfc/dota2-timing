@@ -6,6 +6,7 @@
 - 收紧英雄特性候选规则：不再匹配Valve通用字段名（AbilityManaCost等），ward/charge/root等加词边界；法力依赖改为“文字提到mana或基础技能蓝耗合计≥700”。候选：法力依赖127→50、召唤89→71、机动96→87；v1标签与交叉检查结果不变。详见`docs/hero-traits-analysis.md`§2。
 - 其余发现（脚本间importlib加载、numpy未声明、gem-dota缺失时收集报错、版本号与标签不一致、文档过多）记入计划§8待办池，待用户决定。
 - 决策U24：推送到origin/main；所有改动同步维护文档。
+- 决策U25：新增AI临时分支契约`docs/handoff/ai-temp-branch-contract.md`——临时环境中的AI在各自`<ai名>-temp`分支提交并随时推送，开PR由用户合并进main；删除旧临时分支`claude/hero-traits-candidate-rules`（已全部并入main）。
 
 ## 2026-10-26 近期功能与统一整理
 

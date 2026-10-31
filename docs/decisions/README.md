@@ -28,3 +28,4 @@
 | U22 | [针对装改为触发条件＋数据验证](2026-10-31-situational-triggers.md) |
 | U23 | [先做英雄特性初步分析](2026-10-31-hero-traits.md) |
 | U24 | [云端会话推送审查修复；所有改动同步维护文档](2026-10-31-push-and-docs.md) |
+| U25 | [AI临时分支`<ai名>-temp`，经PR进main](2026-10-31-ai-temp-branch.md) |
