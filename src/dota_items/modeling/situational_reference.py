@@ -61,3 +61,77 @@ def reference(players, purchases, match_ids):
         },
         "supports": supports,
     }
+
+
+# U23 expected pairs: trait -> situational items it should raise (draft mapping).
+EXPECTED = {
+    "evasion": ("monkey_king_bar",),
+    "sustain": ("skadi", "spirit_vessel"),
+    "mobility": ("basher", "force_staff"),
+    "disables": ("sange_and_yasha", "cyclone", "aeon_disk"),
+    "dispellable_save": ("nullifier",),
+    "illusions_summons": ("diffusal",),
+    "mana_dependent": ("diffusal",),
+    "magic_burst": ("glimmer_cape", "pipe"),
+    "targeted_spells": ("lotus_orb",),
+}
+
+
+def _diff(a, n_a, b, n_b):
+    """Difference of proportions a/n_a - b/n_b with a normal-approximation 95% CI."""
+    if not n_a or not n_b:
+        return None
+    p, q = a / n_a, b / n_b
+    se = (p * (1 - p) / n_a + q * (1 - q) / n_b) ** 0.5
+    return {"with": p, "without": q, "diff": p - q, "ci95": [p - q - 1.96 * se, p - q + 1.96 * se]}
+
+
+def trait_crosscheck(players, purchases, match_ids, trait_heroes):
+    """Per hero spec, trait (and subgroup) and item: bought rate with vs without the trait.
+
+    trait_heroes: {group: set(hero_id)}; "with" = at least one enemy hero in the group.
+    Descriptive only; enemy items and timing are not considered here.
+    """
+    match_ids = set(match_ids)
+    players = [r for r in players if r["match_id"] in match_ids]
+    bought = {}
+    for p in purchases:
+        if p["match_id"] in match_ids:
+            bought.setdefault((p["match_id"], p["player_slot"]), set()).add(p["item"])
+    by_match = {}
+    for r in players:
+        by_match.setdefault(r["match_id"], []).append(r)
+    specs = {si.HERO: si.CLASSES, **{s: SUPPORT_ITEMS for s in SUPPORTS}}
+    out = []
+    for spec, items in specs.items():
+        rows = [r for r in players if (r["hero_id"], r["position"]) == spec]
+        if spec == si.HERO:
+            rows = [r for r in rows if not r["collapsed_carry"]]
+        targets = []
+        for r in rows:
+            own = bought.get((r["match_id"], r["player_slot"]), set())
+            if spec == si.HERO:
+                own = {si.ITEM_CLASS[i] for i in own if i in si.ITEM_CLASS}
+            enemies = {
+                e["hero_id"] for e in by_match[r["match_id"]] if e["is_radiant"] != r["is_radiant"]
+            }
+            targets.append((enemies, own))
+        for group, heroes in trait_heroes.items():
+            hit = [own for enemies, own in targets if enemies & heroes]
+            miss = [own for enemies, own in targets if not enemies & heroes]
+            for item in items:
+                a, b = sum(item in o for o in hit), sum(item in o for o in miss)
+                out.append(
+                    {
+                        "spec": list(spec),
+                        "group": group,
+                        "item": item,
+                        "n_with": len(hit),
+                        "n_without": len(miss),
+                        "bought_with": a,
+                        "bought_without": b,
+                        "expected": item in EXPECTED.get(group.split(":")[0], ()),
+                        **(_diff(a, len(hit), b, len(miss)) or {"diff": None}),
+                    }
+                )
+    return out

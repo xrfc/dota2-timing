@@ -52,3 +52,22 @@ def test_counts_use_only_given_matches_and_count_each_player_once():
     assert wd["bought_counts"]["spirit_vessel"] == 1 and wd["bought_counts"]["pipe"] == 0
     assert set(wd["bought_counts"]) == set(sr.SUPPORT_ITEMS)
     assert [s["games"] for s in ref["supports"][1:]] == [0, 0]
+
+
+def test_trait_crosscheck_compares_enemy_trait_presence():
+    players, purchases = [], []
+    for m in range(4):
+        players += [player(m, 0, 8, 1)] + [player(m, 128 + i, 40 + i) for i in range(4)]
+        players.append(player(m, 132, 44 if m < 2 else 99))  # PA in matches 0, 1
+    purchases = [buy(0, 0, "monkey_king_bar"), buy(1, 0, "monkey_king_bar"), buy(2, 0, "skadi")]
+    rows = sr.trait_crosscheck(players, purchases, range(4), {"evasion": {44}})
+    mkb = next(r for r in rows if r["spec"] == [8, 1] and r["item"] == "monkey_king_bar")
+    assert (mkb["n_with"], mkb["bought_with"], mkb["n_without"], mkb["bought_without"]) == (
+        2,
+        2,
+        2,
+        0,
+    )
+    assert mkb["diff"] == 1.0 and mkb["expected"]
+    wd = [r for r in rows if r["spec"] == [30, 5]]
+    assert wd and all(r["diff"] is None for r in wd)  # no supports in the fixture

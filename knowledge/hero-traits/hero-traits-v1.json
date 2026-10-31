@@ -1,0 +1,1357 @@
+{
+ "schema": "hero-traits/1",
+ "version": "v1-assistant-draft-2026-10-31",
+ "decision": "U23",
+ "status": "assistant_labeled_pending_user_spot_check",
+ "source": "knowledge/hero-capabilities/hero-registry.json (official ability snapshot); ability names must exist there",
+ "traits": {
+  "evasion": {
+   "zh": "闪避/致盲",
+   "definition": "技能使自身获得闪避（self_evasion），或使敌方攻击落空（blind）"
+  },
+  "sustain": {
+   "zh": "治疗/吸血/高回复",
+   "definition": "治疗、吸血或高额回复是该英雄技能的主要效果之一（附带少量回复不算）"
+  },
+  "mobility": {
+   "zh": "高机动/逃生",
+   "definition": "有可主动使用的闪烁、跳跃、冲刺、传送或隐身逃生手段"
+  },
+  "disables": {
+   "zh": "控制多",
+   "definition": "至少两个技能带硬控（眩晕、妖术、沉默、定身、恐惧、睡眠、吹风等）"
+  },
+  "dispellable_save": {
+   "zh": "依赖可驱散保命效果",
+   "definition": "关键保命/防御增益可被驱散（否决坠饰等）；驱散规则未逐条核对，置信度偏低"
+  },
+  "illusions_summons": {
+   "zh": "幻象/召唤物",
+   "definition": "依赖幻象（illusions）或召唤单位（summons）作战"
+  },
+  "mana_dependent": {
+   "zh": "法力依赖",
+   "definition": "核心机制持续消耗法力（如魔法盾、球状闪电），或依赖高频施法"
+  },
+  "magic_burst": {
+   "zh": "魔法爆发",
+   "definition": "有高额魔法/纯粹伤害技能，可在短时间内打出大量伤害"
+  },
+  "targeted_spells": {
+   "zh": "依赖指向技能",
+   "definition": "客观规则：基础技能中敌方单体指向主动技能≥2个，或大招为敌方单体指向（清莲宝珠可反射）",
+   "rule_based": true
+  }
+ },
+ "labels": {
+  "evasion": [
+   {
+    "hero": "幻影刺客",
+    "abilities": [
+     "飘忽不定"
+    ],
+    "confidence": "high",
+    "subtype": "self_evasion"
+   },
+   {
+    "hero": "风行者",
+    "abilities": [
+     "风行"
+    ],
+    "confidence": "high",
+    "subtype": "self_evasion"
+   },
+   {
+    "hero": "酒仙",
+    "abilities": [
+     "醉拳"
+    ],
+    "confidence": "high",
+    "subtype": "self_evasion"
+   },
+   {
+    "hero": "娜迦海妖",
+    "abilities": [
+     "鳗鱼皮"
+    ],
+    "confidence": "high",
+    "subtype": "self_evasion"
+   },
+   {
+    "hero": "天穹守望者",
+    "abilities": [
+     "磁场"
+    ],
+    "confidence": "high",
+    "subtype": "self_evasion",
+    "note": "风暴双雄另有致盲（low）"
+   },
+   {
+    "hero": "森海飞霞",
+    "abilities": [
+     "密林奔走"
+    ],
+    "confidence": "high",
+    "subtype": "self_evasion"
+   },
+   {
+    "hero": "幻影长矛手",
+    "abilities": [
+     "幻影冲锋"
+    ],
+    "confidence": "medium",
+    "subtype": "self_evasion"
+   },
+   {
+    "hero": "米拉娜",
+    "abilities": [
+     "月之暗面"
+    ],
+    "confidence": "medium",
+    "subtype": "self_evasion"
+   },
+   {
+    "hero": "沙王",
+    "abilities": [
+     "沙尘暴"
+    ],
+    "confidence": "high",
+    "subtype": "blind"
+   },
+   {
+    "hero": "修补匠",
+    "abilities": [
+     "激光"
+    ],
+    "confidence": "high",
+    "subtype": "blind"
+   },
+   {
+    "hero": "育母蜘蛛",
+    "abilities": [
+     "麻痹之咬"
+    ],
+    "confidence": "high",
+    "subtype": "blind"
+   },
+   {
+    "hero": "光之守卫",
+    "abilities": [
+     "致盲之光"
+    ],
+    "confidence": "high",
+    "subtype": "blind"
+   },
+   {
+    "hero": "巨魔战将",
+    "abilities": [
+     "旋风飞斧（近战）"
+    ],
+    "confidence": "high",
+    "subtype": "blind"
+   },
+   {
+    "hero": "克林克兹",
+    "abilities": [
+     "扫射"
+    ],
+    "confidence": "high",
+    "subtype": "blind"
+   },
+   {
+    "hero": "力丸",
+    "abilities": [
+     "烟幕"
+    ],
+    "confidence": "high",
+    "subtype": "blind"
+   },
+   {
+    "hero": "凯",
+    "abilities": [
+     "渡鸦之纱"
+    ],
+    "confidence": "low",
+    "subtype": "blind"
+   },
+   {
+    "hero": "破晓辰星",
+    "abilities": [
+     "天光现世"
+    ],
+    "confidence": "low",
+    "subtype": "blind"
+   }
+  ],
+  "sustain": [
+   {
+    "hero": "主宰",
+    "abilities": [
+     "治疗守卫"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "巫医",
+    "abilities": [
+     "巫毒疗法"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "全能骑士",
+    "abilities": [
+     "洗礼"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "戴泽",
+    "abilities": [
+     "暗影波"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "神谕者",
+    "abilities": [
+     "虚妄之诺"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "陈",
+    "abilities": [
+     "神力恩泽"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "树精卫士",
+    "abilities": [
+     "活体护甲"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "瘟疫法师",
+    "abilities": [
+     "死亡脉冲"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "艾欧",
+    "abilities": [
+     "羁绊"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "亚巴顿",
+    "abilities": [
+     "迷雾缠绕"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "魅惑魔女",
+    "abilities": [
+     "自然之助"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "寒冬飞龙",
+    "abilities": [
+     "极寒之拥"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "破晓辰星",
+    "abilities": [
+     "熠熠生辉"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "冥魂大帝",
+    "abilities": [
+     "吸血灵魂"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "斯拉克",
+    "abilities": [
+     "暗影之舞"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "炼金术士",
+    "abilities": [
+     "化学狂暴"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "帕格纳",
+    "abilities": [
+     "生命汲取"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "军团指挥官",
+    "abilities": [
+     "勇气之霎"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "哈斯卡",
+    "abilities": [
+     "狂战士之血"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "凤凰",
+    "abilities": [
+     "烈日炙烤"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "噬魂鬼",
+    "abilities": [
+     "盛宴"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "血魔",
+    "abilities": [
+     "焦渴"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "不朽尸王",
+    "abilities": [
+     "噬魂"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "暗夜魔王",
+    "abilities": [
+     "午夜盛宴"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "死亡先知",
+    "abilities": [
+     "吸魂巫术"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "祸乱之源",
+    "abilities": [
+     "蚀脑"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "编织者",
+    "abilities": [
+     "时光倒流"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "帕吉",
+    "abilities": [
+     "肢解"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "克林克兹",
+    "abilities": [
+     "死亡契约"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "电炎绝手",
+    "abilities": [
+     "龙炎饼干"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "伐木机",
+    "abilities": [
+     "暴露疗法"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "朗戈",
+    "abilities": [
+     "大屿灵药"
+    ],
+    "confidence": "low"
+   }
+  ],
+  "mobility": [
+   {
+    "hero": "敌法师",
+    "abilities": [
+     "闪烁"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "痛苦女王",
+    "abilities": [
+     "闪烁"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "帕克",
+    "abilities": [
+     "相位转移",
+     "幻象法球"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "风暴之灵",
+    "abilities": [
+     "球状闪电"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "米拉娜",
+    "abilities": [
+     "跳跃"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "风行者",
+    "abilities": [
+     "风行"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "幻影刺客",
+    "abilities": [
+     "幻影突袭"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "力丸",
+    "abilities": [
+     "闪烁突袭"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "编织者",
+    "abilities": [
+     "缩地"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "克林克兹",
+    "abilities": [
+     "骨隐步"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "赏金猎人",
+    "abilities": [
+     "暗影步"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "斯拉克",
+    "abilities": [
+     "突袭",
+     "暗影之舞"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "虚空假面",
+    "abilities": [
+     "时间漫游"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "变体精灵",
+    "abilities": [
+     "波浪形态"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "自然先知",
+    "abilities": [
+     "传送"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "米波",
+    "abilities": [
+     "忽悠"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "灰烬之灵",
+    "abilities": [
+     "激活残焰"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "大地之灵",
+    "abilities": [
+     "巨石翻滚"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "齐天大圣",
+    "abilities": [
+     "丛林之舞"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "黑暗贤者",
+    "abilities": [
+     "奔腾"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "百戏大王",
+    "abilities": [
+     "逃生技"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "马格纳斯",
+    "abilities": [
+     "巨角冲撞"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "半人马战行者",
+    "abilities": [
+     "奔袭冲撞"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "发条技师",
+    "abilities": [
+     "发射钩爪"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "伐木机",
+    "abilities": [
+     "伐木锯链"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "蝙蝠骑士",
+    "abilities": [
+     "火焰飞行"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "斯拉达",
+    "abilities": [
+     "守卫冲刺"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "裂魂人",
+    "abilities": [
+     "暗影冲刺"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "凯",
+    "abilities": [
+     "制敌爪钩"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "獸",
+    "abilities": [
+     "突"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "玛西",
+    "abilities": [
+     "特快专递"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "森海飞霞",
+    "abilities": [
+     "野地奇袭"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "虚无之灵",
+    "abilities": [
+     "太虚之径"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "朗戈",
+    "abilities": [
+     "灵呱一闪"
+    ],
+    "confidence": "low"
+   }
+  ],
+  "disables": [
+   {
+    "hero": "莱恩",
+    "abilities": [
+     "裂地尖刺",
+     "妖术"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "暗影萨满",
+    "abilities": [
+     "妖术",
+     "枷锁"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "撼地者",
+    "abilities": [
+     "沟壑",
+     "余震"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "小小",
+    "abilities": [
+     "山崩",
+     "投掷"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "斯拉达",
+    "abilities": [
+     "鱼人碎击",
+     "深海重击"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "沉默术士",
+    "abilities": [
+     "遗言",
+     "全领域静默"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "帕克",
+    "abilities": [
+     "梦境缠绕",
+     "新月之痕"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "暗夜魔王",
+    "abilities": [
+     "虚空",
+     "伤残恐惧"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "虚空假面",
+    "abilities": [
+     "时间锁定",
+     "时间结界"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "大地之灵",
+    "abilities": [
+     "巨石冲击",
+     "地磁之握"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "巨牙海民",
+    "abilities": [
+     "雪球",
+     "海象神拳！"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "干扰者",
+    "abilities": [
+     "动能力场",
+     "静态风暴"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "祈求者",
+    "abilities": [
+     "强袭飓风",
+     "急速冷却"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "树精卫士",
+    "abilities": [
+     "自然卷握",
+     "疯狂生长"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "娜迦海妖",
+    "abilities": [
+     "诱捕",
+     "海妖之歌"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "上古巨神",
+    "abilities": [
+     "回音重踏",
+     "裂地沟壑"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "邪影芳灵",
+    "abilities": [
+     "诅咒王冠",
+     "作祟"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "昆卡",
+    "abilities": [
+     "洪流",
+     "幽灵船"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "天涯墨客",
+    "abilities": [
+     "缚魂",
+     "戾影"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "獸",
+    "abilities": [
+     "捶",
+     "咤"
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "dispellable_save": [
+   {
+    "hero": "风行者",
+    "abilities": [
+     "风行"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "瘟疫法师",
+    "abilities": [
+     "幽魂护罩"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "帕格纳",
+    "abilities": [
+     "衰老"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "亚巴顿",
+    "abilities": [
+     "无光之盾"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "灰烬之灵",
+    "abilities": [
+     "烈火罩"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "巫妖",
+    "abilities": [
+     "冰霜魔盾"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "树精卫士",
+    "abilities": [
+     "活体护甲"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "全能骑士",
+    "abilities": [
+     "守护天使"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "神谕者",
+    "abilities": [
+     "虚妄之诺"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "圣堂刺客",
+    "abilities": [
+     "折光"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "黑暗贤者",
+    "abilities": [
+     "离子外壳"
+    ],
+    "confidence": "low"
+   }
+  ],
+  "illusions_summons": [
+   {
+    "hero": "幻影长矛手",
+    "abilities": [
+     "灵魂之矛",
+     "神行百变"
+    ],
+    "confidence": "high",
+    "subtype": "illusions"
+   },
+   {
+    "hero": "娜迦海妖",
+    "abilities": [
+     "镜像"
+    ],
+    "confidence": "high",
+    "subtype": "illusions"
+   },
+   {
+    "hero": "恐怖利刃",
+    "abilities": [
+     "惑幻"
+    ],
+    "confidence": "high",
+    "subtype": "illusions"
+   },
+   {
+    "hero": "混沌骑士",
+    "abilities": [
+     "混沌之军"
+    ],
+    "confidence": "high",
+    "subtype": "illusions"
+   },
+   {
+    "hero": "幽鬼",
+    "abilities": [
+     "鬼影重重"
+    ],
+    "confidence": "medium",
+    "subtype": "illusions"
+   },
+   {
+    "hero": "齐天大圣",
+    "abilities": [
+     "猴子猴孙"
+    ],
+    "confidence": "medium",
+    "subtype": "illusions"
+   },
+   {
+    "hero": "自然先知",
+    "abilities": [
+     "自然的呼唤"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "兽王",
+    "abilities": [
+     "召唤猛禽",
+     "召唤刀背兽"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "独行德鲁伊",
+    "abilities": [
+     "熊灵伙伴"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "育母蜘蛛",
+    "abilities": [
+     "孵化蜘蛛"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "陈",
+    "abilities": [
+     "神圣劝化"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "魅惑魔女",
+    "abilities": [
+     "魅惑"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "狼人",
+    "abilities": [
+     "召狼"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "维萨吉",
+    "abilities": [
+     "召唤佣兽"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "不朽尸王",
+    "abilities": [
+     "墓碑"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "剧毒术士",
+    "abilities": [
+     "瘟疫守卫"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "暗影萨满",
+    "abilities": [
+     "群蛇守卫"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "谜团",
+    "abilities": [
+     "恶魔召唤"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "米波",
+    "abilities": [
+     "分则能成"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "孽主",
+    "abilities": [
+     "恶魔之扉"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "酒仙",
+    "abilities": [
+     "元素分离"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "冥魂大帝",
+    "abilities": [
+     "白骨护卫"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "术士",
+    "abilities": [
+     "混乱之祭"
+    ],
+    "confidence": "high",
+    "subtype": "summons"
+   },
+   {
+    "hero": "克林克兹",
+    "abilities": [
+     "地狱之裂"
+    ],
+    "confidence": "low",
+    "subtype": "summons"
+   }
+  ],
+  "mana_dependent": [
+   {
+    "hero": "美杜莎",
+    "abilities": [
+     "魔法盾"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "风暴之灵",
+    "abilities": [
+     "球状闪电"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "祈求者",
+    "abilities": [
+     "元素祈唤"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "天怒法师",
+    "abilities": [
+     "奥法鹰隼"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "宙斯",
+    "abilities": [
+     "弧形闪电"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "殁境神蚀者",
+    "abilities": [
+     "精华变迁"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "拉席克",
+    "abilities": [
+     "脉冲新星"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "帕格纳",
+    "abilities": [
+     "幽冥爆轰"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "杰奇洛",
+    "abilities": [
+     "冰火交加"
+    ],
+    "confidence": "low"
+   },
+   {
+    "hero": "帕克",
+    "abilities": [
+     "幻象法球"
+    ],
+    "confidence": "low"
+   }
+  ],
+  "magic_burst": [
+   {
+    "hero": "莱恩",
+    "abilities": [
+     "死亡之指",
+     "裂地尖刺"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "莉娜",
+    "abilities": [
+     "神灭斩",
+     "龙破斩",
+     "光击阵"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "宙斯",
+    "abilities": [
+     "雷击",
+     "弧形闪电",
+     "雷神之怒"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "天怒法师",
+    "abilities": [
+     "神秘之耀",
+     "震荡光弹"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "殁境神蚀者",
+    "abilities": [
+     "神智之蚀",
+     "星体禁锢"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "痛苦女王",
+    "abilities": [
+     "超声冲击波",
+     "痛苦尖叫"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "撼地者",
+    "abilities": [
+     "回音击",
+     "沟壑"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "小小",
+    "abilities": [
+     "山崩",
+     "投掷"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "修补匠",
+    "abilities": [
+     "激光",
+     "再装填"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "祈求者",
+    "abilities": [
+     "强袭飓风",
+     "阳炎冲击"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "森海飞霞",
+    "abilities": [
+     "一箭穿心"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "瘟疫法师",
+    "abilities": [
+     "死神镰刀",
+     "死亡脉冲"
+    ],
+    "confidence": "high"
+   },
+   {
+    "hero": "巫妖",
+    "abilities": [
+     "连环霜冻",
+     "寒霜爆发"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "拉席克",
+    "abilities": [
+     "闪电风暴",
+     "脉冲新星"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "远古冰魄",
+    "abilities": [
+     "冰晶爆轰"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "光之守卫",
+    "abilities": [
+     "冲击波"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "天涯墨客",
+    "abilities": [
+     "戾影",
+     "墨涌"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "虚无之灵",
+    "abilities": [
+     "残阴",
+     "异化",
+     "共鸣脉冲"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "帕格纳",
+    "abilities": [
+     "幽冥爆轰"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "大地之灵",
+    "abilities": [
+     "巨石冲击",
+     "地磁之握"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "杰奇洛",
+    "abilities": [
+     "冰火交加",
+     "液态火"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "风暴之灵",
+    "abilities": [
+     "残影",
+     "球状闪电"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "狙击手",
+    "abilities": [
+     "暗杀"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "hero": "帕克",
+    "abilities": [
+     "幻象法球",
+     "梦境缠绕"
+    ],
+    "confidence": "medium"
+   }
+  ]
+ },
+ "rule_notes": "targeted_spells由dota_items.data.hero_traits.targeted()按原始枚举计算，不人工标注；其余为助手依官方技能描述人工标注。"
+}
