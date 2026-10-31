@@ -32,11 +32,12 @@
 **开始**
 
 ```bash
-git fetch origin main <ai名>-temp
+git status --short          # 必须为空；有未提交改动先问用户，不得丢弃
+git fetch origin            # 远端还没有该分支时，按名字fetch会报错，故整体fetch
 # 若远端还没有该分支：从最新main创建
 git checkout -B <ai名>-temp origin/main
-# 若已有：检查它是否已全部并入main
-git checkout <ai名>-temp && git reset --hard origin/<ai名>-temp
+# 若已有：切到远端版本，再检查是否已全部并入main
+git checkout -B <ai名>-temp origin/<ai名>-temp
 git log --oneline origin/main..<ai名>-temp   # 列出尚未进入main的提交
 ```
 
