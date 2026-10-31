@@ -47,6 +47,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | U3 | 三个产品目标A/B/C如§1 | 2026-10-30 |
 | U4 | 采用本计划；主玩1/5号位优势路、传奇段位 | 2026-10-30 |
 | U5 | 标注方式：客观标签自动生成；判断类由助手先标、用户抽查约1/3；定义类用户拍板 | 2026-10-30 |
+| U26 | 建最小机制知识框架（事实层→机制规则层→推导层），只覆盖主宰6件与辅助9件针对装；v2特性由规则推导；原T7并入T6d | 2026-10-31 |
 | U25 | 临时环境中的AI用各自的`<ai名>-temp`分支（Claude为`claude-temp`），随时推送防丢失，开PR由用户合并进main；契约`docs/handoff/ai-temp-branch-contract.md` | 2026-10-31 |
 | U24 | 推送代码审查修复到origin/main；所有改动都要同步维护文档 | 2026-10-31 |
 | U23 | 先做英雄特性初步分析：9维度，助手先标并附技能证据、数据交叉检查、用户抽查约1/3 | 2026-10-31 |
@@ -77,7 +78,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | ~~Q3~~ | 已决（U9、U10） | — | — |
 | ~~Q8~~ | 已决（U15） | — | — |
 | ~~Q9~~ | 已决（U16，方案C） | — | — |
-| Q10 | 各针对装触发条件（敌方英雄、敌方装备）与“敌方先出”时间口径 | M2b-T7 | 助手起草，用户修改 |
+| Q10 | 各针对装触发条件（敌方英雄、敌方装备）与“敌方先出”时间口径 | M2b-T6d（U26：以机制规则形式给出） | 助手起草，用户修改 |
 | Q4 | 对线“打法”和“10分钟优势”的定义 | M3-T1 | 见M3-T1候选 |
 | Q5 | 独立评估采集参数（窗口、规模、请求预算；是否去掉≥30分钟与含主宰限制，段位仍限高分段） | M4-T1 | 7天窗口，超凡+约500场，不限时长与英雄 |
 | Q6 | M6任务定义（危险预测／强玩家行为对照）与录像规模 | M6开始 | 沿用原COACH-03草案 |
@@ -163,7 +164,10 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | M2b-T5 | 8780外壳新增“赛前 · 针对装”页。U20：模型未通过，只显示基线（主宰第一件占比与整局出现率；辅助U21出现率），注明阵容影响未证实，无阵容输入；真实浏览器验收（已完成） |
 | M2b-T6 | ~~用户评审基线页~~（U22：用户指出须考虑阵容，改走T7–T10） |
 | M2b-T6b | 英雄特性初步分析（U23）：`knowledge/hero-traits/`特性表＋交叉检查报告`docs/hero-traits-analysis.md`；用户抽查约1/3 |
-| M2b-T7 | 问Q10：用户给出每件针对装的触发条件（敌方英雄、敌方装备），助手可起草供修改 |
+| M2b-T6c | 知识框架第1层·事实层（U26）：官方原始枚举解码表`knowledge/mechanics/enums-v1.json`＋校验`dota_items.data.mechanics`；用户确认各取值含义。设计`docs/knowledge-framework.md` |
+| M2b-T6d | 第2层·机制规则层（U26，合并Q10）：每件针对装（主宰6件、辅助9件）克制的机制写成可执行规则，引用第1层与装备官方说明，含敌方装备触发与“先出”口径；助手起草，用户定 |
+| M2b-T6e | 第3层·推导层：由规则自动生成hero-traits v2与触发条件，每条附证据链；吸收T6b抽查意见；人工改动登记理由 |
+| ~~M2b-T7~~ | ~~问Q10~~（U26：并入T6d） |
 | M2b-T8 | 数据验证：M1训练集上有/无触发时的出装比例、样本量、区间；“先出”口径；报告`docs/m2b-triggers.md` |
 | M2b-T9 | 页面：输入敌方阵容＋可勾选已见敌方装备，列出被触发的针对装与数据依据；替换基线页；真实浏览器验收 |
 | M2b-T10 | 用户用真实阵容评审；之后M2b结案进M3 |
@@ -277,7 +281,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### 下一步（接手从这里开始）
 
-**U22/U23（2026-10-31）改道。M2b-T6b英雄特性初步分析：助手标注v1与交叉检查已完成（`knowledge/hero-traits/hero-traits-v1.json`、`docs/hero-traits-analysis.md`、`reports/hero-traits-crosscheck-2026-10-31-v1`）。当前：等用户抽查§5清单并回答§3待解释点→出v2→T7触发条件（Q10）。**以下为U22前状态。M2b-T0～T5已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`未通过（功效不足）；U20决定上线基线页后进M3，U21定辅助清单。T5：参照统计`reports/m2b-situational-reference-2026-10-31-v1`（M1训练集，`scripts/build_situational_reference.py`），8780“赛前 · 针对装”页，验收`reports/coach-app-acceptance-2026-10-31-v5`（19项通过），模型卡`docs/m2b-model-card.md`。**当前：M2b-T6——请用户打开8780“赛前 · 针对装”评审内容与说明**；评审意见记决策后M2b结案，进M3-T1（先问Q4）。不得在同一验证集上调参重跑。
+**U26（2026-10-31）：改用三层机制知识框架。当前：M2b-T6c——第1层草稿`knowledge/mechanics/enums-v1.json`已完成并通过与登记表的校验，等用户确认各取值含义（`dispellable`等，见`docs/knowledge-framework.md`§3）→T6d起草机制规则（合并Q10）→T6e推导v2。T6b抽查意见（朗戈证据技能、3条不可驱散）记在`docs/hero-traits-analysis.md`§6，于T6e吸收。** 以下为U26前状态。**U22/U23（2026-10-31）改道。M2b-T6b英雄特性初步分析：助手标注v1与交叉检查已完成（`knowledge/hero-traits/hero-traits-v1.json`、`docs/hero-traits-analysis.md`、`reports/hero-traits-crosscheck-2026-10-31-v1`）。当前：等用户抽查§5清单并回答§3待解释点→出v2→T7触发条件（Q10）。**以下为U22前状态。M2b-T0～T5已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`未通过（功效不足）；U20决定上线基线页后进M3，U21定辅助清单。T5：参照统计`reports/m2b-situational-reference-2026-10-31-v1`（M1训练集，`scripts/build_situational_reference.py`），8780“赛前 · 针对装”页，验收`reports/coach-app-acceptance-2026-10-31-v5`（19项通过），模型卡`docs/m2b-model-card.md`。**当前：M2b-T6——请用户打开8780“赛前 · 针对装”评审内容与说明**；评审意见记决策后M2b结案，进M3-T1（先问Q4）。不得在同一验证集上调参重跑。
 
 ### 已完成记录
 
