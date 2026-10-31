@@ -1,4 +1,4 @@
-// Real-browser acceptance for the coach app (M2-T5). Drives an isolated headless
+// Real-browser acceptance for the coach app (M2-T5, M2b-T5). Drives an isolated headless
 // Chrome over CDP on 127.0.0.1:9229 against the app on 127.0.0.1:8780.
 // Usage: node scripts/acceptance/coach_app_browser.cjs OUTPUT_DIR
 const fs = require('node:fs');
@@ -38,6 +38,7 @@ const CDP = 'http://127.0.0.1:9229';
   await ev(`localStorage.clear()`);
   await send('Page.reload'); await wait(1500);
 
+  record('only_items_view_visible', await ev(`getComputedStyle(document.getElementById('view-situational')).display==='none'`));
   record('initial_render', (await ev(`document.querySelectorAll('#timing-body tr').length`)) === 8, await ev(`document.getElementById('result-title').textContent`));
   record('baseline_reference_title', /高分段出装节奏/.test(await ev(`document.getElementById('result-title').textContent`)));
   record('bfury_baseline_row', /狂战斧[\s\S]*64%[\s\S]*91%/.test(await rowText('狂战斧')), await rowText('狂战斧'));
@@ -58,7 +59,25 @@ const CDP = 'http://127.0.0.1:9229';
   record('dark_mode_background', (await ev(`getComputedStyle(document.body).backgroundColor`)) === 'rgb(18, 21, 26)', await ev(`getComputedStyle(document.body).backgroundColor`));
   await shot('items-mobile-dark.png');
 
-  record('only_whitelisted_requests', requests.every(r => ['/', '/style.css', '/app.js', '/api/meta', '/favicon.ico'].includes(r) || r.startsWith('/api/item-timing?')), [...new Set(requests)]);
+  await viewport(1440, 1000);
+  await ev(`document.querySelector('.tab[data-view="situational"]').click()`); await wait(800);
+  record('situational_tab_switch', await ev(`getComputedStyle(document.getElementById('view-items')).display==='none' && getComputedStyle(document.getElementById('view-situational')).display!=='none'`));
+  const sit = await ev(`document.getElementById('sit-body').innerText`);
+  record('jugg_first_item_baseline', (await ev(`document.querySelectorAll('#sit-body tr').length`)) === 6 && /^金箍棒[\s\S]*31%/.test(sit) && /净魂之刃路线/.test(sit), sit.slice(0, 300));
+  record('jugg_verdict_unproven', /未被可靠证实[\s\S]*含 0/.test(await ev(`document.getElementById('sit-verdict').textContent`)), await ev(`document.getElementById('sit-verdict').textContent`));
+  record('situational_no_lineup_inputs', (await ev(`document.querySelectorAll('#view-situational input').length`)) === 0);
+  await shot('situational-juggernaut.png');
+  await ev(`[...document.querySelectorAll('#sit-heroes button')].find(b=>b.textContent.startsWith('神谕者')).click()`); await wait(400);
+  const oracleSit = await ev(`document.getElementById('sit-body').innerText`);
+  record('oracle_support_rates', (await ev(`document.querySelectorAll('#sit-body tr').length`)) === 9 && /圣洁吊坠/.test(oracleSit) && /固定装/.test(oracleSit) && /样本少/.test(oracleSit) && (await ev(`document.getElementById('sit-verdict').offsetParent`)) === null, oracleSit.slice(0, 300));
+  await shot('situational-oracle.png');
+  await send('Page.reload'); await wait(1500);
+  record('situational_persisted', /神谕者 · 5号位 针对装/.test(await ev(`document.getElementById('sit-title').textContent`)), await ev(`document.getElementById('sit-title').textContent`));
+  await viewport(390, 844, true); await wait(500);
+  record('situational_mobile_no_horizontal_scroll', await ev(`document.documentElement.scrollWidth<=window.innerWidth+1`), await ev(`[document.documentElement.scrollWidth,window.innerWidth]`));
+  await shot('situational-mobile-dark.png');
+
+  record('only_whitelisted_requests', requests.every(r => ['/', '/style.css', '/app.js', '/api/meta', '/api/situational', '/favicon.ico'].includes(r) || r.startsWith('/api/item-timing?')), [...new Set(requests)]);
   record('no_console_errors', errors.length === 0, errors);
   const result = {schema: 'coach-app-browser-acceptance/1', browser: (await (await fetch(`${CDP}/json/version`)).json()).Browser, url: APP, checks, passed: Object.values(checks).every(c => c.ok)};
   fs.writeFileSync(path.join(out, 'browser-checks.json'), JSON.stringify(result, null, 2));

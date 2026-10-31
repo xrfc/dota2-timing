@@ -1,4 +1,4 @@
-"""Unified local coach app (M2-T5 shell). Currently serves the pre-game item-timing page.
+"""Unified local coach app (M2-T5 shell): item-timing reference and 针对装 reference pages.
 
 Loopback only, Host-checked, fixed routes, no file access beyond the bound run.
 """
@@ -12,18 +12,29 @@ from urllib.parse import parse_qs, urlsplit
 from dota_items.data.item_registry import display_name, load_registry
 from dota_items.data.source_io import parse_source_json, read_source_bytes
 from dota_items.modeling import item_timing
+from dota_items.modeling import situational_items as si
+from dota_items.modeling import situational_reference as sr
 from dota_items.storage import file_hash
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = Path(__file__).resolve().parent / "coach_app_assets"
 REGISTRY = "knowledge/hero-capabilities/hero-registry.json"
 DEFAULT_RUN = "reports/m2-item-timing-2026-10-30-r2"
+SITUATIONAL_RUN = "reports/m2b-situational-2026-10-31-v1"
+SITUATIONAL_REFERENCE = "reports/m2b-situational-reference-2026-10-31-v1"
+SMALL_COUNT = 10
 ITEM_REGISTRY = "knowledge/items/item-registry.json"
 NOTES = [
     "数据：超凡及以上段位、30分钟以上的比赛（2026-10-12至13，补丁7.41），节奏快于传奇段常见对局（U7）。",
     "主宰排除10分钟补刀<35的对线崩盘局（U8）。",
     "出装时间主要取决于自己和队友的线上经济，而不是敌方阵容（U13，10分钟经济可解释狂战斧时间的61%）；按你本局表现的时间参照将在赛后复盘中提供。",
-    "敌方阵容影响的是“出什么”（针对装），该功能开发中（M2b）。",
+    "敌方阵容影响的是“出什么”，见“赛前 · 针对装”页。",
+]
+SITUATIONAL_NOTES = [
+    "数据：M1训练集（超凡及以上、30分钟以上的比赛，补丁7.41）；与模型基线所用比赛相同。",
+    "主宰：排除对线崩盘局（U8）；“第一件”只在出过针对装的局里统计，同秒按购买顺序；散魂剑并入净魂之刃路线（U16）。",
+    "辅助：只显示整局出现率，不建模（U17）；清单为U21。标“固定装”的是该英雄的常规关键装，出现率不代表针对性。",
+    "高分段常出不等于“该出”；出现率也受局势和经济影响，不只由阵容决定。",
 ]
 
 
@@ -31,12 +42,89 @@ def _read(path):
     return parse_source_json(read_source_bytes(path))
 
 
-def load_state(run=DEFAULT_RUN, repo=ROOT):
-    run = repo / run
-    manifest = _read(run / "manifest.json")
+def _verified(path):
+    manifest = _read(path / "manifest.json")
     for name, expected in manifest["outputs"].items():
-        if file_hash(run / name) != expected:
+        if file_hash(path / name) != expected:
             raise ValueError(f"Run artifact changed: {name}")
+    return manifest
+
+
+def situational_view(reference, model, result, items, hero_names):
+    """Baseline 针对装 page (U20). The frozen model is not shown unless it passed."""
+    if result["passed"]:
+        raise ValueError("Model passed; the page must be redesigned before showing it")
+    jugg = reference["juggernaut"]
+    if [jugg["first_counts"][c] for c in si.CLASSES] != model["train_class_counts"]:
+        raise ValueError("Reference does not match the M2b baseline priors")
+
+    def name(key):
+        return "净魂之刃路线（含散魂剑）" if key == "diffusal" else display_name(items, key)
+
+    with_any = jugg["games_with_any"]
+    return {
+        "verdict": {
+            "passed": False,
+            "valid_n": result["valid_n"],
+            "improvement": result["log_loss_improvement"],
+            "ci95": result["log_loss_improvement_ci95"],
+            "min_improvement": result["min_improvement"],
+        },
+        "juggernaut": {
+            "spec": jugg["spec"],
+            "name": hero_names[jugg["spec"][0]],
+            "games": jugg["games"],
+            "games_with_any": with_any,
+            "items": sorted(
+                (
+                    {
+                        "item": c,
+                        "name": name(c),
+                        "first_n": jugg["first_counts"][c],
+                        "first_share": jugg["first_counts"][c] / with_any,
+                        "bought_n": jugg["bought_counts"][c],
+                        "bought_rate": jugg["bought_counts"][c] / jugg["games"],
+                    }
+                    for c in si.CLASSES
+                ),
+                key=lambda r: -r["first_n"],
+            ),
+        },
+        "supports": [
+            {
+                "spec": s["spec"],
+                "name": hero_names[s["spec"][0]],
+                "games": s["games"],
+                "items": sorted(
+                    (
+                        {
+                            "item": i,
+                            "name": name(i),
+                            "n": n,
+                            "rate": n / s["games"],
+                            "small": n < SMALL_COUNT,
+                            "fixed": i in item_timing.HERO_ITEMS[tuple(s["spec"])],
+                        }
+                        for i, n in s["bought_counts"].items()
+                    ),
+                    key=lambda r: (-r["n"], sr.SUPPORT_ITEMS.index(r["item"])),
+                ),
+            }
+            for s in reference["supports"]
+        ],
+        "notes": SITUATIONAL_NOTES,
+        "runs": [SITUATIONAL_RUN, SITUATIONAL_REFERENCE],
+    }
+
+
+def load_state(
+    run=DEFAULT_RUN,
+    repo=ROOT,
+    situational_run=SITUATIONAL_RUN,
+    situational_reference=SITUATIONAL_REFERENCE,
+):
+    run = repo / run
+    manifest = _verified(run)
     if manifest.get("protocol_revision") != 2:
         raise ValueError("Page requires the revision-2 run")
     registry = _read(repo / REGISTRY)
@@ -48,6 +136,15 @@ def load_state(run=DEFAULT_RUN, repo=ROOT):
     model = _read(run / "model.json")
     rows = _read(run / "results.json")["rows"]
     hero_names = {h["id"]: h["name"] for h in heroes}
+    _verified(repo / situational_run)
+    _verified(repo / situational_reference)
+    situational = situational_view(
+        _read(repo / situational_reference / "reference.json"),
+        _read(repo / situational_run / "model.json"),
+        _read(repo / situational_run / "results.json"),
+        items,
+        hero_names,
+    )
     meta = {
         "heroes": heroes,
         "my_heroes": [
@@ -62,7 +159,13 @@ def load_state(run=DEFAULT_RUN, repo=ROOT):
         "notes": NOTES,
         "run": str(run.relative_to(repo)),
     }
-    return {"meta": meta, "model": model, "rows": rows, "hero_ids": set(hero_names)}
+    return {
+        "meta": meta,
+        "model": model,
+        "rows": rows,
+        "hero_ids": set(hero_names),
+        "situational": situational,
+    }
 
 
 def parse_timing_query(query):
@@ -90,6 +193,10 @@ def make_handler(state):
         "/api/meta": (
             "application/json; charset=utf-8",
             json.dumps(state["meta"], ensure_ascii=False).encode(),
+        ),
+        "/api/situational": (
+            "application/json; charset=utf-8",
+            json.dumps(state["situational"], ensure_ascii=False).encode(),
         ),
     }
 
