@@ -14,10 +14,10 @@
 5. 新想法、顺手发现的问题：写入§8待办池，不在当前里程碑内做（除非阻塞当前出口）。
 6. 会话结束前按§6.2交接清单收尾。
 
-运行环境：仓库根目录，复用`.venv`（Python 3.11+，已有numpy、pandas、scikit-learn、scipy；**无**pyarrow、lightgbm、torch、matplotlib，新增依赖须用户同意）。命令统一加`PYTHONPATH=src`；运行测试设`NO_PROXY='*'`（shell代理会使HTTP Host头测试返回502）。全库检查：
+运行环境：仓库根目录，复用`.venv`（Python 3.11+，已有numpy、pandas、scikit-learn、scipy；**无**pyarrow、lightgbm、torch、matplotlib，新增依赖须用户同意）。命令统一加`PYTHONPATH=src`；运行测试须去掉代理变量（shell同时设了小写`no_proxy`和`http_proxy`，只设`NO_PROXY`仍会让两条Host头测试返回502）。全库检查：
 
 ```bash
-NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/check.py --scope all
+env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_proxy='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/check.py --scope all
 ```
 
 ---
@@ -47,6 +47,8 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | U3 | 三个产品目标A/B/C如§1 | 2026-10-30 |
 | U4 | 采用本计划；主玩1/5号位优势路、传奇段位 | 2026-10-30 |
 | U5 | 标注方式：客观标签自动生成；判断类由助手先标、用户抽查约1/3；定义类用户拍板 | 2026-10-30 |
+| U21 | 辅助针对装清单9件（魂之灵瓮/微光披风/原力法杖/Eul/清莲宝珠/洞察烟斗/永恒之盘/炎阳纹章/圣洁吊坠），只显示出现率 | 2026-10-31 |
+| U20 | M2b：先上线基线针对装参照页（无阵容输入）再进M3；冻结模型列M4候选，不在原验证集重跑 | 2026-10-31 |
 | U19 | 2026-10-31推送全部本地提交到origin/main；当日收工 | 2026-10-31 |
 | U18 | 授权M2b-T3本次训练 | 2026-10-31 |
 | U17 | 术语统一为“针对装”；辅助针对装暂不建模，只显示出现率（以后再做） | 2026-10-31 |
@@ -153,8 +155,8 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 | M2b-T2 | 特征设计：用`knowledge/hero-capabilities/hero-registry.json`的`published_role_labels`与`capability_review_signals`统计敌方各定位/机制人数（不用逐英雄one-hot）；写入`docs/m2b-design.md`并冻结评估协议（含**最小效果量**门槛，见§8），训练前完成 |
 | M2b-T3 | 训练（须用户授权，Q7）：基线=该英雄该装备平均出现率；模型=训练集内分组CV选正则的逻辑回归；复用M1快照与`item_timing`的CV工具 |
 | M2b-T4 | 评估与诊断：Brier、区间、效果量；可解释系数（哪些敌方定位让某装备更可能） |
-| M2b-T5 | 8780外壳新增“赛前 · 针对装”页：输入敌方阵容，显示各针对装相对平均的倾向与依据；样本不足拒答；真实浏览器验收 |
-| M2b-T6 | 用户用5套真实阵容评审 |
+| M2b-T5 | 8780外壳新增“赛前 · 针对装”页。U20：模型未通过，只显示基线（主宰第一件占比与整局出现率；辅助U21出现率），注明阵容影响未证实，无阵容输入；真实浏览器验收（已完成） |
+| M2b-T6 | 用户评审页面内容与说明（U20：基线不随阵容变化，原“5套阵容”不适用）；完成后M2b结案进M3 |
 
 出口：清单经用户确认；协议先于结果冻结；如实报告；页面验收；用户评审；模型卡`docs/m2b-model-card.md`。
 
@@ -264,22 +266,22 @@ NO_PROXY='*' PYTHONPATH=src PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/c
 
 ### 下一步（接手从这里开始）
 
-M2b-T0～T4已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`**未通过**（对数损失改善0.042≥0.01，但区间[−0.007, 0.087]下限<0），见`docs/m2b-results.md`。**当前：等用户决定`docs/m2b-results.md`§4**（建议：M2b-T5先上线基线“针对装参照”页并进入M3；把冻结模型列为M4独立评估候选；可选人工核对机制信号后另行预注册）。不得在同一验证集上调参重跑。
+M2b-T0～T5已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`未通过（功效不足）；U20决定上线基线页后进M3，U21定辅助清单。T5：参照统计`reports/m2b-situational-reference-2026-10-31-v1`（M1训练集，`scripts/build_situational_reference.py`），8780“赛前 · 针对装”页，验收`reports/coach-app-acceptance-2026-10-31-v5`（19项通过），模型卡`docs/m2b-model-card.md`。**当前：M2b-T6——请用户打开8780“赛前 · 针对装”评审内容与说明**；评审意见记决策后M2b结案，进M3-T1（先问Q4）。不得在同一验证集上调参重跑。
 
 ### 已完成记录
 
 - M0：提交7a42c25、4d39ad8、8a03509、edf3f5c、6fcd223；R1评审通过（U6）；决策记录目录`docs/decisions/`。
 - M1：`reports/m1-match-table-2026-10-30-v1`（1993场、19930行、87.9万条购买；训练1595/验证398；verify一致）；数据卡`docs/m1-data-card.md`；关键事实：只含≥30分钟、超凡+约90%、每场有主宰、跨约15.5小时、与旧1990场队列重合（非独立）。位置规则U8（1/5号位各3849；collapsed_carry 209）。
 - M2：英雄U9、装备U10/U11；协议`docs/m2-design.md`；修订1（`reports/m2-item-timing-2026-10-30-v1`）过拟合、整体差于基线；修订2（`...-r2`，U12，CV选C）≈基线，仅主宰30分钟蝴蝶有效应；结果`docs/m2-results.md`，模型卡`docs/m2-model-card.md`。用户指出时间取决于线上表现，验证成立（U13）。
-- 前端：`scripts/coach_app.py`（8780）当前只有“出装节奏参照”页（高分段基线，无阵容输入，装备名来自登记表）；验收`reports/coach-app-acceptance-2026-10-31-v4`（11项通过）；脚本`scripts/acceptance/coach_app_browser.cjs`。
+- 前端：`scripts/coach_app.py`（8780）有“出装节奏参照”与“赛前 · 针对装”两页（均为高分段基线，无阵容输入，装备名来自登记表）；最新验收`reports/coach-app-acceptance-2026-10-31-v5`（19项通过；v4为仅节奏页时的11项）；脚本`scripts/acceptance/coach_app_browser.cjs`。
 - M2b-T0：装备登记表`knowledge/items/`（545件，507件官方中文名），`scripts/build_item_registry.py`，`dota_items.data.item_registry`。
-- 学习讲解：`learning/docs/project-ml-notes.md`（M1、M2、修订2、推理服务、U13的问题重构）。
+- 学习讲解：`learning/docs/project-ml-notes.md`（M1、M2、修订2、推理服务、U13的问题重构、M2b、M2b-T5基线页）。
 
 ### 运行与交接备注
 
 - Git（2026-10-31起）：本仓库已设本地提交身份`xrfc <147353817+xrfc@users.noreply.github.com>`，直接`git commit`即可；GitHub CLI已登录`xrfc`并经`gh auth setup-git`接管HTTPS凭据，`git push origin main`无需手动输入。凭据可用不等于自动推送：仍在用户要求时推送（如“推送”“收工”）。
 - 2026-10-31收工：已推送至`origin/main`（U19，远端与本地一致）；8780服务已停止。下次开始先按§6.1检查，再向用户确认`docs/m2b-results.md`§4的决定。
-- 8780默认未运行；重启：`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`（启动时校验`reports/m2-item-timing-2026-10-30-r2`哈希）。
+- 8780重启：`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`（启动时校验M2修订2、M2b运行与参照统计的哈希，且参照的主宰第一件计数须等于M2b模型训练集计数；M2b若显示为“通过”会拒绝启动，须先重新设计页面）。
 - 浏览器验收：Windows Chrome无头+临时配置：`"/mnt/c/Program Files/Google/Chrome/Application/chrome.exe" --headless=new --remote-debugging-port=9229 --user-data-dir='C:\Windows\Temp\dota-review-cdp' about:blank &`，再`NO_PROXY='*' node scripts/acceptance/coach_app_browser.cjs NEWDIR`，结束后通过CDP `Browser.close`关闭。WSL为mirrored网络，可直接访问127.0.0.1。
 - 8770旧评审页已停止；需要时：`PYTHONPATH=src .venv/bin/python scripts/decision_review.py --output reports/decision-review-team-2026-10-30-v2 --serve --port 8770`。
 - 每次真实训练与联网采集都须用户单独授权（Q7）；用户画像与账号ID见`configs/user.local.json`（未跟踪，勿提交）。

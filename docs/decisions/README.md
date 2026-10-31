@@ -23,3 +23,5 @@
 | U17 | [术语“针对装”；辅助暂不建模](2026-10-31-terminology-and-support-scope.md) |
 | U18 | [授权M2b-T3训练](2026-10-31-m2b-training.md) |
 | U19 | [推送到远端GitHub](2026-10-31-push.md) |
+| U20 | [M2b去向：基线针对装页后进M3](2026-10-31-m2b-baseline-page.md) |
+| U21 | [辅助针对装清单](2026-10-31-support-situational-items.md) |
