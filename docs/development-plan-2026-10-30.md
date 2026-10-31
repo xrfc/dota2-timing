@@ -47,6 +47,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | U3 | 三个产品目标A/B/C如§1 | 2026-10-30 |
 | U4 | 采用本计划；主玩1/5号位优势路、传奇段位 | 2026-10-30 |
 | U5 | 标注方式：客观标签自动生成；判断类由助手先标、用户抽查约1/3；定义类用户拍板 | 2026-10-30 |
+| U25 | 临时环境中的AI用各自的`<ai名>-temp`分支（Claude为`claude-temp`），随时推送防丢失，开PR由用户合并进main；契约`docs/handoff/ai-temp-branch-contract.md` | 2026-10-31 |
 | U24 | 推送代码审查修复到origin/main；所有改动都要同步维护文档 | 2026-10-31 |
 | U23 | 先做英雄特性初步分析：9维度，助手先标并附技能证据、数据交叉检查、用户抽查约1/3 | 2026-10-31 |
 | U22 | 针对装改为“用户定触发条件（敌方英雄＋敌方装备）＋数据验证”；页面可勾选比赛中看到的敌方装备；替换U20基线页，完成后再进M3 | 2026-10-31 |
@@ -256,9 +257,10 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 ### 6.1 开始
 1. `git status`、`git log -5`，确认无他人未提交改动；有则不覆盖，先问。
 2. 读§7当前任务；读相关设计文档。
+3. 临时环境（云端等）中的AI：按[AI临时分支契约](handoff/ai-temp-branch-contract.md)§4切到并更新自己的`<ai名>-temp`分支（U25）。
 
 ### 6.2 结束
-1. 运行相关测试；能收尾的提交；不能收尾的在§7“交接备注”写明：做到哪、下一步命令、未验证点。
+1. 运行相关测试；能收尾的提交；不能收尾的在§7“交接备注”写明：做到哪、下一步命令、未验证点。临时环境中的AI：推送到自己的temp分支并开/更新PR（U25契约§4）。
 2. 停止自己启动的后台服务/浏览器，或在备注写明仍在运行的端口。
 
 ---
@@ -289,7 +291,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 ### 运行与交接备注
 
 - Git（2026-10-31起）：本仓库已设本地提交身份`xrfc <147353817+xrfc@users.noreply.github.com>`，直接`git commit`即可；GitHub CLI已登录`xrfc`并经`gh auth setup-git`接管HTTPS凭据，`git push origin main`无需手动输入。凭据可用不等于自动推送：仍在用户要求时推送（如“推送”“收工”）。
-- 云端会话（2026-10-31起，U24）：仓库在`/home/user/dota2-timing`，GitHub凭据由会话提供；提交身份须为`Claude <noreply@anthropic.com>`。容器临时，**未推送的提交会丢失**；`data/`、`reports/`、`.venv`、`configs/user.local.json`不在git中，云端无真实数据，只能做代码/文档开发。检查用临时虚拟环境（`.[dev,replay,data]`＋scipy）运行`scripts/check.py`。
+- 云端会话（2026-10-31起，U24）：仓库在`/home/user/dota2-timing`，GitHub凭据由会话提供；提交身份须为`Claude <noreply@anthropic.com>`。容器临时，**未推送的提交会丢失**，因此在`claude-temp`分支提交并随时推送，经PR由用户合并进main（U25，[契约](handoff/ai-temp-branch-contract.md)）；`data/`、`reports/`、`.venv`、`configs/user.local.json`不在git中，云端无真实数据，只能做代码/文档开发。检查用临时虚拟环境（`.[dev,replay,data]`＋scipy）运行`scripts/check.py`。
 - 文档维护（U24）：每次改动同步更新相关文档、本表或§8、CHANGELOG；学习点写入`learning/docs/project-ml-notes.md`。
 - 2026-10-31收工：已推送至`origin/main`（U19，远端与本地一致）；8780服务已停止。下次开始先按§6.1检查，再向用户确认`docs/m2b-results.md`§4的决定。
 - 8780重启：`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`（启动时校验M2修订2、M2b运行与参照统计的哈希，且参照的主宰第一件计数须等于M2b模型训练集计数；M2b若显示为“通过”会拒绝启动，须先重新设计页面）。
