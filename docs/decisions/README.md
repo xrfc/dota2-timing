@@ -25,3 +25,4 @@
 | U19 | [推送到远端GitHub](2026-10-31-push.md) |
 | U20 | [M2b去向：基线针对装页后进M3](2026-10-31-m2b-baseline-page.md) |
 | U21 | [辅助针对装清单](2026-10-31-support-situational-items.md) |
+| U22 | [针对装改为触发条件＋数据验证](2026-10-31-situational-triggers.md) |
