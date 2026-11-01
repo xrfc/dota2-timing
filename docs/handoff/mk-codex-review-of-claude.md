@@ -32,7 +32,7 @@
 
 - **截断片段**：利维坦的渔获说明错在只读了截断的首条原文。复核排除组时请读完整原文（`hero-registry.json`或dotaconstants对应字段），这是P1的重点。
 - **已失效的A杖/魔晶文字**：Valve接口对29个技能保留了升级文字，但`ability_has_scepter/shard`为false（当前没有这项升级），清单`knowledge/mechanics/stale-upgrade-text-v1.json`。第3版证据`knowledge/mechanics/extractions/v3/`去掉了19组（`delta-vs-v2.json`的`removed`，其中第1轮接受17组）。这19组不必再判语义，只需核对“标记为false就视为过时”这条处理是否有误判（如由该升级授予的技能是否被错排）。
-- **技能基础描述可能过时**：快照是2026-10-09，接口不带补丁号。用户已授权重新抓取对照（U36），但云端网络拒绝`www.dota2.com`，尚未完成；若某组原文与当前游戏不符，记为`uncertain`并注明“疑似版本过时”，不要按记忆改判。
+- **版本**：U36重新抓取（2026-11-01）确认英文技能数据与10-09快照零改动，最新补丁7.41f（2026-09-15），技能说明就是Valve官网当前文本，很可能对应7.41f（`knowledge/hero-capabilities/snapshots/2026-11-01/`）。若某组原文与你所知的游戏表现不符，按原文判断，并在理由中注明“官网说明可能与游戏实现不符”，留给用户实测，不要按记忆改判。
 
 ## 4. 回传方式
 
@@ -49,4 +49,4 @@
 
 ## 6. 给Codex的提示词（用户可直接粘贴）
 
-> 请复核Claude第1轮机制证据判断（可选复核，U34）。先读`docs/handoff/mk-codex-review-of-claude.md`和`AGENTS.md`，再读`knowledge/mechanics/reviews/claude-round-001/review-summary.md`。按`codex-review-queue.csv`的顺序，至少完成P1（Claude排除的组和按U33/U35改判的组），排除组要读完整原文，不能只看截断片段。`knowledge/mechanics/extractions/v3/delta-vs-v2.json`里去掉的19组只核对“过时升级文字”这条处理。在`codex-temp`分支工作，从最新main开始；PR #12若未合并，用`git archive origin/claude-temp`只读导出Claude的结果，不要改`claude-temp`。结果写到新目录`knowledge/mechanics/reviews/codex-round-002/`，每组记录review_id、结论（accept/reject/uncertain）、解释、条件、理由、引用的fact_id；与Claude不同的逐条写原因，与用户既有决定冲突的留给用户裁定。完成后开PR到main，不要合并，不要推送main，不要联网采集或训练。
+> 请复核Claude第1轮机制证据判断（可选复核，U34）。先读`docs/handoff/mk-codex-review-of-claude.md`和`AGENTS.md`，再读`knowledge/mechanics/reviews/claude-round-001/review-summary.md`。按`codex-review-queue.csv`的顺序，至少完成P1（Claude排除的组和按U33/U35改判的组），排除组要读完整原文，不能只看截断片段。`knowledge/mechanics/extractions/v3/delta-vs-v2.json`里去掉的19组只核对“过时升级文字”这条处理。在`codex-temp`分支工作，从最新main开始；PR #12若未合并，用`git archive origin/claude-temp`只读导出Claude的结果，不要改`claude-temp`。结果写到新目录`knowledge/mechanics/reviews/codex-round-002/`，每组记录review_id、结论（accept/reject/uncertain）、解释、条件、理由、引用的fact_id；与Claude不同的逐条写原因，与用户既有决定冲突的留给用户裁定。技能文字以快照为准（U36确认与官网当前一致，很可能对应7.41f），与记忆不符的注明后留给用户。完成后开PR到main，不要合并，不要推送main，不要联网采集或训练。
