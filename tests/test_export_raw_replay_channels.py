@@ -7,6 +7,9 @@ from pathlib import Path
 
 import pytest
 
+# The script imports gem-dota (the [replay] extra); skip instead of failing collection.
+pytest.importorskip("gem")
+
 SPEC = importlib.util.spec_from_file_location(
     "export_raw_replay_channels",
     Path(__file__).resolve().parents[1] / "scripts/export_raw_replay_channels.py",
