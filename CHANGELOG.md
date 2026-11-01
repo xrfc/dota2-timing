@@ -1,5 +1,9 @@
 # 变更记录
 
+## 2026-11-01 Codex复核交接更新
+
+- `docs/handoff/mk-codex-review-of-claude.md`更新当前结论（1,265/286/0）、U5抽查进度、截断片段与过时升级文字两个注意点，并加入可直接粘贴给Codex的提示词。
+
 ## 2026-11-01 U36：授权重新抓取Valve英雄数据
 
 - 用户同意重新抓取当前Valve datafeed（中英文）与10-09快照对照，只用于版本核对（`docs/decisions/2026-11-01-refresh-valve-datafeed.md`）。云端环境拒绝连接`www.dota2.com`，尚未抓取。
