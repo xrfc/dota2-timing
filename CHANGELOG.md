@@ -1,5 +1,9 @@
 # 变更记录
 
+## 2026-11-01 U36：当前Valve英雄数据已抓取对照
+
+- 新快照`knowledge/hero-capabilities/snapshots/2026-11-01/`：英文与10-09零改动，中文7处翻译修订（齐天大圣“棒击大地”改名“擎天一击”等，不涉及机制）；Valve补丁列表最新7.41f（2026-09-15），技能文字很可能对应7.41f（推断，`patch_verified=false`）。旧快照不变；测试校验新快照哈希并重算对比结果。
+
 ## 2026-11-01 U36抓取与对比工具
 
 - 新增`scripts/refresh_hero_datafeed.py`：`fetch`把当前Valve英雄数据（中英文）抓到新目录，不覆盖；`diff`离线逐技能列出文字与字段改动。新增`tests/test_refresh_hero_datafeed.py`（旧快照自比零改动、合成数据检出改动、拒绝覆盖）。尚未联网抓取：云端需放行`www.dota2.com`，或在本地运行（命令见U36记录）。

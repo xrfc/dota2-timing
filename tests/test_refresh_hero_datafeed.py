@@ -46,3 +46,23 @@ def test_detects_text_flag_and_ability_changes(tmp_path):
 def test_fetch_refuses_existing_output(tmp_path):
     with pytest.raises(SystemExit):
         refresh.fetch(tmp_path)
+
+
+SNAPSHOT = ROOT / "knowledge/hero-capabilities/snapshots/2026-11-01"
+
+
+def test_checked_in_2026_11_01_snapshot_and_diff():
+    import hashlib
+
+    manifest = json.loads((SNAPSHOT / "manifest.json").read_text())
+    assert manifest["patch_verified"] is False and manifest["heroes"] == 127
+    for record in manifest["records"]:
+        payload = (SNAPSHOT / record["file"]).read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == record["sha256"]
+    stored = json.loads((SNAPSHOT / "diff-vs-2026-10-09.json").read_text())
+    assert stored == refresh.diff(OLD, SNAPSHOT / "sources")
+    assert stored["languages"]["english"]["changes"] == []
+    check = json.loads((SNAPSHOT / "patch-check.json").read_text())
+    raw = (SNAPSHOT / check["file"]).read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == check["sha256"]
+    assert check["latest_patch"] == "7.41f" and check["patch_verified"] is False
