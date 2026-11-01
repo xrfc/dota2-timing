@@ -37,3 +37,4 @@
 | U31 | [指向方式、林肯格挡、莲花反弹分开记录](2026-11-01-targeting-interactions.md) |
 | U32 | [全量机制清单交Claude交叉复核](2026-11-01-cross-ai-review.md) |
 | U33 | [交叉复核第1轮：用户对不确定项的回答](2026-11-01-round1-user-answers.md) |
+| U34 | [交叉复核后续不必交回Codex](2026-11-01-no-codex-handoff.md) |
