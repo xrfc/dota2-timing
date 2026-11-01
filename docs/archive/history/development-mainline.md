@@ -1,8 +1,8 @@
 # 历史（2026-10-10）：主线开发流程：7.41f 阵容出装推荐
 
-> **历史设计，已由后续实现和流程替代（2026-10-29整理）。** 下文的“当前”、“尚未实现”、任务状态和验收数字均指2026-10-10基线，不是当前项目结论，也不恢复历史授权。当前顺序与状态以 [roadmap](roadmap.md)、[数据进度](data-prep-progress.md)、[模型基础](model-foundation.md) 为准；结构以 [模块维护](modular-maintenance.md) 为准。保留本页用于追溯架构理由，不另立开发入口。
+> **历史设计，已由后续实现和流程替代（2026-10-29整理）。** 下文的“当前”、“尚未实现”、任务状态和验收数字均指2026-10-10基线，不是当前项目结论，也不恢复历史授权。当前顺序与状态以 [roadmap](../../roadmap.md)、[数据进度](../../data-prep-progress.md)、[模型基础](../../model-foundation.md) 为准；结构以 [模块维护](../../modular-maintenance.md) 为准。保留本页用于追溯架构理由，不另立开发入口。
 
-更新：2026-10-10。核对基线：[main c6a5e1f](https://github.com/xrfc/dota2-timing/commit/c6a5e1ff5eaa597d6c68567ef00f3acc973a64c9)。本文是**当时的规划入口（已替代）**；任务状态归 [roadmap](roadmap.md)，实际交付归 [project-status](project-status.md)，依赖约束归 [模块边界](module-boundaries.md)。新推荐接口和模块均为设计，尚未实现。
+更新：2026-10-10。核对基线：[main c6a5e1f](https://github.com/xrfc/dota2-timing/commit/c6a5e1ff5eaa597d6c68567ef00f3acc973a64c9)。本文是**当时的规划入口（已替代）**；任务状态归 [roadmap](../../roadmap.md)，实际交付归 [project-status](../../project-status.md)，依赖约束归 [模块边界](module-boundaries.md)。新推荐接口和模块均为设计，尚未实现。
 
 ## 1. 目标与范围
 
@@ -30,7 +30,7 @@
 
 ## 3. 主线阶段与出口
 
-任务状态仅维护在 [M01–M07](roadmap.md)，下表定义依赖与出口。
+任务状态仅维护在 [M01–M07](../../roadmap.md)，下表定义依赖与出口。
 
 | 阶段 | 交付 | 出口 |
 |---|---|---|
@@ -55,7 +55,7 @@
 7. 审阅实现、契约、来源、状态与变更记录的一致性，不提交大型回放、私有数据和环境产物。
 8. 开发分支提交与 PR，记录精确提交/检查结果。PR、合并、发布分别说明。
 
-学习记录可复用 [任务模板](../learning/templates/task-record.md)，但完成 L01–L12 不是新主线的开发门槛。
+学习记录可复用 [任务模板](../../../learning/templates/task-record.md)，但完成 L01–L12 不是新主线的开发门槛。
 
 ## 5. 维护性与扩展性的完成定义
 
@@ -71,7 +71,7 @@
 
 ## 6. 当时的文档使用（不再作为当前入口）
 
-阅读：本文 → [模块边界](module-boundaries.md) → [任务清单](roadmap.md) → [当前状态](project-status.md) → 按需查看契约、操作、知识专题。
+阅读：本文 → [模块边界](module-boundaries.md) → [任务清单](../../roadmap.md) → [当前状态](../../project-status.md) → 按需查看契约、操作、知识专题。
 
 [文档盘点](documentation-inventory.md)逐项登记全部已跟踪 Markdown。旧测试数字、验收 JSON、来源快照、生成英雄档案保留原日期和语义，不能批量替换为 7.41f。学习页面仍主要展示数据工程路线，不宣称已变成新主线的交互管理页面。
 

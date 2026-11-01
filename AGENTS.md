@@ -40,7 +40,7 @@
 
 ## 模块化维护（2026-10-17）
 
-- 当前结构入口：docs/modular-maintenance.md；foundation保留兼容门面，不再堆业务。
+- 当前结构入口：docs/architecture.md（2026-11-01起；docs/modular-maintenance.md保留各层API细节）；foundation保留兼容门面，不再堆业务。
 - 模型分batch/specs、training/estimators、artifacts/inference；data不得依赖workflow，sources不得依赖data。
 - contracts保持标准库接口，handoff为只读传输；这些接口及跨模块回归属于共享范围。
 - 模块scope用于专项，最终仍串行全量验收。旧产物不覆盖；生产者可演进，采用严格默认校验与显式登记迁移，不能忽略哈希失配。
@@ -52,9 +52,10 @@
 - 生产者迁移只接受登记的旧指纹到当前实现，非实现字段须完全相同；不能冒充精确旧源码重现。
 - 当前公共交接入口及命令见docs/public-source-reader.md；模型输入、数据用途及训练授权不因此改变。
 
-## 当前执行计划（2026-10-30 用户确认）
+## 当前执行计划（2026-10-30 用户确认；2026-11-01改为双线，U37）
 
-- 唯一执行计划：`docs/development-plan-2026-10-30.md`（M0–M6，另有MK）。接手先读其§0与§7，只做当前里程碑的下一个未勾选任务。
+- 唯一执行计划：`docs/development-plan-2026-10-30.md`（共享底座MK＋路线A推荐M0–M5＋路线B意识决策B0–B5）。接手先读其§0与§7，只做当前任务的下一个未勾选项；两条线不分主次；先做完共享底座MK，之后两线各自推进（U38）。
+- 架构入口：`docs/architecture.md`。每个模块/脚本须在`src/dota_items/architecture.py`登记线与状态；共享底座不导入任一线，A、B两线互不导入（测试强制）。冻结产物指纹记录源码路径，**不搬迁文件**，物理整理须先登记生产者迁移并单独提出。
 - 2026-11-01交接：当前里程碑MK（机制知识底座），详细待办见`docs/handoff/mk-handoff-2026-11-01.md`。
 - U32：MK-T3改为先交Codex/Claude交叉复核，当前入口`docs/handoff/mk-claude-cross-review.md`；全部清单已打包，未审条目不能当作AI一致或用户批准。
 - 用户决定记录在`docs/decisions/`；计划§2“待决”项必须先问用户。

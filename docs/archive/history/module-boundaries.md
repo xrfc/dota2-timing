@@ -1,6 +1,6 @@
 # 历史（2026-10-10）：模块边界、耦合约束与扩展设计
 
-> **历史设计，已由后续实现和流程替代（2026-10-29整理）。** 下文的“当前”、“尚未实现”、任务状态和验收数字均指2026-10-10基线，不是当前项目结论，也不恢复历史授权。当前顺序与状态以 [roadmap](roadmap.md)、[数据进度](data-prep-progress.md)、[模型基础](model-foundation.md) 为准；结构以 [模块维护](modular-maintenance.md) 为准。保留本页用于追溯架构理由，不另立开发入口。
+> **历史设计，已由后续实现和流程替代（2026-10-29整理）。** 下文的“当前”、“尚未实现”、任务状态和验收数字均指2026-10-10基线，不是当前项目结论，也不恢复历史授权。当前顺序与状态以 [roadmap](../../roadmap.md)、[数据进度](../../data-prep-progress.md)、[模型基础](../../model-foundation.md) 为准；结构以 [模块维护](../../modular-maintenance.md) 为准。保留本页用于追溯架构理由，不另立开发入口。
 
 更新：2026-10-10；实现审查基线 `c6a5e1f`。当前模块见 [工程设计](engineering-design.md)；本页明确**现状问题与目标约束**，不表示已完成重构。主线见 [开发流程](development-mainline.md)。采用模块化单体，不为目录数量或形式拆成微服务。
 
@@ -23,7 +23,7 @@
 | `knowledge/hero-capabilities/` | 来源构建、档案、选人证据、候选导出 | 与正式包隔离，但版本未核验且未提供正式知识接口 | 通过验证后的知识包接入，禁止 src import 这些脚本 |
 | `learning/` | 读取任务 Markdown、catalog 和源码路径 | 文档结构也是生成器接口；文字重排可影响消费者 | 重建并测试；不让正式包依赖学习目录 |
 
-证据入口：[pipeline](../src/dota_items/data/pipeline.py)、[workspace](../src/dota_items/workflow/workspace.py)、[validation](../src/dota_items/workflow/validation.py)、[Gem](../src/dota_items/sources/gem_replay.py)、[学习生成器](../learning/build.py)。本轮不声称已经消除这些耦合。
+证据入口：[pipeline](../../../src/dota_items/data/pipeline.py)、[workspace](../../../src/dota_items/workflow/workspace.py)、[validation](../../../src/dota_items/workflow/validation.py)、[Gem](../../../src/dota_items/sources/gem_replay.py)、[学习生成器](../../../learning/build.py)。本轮不声称已经消除这些耦合。
 
 ## 2. 目标依赖方向（新主线）
 

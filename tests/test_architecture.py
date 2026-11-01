@@ -126,3 +126,98 @@ def test_no_external_consumers_of_private_feasibility_readers():
         }:
             consumers.add(path.relative_to(PACKAGE).as_posix())
     assert not consumers
+
+
+# --- Two-track architecture map (docs/architecture.md) ---------------------------------
+
+
+def _module_name(path):
+    parts = path.relative_to(PACKAGE).with_suffix("").parts
+    if parts[-1] == "__init__":
+        parts = parts[:-1]
+    return ".".join(parts)
+
+
+def test_architecture_map_covers_every_module_exactly():
+    from dota_items import architecture
+
+    actual = {_module_name(path) for path in PACKAGE.rglob("*.py")}
+    declared = set(architecture.MODULES)
+    assert actual - declared == set(), "Classify new modules in dota_items/architecture.py"
+    assert declared - actual == set(), "Remove stale entries from dota_items/architecture.py"
+    for name, (track, status) in architecture.MODULES.items():
+        assert track in architecture.TRACKS, name
+        assert status in architecture.STATUSES, name
+
+
+def test_architecture_map_covers_every_script_exactly():
+    from dota_items import architecture
+
+    actual = {path.stem for path in (ROOT / "scripts").glob("*.py")}
+    assert actual == set(architecture.SCRIPTS)
+    assert set(architecture.SCRIPTS.values()) <= set(architecture.TRACKS)
+
+
+def _cross_track_violations(paths, owner_of):
+    from dota_items import architecture
+
+    violations = []
+    for path, owner in paths:
+        for name in owner_of(path):
+            if name != "dota_items" and not name.startswith("dota_items."):
+                continue
+            try:
+                target = architecture.track_of(name)
+            except KeyError:
+                continue
+            if target in architecture.FORBIDDEN_TRACK_IMPORTS[owner]:
+                violations.append(f"{path.relative_to(ROOT)} ({owner}) -> {name} ({target})")
+    return violations
+
+
+def test_tracks_do_not_import_each_other_and_shared_imports_no_track():
+    from dota_items import architecture
+
+    paths = [
+        (path, architecture.track_of(_module_name(path) or "dota_items"))
+        for path in PACKAGE.rglob("*.py")
+    ]
+    violations = _cross_track_violations(paths, module_imports)
+    assert not violations, "\n".join(violations)
+
+
+def test_scripts_respect_track_boundaries():
+    from dota_items import architecture
+
+    paths = [
+        (ROOT / "scripts" / f"{name}.py", track) for name, track in architecture.SCRIPTS.items()
+    ]
+    violations = _cross_track_violations(
+        paths, lambda path: set(imports(path.read_text(encoding="utf-8"), "scripts"))
+    )
+    assert not violations, "\n".join(violations)
+
+
+def test_architecture_map_is_standard_library_only_and_unused_by_business_code():
+    names = module_imports(PACKAGE / "architecture.py")
+    assert all(name.split(".")[0] in sys.stdlib_module_names for name in names)
+    consumers = [
+        path.relative_to(ROOT).as_posix()
+        for path in PACKAGE.rglob("*.py")
+        if any(
+            name == "dota_items.architecture" or name.startswith("dota_items.architecture.")
+            for name in module_imports(path)
+        )
+    ]
+    assert consumers == []
+
+
+def test_track_of_resolves_most_specific_entry():
+    from dota_items.architecture import AWARENESS, RECOMMEND, SHARED, track_of
+
+    assert track_of("dota_items.data") == SHARED
+    assert track_of("dota_items.data.decision_evidence") == AWARENESS
+    assert track_of("dota_items.data.match_table.build") == RECOMMEND
+    assert track_of("dota_items") == SHARED
+    with pytest.raises(KeyError):
+        track_of("dota_items.unknown_package.module")

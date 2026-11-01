@@ -2,11 +2,21 @@
 
 > 2026-10-27对照包增量：当前8769改为两例[支援/刷钱对照与试标草稿](../docs/decision-comparison-2026-10-27.md)，新增双方同刻可见血量、队友库存、TP到场条件拆解与草稿下载。蓝量已定位schema版本初始化导致范围65536→8192的问题，但未修正旧数据/生产者；敌方装备/CD、完整施放、合法落点/路径及数值收益仍未齐。旧包/旧结果保留，非盲评、非正式标签，不授权训练；后文旧状态按原阶段解释。
 
-> 2026-10-27目标同步：当前主线见[总路线](../docs/roadmap.md)。replay_viewer.py仅供证据复盘，尚无保守/激进建议CLI；不能以旧训练脚本直接启动新任务。时点证据、案例、契约与模型按阶段开发，旧命令/冻结输入不变。
+> 2026-10-27目标同步：当前计划见[开发计划](../docs/development-plan-2026-10-30.md)（原总路线已替代）。replay_viewer.py仅供证据复盘，尚无保守/激进建议CLI；不能以旧训练脚本直接启动新任务。时点证据、案例、契约与模型按阶段开发，旧命令/冻结输入不变。
 
 保留现有CLI路径，不为分类搬迁哈希绑定的生产者。正式业务模块在`src/dota_items/`；部分固定审计脚本仍包含编排实现，不声称已经全部薄CLI化。
 
 从仓库根目录执行，复用`.venv`。一般使用`PYTHONPATH=src .venv/bin/python scripts/名称.py --help`；Windows先设置`$env:PYTHONPATH = "src"`，再用`.venv\Scripts\python.exe`。`--help`不是执行真实任务许可；少数历史批处理入口没有通用help，先阅读相应说明和脚本。
+
+## 按线归属（2026-11-01，U37）
+
+每个脚本的线登记在[`src/dota_items/architecture.py`](../src/dota_items/architecture.py)的`SCRIPTS`，`tests/test_architecture.py`检查覆盖完整且不跨线导入。新增脚本须先登记。设计见[架构](../docs/architecture.md)。
+
+| 线 | 脚本 |
+|---|---|
+| 共享底座 | `accept_replays`、`audit_saved_replays`、`bootstrap`、`build_item_registry`、`build_mechanics_facts`、`build_mechanics_facts_v2`、`build_mechanics_facts_v3`、`build_replay_compat`、`build_stale_upgrade_text`、`check`、`collect_purchase_guarded`、`export_collection_table`、`mechanics_cross_review`、`recover_large_replay_cleaning`、`refresh_hero_datafeed`、`run_purchase_additional`、`verify_context_replays` |
+| 路线A 推荐 | `analyze_cohort_splits`、`audit_evaluation_feasibility`、`audit_purchase_cohorts`、`audit_purchase_observations`、`build_match_table`、`build_situational_reference`、`coach_app`、`collect_evaluation_cohort`、`collect_purchase_additional`、`collect_purchase_candidates`、`collect_purchase_latest`、`collect_purchase_until_daily`、`compare_purchase_sensitivity`、`diagnose_purchase_baseline`、`diagnose_whole_log_experiment`、`hero_trait_crosscheck`、`lineup_analysis`、`lineup_comparison`、`model_foundation`、`package_purchase_handoff`、`prepare_purchase_preview`、`prepare_purchase_snapshot`、`prepare_random_cohort`、`prepare_whole_log_cohort`、`probe_evaluation_sources`、`render_purchase_sensitivity`、`report_purchase_cohorts`、`report_whole_log_regularization`、`run_whole_log_experiment`、`run_whole_log_regularization`、`summarize_purchase_collection`、`train_item_timing`、`train_purchase_baseline`、`train_situational_items`、`verify_whole_log_handoff`、`whole_log_experiment`、`whole_log_regularization` |
+| 路线B 意识决策 | `align_replay_ticks`、`attach_decision_mana`、`attach_team_state`、`audit_decision_mana`、`audit_replay_identity`、`audit_replay_jump_events`、`audit_replay_map_landmarks`、`audit_replay_semantics`、`audit_replay_tracks`、`build_decision_comparisons`、`build_decision_state_cards`、`collect_replay_expansion`、`decision_review`、`enhance_decision_cases`、`export_raw_replay_channels`、`probe_decision_state`、`probe_team_state`、`render_replay_semantics`、`repair_decision_mana`、`replay_viewer`、`report_replay_identity`、`revise_decision_review`、`run_replay_pilot` |
 
 ## 常用入口及前提
 

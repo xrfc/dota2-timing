@@ -1,0 +1,139 @@
+# 项目架构：共享底座＋两条产品线（2026-11-01）
+
+本页是**当前唯一的架构入口**，替代[模块维护](modular-maintenance.md)的入口职责（该页保留各层API细节与历史验收）。机器可读的归属表在[`src/dota_items/architecture.py`](../src/dota_items/architecture.py)，由`tests/test_architecture.py`强制执行。执行顺序和进度只看[开发计划](development-plan-2026-10-30.md)§7。
+
+**决定与建议的区分**：分成两条线、把意识决策作为差异化方向，是用户的决定（[U37](decisions/2026-11-01-two-tracks.md)）。下文的模块归属、依赖规则、迁移策略和目录约定是助手的设计，用户没有逐项确认，可以修改。
+
+---
+
+## 1. 产品结构
+
+```text
+                ┌─────────────────────── 呈现层（统一外壳，赛前页 / 复盘页）───────────────────────┐
+                │                                                                                │
+   路线A 推荐（比赛级ML）                                          路线B 意识决策（差异化）
+   阵容/出装节奏、针对装、对线打法、                                防被抓、是否参团、集合抓人；
+   复盘里的“同线上表现出装时间对照”                                 只用当时可知的录像证据
+   数据：OpenDota比赛JSON，样本大                                   数据：录像→阵营时间线，样本少、解析贵
+                │                                                                                │
+                └───────────────┬────────────────────────────────────────────┬───────────────────┘
+                                │            共享底座（S）                  │
+        来源读取与采集预算 · 存储与哈希 · 契约 · 录像解析与清洗 · MK机制知识（事实→规则→推导）
+        英雄/装备登记表 · 通用评估（按比赛分组的bootstrap）· 生产者迁移 · 工作区/doctor
+```
+
+| 用户产品（U3、U13） | 由哪条线产出 |
+|---|---|
+| A 赛前·针对装 | 路线A（M2b） |
+| B 赛前·对线打法 | 路线A（原M3，比赛级统计） |
+| C 赛后复盘 | **两线合并展示**：出装时间对照来自路线A；防被抓/参团/抓人判断来自路线B |
+
+两条线可以共用一个复盘报告，但模型、数据和验收各自独立：A线的结论不能当B线的证据，反过来也一样。
+
+## 2. 两个维度：层 × 线
+
+每个模块同时有一个**层**（技术职责，包目录）和一条**线**（归属哪个产品方向）。
+
+### 2.1 层（沿用，已有测试）
+
+| 层 | 位置 | 边界 |
+|---|---|---|
+| 来源 | `sources` | 解析外部实体与版本；不导入data/modeling/workflow |
+| 证据/投影 | `data` | 时序、身份、可知性、质量、冻结快照；不导入modeling/workflow |
+| 契约/传输 | `contracts`、`handoff` | 只用标准库；不导入任何业务层 |
+| 学习/推理 | `modeling` | 消费批准快照；不导入data/sources；推理不加载训练库 |
+| 编排 | `experiments`、`workflow` | 协调下层；叶子模块不得反向导入 |
+| 规则原型 | `recommendation` | 自有契约与规则；不调用训练模型 |
+| 入口/展示 | `scripts/`及`*_assets/` | CLI、本地HTTP、静态页 |
+
+强制：`test_track_boundaries`等。
+
+### 2.2 线（2026-11-01新增）
+
+| 线 | 名称 | 模块数（活跃/仅维护） | 脚本数 |
+|---|---|---|---|
+| `shared` | 共享底座 | 53 / 8 | 17 |
+| `recommend` | 路线A 推荐 | 17 / 36 | 37 |
+| `awareness` | 路线B 意识决策 | 13 / 3 | 23 |
+
+依赖规则：
+
+1. **共享底座不导入任一条线**。
+2. **A线与B线互不导入**，需要复用的东西先下沉到共享底座。
+3. 每个`src/dota_items`模块和每个`scripts/*.py`都必须在`architecture.py`里登记；新增文件没登记，测试会失败。
+4. `architecture.py`只用标准库，业务代码不得导入它（它是规则，不是运行时依赖）。
+
+对现有代码的首次扫描结果：**0处跨线导入**。说明原有分层基本按两条线自然分开，这次是把隐含的边界写成可检查的规则。
+
+### 2.3 状态：active / maintenance
+
+- `active`：当前开发可扩展。
+- `maintenance`：只为复现、校验冻结产物而维护（如整局11装备实验、购买队列、7.41f规则原型、机制抽取v1/v2）。修bug可以，新功能另建新版本模块，不在原模块上叠加。
+
+状态是助手按现有文档与代码用途划分的，不是用户决定；判断有误时直接改`architecture.py`并在CHANGELOG说明。
+
+## 3. 模块归属概览
+
+完整列表以`architecture.py`为准，这里只列分组。
+
+| 区域 | 共享底座 | 路线A | 路线B |
+|---|---|---|---|
+| sources | OpenDota、采集预算、采集历史、Gem解析（`gem_*`） | — | 决策时点状态抓取（`decision_state_capture`、`decision_mana`）、坐标身份 |
+| data | `source_io`、校验/清洗/上下文/observer、pipeline、`patch_time`、生产者迁移、装备登记、**MK机制**（`mechanics*`） | 比赛级表`match_table`/`match_snapshot`、购买队列与快照、可行性审计、英雄特性v1 | `decision_*`证据与状态、`replay_*`可知性与回放投影、`tick_alignment` |
+| contracts/handoff | 全部 | — | — |
+| modeling | `_validation`、`evaluation` | 规格、批处理、训练、估计器、制品、推理、`item_timing`、`situational_*`、阵容分析、购买实验 | （尚无，D2起新增） |
+| experiments | 包本身 | `whole_log`（仅维护） | — |
+| recommendation | — | 7.41f规则原型（仅维护） | — |
+| workflow | coach工作区（prepare/observe/doctor） | — | — |
+| scripts | 环境、检查、录像入库、MK构建与复核 | 8780 coach_app、训练/快照/采集 | 回放器、决策评审页（8768–8770）、状态探针、tick对齐 |
+
+### 3.1 已知的归属取舍
+
+- **MK机制知识放在共享底座**：A线用它推导针对装触发条件，B线用它判断敌方抓人能力与逃生手段。
+- **录像解析与清洗（`sources.gem_*`、`data.cleaning/context/observer/pipeline`）放在共享底座**：B线是主要使用者，但coach工作区和A线也能消费；`decision_*`、`replay_*`才是B线专属。
+- **英雄特性v1（`data.hero_traits`）归A线**：它服务M2b的交叉检查；MK-T5推导出v2后，通用的英雄机制档案应放共享底座。
+- **`scripts/coach_app.py`（8780）目前归A线**：B线页面要并入统一外壳时，需要先把外壳（路由、静态资源、安全设置）抽成共享模块，再由两条线各自注册页面。这一步排在B线有第一张可展示的页面时做（计划§8）。
+
+## 4. 数据流
+
+```text
+路线A：OpenDota比赛JSON ─ source_io ─→ match_table（M1快照，10人×比赛）─→ modeling（item_timing、situational_*）─→ 8780赛前页 / 复盘出装对照
+路线B：录像.dem ─ Gem解析 ─→ cleaning/context（共享）─→ 全知/天辉/夜魇时间线 ─ tick_alignment ─→ decision_evidence/state（当时可知）─→ 决策点与客观标签（D0起）─→ 风险/结果模型与行为参照（D2起）─→ 复盘页
+共享知识：Valve快照 → MK事实层 → 规则层 → 推导层 ─┬→ A：针对装触发条件
+                                                 └→ B：抓人能力、逃生手段、技能就绪规则
+```
+
+B线的硬约束（继承U2、U6和`long-term-coach-goals.md`§5）：评价某一时刻的决策，只能用该玩家当时能获取的信息，包括视野、信息年龄和查看成本；全知字段和未来事件只能作为标签，不能作为输入。
+
+## 5. 迁移策略：为什么不搬文件
+
+冻结产物的指纹记录了源码路径，例如：
+
+- `modeling/provenance.py`的`IMPLEMENTATION_FILES`（模型制品校验）；
+- `sources/gem_replay.py`的`adapter_fingerprint`（解析器适配版本）；
+- `data/task_snapshot.py`、`data/lineup_preflight.py`、`data/replay_semantics.py`（快照与审计收据）；
+- `data/pipeline.py`、`experiments/whole_log`对整个包的哈希记录。
+
+把文件挪到`recommend/`、`awareness/`这样的新目录，会让本地已冻结的模型、快照、收据全部校验失败，按项目规则也不能靠忽略哈希来绕过。所以这次重构采用**原地归类**：
+
+1. 目录不动，用`architecture.py`登记每个文件的线和状态，并用测试强制执行依赖规则。
+2. **新代码**：按层放进现有包，并在`architecture.py`登记归属。B线开始建模（D2）时，在`modeling/`下新建子包（暂定`modeling/awareness/`），而不是混进A线文件。
+3. **真正需要搬迁的文件**（候选见下表），必须先在`producer_migration`登记旧指纹到新实现的迁移，再搬；这类搬迁每次单独提出，不批量做。
+
+| 物理整理候选（未执行） | 原因 | 前提 |
+|---|---|---|
+| `mechanics_facts` v1/v2/v3合并为一个版本化模块 | 三个文件大量重复 | v1/v2冻结包的生产者迁移登记 |
+| `scripts/decision_review.py`拆出build与HTTP | 用例与入口同文件（10-28已登记的脚本债务） | 兼容导出与实现指纹清单 |
+| 统一外壳从`coach_app.py`抽到共享模块 | B线页面并入 | B线有第一张页面时 |
+| `modeling.foundation`兼容门面退役 | 只剩旧导入路径 | 确认本地无旧调用方 |
+
+## 6. 检查与入口
+
+- 全量检查不变：`scripts/check.py --scope all`。新增的`test_docs_links.py`检查所有非归档Markdown的相对链接（`data/`、`reports/`等本地证据路径除外），和`test_architecture.py`一起进入各scope的共享测试。
+- 运行入口：路线A `scripts/coach_app.py`（8780）；路线B `scripts/replay_viewer.py`、`scripts/decision_review.py`（8768–8770，历史评审包）。
+
+## 7. 局限
+
+- 归属表只检查导入关系，不检查数据用途：A线脚本读取B线产物的文件，测试发现不了，靠评审把关。
+- `maintenance`状态是助手判断，没有逐项问用户。
+- 本次没有改任何模块的行为；`architecture.py`以外的代码改动只有检查脚本把新测试加进共享集合。
