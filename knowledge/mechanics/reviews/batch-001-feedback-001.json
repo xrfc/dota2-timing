@@ -1,0 +1,70 @@
+{
+  "schema": "mechanics-review-feedback/1",
+  "batch": "knowledge/mechanics/reviews/batch-001.json",
+  "batch_sha256": "ce08e5512d905e7f1f77a2e4cd65ea37342cd511af5afd15eb3071fdde426cb7",
+  "user_message": "好几个技能不记得是谁的了，写详细一点，有些可以解决，3有无魔晶都可以产生幻象，7会触发林肯和莲花，8正确的不提供减益免疫",
+  "responses": [
+    {
+      "audit_number": 3,
+      "review_id": "006b642f01d90ce6f782",
+      "kind": "scope_clarification",
+      "quote": "3有无魔晶都可以产生幻象",
+      "interpretation_zh": "并列基础被动无魔晶也能产生幻象；魔晶说明只是另一种主动产生幻象的方式。",
+      "resolution": "incorporated",
+      "user_decision": null
+    },
+    {
+      "audit_number": 7,
+      "review_id": "022a6b28cc4f727ca996",
+      "kind": "interaction_addition",
+      "quote": "7会触发林肯和莲花",
+      "interpretation_zh": "用户报告魂断会触发林肯格挡与莲花反弹，分别保存为user_reported，不继续写未知。",
+      "resolution": "incorporated",
+      "user_decision": null
+    },
+    {
+      "audit_number": 8,
+      "review_id": "02bf5a4f2224a37c62fb",
+      "kind": "explicit_agreement",
+      "quote": "8正确的不提供减益免疫",
+      "interpretation_zh": "用户确认排除魂断提供减益免疫这一候选。",
+      "resolution": "incorporated",
+      "user_decision": "reject"
+    }
+  ],
+  "additional_context": [
+    {
+      "pointer": {
+        "file": "knowledge/hero-capabilities/hero-registry.json",
+        "path": "/heroes/11/abilities/4/description_zh"
+      },
+      "quote": "幻影长矛手的攻击有一定几率使自己的存在破碎，产生自身的幻象。幻象也有几率进一步破碎，再产生幻象。幻影长矛手产生的幻象持续%illusion_duration%秒，幻象产生的幻象则持续%illusion_from_illusion_duration%秒。"
+    },
+    {
+      "pointer": {
+        "file": "knowledge/hero-capabilities/hero-registry.json",
+        "path": "/heroes/11/abilities/4/upgrade_text/shard_loc/zh"
+      },
+      "quote": "并列增加主动技能。使幻影长矛手进入隐身，最多持续%invis_duration%秒，同时产生一个复制幻象来迷惑敌人。隐身期间自身移动速度提升%invis_movespeed%%%。"
+    }
+  ],
+  "source_sha256": {
+    "knowledge/hero-capabilities/hero-registry.json": "184a490f2d8ca431f5c8b338fb875ccfd6b9684d0847373b02148baea24d04e4"
+  },
+  "pending_audit_numbers": [
+    1,
+    2,
+    4,
+    5,
+    6
+  ],
+  "statistics": {
+    "responses": 3,
+    "explicit_agreements": 1,
+    "scope_clarifications": 1,
+    "interaction_additions": 1,
+    "binary_agreement_rate": 1.0,
+    "binary_agreement_denominator": 1,
+    "note": "仅第8条是对原候选的直接二元判断；3/7为补充与澄清，不计入二元一致率。不是全批准确率。"
+  }
+}

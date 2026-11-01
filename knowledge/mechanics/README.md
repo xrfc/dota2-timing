@@ -17,4 +17,8 @@ MK-T3接口、来源限制、复现命令与抽查入口见[机制事实说明](
 
 语义复核建议独立放在`reviews/`；首批24组说明与8组抽查见[复核入口](../../docs/mechanics-review.md)。`assistant_decision`与`user_decision`分开，未回复保持null，不能当作用户已同意。
 
-U31的四条例子见`reviews/targeting-examples-v1.json`：目标方式、林肯响应、莲花响应分别有value/status/evidence；null表示未知，不是false。这里只记录说明例子，不作为MK-T4可执行规则。
+U31的最新四条例子见`reviews/targeting-examples-v2.json`（旧v1保留）：目标方式、林肯响应、莲花响应分别有value/status/evidence；null表示未知，不是false。这里只记录说明例子，不作为MK-T4可执行规则。
+
+用户反馈独立保存：`reviews/batch-001-feedback-001.json`记录抽查3/7/8；魂断的两项交互在例子v2中标为`user_reported`，与`snapshot_supported`区分。
+
+批次001的8条用户抽查已全部反馈；`batch-001-feedback-002.json`记录剩余5条确认，`batch-001-resolution.json`给出合并解释。原批次不覆盖；未抽样的16组仍是助手建议。
