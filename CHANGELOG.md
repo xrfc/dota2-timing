@@ -1,5 +1,9 @@
 # 变更记录
 
+## 2026-11-01 PR #12合并与分支清理
+
+- 用户同意后合并PR #12（CI全部通过），`claude-temp`快进到合并后的main。用户在GitHub删除旧分支`claude/hero-traits-candidate-rules`（已全部并入main）；远端现为main、claude-temp、codex-temp，标签v0.1.0–v0.4.0。
+
 ## 2026-11-01 Codex交接：版本说明更新
 
 - `docs/handoff/mk-codex-review-of-claude.md`按U36结果改写版本注意点和提示词：技能说明为官网当前文本（很可能7.41f），与记忆不符的注明后留给用户实测。

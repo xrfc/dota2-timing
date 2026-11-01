@@ -139,7 +139,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
   git tag -a v0.4.0 63d395a -m "v0.4.0: version bumped in pyproject on 2026-10-05 (tagged retroactively 2026-11-01, U30)"
   git push origin v0.3.0 v0.4.0
   ```
-- **删除旧远端分支**`claude/hero-traits-candidate-rules`（内容已全部在main；云端会话无删除权限）。
+- ~~删除旧远端分支`claude/hero-traits-candidate-rules`~~：用户已于2026-11-01在GitHub删除（删前确认领先main 0个提交）。标签v0.3.0、v0.4.0也已在远端（分别指向331c6d0、63d395a）。
 
 ## 6. 计划中更远的待决项（到点再问，不要提前假设）
 
