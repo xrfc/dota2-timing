@@ -18,6 +18,11 @@
 - 编织者·连击、米拉娜·天界箭袋、凯·影武长刀等可主动施放/开关的攻击类技能：用户报告不触发敌法师法术反制、清莲宝珠、林肯法球。按U31应单独记为交互（user_reported），建议补入`targeting-examples`。
 - 神谕者·虚妄之诺：用户认为不算治疗、应算“免疫”类，当前没有对应候选组。
 
+### 用户补充的漏抽（U35）
+
+- 夺取控制归召唤物：陈·神圣劝化（`chen_holy_persuasion`）、魅惑魔女·魅惑（`enchantress_enchant`，对非英雄单位）、噬魂鬼·感染（`life_stealer_infest`，附身野怪时控制）当前都没有召唤物候选组。
+- 神谕者·虚妄之诺（`oracle_false_promise`）算减伤，当前没有护盾/减伤候选组。
+
 ## 2. 装备属性字段（`item_attr:`）只覆盖了两类
 
 `field-observations.jsonl`中只有`slow_resistance`（4件）和`status_resistance`（3件）的属性观测，散夜对剑的+16%状态抗性也在其中，没有漏。但其他与针对相关的属性没有抽取，例如：

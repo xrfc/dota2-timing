@@ -1,5 +1,10 @@
 # 变更记录
 
+## 2026-11-01 U35：剩余问题的用户回答
+
+- 夺取控制归召唤物（支配/统御头盔接受，魅惑从强制行为排除）；虚妄之诺算减伤；长大、分则能成不能被破坏；怕破坏英雄6个，新增`knowledge/mechanics/break-vulnerable-heroes-v1.json`及校验测试。第1轮结论：接受1,264、排除286、不确定1（`check-003/`）。
+- 新增漏抽：陈·神圣劝化、魅惑、噬魂鬼·感染缺召唤物候选；虚妄之诺缺减伤候选。
+
 ## 2026-11-01 U34：后续不必交回Codex
 
 - 新增`docs/handoff/mk-codex-review-of-claude.md`与`codex-review-queue.csv`（1,527组按P1/P2/P3排序），用户同意第1轮结果可交Codex复核（可选）。

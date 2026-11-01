@@ -4,6 +4,8 @@
 - 源提交：`6db5eeeb543b10170d2bc9e4984d505715a395c1`（`source-commit.txt`）；只读导出（`git archive`），`verify`通过，未修改codex-temp
 - 复核人：Claude（云端会话，claude-temp分支）；日期2026-11-01；快照`patch_verified=false`
 
+> **U35（2026-11-01）**：剩余问题已答；当前接受1,264、排除286、不确定1，对照`check-003/`（`check-001/002`保留）。
+>
 > **U34（2026-11-01）**：用户决定后续不必交回Codex。`needs_codex_review`的组含义改为“只有Claude审过，待用户按U5抽查”；漏抽修正、词表v3与交互记录由Claude完成。用户随后同意第1轮结果可交Codex复核（可选），入口`docs/handoff/mk-codex-review-of-claude.md`，优先级清单`codex-review-queue.csv`。
 >
 > **修订（2026-11-01，U33）**：用户回答了不确定项后已改判，当前结果为接受1,262、排除282、不确定7；对照见`check-002/`（`needs_codex_review` 1,520、`needs_evidence_review` 7、`same_label_check_conditions` 24、用户冲突0）。下文§1–§4是改判前的第1轮原始结果，`check-001/`保留不覆盖。改判明细见[U33](../../../../docs/decisions/2026-11-01-round1-user-answers.md)，剩余问题见[user-questions.md](user-questions.md)。
