@@ -12,6 +12,12 @@
 | 希瓦的守护 `shivas_guard` | 减速（攻速）`slow` | “Freezing Aura: Reduces the attack speed of all enemies by -40.” | `/shivas_guard/abilities/1/description` | 主动减速已收录，光环的攻速降低漏掉 |
 | 林肯法球 `sphere` | 格挡指向技能（U31交互，不在45项词表） | “Spellblock: Blocks most targeted spells once every 14 seconds.” | `/sphere/abilities/0/description` | U21辅助针对装相关；U31把林肯格挡定为单独记录项，建议在交互记录中补上林肯法球本身 |
 
+### 用户补充的漏抽与交互（U33）
+
+- 斧王·反击螺旋：用户确认固定值反击算反伤，但它不在反伤候选中（`knowledge/hero-capabilities/hero-registry.json`中`axe_counter_helix`）。
+- 编织者·连击、米拉娜·天界箭袋、凯·影武长刀等可主动施放/开关的攻击类技能：用户报告不触发敌法师法术反制、清莲宝珠、林肯法球。按U31应单独记为交互（user_reported），建议补入`targeting-examples`。
+- 神谕者·虚妄之诺：用户认为不算治疗、应算“免疫”类，当前没有对应候选组。
+
 ## 2. 装备属性字段（`item_attr:`）只覆盖了两类
 
 `field-observations.jsonl`中只有`slow_resistance`（4件）和`status_resistance`（3件）的属性观测，散夜对剑的+16%状态抗性也在其中，没有漏。但其他与针对相关的属性没有抽取，例如：

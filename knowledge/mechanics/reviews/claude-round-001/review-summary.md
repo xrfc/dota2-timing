@@ -4,7 +4,9 @@
 - 源提交：`6db5eeeb543b10170d2bc9e4984d505715a395c1`（`source-commit.txt`）；只读导出（`git archive`），`verify`通过，未修改codex-temp
 - 复核人：Claude（云端会话，claude-temp分支）；日期2026-11-01；快照`patch_verified=false`
 
-## 1. 数量
+> **修订（2026-11-01，U33）**：用户回答了不确定项后已改判，当前结果为接受1,262、排除282、不确定7；对照见`check-002/`（`needs_codex_review` 1,520、`needs_evidence_review` 7、`same_label_check_conditions` 24、用户冲突0）。下文§1–§4是改判前的第1轮原始结果，`check-001/`保留不覆盖。改判明细见[U33](../../../../docs/decisions/2026-11-01-round1-user-answers.md)，剩余问题见[user-questions.md](user-questions.md)。
+
+## 1. 数量（第1轮原始结果）
 
 | 结论 | 组数 |
 |---|---|
