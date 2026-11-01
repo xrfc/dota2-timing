@@ -35,3 +35,4 @@
 | U29 | [交叉检查现象的解释；整理代码与文档](2026-11-01-review-answers-and-cleanup.md) |
 | U30 | [可驱散性表确认；闪避/致盲分开；补打标签；合并PR #9](2026-11-01-confirmations-tags-merge.md) |
 | U31 | [指向方式、林肯格挡、莲花反弹分开记录](2026-11-01-targeting-interactions.md) |
+| U32 | [全量机制清单交Claude交叉复核](2026-11-01-cross-ai-review.md) |

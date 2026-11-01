@@ -22,3 +22,5 @@ U31的最新四条例子见`reviews/targeting-examples-v2.json`（旧v1保留）
 用户反馈独立保存：`reviews/batch-001-feedback-001.json`记录抽查3/7/8；魂断的两项交互在例子v2中标为`user_reported`，与`snapshot_supported`区分。
 
 批次001的8条用户抽查已全部反馈；`batch-001-feedback-002.json`记录剩余5条确认，`batch-001-resolution.json`给出合并解释。原批次不覆盖；未抽样的16组仍是助手建议。
+
+U32完整交叉复核包：[cross-review/v1](cross-review/v1/README.md)；[Claude操作说明](../../docs/handoff/mk-claude-cross-review.md)。包括全部候选与结构化附表，Codex既有判断单独放置；回传未审null不当作同意。

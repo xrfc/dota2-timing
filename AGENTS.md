@@ -56,6 +56,7 @@
 
 - 唯一执行计划：`docs/development-plan-2026-10-30.md`（M0–M6，另有MK）。接手先读其§0与§7，只做当前里程碑的下一个未勾选任务。
 - 2026-11-01交接：当前里程碑MK（机制知识底座），详细待办见`docs/handoff/mk-handoff-2026-11-01.md`。
+- U32：MK-T3改为先交Codex/Claude交叉复核，当前入口`docs/handoff/mk-claude-cross-review.md`；全部清单已打包，未审条目不能当作AI一致或用户批准。
 - 用户决定记录在`docs/decisions/`；计划§2“待决”项必须先问用户。
 - 账号ID只在未跟踪的`configs/user.local.json`，不得写入跟踪文件或推送。
 

@@ -4,6 +4,8 @@
 
 > 后续实现：MK-T3已有`knowledge/mechanics/extractions/v1/`首版证据包及校验器，待语义抽查。操作与局限见[机制事实](../mechanics-facts.md)，最新进度见计划§7。下文保留交接时点任务说明。
 
+> U32后续：当前转为Codex/Claude交叉复核，完整清单和回传格式见[Claude交接](mk-claude-cross-review.md)。原始任务背景仍保留在下文。
+
 ## 0. 先读这些（按顺序）
 
 1. `AGENTS.md`：项目规则。重点：所有改动同步维护文档（U24）；临时环境用`<ai名>-temp`分支（U25）；改数据口径/标签/采集/训练前必须问用户；账号ID不得入库。
