@@ -1,5 +1,12 @@
 # 开发与贡献
 
+## 当前入口（2026-11-01，U37双线重构）
+
+- 进度与任务：[开发计划](docs/development-plan-2026-10-30.md)§0、§7；架构：[架构](docs/architecture.md)。旧的“总路线/数据/模型三份主文档”说法已被开发计划替代，下文保留为历史约定。
+- 新增模块或脚本：按层放进现有包，在`src/dota_items/architecture.py`登记**线**（`shared`/`recommend`/`awareness`）和**状态**（`active`/`maintenance`）。共享底座不导入任一线，A、B两线互不导入；`tests/test_architecture.py`会检查。
+- 不搬迁被冻结指纹记录的源码文件；物理整理须先登记生产者迁移并单独提出（架构§5）。
+- 文档：新增`docs/`文件要列入[文档索引](docs/README.md)，用户决定写入`docs/decisions/`并列入其README；`tests/test_docs_links.py`检查索引完整和相对链接。
+
 2026-10-30 Git结构：单工作区当前为`main`，跟踪`origin/main`；已合并开发分支已清理。后续新功能分支须按任务协调，不重建旧数据/模型双分支。分支清单、恢复办法及操作边界见[Git维护记录](docs/git-maintenance-2026-10-30.md)。
 
 > 2026-10-27目标同步：当前产品贡献优先服务“位置＋装备→注意地图／保守／激进走位复盘”，开发流程见[总路线](docs/roadmap.md)。提交时区分事实证据、规则原型、学习模型与建议有效性；不得混入隐藏/未来信息，历史实验协议和用户学习勾选不改。

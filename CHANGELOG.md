@@ -1,5 +1,15 @@
 # 变更记录
 
+## 2026-11-01 U37：双线重构与架构设计
+
+- 用户决定分成两条线：路线A推荐（阵容、出装、针对装、对线；比赛级机器学习）与路线B意识决策（防被抓、参团、集合抓人；差异化）。决策记录`docs/decisions/2026-11-01-two-tracks.md`。
+- 新增[架构](docs/architecture.md)：层×线两个维度、模块归属、依赖规则、数据流与迁移策略；替代`modular-maintenance.md`的入口职责。新增[路线B设计](docs/awareness-track.md)：竞品对照、三类判断、四层设计、B0–B5、数据工程难点。
+- 新增`src/dota_items/architecture.py`（标准库，业务代码不导入）：130个模块（含新增的architecture.py）、77个脚本登记线（shared/recommend/awareness）与状态（active/maintenance）。`tests/test_architecture.py`新增6项：覆盖完整、无过期条目、共享不导入任一线、A/B互不导入（模块与脚本）、未登记模块不回落到共享。首次扫描0处跨线导入。
+- 新增`tests/test_docs_links.py`：非归档Markdown相对链接可解析（本地证据路径除外）、`docs/`文档全部列入索引、决策文件全部列入决策索引；加入`check.py`各scope的共享测试集合。
+- 计划改为双线（文件名不变）：MK为共享底座且优先；路线A沿用M0–M5编号；原M6改为路线B（B0–B5）；新增待决Q11–Q16，Q6由其替代；§2补U36、U37；§5在制品上限改为每线一个；§8登记物理整理候选；§9补两条风险。
+- 文档：重写`README.md`与`docs/README.md`（按共享/A/B组织，全部非归档文档入索引）；`AGENTS.md`、`CONTRIBUTING.md`、`scripts/README.md`（按线归属表）、`roadmap.md`、`project-status.md`、`modular-maintenance.md`更新入口；4份2026-10-10历史设计文档（development-mainline、module-boundaries、documentation-inventory、engineering-design）移入`docs/archive/history/`并改写相对链接，历史归档README补全文件清单。
+- 不改变：任何模块的运行行为、冻结产物、训练/采集/数据用途授权。源码文件不搬迁（冻结指纹记录路径）。
+
 ## 2026-11-01 Codex第2轮复核Claude P1（U34）
 
 - 新增`knowledge/mechanics/reviews/codex-round-002/`：P1队列389项完整覆盖（387语义＋2过时处理）；语义114接受、257排除、16不确定，19处标签分歧逐条附原因，用户边界冲突保持待裁定。

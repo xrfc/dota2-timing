@@ -1,18 +1,18 @@
 # 工程设计：阵容推荐与回放基础设施
 
 
-> 2026-10-27目标同步：近期产品是位置和装备驱动的决策复盘。职责：data构造时点可知证据，contracts承载经确认的新版本，modeling训练/推断，应用层组合建议与隔离的事后解释。具体流程见[总路线](roadmap.md)；这是设计目标，新建议模块尚未交付，不改下方既有接口。
+> 2026-10-27目标同步：近期产品是位置和装备驱动的决策复盘。职责：data构造时点可知证据，contracts承载经确认的新版本，modeling训练/推断，应用层组合建议与隔离的事后解释。具体流程见[总路线](../../roadmap.md)；这是设计目标，新建议模块尚未交付，不改下方既有接口。
 
 ## 公共读取更新 — 2026-10-17
 
 来源文件I/O与解析归data.source_io（标准库），审计/采样/玩家关联复用同一实现。
 producer_migration只处理明确登记的实现身份差异，不忽略任意hash，也不改变数据语义。
-边界及接口见[公共读取说明](public-source-reader.md)。
+边界及接口见[公共读取说明](../../public-source-reader.md)。
 
 
 ## 当前设计 — 2026-10-17
 
-当前拓扑见[模块维护指南](modular-maintenance.md)。modeling分为batch/specs、training/estimators、artifacts、inference和evaluation，foundation为兼容门面。
+当前拓扑见[模块维护指南](../../modular-maintenance.md)。modeling分为batch/specs、training/estimators、artifacts、inference和evaluation，foundation为兼容门面。
 data.validation持有来源校验，workflow.validation兼容导出；sources不再导入data。contracts提供纯上下文格式，handoff.bundle独立读取。
 recommendation仍为人工规则，不能把源日志概率当最佳出装效用。以下内容保留历史设计。
 
@@ -20,7 +20,7 @@ recommendation仍为人工规则，不能把源日志概率当最佳出装效用
 
 `audit_data.py → feasibility_cli → feasibility + semantic_review` 复用normalize和OpenDota读取器。
 `feasibility_sampling`绑定发现顺序与配置，`patch_time`验证官方快照并判断发布时间区间。
-输出仅诊断，不接入训练准入；实现/契约见[审计说明](data-feasibility.md)和[语义核验](data-semantics.md)。
+输出仅诊断，不接入训练准入；实现/契约见[审计说明](../../data-feasibility.md)和[语义核验](../../data-semantics.md)。
 推荐引擎现为 `lineup-rules/2`，新增条件传递/展示修正；下方2026-10-11是原链路设计背景。
 
 ## 当前推荐链路（2026-10-11 / 本地47b8f7f）
@@ -32,20 +32,20 @@ recommendation仍为人工规则，不能把源日志概率当最佳出装效用
         → 需求分析 → 候选硬约束 → 确定性排序 → JSON/文本/HTML报告
 ```
 
-实现位于 [recommendation/](../src/dota_items/recommendation/)，`knowledge.py`定义不可变值对象，
+实现位于 [recommendation/](../../../src/dota_items/recommendation)，`knowledge.py`定义不可变值对象，
 `files.py`负责I/O及来源验证，`engine.py`处理纯逻辑，`report.py`只渲染，`cli.py`组合调用。
 英雄/位置与权重规则由配置选择，当前仅启用 `(8, 1)`；新组合需补事实与案例验收，
-不直接复制主宰策略。使用及详细扩展说明见[本地推荐](lineup-recommendation.md)。
+不直接复制主宰策略。使用及详细扩展说明见[本地推荐](../../lineup-recommendation.md)。
 
-规则质量仍按[评审流程](recommendation-quality-review.md)推进；当前开发优先数据/标签语义证据。
+规则质量仍按[评审流程](../../recommendation-quality-review.md)推进；当前开发优先数据/标签语义证据。
 本链路不导入Gem、workflow或训练框架；不改变下方旧回放/模型契约。
 
 ## 已有回放架构与历史设计
 
-> v0.4 数据准备更新：`prepare` 已实现单文件清洗/特征/标签；`build-samples` 输出固定 split 的训练数组和 train-only 预处理。输入、错误策略、任务 mask 和操作示例以[数据管线](data-pipeline.md)为准。实际模型与真实字段验收仍待完成。
+> v0.4 数据准备更新：`prepare` 已实现单文件清洗/特征/标签；`build-samples` 输出固定 split 的训练数组和 train-only 预处理。输入、错误策略、任务 mask 和操作示例以[数据管线](../../data-pipeline.md)为准。实际模型与真实字段验收仍待完成。
 
 下方架构以2026-10-02的v0.3为历史起点，包含后续数据准备增量；它不是新推荐链路。
-最新功能状态见[完成度](project-status.md)，选型理由见[技术选型](long-term-roadmap.md)。
+最新功能状态见[完成度](../../project-status.md)，选型理由见[技术选型](../../long-term-roadmap.md)。
 
 ## 系统边界
 
@@ -75,21 +75,21 @@ flowchart TD
 
 | 模块 | 职责 |
 |---|---|
-| [coach.py](../coach.py)、[bootstrap.py](../scripts/bootstrap.py) | 启动项目 venv、安装可选依赖；不管理 GPU |
-| [workflow/cli.py](../src/dota_items/workflow/cli.py) | 新命令、批次结果、Schema 和适配器模板初始化 |
-| [sources/gem_replay.py](../src/dota_items/sources/gem_replay.py) | 解压、解析、购买规范化、旧 SQLite 缓存 |
-| [sources/gem_observations.py](../src/dota_items/sources/gem_observations.py) | 用 game_clock 导出位置与自身经济通道 |
-| [sources/opendota.py](../src/dota_items/sources/opendota.py) | OpenDota HTTP 请求、有限重试、原始响应缓存 |
-| [normalize.py](../src/dota_items/normalize.py)、[domain.py](../src/dota_items/domain.py) | 购买时间线、缺失/非法事件状态和事实结构 |
-| [analysis.py](../src/dota_items/analysis.py)、[report.py](../src/dota_items/report.py) | 关注装备的最早购买记录、转义的静态 HTML |
-| [storage.py](../src/dota_items/storage.py) | 跨数据源与工作流共用的文件指纹、JSON 原子替换、相对路径检查和写锁 |
-| [workflow/validation.py](../src/dota_items/workflow/validation.py) | 比赛结构、原始证据引用和时序基础检查 |
-| [workflow/workspace.py](../src/dota_items/workflow/workspace.py) | 数据包、catalog、标签、status、doctor |
-| [workflow/datasets.py](../src/dota_items/workflow/datasets.py) | 筛选、按比赛划分、复制快照、数据集 ID |
-| [data/](../src/dota_items/data/) | 输入清洗、backward 对齐、未来标签、固定样本、sklearn 预处理 |
-| [workflow/contracts.py](../src/dota_items/workflow/contracts.py) | 配置、标签、模型和预测的 Pydantic 契约 |
-| [workflow/jobs.py](../src/dota_items/workflow/jobs.py) | 子进程运行、日志、状态、模型登记与读取 |
-| [workflow/reviews.py](../src/dota_items/workflow/reviews.py) | 模型适用范围、预测引用校验、复盘输出 |
+| [coach.py](../../../coach.py)、[bootstrap.py](../../../scripts/bootstrap.py) | 启动项目 venv、安装可选依赖；不管理 GPU |
+| [workflow/cli.py](../../../src/dota_items/workflow/cli.py) | 新命令、批次结果、Schema 和适配器模板初始化 |
+| [sources/gem_replay.py](../../../src/dota_items/sources/gem_replay.py) | 解压、解析、购买规范化、旧 SQLite 缓存 |
+| [sources/gem_observations.py](../../../src/dota_items/sources/gem_observations.py) | 用 game_clock 导出位置与自身经济通道 |
+| [sources/opendota.py](../../../src/dota_items/sources/opendota.py) | OpenDota HTTP 请求、有限重试、原始响应缓存 |
+| [normalize.py](../../../src/dota_items/normalize.py)、[domain.py](../../../src/dota_items/domain.py) | 购买时间线、缺失/非法事件状态和事实结构 |
+| [analysis.py](../../../src/dota_items/analysis.py)、[report.py](../../../src/dota_items/report.py) | 关注装备的最早购买记录、转义的静态 HTML |
+| [storage.py](../../../src/dota_items/storage.py) | 跨数据源与工作流共用的文件指纹、JSON 原子替换、相对路径检查和写锁 |
+| [workflow/validation.py](../../../src/dota_items/workflow/validation.py) | 比赛结构、原始证据引用和时序基础检查 |
+| [workflow/workspace.py](../../../src/dota_items/workflow/workspace.py) | 数据包、catalog、标签、status、doctor |
+| [workflow/datasets.py](../../../src/dota_items/workflow/datasets.py) | 筛选、按比赛划分、复制快照、数据集 ID |
+| [data/](../../../src/dota_items/data) | 输入清洗、backward 对齐、未来标签、固定样本、sklearn 预处理 |
+| [workflow/contracts.py](../../../src/dota_items/workflow/contracts.py) | 配置、标签、模型和预测的 Pydantic 契约 |
+| [workflow/jobs.py](../../../src/dota_items/workflow/jobs.py) | 子进程运行、日志、状态、模型登记与读取 |
+| [workflow/reviews.py](../../../src/dota_items/workflow/reviews.py) | 模型适用范围、预测引用校验、复盘输出 |
 
 ## 存储层分工
 
@@ -142,8 +142,8 @@ HTML 文本转义、无需 CDN。当前没有地图、路线轨迹、库存状�
 
 ## 回放支线后续结构变化
 
-优先补齐原回放/解析环境追踪、真实字段验证、完整性与覆盖率、解析资源限制和故障恢复。窗口/标签层应在快照与训练器之间显式建立。Parquet、统一 SQLite catalog、任务队列和 Web 界面均需满足[选型路线](long-term-roadmap.md)中的实际触发条件后再引入。
+优先补齐原回放/解析环境追踪、真实字段验证、完整性与覆盖率、解析资源限制和故障恢复。窗口/标签层应在快照与训练器之间显式建立。Parquet、统一 SQLite catalog、任务队列和 Web 界面均需满足[选型路线](../../long-term-roadmap.md)中的实际触发条件后再引入。
 
 ## 2026-10-27状态卡增量
 
-状态提取走独立sources探针与data纯投影，不堆入foundation、训练或回放器策略；应用层只组合状态证据与条件建议。未实现精确ETA或收益预测，不把字段0当完整ready。模块/命令/当前局限见[状态卡](decision-state-card-2026-10-27.md)。
+状态提取走独立sources探针与data纯投影，不堆入foundation、训练或回放器策略；应用层只组合状态证据与条件建议。未实现精确ETA或收益预测，不把字段0当完整ready。模块/命令/当前局限见[状态卡](../../decision-state-card-2026-10-27.md)。
