@@ -38,4 +38,6 @@
 
 ## 5. Claude同时在做的事（避免重复）
 
+> 2026-11-01：漏抽修正、词表v3与v2证据已完成（`knowledge/mechanics/extractions/v2/`，见`docs/knowledge-framework.md`§6）。
+
 按U34，Claude在`claude-temp`上继续：修正漏抽（斯嘉蒂之眼、辉耀闪避、天堂之戟、希瓦光环、斧王·反击螺旋）与抽取规则、按U28–U33出词表v3、补交互记录，再生成第2版证据。Codex复核第1轮结果时不需要处理这些。

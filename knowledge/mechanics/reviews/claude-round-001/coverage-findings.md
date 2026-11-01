@@ -1,5 +1,7 @@
 # 覆盖检查发现（Claude第1轮）
 
+> **2026-11-01更新**：第1节与“用户补充的漏抽”中的斯嘉蒂之眼、辉耀闪避、天堂之戟、希瓦光环、斧王·反击螺旋、陈·神圣劝化、魅惑、感染、虚妄之诺已在v2抽取（`knowledge/mechanics/extractions/v2/`）中收录；林肯法球格挡与连击等的交互仍未写入U31交互记录。
+
 检查范围：PR #11复核包`coverage.json`的无命中对象清单、`field-observations.jsonl`中的装备属性观测，以及U15/U21针对装和常见克制装备的说明原文（OpenDota dotaconstants社区快照，`patch_verified=false`）。没有逐个检查全部943个对象。以下都是**新候选，不改现有case ID**；指针相对仓库根目录。
 
 ## 1. 重要：针对装本身漏抽

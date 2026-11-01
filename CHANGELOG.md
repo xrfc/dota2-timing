@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-11-01 MK-T3第2版证据（v2抽取、词表v3）
+
+- 新增`knowledge/mechanics/vocabulary-v3.json`（U33/U35定义）、`mechanics_rules_v2.py`、`mechanics_facts_v2.py`、`scripts/build_mechanics_facts_v2.py`及`extractions/v2/`；v1冻结包与生产者不变。
+- 与第1轮复核对照：v2去掉94组误报（第1轮均为排除），未去掉任何第1轮接受的组；新增14组（斯嘉蒂之眼、天堂之戟、希瓦光环、斧王·反击螺旋、夺取控制等），Claude复核全部接受（`knowledge/mechanics/reviews/claude-round-002/new-in-v2.jsonl`）。装备属性字段观测由7类扩到闪避、减伤、治疗削减、吸血、真视。
+- 新增`tests/test_mechanics_facts_v2.py`：第1轮误报/漏报回归、用户排除的不可破坏被动、v2重放与篡改拒绝、冻结包哈希。
+
 ## 2026-11-01 U35：剩余问题的用户回答
 
 - 夺取控制归召唤物（支配/统御头盔接受，魅惑从强制行为排除）；虚妄之诺算减伤；长大、分则能成不能被破坏；怕破坏英雄6个，新增`knowledge/mechanics/break-vulnerable-heroes-v1.json`及校验测试。第1轮结论：接受1,264、排除286、不确定1（`check-003/`）。
