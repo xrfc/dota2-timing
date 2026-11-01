@@ -2,6 +2,7 @@
 
 ## 2026-11-01 U34：后续不必交回Codex
 
+- 新增`docs/handoff/mk-codex-review-of-claude.md`与`codex-review-queue.csv`（1,527组按P1/P2/P3排序），用户同意第1轮结果可交Codex复核（可选）。
 - 用户决定交叉复核的后续工作不以Codex为前提；只有Claude审过的组待用户按U5抽查。漏抽修正、词表v3、交互记录改由Claude完成。
 
 ## 2026-11-01 U33：第1轮不确定项的用户回答
