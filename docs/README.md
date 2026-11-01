@@ -115,6 +115,7 @@
 - [模型搭建agent提示词](handoff/model-agent-prompt.md)
 - [并行开发与串行集成协议](handoff/parallel-development.md)
 - [AI临时分支契约（U25）](handoff/ai-temp-branch-contract.md)
+- [MK机制知识底座交接（2026-11-01，接手先读）](handoff/mk-handoff-2026-11-01.md)
 - [数据接口交接（2026-10-16）](handoff/purchase-data-interface.md)
 - [单目录整合与模型agent接续（2026-10-16）](handoff/single-workspace-2026-10-16.md)
 
