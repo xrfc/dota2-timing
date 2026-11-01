@@ -24,3 +24,5 @@ U31的最新四条例子见`reviews/targeting-examples-v2.json`（旧v1保留）
 批次001的8条用户抽查已全部反馈；`batch-001-feedback-002.json`记录剩余5条确认，`batch-001-resolution.json`给出合并解释。原批次不覆盖；未抽样的16组仍是助手建议。
 
 U32完整交叉复核包：[cross-review/v1](cross-review/v1/README.md)；[Claude操作说明](../../docs/handoff/mk-claude-cross-review.md)。包括全部候选与结构化附表，Codex既有判断单独放置；回传未审null不当作同意。
+- 怕破坏英雄名单（推导层，U35）：`break-vulnerable-heroes-v1.json`，与“被动能否被破坏”（事实层）分开。
+- **第2版证据（2026-11-01，U34）**：`vocabulary-v3.json`（写入U33/U35定义）、`src/dota_items/data/mechanics_rules_v2.py`、`mechanics_facts_v2.py`，输出`extractions/v2/`（`facts-v2.json`、`review.csv`、`delta-vs-v1.json`、`manifest.json`）。构建：`PYTHONPATH=src python scripts/build_mechanics_facts_v2.py --output <新目录>`。v1与其冻结包不变。

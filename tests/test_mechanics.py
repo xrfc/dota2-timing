@@ -100,3 +100,16 @@ def test_real_vocabulary_is_valid():
     doc = json.loads((ROOT / "knowledge/mechanics/vocabulary-v1.json").read_text())
     terms = mx.load_vocabulary(doc, enums)
     assert {"applies_break", "break_sensitive", "status_resistance", "mana_gain"} <= set(terms)
+
+
+def test_break_vulnerable_heroes_match_registry():
+    registry = json.loads((ROOT / "knowledge/hero-capabilities/hero-registry.json").read_text())
+    heroes = {h["hero_id"]: h for h in registry["heroes"]}
+    doc = json.loads((ROOT / "knowledge/mechanics/break-vulnerable-heroes-v1.json").read_text())
+    assert doc["schema"] == "break-vulnerable-heroes/1"
+    assert len(doc["heroes"]) == 6
+    for entry in doc["heroes"]:
+        hero = heroes[entry["hero_id"]]
+        assert hero["name_zh"] == entry["name_zh"]
+        names = {a["name"] for a in hero["abilities"]}
+        assert set(entry["key_passives"]) <= names, entry

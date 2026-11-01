@@ -10,6 +10,8 @@
 - 来源是官网当前返回值，不是游戏客户端全量实现。接口没有明确 patch 字段；未知枚举、占位参数与语言差异不自动解释。
 - 技能文本等第三方内容属于其原权利人。仓库代码许可证不将这些文本重新授权为 MIT；用于训练、公开分发或其他产品时应分别确认适用条款。本次仅记录出处与候选状态，不宣称获得训练许可。
 
+- 版本对照（U36，2026-11-01）：新快照用`scripts/refresh_hero_datafeed.py`抓到新目录（`knowledge/hero-capabilities/snapshots/<日期>/`），本目录`sources/`保持不变；用法见[U36](../../docs/decisions/2026-11-01-refresh-valve-datafeed.md)。2026-11-01快照：英文与本目录零改动，中文7处翻译修订；最新补丁7.41f（2026-09-15）。
+
 ## OpenDota
 
 - 项目：[odota/dotaconstants](https://github.com/odota/dotaconstants)。

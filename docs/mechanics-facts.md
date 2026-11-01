@@ -4,6 +4,8 @@
 
 ## 交付与结果
 
+> **当前版本（2026-11-01）**：v2（词表v3、规则v2）见[知识框架§6](knowledge-framework.md)；v3在v2基础上去掉Valve标记为“当前无此升级”的A杖/魔晶文字，见§7，命令`PYTHONPATH=src python scripts/build_mechanics_facts_v3.py --output <新目录>`。下文描述v1，保留不改。
+
 产物在 [`knowledge/mechanics/extractions/v1/`](../knowledge/mechanics/extractions/v1/)：
 
 | 文件 | 用途 |
