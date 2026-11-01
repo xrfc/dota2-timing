@@ -54,7 +54,7 @@ def test_real_table_matches_registry():
     registry = json.loads((ROOT / "knowledge/hero-capabilities/hero-registry.json").read_text())
     table = json.loads((ROOT / "knowledge/mechanics/enums-v1.json").read_text())
     enums = mx.load_enums(table, registry["heroes"])
-    assert set(enums) == {"dispellable", "target_team", "damage", "type"}
+    assert set(enums) == {"dispellable", "target_team", "damage", "type", "immunity"}
     assert mx.decode(enums, "dispellable", 3) == "不可驱散"
 
 
@@ -83,7 +83,7 @@ def test_vocabulary_checks_ids_categories_and_evidence_kinds():
     for bad, message in (
         ([term("a"), term("a")], "Duplicate"),
         ([term("a", category="x")], "unknown category"),
-        ([term("a", ["enum:immunity"])], "unknown evidence"),
+        ([term("a", ["enum:behavior"])], "unknown evidence"),
         ([term("a", ["guess"])], "unknown evidence"),
         ([{**term("a"), "definition": ""}], "needs zh"),
     ):
