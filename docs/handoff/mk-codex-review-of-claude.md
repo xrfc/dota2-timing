@@ -2,6 +2,10 @@
 
 用户先说“你不用非得交给codex”（U34），随后说“这个可以给他复核”。所以：**Codex可以复核Claude的结果，但不是必须环节**；Claude不会等待Codex才继续后续修正。本文件是Codex的入口。
 
+## 本次Codex复核回传（2026-11-01）
+
+P1队列389项已覆盖（387语义＋2过时升级处理）；19个v3移除组均只核对处理依据。结果见[Codex第2轮](../../knowledge/mechanics/reviews/codex-round-002/README.md)：114接受、257排除、16不确定，与Claude不同19组（3接受建议、16待裁定）。9组先天例外涉及U33适用范围，交用户裁定。P2/P3未审；旧结果不改写。
+
 ## 1. 复核对象
 
 - PR #12，分支`claude-temp`；结果目录`knowledge/mechanics/reviews/claude-round-001/`
