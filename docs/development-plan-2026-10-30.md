@@ -47,6 +47,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | U3 | 三个产品目标A/B/C如§1 | 2026-10-30 |
 | U4 | 采用本计划；主玩1/5号位优势路、传奇段位 | 2026-10-30 |
 | U5 | 标注方式：客观标签自动生成；判断类由助手先标、用户抽查约1/3；定义类用户拍板 | 2026-10-30 |
+| U30 | `dispellable`四值确认；闪避与致盲分开；补打v0.3.0/v0.4.0（云端推送标签被拒，待用户本地推送）；合并PR #9 | 2026-11-01 |
 | U29 | 3.1金箍棒高因敌方蝴蝶/辉耀（确认）；散夜对剑降低被控时间→新增状态/减速抗性；巫妖×碎颅锤未解释，熊战士应出碎颅锤（原因待补）；按建议整理代码与文档（标签v0.3.0/v0.4.0待定） | 2026-11-01 |
 | U28 | 词表回答：受破坏影响＝关键被动（如法力损毁、海妖外壳）；法力依赖＝高蓝耗且无自身回蓝（莱恩有法力吸取）；减益免疫只被穿透效果影响（如碎颅锤）；新增`mana_gain`、解码`immunity`；闪避/致盲待定 | 2026-11-01 |
 | U27 | 知识框架扩为完整版：新里程碑MK，先做完再回M2b；范围＝全英雄（含A杖/魔晶）＋全部可购买装备，中立物品与天赋以后 | 2026-10-31 |
@@ -303,7 +304,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### 下一步（接手从这里开始）
 
-**U27（2026-10-31）：知识框架扩为完整版，新里程碑MK（§4），M2b暂停。当前：MK-T1——机制词表草稿`knowledge/mechanics/vocabulary-v1.json`待用户拍板定义；同时可确认MK-T2（`enums-v1.json`）。MK完成后回M2b-T6d。** 以下为U27前状态。**U26（2026-10-31）：改用三层机制知识框架。当前：M2b-T6c——第1层草稿`knowledge/mechanics/enums-v1.json`已完成并通过与登记表的校验，等用户确认各取值含义（`dispellable`等，见`docs/knowledge-framework.md`§3）→T6d起草机制规则（合并Q10）→T6e推导v2。T6b抽查意见（朗戈证据技能、3条不可驱散）记在`docs/hero-traits-analysis.md`§6，于T6e吸收。** 以下为U26前状态。**U22/U23（2026-10-31）改道。M2b-T6b英雄特性初步分析：助手标注v1与交叉检查已完成（`knowledge/hero-traits/hero-traits-v1.json`、`docs/hero-traits-analysis.md`、`reports/hero-traits-crosscheck-2026-10-31-v1`）。当前：等用户抽查§5清单并回答§3待解释点→出v2→T7触发条件（Q10）。**以下为U22前状态。M2b-T0～T5已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`未通过（功效不足）；U20决定上线基线页后进M3，U21定辅助清单。T5：参照统计`reports/m2b-situational-reference-2026-10-31-v1`（M1训练集，`scripts/build_situational_reference.py`），8780“赛前 · 针对装”页，验收`reports/coach-app-acceptance-2026-10-31-v5`（19项通过），模型卡`docs/m2b-model-card.md`。**当前：M2b-T6——请用户打开8780“赛前 · 针对装”评审内容与说明**；评审意见记决策后M2b结案，进M3-T1（先问Q4）。不得在同一验证集上调参重跑。
+**MK进度（2026-11-01）：MK-T1词表45项，用户已答全部待答问题（U28–U30，闪避/致盲分开）；MK-T2中`dispellable`已确认，`immunity`、`target_team`、`damage`、`type`待确认→确认后进MK-T3（官方说明事实抽取）。MK完成后回M2b-T6d。** U27（2026-10-31）：知识框架扩为完整版，新里程碑MK（§4），M2b暂停。 以下为U27前状态。**U26（2026-10-31）：改用三层机制知识框架。当前：M2b-T6c——第1层草稿`knowledge/mechanics/enums-v1.json`已完成并通过与登记表的校验，等用户确认各取值含义（`dispellable`等，见`docs/knowledge-framework.md`§3）→T6d起草机制规则（合并Q10）→T6e推导v2。T6b抽查意见（朗戈证据技能、3条不可驱散）记在`docs/hero-traits-analysis.md`§6，于T6e吸收。** 以下为U26前状态。**U22/U23（2026-10-31）改道。M2b-T6b英雄特性初步分析：助手标注v1与交叉检查已完成（`knowledge/hero-traits/hero-traits-v1.json`、`docs/hero-traits-analysis.md`、`reports/hero-traits-crosscheck-2026-10-31-v1`）。当前：等用户抽查§5清单并回答§3待解释点→出v2→T7触发条件（Q10）。**以下为U22前状态。M2b-T0～T5已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`未通过（功效不足）；U20决定上线基线页后进M3，U21定辅助清单。T5：参照统计`reports/m2b-situational-reference-2026-10-31-v1`（M1训练集，`scripts/build_situational_reference.py`），8780“赛前 · 针对装”页，验收`reports/coach-app-acceptance-2026-10-31-v5`（19项通过），模型卡`docs/m2b-model-card.md`。**当前：M2b-T6——请用户打开8780“赛前 · 针对装”评审内容与说明**；评审意见记决策后M2b结案，进M3-T1（先问Q4）。不得在同一验证集上调参重跑。
 
 ### 已完成记录
 
@@ -337,7 +338,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 - 机制信号（`capability_review_signals`）人工核对后可作为更干净的特征（需新决策与预注册）。
 - M4评估协议须加“最小效果量”门槛（M2展示规则只看区间>0，导致改善≈0也通过）。
 - ~~文档数量多~~：U29已归档34份，`docs/`根目录现57份；以后新的阶段记录被替代时继续移入`docs/archive/history/`。
-- ~~2026-10-31代码审查（共享/工程范围）~~：U29（2026-11-01）已处理——快照读取下沉`dota_items.data.match_snapshot`；`[data]`声明numpy、缺gem-dota时测试跳过；34份旧文档归档到`docs/archive/history/`。**仍待用户**：是否补打并推送`v0.3.0`（331c6d0）、`v0.4.0`（63d395a）标签。
+- ~~2026-10-31代码审查（共享/工程范围）~~：U29（2026-11-01）已处理——快照读取下沉`dota_items.data.match_snapshot`；`[data]`声明numpy、缺gem-dota时测试跳过；34份旧文档归档到`docs/archive/history/`。标签：U30决定补打`v0.3.0`（331c6d0）、`v0.4.0`（63d395a），云端推送标签被拒，**待用户本地推送**（命令见U30）。
 ---
 
 ## 9. 风险

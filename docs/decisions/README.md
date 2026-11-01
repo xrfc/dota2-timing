@@ -33,3 +33,4 @@
 | U27 | [知识框架扩为完整版：新里程碑MK](2026-10-31-complete-knowledge-framework.md) |
 | U28 | [机制词表第一轮回答（破坏、法力依赖、减益免疫）](2026-11-01-vocabulary-answers.md) |
 | U29 | [交叉检查现象的解释；整理代码与文档](2026-11-01-review-answers-and-cleanup.md) |
+| U30 | [可驱散性表确认；闪避/致盲分开；补打标签；合并PR #9](2026-11-01-confirmations-tags-merge.md) |
