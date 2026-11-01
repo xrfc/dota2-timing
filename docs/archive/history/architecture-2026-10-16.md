@@ -2,8 +2,8 @@
 
 ## 后续替代 — 2026-10-17
 
-本页为历史审查。当前以[模块维护指南](modular-maintenance.md)为准。foundation职责混合、data/workflow及sources/data反向依赖已处理，交接读取独立为handoff.bundle。
-私有读取复用已于10/17上午收尾消除，见[公共读取接口](public-source-reader.md)；下方454项及旧lint状态不是当前验收。
+本页为历史审查。当前以[模块维护指南](../../modular-maintenance.md)为准。foundation职责混合、data/workflow及sources/data反向依赖已处理，交接读取独立为handoff.bundle。
+私有读取复用已于10/17上午收尾消除，见[公共读取接口](../../public-source-reader.md)；下方454项及旧lint状态不是当前验收。
 
 ## 同日加固集成更新
 
@@ -30,7 +30,7 @@ feat/lineup-contracts、feat/purchase-data-prep、feat/purchase-model-foundation
 ## 现行开发协作规则
 
 用户已明确：两侧可并行修改各自专属文件；共享文件修改、依赖安装与最终全量验收串行协调。
-文件所有权、暂停写入确认、单写者执行和验收窗口见[协作协议](handoff/parallel-development.md)。
+文件所有权、暂停写入确认、单写者执行和验收窗口见[协作协议](../../handoff/parallel-development.md)。
 这是工程协作边界调整，不是拆包、数据迁移或新增真实实验授权。
 
 ## 当前结构与职责
@@ -118,5 +118,5 @@ PYTHONPATH=src .venv/bin/python -m pytest tests/test_architecture.py tests/test_
 - 将来接入推荐：新增显式适配层；不要把源日志购买概率当成最佳装备效用。
 - 当前无需插件系统、微服务、数据库迁移或拆成两个发行包；先让边界测试约束演进。
 
-最新工作区规则见 [单目录交接](handoff/single-workspace-2026-10-16.md)，
-数据接口见 [交接契约](handoff/purchase-data-interface.md)。
+最新工作区规则见 [单目录交接](../../handoff/single-workspace-2026-10-16.md)，
+数据接口见 [交接契约](../../handoff/purchase-data-interface.md)。

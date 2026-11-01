@@ -49,7 +49,7 @@ $env:PYTHONPATH = "src"
 - `scripts/lineup_analysis.py`：冻结制品加载、原型HTML与本地HTTP表单、离线导出；不使用共享workflow或recommendation模块。
 - `tests/test_lineup_analysis.py`：真实冻结输入只读验收，无fit；没有本地私有制品的环境明确skip，不能将skip报告为通过。
 - 严格校验两个模型文件的已知字节哈希、模型内部校验和、任务契约、同源快照canonical digest和预处理一致性；案例只取1592条train成员。
-- 原型输出：[静态分析](../reports/lineup-prototype-2026-10-25/index.html)、[结构化数据](../reports/lineup-prototype-2026-10-25/analysis.json)、[单英雄替换对照](../reports/lineup-prototype-2026-10-25/enemy-swap.json)。这些是手工阵容功能演示，不是新数据评价或新性能报告。
+- 原型输出：[静态分析](../../../reports/lineup-prototype-2026-10-25/index.html)、[结构化数据](../../../reports/lineup-prototype-2026-10-25/analysis.json)、[单英雄替换对照](../../../reports/lineup-prototype-2026-10-25/enemy-swap.json)。这些是手工阵容功能演示，不是新数据评价或新性能报告。
 
 真实演示将敌方英雄10换成25，其余不变：跳刀概率48.98%→59.44%，冰眼27.28%→16.90%，A杖52.74%→60.97%；所有频率基线不变。这说明输入确实影响已训练模型，不证明变化合理或推荐正确。
 
@@ -63,4 +63,4 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python -m pytest -p no:cachep
 
 本轮只修改上述模型专属文件及本文件、模型进度文档；不改共享路线/配置、采集器、冻结协议或旧模型。未安装依赖、提交、推送或执行全库验收。
 
-实测结果：上述专项**158项通过**，无跳过；Ruff及格式检查通过。真实模型导出、单英雄替换以及本地HTTP表单默认/合法/非法输入均完成验证。浏览器视觉布局未验证（当前环境未提供可用Playwright）；不声称已完成视觉验收。[验证收据](../reports/lineup-prototype-2026-10-25/verification.json)记录本轮源码和输出哈希。
+实测结果：上述专项**158项通过**，无跳过；Ruff及格式检查通过。真实模型导出、单英雄替换以及本地HTTP表单默认/合法/非法输入均完成验证。浏览器视觉布局未验证（当前环境未提供可用Playwright）；不声称已完成视觉验收。[验证收据](../../../reports/lineup-prototype-2026-10-25/verification.json)记录本轮源码和输出哈希。

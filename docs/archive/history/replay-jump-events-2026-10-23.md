@@ -89,7 +89,7 @@ v2核心候选事件引用计数（不是互斥突跳数，可与复活组重叠
 - `tests/test_replay_jump_events.py`：17项专项用例。
 - 本文为独立数据侧入口/API/命令/验收说明；未改需双方协调的共享文档索引。
 
-当前产物：[v2目录](../data/replay-jump-events-2026-10-23-v2/)，三份逐条JSON及[summary.json](../data/replay-jump-events-2026-10-23-v2/summary.json)。summary绑定消费输入、实现及每场输出哈希。读取使用公共`data.source_io`，显式512MiB上限；semantic receipt→audit、audit→manifest、manifest/audit→raw核对，并在输出前复查输入和代码未漂移。该校验不是完整bundle验收，不重跑旧生产者。
+当前产物：[v2目录](../../../data/replay-jump-events-2026-10-23-v2/)，三份逐条JSON及[summary.json](../../../data/replay-jump-events-2026-10-23-v2/summary.json)。summary绑定消费输入、实现及每场输出哈希。读取使用公共`data.source_io`，显式512MiB上限；semantic receipt→audit、audit→manifest、manifest/audit→raw核对，并在输出前复查输入和代码未漂移。该校验不是完整bundle验收，不重跑旧生产者。
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python scripts/audit_replay_jump_events.py \

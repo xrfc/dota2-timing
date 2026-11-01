@@ -40,10 +40,11 @@
 
 ## 5. 机制词表（MK-T1，草稿待用户拍板）
 
-`knowledge/mechanics/vocabulary-v1.json`：43项机制（U28新增`mana_gain`）、9类（控制、防御/保命、状态与驱散、生命/法力、单位、位移、伤害、攻击修正、施法方式）。每项有定义与判定依据：
+`knowledge/mechanics/vocabulary-v1.json`：45项机制（U28新增`mana_gain`；U29新增`status_resistance`、`slow_resistance`）、9类（控制、防御/保命、状态与驱散、生命/法力、单位、位移、伤害、攻击修正、施法方式）。每项有定义与判定依据：
 
 - `enum:X`：已解码的官方枚举（如`effect_dispellability`用`dispellable`，伤害类型用`damage`）；
 - `field:X`：技能原始字段（如法力消耗数值、`behavior`位掩码）；
+- `item_attr:X`：装备属性字段（OpenDota dotaconstants `attrib`，如散夜对剑的`status_resistance`），U29新增；
 - `official_text`：官方说明中的明确表述（如“施加破坏效果”“破坏会使……失效”）；
 - `manual`：人工判断（目前没有项只靠人工）。
 

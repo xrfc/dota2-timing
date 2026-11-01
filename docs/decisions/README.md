@@ -32,3 +32,4 @@
 | U26 | [建立最小机制知识框架（三层）](2026-10-31-knowledge-framework.md) |
 | U27 | [知识框架扩为完整版：新里程碑MK](2026-10-31-complete-knowledge-framework.md) |
 | U28 | [机制词表第一轮回答（破坏、法力依赖、减益免疫）](2026-11-01-vocabulary-answers.md) |
+| U29 | [交叉检查现象的解释；整理代码与文档](2026-11-01-review-answers-and-cleanup.md) |

@@ -78,13 +78,14 @@ def term(mid, evidence=("official_text",), category="c"):
 
 def test_vocabulary_checks_ids_categories_and_evidence_kinds():
     enums = {"dispellable": {}}
-    terms = [term("a"), term("b", ["enum:dispellable", "field:mana_costs"])]
+    terms = [term("a"), term("b", ["enum:dispellable", "field:mana_costs", "item_attr:x"])]
     assert set(mx.load_vocabulary(vocab(*terms), enums)) == {"a", "b"}
     for bad, message in (
         ([term("a"), term("a")], "Duplicate"),
         ([term("a", category="x")], "unknown category"),
         ([term("a", ["enum:behavior"])], "unknown evidence"),
         ([term("a", ["guess"])], "unknown evidence"),
+        ([term("a", ["item_attr:"])], "unknown evidence"),
         ([{**term("a"), "definition": ""}], "needs zh"),
     ):
         with pytest.raises(ValueError, match=message):
@@ -98,4 +99,4 @@ def test_real_vocabulary_is_valid():
     )
     doc = json.loads((ROOT / "knowledge/mechanics/vocabulary-v1.json").read_text())
     terms = mx.load_vocabulary(doc, enums)
-    assert {"applies_break", "break_sensitive", "effect_dispellability"} <= set(terms)
+    assert {"applies_break", "break_sensitive", "status_resistance", "mana_gain"} <= set(terms)

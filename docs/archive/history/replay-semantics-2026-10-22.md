@@ -78,14 +78,14 @@
 
 ## 交付与复现
 
-输出根目录：[`data/replay-semantics-2026-10-22-v1/`](../data/replay-semantics-2026-10-22-v1/)。每场：
+输出根目录：[`data/replay-semantics-2026-10-22-v1/`](../../../data/replay-semantics-2026-10-22-v1/)。每场：
 
 - `audit.json`：输入/实现哈希、逐玩家统计、全部状态转换/位移候选/警告、死亡对应和扰动检查结果。
 - `receipt.json`：audit哈希与泄漏检查结果；不是整体语义合格证。
 - `quarantine-details.json`：逐条隔离input引用、时间、tick与raw引用，绑定input哈希。
 - `timeline.svg`：状态与位移事件时间线，悬浮标题包含来源引用；灰色表示图中未用转换区间推断覆盖。该图不是地图。
 
-时间线：[9056009571](../data/replay-semantics-2026-10-22-v1/9056009571/timeline.svg) · [9056009136](../data/replay-semantics-2026-10-22-v1/9056009136/timeline.svg) · [9056009130](../data/replay-semantics-2026-10-22-v1/9056009130/timeline.svg)。已生成并检查SVG结构；未做浏览器视觉验收。
+时间线：[9056009571](../../../data/replay-semantics-2026-10-22-v1/9056009571/timeline.svg) · [9056009136](../../../data/replay-semantics-2026-10-22-v1/9056009136/timeline.svg) · [9056009130](../../../data/replay-semantics-2026-10-22-v1/9056009130/timeline.svg)。已生成并检查SVG结构；未做浏览器视觉验收。
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python scripts/audit_replay_semantics.py \

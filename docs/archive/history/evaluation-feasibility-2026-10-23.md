@@ -114,7 +114,7 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python -m pytest -p no:cachep
   tests/test_random_cohort_snapshot.py tests/test_whole_log_snapshot.py -q
 ```
 
-当前交付：[v3审计目录](../reports/evaluation-feasibility-2026-10-23-v3/)，audit.json与complete.json；v1/v2保留。v2增加成功SQL模板对照并修正lint长行，主要统计与v1一致。
+当前交付：[v3审计目录](../../../reports/evaluation-feasibility-2026-10-23-v3/)，audit.json与complete.json；v1/v2保留。v2增加成功SQL模板对照并修正lint长行，主要统计与v1一致。
 69项专项通过（新增11项）；新增两文件Ruff及格式检查通过。开发初次lint有导入/长行格式问题，修正后通过。测试覆盖日志空/缺失/非法差异、匿名身份、严格时间边界、传递连接、输入哈希/漂移、输出保护、非法时钟与旧预测错配。
 未组织新的全库停写验收，69项不能称全库通过；未安装依赖、提交或推送。此前研究设计的未提交文件保留并追加进度，不覆盖历史证据。
 

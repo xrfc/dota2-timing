@@ -198,7 +198,7 @@ data.replay_status为纯展示分类；data.decision_evidence提供只读同tick
 
 ### 增强案例来源附录（2026-10-27）
 
-data.decision_context为纯投影，不读文件或实现行动策略，严格排除未来事件、敌方隐藏眼/雾和完整团战结果。scripts/enhance_decision_cases.py复用公共读取及DecisionEvidenceStore，校验来源/旧包/时钟字节，把未认证附录与原decision_input隔离。行动条件来自独立人工修订，不进入data策略；增强页复用兼容的decision_review_assets。新测试按既有默认归data；不改共享contracts/handoff。操作、API边界及研究未决项见[字段清单](decision-field-readiness-2026-10-27.md)与[任务草案](decision-training-task-draft-2026-10-27.md)。
+data.decision_context为纯投影，不读文件或实现行动策略，严格排除未来事件、敌方隐藏眼/雾和完整团战结果。scripts/enhance_decision_cases.py复用公共读取及DecisionEvidenceStore，校验来源/旧包/时钟字节，把未认证附录与原decision_input隔离。行动条件来自独立人工修订，不进入data策略；增强页复用兼容的decision_review_assets。新测试按既有默认归data；不改共享contracts/handoff。操作、API边界及研究未决项见[字段清单](decision-field-readiness-2026-10-27.md)与[任务草案](archive/history/decision-training-task-draft-2026-10-27.md)。
 
 ### 独立现场探针与状态卡（2026-10-27）
 

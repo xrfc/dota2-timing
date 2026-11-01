@@ -3,7 +3,7 @@
  "version": "v1-draft-2026-10-31",
  "decision": "U27",
  "status": "draft_pending_user_definition",
- "note": "机制定义属于U5“定义类”，由用户拍板。evidence说明判定依据：enum:X＝已解码的官方枚举（enums-v1.json），field:X＝技能原始字段（数值或位掩码），official_text＝官方说明原文中的明确表述，manual＝需人工判断。open是待用户回答的问题。 2026-11-01用户回答见docs/decisions（U28）。",
+ "note": "机制定义属于U5“定义类”，由用户拍板。evidence说明判定依据：enum:X＝已解码的官方枚举（enums-v1.json），field:X＝技能原始字段（数值或位掩码），item_attr:X＝装备属性字段（OpenDota dotaconstants attrib），official_text＝官方说明原文中的明确表述，manual＝需人工判断。open是待用户回答的问题。 2026-11-01用户回答见docs/decisions（U28）。",
  "categories": {
   "control": "控制",
   "defense": "防御/保命",
@@ -169,6 +169,27 @@
    "definition": "在一段时间内生命值不会降到0以下（如薄葬、回光返照）",
    "evidence": [
     "official_text"
+   ]
+  },
+  {
+   "id": "status_resistance",
+   "zh": "状态抗性",
+   "category": "defense",
+   "definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）",
+   "evidence": [
+    "official_text",
+    "item_attr:status_resistance"
+   ],
+   "note": "U29：用户指出散夜对剑能降低被控制时间；装备数值在OpenDota属性字段，不在技能说明里"
+  },
+  {
+   "id": "slow_resistance",
+   "zh": "减速抗性",
+   "category": "defense",
+   "definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+   "evidence": [
+    "official_text",
+    "item_attr:slow_resistance"
    ]
   },
   {

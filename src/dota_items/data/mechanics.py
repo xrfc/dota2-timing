@@ -48,7 +48,8 @@ RAW_FIELDS = {"behavior", "target_type", "immunity", "mana_costs", "cooldowns", 
 def load_vocabulary(doc, enums):
     """Validate the mechanism vocabulary (layer 1 terms); return {id: entry}.
 
-    Evidence kinds: official_text, manual, enum:<decoded field>, field:<raw field>.
+    Evidence kinds: official_text, manual, enum:<decoded field>, field:<raw field>,
+    item_attr:<item attribute key>.
     """
     if doc.get("schema") != "mechanics-vocabulary/1":
         raise ValueError("Unsupported mechanics vocabulary schema")
@@ -68,6 +69,7 @@ def load_vocabulary(doc, enums):
                 kind in TEXT_EVIDENCE
                 or (prefix == "enum" and name in enums)
                 or (prefix == "field" and name in RAW_FIELDS)
+                or (prefix == "item_attr" and bool(name))
             )
             if not ok:
                 raise ValueError(f"{mid}: unknown evidence {kind}")

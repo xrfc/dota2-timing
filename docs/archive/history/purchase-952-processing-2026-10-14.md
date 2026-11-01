@@ -42,7 +42,7 @@ train/validation共有230个账号，train/test共有220个，validation/test共
 
 - `reports/purchase-952-summary-2026-10-14.json`：全局来源哈希复验、日志观测、玩家关联。
 - `reports/purchase-952-preview-2026-10-14.json`：阵容特征、编码、源购买观测、未知标签。
-- [脱敏处理收据](acceptance/purchase-952-processing-2026-10-14.json)：哈希与汇总，不含玩家账号。
+- [脱敏处理收据](../../acceptance/purchase-952-processing-2026-10-14.json)：哈希与汇总，不含玩家账号。
 
 ```bash
 PYTHONPATH=src .venv/bin/python scripts/summarize_purchase_collection.py --root data/purchase-1000-2026-10-14 --output reports/purchase-952-summary-new.json
@@ -54,7 +54,7 @@ PYTHONPATH=src .venv/bin/python scripts/prepare_purchase_preview.py --summary re
 
 ## 后续推进：源购买观测契约
 
-[购买日志观测契约](purchase-observation-contract.md)已实现并离线运行。
+[购买日志观测契约](../../purchase-observation-contract.md)已实现并离线运行。
 五候选键/ID与本地官方快照一致；其他英雄在782场出现BKB，未发现键统一漏掉迹象。
 946场估算carry、6场估算其他位置；全部保留，不使用估算位置作为输入。
 已将源日志存在性0/1与未准入的实际购买标签明确分离，不能混用。

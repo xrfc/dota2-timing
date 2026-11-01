@@ -6,7 +6,7 @@
 确认原话：“采用这组参数，继续实现并按预算分批采集”。下文推荐措辞保留设计理由，不再表示参数待确认。
 真实评估/训练不在此次采集授权内；不修改旧产物、模型或共享接口。
 
-依据：[研究协议](independent-evaluation-design-2026-10-23.md)、[离线审计](evaluation-feasibility-2026-10-23.md)、[联网复测](evaluation-source-probe-2026-10-23.md)。
+依据：[研究协议](archive/history/independent-evaluation-design-2026-10-23.md)、[离线审计](archive/history/evaluation-feasibility-2026-10-23.md)、[联网复测](archive/history/evaluation-source-probe-2026-10-23.md)。
 目标仍为开局阵容预测主宰整份合法源日志中的11装备出现概率，不是最优出装或时间点预测。
 
 ## 1. 推荐档位及理由

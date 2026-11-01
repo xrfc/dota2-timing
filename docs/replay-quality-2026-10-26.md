@@ -4,7 +4,7 @@
 
 用户授权的数据质量补齐与tick对齐已完成。13场生成分离的全知、天辉和夜魇数据；新增10场静态地标核验完成；两场大文件完成clean-only恢复。未改变数据用途、训练准入、标签、划分或共享默认读取上限。没有训练、安装依赖、推送或启动客户端。
 
-交付入口：[数据包说明](../data/replay-quality-2026-10-26-v1/README.md)、[汇总证据](../data/replay-quality-2026-10-26-v1/summary.json)。旧[扩量报告](replay-expansion-2026-10-26.md)和[地图报告](map-reference-2026-10-26.md)保留历史状态；本报告补充其未完成事项，不覆盖旧产物。
+交付入口：[数据包说明](../data/replay-quality-2026-10-26-v1/README.md)、[汇总证据](../data/replay-quality-2026-10-26-v1/summary.json)。旧[扩量报告](archive/history/replay-expansion-2026-10-26.md)和[地图报告](archive/history/map-reference-2026-10-26.md)保留历史状态；本报告补充其未完成事项，不覆盖旧产物。
 
 ## 1. 大文件恢复
 

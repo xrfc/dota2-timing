@@ -66,9 +66,9 @@
 - `scripts/report_replay_identity.py`：验证audit/capture哈希，汇总静态签名并生成原生坐标SVG。
 - `tests/test_replay_identity.py`：15项新专项测试。
 
-产物根目录：[`data/replay-identity-2026-10-22-v1/`](../data/replay-identity-2026-10-22-v1/)。每场保留私有取证源码、执行指纹、capture、逐条链接audit和完成回执；旧录像/旧解析不覆盖，解压临时文件由已有入口自动清理。`summary/summary.json`记录跨场地标对照；不等于完整bundle验收。
+产物根目录：[`data/replay-identity-2026-10-22-v1/`](../../../data/replay-identity-2026-10-22-v1/)。每场保留私有取证源码、执行指纹、capture、逐条链接audit和完成回执；旧录像/旧解析不覆盖，解压临时文件由已有入口自动清理。`summary/summary.json`记录跨场地标对照；不等于完整bundle验收。
 
-原生地标示意图：[9056009571](../data/replay-identity-2026-10-22-v1/summary/9056009571.svg) · [9056009136](../data/replay-identity-2026-10-22-v1/summary/9056009136.svg) · [9056009130](../data/replay-identity-2026-10-22-v1/summary/9056009130.svg)。SVG已通过XML结构检查，未做浏览器视觉验收。图中y向上是展示约定，不是独立朝向认证；悬浮标题包含实体身份与capture引用。
+原生地标示意图：[9056009571](../../../data/replay-identity-2026-10-22-v1/summary/9056009571.svg) · [9056009136](../../../data/replay-identity-2026-10-22-v1/summary/9056009136.svg) · [9056009130](../../../data/replay-identity-2026-10-22-v1/summary/9056009130.svg)。SVG已通过XML结构检查，未做浏览器视觉验收。图中y向上是展示约定，不是独立朝向认证；悬浮标题包含实体身份与capture引用。
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python scripts/audit_replay_identity.py \

@@ -61,4 +61,4 @@ git diff --check
 原始来源重建成功；本轮无网络采集、无重训练、无推送或合并。
 
 产物：`reports/purchase-log-diagnostics-952-2026-10-15.json`；
-[验收摘要](acceptance/purchase-log-diagnostics-952-2026-10-15.json)。
+[验收摘要](../../acceptance/purchase-log-diagnostics-952-2026-10-15.json)。

@@ -2,10 +2,10 @@
 
 > 2026-10-22维护说明：下文记录当时实现及实验结果。当前编排已从scripts迁至
 > experiments.whole_log，旧命令保持兼容；旧产物、当时源码指纹与实验结果不改写。
-> 结构与验收见[实验层维护](experiment-maintenance.md)。
+> 结构与验收见[实验层维护](../../experiment-maintenance.md)。
 
 
-> 2026-10-22文档整理：本页为已执行的固定实验记录，保留原文，不再维护当前开发路线。最新流程及任务统一见[数据](data-prep-progress.md)、[模型](model-foundation.md)、[总路线](roadmap.md)。下方“当前／下一步／未训练”均按原记录日期解释。
+> 2026-10-22文档整理：本页为已执行的固定实验记录，保留原文，不再维护当前开发路线。最新流程及任务统一见[数据](../../data-prep-progress.md)、[模型](../../model-foundation.md)、[总路线](../../roadmap.md)。下方“当前／下一步／未训练”均按原记录日期解释。
 
 ## 授权与实验前冻结（2026-10-21 17:27）
 
@@ -39,7 +39,7 @@
 
 ## 个人学习同步
 
-见[当前学习路线](../learning/docs/roadmap.md)新增L13–L17与[本轮练习](../learning/docs/whole-log-baseline-lab.md)。工程实现/训练完成不等于用户已掌握，个人练习不自动勾选。实际结果、运行命令和验收待本轮执行后补充。
+见[当前学习路线](../../../learning/docs/roadmap.md)新增L13–L17与[本轮练习](../../../learning/docs/whole-log-baseline-lab.md)。工程实现/训练完成不等于用户已掌握，个人练习不自动勾选。实际结果、运行命令和验收待本轮执行后补充。
 
 ## 本轮真实执行结果
 

@@ -47,6 +47,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | U3 | 三个产品目标A/B/C如§1 | 2026-10-30 |
 | U4 | 采用本计划；主玩1/5号位优势路、传奇段位 | 2026-10-30 |
 | U5 | 标注方式：客观标签自动生成；判断类由助手先标、用户抽查约1/3；定义类用户拍板 | 2026-10-30 |
+| U29 | 3.1金箍棒高因敌方蝴蝶/辉耀（确认）；散夜对剑降低被控时间→新增状态/减速抗性；巫妖×碎颅锤未解释，熊战士应出碎颅锤（原因待补）；按建议整理代码与文档（标签v0.3.0/v0.4.0待定） | 2026-11-01 |
 | U28 | 词表回答：受破坏影响＝关键被动（如法力损毁、海妖外壳）；法力依赖＝高蓝耗且无自身回蓝（莱恩有法力吸取）；减益免疫只被穿透效果影响（如碎颅锤）；新增`mana_gain`、解码`immunity`；闪避/致盲待定 | 2026-11-01 |
 | U27 | 知识框架扩为完整版：新里程碑MK，先做完再回M2b；范围＝全英雄（含A杖/魔晶）＋全部可购买装备，中立物品与天赋以后 | 2026-10-31 |
 | U26 | 建最小机制知识框架（事实层→机制规则层→推导层），只覆盖主宰6件与辅助9件针对装；v2特性由规则推导；原T7并入T6d | 2026-10-31 |
@@ -237,7 +238,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### M6 决策级复盘（约8–12周）
 
-即原COACH-03～06（见总路线R2–R4与`docs/decision-training-task-draft-2026-10-27.md`）。开始时问Q6；任务分解届时写入本文。展示层并入M2-T5统一外壳（8770评审页保留为历史参考）。
+即原COACH-03～06（见总路线R2–R4与`docs/archive/history/decision-training-task-draft-2026-10-27.md`）。开始时问Q6；任务分解届时写入本文。展示层并入M2-T5统一外壳（8770评审页保留为历史参考）。
 
 已登记需求（U6，用户2026-10-30）：评价某时刻决策时，须区分“信息在录像中存在”与“玩家当时能否获取”——包括视野、信息年龄、以及查看队友关键技能CD等所需的操作/时间成本（来不及看就不能当作已知）。任务定义与特征设计须体现这一点。用户对R1案例1的判断（主宰无敌斩未就绪、开团点过远、TP后仍需步行→倾向不参团）作为开发反馈保留，不作训练标签。
 
@@ -335,12 +336,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 - M4候选：M2b冻结模型（`reports/m2b-situational-2026-10-31-v1`）在新数据上评估一次。
 - 机制信号（`capability_review_signals`）人工核对后可作为更干净的特征（需新决策与预注册）。
 - M4评估协议须加“最小效果量”门槛（M2展示规则只看区间>0，导致改善≈0也通过）。
-- 文档数量多（80+份），M0后逐步归档过时日期文档到`docs/archive/`。（2026-10-31审查：`docs/`根目录已94份。）
-- 2026-10-31代码审查（共享/工程范围，待用户决定）：
-  - `scripts/train_situational_items.py`、`build_situational_reference.py`、`hero_trait_crosscheck.py`用importlib加载`scripts/train_item_timing.py`的`load_snapshot`/`write`；应下沉到`src`（data或modeling.batch），改动影响各脚本IMPLEMENTATION指纹，须按登记迁移处理。
-  - `pyproject.toml`未声明numpy（modeling直接import，仅靠sklearn/pandas间接安装）；`scripts/export_raw_replay_channels.py`依赖`[replay]`的gem-dota，只装`.[dev,data]`时pytest在收集阶段报错退出而非跳过。
-  - 版本号不一致：`pyproject.toml`为0.4.0，git标签只有v0.1.0、v0.2.0。
-
+- ~~文档数量多~~：U29已归档34份，`docs/`根目录现57份；以后新的阶段记录被替代时继续移入`docs/archive/history/`。
+- ~~2026-10-31代码审查（共享/工程范围）~~：U29（2026-11-01）已处理——快照读取下沉`dota_items.data.match_snapshot`；`[data]`声明numpy、缺gem-dota时测试跳过；34份旧文档归档到`docs/archive/history/`。**仍待用户**：是否补打并推送`v0.3.0`（331c6d0）、`v0.4.0`（63d395a）标签。
 ---
 
 ## 9. 风险

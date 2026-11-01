@@ -73,7 +73,7 @@ PYTHONPATH=data/replay-pilot-2026-10-22/compat-v1:src \
 
 ## 最终交付与验收
 
-最终原始通道目录：[`raw-channels-v2`](../data/replay-expansion-2026-10-26-v1/raw-channels-v2/)。首次v1导出及失败记录保留；原始脚本源码快照为`export_raw_replay_channels-v1.py`。当前脚本schema为`raw-replay-channel-projection/2`，增加英雄别名修正证据；不覆盖原值。v2对全部10场重新导出，**没有重新下载或重新解析录像**。
+最终原始通道目录：[`raw-channels-v2`](../../../data/replay-expansion-2026-10-26-v1/raw-channels-v2/)。首次v1导出及失败记录保留；原始脚本源码快照为`export_raw_replay_channels-v1.py`。当前脚本schema为`raw-replay-channel-projection/2`，增加英雄别名修正证据；不覆盖原值。v2对全部10场重新导出，**没有重新下载或重新解析录像**。
 
 |层级|比赛数|位置行数|可见性事件数|用途/边界|
 |---|---:|---:|---:|---|
@@ -97,10 +97,10 @@ PYTHONPATH=data/replay-pilot-2026-10-22/compat-v1:src \
 
 目前没有需要用户立即决定的筛选/补值规则。72个候选（70未命中、2非存活端点）先由助手补齐事件链、排查解析与同tick问题，再把确需游戏经验的少量案例带完整上下文交给用户；不将72条原始疑点直接当作72个用户判断任务。用户判断仅作核查证据，不直接生成训练标签。
 
-- [逐场索引与状态](../data/replay-expansion-2026-10-26-v1/handoff/matches.csv)
-- [汇总与英雄别名证据](../data/replay-expansion-2026-10-26-v1/handoff/summary.json)
-- [待技术筛查的位移清单](../data/replay-expansion-2026-10-26-v1/handoff/review-queue.csv)
-- [八场语义审计汇总](../data/replay-expansion-2026-10-26-v1/semantic-summary.json)
+- [逐场索引与状态](../../../data/replay-expansion-2026-10-26-v1/handoff/matches.csv)
+- [汇总与英雄别名证据](../../../data/replay-expansion-2026-10-26-v1/handoff/summary.json)
+- [待技术筛查的位移清单](../../../data/replay-expansion-2026-10-26-v1/handoff/review-queue.csv)
+- [八场语义审计汇总](../../../data/replay-expansion-2026-10-26-v1/semantic-summary.json)
 
 ### 软件收尾
 

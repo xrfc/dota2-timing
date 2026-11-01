@@ -54,7 +54,7 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python scripts/probe_evaluati
 产物complete内全部哈希、实现指纹、原失败来源哈希和预算预留连续性实测核对通过。
 未组织全库停写验收，专项不称全库通过；未安装依赖、提交、推送或合并。
 
-完整收据：[本地复测目录](../reports/evaluation-source-probe-2026-10-23/)。
+完整收据：[本地复测目录](../../../reports/evaluation-source-probe-2026-10-23/)。
 该目录包含源响应，仅供本地审计，不应把玩家级响应上传GitHub。
 
 ## 4. 接下来的研究决策
