@@ -4,6 +4,7 @@
 - 源提交：`6db5eeeb543b10170d2bc9e4984d505715a395c1`（`source-commit.txt`）；只读导出（`git archive`），`verify`通过，未修改codex-temp
 - 复核人：Claude（云端会话，claude-temp分支）；日期2026-11-01；快照`patch_verified=false`
 
+> **U5抽查（2026-11-01）**：利维坦的渔获伤害格挡改为接受，冥魂大帝·吸血灵魂A杖吸血改为排除（用户实测）；当前接受1,265、排除286、不确定0。另有17组接受组只靠已失效的A杖/魔晶文字，第3版证据已去掉（`extractions/v3/delta-vs-v2.json`），本文件的判断不改，因为判断的是文字本身。
 > **U35（2026-11-01）**：剩余问题已答；当前接受1,264、排除286、不确定1，对照`check-003/`（`check-001/002`保留）。
 >
 > **U34（2026-11-01）**：用户决定后续不必交回Codex。`needs_codex_review`的组含义改为“只有Claude审过，待用户按U5抽查”；漏抽修正、词表v3与交互记录由Claude完成。用户随后同意第1轮结果可交Codex复核（可选），入口`docs/handoff/mk-codex-review-of-claude.md`，优先级清单`codex-review-queue.csv`。
