@@ -63,3 +63,7 @@
 ## MK-T3接口补充
 
 字段观测与文字候选独立保存到`knowledge/mechanics/extractions/v1/`，详见[机制事实接口与复核](mechanics-facts.md)。装备原文是社区快照，不能因证据种类名为`official_text`而称为Valve官方认证。所有文字候选均待复核；当前尚无T4规则或T5推导结果。
+
+## U31：指向方式与物品响应分开
+
+用户确认三项独立记录：能否主动选择敌方单位、是否触发林肯格挡、是否触发莲花反弹。`vocabulary-v2.json`只修订单体指向定义，允许兼容友方目标；具体交互逐项核对，缺证据为未知。原词表/抽取v1保持不变，语义复核引用v2。例子与来源见[复核说明](mechanics-review.md)，用户决定见[U31](decisions/2026-11-01-targeting-interactions.md)。

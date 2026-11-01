@@ -5,7 +5,7 @@
 | 层 | 文件 | 状态 |
 |---|---|---|
 | 1 事实层：官方原始枚举的含义 | `enums-v1.json` | 已经用户确认（U30，MK-T2完成） |
-| 1 事实层：机制词表 | `vocabulary-v1.json` | 45项，定义已按U28–U30确认（MK-T1完成） |
+| 1 事实层：机制词表 | `vocabulary-v2.json`（旧抽取仍绑定v1） | 45项；U31将指向方式与格挡/反弹分开，其他定义沿用 |
 | 1 事实层：字段观测与说明候选 | `extractions/v1/`（MK-T3） | 已抽取，待语义复核 |
 | 2 机制规则层：机制交互与装备↔机制克制 | 待建（MK-T4） | — |
 | 3 推导层：英雄/装备机制档案、克制图、hero-traits v2 | 待建（MK-T5） | — |
@@ -14,3 +14,7 @@
 - 修改须记决策并升版本（v2…），旧版本不覆盖。
 
 MK-T3接口、来源限制、复现命令与抽查入口见[机制事实说明](../../docs/mechanics-facts.md)。v1包含全部734个技能和209个装备清单候选；原文匹配均待复核，不能直接当作机制规则。
+
+语义复核建议独立放在`reviews/`；首批24组说明与8组抽查见[复核入口](../../docs/mechanics-review.md)。`assistant_decision`与`user_decision`分开，未回复保持null，不能当作用户已同意。
+
+U31的四条例子见`reviews/targeting-examples-v1.json`：目标方式、林肯响应、莲花响应分别有value/status/evidence；null表示未知，不是false。这里只记录说明例子，不作为MK-T4可执行规则。

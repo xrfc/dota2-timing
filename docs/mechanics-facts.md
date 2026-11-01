@@ -73,3 +73,7 @@ python scripts/check.py --scope all
 专项44项通过：真实快照全部引用核验、全对象覆盖、已知语义回归、A杖/魔晶条件、否定和子串误命中、字段/来源/归属/复核状态篡改拒绝、可重复生成、旧目录保护。全量`check.py --scope all`通过：pytest 1,426通过、17跳过；Ruff、22项学习/英雄知识unittest及全部JS检查通过。17项跳过来自不在Git中的本地冻结产物。检查前后所有跟踪/未跟踪文件指纹一致，随后仅补记本验收结果。工程通过不代表候选已经过用户语义评审。
 
 产物目录在`.gitattributes`中标为`-text`，避免Git转换CSV换行符使收据失配；提交时额外对Git暂存区blob逐项核对输出哈希。
+
+## 独立语义复核
+
+首批24组助手判定与原抽样中的8组用户抽查见[语义复核说明](mechanics-review.md)，机器记录在`knowledge/mechanics/reviews/batch-001.json`。评审建议独立保存，接受建议不等于用户批准，不修改v1事实或抽查CSV。
