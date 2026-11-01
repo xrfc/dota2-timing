@@ -41,3 +41,4 @@
 | U35 | [夺取控制归召唤物；虚妄之诺算减伤；怕破坏英雄名单](2026-11-01-control-falsepromise-break.md) |
 | U36 | [授权重新抓取当前Valve英雄数据做版本对照](2026-11-01-refresh-valve-datafeed.md) |
 | U37 | [分成两条线（推荐／意识决策）；重构项目与架构](2026-11-01-two-tracks.md) |
+| U38 | [两条线不分主次；先做完MK；采集前先定采集内容](2026-11-01-tracks-equal-mk-first.md) |
