@@ -1,5 +1,9 @@
 # 变更记录
 
+## 2026-11-01 U36：授权重新抓取Valve英雄数据
+
+- 用户同意重新抓取当前Valve datafeed（中英文）与10-09快照对照，只用于版本核对（`docs/decisions/2026-11-01-refresh-valve-datafeed.md`）。云端环境拒绝连接`www.dota2.com`，尚未抓取。
+
 ## 2026-11-01 MK-T3第3版证据：去掉已失效的A杖/魔晶文字
 
 - 用户U5抽查指出殁境神蚀者·奥术天球A杖、琼英碧灵越界的吸血与当前游戏不符。查原始字节：Valve datafeed对29个技能保留了`scepter_loc`/`shard_loc`文字，但该技能的`ability_has_scepter`/`ability_has_shard`为false（当前没有这项升级）；英雄登记表当初没保留这两个标记，v1/v2把所有升级文字都当成现行。
