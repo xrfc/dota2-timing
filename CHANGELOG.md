@@ -1,5 +1,9 @@
 # 变更记录
 
+## 2026-11-01 U36抓取与对比工具
+
+- 新增`scripts/refresh_hero_datafeed.py`：`fetch`把当前Valve英雄数据（中英文）抓到新目录，不覆盖；`diff`离线逐技能列出文字与字段改动。新增`tests/test_refresh_hero_datafeed.py`（旧快照自比零改动、合成数据检出改动、拒绝覆盖）。尚未联网抓取：云端需放行`www.dota2.com`，或在本地运行（命令见U36记录）。
+
 ## 2026-11-01 Codex复核交接更新
 
 - `docs/handoff/mk-codex-review-of-claude.md`更新当前结论（1,265/286/0）、U5抽查进度、截断片段与过时升级文字两个注意点，并加入可直接粘贴给Codex的提示词。
