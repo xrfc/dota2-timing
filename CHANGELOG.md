@@ -1,5 +1,9 @@
 # 变更记录
 
+## 2026-11-01 U5抽查发出
+
+- 497组抽查（按机制每3组取1组＋第2版新增14组）做成私有页面交用户标记“对/错/不确定”；样本清单`knowledge/mechanics/reviews/claude-round-001/spot-check-sample.json`。
+
 ## 2026-11-01 MK-T3第2版证据（v2抽取、词表v3）
 
 - 新增`knowledge/mechanics/vocabulary-v3.json`（U33/U35定义）、`mechanics_rules_v2.py`、`mechanics_facts_v2.py`、`scripts/build_mechanics_facts_v2.py`及`extractions/v2/`；v1冻结包与生产者不变。
