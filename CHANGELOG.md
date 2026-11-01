@@ -2,7 +2,7 @@
 
 ## 2026-11-01 确认与标签（U30）
 
-- `dispellable`四值确认；闪避与致盲分开。
+- 五个枚举字段（`dispellable`、`immunity`、`target_team`、`damage`、`type`）全部经用户确认，MK-T2完成；闪避与致盲分开。
 - 补打`v0.3.0`（331c6d0）、`v0.4.0`（63d395a）附注标签；云端推送标签被拒，待用户本地推送（命令见`docs/decisions/2026-11-01-confirmations-tags-merge.md`）。
 
 ## 2026-11-01 代码与文档整理；交叉检查现象解释（U29）
