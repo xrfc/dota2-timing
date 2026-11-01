@@ -28,7 +28,7 @@
 - 依据：Valve引擎枚举定义顺序推断，并用已知技能逐值核对（例：薄葬、回光返照、决斗→3；妖术、沟壑→1；风行、无光之盾→2）。
 - 校验：`load_enums`要求每个例子技能存在且取值一致，且登记表中出现的每个取值都有解释；补丁带来新取值会直接报错，不会被默默猜测。
 - 暂不解码：`behavior`其余位、`target_type`。（`immunity`原暂不解码，U28按用户对减益免疫的说明补充解码。）
-- 局限：快照未核对补丁（`patch_verified=false`）；`confirmed`全部为false，等用户确认（2026-11-01用户要求再确认`dispellable`表，尤其值0的例子动人之舐）。
+- 局限：快照未核对补丁（`patch_verified=false`）；`confirmed`全部为false，等用户确认（2026-11-01：`dispellable=0`经用户确认——动人之舐不留buff、与可驱散性无关；其余取值待确认）。
 
 装备侧已知事实（第2层将引用）：否决坠饰主动“Nullify”为**弱驱散**（OpenDota dotaconstants物品说明`Dispel Type: Basic Dispel`，`knowledge/items/sources/dotaconstants-items.json`）。
 
