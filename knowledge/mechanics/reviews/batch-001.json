@@ -1,0 +1,1075 @@
+{
+  "schema": "mechanics-semantic-review/1",
+  "batch": "batch-001",
+  "reviewer": "Codex",
+  "status": "assistant_proposals_pending_user_audit",
+  "patch_verified": false,
+  "selection": "first 24 rows of frozen v1/review.csv; retain original sample flags (8 rows)",
+  "decision_scope": "conditional interpretation of the group; never auto-approve each evidence row or update frozen facts",
+  "source_sha256": {
+    "knowledge/mechanics/extractions/v1/facts-v1.json": "631358c57690e60bbf735b8f28f8e707ace96d2755de04523400561e27f2e63f",
+    "knowledge/mechanics/extractions/v1/review.csv": "01986d8705ac181aef2795d8bc58443d9d59c37b6f6a24e860d335a6b35d86c5",
+    "knowledge/mechanics/vocabulary-v1.json": "5b94c4599d7f6232cd1b253fe4c9de41e919defbdf1519eda0b8c6353013629f",
+    "knowledge/hero-capabilities/hero-registry.json": "184a490f2d8ca431f5c8b338fb875ccfd6b9684d0847373b02148baea24d04e4",
+    "knowledge/items/sources/dotaconstants-items.json": "6b88515596307cf66e222d94b415d1ad8d4bd35809919f00da5cc074fd583a2f",
+    "knowledge/mechanics/vocabulary-v2.json": "781ae3c3c1cea97bcf4c56a0c77fa8d83feb7440e670911c234ed2dcaf9bda76"
+  },
+  "summary": {
+    "accept": 16,
+    "reject": 8,
+    "uncertain": 0
+  },
+  "user_reviewed": 0,
+  "agreement_rate": null,
+  "remaining_groups": 1527,
+  "reviews": [
+    {
+      "row": 1,
+      "review_id": "001413a7a6c8514451d5",
+      "subject": "gem",
+      "hero_zh": "",
+      "name_zh": "真视宝石",
+      "mechanism": "true_sight",
+      "mechanism_zh": "真视",
+      "condition": {
+        "context": "item",
+        "item_ability_type": "active",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": true,
+      "assistant_decision": "accept",
+      "interpretation_zh": "真视宝石主动效果在指定范围提供真视。",
+      "conditions_zh": "使用该主动效果；300范围是本社区快照的数值。",
+      "reason_zh": "原文直接写Gives True Sight；不能据此给被动真视套用同一范围。",
+      "evidence": [
+        {
+          "fact_id": "mf-c661c449f6d858ff1ed0",
+          "pointer": {
+            "file": "knowledge/items/sources/dotaconstants-items.json",
+            "path": "/gem/abilities/0/description"
+          },
+          "quote": "Gives True Sight over a 300 radius revealing wards and units even in Fog of War."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": 1
+    },
+    {
+      "row": 2,
+      "review_id": "0022a156f62ba85785ef",
+      "subject": "brewmaster_liquid_courage",
+      "hero_zh": "酒仙",
+      "name_zh": "壮胆酒",
+      "mechanism": "status_resistance",
+      "mechanism_zh": "状态抗性",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "壮胆酒在酒仙低血量时提供状态抗性。",
+      "conditions_zh": "血量低于原文min_health_threshold；强度随血量变化。",
+      "reason_zh": "两种语言均明确状态抗性，不补填未解析的百分比占位符。",
+      "evidence": [
+        {
+          "fact_id": "mf-5f82465b2784aa88b9d9",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/76/abilities/3/description_en"
+          },
+          "quote": "When Brewmaster drops below %min_health_threshold%%% Health he gains a Status Resistance buff and his movement speed alternates every %speed_toggle_time%s between being faster and being slower."
+        },
+        {
+          "fact_id": "mf-d32de12df1ed26ff1c37",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/76/abilities/3/description_zh"
+          },
+          "quote": "当酒仙的生命值低于%min_health_threshold%%%，他就会获得状态抗性加成，而且他的移动速度每%speed_toggle_time%秒都会在加速和减速之间改变。"
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 3,
+      "review_id": "003553bae9be6f4d48d0",
+      "subject": "lion_mana_drain",
+      "hero_zh": "莱恩",
+      "name_zh": "法力吸取",
+      "mechanism": "mana_burn",
+      "mechanism_zh": "烧蓝/法力削减",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "法力吸取对敌人持续削减魔法。",
+      "conditions_zh": "敌方目标且引导持续；友方模式另外处理。",
+      "reason_zh": "说明同时含对友军给予魔法的模式，不能把烧蓝结论套到友方。",
+      "evidence": [
+        {
+          "fact_id": "mf-7cfc172de9c9e78dd6eb",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/25/abilities/2/description_zh"
+          },
+          "quote": "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。"
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 4,
+      "review_id": "004f1fda68643438e025",
+      "subject": "batrider_flaming_lasso",
+      "hero_zh": "蝙蝠骑士",
+      "name_zh": "燃烧枷锁",
+      "mechanism": "self_mobility",
+      "mechanism_zh": "自身位移",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": true,
+      "assistant_decision": "reject",
+      "interpretation_zh": "本段不能证明燃烧枷锁提供自身位移。",
+      "conditions_zh": "仅排除self_mobility候选；不否认枷锁拖动敌人的效果。",
+      "reason_zh": "闪烁/传送是打断枷锁的外部动作，不是此技能给予的能力。",
+      "evidence": [
+        {
+          "fact_id": "mf-0737a941582730036b0d",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/63/abilities/4/description_zh"
+          },
+          "quote": "传送或闪烁会打破枷锁。"
+        },
+        {
+          "fact_id": "mf-19ae201a4524b3b8dbd3",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/63/abilities/4/description_en"
+          },
+          "quote": "Teleporting or blinking will break the lasso."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": 2
+    },
+    {
+      "row": 5,
+      "review_id": "0057c429b1e35e051238",
+      "subject": "tinker_laser",
+      "hero_zh": "修补匠",
+      "name_zh": "激光",
+      "mechanism": "heal_reduction",
+      "mechanism_zh": "治疗削减",
+      "condition": {
+        "context": "scepter_upgrade",
+        "requires_scepter": true,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "reject",
+      "interpretation_zh": "A杖激光降低当前/最大生命值，不能据此认定治疗削减。",
+      "conditions_zh": "保留A杖条件；排除heal_reduction这一归类。",
+      "reason_zh": "英文health被heal的宽泛匹配命中；原文没有降低治疗或生命恢复量。",
+      "evidence": [
+        {
+          "fact_id": "mf-5c482240f81baf78b220",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/32/abilities/0/upgrade_text/scepter_loc/en"
+          },
+          "quote": "Upgrades Tinker's Laser into a Shrink Ray, reducing the main target's size, current health, and maximum health by %scepter_reduction_pct%%% (stacking)."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 6,
+      "review_id": "005a48b27365f0da7f07",
+      "subject": "marci_special_delivery",
+      "hero_zh": "玛西",
+      "name_zh": "特快专递",
+      "mechanism": "summons",
+      "mechanism_zh": "召唤物",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "reject",
+      "interpretation_zh": "特快专递传送已有信使，不足以认定创造召唤物。",
+      "conditions_zh": "仅排除summons候选；不另建位移分类。",
+      "reason_zh": "英文summon在此表示召来已有信使；中文明确传送到身边。",
+      "evidence": [
+        {
+          "fact_id": "mf-35069ea2092704935350",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/121/abilities/3/description_en"
+          },
+          "quote": "Marci whistles to instantly summon her courier to her."
+        }
+      ],
+      "additional_context": [
+        {
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/121/abilities/3/description_zh"
+          },
+          "quote": "玛西吹起口哨，立刻把她的信使传送到她身边。如果信使起始于泉水，它会带上玛西储藏处内的物品。传送后会把这些物品移交给玛西，再返回泉水。所有友方信使被动获得%bonus_levels%级额外等级和%bonus_hp_tooltip%点额外生命。"
+        }
+      ],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 7,
+      "review_id": "006b642f01d90ce6f782",
+      "subject": "phantom_lancer_juxtapose",
+      "hero_zh": "幻影长矛手",
+      "name_zh": "并列",
+      "mechanism": "illusions",
+      "mechanism_zh": "幻象",
+      "condition": {
+        "context": "shard_upgrade",
+        "requires_scepter": false,
+        "requires_shard": true
+      },
+      "user_audit_selected": true,
+      "assistant_decision": "accept",
+      "interpretation_zh": "魔晶升级的并列主动会产生一个复制幻象。",
+      "conditions_zh": "需要魔晶并使用升级主动。",
+      "reason_zh": "中文原文直接写产生一个复制幻象，不把这段描述当成无魔晶的基础被动。",
+      "evidence": [
+        {
+          "fact_id": "mf-95d7a5c4f5f680b02627",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/11/abilities/4/upgrade_text/shard_loc/zh"
+          },
+          "quote": "使幻影长矛手进入隐身，最多持续%invis_duration%秒，同时产生一个复制幻象来迷惑敌人。"
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": 3
+    },
+    {
+      "row": 8,
+      "review_id": "00854468eafde55e2588",
+      "subject": "meteor_hammer",
+      "hero_zh": "",
+      "name_zh": "陨星锤",
+      "mechanism": "summons",
+      "mechanism_zh": "召唤物",
+      "condition": {
+        "context": "item",
+        "item_ability_type": "active",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "reject",
+      "interpretation_zh": "陨星锤召来的是伤害效果，不能据此归为可控召唤物。",
+      "conditions_zh": "仅排除summons；持续施法/眩晕另有候选。",
+      "reason_zh": "meteor不是原词表所说的可控单位或守卫。引用还被小数点切到0，需使用完整来源上下文核对。",
+      "evidence": [
+        {
+          "fact_id": "mf-f8ca5079b90de6e11c7e",
+          "pointer": {
+            "file": "knowledge/items/sources/dotaconstants-items.json",
+            "path": "/meteor_hammer/abilities/0/description"
+          },
+          "quote": "CHANNELED - After a successful channel, summons a meteor that strikes a 400 AoE, stunning enemies for 0."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 9,
+      "review_id": "00baa38adedd45ac0a86",
+      "subject": "viper_viper_strike",
+      "hero_zh": "冥界亚龙",
+      "name_zh": "蝮蛇突袭",
+      "mechanism": "break_sensitive",
+      "mechanism_zh": "受破坏影响",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "reject",
+      "interpretation_zh": "蝮蛇突袭描述对敌方施加破坏，不证明自身受破坏影响。",
+      "conditions_zh": "仅排除break_sensitive。",
+      "reason_zh": "“破坏其被动”中的其指敌方目标，属于施加者/承受者方向误配。",
+      "evidence": [
+        {
+          "fact_id": "mf-c268988e519cb79eb2fb",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/45/abilities/5/description_zh"
+          },
+          "quote": "蝮蛇降低敌方目标单位的移动和攻击速度，同时破坏其被动技能并造成持续毒素伤害。"
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 10,
+      "review_id": "00f92072dcb3fd2b2def",
+      "subject": "keeper_of_the_light_blinding_light",
+      "hero_zh": "光之守卫",
+      "name_zh": "致盲之光",
+      "mechanism": "blind",
+      "mechanism_zh": "致盲",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": true,
+      "assistant_decision": "accept",
+      "interpretation_zh": "致盲之光使命中的单位部分攻击落空。",
+      "conditions_zh": "目标区域内被效果命中的单位。",
+      "reason_zh": "说明直接包含blinding与miss some attacks；不延伸为对装备的克制关系。",
+      "evidence": [
+        {
+          "fact_id": "mf-14d2dc0bb165bce91731",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/88/abilities/1/description_en"
+          },
+          "quote": "A blinding light flashes over the targeted area, knocking back units to the edge of the area and blinding them, causing them to miss some attacks."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": 4
+    },
+    {
+      "row": 11,
+      "review_id": "01228bc6db96dec2b57a",
+      "subject": "kez_shodo_sai",
+      "hero_zh": "凯",
+      "name_zh": "翔影之钗",
+      "mechanism": "stun",
+      "mechanism_zh": "眩晕",
+      "condition": {
+        "context": "shard_upgrade",
+        "requires_scepter": false,
+        "requires_shard": true
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "魔晶翔影之钗使招架产生的印记强化眩晕效果。",
+      "conditions_zh": "需要魔晶、招架及印记相关触发；命中印记的攻击条件见基础说明。",
+      "reason_zh": "升级说明有additional stun；只接受带招架/印记条件的表述，不能当成施法即眩晕。",
+      "evidence": [
+        {
+          "fact_id": "mf-80a8706aaa5d186a1112",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/125/abilities/7/upgrade_text/shard_loc/en"
+          },
+          "quote": "Parrying creates a stronger Mark that deals additional stun and critical damage."
+        },
+        {
+          "fact_id": "mf-8282058f381a20e4c478",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/125/abilities/7/upgrade_text/shard_loc/zh"
+          },
+          "quote": "招架会产生更强的印记，造成额外眩晕和致命一击伤害。"
+        }
+      ],
+      "additional_context": [
+        {
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/125/abilities/7/description_zh"
+          },
+          "quote": "装备双钗时凯的攻击有几率对敌人造成致命一击。凯可以主动开启技能，使自身被缴械，面朝方向被锁定，招架来自目标方向的攻击和攻击效果，持续%parry_duration%秒。如果有敌方英雄的攻击被招架，该英雄会被眩晕%parry_stun_duration%秒并获得印记，拥有印记的目标被凯攻击时必定会造成致命一击，并且被眩晕。子技能可以用于提前取消招架状态。"
+        }
+      ],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 12,
+      "review_id": "01240ff80c81a3d608bf",
+      "subject": "skeleton_king_reincarnation",
+      "hero_zh": "冥魂大帝",
+      "name_zh": "绝冥再生",
+      "mechanism": "slow",
+      "mechanism_zh": "减速",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "绝冥再生在冥魂大帝死亡时减速附近敌人。",
+      "conditions_zh": "在死亡时、slow_radius范围内。",
+      "reason_zh": "中英文都明确upon death，不能把减速写成常驻光环。",
+      "evidence": [
+        {
+          "fact_id": "mf-cffe41ebe962135debbd",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/40/abilities/4/description_zh"
+          },
+          "quote": "死亡时附近%slow_radius%范围内的敌人会被减速，会产生骷髅兵攻击附近每个敌方英雄。"
+        },
+        {
+          "fact_id": "mf-db197a6601fd6b3d6dbe",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/40/abilities/4/description_en"
+          },
+          "quote": "Upon death, enemy units in a %slow_radius% radius are slowed."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 13,
+      "review_id": "0137ceb5b13207823a44",
+      "subject": "silencer_global_silence",
+      "hero_zh": "沉默术士",
+      "name_zh": "全领域静默",
+      "mechanism": "invisibility",
+      "mechanism_zh": "隐身",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": true,
+      "assistant_decision": "reject",
+      "interpretation_zh": "全领域静默可以影响隐身单位，不表示给予隐身。",
+      "conditions_zh": "仅排除invisibility候选。",
+      "reason_zh": "隐身是受影响单位已有的状态，不是该技能施加的效果。",
+      "evidence": [
+        {
+          "fact_id": "mf-3d3d98bdd25f5419a3e5",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/73/abilities/4/notes_zh/0"
+          },
+          "quote": "沉默效果对隐身和减益免疫单位有效，但是期间获得减益免疫状态将移除该效果。"
+        },
+        {
+          "fact_id": "mf-90926b177090b7e0999f",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/73/abilities/4/notes_en/0"
+          },
+          "quote": "This skill works on invisible and Debuff Immune units, but gaining debuff immunity will remove its effect."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": 5
+    },
+    {
+      "row": 14,
+      "review_id": "013c855eae20c86185b9",
+      "subject": "necrolyte_reapers_scythe",
+      "hero_zh": "瘟疫法师",
+      "name_zh": "死神镰刀",
+      "mechanism": "stun",
+      "mechanism_zh": "眩晕",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "死神镰刀先眩晕目标，伤害在眩晕结束时结算。",
+      "conditions_zh": "敌方英雄目标；本条只确认眩晕及相对时机。",
+      "reason_zh": "description给出施加眩晕的正面证据；notes补充结算时机，不单靠notes推断能力。",
+      "evidence": [
+        {
+          "fact_id": "mf-1638a8dc02ed2894048a",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/34/abilities/5/description_zh"
+          },
+          "quote": "眩晕目标敌方英雄，然后造成基于他当前损失生命值的伤害。"
+        },
+        {
+          "fact_id": "mf-a599edfb75d164661659",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/34/abilities/5/notes_en/0"
+          },
+          "quote": "Damage is dealt at the end of the stun."
+        },
+        {
+          "fact_id": "mf-b37b432ca45eb4fb3ea6",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/34/abilities/5/notes_zh/0"
+          },
+          "quote": "伤害在眩晕结束后结算。"
+        },
+        {
+          "fact_id": "mf-cf4a9f79081ceccebcec",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/34/abilities/5/description_en"
+          },
+          "quote": "Stuns the target enemy hero, then deals damage based on how much life it is missing."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 15,
+      "review_id": "016539c7f2702ba7c539",
+      "subject": "razor_static_link",
+      "hero_zh": "雷泽",
+      "name_zh": "静电连接",
+      "mechanism": "unit_target_spell",
+      "mechanism_zh": "单体指向技能",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "静电连接可以主动选择敌方英雄为目标。",
+      "conditions_zh": "behavior含单位目标位且target_team=2；物品交互未核验。",
+      "reason_zh": "按U31与词表v2，只核验可以主动选择敌方单位。单位目标位、目标队伍字段与描述支持这一点；林肯与莲花的具体交互尚未核验，各自记录unknown。",
+      "evidence": [
+        {
+          "fact_id": "mf-4c092785c1f66753c38f",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/14/abilities/1/raw_mechanics/behavior"
+          },
+          "quote": "\"134217736\""
+        },
+        {
+          "fact_id": "mf-f15d0f70502bc257b789",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/14/abilities/1/raw_mechanics/target_team"
+          },
+          "quote": "2"
+        }
+      ],
+      "additional_context": [
+        {
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/14/abilities/1/description_zh"
+          },
+          "quote": "在雷泽和敌方英雄之间创造静电连接，偷取目标的攻击力并转移给雷泽。雷泽在连接生效时可以边移动边攻击。"
+        }
+      ],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 16,
+      "review_id": "0178dd52ce9cbd0700d9",
+      "subject": "earth_spirit_geomagnetic_grip",
+      "hero_zh": "大地之灵",
+      "name_zh": "地磁之握",
+      "mechanism": "silence",
+      "mechanism_zh": "沉默",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": true,
+      "assistant_decision": "accept",
+      "interpretation_zh": "地磁之握拉扯的目标击中敌人时施加沉默。",
+      "conditions_zh": "敌人被拉扯的残岩或友方单位击中。",
+      "reason_zh": "中英文直接说明沉默对象；不把沉默归给被拉回的友军。",
+      "evidence": [
+        {
+          "fact_id": "mf-5339178f50ad327b6075",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/104/abilities/2/description_en"
+          },
+          "quote": "Enemies struck by the gripped target will be silenced."
+        },
+        {
+          "fact_id": "mf-64df740aba97bbdd8203",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/104/abilities/2/description_zh"
+          },
+          "quote": "大地之灵将目标残岩或友方单位拉扯到自己所在的位置，行进路径上被击中的敌人都会被沉默并受到伤害。"
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": 6
+    },
+    {
+      "row": 17,
+      "review_id": "01f675bae159e5f00287",
+      "subject": "slardar_amplify_damage",
+      "hero_zh": "斯拉达",
+      "name_zh": "侵蚀雾霭",
+      "mechanism": "invisibility",
+      "mechanism_zh": "隐身",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "reject",
+      "interpretation_zh": "侵蚀雾霭提供真实视域并揭示目标，不是给予隐身。",
+      "conditions_zh": "仅排除invisibility候选。",
+      "reason_zh": "revealing invisibility描述侦测隐身，作用方向与给予隐身相反。",
+      "evidence": [
+        {
+          "fact_id": "mf-05f4c4d9d03903fffb7c",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/27/abilities/4/description_zh"
+          },
+          "quote": "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。"
+        },
+        {
+          "fact_id": "mf-ab7d7b69bc2430b52226",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/27/abilities/4/description_en"
+          },
+          "quote": "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 18,
+      "review_id": "0211dd6f7223f9b027da",
+      "subject": "lion_mana_drain",
+      "hero_zh": "莱恩",
+      "name_zh": "法力吸取",
+      "mechanism": "channeled",
+      "mechanism_zh": "持续施法",
+      "condition": {
+        "context": "shard_upgrade",
+        "requires_scepter": false,
+        "requires_shard": true
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "魔晶说明证实法力吸取仍有持续引导阶段。",
+      "conditions_zh": "在魔晶语境下持续引导；引导本身不是魔晶新增能力。",
+      "reason_zh": "while channeling支持施法方式，基础中文也明确持续施法；不推断具体中断规则。",
+      "evidence": [
+        {
+          "fact_id": "mf-812cd541b8e868d498e1",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/25/abilities/2/upgrade_text/shard_loc/zh"
+          },
+          "quote": "持续施法期间莱恩为减益免疫状态，并且获得%magic_resist%%%魔法抗性。"
+        },
+        {
+          "fact_id": "mf-ee91da779f0e4c1cafee",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/25/abilities/2/upgrade_text/shard_loc/en"
+          },
+          "quote": "Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling."
+        }
+      ],
+      "additional_context": [
+        {
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/25/abilities/2/description_zh"
+          },
+          "quote": "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。如果敌人没有魔法剩余，减速效果提升%movespeed_bonus_when_empty_pct%%%。可以对友军施放，给予他们%ally_pct%%%魔法和移动速度。"
+        }
+      ],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 19,
+      "review_id": "022a6b28cc4f727ca996",
+      "subject": "terrorblade_sunder",
+      "hero_zh": "恐怖利刃",
+      "name_zh": "魂断",
+      "mechanism": "unit_target_spell",
+      "mechanism_zh": "单体指向技能",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": true,
+      "assistant_decision": "accept",
+      "interpretation_zh": "魂断可以主动选择敌方英雄为目标，也支持友方目标。",
+      "conditions_zh": "behavior含单位目标位且target_team=3；只核验选敌方目标这一能力。",
+      "reason_zh": "按U31与词表v2，只核验可以主动选择敌方单位。单位目标位、目标队伍字段与描述支持这一点；林肯与莲花的具体交互尚未核验，各自记录unknown。",
+      "evidence": [
+        {
+          "fact_id": "mf-0415497e2849b3a266b4",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/105/abilities/5/raw_mechanics/behavior"
+          },
+          "quote": "\"33554440\""
+        },
+        {
+          "fact_id": "mf-56ea34a0de09839335b1",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/105/abilities/5/raw_mechanics/target_team"
+          },
+          "quote": "3"
+        }
+      ],
+      "additional_context": [
+        {
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/105/abilities/5/description_zh"
+          },
+          "quote": "隔断恐怖利刃以及目标英雄的灵魂并将双方的当前血量百分比进行互换。交换后双方英雄的生命值必定在一定百分比以上。"
+        }
+      ],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": 7
+    },
+    {
+      "row": 20,
+      "review_id": "023b1cfedc31aaaf3dcb",
+      "subject": "abaddon_withering_mist",
+      "hero_zh": "亚巴顿",
+      "name_zh": "凋零迷雾",
+      "mechanism": "heal_reduction",
+      "mechanism_zh": "治疗削减",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "凋零迷雾对低血量的受影响敌人削减生命恢复。",
+      "conditions_zh": "先施加减益，目标低于hp_threshold_pct时生效。",
+      "reason_zh": "原文明确Health Restoration reduced；数值占位符保持未解析。",
+      "evidence": [
+        {
+          "fact_id": "mf-7840b539af67e9d01622",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/100/abilities/3/description_en"
+          },
+          "quote": "Affected enemies have their Health Restoration reduced by %heal_reduction_pct%%% if they are below %hp_threshold_pct%%% HP."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 21,
+      "review_id": "02424320a1d2b74bf02d",
+      "subject": "lina_light_strike_array",
+      "hero_zh": "莉娜",
+      "name_zh": "光击阵",
+      "mechanism": "stun",
+      "mechanism_zh": "眩晕",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "光击阵对命中的敌人造成眩晕。",
+      "conditions_zh": "命中技能效果区域的敌人。",
+      "reason_zh": "中英文直接说眩晕，不从summons a column推断可控召唤物。",
+      "evidence": [
+        {
+          "fact_id": "mf-66aa9757da36c05debe4",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/23/abilities/1/description_zh"
+          },
+          "quote": "召唤柱状火焰伤害并眩晕敌人。"
+        },
+        {
+          "fact_id": "mf-6c513d9d81cf0ea2b8c9",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/23/abilities/1/description_en"
+          },
+          "quote": "Summons a column of flames that damages and stuns enemies."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 22,
+      "review_id": "02bf5a4f2224a37c62fb",
+      "subject": "terrorblade_sunder",
+      "hero_zh": "恐怖利刃",
+      "name_zh": "魂断",
+      "mechanism": "debuff_immunity",
+      "mechanism_zh": "减益免疫/技能免疫",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": true,
+      "assistant_decision": "reject",
+      "interpretation_zh": "魂断说明的是敌方已有减益免疫时血量不变，不是获得免疫。",
+      "conditions_zh": "仅排除debuff_immunity候选。",
+      "reason_zh": "说明为负面交互条件；don’t未被原过滤完整覆盖，语义上应排除此候选。",
+      "evidence": [
+        {
+          "fact_id": "mf-baca0ca4df27ae37bdaf",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/105/abilities/5/notes_en/0"
+          },
+          "quote": "Debuff Immune enemies don't get their HP modified."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": 8
+    },
+    {
+      "row": 23,
+      "review_id": "02d8e202a2237dc6f898",
+      "subject": "life_stealer_feast",
+      "hero_zh": "噬魂鬼",
+      "name_zh": "盛宴",
+      "mechanism": "healing",
+      "mechanism_zh": "治疗/回复",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": false
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "盛宴攻击时为噬魂鬼提供治疗，治疗与伤害独立。",
+      "conditions_zh": "攻击触发；按目标最大生命值的一定比例。",
+      "reason_zh": "原文明确heal且注明independent of damage，不顺带标为按伤害吸血。",
+      "evidence": [
+        {
+          "fact_id": "mf-18b62b1abe21c71ed986",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/52/abilities/2/notes_en/1"
+          },
+          "quote": "The heal is independent of the damage."
+        },
+        {
+          "fact_id": "mf-5e990903053a4f57e160",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/52/abilities/2/description_en"
+          },
+          "quote": "Lifestealer's attacks deal damage and provide heal for a percentage of his target's max health."
+        },
+        {
+          "fact_id": "mf-af72f7772476c2c358ea",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/52/abilities/2/description_zh"
+          },
+          "quote": "噬魂鬼每次攻击时还会根据目标最大生命值的一定百分比造成伤害，同时获得治疗。"
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    },
+    {
+      "row": 24,
+      "review_id": "03dd99bb1f6073597f3e",
+      "subject": "pangolier_rollup",
+      "hero_zh": "石鳞剑士",
+      "name_zh": "卷土重来",
+      "mechanism": "stun",
+      "mechanism_zh": "眩晕",
+      "condition": {
+        "context": "base",
+        "requires_scepter": false,
+        "requires_shard": true
+      },
+      "user_audit_selected": false,
+      "assistant_decision": "accept",
+      "interpretation_zh": "卷土重来受到攻击后滚离攻击者，可眩晕路径上的敌人。",
+      "conditions_zh": "技能由魔晶获得；处于卷土重来、受到攻击、滚动路径上有敌人。",
+      "reason_zh": "这是条件触发的地雷滚滚眩晕；不能写成卷土重来一施放就眩晕。",
+      "evidence": [
+        {
+          "fact_id": "mf-3c53e4992176121d041f",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/113/abilities/3/description_zh"
+          },
+          "quote": "若敌人在此期间发动攻击，将滚离攻击者，对途中的敌人施加地雷滚滚的伤害/眩晕。"
+        },
+        {
+          "fact_id": "mf-43aa31e444fb1eef4f16",
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/113/abilities/3/description_en"
+          },
+          "quote": "If enemies attack Pangolier during this, he will roll away from the attacker, applying Rolling Thunder damage/stun if there are enemies in the way."
+        }
+      ],
+      "additional_context": [],
+      "user_decision": null,
+      "user_reason": null,
+      "audit_number": null
+    }
+  ],
+  "supplementary_examples": [
+    {
+      "subject": "urn_of_shadows",
+      "name_zh": "影之灵龛",
+      "publisher": "OpenDota dotaconstants (community)",
+      "targeting_observation": "Unit Target / Both",
+      "interaction_quote": "Does not trigger spell block or spell reflect.",
+      "evidence": [
+        {
+          "pointer": {
+            "file": "knowledge/items/sources/dotaconstants-items.json",
+            "path": "/urn_of_shadows/behavior"
+          },
+          "quote": "Unit Target"
+        },
+        {
+          "pointer": {
+            "file": "knowledge/items/sources/dotaconstants-items.json",
+            "path": "/urn_of_shadows/target_team"
+          },
+          "quote": "Both"
+        },
+        {
+          "pointer": {
+            "file": "knowledge/items/sources/dotaconstants-items.json",
+            "path": "/urn_of_shadows/notes"
+          },
+          "quote": "Does not trigger spell block or spell reflect."
+        }
+      ],
+      "scope": "说明指向方式和格挡/反弹可分开；不改变原24组抽样，不自动创建新机制事实。",
+      "patch_verified": false
+    },
+    {
+      "subject": "spirit_vessel",
+      "name_zh": "魂之灵瓮",
+      "publisher": "OpenDota dotaconstants (community)",
+      "targeting_observation": "Unit Target / Both",
+      "interaction_quote": "Does not trigger spell block or spell reflect.",
+      "evidence": [
+        {
+          "pointer": {
+            "file": "knowledge/items/sources/dotaconstants-items.json",
+            "path": "/spirit_vessel/behavior"
+          },
+          "quote": "Unit Target"
+        },
+        {
+          "pointer": {
+            "file": "knowledge/items/sources/dotaconstants-items.json",
+            "path": "/spirit_vessel/target_team"
+          },
+          "quote": "Both"
+        },
+        {
+          "pointer": {
+            "file": "knowledge/items/sources/dotaconstants-items.json",
+            "path": "/spirit_vessel/notes"
+          },
+          "quote": "Does not trigger spell block or spell reflect."
+        }
+      ],
+      "scope": "说明指向方式和格挡/反弹可分开；不改变原24组抽样，不自动创建新机制事实。",
+      "patch_verified": false
+    }
+  ],
+  "user_feedback": {
+    "quote": "没明白是什么意思，给我一个具体例子，注意到大部分指向型技能和物品可以与莲花，林肯交互，但是大中小骨灰不会触发林肯",
+    "interpretation": "要求具体例子并指出骨灰例外；不是对新定义或本批8组的批准。",
+    "unresolved_alias": "仓库已找到影之灵龛、魂之灵瓮；“大中小”三种称呼尚未逐一映射，不猜测第三种物品。",
+    "definition_decision": {
+      "id": "U31",
+      "answer": "分开记录（推荐）",
+      "scope": "同意拆分定义，不代表完成本批8组语义抽查。"
+    }
+  },
+  "review_vocabulary": "knowledge/mechanics/vocabulary-v2.json",
+  "definition_decision": "U31"
+}

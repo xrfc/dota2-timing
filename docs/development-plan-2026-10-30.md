@@ -42,6 +42,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 | 编号 | 决定 | 日期 |
 |---|---|---|
+| U32 | 全量列出机制复核项并推送PR，用户交Claude复核，再由Codex对照分歧 | 2026-11-01 |
+| U31 | 指向方式、林肯格挡、莲花反弹分别记录；具体例外逐项核验，未知保留null；词表v2 | 2026-11-01 |
 | U1 | 取消10/31前瞻采集预约 | 2026-10-30 |
 | U2 | 状态面板方案A：友方全显示；可见敌方只显示蓝量；隐藏不显示 | 2026-10-30 |
 | U3 | 三个产品目标A/B/C如§1 | 2026-10-30 |
@@ -306,6 +308,15 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 **MK-T3交叉复核（2026-11-01）：Claude第1轮复核PR #11全部1,551组，结果见`knowledge/mechanics/reviews/claude-round-001/review-summary.md`，回交Codex复核1,411组Claude独有判断与116组不确定；漏抽的斯嘉蒂之眼、辉耀闪避等见同目录`coverage-findings.md`。** **交接（2026-11-01）：用户安排另一个模型接手，详细任务、环境、已知坑与待问事项见[MK交接](handoff/mk-handoff-2026-11-01.md)。** **MK进度（2026-11-01）：MK-T1词表45项，用户已答全部待答问题（U28–U30，闪避/致盲分开）；MK-T2完成（五个枚举字段全部经用户确认，U30）。**下一步MK-T3：官方说明事实抽取**（逐技能含A杖/魔晶、逐装备，附原文引用与出处；装备中文说明若需联网抓取须先问用户）。MK完成后回M2b-T6d。** U27（2026-10-31）：知识框架扩为完整版，新里程碑MK（§4），M2b暂停。 以下为U27前状态。**U26（2026-10-31）：改用三层机制知识框架。当前：M2b-T6c——第1层草稿`knowledge/mechanics/enums-v1.json`已完成并通过与登记表的校验，等用户确认各取值含义（`dispellable`等，见`docs/knowledge-framework.md`§3）→T6d起草机制规则（合并Q10）→T6e推导v2。T6b抽查意见（朗戈证据技能、3条不可驱散）记在`docs/hero-traits-analysis.md`§6，于T6e吸收。** 以下为U26前状态。**U22/U23（2026-10-31）改道。M2b-T6b英雄特性初步分析：助手标注v1与交叉检查已完成（`knowledge/hero-traits/hero-traits-v1.json`、`docs/hero-traits-analysis.md`、`reports/hero-traits-crosscheck-2026-10-31-v1`）。当前：等用户抽查§5清单并回答§3待解释点→出v2→T7触发条件（Q10）。**以下为U22前状态。M2b-T0～T5已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`未通过（功效不足）；U20决定上线基线页后进M3，U21定辅助清单。T5：参照统计`reports/m2b-situational-reference-2026-10-31-v1`（M1训练集，`scripts/build_situational_reference.py`），8780“赛前 · 针对装”页，验收`reports/coach-app-acceptance-2026-10-31-v5`（19项通过），模型卡`docs/m2b-model-card.md`。**当前：M2b-T6——请用户打开8780“赛前 · 针对装”评审内容与说明**；评审意见记决策后M2b结案，进M3-T1（先问Q4）。不得在同一验证集上调参重跑。
 
+**U32当前任务：全量清单交Claude交叉复核。** `knowledge/mechanics/cross-review/v1/`列出1,551组候选（2,801证据）、2,006字段观测与943对象上下文；合计4,807原始记录。Codex只人工审过24组，其余1,527组明确未审。用户将[交接说明](handoff/mk-claude-cross-review.md)和PR #11交Claude；Claude回传后由Codex复核独有判断、比较条件与分歧。当前Claude结果为0，不继续逐批向用户发题，也不声称双AI已完成复核。下面保留此前批次记录。
+
+**MK-T3语义复核批次001（2026-11-01）：** 已按冻结队列顺序完成前24组助手初审，建议接受16、排除8、待定0；保留原抽样中的8组供用户抽查。用户已完成8/8抽查：6条直接同意，另2条为并列基础/魔晶方式澄清、魂断格挡/反弹补充。直接二元一致6/6，另两条不计分母。反馈分别保存001/002，合并结果`batch-001-resolution.json`；剩余1,527组继续分批处理。记录`knowledge/mechanics/reviews/batch-001.json`，解释与待定义问题见[复核入口](mechanics-review.md)。用户已确认单体指向、林肯格挡与莲花反弹分开记录（U31），新词表v2仅修订该定义；原批次保持不变，逐条用户回复另存修订，定义确认不等于逐条批准。剩余1,527组继续分批处理，T4尚未开始。
+
+**2026-11-01 Codex：MK-T3工程与首版证据包已完成，待语义抽查。** `knowledge/mechanics/extractions/v1/`扫描734技能、209个装备清单候选，4,807条证据（2,006字段观测、2,801待复核），合并为1,551复核组，抽查517组。接口、局限与评审方法见[机制事实](mechanics-facts.md)。下一步处理用户抽查与疑义，记录独立修订后再进入MK-T4；尚未完成游戏语义验收。下面保留此前交接时点记录。
+
+**交接（2026-11-01）：用户安排另一个模型接手，详细任务、环境、已知坑与待问事项见[MK交接](handoff/mk-handoff-2026-11-01.md)。** **MK进度（2026-11-01）：MK-T1词表45项，用户已答全部待答问题（U28–U30，闪避/致盲分开）；MK-T2完成（五个枚举字段全部经用户确认，U30）。**下一步MK-T3：官方说明事实抽取**（逐技能含A杖/魔晶、逐装备，附原文引用与出处；装备中文说明若需联网抓取须先问用户）。MK完成后回M2b-T6d。** U27（2026-10-31）：知识框架扩为完整版，新里程碑MK（§4），M2b暂停。 以下为U27前状态。**U26（2026-10-31）：改用三层机制知识框架。当前：M2b-T6c——第1层草稿`knowledge/mechanics/enums-v1.json`已完成并通过与登记表的校验，等用户确认各取值含义（`dispellable`等，见`docs/knowledge-framework.md`§3）→T6d起草机制规则（合并Q10）→T6e推导v2。T6b抽查意见（朗戈证据技能、3条不可驱散）记在`docs/hero-traits-analysis.md`§6，于T6e吸收。** 以下为U26前状态。**U22/U23（2026-10-31）改道。M2b-T6b英雄特性初步分析：助手标注v1与交叉检查已完成（`knowledge/hero-traits/hero-traits-v1.json`、`docs/hero-traits-analysis.md`、`reports/hero-traits-crosscheck-2026-10-31-v1`）。当前：等用户抽查§5清单并回答§3待解释点→出v2→T7触发条件（Q10）。**以下为U22前状态。M2b-T0～T5已完成：冻结模型`reports/m2b-situational-2026-10-31-v1`未通过（功效不足）；U20决定上线基线页后进M3，U21定辅助清单。T5：参照统计`reports/m2b-situational-reference-2026-10-31-v1`（M1训练集，`scripts/build_situational_reference.py`），8780“赛前 · 针对装”页，验收`reports/coach-app-acceptance-2026-10-31-v5`（19项通过），模型卡`docs/m2b-model-card.md`。**当前：M2b-T6——请用户打开8780“赛前 · 针对装”评审内容与说明**；评审意见记决策后M2b结案，进M3-T1（先问Q4）。不得在同一验证集上调参重跑。
+
+
 ### 已完成记录
 
 - M0：提交7a42c25、4d39ad8、8a03509、edf3f5c、6fcd223；R1评审通过（U6）；决策记录目录`docs/decisions/`。
@@ -316,6 +327,14 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 - 学习讲解：`learning/docs/project-ml-notes.md`（M1、M2、修订2、推理服务、U13的问题重构、M2b、M2b-T5基线页）。
 
 ### 运行与交接备注
+
+- U32交接包：导出/校验/比对命令`scripts/mechanics_cross_review.py`，回传模板全部null，包ID绑定来源和实现。新增13项专项检查通过；全量验收为1,439 passed、17 skipped，Ruff及22项unittest、JS检查全部通过，验收前后1,182个文件指纹无漂移。交接包逐机制分册，不覆盖任何旧产物。
+
+- 批次001用户反馈：8/8已完成，补上英雄名和技能用途；并列基础被动无需魔晶、魂断两项交互为用户报告。旧产物和原批次保留，新反馈/例子v2/合并结果独立校验；最终全量检查通过：pytest 1,426通过/17跳过，Ruff、22项unittest及全部JS检查通过；前后文件指纹一致。下一批从冻结队列第25组开始。
+
+- MK-T3语义复核批次001：只新增独立JSON判定与文档，旧v1源文件/产物未修改。来源与24组身份、8组抽样及引用校验通过；全量检查通过：pytest 1,426通过/17跳过，Ruff、22项学习/英雄知识unittest及全部JS检查通过；验收前后文件指纹一致，随后只补记结果与抽查编号。
+
+- MK-T3（Codex）：当前云端仓库`/workspace/dota2-timing`，分支`codex-temp`，临时环境`/workspace/scratch/dota-venv`按交接安装既定依赖。专项44项通过；全量`check.py --scope all`通过：Ruff通过，pytest 1,426通过/17跳过，学习与英雄知识共22项unittest、全部JS检查通过；验收前后所有跟踪/未跟踪文件指纹一致。抽取只读仓库快照，无联网数据采集或训练，旧知识/数据不改写。
 
 - Git（2026-10-31起）：本仓库已设本地提交身份`xrfc <147353817+xrfc@users.noreply.github.com>`，直接`git commit`即可；GitHub CLI已登录`xrfc`并经`gh auth setup-git`接管HTTPS凭据，`git push origin main`无需手动输入。凭据可用不等于自动推送：仍在用户要求时推送（如“推送”“收工”）。
 - 云端会话（2026-10-31起，U24）：仓库在`/home/user/dota2-timing`，GitHub凭据由会话提供；提交身份须为`Claude <noreply@anthropic.com>`。容器临时，**未推送的提交会丢失**，因此在`claude-temp`分支提交并随时推送，经PR由用户合并进main（U25，[契约](handoff/ai-temp-branch-contract.md)）；`data/`、`reports/`、`.venv`、`configs/user.local.json`不在git中，云端无真实数据，只能做代码/文档开发。检查用临时虚拟环境（`.[dev,replay,data]`＋scipy）运行`scripts/check.py`。
@@ -329,6 +348,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 ---
 
 ## 8. 待办池（不在当前里程碑执行）
+
+- MK-T3下一版抽取修订线索（批次001）：区分施加者/承受者、能力/外部中断条件、health/heal、召唤单位/召来效果；修正小数句界与don’t否定漏识别。旧v1和生产者指纹不回写，按新版本实施。
 
 - 非主宰英雄技能/物品中文名映射（R1评审发现）。
 - 旧蓝量修复脚本`scripts/repair_decision_mana.py`的计划指纹因`data/decision_mana.py`新增函数而失配，重跑前需登记迁移。

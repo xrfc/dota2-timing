@@ -1,0 +1,229 @@
+{
+  "schema": "targeting-interaction-observations/1",
+  "decision": "U31",
+  "status": "assistant_snapshot_observations",
+  "patch_verified": false,
+  "scope": "Four examples for the separated definition, not MK-T4 interaction rules or a full item database.",
+  "unknown_semantics": "null means unverified; false means explicit supporting evidence. Targeting never fills either interaction field.",
+  "source_sha256": {
+    "knowledge/hero-capabilities/hero-registry.json": "184a490f2d8ca431f5c8b338fb875ccfd6b9684d0847373b02148baea24d04e4",
+    "knowledge/items/sources/dotaconstants-items.json": "6b88515596307cf66e222d94b415d1ad8d4bd35809919f00da5cc074fd583a2f",
+    "knowledge/mechanics/vocabulary-v2.json": "781ae3c3c1cea97bcf4c56a0c77fa8d83feb7440e670911c234ed2dcaf9bda76"
+  },
+  "examples": [
+    {
+      "subject_type": "hero_ability",
+      "subject": "razor_static_link",
+      "name_zh": "静电连接",
+      "enemy_unit_target": {
+        "value": true,
+        "status": "snapshot_supported",
+        "evidence": [
+          {
+            "pointer": {
+              "file": "knowledge/hero-capabilities/hero-registry.json",
+              "path": "/heroes/14/abilities/1/raw_mechanics/behavior"
+            },
+            "quote": "134217736"
+          },
+          {
+            "pointer": {
+              "file": "knowledge/hero-capabilities/hero-registry.json",
+              "path": "/heroes/14/abilities/1/raw_mechanics/target_team"
+            },
+            "quote": "2"
+          },
+          {
+            "pointer": {
+              "file": "knowledge/hero-capabilities/hero-registry.json",
+              "path": "/heroes/14/abilities/1/description_zh"
+            },
+            "quote": "在雷泽和敌方英雄之间创造静电连接，偷取目标的攻击力并转移给雷泽。雷泽在连接生效时可以边移动边攻击。"
+          }
+        ]
+      },
+      "triggers_linkens_spellblock": {
+        "value": null,
+        "status": "unknown",
+        "evidence": []
+      },
+      "triggers_lotus_reflection": {
+        "value": null,
+        "status": "unknown",
+        "evidence": []
+      }
+    },
+    {
+      "subject_type": "hero_ability",
+      "subject": "terrorblade_sunder",
+      "name_zh": "魂断",
+      "enemy_unit_target": {
+        "value": true,
+        "status": "snapshot_supported",
+        "evidence": [
+          {
+            "pointer": {
+              "file": "knowledge/hero-capabilities/hero-registry.json",
+              "path": "/heroes/105/abilities/5/raw_mechanics/behavior"
+            },
+            "quote": "33554440"
+          },
+          {
+            "pointer": {
+              "file": "knowledge/hero-capabilities/hero-registry.json",
+              "path": "/heroes/105/abilities/5/raw_mechanics/target_team"
+            },
+            "quote": "3"
+          },
+          {
+            "pointer": {
+              "file": "knowledge/hero-capabilities/hero-registry.json",
+              "path": "/heroes/105/abilities/5/description_zh"
+            },
+            "quote": "隔断恐怖利刃以及目标英雄的灵魂并将双方的当前血量百分比进行互换。交换后双方英雄的生命值必定在一定百分比以上。"
+          }
+        ]
+      },
+      "triggers_linkens_spellblock": {
+        "value": null,
+        "status": "unknown",
+        "evidence": []
+      },
+      "triggers_lotus_reflection": {
+        "value": null,
+        "status": "unknown",
+        "evidence": []
+      }
+    },
+    {
+      "subject_type": "item",
+      "subject": "urn_of_shadows",
+      "name_zh": "影之灵龛",
+      "enemy_unit_target": {
+        "value": true,
+        "status": "snapshot_supported",
+        "evidence": [
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/urn_of_shadows/behavior"
+            },
+            "quote": "Unit Target"
+          },
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/urn_of_shadows/target_team"
+            },
+            "quote": "Both"
+          }
+        ]
+      },
+      "triggers_linkens_spellblock": {
+        "value": false,
+        "status": "snapshot_supported",
+        "evidence": [
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/urn_of_shadows/notes"
+            },
+            "quote": "Does not trigger spell block or spell reflect."
+          },
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/sphere/abilities/0/description"
+            },
+            "quote": "Blocks most targeted spells once every 14 seconds."
+          }
+        ]
+      },
+      "triggers_lotus_reflection": {
+        "value": false,
+        "status": "snapshot_supported",
+        "evidence": [
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/urn_of_shadows/notes"
+            },
+            "quote": "Does not trigger spell block or spell reflect."
+          },
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/lotus_orb/abilities/0/description"
+            },
+            "quote": "Applies a shield to the target unit for 5 seconds which re-casts most targeted spells back to their caster.\n\nThe shielded unit will still take damage from the spell.\nDispel Type: Basic Dispel"
+          }
+        ]
+      }
+    },
+    {
+      "subject_type": "item",
+      "subject": "spirit_vessel",
+      "name_zh": "魂之灵瓮",
+      "enemy_unit_target": {
+        "value": true,
+        "status": "snapshot_supported",
+        "evidence": [
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/spirit_vessel/behavior"
+            },
+            "quote": "Unit Target"
+          },
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/spirit_vessel/target_team"
+            },
+            "quote": "Both"
+          }
+        ]
+      },
+      "triggers_linkens_spellblock": {
+        "value": false,
+        "status": "snapshot_supported",
+        "evidence": [
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/spirit_vessel/notes"
+            },
+            "quote": "Does not trigger spell block or spell reflect."
+          },
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/sphere/abilities/0/description"
+            },
+            "quote": "Blocks most targeted spells once every 14 seconds."
+          }
+        ]
+      },
+      "triggers_lotus_reflection": {
+        "value": false,
+        "status": "snapshot_supported",
+        "evidence": [
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/spirit_vessel/notes"
+            },
+            "quote": "Does not trigger spell block or spell reflect."
+          },
+          {
+            "pointer": {
+              "file": "knowledge/items/sources/dotaconstants-items.json",
+              "path": "/lotus_orb/abilities/0/description"
+            },
+            "quote": "Applies a shield to the target unit for 5 seconds which re-casts most targeted spells back to their caster.\n\nThe shielded unit will still take damage from the spell.\nDispel Type: Basic Dispel"
+          }
+        ]
+      }
+    }
+  ]
+}

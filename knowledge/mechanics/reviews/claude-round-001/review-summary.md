@@ -87,6 +87,8 @@
 
 ## 4. 不确定的116组，需要用户或补充来源
 
+给用户的问题已整理为[user-questions.md](user-questions.md)（原则性问题＋约1/3抽查清单）。
+
 - 受破坏影响100组（见§3.4）。
 - 定义边界（需用户按定义裁定）：
   - 反伤：半人马·反伤、冥界亚龙·腐蚀皮肤、雷泽·风暴涌动是固定值反击，不按所受伤害比例返还。
@@ -112,5 +114,6 @@
 
 - `claude-review.jsonl`：1,551组完整判断
 - `coverage-findings.md`：覆盖缺口与漏抽（含覆盖针对装的重要缺口）
+- `user-questions.md`：需要用户判断的问题
 - `check-001/`：最后一次`compare --require-complete`输出（comparison.json、README）
 - `work/decisions/*.txt`：逐机制的原始判定（序号＝按review_id排序后的位置），`work/assemble.py`由此生成JSONL，`work/view.py`是复核时的查看工具，可复现

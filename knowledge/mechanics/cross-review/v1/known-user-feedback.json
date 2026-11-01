@@ -1,0 +1,372 @@
+{
+  "feedback": [
+    {
+      "schema": "mechanics-review-feedback/1",
+      "batch": "knowledge/mechanics/reviews/batch-001.json",
+      "batch_sha256": "ce08e5512d905e7f1f77a2e4cd65ea37342cd511af5afd15eb3071fdde426cb7",
+      "user_message": "好几个技能不记得是谁的了，写详细一点，有些可以解决，3有无魔晶都可以产生幻象，7会触发林肯和莲花，8正确的不提供减益免疫",
+      "responses": [
+        {
+          "audit_number": 3,
+          "review_id": "006b642f01d90ce6f782",
+          "kind": "scope_clarification",
+          "quote": "3有无魔晶都可以产生幻象",
+          "interpretation_zh": "并列基础被动无魔晶也能产生幻象；魔晶说明只是另一种主动产生幻象的方式。",
+          "resolution": "incorporated",
+          "user_decision": null
+        },
+        {
+          "audit_number": 7,
+          "review_id": "022a6b28cc4f727ca996",
+          "kind": "interaction_addition",
+          "quote": "7会触发林肯和莲花",
+          "interpretation_zh": "用户报告魂断会触发林肯格挡与莲花反弹，分别保存为user_reported，不继续写未知。",
+          "resolution": "incorporated",
+          "user_decision": null
+        },
+        {
+          "audit_number": 8,
+          "review_id": "02bf5a4f2224a37c62fb",
+          "kind": "explicit_agreement",
+          "quote": "8正确的不提供减益免疫",
+          "interpretation_zh": "用户确认排除魂断提供减益免疫这一候选。",
+          "resolution": "incorporated",
+          "user_decision": "reject"
+        }
+      ],
+      "additional_context": [
+        {
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/11/abilities/4/description_zh"
+          },
+          "quote": "幻影长矛手的攻击有一定几率使自己的存在破碎，产生自身的幻象。幻象也有几率进一步破碎，再产生幻象。幻影长矛手产生的幻象持续%illusion_duration%秒，幻象产生的幻象则持续%illusion_from_illusion_duration%秒。"
+        },
+        {
+          "pointer": {
+            "file": "knowledge/hero-capabilities/hero-registry.json",
+            "path": "/heroes/11/abilities/4/upgrade_text/shard_loc/zh"
+          },
+          "quote": "并列增加主动技能。使幻影长矛手进入隐身，最多持续%invis_duration%秒，同时产生一个复制幻象来迷惑敌人。隐身期间自身移动速度提升%invis_movespeed%%%。"
+        }
+      ],
+      "source_sha256": {
+        "knowledge/hero-capabilities/hero-registry.json": "184a490f2d8ca431f5c8b338fb875ccfd6b9684d0847373b02148baea24d04e4"
+      },
+      "pending_audit_numbers": [
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "statistics": {
+        "responses": 3,
+        "explicit_agreements": 1,
+        "scope_clarifications": 1,
+        "interaction_additions": 1,
+        "binary_agreement_rate": 1.0,
+        "binary_agreement_denominator": 1,
+        "note": "仅第8条是对原候选的直接二元判断；3/7为补充与澄清，不计入二元一致率。不是全批准确率。"
+      }
+    },
+    {
+      "schema": "mechanics-review-feedback/1",
+      "batch": "knowledge/mechanics/reviews/batch-001.json",
+      "batch_sha256": "ce08e5512d905e7f1f77a2e4cd65ea37342cd511af5afd15eb3071fdde426cb7",
+      "user_message": "正确",
+      "question_scope": {
+        "1": "真视宝石主动提供真视；快照主动300与被动900范围分开。",
+        "2": "蝙蝠骑士燃烧枷锁拖行敌人，但不据闪烁打断描述认定自身位移。",
+        "4": "光之守卫致盲之光对目标致盲，不是自身闪避。",
+        "5": "沉默术士全领域静默可以影响隐身敌人，但不提供隐身。",
+        "6": "大地之灵地磁之握沉默被拉扯目标击中的敌人，不是被拉回的友军。"
+      },
+      "responses": [
+        {
+          "audit_number": 1,
+          "review_id": "001413a7a6c8514451d5",
+          "kind": "explicit_agreement",
+          "user_decision": "accept"
+        },
+        {
+          "audit_number": 2,
+          "review_id": "004f1fda68643438e025",
+          "kind": "explicit_agreement",
+          "user_decision": "reject"
+        },
+        {
+          "audit_number": 4,
+          "review_id": "00f92072dcb3fd2b2def",
+          "kind": "explicit_agreement",
+          "user_decision": "accept"
+        },
+        {
+          "audit_number": 5,
+          "review_id": "0137ceb5b13207823a44",
+          "kind": "explicit_agreement",
+          "user_decision": "reject"
+        },
+        {
+          "audit_number": 6,
+          "review_id": "0178dd52ce9cbd0700d9",
+          "kind": "explicit_agreement",
+          "user_decision": "accept"
+        }
+      ],
+      "pending_audit_numbers": []
+    }
+  ],
+  "targeting_examples": {
+    "schema": "targeting-interaction-observations/1",
+    "decision": "U31",
+    "status": "mixed_source_observations",
+    "patch_verified": false,
+    "scope": "Four examples for the separated definition, not MK-T4 interaction rules or a full item database.",
+    "unknown_semantics": "null means unverified; false means explicit supporting evidence. Targeting never fills either interaction field.",
+    "source_sha256": {
+      "knowledge/hero-capabilities/hero-registry.json": "184a490f2d8ca431f5c8b338fb875ccfd6b9684d0847373b02148baea24d04e4",
+      "knowledge/items/sources/dotaconstants-items.json": "6b88515596307cf66e222d94b415d1ad8d4bd35809919f00da5cc074fd583a2f",
+      "knowledge/mechanics/vocabulary-v2.json": "781ae3c3c1cea97bcf4c56a0c77fa8d83feb7440e670911c234ed2dcaf9bda76",
+      "knowledge/mechanics/reviews/batch-001-feedback-001.json": "5384c1b5df5db4b1ddcecfc3933ccdab8b8101e5c127bc969273fbf5e11528bd"
+    },
+    "examples": [
+      {
+        "subject_type": "hero_ability",
+        "subject": "razor_static_link",
+        "name_zh": "静电连接",
+        "enemy_unit_target": {
+          "value": true,
+          "status": "snapshot_supported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/hero-capabilities/hero-registry.json",
+                "path": "/heroes/14/abilities/1/raw_mechanics/behavior"
+              },
+              "quote": "134217736"
+            },
+            {
+              "pointer": {
+                "file": "knowledge/hero-capabilities/hero-registry.json",
+                "path": "/heroes/14/abilities/1/raw_mechanics/target_team"
+              },
+              "quote": "2"
+            },
+            {
+              "pointer": {
+                "file": "knowledge/hero-capabilities/hero-registry.json",
+                "path": "/heroes/14/abilities/1/description_zh"
+              },
+              "quote": "在雷泽和敌方英雄之间创造静电连接，偷取目标的攻击力并转移给雷泽。雷泽在连接生效时可以边移动边攻击。"
+            }
+          ]
+        },
+        "triggers_linkens_spellblock": {
+          "value": null,
+          "status": "unknown",
+          "evidence": []
+        },
+        "triggers_lotus_reflection": {
+          "value": null,
+          "status": "unknown",
+          "evidence": []
+        }
+      },
+      {
+        "subject_type": "hero_ability",
+        "subject": "terrorblade_sunder",
+        "name_zh": "魂断",
+        "enemy_unit_target": {
+          "value": true,
+          "status": "snapshot_supported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/hero-capabilities/hero-registry.json",
+                "path": "/heroes/105/abilities/5/raw_mechanics/behavior"
+              },
+              "quote": "33554440"
+            },
+            {
+              "pointer": {
+                "file": "knowledge/hero-capabilities/hero-registry.json",
+                "path": "/heroes/105/abilities/5/raw_mechanics/target_team"
+              },
+              "quote": "3"
+            },
+            {
+              "pointer": {
+                "file": "knowledge/hero-capabilities/hero-registry.json",
+                "path": "/heroes/105/abilities/5/description_zh"
+              },
+              "quote": "隔断恐怖利刃以及目标英雄的灵魂并将双方的当前血量百分比进行互换。交换后双方英雄的生命值必定在一定百分比以上。"
+            }
+          ]
+        },
+        "triggers_linkens_spellblock": {
+          "value": true,
+          "status": "user_reported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/mechanics/reviews/batch-001-feedback-001.json",
+                "path": "/user_message"
+              },
+              "quote": "7会触发林肯和莲花"
+            }
+          ],
+          "note": "用户游戏知识；未补充本次官方/客户端或指定补丁核验，不能伪装成快照说明。"
+        },
+        "triggers_lotus_reflection": {
+          "value": true,
+          "status": "user_reported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/mechanics/reviews/batch-001-feedback-001.json",
+                "path": "/user_message"
+              },
+              "quote": "7会触发林肯和莲花"
+            }
+          ],
+          "note": "用户游戏知识；未补充本次官方/客户端或指定补丁核验，不能伪装成快照说明。"
+        }
+      },
+      {
+        "subject_type": "item",
+        "subject": "urn_of_shadows",
+        "name_zh": "影之灵龛",
+        "enemy_unit_target": {
+          "value": true,
+          "status": "snapshot_supported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/urn_of_shadows/behavior"
+              },
+              "quote": "Unit Target"
+            },
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/urn_of_shadows/target_team"
+              },
+              "quote": "Both"
+            }
+          ]
+        },
+        "triggers_linkens_spellblock": {
+          "value": false,
+          "status": "snapshot_supported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/urn_of_shadows/notes"
+              },
+              "quote": "Does not trigger spell block or spell reflect."
+            },
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/sphere/abilities/0/description"
+              },
+              "quote": "Blocks most targeted spells once every 14 seconds."
+            }
+          ]
+        },
+        "triggers_lotus_reflection": {
+          "value": false,
+          "status": "snapshot_supported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/urn_of_shadows/notes"
+              },
+              "quote": "Does not trigger spell block or spell reflect."
+            },
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/lotus_orb/abilities/0/description"
+              },
+              "quote": "Applies a shield to the target unit for 5 seconds which re-casts most targeted spells back to their caster.\n\nThe shielded unit will still take damage from the spell.\nDispel Type: Basic Dispel"
+            }
+          ]
+        }
+      },
+      {
+        "subject_type": "item",
+        "subject": "spirit_vessel",
+        "name_zh": "魂之灵瓮",
+        "enemy_unit_target": {
+          "value": true,
+          "status": "snapshot_supported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/spirit_vessel/behavior"
+              },
+              "quote": "Unit Target"
+            },
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/spirit_vessel/target_team"
+              },
+              "quote": "Both"
+            }
+          ]
+        },
+        "triggers_linkens_spellblock": {
+          "value": false,
+          "status": "snapshot_supported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/spirit_vessel/notes"
+              },
+              "quote": "Does not trigger spell block or spell reflect."
+            },
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/sphere/abilities/0/description"
+              },
+              "quote": "Blocks most targeted spells once every 14 seconds."
+            }
+          ]
+        },
+        "triggers_lotus_reflection": {
+          "value": false,
+          "status": "snapshot_supported",
+          "evidence": [
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/spirit_vessel/notes"
+              },
+              "quote": "Does not trigger spell block or spell reflect."
+            },
+            {
+              "pointer": {
+                "file": "knowledge/items/sources/dotaconstants-items.json",
+                "path": "/lotus_orb/abilities/0/description"
+              },
+              "quote": "Applies a shield to the target unit for 5 seconds which re-casts most targeted spells back to their caster.\n\nThe shielded unit will still take damage from the spell.\nDispel Type: Basic Dispel"
+            }
+          ]
+        }
+      }
+    ],
+    "derived_from": {
+      "file": "knowledge/mechanics/reviews/targeting-examples-v1.json",
+      "sha256": "7b8de421441901d37c89b884b8d9ef779f8c4b79fbfd135cfe73ce01f6d6d49c"
+    }
+  }
+}
