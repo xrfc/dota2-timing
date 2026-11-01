@@ -40,3 +40,4 @@
 | U34 | [交叉复核后续不必交回Codex](2026-11-01-no-codex-handoff.md) |
 | U35 | [夺取控制归召唤物；虚妄之诺算减伤；怕破坏英雄名单](2026-11-01-control-falsepromise-break.md) |
 | U36 | [授权重新抓取当前Valve英雄数据做版本对照](2026-11-01-refresh-valve-datafeed.md) |
+| U37 | [Codex第2轮分歧的用户裁定](2026-11-01-codex-round2-rulings.md) |

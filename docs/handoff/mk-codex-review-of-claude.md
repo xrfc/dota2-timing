@@ -54,3 +54,7 @@ P1队列389项已覆盖（387语义＋2过时升级处理）；19个v3移除组�
 ## 6. 给Codex的提示词（用户可直接粘贴）
 
 > 请复核Claude第1轮机制证据判断（可选复核，U34）。先读`docs/handoff/mk-codex-review-of-claude.md`和`AGENTS.md`，再读`knowledge/mechanics/reviews/claude-round-001/review-summary.md`。按`codex-review-queue.csv`的顺序，至少完成P1（Claude排除的组和按U33/U35改判的组），排除组要读完整原文，不能只看截断片段。`knowledge/mechanics/extractions/v3/delta-vs-v2.json`里去掉的19组只核对“过时升级文字”这条处理。在`codex-temp`分支工作，从最新main开始；PR #12若未合并，用`git archive origin/claude-temp`只读导出Claude的结果，不要改`claude-temp`。结果写到新目录`knowledge/mechanics/reviews/codex-round-002/`，每组记录review_id、结论（accept/reject/uncertain）、解释、条件、理由、引用的fact_id；与Claude不同的逐条写原因，与用户既有决定冲突的留给用户裁定。技能文字以快照为准（U36确认与官网当前一致，很可能对应7.41f），与记忆不符的注明后留给用户。完成后开PR到main，不要合并，不要推送main，不要联网采集或训练。
+
+## 7. 结果（2026-11-01）
+
+Codex第2轮（PR #13，已合并）审完P1；19组分歧经用户裁定（U37），当前结论见`knowledge/mechanics/reviews/resolution-001/`。P2/P3仍只有Claude审过，靠用户U5抽查。若再请Codex复核，请对照`resolution-001/resolved.jsonl`，不要改`claude-review.jsonl`。

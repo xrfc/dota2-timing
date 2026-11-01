@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-11-01 U37：Codex第2轮分歧裁定与当前结论汇总
+
+- 用户同意后合并PR #13（Codex复核P1，387组）。19组分歧由用户裁定（`docs/decisions/2026-11-01-codex-round2-rulings.md`）：改接受6组（热血竞技场、回身踢、戾影、钢毛后背、锚击、灵光），保持排除13组，另新增回身踢友方位移1条。
+- 新增`scripts/resolve_mechanics_reviews.py`与`knowledge/mechanics/reviews/resolution-001/`：用户决定优先，其余沿用Claude第1/2轮；Codex与Claude不同而用户未裁定时构建失败。共1,565组，当前证据（v3）1,452组：接受1,266、排除186；另新增1条。Claude/Codex原文件不改。
+- 新增`tests/test_mechanics_resolution.py`（重放、U37生效、未裁定分歧报错）。
+
 ## 2026-11-01 Codex第2轮复核Claude P1（U34）
 
 - 新增`knowledge/mechanics/reviews/codex-round-002/`：P1队列389项完整覆盖（387语义＋2过时处理）；语义114接受、257排除、16不确定，19处标签分歧逐条附原因，用户边界冲突保持待裁定。

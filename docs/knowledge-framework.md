@@ -84,3 +84,7 @@
 - 清单`knowledge/mechanics/stale-upgrade-text-v1.json`：29条，由原始响应推出，测试可重算；由该升级授予的技能（如狙击手·震荡手雷）不算。
 - `extractions/v3/`＝v2去掉这些文字的证据（`excluded_facts`保留原文和原因），去掉19组，其中第1轮接受17组。
 - **局限**：标记只能识别升级文字。U36重新抓取（2026-11-01）英文零改动、最新补丁7.41f（09-15），基础描述就是官网当前文本，很可能对应7.41f；接口无补丁字段，仍为`patch_verified=false`。
+
+## 8. 当前结论汇总（U37，2026-11-01）
+
+复核分几轮做，各自的文件不改；当前结论由`scripts/resolve_mechanics_reviews.py`汇总到`knowledge/mechanics/reviews/resolution-001/`：用户决定（`reviews/user-decisions/`）优先，其余沿用Claude第1轮（已含U33/U35/U5改判）与第2轮（v2新增14组）；Codex第2轮只审了P1，与Claude不同的组必须有用户裁定，否则构建失败。当前证据v3共1,452组：接受1,266、排除186。U37定下的口径：召唤物须是能被攻击或摧毁的独立单位；受伤后触发的周围反击算反伤；隐身只算真视可识破的；非战斗先天被动按不能破坏处理（项目口径）。
