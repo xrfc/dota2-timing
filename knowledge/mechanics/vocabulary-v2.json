@@ -1,0 +1,440 @@
+{
+ "schema": "mechanics-vocabulary/1",
+ "version": "v2-2026-11-01",
+ "decision": "U31",
+ "status": "definitions_confirmed",
+ "note": "U28–U30确认的45项机制定义沿用；U31仅修订单体指向定义。目标选择、林肯格挡触发、莲花反弹触发分别记录，具体交互逐项核验，未知不视为否。v1与其冻结抽取包保持不变。",
+ "categories": {
+  "control": "控制",
+  "defense": "防御/保命",
+  "status": "状态与驱散",
+  "resource": "生命/法力",
+  "units": "单位",
+  "movement": "位移",
+  "damage": "伤害",
+  "attack": "攻击修正",
+  "casting": "施法方式"
+ },
+ "mechanisms": [
+  {
+   "id": "stun",
+   "zh": "眩晕",
+   "category": "control",
+   "definition": "使目标无法行动和施法的硬控（含小眩晕）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "hex",
+   "zh": "妖术",
+   "category": "control",
+   "definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "silence",
+   "zh": "沉默",
+   "category": "control",
+   "definition": "目标无法施放技能（仍可攻击、使用物品）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "mute",
+   "zh": "禁用物品",
+   "category": "control",
+   "definition": "目标无法使用物品",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "disarm",
+   "zh": "缴械",
+   "category": "control",
+   "definition": "目标无法普通攻击",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "root",
+   "zh": "定身",
+   "category": "control",
+   "definition": "目标无法移动（部分会阻止闪烁类位移）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "forced_action",
+   "zh": "强制行为",
+   "category": "control",
+   "definition": "嘲讽、恐惧、魅惑等强制目标攻击或移动",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "sleep",
+   "zh": "睡眠",
+   "category": "control",
+   "definition": "无法行动，受伤害后醒来",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "cyclone_banish",
+   "zh": "吹风/放逐",
+   "category": "control",
+   "definition": "使目标短暂离开战场，期间无敌或不可被选取",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "slow",
+   "zh": "减速",
+   "category": "control",
+   "definition": "降低移动速度或攻击速度",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "evasion",
+   "zh": "闪避",
+   "category": "defense",
+   "definition": "自身有概率使敌方攻击落空",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U30：用户确认闪避与致盲分开（金箍棒只穿透闪避，致盲靠驱散或离开范围）"
+  },
+  {
+   "id": "blind",
+   "zh": "致盲",
+   "category": "defense",
+   "definition": "使敌方单位的攻击有概率落空",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "debuff_immunity",
+   "zh": "减益免疫/技能免疫",
+   "category": "defense",
+   "definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "pierces_debuff_immunity",
+   "zh": "穿透减益免疫",
+   "category": "control",
+   "definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）",
+   "evidence": [
+    "enum:immunity",
+    "official_text"
+   ]
+  },
+  {
+   "id": "invulnerable_untargetable",
+   "zh": "无敌/不可选取",
+   "category": "defense",
+   "definition": "暂时无法被伤害或无法被指向",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "damage_block",
+   "zh": "护盾/伤害吸收/减伤",
+   "category": "defense",
+   "definition": "吸收一定伤害或按比例减少受到的伤害",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "death_prevention",
+   "zh": "免死",
+   "category": "defense",
+   "definition": "在一段时间内生命值不会降到0以下（如薄葬、回光返照）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "status_resistance",
+   "zh": "状态抗性",
+   "category": "defense",
+   "definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）",
+   "evidence": [
+    "official_text",
+    "item_attr:status_resistance"
+   ],
+   "note": "U29：用户指出散夜对剑能降低被控制时间；装备数值在OpenDota属性字段，不在技能说明里"
+  },
+  {
+   "id": "slow_resistance",
+   "zh": "减速抗性",
+   "category": "defense",
+   "definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+   "evidence": [
+    "official_text",
+    "item_attr:slow_resistance"
+   ]
+  },
+  {
+   "id": "applies_basic_dispel",
+   "zh": "施加弱驱散",
+   "category": "status",
+   "definition": "移除目标身上可被弱驱散的效果",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "applies_strong_dispel",
+   "zh": "施加强驱散",
+   "category": "status",
+   "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "effect_dispellability",
+   "zh": "效果可驱散性",
+   "category": "status",
+   "definition": "技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散",
+   "evidence": [
+    "enum:dispellable"
+   ]
+  },
+  {
+   "id": "applies_break",
+   "zh": "施加破坏",
+   "category": "status",
+   "definition": "使目标的被动技能暂时失效",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "break_sensitive",
+   "zh": "受破坏影响",
+   "category": "status",
+   "definition": "英雄的关键被动（体现英雄特点的被动或技能的被动部分，如敌法师法力损毁、潮汐猎人海妖外壳）会被破坏暂时失效",
+   "evidence": [
+    "field:behavior",
+    "official_text",
+    "manual"
+   ],
+   "note": "官方说明不总注明破坏（法力损毁、海妖外壳都没写），海妖外壳的behavior也不含被动位，因此“是否关键被动”需人工判断（助手先标、用户抽查）"
+  },
+  {
+   "id": "invisibility",
+   "zh": "隐身",
+   "category": "status",
+   "definition": "使自身或队友隐身（可被真视识破）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "true_sight",
+   "zh": "真视",
+   "category": "status",
+   "definition": "可看见隐身单位",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "healing",
+   "zh": "治疗/回复",
+   "category": "resource",
+   "definition": "恢复生命值（治疗、生命恢复）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "lifesteal",
+   "zh": "吸血",
+   "category": "resource",
+   "definition": "按造成的伤害恢复生命（攻击吸血、技能吸血）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "heal_reduction",
+   "zh": "治疗削减",
+   "category": "resource",
+   "definition": "降低目标受到的治疗与生命恢复",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "mana_burn",
+   "zh": "烧蓝/法力削减",
+   "category": "resource",
+   "definition": "减少目标的法力值",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "mana_gain",
+   "zh": "自身回蓝/吸蓝",
+   "category": "resource",
+   "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "mana_cost",
+   "zh": "法力消耗",
+   "category": "resource",
+   "definition": "技能的法力消耗（数值，来自官方字段），用于判断法力依赖",
+   "evidence": [
+    "field:mana_costs"
+   ],
+   "note": "法力依赖在推导层判断：高蓝耗且缺少自身回蓝手段（见mana_gain），如莱恩蓝耗高但法力吸取可抽取其他单位蓝量，所以依赖低；门槛在MK-T4/T5定"
+  },
+  {
+   "id": "illusions",
+   "zh": "幻象",
+   "category": "units",
+   "definition": "制造自身或他人的幻象",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "summons",
+   "zh": "召唤物",
+   "category": "units",
+   "definition": "召唤可控单位或守卫",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "self_mobility",
+   "zh": "自身位移",
+   "category": "movement",
+   "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "displace_other",
+   "zh": "位移他人",
+   "category": "movement",
+   "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "magical_damage",
+   "zh": "魔法伤害",
+   "category": "damage",
+   "definition": "技能伤害类型为魔法",
+   "evidence": [
+    "enum:damage"
+   ]
+  },
+  {
+   "id": "pure_damage",
+   "zh": "纯粹伤害",
+   "category": "damage",
+   "definition": "技能伤害类型为纯粹",
+   "evidence": [
+    "enum:damage"
+   ]
+  },
+  {
+   "id": "physical_damage",
+   "zh": "物理伤害",
+   "category": "damage",
+   "definition": "技能伤害类型为物理",
+   "evidence": [
+    "enum:damage"
+   ]
+  },
+  {
+   "id": "damage_return",
+   "zh": "反伤",
+   "category": "damage",
+   "definition": "把受到的伤害部分返还给攻击者",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "bash",
+   "zh": "重击",
+   "category": "attack",
+   "definition": "攻击有概率眩晕目标",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "pierce_evasion",
+   "zh": "克敌击先",
+   "category": "attack",
+   "definition": "攻击无视闪避（必中）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "critical",
+   "zh": "暴击",
+   "category": "attack",
+   "definition": "攻击有概率造成额外倍数伤害",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "unit_target_spell",
+   "zh": "单体指向技能",
+   "category": "casting",
+   "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+   "evidence": [
+    "field:behavior",
+    "enum:target_team"
+   ],
+   "note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。"
+  },
+  {
+   "id": "channeled",
+   "zh": "持续施法",
+   "category": "casting",
+   "definition": "需要持续引导，被打断即停止",
+   "evidence": [
+    "official_text"
+   ]
+  }
+ ],
+ "derived_from": {
+  "file": "knowledge/mechanics/vocabulary-v1.json",
+  "sha256": "5b94c4599d7f6232cd1b253fe4c9de41e919defbdf1519eda0b8c6353013629f"
+ }
+}

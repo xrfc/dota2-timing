@@ -126,3 +126,11 @@
 ### 统一前端：赛前出装节奏（2026-10-30，M2）
 
 `scripts/train_item_timing.py --snapshot reports/m1-match-table-2026-10-30-v1 --output NEWDIR [--revision 2]`训练并按冻结协议评估（每次真实训练须用户授权）；M1快照读取与新JSON写出由`dota_items.data.match_snapshot`提供（2026-11-01由本脚本下沉，M2b/U23脚本共用）。`PYTHONPATH=src .venv/bin/python scripts/coach_app.py --port 8780`启动统一前端（当前只有赛前出装页，绑定`reports/m2-item-timing-2026-10-30-r2`并核对哈希）。M1数据表：`scripts/build_match_table.py inventory|snapshot|verify`。见[模型卡](../docs/m2-model-card.md)、[M1数据卡](../docs/m1-data-card.md)。
+
+### MK-T3机制事实抽取
+
+`PYTHONPATH=src python scripts/build_mechanics_facts.py --output NEWDIR`只读取仓库内快照，生成来源可核对的证据、覆盖率、复核CSV与哈希收据。NEWDIR必须不存在；不联网、不训练。接口、来源限制及抽查方法见[机制事实](../docs/mechanics-facts.md)。
+
+### MK-T3双AI交叉复核交接
+
+`scripts/mechanics_cross_review.py build --output NEWDIR`导出完整清单、上下文、空白Claude模板与既有判断；`verify --packet DIR`核验输入及包文件；`compare --packet DIR --review RETURN.jsonl --output NEWDIR [--require-complete]`生成逐项对照，识别未审、独有判断、标签分歧和用户冲突，不修改事实。命令需`PYTHONPATH=src`；完整操作见[Claude交接](../docs/handoff/mk-claude-cross-review.md)。

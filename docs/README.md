@@ -26,6 +26,11 @@
 
 ## 架构、接口与操作
 
+- [MK-T3交Claude全量交叉复核](handoff/mk-claude-cross-review.md)
+
+- [MK-T3机制事实：接口、复现与抽查](mechanics-facts.md)
+- [MK-T3语义复核：批次与判定方法](mechanics-review.md)
+
 - [Git结构与已合并分支清理（2026-10-30）](git-maintenance-2026-10-30.md)
 
 - [架构与分步任务审查（2026-10-28）](archive/history/architecture-review-2026-10-28.md)
