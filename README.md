@@ -71,7 +71,7 @@ contracts：轻量共享契约；workflow/experiments：编排；scripts：命�
 
 2026-10-27数据侧新增：[五个决策复盘案例](docs/data-decision-cases-2026-10-27.md)，包含当时证据、人工建议与分离的事后采样。尚未通过游戏语义评审或浏览器视觉验收，不是新模型。
 
-2026-10-27增强交付：[字段可用性清单](docs/decision-field-readiness-2026-10-27.md)与[训练任务草案](docs/decision-training-task-draft-2026-10-27.md)。案例1/2增加参团、发育、换区的条件比较及未准入来源附录，独立增强页用8769；不是新模型或已批准标签。
+2026-10-27增强交付：[字段可用性清单](docs/decision-field-readiness-2026-10-27.md)与[训练任务草案](docs/archive/history/decision-training-task-draft-2026-10-27.md)。案例1/2增加参团、发育、换区的条件比较及未准入来源附录，独立增强页用8769；不是新模型或已批准标签。
 
 2026-10-27状态卡增量：[血蓝、技能CD与TP取证](docs/decision-state-card-2026-10-27.md)。已独立离线读取原两场录像，提取6条指定状态；案例1无敌斩约30.7秒CD，案例2TP约3.0秒CD，属于来源观测而非完整可施放认证。当前状态卡沿用8769，mana单位/精确到场/收益仍有缺口；未训练。
 

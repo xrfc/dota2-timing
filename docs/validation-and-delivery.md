@@ -33,7 +33,7 @@
 - 唯一必要修复是compare_purchase_sensitivity.py接通显式public-reader/1；默认严格不变，不改候选、指标或选择规则。
 - 5项新CLI合成回归，连同原敏感性及生产者迁移共30 passed；修改文件Ruff/格式通过。
 - 全量稳定窗口日志与前后保护收据保存于reports/sensitivity-readiness-2026-10-18/；最终结果及提交/CI在交付回复核实。
-- 方案、唯一实验入口、验收条件及真实运行待确认项见[敏感性方案](purchase-log-sensitivity-plan-2026-10-15.md)。
+- 方案、唯一实验入口、验收条件及真实运行待确认项见[敏感性方案](archive/history/purchase-log-sensitivity-plan-2026-10-15.md)。
 - 保持旧952输入及新增1038用途不变；不真实训练/评估、不改认证、不上传运行产物、不合并main。
 
 ## 2026-10-18 续接：评估输入契约
@@ -131,7 +131,7 @@ verification.json、preservation.json、document-audit.json、audit-differences.
 
 359项pytest、全仓Ruff及276文件格式检查通过；原缓存重建与确定性重算一致。
 4项新增回归覆盖隔离、身份、概率、mask及分母。未重训练、未补采、未推送或合并。
-见[诊断报告](purchase-log-diagnostics-2026-10-15.md)与[验收摘要](acceptance/purchase-log-diagnostics-952-2026-10-15.json)。
+见[诊断报告](archive/history/purchase-log-diagnostics-2026-10-15.md)与[验收摘要](acceptance/purchase-log-diagnostics-952-2026-10-15.json)。
 
 ## 2026-10-14 玩家重叠增量（本地）
 
@@ -408,7 +408,7 @@ Windows 的解释器路径为 `.venv/Scripts/python.exe`。只核对 JSON 工作
 本地验收日志和指纹：`reports/github-delivery-2026-10-23/{check.log,pre-check.json,post-check.json}`，不上传真实数据或本地运行制品。
 全量检查结束后仅追加本验收文字及日期摘要链接，不改受测代码；提交前复查受测代码指纹和diff空白检查。
 
-本轮更新内容见[近期摘要](recent-progress-2026-10-23.md)。GitHub提交目标为`xrfc/dota2-timing`的
+本轮更新内容见[近期摘要](archive/history/recent-progress-2026-10-23.md)。GitHub提交目标为`xrfc/dota2-timing`的
 `feat/purchase-data-prep`，PR面向`main`，包含此前未合入main的开发提交。实际提交SHA、PR及CI状态以GitHub为准；本地通过不冒称远端CI已通过。
 保留旧PR #6，不自动关闭/合并；data/reports链接是本地证据路径，在GitHub可能不可访问。
 
@@ -454,7 +454,7 @@ PR目标：[现有PR #7](https://github.com/xrfc/dota2-timing/pull/7)，`feat/pu
 
 统一工程检查、前后tracked/untracked指纹、旧案例与raw保护、两例原decision_input兼容、事件截止/隐藏眼雾/未来端点隔离和真实HTTP记录见`reports/decision-enhanced-acceptance-2026-10-27-v1/acceptance.json`及同目录日志；以终态收据为准，文档先于全量窗口写入。浏览器视觉/点击仍未认证，HTTP/DOM不代替游戏语义验收。
 
-交付入口：[字段可用性](decision-field-readiness-2026-10-27.md)、[研究任务草案](decision-training-task-draft-2026-10-27.md)。未提交、推送、安装依赖或远端合并。
+交付入口：[字段可用性](decision-field-readiness-2026-10-27.md)、[研究任务草案](archive/history/decision-training-task-draft-2026-10-27.md)。未提交、推送、安装依赖或远端合并。
 
 ## 2026-10-27 血蓝/CD/TP最小提取与状态卡
 
@@ -468,7 +468,7 @@ PR目标：[现有PR #7](https://github.com/xrfc/dota2-timing/pull/7)，`feat/pu
 
 ## 2026-10-28架构与任务整理验收
 
-用户取消其他开发者停写确认前置要求；AGENTS、协作协议和当前引用已同步，实际冲突检查与既有改动保护不变。审查范围、处置与未解决债务见[审查报告](architecture-review-2026-10-28.md)。
+用户取消其他开发者停写确认前置要求；AGENTS、协作协议和当前引用已同步，实际冲突检查与既有改动保护不变。审查范围、处置与未解决债务见[审查报告](archive/history/architecture-review-2026-10-28.md)。
 
 - 统一入口`.venv/bin/python scripts/check.py`最终退出0：Ruff通过、503文件格式通过；1327 pytest、10学习Python、12知识Python、6学习JS、5回放UI逻辑、11决策UI逻辑通过，共1371项。
 - 架构/维护/检查范围专项33项通过，包含在全量中，不重复计数。首次直接pytest因缺PYTHONPATH收集失败；补`PYTHONPATH=src`后通过，统一入口本身已处理该环境问题。

@@ -62,7 +62,7 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python scripts/decision_revie
 
 页面包含：原阵营地图和最近30/20/10/5秒采样、单英雄筛选、用户原评审、三种行动的条件/机会成本/停止条件、未认证来源附录和单独事后展开。单英雄筛选仅缓解重叠，不补不存在的战斗数据。
 
-终态与保护指纹见`reports/decision-enhanced-acceptance-2026-10-27-v1/acceptance.json`；缺少通过收据不声称本轮全量通过。真实浏览器视觉验收仍未完成；DOM/HTTP验证不认证游戏建议。下一项研究决策见[任务草案](decision-training-task-draft-2026-10-27.md)。
+终态与保护指纹见`reports/decision-enhanced-acceptance-2026-10-27-v1/acceptance.json`；缺少通过收据不声称本轮全量通过。真实浏览器视觉验收仍未完成；DOM/HTTP验证不认证游戏建议。下一项研究决策见[任务草案](archive/history/decision-training-task-draft-2026-10-27.md)。
 
 ## 2026-10-27现场状态增量（优先于旧导出缺口表）
 

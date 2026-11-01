@@ -1,5 +1,37 @@
 # 变更记录
 
+## 2026-11-01 确认与标签（U30）
+
+- 五个枚举字段（`dispellable`、`immunity`、`target_team`、`damage`、`type`）全部经用户确认，MK-T2完成；闪避与致盲分开。
+- 补打`v0.3.0`（331c6d0）、`v0.4.0`（63d395a）附注标签；云端推送标签被拒，待用户本地推送（命令见`docs/decisions/2026-11-01-confirmations-tags-merge.md`）。
+
+## 2026-11-01 代码与文档整理；交叉检查现象解释（U29）
+
+- 新增`dota_items.data.match_snapshot`（M1快照读取、新JSON写出），`train_item_timing.py`改为导入，M2b/U23三个脚本不再用importlib加载脚本；新增合成测试。
+- `pyproject.toml`的`[data]`声明numpy；缺少gem-dota时`test_export_raw_replay_channels`跳过。
+- 34份已被替代的日期文档移到`docs/archive/history/`（内容不变、链接已改，无新增失效链接）。
+- 词表新增状态抗性、减速抗性（45项）与依据类型`item_attr:`（用户指出散夜对剑降低被控时间）。
+- 未执行：补打`v0.3.0`/`v0.4.0`标签（发布操作，待用户决定）。
+- 用户确认：熊战士激怒只有状态抗性、无减益免疫（碎颅锤的理由是激怒强驱散自身解控）；`dispellable=0`含义确认。
+
+## 2026-11-01 机制词表第一轮回答（U28）
+
+- 按用户回答修订词表（43项）：受破坏影响改为“关键被动”（助手标注、用户抽查）；法力依赖改为推导层“高蓝耗且无自身回蓝”，新增`mana_gain`；减益免疫按用户定义。
+- `enums-v1.json`新增`immunity`解码（3＝穿透减益免疫等），例子技能与登记表一致；含义待用户确认。闪避/致盲是否合并待定。
+- 更正：用户指出金箍棒解决不了致盲；官方说明只写“穿透闪避”。记入`docs/hero-traits-analysis.md`§6（v1“闪避/致盲→金箍棒”的初步对应不对），附各致盲技能的可驱散性。
+
+## 2026-10-31 完整知识框架里程碑MK（U27）
+
+- 决策U27：知识框架扩为完整版（全英雄含A杖/魔晶＋全部可购买装备，中立物品与天赋以后），新里程碑MK先于M2b剩余任务；M2b暂停于T6c（并入MK-T2）。计划§4新增MK-T0～T6，§7状态表更新。
+- MK-T1草稿：机制词表`knowledge/mechanics/vocabulary-v1.json`（42项、9类，含破坏、隐身/真视、沉默、减益免疫/穿透等v1缺失机制），`dota_items.data.mechanics.load_vocabulary`校验编号、类别与依据类型。定义待用户拍板，4个待答问题见`docs/knowledge-framework.md`§5。
+
+## 2026-10-31 机制知识框架第1层（U26）
+
+- 新增三层机制知识框架设计`docs/knowledge-framework.md`：事实层→机制规则层→推导层，只覆盖主宰6件与辅助9件针对装。
+- 第1层草稿`knowledge/mechanics/enums-v1.json`：解码官方`dispellable`、`target_team`、`damage`、`type`枚举，每个取值附核对例子技能；`dota_items.data.mechanics.load_enums`校验例子与登记表一致、所有出现的取值都有解释。全部`confirmed=false`，待用户确认。
+- 记录用户抽查反馈（`docs/hero-traits-analysis.md`§6）：朗戈证据技能错误；守护天使、虚妄之诺、折光为不可驱散，v1标注错误。v1不改，于v2吸收。
+- 计划M2b新增T6c/T6d/T6e，原T7（Q10）并入T6d。
+
 ## 2026-10-31 代码审查（云端会话）
 
 - 全量检查通过（ruff、1379项pytest通过/17项因本地冻结产物不在git而跳过、学习与前端测试）。
@@ -86,14 +118,14 @@
 新增仅训练/验证的截距与正则化对照模块及CLI，合成回归14项通过。
 未运行真实对照，未评估新增数据；研究方案待用户确认。
 采集已由显式代理接续，以下旧“等待直连冷却/新增0场”是历史启动状态。
-详见[对照方案与学习说明](docs/purchase-log-sensitivity-plan-2026-10-15.md)。
+详见[对照方案与学习说明](docs/archive/history/purchase-log-sensitivity-plan-2026-10-15.md)。
 
 ## 2026-10-15 新增1,000场采集已安排
 
 用户已授权恢复补采；独立批次排除2,950个历史比赛ID，旧952场不计入新目标。
 后台进程已启动，等待本地冷却至今天18:21后自动请求；限额到达自动等待，当前新增0场。
 368项pytest及静态检查通过。未换IP、未使用第二节点、未重训练或推送。
-详见[采集规则、状态与恢复命令](docs/collection-additional-1000-2026-10-15.md)。
+详见[采集规则、状态与恢复命令](docs/archive/history/collection-additional-1000-2026-10-15.md)。
 下方“补采暂停”为此前决定，已由本次授权替代。
 
 ## 验证集误差与分布诊断 — 2026-10-15（本地）
@@ -101,7 +133,7 @@
 - 新增只读诊断CLI、哈希绑定、来源重建、冻结概率核对及4项回归。
 - 训练/验证标签、最大关联组、阵容频率、概率分箱和逐场Brier差已导出。
 - 359项pytest与全仓静态检查通过；不重训练、不补采、不分析测试集、未推送。
-- 结果与复现见[诊断文档](docs/purchase-log-diagnostics-2026-10-15.md)。
+- 结果与复现见[诊断文档](docs/archive/history/purchase-log-diagnostics-2026-10-15.md)。
 
 ## 20分钟购买行为基线确认 — 2026-10-14（本地）
 

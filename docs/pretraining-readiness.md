@@ -230,7 +230,7 @@ PYTHONPATH=src .venv/bin/python audit_data.py --verify-preflight reports/preflig
 
 用户决定先用已有952场推进，不等待补满1000。952场全部通过全局源哈希和初筛复验，
 已导出952条预览、254列阵容编码；49项相关回归通过。尚未训练。
-装备观测与玩家相关性等最新结果见 [952场处理报告](purchase-952-processing-2026-10-14.md)，
+装备观测与玩家相关性等最新结果见 [952场处理报告](archive/history/purchase-952-processing-2026-10-14.md)，
 上文50场及7场数量均为历史检查点，不代表当前探索队列规模。
 
 ## 购买日志标签契约增量（2026-10-14）

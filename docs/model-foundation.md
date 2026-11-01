@@ -46,7 +46,7 @@
 A杖预测75.3%的57场实际49.1%；冰眼预测5.2%的169场实际14.2%。平均偏差不大但分段偏差明显。跳刀、A杖、冰眼的概率方差未获得足够标签协方差抵消，支持“概率区分过强／估计不稳定”的待检验假设，不证明唯一成因。
 精确恒等式：Brier=Var(p)+bias²−2Cov(p,y)+Var(y)，分母均为n；分箱ECE不是精确Brier分解。
 
-证据：[固定实验](whole-log-baseline-2026-10-21.md)、[诊断](whole-log-calibration-2026-10-21.md)；本地产物reports/whole-log-fixed-baseline-2026-10-21/及reports/whole-log-calibration-2026-10-21/。本次文档整理未复算历史实验。
+证据：[固定实验](archive/history/whole-log-baseline-2026-10-21.md)、[诊断](archive/history/whole-log-calibration-2026-10-21.md)；本地产物reports/whole-log-fixed-baseline-2026-10-21/及reports/whole-log-calibration-2026-10-21/。本次文档整理未复算历史实验。
 
 ## 4. 当前接口与复用边界
 
@@ -169,7 +169,7 @@ CLI命令、schema、数据口径、参数、指标和完成收据的发布顺�
 
 用户明确授权“继续下一步，做两组C真实对照”；固定协议无变更，新22个二分类均完成。
 旧frequency／C=1未重训，续采数据未进入本轮。完整逐装备、校准、系数／截距及命令见
-[真实对照报告](whole-log-regularization-2026-10-22.md)。
+[真实对照报告](archive/history/whole-log-regularization-2026-10-22.md)。
 
 | 模型 | train宏Brier | validation宏Brier↓ | validation宏AP↑ | validation宏AUC↑ |
 |---|---:|---:|---:|---:|
@@ -200,7 +200,7 @@ C=0.01仅比frequency下降0.13%，进一步收缩并未取得更好整体结果
 
 ## 2026-10-25：主宰阵容分析原型（产品主线恢复）
 
-用户指出过度偏向指标与审计，随后明确授权实现阵容分析原型。新交付见[功能、命令与局限](lineup-analysis-prototype-2026-10-25.md)。
+用户指出过度偏向指标与审计，随后明确授权实现阵容分析原型。新交付见[功能、命令与局限](archive/history/lineup-analysis-prototype-2026-10-25.md)。
 输入双方阵容，使用冻结C=0.1与frequency显示11装备概率、基线差值、精确log-odds贡献和仅训练集相近案例。不重训、不读取前瞻评估数据、不变更采集协议。
 原型并不阻塞在10/31采集窗口上；独立评估依然是验证事项，不是原型交付前提。
 
@@ -245,7 +245,7 @@ C=0.01仅比frequency下降0.13%，进一步收缩并未取得更好整体结果
 
 ### §13训练任务草案交付（2026-10-27）
 
-[任务草案](decision-training-task-draft-2026-10-27.md)建议主任务为候选行动可接受性，多合理选项、条件方案与信息不足的具体标签形式待确认；与未来危险风险、实际行为模仿分开。英雄/角色/补丁、窗口、样本预算、split、指标门槛及真实训练仍未批准。增强两例仅开发材料，不成为独立评估或训练集；[字段清单](decision-field-readiness-2026-10-27.md)区分来源存在与准入。
+[任务草案](archive/history/decision-training-task-draft-2026-10-27.md)建议主任务为候选行动可接受性，多合理选项、条件方案与信息不足的具体标签形式待确认；与未来危险风险、实际行为模仿分开。英雄/角色/补丁、窗口、样本预算、split、指标门槛及真实训练仍未批准。增强两例仅开发材料，不成为独立评估或训练集；[字段清单](decision-field-readiness-2026-10-27.md)区分来源存在与准入。
 
 ### §13状态字段补齐（2026-10-27）
 

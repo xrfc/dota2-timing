@@ -5,10 +5,11 @@ Writes JSON only. Output directory must be new. Protocol: docs/m2b-design.md.
 
 import argparse
 import hashlib
-import importlib.util
 import json
 from pathlib import Path
 
+from dota_items.data.match_snapshot import load_snapshot
+from dota_items.data.match_snapshot import write_new_json as write
 from dota_items.data.source_io import parse_source_json, read_source_bytes
 from dota_items.modeling import situational_items as si
 from dota_items.storage import file_hash
@@ -17,25 +18,15 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = "knowledge/hero-capabilities/hero-registry.json"
 IMPLEMENTATION = (
     "scripts/train_situational_items.py",
-    "scripts/train_item_timing.py",
+    "src/dota_items/data/match_snapshot.py",
     "src/dota_items/modeling/situational_items.py",
 )
-
-
-def _snapshot_loader():
-    spec = importlib.util.spec_from_file_location(
-        "train_item_timing", Path(__file__).resolve().parent / "train_item_timing.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module.load_snapshot, module.write
 
 
 def run(snapshot, output, repo=ROOT):
     snapshot, output = Path(snapshot), Path(output)
     if output.exists():
         raise ValueError("Output exists")
-    load_snapshot, write = _snapshot_loader()
     implementation = {name: file_hash(repo / name) for name in IMPLEMENTATION}
     registry_hash = file_hash(repo / REGISTRY)
     _, players, purchases, split = load_snapshot(snapshot)
