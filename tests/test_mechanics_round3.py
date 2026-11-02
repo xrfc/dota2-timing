@@ -78,3 +78,29 @@ def test_round4_totals_follow_from_round1():
     for decision in final.values():
         counts[decision] = counts.get(decision, 0) + 1
     assert counts == ROUND4["totals_after"] == {"accept": 1271, "reject": 280}
+
+
+ROUND5 = json.loads((REVIEWS / "claude-round-005/resolution.json").read_text(encoding="utf-8"))
+
+
+def test_round5_flips_exactly_the_confirmed_innate_proposal():
+    for key in ("proposal", "round4"):
+        data = (ROOT / ROUND5["input"][key]).read_bytes()
+        assert hashlib.sha256(data).hexdigest() == ROUND5["input"][key + "_sha256"]
+    proposal = json.loads((ROOT / ROUND5["input"]["proposal"]).read_text(encoding="utf-8"))
+    subjects = {row["subject"] for row in ROUND5["rows"]}
+    assert subjects == {item["subject"] for item in proposal["candidates"]}
+    assert len(ROUND5["rows"]) == 24
+    assert all(
+        row["mechanism"] == "break_sensitive"
+        and (row["previous_decision"], row["final_decision"]) == ("accept", "reject")
+        for row in ROUND5["rows"]
+    )
+    round1 = jsonl(ROOT / ROUND4["input"]["claude_round1"])
+    final = {row["review_id"]: row["decision"] for row in round1}
+    final.update({row["review_id"]: row["final_decision"] for row in ROUND4["rows"]})
+    final.update({row["review_id"]: row["final_decision"] for row in ROUND5["rows"]})
+    counts = {}
+    for decision in final.values():
+        counts[decision] = counts.get(decision, 0) + 1
+    assert counts == ROUND5["totals_after"] == {"accept": 1247, "reject": 304}

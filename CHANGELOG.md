@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-11-02 U41：另外24个规则类先天不能被破坏
+
+- 助手复查第1轮按U33接受为可被破坏的105个先天：10个按官方原文记录破坏交互，24个属规则类（提议`claude-round-004/innate-break-proposal.json`），71个战斗类保持。用户确认24个全部不能被破坏（`docs/decisions/2026-11-02-innate-break-class.md`）。
+- 新增`knowledge/mechanics/reviews/claude-round-005/`：累计接受1,247／排除304／不确定0；`tests/test_mechanics_round3.py`新增1项校验名单与总数。
+- 计划§2/§7/§8、`docs/mechanics-review.md`、第4轮README同步。
+
 ## 2026-11-02 U40：第3轮4个问题裁定与第4轮结果
 
 - 决策记录`docs/decisions/2026-11-02-round3-rulings.md`；新增`knowledge/mechanics/reviews/claude-round-004/`：19处分歧全部定案，第1轮1,551组变为接受1,271／排除280／不确定0。
