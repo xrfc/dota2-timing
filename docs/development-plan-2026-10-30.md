@@ -346,6 +346,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### 下一步（接手从这里开始）
 
+**MK-T3 Claude第3轮（2026-11-02）**：处理Codex第2轮与Claude第1轮在P1的19处分歧（[结果](../knowledge/mechanics/reviews/claude-round-003/README.md)）。3组Codex改接受经Claude回读同意（热血竞技场击退、回身踢自身位移、戾影召唤物；第1轮判错）；16组归成4个问题等用户裁定：Q1九个先天被动能否被破坏、Q2受伤后自动放技能算不算反伤、Q3感应地雷算不算隐身、Q4没写能否被攻击的召出物算不算召唤物。**下一步：用户回答这4个问题→出第4轮结果**；U5抽查回读与同类错误批量复查继续；之后进MK-T4。
+
 **2026-11-01 Codex可选复核（U34）**：P1的389项已覆盖（387语义＋2过时处理），另核对其余17移除组；语义114接受／257排除／16不确定，19处与Claude不同，其中3处建议接受、16处待用户裁定（含9组U33先天例外适用冲突）。[完整回传](../knowledge/mechanics/reviews/codex-round-002/README.md)。旧Claude判断与正式词表未改写，P2/P3未审，不把本轮同标签计作事实认证；下一步由用户审阅PR与待定边界，后续仍按U34推进。
 
 

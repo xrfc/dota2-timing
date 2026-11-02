@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-11-02 MK-T3 Claude第3轮：处理19处AI分歧
+
+- 新增`knowledge/mechanics/reviews/claude-round-003/`（`resolution.json`＋README）：Codex第2轮与Claude第1轮在P1的19处分歧中，3处Claude回读后同意改为接受（玛尔斯·热血竞技场位移他人、玛西·回身踢自身位移、天涯墨客·戾影召唤物），16处归成4个问题待用户裁定。输入文件哈希登记、不改写。
+- 新增`tests/test_mechanics_round3.py`：输入哈希不变、恰好覆盖19处分歧、只有Codex接受项可由AI一致解决、不确定项全部指向待答问题。
+- 同步计划§7、`docs/mechanics-review.md`与学习笔记。
+
 ## 2026-11-01 U39：一份复盘报告、“被抓”定义原则、评价对象
 
 - 决策记录`docs/decisions/2026-11-01-report-gank-subject.md`：Q13（一份报告）、Q16（只评用户操作的1号位或5号位一个英雄）已决；Q15原则已定（敌方离开自己分路、多打少等局面；死亡是结果另记），实现细节（离线判定、半径、窗口、其他局面）留到B0确认。

@@ -2,6 +2,10 @@
 
 这里记录助手逐条阅读原文后的建议。当前进度只维护在[开发计划§7](development-plan-2026-10-30.md#7-状态表唯一进度来源)，原始抽取接口见[机制事实说明](mechanics-facts.md)。
 
+## Claude第3轮：19处分歧（2026-11-02）
+
+Codex第2轮复核P1时与Claude第1轮有19处不同。Claude回读完整原文后同意其中3处改为接受（热血竞技场、回身踢、戾影），其余16处归成4个问题交用户裁定。结果与助手倾向见[第3轮说明](../knowledge/mechanics/reviews/claude-round-003/README.md)。
+
 ## 批次001
 
 机器可读记录：[batch-001.json](../knowledge/mechanics/reviews/batch-001.json)。本批取冻结`review.csv`原顺序前24组，保留原抽查标记，恰好8组供用户抽查。没有重新抽样或只挑容易通过的例子。
