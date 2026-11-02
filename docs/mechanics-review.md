@@ -4,7 +4,7 @@
 
 ## Claude第3轮：19处分歧（2026-11-02）
 
-Codex第2轮复核P1时与Claude第1轮有19处不同。Claude回读完整原文后同意其中3处改为接受（热血竞技场、回身踢、戾影），其余16处归成4个问题交用户裁定。结果与助手倾向见[第3轮说明](../knowledge/mechanics/reviews/claude-round-003/README.md)。
+Codex第2轮复核P1时与Claude第1轮有19处不同。Claude回读完整原文后同意其中3处改为接受（热血竞技场、回身踢、戾影），其余16处归成4个问题交用户裁定。结果与助手倾向见[第3轮说明](../knowledge/mechanics/reviews/claude-round-003/README.md)。用户已裁定（U40），最终结果见[第4轮](../knowledge/mechanics/reviews/claude-round-004/README.md)：接受1,271／排除280／不确定0。
 
 ## 批次001
 

@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-11-02 U40：第3轮4个问题裁定与第4轮结果
+
+- 决策记录`docs/decisions/2026-11-02-round3-rulings.md`；新增`knowledge/mechanics/reviews/claude-round-004/`：19处分歧全部定案，第1轮1,551组变为接受1,271／排除280／不确定0。
+- `tests/test_mechanics_round3.py`新增2项：每个待裁定组都按U40落地、总数可由第1轮推出。
+- 计划§2/§7/§8、`docs/mechanics-review.md`同步；§8登记“其他先天是否同类”的复查。
+
 ## 2026-11-02 MK-T3 Claude第3轮：处理19处AI分歧
 
 - 新增`knowledge/mechanics/reviews/claude-round-003/`（`resolution.json`＋README）：Codex第2轮与Claude第1轮在P1的19处分歧中，3处Claude回读后同意改为接受（玛尔斯·热血竞技场位移他人、玛西·回身踢自身位移、天涯墨客·戾影召唤物），16处归成4个问题待用户裁定。输入文件哈希登记、不改写。

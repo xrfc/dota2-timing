@@ -44,3 +44,37 @@ def test_only_codex_accepts_are_resolved_and_uncertain_go_to_user():
             assert row["question"] in DOC["questions"]
     statuses = [row["status"] for row in DOC["rows"]]
     assert statuses.count("resolved_ai_agreement") == 3
+
+
+ROUND4 = json.loads((REVIEWS / "claude-round-004/resolution.json").read_text(encoding="utf-8"))
+
+
+def test_round4_applies_user_rulings_to_every_pending_row():
+    assert (
+        hashlib.sha256((ROOT / ROUND4["input"]["round3"]).read_bytes()).hexdigest()
+        == (ROUND4["input"]["round3_sha256"])
+    )
+    pending = {row["review_id"]: row for row in DOC["rows"]}
+    rows = {row["review_id"]: row for row in ROUND4["rows"]}
+    assert set(rows) == set(pending)
+    expected = {"innate_break": "reject", "damage_return": "accept", "invisibility": "reject"}
+    for review_id, row in rows.items():
+        source = pending[review_id]
+        if source["status"] == "resolved_ai_agreement":
+            assert row["final_decision"] == "accept" and row["basis"] == "ai_agreement"
+        elif source["question"] == "summons":
+            wisp = row["subject"] == "keeper_of_the_light_will_o_wisp"
+            assert row["final_decision"] == ("accept" if wisp else "reject")
+        else:
+            assert row["final_decision"] == expected[source["question"]]
+            assert row["basis"] == "user_ruling"
+
+
+def test_round4_totals_follow_from_round1():
+    round1 = jsonl(ROOT / ROUND4["input"]["claude_round1"])
+    final = {row["review_id"]: row["decision"] for row in round1}
+    final.update({row["review_id"]: row["final_decision"] for row in ROUND4["rows"]})
+    counts = {}
+    for decision in final.values():
+        counts[decision] = counts.get(decision, 0) + 1
+    assert counts == ROUND4["totals_after"] == {"accept": 1271, "reject": 280}
