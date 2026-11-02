@@ -45,3 +45,4 @@
 | U39 | [复盘报告只做一份；“被抓”按敌方离线、多打少定义；只评1号位或5号位一个英雄](2026-11-01-report-gank-subject.md) |
 | U40 | [MK-T3第3轮4个问题的裁定](2026-11-02-round3-rulings.md) |
 | U41 | [另外24个规则类先天也按不能被破坏处理](2026-11-02-innate-break-class.md) |
+| U42 | [U5抽查剩余部分交给Codex](2026-11-02-spot-check-to-codex.md) |

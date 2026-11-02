@@ -104,3 +104,26 @@ def test_round5_flips_exactly_the_confirmed_innate_proposal():
     for decision in final.values():
         counts[decision] = counts.get(decision, 0) + 1
     assert counts == ROUND5["totals_after"] == {"accept": 1247, "reject": 304}
+
+
+SPOT = REVIEWS / "u5-spot-check"
+
+
+def test_codex_spot_check_queue_is_sample_minus_user_marks_and_codex_p1():
+    queue = json.loads((SPOT / "codex-queue.json").read_text(encoding="utf-8"))
+    for name, digest in queue["input_sha256"].items():
+        assert hashlib.sha256((REVIEWS / name).read_bytes()).hexdigest() == digest
+    sample = json.loads(
+        (REVIEWS / "claude-round-001/spot-check-sample.json").read_text(encoding="utf-8")
+    )
+    marked = json.loads((SPOT / "user-verdicts-2026-11-02.json").read_text(encoding="utf-8"))
+    codex = {row["review_id"] for row in jsonl(REVIEWS / "codex-round-002/codex-review.jsonl")}
+    expected = [
+        group["id"]
+        for group in sample["groups"]
+        if group["id"] not in marked["verdicts"] and group["id"] not in codex
+    ]
+    assert [group["review_id"] for group in queue["groups"]] == expected
+    assert len(expected) == 387 and len(marked["verdicts"]) == 93
+    assert set(marked["verdicts"]) <= {group["id"] for group in sample["groups"]}
+    assert all(group["current_decision"] in ("accept", "reject") for group in queue["groups"])
