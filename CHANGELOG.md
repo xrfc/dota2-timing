@@ -2,7 +2,7 @@
 
 ## 2026-11-02 U42：U5抽查剩余部分交给Codex
 
-- 导出私有抽查页用户标记快照（93组：对85、不确定5、错3），新增`knowledge/mechanics/reviews/u5-spot-check/`与剩余387组队列（当前结论叠加U40/U41）。
+- 导出私有抽查页用户标记快照（93组：对85、不确定5、错3），新增`knowledge/mechanics/reviews/u5-spot-check/`与剩余379组队列（当前结论叠加U40/U41；另8组只由已失效升级文字支持，单列不复核）。
 - 新增交接`docs/handoff/mk-codex-spot-check.md`（含给Codex的提示词）与决策记录；`tests/test_mechanics_round3.py`新增1项校验队列构成。
 - 计划§2/§7、文档索引、决策索引同步。
 

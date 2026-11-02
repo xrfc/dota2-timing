@@ -118,12 +118,21 @@ def test_codex_spot_check_queue_is_sample_minus_user_marks_and_codex_p1():
     )
     marked = json.loads((SPOT / "user-verdicts-2026-11-02.json").read_text(encoding="utf-8"))
     codex = {row["review_id"] for row in jsonl(REVIEWS / "codex-round-002/codex-review.jsonl")}
-    expected = [
+    current = {
+        line.split(",", 1)[0]
+        for line in (ROOT / "knowledge/mechanics/extractions/v3/review.csv")
+        .read_text(encoding="utf-8")
+        .splitlines()[1:]
+    }
+    remaining = [
         group["id"]
         for group in sample["groups"]
         if group["id"] not in marked["verdicts"] and group["id"] not in codex
     ]
+    expected = [review_id for review_id in remaining if review_id in current]
+    excluded = [review_id for review_id in remaining if review_id not in current]
     assert [group["review_id"] for group in queue["groups"]] == expected
-    assert len(expected) == 387 and len(marked["verdicts"]) == 93
+    assert [group["review_id"] for group in queue["excluded_not_in_v3"]] == excluded
+    assert (len(expected), len(excluded), len(marked["verdicts"])) == (379, 8, 93)
     assert set(marked["verdicts"]) <= {group["id"] for group in sample["groups"]}
     assert all(group["current_decision"] in ("accept", "reject") for group in queue["groups"])

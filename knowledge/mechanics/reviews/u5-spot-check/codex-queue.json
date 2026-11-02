@@ -2,14 +2,15 @@
  "schema": "mechanics-spot-check-queue/1",
  "created": "2026-11-02",
  "decision_ref": "docs/decisions/2026-11-02-spot-check-to-codex.md",
- "method_zh": "U5抽查样本497组，去掉用户已标记的93组，再去掉Codex第2轮P1已复核的17组；current_decision为第1轮叠加第4、5轮（U40、U41）后的当前结论。第2版新增14组的结论取自claude-round-002/new-in-v2.jsonl。",
+ "method_zh": "U5抽查样本497组，去掉用户已标记的93组，再去掉Codex第2轮P1已复核的17组，再去掉不在v3当前证据（review.csv）中的8组（只由已失效升级文字支持，列在excluded_not_in_v3）；current_decision为第1轮叠加第4、5轮（U40、U41）后的当前结论。第2版新增14组的结论取自claude-round-002/new-in-v2.jsonl。",
  "input_sha256": {
   "claude-round-001/spot-check-sample.json": "3941eb224d684344b63efe370c50c4c12d24f943e76ad11def5bc1d4bccff047",
   "claude-round-001/claude-review.jsonl": "8348741b3487043351c68733b0b09062bef40ba6189062b41bac491b9fc282dc",
   "claude-round-004/resolution.json": "08208603355d2e4996394191486b1e9318f67b096e2ec8491dc064e627911a8a",
   "claude-round-005/resolution.json": "83e8dde274adb45bfb2cdc987e40dfd4fec018e3108d7bf0cda3fb1c26d97a6a",
   "codex-round-002/codex-review.jsonl": "9ff7ac5a09ac0e4c8fb6f9b0f2a0fd195326f7ac6f3095336223ee21315e98da",
-  "claude-round-002/new-in-v2.jsonl": "785eb0e1d057030212ad50c864dbfe5b46d9085a4be570760f359da3d6292269"
+  "claude-round-002/new-in-v2.jsonl": "785eb0e1d057030212ad50c864dbfe5b46d9085a4be570760f359da3d6292269",
+  "../extractions/v3/review.csv": "23bdacbff64fcf43d1c69e2bcdb9b194b8c37051c581899196a00cfdc69e446e"
  },
  "groups": [
   {
@@ -20,15 +21,6 @@
    "source": "round1",
    "current_decision": "accept",
    "claude_note_zh": "A杖附注：鬼火对范围内所有敌人施加不打断的牵引"
-  },
-  {
-   "review_id": "f3baad5a69dc93bfbb4d",
-   "mechanism": "displace_other",
-   "mechanism_zh": "位移他人",
-   "subject_zh": "玛尔斯·护身甲盾",
-   "source": "round1",
-   "current_decision": "accept",
-   "claude_note_zh": "A杖：护身甲盾的士兵攻击击退并减速接近的敌人"
   },
   {
    "review_id": "1abdd5c435a577eb104b",
@@ -364,15 +356,6 @@
    "claude_note_zh": "对敌方单位施加减速（原文直接写slow/减速，作用于敌人）"
   },
   {
-   "review_id": "8869f8e6c674f6129c6e",
-   "mechanism": "slow",
-   "mechanism_zh": "减速",
-   "subject_zh": "雷泽·静电连接",
-   "source": "round1",
-   "current_decision": "accept",
-   "claude_note_zh": "魔晶：静电连接按偷取的伤害减速目标"
-  },
-  {
    "review_id": "8e00fcf5de33c634c06a",
    "mechanism": "slow",
    "mechanism_zh": "减速",
@@ -548,15 +531,6 @@
    "mechanism": "slow",
    "mechanism_zh": "减速",
    "subject_zh": "巨魔战将·旋风飞斧（远程）",
-   "source": "round1",
-   "current_decision": "accept",
-   "claude_note_zh": "对敌方单位施加减速（原文直接写slow/减速，作用于敌人）"
-  },
-  {
-   "review_id": "d592310bc9358fb8a385",
-   "mechanism": "slow",
-   "mechanism_zh": "减速",
-   "subject_zh": "玛尔斯·护身甲盾",
    "source": "round1",
    "current_decision": "accept",
    "claude_note_zh": "对敌方单位施加减速（原文直接写slow/减速，作用于敌人）"
@@ -1624,15 +1598,6 @@
    "claude_note_zh": "主动：被支配的单位获得+12生命恢复等加成（作用于被控单位）"
   },
   {
-   "review_id": "88c4af135854022b3484",
-   "mechanism": "healing",
-   "mechanism_zh": "治疗/回复",
-   "subject_zh": "独行德鲁伊·灵魂链接",
-   "source": "round1",
-   "current_decision": "accept",
-   "claude_note_zh": "A杖：一方造成的伤害会治疗另一方（德鲁伊与熊灵互相）"
-  },
-  {
    "review_id": "8c9783d9ca7a0ad37a57",
    "mechanism": "healing",
    "mechanism_zh": "治疗/回复",
@@ -2191,15 +2156,6 @@
    "claude_note_zh": "传送到目标单位身后并攻击"
   },
   {
-   "review_id": "642379011eb13f6d0c88",
-   "mechanism": "self_mobility",
-   "mechanism_zh": "自身位移",
-   "subject_zh": "裂魂人·暗影冲刺",
-   "source": "round1",
-   "current_decision": "accept",
-   "claude_note_zh": "魔晶：提升暗影冲刺的移动速度加成（暗影冲刺本身是冲刺位移）"
-  },
-  {
    "review_id": "77d43286112ec38574d2",
    "mechanism": "self_mobility",
    "mechanism_zh": "自身位移",
@@ -2632,15 +2588,6 @@
    "claude_note_zh": "被动给予玛西吸血；对友军施放时也提供吸血"
   },
   {
-   "review_id": "4949f6b9dfe2863b2ff0",
-   "mechanism": "lifesteal",
-   "mechanism_zh": "吸血",
-   "subject_zh": "琼英碧灵·越界",
-   "source": "round1",
-   "current_decision": "accept",
-   "claude_note_zh": "魔晶：越界期间获得技能吸血"
-  },
-  {
    "review_id": "847cbcb56409d5684dfc",
    "mechanism": "lifesteal",
    "mechanism_zh": "吸血",
@@ -2810,15 +2757,6 @@
    "source": "round1",
    "current_decision": "accept",
    "claude_note_zh": "魔晶：战吼变为不可驱散并提供物理伤害护盾"
-  },
-  {
-   "review_id": "46acc3dfe5b9f414eabe",
-   "mechanism": "damage_block",
-   "mechanism_zh": "护盾/伤害吸收/减伤",
-   "subject_zh": "暗影萨满·禽戏",
-   "source": "round1",
-   "current_decision": "accept",
-   "claude_note_zh": "魔晶：禽戏的伤害减免时间延长，并在触发时无敌"
   },
   {
    "review_id": "54a8041616495ab6f4ad",
@@ -3134,15 +3072,6 @@
    "source": "round1",
    "current_decision": "accept",
    "claude_note_zh": "催眠敌方单位，强制其走向两者之间的一点并吸取魔法"
-  },
-  {
-   "review_id": "c7f5d9631bd3e6bee8c6",
-   "mechanism": "forced_action",
-   "mechanism_zh": "强制行为",
-   "subject_zh": "独行德鲁伊·灵魂链接",
-   "source": "round1",
-   "current_decision": "reject",
-   "claude_note_zh": "熊灵在变形期间被恐惧是对己方熊灵的限制（除非熊灵有A杖），不是对敌强制行为"
   },
   {
    "review_id": "eb5e8073ab20b42d6e5c",
@@ -3494,6 +3423,56 @@
    "source": "v2new",
    "current_decision": "accept",
    "claude_note_zh": "附身敌方或中立野怪时可以控制其移动与攻击；用户U35"
+  }
+ ],
+ "excluded_not_in_v3": [
+  {
+   "review_id": "f3baad5a69dc93bfbb4d",
+   "subject_zh": "玛尔斯·护身甲盾",
+   "mechanism": "displace_other",
+   "reason": "stale_upgrade_text：只由已失效的A杖/魔晶文字支持，v3已隔离，不做语义复核"
+  },
+  {
+   "review_id": "8869f8e6c674f6129c6e",
+   "subject_zh": "雷泽·静电连接",
+   "mechanism": "slow",
+   "reason": "stale_upgrade_text：只由已失效的A杖/魔晶文字支持，v3已隔离，不做语义复核"
+  },
+  {
+   "review_id": "d592310bc9358fb8a385",
+   "subject_zh": "玛尔斯·护身甲盾",
+   "mechanism": "slow",
+   "reason": "stale_upgrade_text：只由已失效的A杖/魔晶文字支持，v3已隔离，不做语义复核"
+  },
+  {
+   "review_id": "88c4af135854022b3484",
+   "subject_zh": "独行德鲁伊·灵魂链接",
+   "mechanism": "healing",
+   "reason": "stale_upgrade_text：只由已失效的A杖/魔晶文字支持，v3已隔离，不做语义复核"
+  },
+  {
+   "review_id": "642379011eb13f6d0c88",
+   "subject_zh": "裂魂人·暗影冲刺",
+   "mechanism": "self_mobility",
+   "reason": "stale_upgrade_text：只由已失效的A杖/魔晶文字支持，v3已隔离，不做语义复核"
+  },
+  {
+   "review_id": "4949f6b9dfe2863b2ff0",
+   "subject_zh": "琼英碧灵·越界",
+   "mechanism": "lifesteal",
+   "reason": "stale_upgrade_text：只由已失效的A杖/魔晶文字支持，v3已隔离，不做语义复核"
+  },
+  {
+   "review_id": "46acc3dfe5b9f414eabe",
+   "subject_zh": "暗影萨满·禽戏",
+   "mechanism": "damage_block",
+   "reason": "stale_upgrade_text：只由已失效的A杖/魔晶文字支持，v3已隔离，不做语义复核"
+  },
+  {
+   "review_id": "c7f5d9631bd3e6bee8c6",
+   "subject_zh": "独行德鲁伊·灵魂链接",
+   "mechanism": "forced_action",
+   "reason": "stale_upgrade_text：只由已失效的A杖/魔晶文字支持，v3已隔离，不做语义复核"
   }
  ]
 }

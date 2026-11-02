@@ -1,4 +1,4 @@
-# 交接：请Codex完成MK-T3的U5抽查剩余387组（U42）
+# 交接：请Codex完成MK-T3的U5抽查剩余379组（U42）
 
 用户已抽查93组（对85、不确定5、错3），决定剩余部分交给Codex（[U42](../decisions/2026-11-02-spot-check-to-codex.md)）。这是AI交叉复核，结果与用户抽查分开记录。
 
@@ -11,7 +11,7 @@
 
 ## 2. 复核对象
 
-- `knowledge/mechanics/reviews/u5-spot-check/codex-queue.json`的387组。`current_decision`是当前结论（接受386、排除1），复核以它为准，而不是第1轮原始标签。
+- `knowledge/mechanics/reviews/u5-spot-check/codex-queue.json`的379组。`current_decision`是当前结论（接受379、排除0）；`excluded_not_in_v3`的8组只由已失效升级文字支持，**不要做语义复核**，复核以它为准，而不是第1轮原始标签。
 - 每组的完整证据、fact_id与原文指针在`knowledge/mechanics/cross-review/v1/cases.jsonl`（第2版新增14组在`knowledge/mechanics/extractions/v2/`）。
 - 主要机制：减速60、单体指向51、治疗/回复36、眩晕30、受破坏影响23、自身位移14、自身回蓝/吸蓝14、施加弱驱散13，其余较少。
 
@@ -27,9 +27,9 @@
 
 - 在`codex-temp`工作（U25），从最新main开始；结果写新目录`knowledge/mechanics/reviews/codex-round-003/`。
 - 每组：`review_id`、Codex结论（accept/reject/uncertain）、解释、条件、理由、引用的fact_id、与`current_decision`是否一致、不一致原因、是否需用户裁定。
-- README写清：一致率（只对这387组）、两类错误各多少、需用户裁定清单。不要和用户的93组抽查合并成一个一致率。
+- README写清：一致率（只对这379组）、两类错误各多少、需用户裁定清单。不要和用户的93组抽查合并成一个一致率。
 - 不授权合并、推送main、训练或联网采集。
 
 ## 5. 给Codex的提示词（用户可直接粘贴）
 
-> 请完成MK-T3的U5抽查剩余387组（U42，AI交叉复核）。先读`docs/handoff/mk-codex-spot-check.md`和`AGENTS.md`；队列在`knowledge/mechanics/reviews/u5-spot-check/codex-queue.json`，以其中`current_decision`为准。逐组读完整原文，结果写到`knowledge/mechanics/reviews/codex-round-003/`，在`codex-temp`分支提交并开PR，不要合并。
+> 请完成MK-T3的U5抽查剩余379组（U42，AI交叉复核）。先读`docs/handoff/mk-codex-spot-check.md`和`AGENTS.md`；队列在`knowledge/mechanics/reviews/u5-spot-check/codex-queue.json`，以其中`current_decision`为准。逐组读完整原文，结果写到`knowledge/mechanics/reviews/codex-round-003/`，在`codex-temp`分支提交并开PR，不要合并。
