@@ -71,3 +71,6 @@
 | U65 | [升级只改数值不记机制；第7轮裁定](2026-11-04-round7-rulings.md) |
 | U66 | [18组升级移到数值；版本认证放到MK-T6](2026-11-05-upgrade-numeric-final.md) |
 | U67 | [结束MK-T3，进入MK-T4](2026-11-05-t3-done.md) |
+| U68 | [MK-T4规则第1轮意见](2026-11-05-t4-rules-round1.md) |
+| U69 | [MK-T4规则第2轮意见](2026-11-05-t4-rules-round2.md) |
+| U70 | [MK-T4规则第3轮；词表v7、事实v7、规则v1](2026-11-05-t4-rules-final.md) |

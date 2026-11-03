@@ -1,8 +1,25 @@
 # 变更记录
 
+## 2026-11-05 收尾
+
+- 同步入口文档、知识框架§8、架构、机制README和计划§7；新增`docs/handoff/mk-handoff-2026-11-05.md`。
+
+## 2026-11-05 U70：规则v1与事实v7
+
+- 新增`vocabulary-v7.json`、`skill-notes-v1.json`、`rules-v1.json`、`extractions/v7/`、`data.mechanics_facts_v7`、`data.mechanics_interactions`、`scripts/build_mechanics_facts_v7.py`及测试。v6测试改为校验冻结哈希。
+
+## 2026-11-05 U69：MK-T4规则第2轮
+
+- 规则草稿改为第3版。决策记录`docs/decisions/2026-11-05-t4-rules-round2.md`。事实补充待下一版一起写入。
+
+## 2026-11-05 U68：MK-T4规则第1轮
+
+- 规则草稿改为第2版，记录用户意见和末日的事实缺口。决策记录`docs/decisions/2026-11-05-t4-rules-round1.md`。
+
 ## 2026-11-05 U67：结束MK-T3
 
 - v6成为MK-T4、T5的输入，当前任务改为MK-T4。
+- 新增`docs/handoff/mk-t4-rules-draft.md`第1版规则草稿，并记录黑皇杖、回光返照两处事实缺口，待用户确认。
 
 ## 2026-11-05 升级只改数值复查
 

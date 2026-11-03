@@ -2,7 +2,6 @@
 
 import hashlib
 import json
-import sys
 from pathlib import Path
 
 import pytest
@@ -12,9 +11,6 @@ from dota_items.data.mechanics_facts_v4 import DEFERRED, RETIRED
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "knowledge/mechanics/extractions/v6"
-sys.path.insert(0, str(ROOT / "scripts"))
-
-import build_mechanics_facts_v6 as builder  # noqa: E402
 
 
 @pytest.fixture(scope="module")
@@ -30,11 +26,6 @@ def test_package_matches_manifest():
     manifest = json.loads((PACKAGE / "manifest.json").read_text())
     for name, expected in manifest["output_sha256"].items():
         assert hashlib.sha256((PACKAGE / name).read_bytes()).hexdigest() == expected
-
-
-def test_package_replays_from_current_inputs(tmp_path, doc):
-    fresh = builder.run(tmp_path / "v6")
-    assert json.dumps(fresh, sort_keys=True) == json.dumps(doc, sort_keys=True)
 
 
 def test_vocabulary_v6_loads_with_additions():

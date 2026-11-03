@@ -1,0 +1,309 @@
+{
+ "schema": "mechanics-rules/1",
+ "version": "v1-2026-11-05",
+ "status": "user_confirmed_rules",
+ "note": "MK-T4机制规则。写法由助手整理，核心来自用户决定；不说“该出”。",
+ "vocabulary": "knowledge/mechanics/vocabulary-v7.json",
+ "rules": [
+  {
+   "id": "R01",
+   "zh": "弱驱散去掉dispellable=2的效果，对1、3无效",
+   "relation": "removes",
+   "source_mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "target_enum": {
+    "dispellable": [
+     2
+    ]
+   },
+   "decision": "U30,U68"
+  },
+  {
+   "id": "R02",
+   "zh": "强驱散去掉dispellable=1、2的效果，对3无效",
+   "relation": "removes",
+   "source_mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "target_enum": {
+    "dispellable": [
+     1,
+     2
+    ]
+   },
+   "decision": "U30,U68"
+  },
+  {
+   "id": "R03",
+   "zh": "否决坠饰持续驱散，目标身上的推推、吹风无效",
+   "relation": "blocks",
+   "source_subjects": [
+    "nullifier"
+   ],
+   "target_subjects": [
+    "force_staff",
+    "hurricane_pike",
+    "cyclone",
+    "wind_waker"
+   ],
+   "decision": "U51,U68",
+   "note": "推推、吹风对应的装备由助手列出"
+  },
+  {
+   "id": "R04",
+   "zh": "破坏使IsBreakable=1的效果失效，部分破坏按附注",
+   "relation": "disables",
+   "source_mechanisms": [
+    "applies_break"
+   ],
+   "target_mechanisms": [
+    "break_sensitive"
+   ],
+   "decision": "U48,U68"
+  },
+  {
+   "id": "R05",
+   "zh": "怕破坏的英雄优先考虑破坏来源",
+   "relation": "counters",
+   "source_mechanisms": [
+    "applies_break"
+   ],
+   "target_subjects": [
+    "bristleback_bristleback",
+    "enchantress_untouchable",
+    "huskar_berserkers_blood",
+    "phantom_assassin_coup_de_grace",
+    "phantom_assassin_immaterial",
+    "shredder_reactive_armor",
+    "tidehunter_kraken_shell"
+   ],
+   "decision": "U35,U68",
+   "note": "目标取自break-vulnerable-heroes-v1.json的key_passives"
+  },
+  {
+   "id": "R06",
+   "zh": "真视、显形克制隐身；诡计之雾真视也看不破",
+   "relation": "counters",
+   "source_mechanisms": [
+    "true_sight",
+    "reveal"
+   ],
+   "target_mechanisms": [
+    "invisibility"
+   ],
+   "target_exclude": [
+    "smoke_of_deceit"
+   ],
+   "decision": "U59,U68"
+  },
+  {
+   "id": "R07",
+   "zh": "克敌机先克制闪避，不克制致盲",
+   "relation": "counters",
+   "source_mechanisms": [
+    "pierce_evasion"
+   ],
+   "target_mechanisms": [
+    "evasion"
+   ],
+   "decision": "U30,U68"
+  },
+  {
+   "id": "R08",
+   "zh": "克制判断看敌方装备：赛前按对方常规会出，游戏中按已看到对方出了",
+   "relation": "context",
+   "decision": "U22,U70",
+   "parameters": {
+    "pregame": "expected_common",
+    "ingame": "seen"
+   },
+   "note": "常规会出的门槛在T5读出装数据时定"
+  },
+  {
+   "id": "R09",
+   "zh": "减益免疫挡住不能穿透的效果，能穿透的仍生效",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "debuff_immunity"
+   ],
+   "target_exempt_mechanisms": [
+    "pierces_debuff_immunity"
+   ],
+   "decision": "U28,U68",
+   "note": "目标是所有不能穿透的效果，不逐个列出"
+  },
+  {
+   "id": "R10",
+   "zh": "碎颅锤重击可穿透减益免疫；对能强驱散自解控的英雄，可解控后再控",
+   "relation": "counters",
+   "source_subjects": [
+    "basher",
+    "abyssal_blade"
+   ],
+   "target_mechanisms": [
+    "debuff_immunity"
+   ],
+   "target_subjects": [
+    "ursa_enrage"
+   ],
+   "decision": "U28,U68"
+  },
+  {
+   "id": "R11",
+   "zh": "状态抗性缩短控制和减益时长，减速抗性降低减速",
+   "relation": "reduces",
+   "source_mechanisms": [
+    "status_resistance",
+    "slow_resistance"
+   ],
+   "target_mechanisms": [
+    "stun",
+    "silence",
+    "hex",
+    "root",
+    "disarm",
+    "sleep",
+    "forced_action",
+    "slow"
+   ],
+   "decision": "U29,U68",
+   "note": "“控制多”的门槛不在这里定"
+  },
+  {
+   "id": "R12",
+   "zh": "烧蓝克制没蓝放不了技能就很脆弱的英雄，不按蓝耗高低",
+   "relation": "counters",
+   "source_mechanisms": [
+    "mana_burn"
+   ],
+   "decision": "U68",
+   "pending": "“脆弱”怎么判断，T5定"
+  },
+  {
+   "id": "R13",
+   "zh": "格挡和反弹分开看，不能互推；只对单体指向技能",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "spell_block",
+    "spell_reflect"
+   ],
+   "target_mechanisms": [
+    "unit_target_spell"
+   ],
+   "decision": "U31,U68",
+   "pending": "例外清单，T5读附注"
+  },
+  {
+   "id": "R14",
+   "zh": "治疗削减克制任何形式的生命恢复；提升生命上限不受影响",
+   "relation": "counters",
+   "source_mechanisms": [
+    "heal_reduction"
+   ],
+   "target_mechanisms": [
+    "healing",
+    "lifesteal"
+   ],
+   "target_exclude_note_kinds": [
+    "max_hp_gain"
+   ],
+   "decision": "U68,U69"
+  },
+  {
+   "id": "R15",
+   "zh": "致盲和闪避克制依赖普攻的英雄：看常规出装是否以属性和攻速为主，一号位默认算",
+   "relation": "counters",
+   "source_mechanisms": [
+    "blind",
+    "evasion"
+   ],
+   "decision": "U68",
+   "pending": "出装数据在T5读取"
+  },
+  {
+   "id": "R16",
+   "zh": "虚无分对敌和对己：对敌是控制和打输出，对己是防物理保命，代价都是多受魔法伤害",
+   "relation": "context",
+   "source_mechanisms": [
+    "ethereal"
+   ],
+   "decision": "U57,U69"
+  },
+  {
+   "id": "R17",
+   "zh": "打断和控制克制持续施法",
+   "relation": "counters",
+   "source_mechanisms": [
+    "channel_interrupt",
+    "stun",
+    "silence",
+    "hex",
+    "sleep",
+    "cyclone_banish",
+    "forced_action"
+   ],
+   "target_mechanisms": [
+    "channeled"
+   ],
+   "decision": "U69",
+   "note": "哪些控制算打断由助手列出"
+  },
+  {
+   "id": "R18",
+   "zh": "定身阻止带ROOT_DISABLES字段的位移，限制位移另算",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "root",
+    "mobility_lock"
+   ],
+   "target_mechanisms": [
+    "self_mobility"
+   ],
+   "target_game_field": "ROOT_DISABLES",
+   "decision": "U68"
+  },
+  {
+   "id": "R19",
+   "zh": "减护甲放大物理，减魔抗放大魔法，只记方向，不算强度",
+   "relation": "amplifies",
+   "source_mechanisms": [
+    "armor_reduction",
+    "magic_resist_reduction"
+   ],
+   "target_mechanisms": [
+    "physical_damage",
+    "magical_damage"
+   ],
+   "pairs": [
+    [
+     "armor_reduction",
+     "physical_damage"
+    ],
+    [
+     "magic_resist_reduction",
+     "magical_damage"
+    ]
+   ],
+   "decision": "U69",
+   "note": "只记方向：减护甲对物理，减魔抗对魔法；不列目标技能"
+  },
+  {
+   "id": "R20",
+   "zh": "分裂溅射和回音击类技能克制幻象和召唤物；伤害光环待定",
+   "relation": "counters",
+   "source_mechanisms": [
+    "cleave"
+   ],
+   "source_note_kinds": [
+    "scales_with_enemy_units"
+   ],
+   "target_mechanisms": [
+    "illusions",
+    "summons"
+   ],
+   "decision": "U68,U69,U70",
+   "pending": "哪些光环算（只有打敌方的才可能算）"
+  }
+ ]
+}
