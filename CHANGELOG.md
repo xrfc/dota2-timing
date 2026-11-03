@@ -1,5 +1,89 @@
 # 变更记录
 
+## 2026-11-03 U53：远端范围
+
+- 用户确认除demo和相关对局解析文件外都可以进远端，决策记录`docs/decisions/2026-11-03-remote-scope.md`。
+
+## 2026-11-03 U52：第4轮裁定完成
+
+- 禽戏1秒无敌且与魔晶无关；枷锁记眩晕；其余9组按建议。决策记录`docs/decisions/2026-11-03-round4-final.md`。`user-rulings-001.jsonl`共120行。
+- 更正：第4轮打包未去掉已隔离的过时升级文字，影响禽戏2组。词表和证据待下一版。
+
+## 2026-11-03 U51：第4轮裁定
+
+- 用户裁定退出装备不收及J块游戏知识题。决策记录`docs/decisions/2026-11-03-round4-rulings.md`。
+- 新增`knowledge/mechanics/retired-items-v1.json`、`scripts/build_retired_items.py`和`neutral_items.txt`快照。更正：v3证据中按退出标记的是11组5个物品，不是此前说的14组7个，奶酪和树之祭祀（共享）当前可得。
+- `user-rulings-001.jsonl`改1行、加22行，共109行。词表和证据待下一版。
+
+## 2026-11-03 U50：回蓝倍率与治疗增强
+
+- 回蓝倍率算自身回蓝，治疗增强不算治疗。决策记录`docs/decisions/2026-11-03-mana-multiplier-heal-amp.md`，`user-rulings-001.jsonl`加5行，共87行。
+
+## 2026-11-03 U49：排查疑点复核
+
+- 用户选方案1，并定属性回蓝算自身回蓝。决策记录`docs/decisions/2026-11-03-audit-review-mana-attr.md`。
+- 新增`knowledge/mechanics/reviews/codex-round-004/`：175组，同标签136组，分歧39组，都不确定9组。48组写入裁定汇总J块。结果未写入证据或词表。
+- 更正：110组装备候选中46组疑似已不在当前游戏，受影响的10组待决项建议先搁置。
+
+## 2026-11-03 U48：破坏规则与其他机制排查
+
+- 部分破坏附注记入`break-check-001/break-conditions.jsonl`；“能否被破坏”直接用`IsBreakable`。决策记录`docs/decisions/2026-11-03-isbreakable-and-audit.md`。
+- 新增`scripts/audit_mechanics_against_game_files.py`和`game-files-audit-001/`，抓取`items.txt`。5个接口字段733个技能全部一致；持续施法、单体指向各有少量差异；字段名候选待复核。未改判断。
+
+## 2026-11-03 U47：可被破坏差异裁定
+
+- 用户确认37组无法破坏、贪魔的贪婪可破坏、16个漏记技能可破坏。决策记录`docs/decisions/2026-11-03-break-rulings.md`。
+- `user-rulings-001.jsonl`改1行、加37行，共82行；16个技能记在`break-check-001/confirmed-missing-groups.jsonl`；裁定后结果在`break-check-001/after-u47/`。词表和证据版本待下一版。
+
+## 2026-11-02 U46：可被破坏对照游戏文件
+
+- 用户授权抓取公开镜像固定提交的游戏文件，新增`knowledge/game-files/`、`scripts/fetch_game_files_snapshot.py`、`scripts/check_break_against_game_files.py`及测试，脚本已登记架构。
+- 180组中一致142组；37组接受但无`IsBreakable`，1组排除但有标记；16个有标记的技能没有任何一组；26组有部分破坏类附注。未改任何判断，等用户裁定。见`knowledge/mechanics/reviews/break-check-001/README.md`。
+
+## 2026-11-02 U45：光之守卫魔晶保留治疗
+
+- 用户决定魔晶组保留治疗，注明是增强治疗量。决策记录`docs/decisions/2026-11-02-kotl-shard-heal.md`，`user-rulings-001.jsonl`共45行。第3轮24组分歧全部裁定。
+- 试探公开游戏文件镜像：H1的14组都有`IsBreakable=1`，美杜莎魔法盾没有；结果未入库，见裁定汇总。
+
+## 2026-11-02 U44：可被破坏14组与刃甲、风之杖
+
+- 用户裁定H1的14组都能被破坏，刃甲、风之杖接受。决策记录`docs/decisions/2026-11-02-round3-break-h3.md`，16组追加到`user-rulings-001.jsonl`，共44行。
+- 第3轮24组分歧只剩光之守卫·灵魂形态（魔晶）／治疗待定。
+
+## 2026-11-02 U43：召唤物规则与勇气之霎改判
+
+- 用户确认召唤物规则“能被选中、控制或攻击的独立单位才算”，烈焰之军、恶魔召唤接受；勇气之霎／反伤由U42的排除改为附条件接受；中文名采用官方“克敌机先”。决策记录`docs/decisions/2026-11-02-summons-rule-courage.md`。
+- `user-rulings-001.jsonl`改1行、加2行，共28行。裁定汇总H块列出H1、H3逐组内容。词表改动待下一版，历史复核包不改。
+
+## 2026-11-02 U42：Codex第3轮7组游戏知识裁定
+
+- 用户裁定H2块：6组接受（迅风斩、卫士胫甲、净化药水、圣洁吊坠、死亡守卫、虚无投影），勇气之霎／反伤排除（随后由U43改判）。决策记录`docs/decisions/2026-11-02-round3-game-knowledge.md`，7组追加到`user-rulings-001.jsonl`。
+- H1（14组）、H3（3组）和召唤物通用规则仍待裁定。不改`claude-review.jsonl`和词表。
+
+## 2026-11-02 U41：Codex第3轮复核U5剩余组
+
+- 用户决定U5未标且Codex未审的组先交Codex只读复核，用户看分歧；Q13定为两线同一页面。决策记录`docs/decisions/2026-11-02-codex-spotcheck-q13.md`，计划移除Q13待决行。
+- 新增`knowledge/mechanics/reviews/codex-round-003/`：387组中8组因过时升级文字未送审，实审379组；输入不含Claude判断；Codex接受355、不确定21、排除3。24组分歧写入裁定汇总H块。
+- 发现“能被攻击摧毁才算召唤物”与死亡守卫（无敌）矛盾，改提新规则待用户确认。不改`claude-review.jsonl`和词表。
+
+## 2026-11-02 U40：Codex第2轮分歧裁定完成
+
+- 用户接受A、B、C、E块建议：9组规则类先天不记入受破坏影响；钢毛后背、净化锚击附条件算反伤；感应地雷不算隐身；竞技场、回身踢、戾影接受。决策记录`docs/decisions/2026-11-02-round2-rulings.md`，15组追加到`user-rulings-001.jsonl`。
+- 统计U5抽查：未标404组中17组Codex已审，387组未审；已标93组仅12组属于P2、P3。抽查方式待用户决定。
+- 词表未改，待下一版；`claude-review.jsonl`未改。
+
+## 2026-11-02 U39：召唤物边界
+
+- 用户裁定：灵光的幻火可被攻击摧毁，算召唤物；毒蛇撕咬、闪光幽魂、唤魂不算。决策记录`docs/decisions/2026-11-02-summons-boundary.md`。
+- 新增`knowledge/mechanics/reviews/user-rulings-001.jsonl`记录这4组。`claude-review.jsonl`未改，因为Codex第2轮manifest绑定其哈希；词表也未改，等用户确认是否定为通用规则。
+
+## 2026-11-02 待用户裁定汇总
+
+- 新增`docs/handoff/user-rulings-2026-11-02.md`：Codex第2轮19处分歧按规则分组并附原文，另列U5抽查进度、计划待决项与遗留事项。助手建议均标明，不是用户决定。
+- 回读U5抽查页：已标93/497（对85、不确定5、错3），较上次新增17组全部为“对”，无需改判。发现9组先天争议中5组用户已标“对”，Codex第2轮未使用这些标记。
+- 发现：词表v3中“只被标记为反射伤害不算”的备注标注U33，但U33原文无此句；v0.3.0、v0.4.0标签本地与远端均不存在。只记录，未改动。
+- 不改变：复核结果、词表、抽取证据、冻结产物。
+
 ## 2026-11-01 U38：两线不分主次、先做完MK、采集内容先定
 
 - 决策记录`docs/decisions/2026-11-01-tracks-equal-mk-first.md`：Q11（无主次）、Q12（先做完MK）已决；Q14改为先确定采集内容规格；Q13已向用户解释复盘报告含义，待答。

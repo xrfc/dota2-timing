@@ -1,0 +1,1714 @@
+[
+{
+"review_id": "f2136996ac190ba19044",
+"subject": "omniknight_hammer_of_purity",
+"subject_zh": "全能骑士·纯洁之锤",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"137439088648\"",
+"value": "137439088648",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/55/abilities/2/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/55/abilities/2/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Hammer of Purity",
+"name_zh": "纯洁之锤",
+"description_en": "Omniknight imbues his hammer with holy power, causing his attack to have increased range, deal pure damage based on a percentage of his base damage and slow his target for a short duration. Omniknight heals for %heal_pct%%% of the damage dealt over %heal_duration%s.",
+"description_zh": "全能骑士将神圣之力注入他的战锤，使他的攻击距离提升，会根据基础攻击力的一定百分比造成纯粹伤害，并且使目标短时间内被减速。全能骑士会在%heal_duration%秒内回复%heal_pct%%%造成的伤害。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "137439088648",
+"damage": 4,
+"dispellable": 2,
+"immunity": 3,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "fcfd1d7cfb96f026d32f",
+"subject": "arc_warden_flux",
+"subject_zh": "天穹守望者·乱流",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/110/abilities/0/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/110/abilities/0/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Flux",
+"name_zh": "乱流",
+"description_en": "Infuses a lone enemy unit with swirling, volatile energy, dealing damage over time and slowing the target. The damage is not applied if another enemy unit is near the target.",
+"description_zh": "将不稳定的涡流能量灌注到落单敌人体内，造成持续伤害并减缓其移动速度。如目标周围有其他敌方单位 ，则不会造成伤害。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Flux silences when the target is alone, deals more damage, and lasts longer.",
+"zh": "目标落单时乱流具有沉默效果，造成更高伤害，而且持续时间更长。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "928b16ea938d83ac02d2",
+"subject": "spirit_breaker_bulldoze",
+"subject_zh": "裂魂人·威吓",
+"mechanism": "status_resistance",
+"mechanism_zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）",
+"definition_note": "U29：用户指出散夜对剑能降低被控制时间；装备数值在OpenDota属性字段，不在技能说明里",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "裂魂人获得移动速度和状态抗性加成，在敌人之间横冲直撞。",
+"value": "裂魂人获得移动速度和状态抗性加成，在敌人之间横冲直撞。可以在冲刺期间使用。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/1/description_zh"
+}
+},
+{
+"quote": "Spirit Breaker gains movement speed and status resistance to ram through enemies.",
+"value": "Spirit Breaker gains movement speed and status resistance to ram through enemies. Can be used while charging.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/1/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Bulldoze",
+"name_zh": "威吓",
+"description_en": "Spirit Breaker gains movement speed and status resistance to ram through enemies. Can be used while charging.",
+"description_zh": "裂魂人获得移动速度和状态抗性加成，在敌人之间横冲直撞。可以在冲刺期间使用。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2052",
+"damage": 0,
+"dispellable": 2,
+"immunity": 0,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "06a5de3d0fd2e0f5a126",
+"subject": "kez_falcon_rush",
+"subject_zh": "凯·天隼冲击",
+"mechanism": "slow_resistance",
+"mechanism_zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "在这个状态下，凯拥有相位移动状态和减速抗性。",
+"value": "开启后凯可以向敌方目标冲去，发动的攻击会重复一次。在这个状态下，凯拥有相位移动状态和减速抗性。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/125/abilities/5/description_zh"
+}
+},
+{
+"quote": "While in this state, Kez has phased collision and slow resistance.",
+"value": "Kez gains the ability to rush towards enemy targets to deliver echoing secondary attacks.  While in this state, Kez has phased collision and slow resistance.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/125/abilities/5/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Falcon Rush",
+"name_zh": "天隼冲击",
+"description_en": "Kez gains the ability to rush towards enemy targets to deliver echoing secondary attacks.  While in this state, Kez has phased collision and slow resistance.",
+"description_zh": "开启后凯可以向敌方目标冲去，发动的攻击会重复一次。在这个状态下，凯拥有相位移动状态和减速抗性。",
+"notes_en": [
+"Does not work on buildings."
+],
+"notes_zh": [
+"不会对建筑生效。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "9007207978895365",
+"damage": 0,
+"dispellable": 2,
+"immunity": 0,
+"max_level": 4,
+"target_team": 2,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "50a84ee4bd2a4a09e91d",
+"subject": "disperser",
+"subject_zh": "散魂剑",
+"mechanism": "slow_resistance",
+"mechanism_zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Allied targets gain bonus movespeed and 40% slow resistance for 4 seconds.",
+"value": "Dispels both the wearer and the target. Enemy targets are slowed for 4 seconds. Allied targets gain bonus movespeed and 40% slow resistance for 4 seconds. Caster is always granted the ally benefit on cast.\n\nBoth movement speed reduction and increase start at 100% and gradually decrease to 0% over the course of the buff duration.\nDispel Type: Basic Dispel",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/disperser/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"lore": "Once entrusted to an Apostle General of the Rumusque Faithful's expeditionary force."
+}
+]
+},
+{
+"review_id": "749d803fd03bb76531ee",
+"subject": "largo_song_double_time",
+"subject_zh": "朗戈·疾步生风",
+"mechanism": "slow_resistance",
+"mechanism_zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "朗戈弹奏的乐曲会提升附近友方单位的移动速度，还有短时间的减速抗性。",
+"value": "朗戈弹奏的乐曲会提升附近友方单位的移动速度，还有短时间的减速抗性。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/126/abilities/6/description_zh"
+}
+},
+{
+"quote": "Largo plays a song that increases nearby friendly units' movement speed and grants a brief slow resistance.",
+"value": "Largo plays a song that increases nearby friendly units' movement speed and grants a brief slow resistance.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/126/abilities/6/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Hotfeet Hustle",
+"name_zh": "疾步生风",
+"description_en": "Largo plays a song that increases nearby friendly units' movement speed and grants a brief slow resistance.",
+"description_zh": "朗戈弹奏的乐曲会提升附近友方单位的移动速度，还有短时间的减速抗性。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "9007207844677701",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 3,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "950b1d9d32fb4eca46f4",
+"subject": "ursa_overpower",
+"subject_zh": "熊战士·超强力量",
+"mechanism": "slow_resistance",
+"mechanism_zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "乌尔萨在战斗中运用他的技艺，提升了接下来几次攻击的攻击速度，同时还获得了减速抗性。",
+"value": "乌尔萨在战斗中运用他的技艺，提升了接下来几次攻击的攻击速度，同时还获得了减速抗性。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/68/abilities/1/description_zh"
+}
+},
+{
+"quote": "Using his skill in combat, Ursa gains increased attack speed and slow resistance for a number of subsequent attacks.",
+"value": "Using his skill in combat, Ursa gains increased attack speed and slow resistance for a number of subsequent attacks.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/68/abilities/1/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Overpower",
+"name_zh": "超强力量",
+"description_en": "Using his skill in combat, Ursa gains increased attack speed and slow resistance for a number of subsequent attacks.",
+"description_zh": "乌尔萨在战斗中运用他的技艺，提升了接下来几次攻击的攻击速度，同时还获得了减速抗性。",
+"notes_en": [
+"Missing an attack still consumes a charge of Overpower."
+],
+"notes_zh": [
+"攻击丢失还是会消耗超强力量的攻击次数。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134217732",
+"damage": 0,
+"dispellable": 2,
+"immunity": 0,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "b460eae5652aed659046",
+"subject": "magnataur_solid_core",
+"subject_zh": "马格纳斯·坚固核心",
+"mechanism": "slow_resistance",
+"mechanism_zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Magnus has increased slow resistance and suffers less knockback from enemy's abilities and items.",
+"value": "Magnus has increased slow resistance and suffers less knockback from enemy's abilities and items.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/95/abilities/4/description_en"
+}
+},
+{
+"quote": "马格纳斯的减速抗性得到提升，并且受到敌人技能和物品的击退效果减少。",
+"value": "马格纳斯的减速抗性得到提升，并且受到敌人技能和物品的击退效果减少。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/95/abilities/4/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Solid Core",
+"name_zh": "坚固核心",
+"description_en": "Magnus has increased slow resistance and suffers less knockback from enemy's abilities and items.",
+"description_zh": "马格纳斯的减速抗性得到提升，并且受到敌人技能和物品的击退效果减少。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "562949953421315",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "06da11625b7e279d0f8e",
+"subject": "mars_dauntless",
+"subject_zh": "玛尔斯·无畏",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "%radius%范围内敌方英雄数量更多时，玛尔斯就会获得生命恢复，敌人数量越多，生命恢复也越高。",
+"value": "%radius%范围内敌方英雄数量更多时，玛尔斯就会获得生命恢复，敌人数量越多，生命恢复也越高。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/116/abilities/3/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Dauntless",
+"name_zh": "无畏",
+"description_en": "Mars gets more HP Regen the more he is outnumbered by enemy heroes in %radius% radius.",
+"description_zh": "%radius%范围内敌方英雄数量更多时，玛尔斯就会获得生命恢复，敌人数量越多，生命恢复也越高。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "66",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "0c79f5452c90546153db",
+"subject": "shredder_reactive_armor",
+"subject_zh": "伐木机·活性护甲",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "伐木机每受到一次物理攻击，他的生命恢复和护甲值都会提升。",
+"value": "伐木机每受到一次物理攻击，他的生命恢复和护甲值都会提升。英雄攻击提供%stacks_per_hero_attack%倍提升。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/96/abilities/2/description_zh"
+}
+},
+{
+"quote": "Each time Timbersaw is attacked, he gains increased health regen and armor.",
+"value": "Each time Timbersaw is attacked, he gains increased health regen and armor. Hero attacks are counted as %stacks_per_hero_attack%x the amount.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/96/abilities/2/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Reactive Armor",
+"name_zh": "活性护甲",
+"description_en": "Each time Timbersaw is attacked, he gains increased health regen and armor. Hero attacks are counted as %stacks_per_hero_attack%x the amount.",
+"description_zh": "伐木机每受到一次物理攻击，他的生命恢复和护甲值都会提升。英雄攻击提供%stacks_per_hero_attack%倍提升。",
+"notes_en": [
+"Break disables the gaining of new stacks.",
+"Break does not disable the bonuses from existing stacks."
+],
+"notes_zh": [
+"破坏会使技能无法获得新的叠加效果。",
+"破坏不会使现有叠加效果提供的加成失效。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Reactive Armor can now be activated to get max stacks and %initial_shield% damage barrier. Grants Timbersaw %shield_per_sec% + %shield_per_sec_per_enemy% barrier amount per second for each enemy hero within %radius% radius of Timbersaw up to a maximum of %max_shield%. After %duration% seconds, Timbersaw deals damage to every hero within %explosion_radius% radius equal to %base_explosion% + his remaining barrier amount and loses all of his barrier.",
+"zh": "活性护甲可以主动施放，获得最大叠加次数和%initial_shield%点生命的护盾。护盾的恢复速度为每秒%shield_per_sec% + 伐木机%radius%范围内每名敌方英雄都会增加%shield_per_sec_per_enemy%，最高为%max_shield%。%duration%秒后伐木机会对%explosion_radius%范围内每个英雄造成伤害，数值为%base_explosion% + 护盾剩余生命，而且失去全部护盾。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2",
+"damage": 2,
+"dispellable": 3,
+"immunity": 0,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "168d34ec5020caa25ee8",
+"subject": "enchantress_natures_attendants",
+"subject_zh": "魅惑魔女·自然之助",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "召唤一群小精灵治疗魅惑魔女以及身边的友方单位。",
+"value": "召唤一群小精灵治疗魅惑魔女以及身边的友方单位。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/56/abilities/2/description_zh"
+}
+},
+{
+"quote": "A cloud of wisps heals Enchantress and any friendly units nearby.",
+"value": "A cloud of wisps heals Enchantress and any friendly units nearby.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/56/abilities/2/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Nature's Attendants",
+"name_zh": "自然之助",
+"description_en": "A cloud of wisps heals Enchantress and any friendly units nearby.",
+"description_zh": "召唤一群小精灵治疗魅惑魔女以及身边的友方单位。",
+"notes_en": [
+"Units with full HP will not be selected for the heal."
+],
+"notes_zh": [
+"不会选择满血单位进行治疗。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4",
+"damage": 0,
+"dispellable": 3,
+"immunity": 1,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "1f7fff861457a5a8127a",
+"subject": "necrolyte_death_pulse",
+"subject_zh": "瘟疫法师·死亡脉冲",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "瘟疫法师向他的周围释放死亡波纹，伤害敌方单位并治疗友军单位。",
+"value": "瘟疫法师向他的周围释放死亡波纹，伤害敌方单位并治疗友军单位。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/34/abilities/0/description_zh"
+}
+},
+{
+"quote": "Necrophos releases a wave of death around him, dealing damage to enemy units and healing allied units.",
+"value": "Necrophos releases a wave of death around him, dealing damage to enemy units and healing allied units.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/34/abilities/0/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Death Pulse",
+"name_zh": "死亡脉冲",
+"description_en": "Necrophos releases a wave of death around him, dealing damage to enemy units and healing allied units.",
+"description_zh": "瘟疫法师向他的周围释放死亡波纹，伤害敌方单位并治疗友军单位。",
+"notes_en": [
+"Death Pulse can't be disjointed."
+],
+"notes_zh": [
+"死亡脉冲不能被躲避。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4",
+"damage": 2,
+"dispellable": 0,
+"immunity": 5,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "24d00d2e3d6a77e54fb9",
+"subject": "tinker_march_of_the_machines",
+"subject_zh": "修补匠·机械行军",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "scepter_upgrade",
+"requires_scepter": true,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "March of the Machines applies a non-stacking heal over time when passing through allied heroes.",
+"value": "March of the Machines applies a non-stacking heal over time when passing through allied heroes.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/32/abilities/1/upgrade_text/scepter_loc/en"
+}
+},
+{
+"quote": "机械行军在穿过友方英雄时会施加不可叠加的持续治疗效果。",
+"value": "机械行军在穿过友方英雄时会施加不可叠加的持续治疗效果。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/32/abilities/1/upgrade_text/scepter_loc/zh"
+}
+}
+],
+"context": [
+{
+"name_en": "March of the Machines",
+"name_zh": "机械行军",
+"description_en": "Enlists an army of robotic minions to destroy enemy units in an area around Tinker.",
+"description_zh": "征募一支机器人军队，摧毁修补匠周围的敌方单位。",
+"notes_en": [
+"Robots spawn at a rate of %machines_per_sec% per second."
+],
+"notes_zh": [
+"机器人的产生速率是每秒%machines_per_sec%个。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "March of the Machines applies a non-stacking heal over time when passing through allied heroes.",
+"zh": "机械行军在穿过友方英雄时会施加不可叠加的持续治疗效果。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "48",
+"damage": 2,
+"dispellable": 0,
+"immunity": 4,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "390ace6a8585d2e16f1d",
+"subject": "pugna_life_drain",
+"subject_zh": "帕格纳·生命汲取",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.",
+"value": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.\n\nWhen cast on an ally, Pugna will drain his own health into his ally.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/43/abilities/4/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Life Drain",
+"name_zh": "生命汲取",
+"description_en": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.\n\nWhen cast on an ally, Pugna will drain his own health into his ally.",
+"description_zh": "持续施法 - 使用生命汲取时，帕格纳吸取目标敌方单位的生命值，并获得其视野。\n\n向队友施放可以将自己的生命值转移给队友。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Reduces cooldown by %abilitycooldown%s. When targeting an enemy hero, Pugna reduces their outgoing spell damage by %spell_amp_drain_rate%%% per second up to a maximum of %spell_amp_drain_max%%% and increases his own, up to a maximum of %max_spell_amp_drain_pct%%%. When draining through a Nether Ward using Shard, the rate of increase/decrease is %spell_amp_drain_rate_ward%%% instead. Debuff lasts %spell_amp_drain_duration% seconds.",
+"zh": "冷却时间减少%abilitycooldown%秒。以敌方英雄为目标时，帕格纳每秒降低他们%spell_amp_drain_rate%%%技能伤害输出，最高可达到%spell_amp_drain_max%%%，并且自身的技能伤害输出提升，最高可达到%max_spell_amp_drain_pct%%%。魔晶升级下对幽冥守卫施放时降低和提升的速率为%spell_amp_drain_rate_ward%%%。负面效果持续%spell_amp_drain_duration%秒。"
+},
+"shard_loc": {
+"en": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed.",
+"zh": "生命汲取可以对幽冥守卫施放，使生命汲取可以折射至守卫附近%abilitycastrange%范围内所有敌方英雄，造成%shard_damage_pct_from_ward%%%效果。守卫被摧毁后效果将会中断。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134217864",
+"damage": 2,
+"dispellable": 3,
+"immunity": 4,
+"max_level": 3,
+"target_team": 3,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "3df37d289718ca76d249",
+"subject": "lifesteal",
+"subject_zh": "吸血面具",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "item",
+"item_ability_type": "passive",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Heals the attacker for a percentage of physical damage dealt.",
+"value": "Heals the attacker for a percentage of physical damage dealt.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/lifesteal/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"lore": "A mask that drains the energy of those caught in its gaze."
+}
+]
+},
+{
+"review_id": "4b63ef28d1bd55ce3b98",
+"subject": "tango",
+"subject_zh": "树之祭祀",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "item",
+"item_ability_type": "use",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Consuming an Ironwood Tree doubles the heal duration.",
+"value": "Consumes a target tree to gain 7 health regeneration for 16 seconds. Consuming an Ironwood Tree doubles the heal duration.\n\nComes with 3 charges. Can be used on an allied hero to give them one Tango.\n\nTree Range: 165",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/tango/abilities/0/description"
+}
+},
+{
+"quote": "Consumes a target tree to gain 7 health regeneration for 16 seconds.",
+"value": "Consumes a target tree to gain 7 health regeneration for 16 seconds. Consuming an Ironwood Tree doubles the heal duration.\n\nComes with 3 charges. Can be used on an allied hero to give them one Tango.\n\nTree Range: 165",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/tango/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"lore": "Forage to survive on the battlefield."
+}
+]
+},
+{
+"review_id": "4dd7c32bb2647226e4a3",
+"subject": "tango_single",
+"subject_zh": "树之祭祀（共享）",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "item",
+"item_ability_type": "use",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "5 health regeneration for 16 seconds.",
+"value": "Consumes a target tree to gain 3.5 health regeneration for 16 seconds. Consuming an Ironwood Tree doubles the heal duration.\n\nTree Range: 165",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/tango_single/abilities/0/description"
+}
+},
+{
+"quote": "Consuming an Ironwood Tree doubles the heal duration.",
+"value": "Consumes a target tree to gain 3.5 health regeneration for 16 seconds. Consuming an Ironwood Tree doubles the heal duration.\n\nTree Range: 165",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/tango_single/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"lore": "Om nom nom."
+}
+]
+},
+{
+"review_id": "522b75b460a924a0a717",
+"subject": "lycan_wolf_bite",
+"subject_zh": "狼人·饿狼撕咬",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": true,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Lycan and the bitten target gain %lifesteal_percent%%% Lifesteal and share the healing effect of Lifesteal with each other as long as they are within %lifesteal_range% range of each other.",
+"value": "Lycan bites an allied hero or creep-hero, granting them Shapeshift properties. Lycan and the bitten target gain %lifesteal_percent%%% Lifesteal and share the healing effect of Lifesteal with each other as long as they are within %lifesteal_range% range of each other.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/75/abilities/3/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Wolf Bite",
+"name_zh": "饿狼撕咬",
+"description_en": "Lycan bites an allied hero or creep-hero, granting them Shapeshift properties. Lycan and the bitten target gain %lifesteal_percent%%% Lifesteal and share the healing effect of Lifesteal with each other as long as they are within %lifesteal_range% range of each other.",
+"description_zh": "狼人撕咬友方英雄或类英雄单位，使其获得变身效果。自身和目标都获得%lifesteal_percent%%%吸血效果，并且双方距离只要不超过%lifesteal_range%就能共用吸血效果。",
+"notes_en": [
+"Wolf Bite cooldown matches the cooldown of the current level of Shapeshift."
+],
+"notes_zh": [
+"饿狼撕咬的冷却时间与变身的当前等级相同。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": true,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8589934665",
+"damage": 0,
+"dispellable": 3,
+"immunity": 1,
+"max_level": 3,
+"target_team": 1,
+"target_type": 1,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "572d3f6c4a7926e111f3",
+"subject": "chen_hand_of_god",
+"subject_zh": "陈·上帝之手",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Heals all allied heroes on the map as well as all units under Chen's control.",
+"value": "Heals all allied heroes on the map as well as all units under Chen's control. A large heal is applied at first and a slow heal over time is applied for %hot_duration% seconds afterwards.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/4/description_en"
+}
+},
+{
+"quote": "一开始先施加高额治疗，在之后%hot_duration%秒内持续进行小额治疗。",
+"value": "治疗地图上的所有友军英雄以及陈控制的所有单位。一开始先施加高额治疗，在之后%hot_duration%秒内持续进行小额治疗。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/4/description_zh"
+}
+},
+{
+"quote": "Can heal invulnerable and hidden/banished allies.",
+"value": "Can heal invulnerable and hidden/banished allies.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/4/notes_en/0"
+}
+},
+{
+"quote": "治疗地图上的所有友军英雄以及陈控制的所有单位。",
+"value": "治疗地图上的所有友军英雄以及陈控制的所有单位。一开始先施加高额治疗，在之后%hot_duration%秒内持续进行小额治疗。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/4/description_zh"
+}
+},
+{
+"quote": "A large heal is applied at first and a slow heal over time is applied for %hot_duration% seconds afterwards.",
+"value": "Heals all allied heroes on the map as well as all units under Chen's control. A large heal is applied at first and a slow heal over time is applied for %hot_duration% seconds afterwards.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/4/description_en"
+}
+},
+{
+"quote": "可以治疗无敌和被隐藏/放逐友军。",
+"value": "可以治疗无敌和被隐藏/放逐友军。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/4/notes_zh/0"
+}
+}
+],
+"context": [
+{
+"name_en": "Hand of God",
+"name_zh": "上帝之手",
+"description_en": "Heals all allied heroes on the map as well as all units under Chen's control. A large heal is applied at first and a slow heal over time is applied for %hot_duration% seconds afterwards.",
+"description_zh": "治疗地图上的所有友军英雄以及陈控制的所有单位。一开始先施加高额治疗，在之后%hot_duration%秒内持续进行小额治疗。",
+"notes_en": [
+"Can heal invulnerable and hidden/banished allies."
+],
+"notes_zh": [
+"可以治疗无敌和被隐藏/放逐友军。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Decreases the cooldown of Hand of God to %AbilityCooldown%s and it becomes a channelled spell that lasts for up to %AbilityChannelTime% seconds. The initial heal happens at the start of the channel, and while channeling other nearby allied units become debuff immune with %debuff_immune_resist%%% magic resistance and the power of the heal over time is increased by %nearby_hot_boost%%%.",
+"zh": "上帝之手的冷却时间降低至%AbilityCooldown%秒，并且变为持续施法型技能，持续最多%AbilityChannelTime%秒。初始治疗会在持续施法起始时发生，持续施法期间其他附近友方单位变为减益免疫状态，拥有%debuff_immune_resist%%%魔法抗性，而且持续治疗的威力提升%nearby_hot_boost%%%。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4",
+"damage": 0,
+"dispellable": 2,
+"immunity": 1,
+"max_level": 3,
+"target_team": 0,
+"target_type": 0,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "6087ba2c896efaf75a14",
+"subject": "alchemist_berserk_potion",
+"subject_zh": "炼金术士·狂暴药剂",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": true
+},
+"evidence": [
+{
+"quote": "炼金术士向友军目标扔出一瓶药剂，施加弱驱散效果，并提供攻击速度、移动速度和生命恢复。",
+"value": "炼金术士向友军目标扔出一瓶药剂，施加弱驱散效果，并提供攻击速度、移动速度和生命恢复。驱散类型：弱驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/71/abilities/3/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Berserk Potion",
+"name_zh": "狂暴药剂",
+"description_en": "Alchemist throws a potion at an ally, applying a basic dispel and giving them attack speed, movement speed and HP regen.DISPEL TYPE: Basic Dispel",
+"description_zh": "炼金术士向友军目标扔出一瓶药剂，施加弱驱散效果，并提供攻击速度、移动速度和生命恢复。驱散类型：弱驱散",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": true,
+"raw_mechanics": {
+"behavior": "8589934601",
+"damage": 0,
+"dispellable": 2,
+"immunity": 1,
+"max_level": 1,
+"target_team": 1,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "64dfa12adf518896c095",
+"subject": "guardian_greaves",
+"subject_zh": "卫士胫甲",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "item",
+"item_ability_type": "passive",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "If the wearer's health falls below 25%, their health regeneration is increased to 14.",
+"value": "Grants 2.5 health regeneration and 1.5 mana regeneration to allied units. If the wearer's health falls below 25%, their health regeneration is increased to 14.5. \n\nRadius: 1200",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/guardian_greaves/abilities/1/description"
+}
+},
+{
+"quote": "5 health regeneration and 1.",
+"value": "Grants 2.5 health regeneration and 1.5 mana regeneration to allied units. If the wearer's health falls below 25%, their health regeneration is increased to 14.5. \n\nRadius: 1200",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/guardian_greaves/abilities/1/description"
+}
+}
+],
+"context": [
+{
+"notes": "Mend does not affect units that have been affected by Mend or Mekansm Restore within Guardian Greaves' cooldown.",
+"lore": "One of many holy instruments constructed to honor the Omniscience."
+}
+]
+},
+{
+"review_id": "6d9e2d1f32351c5c3a2d",
+"subject": "mekansm",
+"subject_zh": "梅肯斯姆",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Restores 250 health to allied units in a 1200 radius.",
+"value": "Restores 250 health to allied units in a 1200 radius.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/mekansm/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Restore does not affect units that have been affected by Restore or Guardian Greaves Mend within Mekansm's cooldown.\nMultiple instances of Mekansm Aura do not stack.",
+"lore": "A glowing jewel formed out of assorted parts that somehow fit together perfectly."
+}
+]
+},
+{
+"review_id": "762d9498167f9b140529",
+"subject": "chen_divine_favor",
+"subject_zh": "陈·神力恩泽",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "被动提供光环，提供生命恢复加成。",
+"value": "被动提供光环，提供生命恢复加成。可以主动对友军施放，提供护甲加成，以及治疗和生命恢复增强。\n\n对陈施放后，陈控制的所有单位都会获得增益效果。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/2/description_zh"
+}
+},
+{
+"quote": "Passively provides an aura that grants increased health regeneration.",
+"value": "Passively provides an aura that grants increased health regeneration. Can be cast on allies to provide them with bonus armor and increasing the healing and health regeneration they receive.\n\nIf cast on Chen, all units controlled by Chen receive the buff.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/2/description_en"
+}
+},
+{
+"quote": "Can be cast on allies to provide them with bonus armor and increasing the healing and health regeneration they receive.",
+"value": "Passively provides an aura that grants increased health regeneration. Can be cast on allies to provide them with bonus armor and increasing the healing and health regeneration they receive.\n\nIf cast on Chen, all units controlled by Chen receive the buff.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/2/description_en"
+}
+},
+{
+"quote": "可以主动对友军施放，提供护甲加成，以及治疗和生命恢复增强。",
+"value": "被动提供光环，提供生命恢复加成。可以主动对友军施放，提供护甲加成，以及治疗和生命恢复增强。\n\n对陈施放后，陈控制的所有单位都会获得增益效果。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/2/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Divine Favor",
+"name_zh": "神力恩泽",
+"description_en": "Passively provides an aura that grants increased health regeneration. Can be cast on allies to provide them with bonus armor and increasing the healing and health regeneration they receive.\n\nIf cast on Chen, all units controlled by Chen receive the buff.",
+"description_zh": "被动提供光环，提供生命恢复加成。可以主动对友军施放，提供护甲加成，以及治疗和生命恢复增强。\n\n对陈施放后，陈控制的所有单位都会获得增益效果。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 0,
+"dispellable": 3,
+"immunity": 1,
+"max_level": 4,
+"target_team": 1,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "799443581e85b1792948",
+"subject": "dazzle_innate_weave",
+"subject_zh": "戴泽·编织",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "shard_upgrade",
+"requires_scepter": false,
+"requires_shard": true
+},
+"evidence": [
+{
+"quote": "对友军施加编织时，每层编织效果治疗%ally_heal%点。",
+"value": "对友军施加编织时，每层编织效果治疗%ally_heal%点。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/48/abilities/3/upgrade_text/shard_loc/zh"
+}
+},
+{
+"quote": "Applying Weave to an ally heals them for %ally_heal% per stack of Weave.",
+"value": "Applying Weave to an ally heals them for %ally_heal% per stack of Weave.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/48/abilities/3/upgrade_text/shard_loc/en"
+}
+}
+],
+"context": [
+{
+"name_en": "Weave",
+"name_zh": "编织",
+"description_en": "Dazzle's abilities apply Weave to both allies and enemies they affect, increasing allied armor and reducing enemy armor. Multiple instances of this effect stack.",
+"description_zh": "戴泽的技能会对范围内友军和敌人同时施加编织，提升友军的护甲并减少敌人的护甲。本效果可以多次叠加。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Applying Weave to an ally heals them for %ally_heal% per stack of Weave.",
+"zh": "对友军施加编织时，每层编织效果治疗%ally_heal%点。"
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "562949953421379",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "81ae6f5d51f1d69ed25f",
+"subject": "arcane_blink",
+"subject_zh": "秘奥闪光",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "After teleportation, you restore 250 health and 100 mana.",
+"value": "Teleport to a target point up to 1400 units away. \n\nAfter teleportation, you restore 250 health and 100 mana.\n\nArcane Blink cannot be used for 3 seconds after taking damage from an enemy hero or Roshan.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/arcane_blink/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Self-casting will cause you to teleport in the direction of your team's fountain.",
+"lore": "A revitalizing tool to help bear the weight of arcane expenditure."
+}
+]
+},
+{
+"review_id": "841d73dbbce0084f6b3a",
+"subject": "helm_of_the_dominator",
+"subject_zh": "支配头盔",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Also provides the unit with +25 base attack damage, +12 health regen, +4 mana regen and +4 armor.",
+"value": "Takes control of one neutral, non-ancient target unit and sets its movement speed to 370 and max health to a minimum of 1000. Also provides the unit with +25 base attack damage, +12 health regen, +4 mana regen and +4 armor. \n\nDominated units with a max health of greater than 1000 retain their original max health. Grants the caster 50% of the gold and experience bounty of the dominated creep. Dominated unit's bounty is set to 100 gold and it can no longer be killed by abilities that instantly kill creeps otherwise.\n\nThe Helm cannot be used for 3 seconds after the dominated creep takes damage from an enemy hero or Roshan.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/helm_of_the_dominator/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Cannot dominate more than one unit at a time. If a new unit is dominated, the old one will die.\nCan also Dominate enemy lane creeps and summoned units.\nSelling Helm of the Dominator will cause dominated units to die.",
+"lore": "The powerful headpiece of a dead necromancer."
+}
+]
+},
+{
+"review_id": "8c9783d9ca7a0ad37a57",
+"subject": "keeper_of_the_light_spirit_form",
+"subject_zh": "光之守卫·灵魂形态",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "shard_upgrade",
+"requires_scepter": false,
+"requires_shard": true
+},
+"evidence": [
+{
+"quote": "Increases illuminate heal.",
+"value": "Increases illuminate heal.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/88/abilities/5/upgrade_text/shard_loc/en"
+}
+},
+{
+"quote": "提升冲击波的治疗效果。",
+"value": "提升冲击波的治疗效果。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/88/abilities/5/upgrade_text/shard_loc/zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Spirit Form",
+"name_zh": "灵魂形态",
+"description_en": "Ezalor temporarily turns his body luminescent, gaining cast range, increasing the speed bonus from Bright Speed, and allows Illuminate to be channeled by a separate spirit and heal allies.",
+"description_zh": "伊扎洛暂时使身体发光，获得施法距离加成，提升光明速度的移速加成，并且冲击波将由一个单独的灵魂施法，可以治疗友军。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Increases illuminate heal.",
+"zh": "提升冲击波的治疗效果。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4",
+"damage": 0,
+"dispellable": 3,
+"immunity": 0,
+"max_level": 3,
+"target_team": 0,
+"target_type": 0,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "8e7e9d5afc2b0e772cf7",
+"subject": "keeper_of_the_light_spirit_form",
+"subject_zh": "光之守卫·灵魂形态",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "伊扎洛暂时使身体发光，获得施法距离加成，提升光明速度的移速加成，并且冲击波将由一个单独的灵魂施法，可以治疗友军。",
+"value": "伊扎洛暂时使身体发光，获得施法距离加成，提升光明速度的移速加成，并且冲击波将由一个单独的灵魂施法，可以治疗友军。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/88/abilities/5/description_zh"
+}
+},
+{
+"quote": "Ezalor temporarily turns his body luminescent, gaining cast range, increasing the speed bonus from Bright Speed, and allows Illuminate to be channeled by a separate spirit and heal allies.",
+"value": "Ezalor temporarily turns his body luminescent, gaining cast range, increasing the speed bonus from Bright Speed, and allows Illuminate to be channeled by a separate spirit and heal allies.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/88/abilities/5/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Spirit Form",
+"name_zh": "灵魂形态",
+"description_en": "Ezalor temporarily turns his body luminescent, gaining cast range, increasing the speed bonus from Bright Speed, and allows Illuminate to be channeled by a separate spirit and heal allies.",
+"description_zh": "伊扎洛暂时使身体发光，获得施法距离加成，提升光明速度的移速加成，并且冲击波将由一个单独的灵魂施法，可以治疗友军。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Increases illuminate heal.",
+"zh": "提升冲击波的治疗效果。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4",
+"damage": 0,
+"dispellable": 3,
+"immunity": 0,
+"max_level": 3,
+"target_team": 0,
+"target_type": 0,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "949bfed2d0b954a9dba6",
+"subject": "omniknight_martyr",
+"subject_zh": "全能骑士·驱逐",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "提供减益免疫状态和%magic_resist%%%魔法抗性，以及额外生命恢复。",
+"value": "提供减益免疫状态和%magic_resist%%%魔法抗性，以及额外生命恢复。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/55/abilities/1/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Repel",
+"name_zh": "驱逐",
+"description_en": "Grants Debuff Immunity with %magic_resist%%% magic resistance, as well as bonus HP Regen.",
+"description_zh": "提供减益免疫状态和%magic_resist%%%魔法抗性，以及额外生命恢复。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 0,
+"dispellable": 2,
+"immunity": 1,
+"max_level": 4,
+"target_team": 1,
+"target_type": 1,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "997fb8f90cf29995cdf6",
+"subject": "grimstroke_spirit_walk",
+"subject_zh": "天涯墨客·墨涌",
+"mechanism": "healing",
+"mechanism_zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）",
+"definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗",
+"condition": {
+"context": "shard_upgrade",
+"requires_scepter": false,
+"requires_shard": true
+},
+"evidence": [
+{
+"quote": "Causes Ink Swell to deal %shard_bonus_damage_pct%%% more damage and heal the target for %shard_heal_pct%%% of the damage Ink Swell deals.",
+"value": "Ink Swell dispels the allied unit when cast. Causes Ink Swell to deal %shard_bonus_damage_pct%%% more damage and heal the target for %shard_heal_pct%%% of the damage Ink Swell deals.DISPEL TYPE: Basic Dispel",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/115/abilities/2/upgrade_text/shard_loc/en"
+}
+},
+{
+"quote": "墨涌造成的伤害增加%shard_bonus_damage_pct%%%，并且治疗目标，治疗量为墨涌造成伤害的%shard_heal_pct%%%。",
+"value": "墨涌在施放时会驱散友方单位。墨涌造成的伤害增加%shard_bonus_damage_pct%%%，并且治疗目标，治疗量为墨涌造成伤害的%shard_heal_pct%%%。驱散类型：弱驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/115/abilities/2/upgrade_text/shard_loc/zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Ink Swell",
+"name_zh": "墨涌",
+"description_en": "Grimstroke shrouds an allied unit in ink, increasing its movement speed. Enemies in range of the allied unit are damaged with inky tendrils over time. After %buff_duration% seconds it applies damage and stun in an area around the unit in proportion to how long ink tendril was near any hero.",
+"description_zh": "天涯墨客将一个友方单位笼罩在一片墨汁中，目标的移动速度得到提升。友方单位附近的敌人会持续被墨须伤害。%buff_duration%秒后将根据墨须对英雄造成伤害的时间对区域内单位造成伤害和眩晕。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Ink Swell dispels the allied unit when cast. Causes Ink Swell to deal %shard_bonus_damage_pct%%% more damage and heal the target for %shard_heal_pct%%% of the damage Ink Swell deals.DISPEL TYPE: Basic Dispel",
+"zh": "墨涌在施放时会驱散友方单位。墨涌造成的伤害增加%shard_bonus_damage_pct%%%，并且治疗目标，治疗量为墨涌造成伤害的%shard_heal_pct%%%。驱散类型：弱驱散"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "33554440",
+"damage": 2,
+"dispellable": 2,
+"immunity": 5,
+"max_level": 4,
+"target_team": 1,
+"target_type": 19,
+"type": 0
+}
+}
+]
+}
+]

@@ -1,0 +1,1029 @@
+[
+ {
+  "review_id": "26b4fa40fa9cf3a9d253",
+  "subject": "greater_crit",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击有概率造成额外倍数伤害",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "crit_chance": "30",
+   "crit_multiplier": "225"
+  },
+  "game_file_labels": {
+   "crit_chance": null,
+   "crit_multiplier": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Daedalus",
+  "context": {
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Critical Strike",
+     "description": "Grants each attack a 30% chance to deal 225% damage."
+    }
+   ],
+   "notes": "Critical Strike does not work against buildings.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "88"
+    },
+    {
+     "key": "crit_chance",
+     "value": "30"
+    },
+    {
+     "key": "crit_multiplier",
+     "value": "225"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "ed1d3bfb4ceeb2f9079f",
+  "subject": "imp_claw",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击有概率造成额外倍数伤害",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "crit_multiplier": "130"
+  },
+  "game_file_labels": {
+   "crit_multiplier": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Imp Claw",
+  "context": {
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Critical Strike",
+     "description": "Empowers your next attack, causing it to be a critical strike dealing 130% damage."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "crit_multiplier",
+     "value": "130"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "e1b62b54ec70ec5f3171",
+  "subject": "lesser_crit",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击有概率造成额外倍数伤害",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "crit_chance": "30",
+   "crit_multiplier": "160",
+   "tooltip_crit_damage": "60"
+  },
+  "game_file_labels": {
+   "crit_chance": null,
+   "crit_multiplier": null,
+   "tooltip_crit_damage": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Crystalys",
+  "context": {
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Critical Strike",
+     "description": "Grants each attack a 30% chance to deal 160% damage."
+    }
+   ],
+   "notes": "Critical Strike does not work against buildings.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "32"
+    },
+    {
+     "key": "crit_chance",
+     "value": "30"
+    },
+    {
+     "key": "crit_multiplier",
+     "value": "160"
+    },
+    {
+     "key": "tooltip_crit_damage",
+     "value": "60"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "5771c7a201888f104de7",
+  "subject": "skeleton_king_mortal_strike",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击有概率造成额外倍数伤害",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "crit_mult": "160 200 240 280"
+  },
+  "game_file_labels": {
+   "crit_mult": "%CRITICAL DAMAGE:"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "subject_zh": "冥魂大帝·本命一击",
+  "context": {
+   "description_en": "Wraith King passively deals bonus damage on an attack with a cooldown.",
+   "description_zh": "冥魂大帝被动地在攻击时造成额外伤害，本技能具有冷却时间。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "Mortal Strike hits curse their target, causing them to take %curse_damage_pct%%% of the initial attack damage again as Pure damage after a %curse_delay% second delay. Vampiric Spirit's lifesteal applies to the curse damage.",
+     "zh": "本命一击会诅咒目标，使其在%curse_delay%秒延迟后再次受到%curse_damage_pct%%%原攻击伤害的纯粹伤害。吸血灵魂的吸血效果对诅咒伤害有效。"
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "ebbbbe178b11c4ce1cbd",
+  "subject": "clinkz_death_pact",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "subject_zh": "克林克兹·死亡契约",
+  "context": {
+   "description_en": "Clinkz consumes the target enemy creep or friendly Skeleton Archer, healing and gaining max health. Does not take Clinkz out of Skeleton Walk.",
+   "description_zh": "克林克兹以敌方非英雄单位或友方骷髅弓手为吞噬的目标，治疗并获得最大生命值。不会使克林克兹脱离骨隐步。",
+   "notes_en": [
+    "If the target is an enemy, Clinkz will gain the correct experience and gold.",
+    "Increases Clinkz' current and max HP.",
+    "When the duration ends, max HP returns to normal, but current HP stays the same."
+   ],
+   "notes_zh": [
+    "如果目标是敌方单位，克林克兹将获得经验和金钱。",
+    "克林克兹的当前血量和生命值上限都将提高。",
+    "持续时间结束后，血量上限回到正常值，但是当前生命值不变（不会高于血量上限）。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "0e234c07bae2d264c62c",
+  "subject": "doom_bringer_devour",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "末日使者·吞噬",
+  "context": {
+   "description_en": "Consumes an enemy or neutral creep, acquiring any special abilities that it possessed. If alt-cast is activated, Doom will not acquire the creep's abilities. Duration is equal to the cooldown.",
+   "description_zh": "消化一个敌军或中立生物，获得其特殊技能。开启多样施法（右键点击技能栏图标）后，末日使者不会获得其技能。持续时间与冷却时间相同。",
+   "notes_en": [
+    "Gives Doom the original bounty of the creep, along with the bonus gold.",
+    "If you devour a creep without abilities, you'll keep the abilities you had previously."
+   ],
+   "notes_zh": [
+    "末日使者将获得该生物的正常金钱，还有技能的额外金钱。",
+    "如果吞噬的单位没有技能，之前获得的技能将会保留。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "Devour has %AbilityCharges% charges and can target Ancients. Stolen creep abilities have %bonus_aoe_pct%%% increased AoE and %bonus_spell_amp_pct%%% increased spell amplification.",
+     "zh": "吞噬拥有%AbilityCharges%点能量点数，能以远古生物为目标。获得的野怪技能拥有%bonus_aoe_pct%%%额外作用范围和%bonus_spell_amp_pct%%%额外技能增强。"
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "329c4fe35dd730522371",
+  "subject": "earth_spirit_petrify",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET |  DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "大地之灵·残岩魔咒",
+  "context": {
+   "description_en": "Earth Spirit temporarily enchants a hero, granting them the properties of a Stone Remnant. After a short duration the remnant shatters, releasing the hero and damaging nearby enemies. Can be cast on Stone Remnants. Has a 5 second cooldown when used that way.Has a larger cast range when cast on an ally hero.",
+   "description_zh": "大地之灵对一名英雄施法，使其暂时获得残岩的属性。经过短时间后残岩就会碎裂，释放出英雄，并对周围单位造成伤害。可以对残岩施放。对残岩施放时冷却时间为5秒。对友方英雄施放时施法距离更远。",
+   "notes_en": [
+    "Earth Spirit himself can be targeted by Boulder Smash if he is enchanted."
+   ],
+   "notes_zh": [
+    "如果大地之灵自身受到残岩魔咒的效果，也可以成为巨石冲击的目标。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8804d4b34b90572aa12b",
+  "subject": "life_stealer_infest",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "噬魂鬼·感染",
+  "context": {
+   "description_en": "Lifestealer infests the body of a target unit, becoming undetectable, and healing for a portion of his max hitpoints every second while inside. He can then explode from the host body, dealing damage to nearby enemies. If the infested unit is an enemy creep or a neutral creep, he can take control of the unit's ability to move and attack, and the creep loses a portion of their max hitpoints over time. Does not work on enemy heroes.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "噬魂鬼进入目标单位的身体，无法被察觉，而且自身在体内时每秒恢复最大生命值的一定百分比。接着可以从宿主体内现身，对周围所有敌方单位造成伤害。如果被感染单位是敌方非英雄单位或中立生物，噬魂鬼可以控制其进行移动和攻击，而且该生物会持续失去最大生命值的一部分。无法对敌方英雄生效。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Lifestealer gains experience while under the effects of Infest.",
+    "Creeps that are controlled while Infested gain Infest's movement speed bonus.",
+    "Does not trigger spell reflect.",
+    "Infest can be used on Ancient creeps."
+   ],
+   "notes_zh": [
+    "噬魂鬼在感染一个单位期间能够从周围死亡的单位身上获得经验。",
+    "被感染控制的单位会获得感染的移动速度加成。",
+    "不会触发法术反弹。",
+    "感染可以对远古生物使用。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range and reduces cooldown to %bonus_AbilityCooldown%s.  Infest may target enemy heroes for a short duration, attacking them from the inside while increasing Lifestealer's regeneration rate.",
+     "zh": "提升施法距离并且冷却时间降低至%bonus_AbilityCooldown%秒。感染可以对敌方英雄施放，持续时间较短，并在他们体内发动攻击，同时提升噬魂鬼的恢复速率。"
+    },
+    "shard_loc": {
+     "en": "Consuming a creep with Infest drenches enemies in blood which deals damage over time based on the host's remaining health.",
+     "zh": "吞噬感染的中立生物会使敌人沾满鲜血，根据宿主的剩余生命值造成持续伤害。"
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "5cdebafa54dd4cb5016e",
+  "subject": "monkey_king_tree_dance",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_TREE"
+  },
+  "subject_zh": "齐天大圣·丛林之舞",
+  "context": {
+   "description_en": "Monkey King jumps to a tree and perches atop it. While perched, he gains the Primal Spring ability-a channeled leap attack. If Monkey King's tree is destroyed, he falls and is stunned for %unperched_stunned_duration%s. Taking damage while on the ground puts Tree Dance on cooldown.",
+   "description_zh": "齐天大圣跳上一棵树并停在上面。停留时获得乾坤之跃技能——需要持续施法的跳跃式攻击。如果树木被摧毁，他将从树上掉下，并眩晕%unperched_stunned_duration%秒。在地面受到伤害时丛林之舞将在一定时间内无法使用，处于冷却状态。",
+   "notes_en": [
+    "Tree Dance cooldown starts upon landing.",
+    "Right-clicking the ground will have Monkey King drop from the tree.",
+    "Movement is interrupted if Monkey King is stunned, hexed or banished."
+   ],
+   "notes_zh": [
+    "丛林之舞在落地时进入冷却。",
+    "右键点击地面后齐天大圣会从树上跳下。",
+    "齐天大圣受到眩晕、妖术或放逐作用时位移都会被打断。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "0dba6399710fa947dc5d",
+  "subject": "morphling_replicate",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "变体精灵·变形",
+  "context": {
+   "description_en": "Morphling changes his form to match the targeted enemy, gaining their basic abilities and changing his primary attribute based on his target. Can be toggled for the duration of the ability.",
+   "description_zh": "使自身向敌方目标改变，获得其基础技能，并且基于目标改变自己的主属性。技能持续时间内可以来回切换。",
+   "notes_en": [
+    "You can't target yourself with Morph.",
+    "Morph won't copy Shard/Scepter abilities unless Morphling owns the respective item.",
+    "Does not trigger spell reflect."
+   ],
+   "notes_zh": [
+    "变体精灵自身及其控制的单位不能作为变形的目标。",
+    "变形不会复制魔晶/神杖类技能，除非变体精灵自身也拥有相应物品。",
+    "不会触发法术反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Adds an alt-cast to Morph. When enabled, a strong illusion is created of the target hero that can cast all of the hero's basic abilities. If the illusion is alive when Morphling toggles the ability, he will take the place of the illusion, destroying it.",
+     "zh": "变形增加多样施法（右键点击技能栏图标）。开启后会产生目标英雄的强幻象，可以施放英雄的所有基础技能。如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。"
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "c4c9a19f3fd010964b01",
+  "subject": "phantom_assassin_phantom_strike",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "幻影刺客·幻影突袭",
+  "context": {
+   "description_en": "Teleports to a unit, friendly or enemy, and grants bonus attack speed while attacking if it's an enemy unit.",
+   "description_zh": "传送到一个单位身旁，敌我皆可，如果目标是敌方单位将进行攻击并获得攻速加成。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "9651e7885caaf7fd1553",
+  "subject": "pugna_decrepify",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "帕格纳·衰老",
+  "context": {
+   "description_en": "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked. Healing on affected allies is increased, while afflicted enemies take extra magic damage instead.",
+   "description_zh": "一个强大的驱逐咒语，能使一个单位进入虚无状态，无法攻击或受到攻击。受作用的友军提升了治疗效果，而受作用的敌军会被减速，并且承受额外魔法伤害。",
+   "notes_en": [
+    "Only magical and pure damage can affect a unit under the effects of Decrepify.",
+    "Doesn't slow allied units.",
+    "Can be used on your Nether Ward."
+   ],
+   "notes_zh": [
+    "只有魔法伤害和纯粹伤害可以作用于处于衰老状态的单位。",
+    "不会对友方单位造成减速。",
+    "可以对幽冥守卫施放。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "4c3b3d12268fa524a4c9",
+  "subject": "riki_blink_strike",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "力丸·闪烁突袭",
+  "context": {
+   "description_en": "Teleports behind the target unit, momentarily slowing them by %slow_pct_tooltip%%% and attacking them with bonus damage if it is an enemy.",
+   "description_zh": "传送到目标背后，如果是敌人对其造成%slow_pct_tooltip%%%短暂减速，并发动一次拥有额外伤害的攻击。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "251928b0c922f222fa95",
+  "subject": "snapfire_gobble_up",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "电炎绝手·血盆大口",
+  "context": {
+   "description_en": "Mortimer gobbles up a creep or an allied hero, which he can then spit towards enemies. The unit stays in his belly up to %max_time_in_belly% seconds.",
+   "description_zh": "小莫迪吞下一个小兵或一名友方英雄，再朝敌人吐出。单位停留在他肚子里最多可达%max_time_in_belly%秒。",
+   "notes_en": [
+    "Snapfire earns the creep's bounty after it has been spat out and died."
+   ],
+   "notes_zh": [
+    "电炎绝手在小兵被吐出并阵亡后获得相应的金钱。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f3812578fb020dccb842",
+  "subject": "tiny_toss",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_RUNE_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "小小·投掷",
+  "context": {
+   "description_en": "Grabs the nearest unit in a %grab_radius% radius around Tiny, ally or enemy, and launches it at the target unit or rune to deal damage where they land.",
+   "description_zh": "抓起小小身旁%grab_radius%范围内最近的单位，不论敌友，扔向目标单位或神符，落地时将造成伤害。",
+   "notes_en": [
+    "You can toss allies, but they don't take damage.",
+    "Toss deals 33% of its damage to buildings.",
+    "Debuff Immune units can be targeted but cannot be tossed.",
+    "Flight time is %duration%s."
+   ],
+   "notes_zh": [
+    "你可以投掷队友，但他们不会受到伤害。",
+    "投掷对建筑物造成33%的伤害。",
+    "可以对减益免疫单位施放，但是不能将他们扔起，或对他们造成伤害。",
+    "飞行时间是%duration%秒。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "0e76b524b220e0cbf3bd",
+  "subject": "tiny_tree_grab",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "小小·抓树",
+  "context": {
+   "description_en": "Grabs a tree and causes Tiny to have bonus range, damage, and a splashing attack for a limited number of attacks.  The tree can be thrown, to deal your attack to a unit at a distance.",
+   "description_zh": "抓起一棵树，使小小在有限次数的攻击里获得攻击距离加成、攻击力加成和溅射攻击。可以将树木扔出，对远距离的敌人造成攻击伤害。",
+   "notes_en": [
+    "The cooldown begins when the tree is thrown."
+   ],
+   "notes_zh": [
+    "树木扔出后技能进入冷却。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "fa957c2e0ea72b92fcb6",
+  "subject": "treant_eyes_in_the_forest",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_TREE"
+  },
+  "subject_zh": "树精卫士·丛林之眼",
+  "context": {
+   "description_en": "Treant Protector enchants a tree, which grants him unobstructed vision in that location. The eyes last for %duration% seconds and are invisible, but are destroyed if their host tree is destroyed or if they are attacked directly.",
+   "description_zh": "树精卫士对目标树木灌注魔力。注魔后树木将拥有周围的顺畅视野。树眼持续%duration%秒，为隐形状态，但是寄生的树木被摧毁或者树眼直接被攻击后都会被摧毁。",
+   "notes_en": [
+    "Being entangled by Overgrowth through enchanted trees from Eyes in the Forest does damage.",
+    "If the enemy has True Sight, they will be able to see which trees are enchanted."
+   ],
+   "notes_zh": [
+    "丛林之眼的树木产生的疯狂生长效果也可以造成伤害。",
+    "如果敌人拥有真实视域，他们将会发现被灌注魔力的树木。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ },
+ {
+  "review_id": "d5e57f0f93f66dedf40f",
+  "subject": "undying_soul_rip",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "不朽尸王·噬魂",
+  "context": {
+   "description_en": "Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy. Soul Rip can also be used to heal Tombstone.",
+   "description_zh": "不朽尸王从附近的所有单位身上扯出生命力，并使用它治疗队友或伤害敌人。可以使用噬魂治疗墓碑。",
+   "notes_en": [
+    "Can heal Tombstone, but can't heal or damage other buildings.",
+    "Does not rip from invisible units, invulnerable units, units in the fog of war, or spell immune enemies.",
+    "Does rip from spell immune allies, including zombies."
+   ],
+   "notes_zh": [
+    "可以治疗墓碑，但是不能治疗或伤害其他建筑。",
+    "不会扯出隐身单位、无敌单位、战争迷雾内单位或减益免疫敌人的生命力。",
+    "可以扯出减益免疫友军，包括僵尸的生命力。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "aabbcefa3e2158a644a7",
+  "subject": "vengefulspirit_nether_swap",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+  "lead": "behavior_unit_target",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "复仇之魂·移形换位",
+  "context": {
+   "description_en": "Instantaneously swaps positions with a target Hero, friend or enemy. Nether Swap interrupts channeling abilities on the target. Enemy Swapped units take damage. Vengeful Spirit and allied swapped units gain a barrier equal to the damage dealt.",
+   "description_zh": "与一个目标英雄瞬间交换位置，不论敌我。移形换位会打断目标的持续施法。敌方英雄被交换后受到伤害。复仇之魂和被交换的友方英雄都会获得等同于造成伤害的护盾。",
+   "notes_en": [
+    "Works on Spell Immune units.",
+    "Trees near Vengeful Spirit and the target will be destroyed when the spell is cast.",
+    "Channeling spells are interrupted by Nether Swap."
+   ],
+   "notes_zh": [
+    "对减益免疫单位有效。",
+    "技能施放后复仇之魂和目标附近的树木将会被摧毁。",
+    "移形换位能够打断持续施法。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "20cd1f491f00654b634a",
+  "subject": "broodmother_sticky_snare",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "需要持续引导，被打断即停止",
+  "definition_note": "",
+  "lead": "behavior_channelled",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_CHANNELLED ",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "subject_zh": "育母蜘蛛·蛛纱陷阱",
+  "context": {
+   "description_en": "Broodmother may create up to %count% invisible web lines touching any existing web. Enemy Heroes that cross the web line will spring the trap, becoming rooted, revealed in fog, and take damage over time.  Multiple Heroes can trip on the same line until it's destroyed after being initially triggered.  Broodmother's team is alerted via the minimap when an enemy has triggered the snare.",
+   "description_zh": "育母蜘蛛可以制造出最多%count%个触碰已有蛛网的隐形网线。敌方英雄穿过网线将会触发陷阱，被缠绕，在战争迷雾中显形，并持续受到伤害。网线一开始被触发后，多名英雄还可以在同根网线上被绊倒，直到网线被摧毁。只要有人触发陷阱，育母蜘蛛的队友就会在小地图上发现。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "3a8055b9f2959a6fb099",
+  "subject": "shadow_shaman_shackles",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "需要持续引导，被打断即停止",
+  "definition_note": "",
+  "lead": "behavior_channelled",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC",
+   "AbilityChannelTime": "2.4 3.0 3.6 4.2"
+  },
+  "subject_zh": "暗影萨满·枷锁",
+  "context": {
+   "description_en": "CHANNELED - Magically binds an enemy unit so that it cannot move or attack, absorbing their life energy over time.",
+   "description_zh": "持续施法 - 使用魔法绑住一个敌方单位，使其无法攻击和移动，同时持续吸取他们的生命能量。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increase cast range. Every %scepter_shock_interval% seconds, shackled units emit a radial Ether Shock hitting all other units within %scepter_shock_radius% of the target for %scepter_shock_pct%%% of Ether Shock's normal damage. Shackles can now also be cast on allies and Mass Serpent Wards that stay within %ally_break_range% units of Shadow Shaman. Allied units are not disabled by Shackle.",
+     "zh": "提升施法距离。被绑住的单位每%scepter_shock_interval%秒会释放一次辐射状的苍穹震击，作用于%scepter_shock_radius%范围内其他所有单位，造成伤害的数值为%scepter_shock_pct%%%苍穹震击普通伤害。另外还能使枷锁可以对暗影萨满附近%ally_break_range%范围内的友军和群蛇守卫施放。友方单位不会被控制。"
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "384ae8c85096142ee255",
+  "subject": "chen_hand_of_god",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "需要持续引导，被打断即停止",
+  "definition_note": "",
+  "lead": "text_without_channelled_field",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "subject_zh": "陈·上帝之手",
+  "context": {
+   "description_en": "Heals all allied heroes on the map as well as all units under Chen's control. A large heal is applied at first and a slow heal over time is applied for %hot_duration% seconds afterwards.",
+   "description_zh": "治疗地图上的所有友军英雄以及陈控制的所有单位。一开始先施加高额治疗，在之后%hot_duration%秒内持续进行小额治疗。",
+   "notes_en": [
+    "Can heal invulnerable and hidden/banished allies."
+   ],
+   "notes_zh": [
+    "可以治疗无敌和被隐藏/放逐友军。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases the cooldown of Hand of God to %AbilityCooldown%s and it becomes a channelled spell that lasts for up to %AbilityChannelTime% seconds. The initial heal happens at the start of the channel, and while channeling other nearby allied units become debuff immune with %debuff_immune_resist%%% magic resistance and the power of the heal over time is increased by %nearby_hot_boost%%%.",
+     "zh": "上帝之手的冷却时间降低至%AbilityCooldown%秒，并且变为持续施法型技能，持续最多%AbilityChannelTime%秒。初始治疗会在持续施法起始时发生，持续施法期间其他附近友方单位变为减益免疫状态，拥有%debuff_immune_resist%%%魔法抗性，而且持续治疗的威力提升%nearby_hot_boost%%%。"
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "ea4ef565b09cfacaaf80",
+  "subject": "abyssal_underlord_dark_portal",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "需要持续引导，被打断即停止",
+  "definition_note": "",
+  "lead": "text_without_channelled_field",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING "
+  },
+  "subject_zh": "孽主·恶魔之扉",
+  "context": {
+   "description_en": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side. Portals have to be at least %minimum_distance% away from each other.",
+   "description_zh": "打开2个传送门，一个在孽主身旁，另一个在目标地点。英雄可以对一个传送门持续施法%warp_channel_duration%秒，传送至另一端。传送门之间的距离必须超过%minimum_distance%。",
+   "notes_en": [
+    "Double-click to teleport to your team's base, in front of your fountain"
+   ],
+   "notes_zh": [
+    "双击会在己方基地的泉水前打开另一个传送门。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Summons a Pit of Malice around each of the portals. Reduces cooldown.",
+     "zh": "在传送门两端各召唤一个怨念深渊。减少冷却时间。"
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "0fc35ad3f5e2986dec11",
+  "subject": "meepo_poof",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "需要持续引导，被打断即停止",
+  "definition_note": "",
+  "lead": "text_without_channelled_field",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO",
+   "AbilityChannelTime": "0.0"
+  },
+  "subject_zh": "米波·忽悠",
+  "context": {
+   "description_en": "Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for %cast_duration% seconds, damaging the enemy in both the departure and arrival locations. If the ability is in alt-cast state, all Meepos will also cast Poof to the target. When cast on the ground, all Meepos except the selected one will Poof to the closest location.",
+   "description_zh": "通过从大地中汲取神秘的能量，一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处，在离开和到达的区域都对敌人造成伤害。如果技能设为多样施法（右键点击技能栏图标）状态，所有米波也会对目标施放忽悠。对地施放后，除了选中的米波外所有米波会忽悠至最近的地点。",
+   "notes_en": [
+    "Can be cast through the minimap.",
+    "Can teleport to Meepo illusions."
+   ],
+   "notes_zh": [
+    "可以点击小地图施放。",
+    "可以传送至米波的幻象。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "9e949769eb4cc3eaecb8",
+  "subject": "monkey_king_tree_dance",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "需要持续引导，被打断即停止",
+  "definition_note": "",
+  "lead": "text_without_channelled_field",
+  "game_file_values": {},
+  "game_file_labels": {},
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_TREE"
+  },
+  "subject_zh": "齐天大圣·丛林之舞",
+  "context": {
+   "description_en": "Monkey King jumps to a tree and perches atop it. While perched, he gains the Primal Spring ability-a channeled leap attack. If Monkey King's tree is destroyed, he falls and is stunned for %unperched_stunned_duration%s. Taking damage while on the ground puts Tree Dance on cooldown.",
+   "description_zh": "齐天大圣跳上一棵树并停在上面。停留时获得乾坤之跃技能——需要持续施法的跳跃式攻击。如果树木被摧毁，他将从树上掉下，并眩晕%unperched_stunned_duration%秒。在地面受到伤害时丛林之舞将在一定时间内无法使用，处于冷却状态。",
+   "notes_en": [
+    "Tree Dance cooldown starts upon landing.",
+    "Right-clicking the ground will have Monkey King drop from the tree.",
+    "Movement is interrupted if Monkey King is stunned, hexed or banished."
+   ],
+   "notes_zh": [
+    "丛林之舞在落地时进入冷却。",
+    "右键点击地面后齐天大圣会从树上跳下。",
+    "齐天大圣受到眩晕、妖术或放逐作用时位移都会被打断。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ }
+]

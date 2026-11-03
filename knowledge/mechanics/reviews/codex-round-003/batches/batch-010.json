@@ -1,0 +1,1818 @@
+[
+{
+"review_id": "dc694b843716baff31ed",
+"subject": "magic_stick",
+"subject_zh": "魔棒",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Instantly restores 15 health and mana per charge stored.",
+"value": "Instantly restores 15 health and mana per charge stored.\n\n Max 10 charges. Gains a charge whenever a visible enemy within 1200 range uses an ability.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/magic_stick/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Gains charges for spells cast by visible enemies in 1200 range.\nCertain abilities and item abilities will not add charges.",
+"lore": "A simple wand used to channel magic energies, it is favored by apprentice wizards and great warlocks alike."
+}
+]
+},
+{
+"review_id": "e09f616d2e6ba68133cf",
+"subject": "lion_mana_drain",
+"subject_zh": "莱恩·法力吸取",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。",
+"value": "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。如果敌人没有魔法剩余，减速效果提升%movespeed_bonus_when_empty_pct%%%。可以对友军施放，给予他们%ally_pct%%%魔法和移动速度。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/25/abilities/2/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Mana Drain",
+"name_zh": "法力吸取",
+"description_en": "CHANNELED - Channels magical energy, taking mana and slowing enemies over time. If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%.  Can target allies to give them mana and movement speed at a %ally_pct%%% rate.",
+"description_zh": "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。如果敌人没有魔法剩余，减速效果提升%movespeed_bonus_when_empty_pct%%%。可以对友军施放，给予他们%ally_pct%%%魔法和移动速度。",
+"notes_en": [
+"Prevents heroes from going invisible."
+],
+"notes_zh": [
+"阻止英雄进入隐身状态。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Causes Mana Drain to affect up to %shard_bonus_targets% additional enemies and increases break distance. Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.",
+"zh": "法力吸取可以作用最多%shard_bonus_targets%个额外敌人，并且断裂距离增加。持续施法期间莱恩为减益免疫状态，并且获得%magic_resist%%%魔法抗性。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134217864",
+"damage": 0,
+"dispellable": 3,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "fb1b9d7f0bfd056a43d2",
+"subject": "templar_assassin_inner_peace",
+"subject_zh": "圣堂刺客·心怀安宁",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "原地不动且未受到伤害超过%time_until_meditation%秒后，圣堂刺客开始冥想，获得生命恢复和魔法恢复加成，冥想%time_until_max_bonus%秒后达到最大加成。",
+"value": "原地不动且未受到伤害超过%time_until_meditation%秒后，圣堂刺客开始冥想，获得生命恢复和魔法恢复加成，冥想%time_until_max_bonus%秒后达到最大加成。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/44/abilities/5/description_zh"
+}
+},
+{
+"quote": "When remaining stationary and not taking damage for %time_until_meditation%s, Templar Assassin begins meditating, gaining health and mana regeneration, reaching the maximum bonus after %time_until_max_bonus%s of meditating.",
+"value": "When remaining stationary and not taking damage for %time_until_meditation%s, Templar Assassin begins meditating, gaining health and mana regeneration, reaching the maximum bonus after %time_until_max_bonus%s of meditating.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/44/abilities/5/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Inner Peace",
+"name_zh": "心怀安宁",
+"description_en": "When remaining stationary and not taking damage for %time_until_meditation%s, Templar Assassin begins meditating, gaining health and mana regeneration, reaching the maximum bonus after %time_until_max_bonus%s of meditating.",
+"description_zh": "原地不动且未受到伤害超过%time_until_meditation%秒后，圣堂刺客开始冥想，获得生命恢复和魔法恢复加成，冥想%time_until_max_bonus%秒后达到最大加成。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8796093022274",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "1ce7199620358c6dbfce",
+"subject": "crystal_maiden_glacial_guard",
+"subject_zh": "水晶室女·冰川护体",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "A portion of the mana Crystal Maiden spends on her abilities is converted into a physical barrier.",
+"value": "A portion of the mana Crystal Maiden spends on her abilities is converted into a physical barrier.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/4/abilities/4/description_en"
+}
+},
+{
+"quote": "水晶室女消耗在她技能上的一部分魔法会转化为物理护盾。",
+"value": "水晶室女消耗在她技能上的一部分魔法会转化为物理护盾。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/4/abilities/4/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Glacial Guard",
+"name_zh": "冰川护体",
+"description_en": "A portion of the mana Crystal Maiden spends on her abilities is converted into a physical barrier.",
+"description_zh": "水晶室女消耗在她技能上的一部分魔法会转化为物理护盾。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "562949953421315",
+"damage": 0,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "287d0bfe2c98176493f0",
+"subject": "sven_warcry",
+"subject_zh": "斯温·战吼",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "shard_upgrade",
+"requires_scepter": false,
+"requires_shard": true
+},
+"evidence": [
+{
+"quote": "Warcry is now undispellable and provides a %base_barrier_amount% physical damage barrier.",
+"value": "Increases radius and bonus movement speed. Warcry is now undispellable and provides a %base_barrier_amount% physical damage barrier.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/17/abilities/2/upgrade_text/shard_loc/en"
+}
+},
+{
+"quote": "现在战吼不可驱散，并提供%base_barrier_amount%点物理伤害护盾。",
+"value": "提升作用范围和移动速度加成。现在战吼不可驱散，并提供%base_barrier_amount%点物理伤害护盾。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/17/abilities/2/upgrade_text/shard_loc/zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Warcry",
+"name_zh": "战吼",
+"description_en": "Sven's Warcry heartens his allied heroes for battle, increasing their armor and movement speed. Lasts %duration% seconds.",
+"description_zh": "斯温的战吼激励着同伴作战，提升他们的护甲和移动速度。持续%duration%秒。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Increases radius and bonus movement speed. Warcry is now undispellable and provides a %base_barrier_amount% physical damage barrier.",
+"zh": "提升作用范围和移动速度加成。现在战吼不可驱散，并提供%base_barrier_amount%点物理伤害护盾。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2052",
+"damage": 0,
+"dispellable": 2,
+"immunity": 1,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "54a8041616495ab6f4ad",
+"subject": "pipe",
+"subject_zh": "洞察烟斗",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Gives a magic damage barrier that absorbs 425 damage to all nearby allies.",
+"value": "Gives a magic damage barrier that absorbs 425 damage to all nearby allies. Lasts 8 seconds.\n\nRadius: 1200",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/pipe/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Barrier does not affect units that have been affected by Barrier within Pipe of Insight's cooldown.\nStacks multiplicatively with other sources of magic resistance.",
+"lore": "A powerful artifact of mysterious origin, it creates barriers against magical forces."
+}
+]
+},
+{
+"review_id": "65b3103d3fcdb3e8f522",
+"subject": "treant_living_armor",
+"subject_zh": "树精卫士·活体护甲",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "If the damage block is decreased to 0, the buff is removed early.",
+"value": "Infuses the target hero or structure with a protective coating which heals the target and blocks damage from player-controlled sources. Each time this spell blocks damage, the block amount is decreased. If the damage block is decreased to 0, the buff is removed early.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/81/abilities/2/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Living Armor",
+"name_zh": "活体护甲",
+"description_en": "Infuses the target hero or structure with a protective coating which heals the target and blocks damage from player-controlled sources. Each time this spell blocks damage, the block amount is decreased. If the damage block is decreased to 0, the buff is removed early.",
+"description_zh": "将目标英雄或建筑笼罩在保护性外壳中，治疗目标并格挡来自玩家控制来源的伤害。每次本技能格挡伤害后，下次的伤害格挡量都会减少。如果伤害格挡量降至0，加成效果会提前移除。",
+"notes_en": [
+"Instances of damage less than %damage_block_threshold% are ignored."
+],
+"notes_zh": [
+"低于%damage_block_threshold%点的伤害会被无视。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Increases the Damage Blocked by Living Armor. Treant now also passively benefits from Living Armor, with the damage block resetting after not taking damage for %passive_reset_cd% seconds.",
+"zh": "提升活体护甲的伤害格挡量。树精卫士现在还会被动获得活体护甲的加成效果，%passive_reset_cd%秒内未受到伤害后伤害格挡量会重置。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "24",
+"damage": 0,
+"dispellable": 2,
+"immunity": 1,
+"max_level": 4,
+"target_team": 1,
+"target_type": 23,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "8b64c6b15da1e5814a65",
+"subject": "shredder_reactive_armor",
+"subject_zh": "伐木机·活性护甲",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "scepter_upgrade",
+"requires_scepter": true,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "After %duration% seconds, Timbersaw deals damage to every hero within %explosion_radius% radius equal to %base_explosion% + his remaining barrier amount and loses all of his barrier.",
+"value": "Reactive Armor can now be activated to get max stacks and %initial_shield% damage barrier. Grants Timbersaw %shield_per_sec% + %shield_per_sec_per_enemy% barrier amount per second for each enemy hero within %radius% radius of Timbersaw up to a maximum of %max_shield%. After %duration% seconds, Timbersaw deals damage to every hero within %explosion_radius% radius equal to %base_explosion% + his remaining barrier amount and loses all of his barrier.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/96/abilities/2/upgrade_text/scepter_loc/en"
+}
+},
+{
+"quote": "护盾的恢复速度为每秒%shield_per_sec% + 伐木机%radius%范围内每名敌方英雄都会增加%shield_per_sec_per_enemy%，最高为%max_shield%。",
+"value": "活性护甲可以主动施放，获得最大叠加次数和%initial_shield%点生命的护盾。护盾的恢复速度为每秒%shield_per_sec% + 伐木机%radius%范围内每名敌方英雄都会增加%shield_per_sec_per_enemy%，最高为%max_shield%。%duration%秒后伐木机会对%explosion_radius%范围内每个英雄造成伤害，数值为%base_explosion% + 护盾剩余生命，而且失去全部护盾。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/96/abilities/2/upgrade_text/scepter_loc/zh"
+}
+},
+{
+"quote": "Reactive Armor can now be activated to get max stacks and %initial_shield% damage barrier.",
+"value": "Reactive Armor can now be activated to get max stacks and %initial_shield% damage barrier. Grants Timbersaw %shield_per_sec% + %shield_per_sec_per_enemy% barrier amount per second for each enemy hero within %radius% radius of Timbersaw up to a maximum of %max_shield%. After %duration% seconds, Timbersaw deals damage to every hero within %explosion_radius% radius equal to %base_explosion% + his remaining barrier amount and loses all of his barrier.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/96/abilities/2/upgrade_text/scepter_loc/en"
+}
+},
+{
+"quote": "活性护甲可以主动施放，获得最大叠加次数和%initial_shield%点生命的护盾。",
+"value": "活性护甲可以主动施放，获得最大叠加次数和%initial_shield%点生命的护盾。护盾的恢复速度为每秒%shield_per_sec% + 伐木机%radius%范围内每名敌方英雄都会增加%shield_per_sec_per_enemy%，最高为%max_shield%。%duration%秒后伐木机会对%explosion_radius%范围内每个英雄造成伤害，数值为%base_explosion% + 护盾剩余生命，而且失去全部护盾。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/96/abilities/2/upgrade_text/scepter_loc/zh"
+}
+},
+{
+"quote": "%duration%秒后伐木机会对%explosion_radius%范围内每个英雄造成伤害，数值为%base_explosion% + 护盾剩余生命，而且失去全部护盾。",
+"value": "活性护甲可以主动施放，获得最大叠加次数和%initial_shield%点生命的护盾。护盾的恢复速度为每秒%shield_per_sec% + 伐木机%radius%范围内每名敌方英雄都会增加%shield_per_sec_per_enemy%，最高为%max_shield%。%duration%秒后伐木机会对%explosion_radius%范围内每个英雄造成伤害，数值为%base_explosion% + 护盾剩余生命，而且失去全部护盾。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/96/abilities/2/upgrade_text/scepter_loc/zh"
+}
+},
+{
+"quote": "Grants Timbersaw %shield_per_sec% + %shield_per_sec_per_enemy% barrier amount per second for each enemy hero within %radius% radius of Timbersaw up to a maximum of %max_shield%.",
+"value": "Reactive Armor can now be activated to get max stacks and %initial_shield% damage barrier. Grants Timbersaw %shield_per_sec% + %shield_per_sec_per_enemy% barrier amount per second for each enemy hero within %radius% radius of Timbersaw up to a maximum of %max_shield%. After %duration% seconds, Timbersaw deals damage to every hero within %explosion_radius% radius equal to %base_explosion% + his remaining barrier amount and loses all of his barrier.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/96/abilities/2/upgrade_text/scepter_loc/en"
+}
+}
+],
+"context": [
+{
+"name_en": "Reactive Armor",
+"name_zh": "活性护甲",
+"description_en": "Each time Timbersaw is attacked, he gains increased health regen and armor. Hero attacks are counted as %stacks_per_hero_attack%x the amount.",
+"description_zh": "伐木机每受到一次物理攻击，他的生命恢复和护甲值都会提升。英雄攻击提供%stacks_per_hero_attack%倍提升。",
+"notes_en": [
+"Break disables the gaining of new stacks.",
+"Break does not disable the bonuses from existing stacks."
+],
+"notes_zh": [
+"破坏会使技能无法获得新的叠加效果。",
+"破坏不会使现有叠加效果提供的加成失效。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Reactive Armor can now be activated to get max stacks and %initial_shield% damage barrier. Grants Timbersaw %shield_per_sec% + %shield_per_sec_per_enemy% barrier amount per second for each enemy hero within %radius% radius of Timbersaw up to a maximum of %max_shield%. After %duration% seconds, Timbersaw deals damage to every hero within %explosion_radius% radius equal to %base_explosion% + his remaining barrier amount and loses all of his barrier.",
+"zh": "活性护甲可以主动施放，获得最大叠加次数和%initial_shield%点生命的护盾。护盾的恢复速度为每秒%shield_per_sec% + 伐木机%radius%范围内每名敌方英雄都会增加%shield_per_sec_per_enemy%，最高为%max_shield%。%duration%秒后伐木机会对%explosion_radius%范围内每个英雄造成伤害，数值为%base_explosion% + 护盾剩余生命，而且失去全部护盾。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2",
+"damage": 2,
+"dispellable": 3,
+"immunity": 0,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "9688b836a476295ad496",
+"subject": "consecrated_wraps",
+"subject_zh": "圣化护服",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "item",
+"item_ability_type": "passive",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Whenever you take damage from a player-controlled source or Roshan, consume all charges to gain an all damage barrier for 5s that absorbs 120 damage per charge (360 max).",
+"value": "Gain a charge every 4s, up to a maximum of 3 charges. Upon gaining a charge, your movement speed is increased by 15% for 5s.\n\nWhenever you take damage from a player-controlled source or Roshan, consume all charges to gain an all damage barrier for 5s that absorbs 120 damage per charge (360 max).",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/consecrated_wraps/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Charges cannot be gained for 4s after you take damage from a player-controlled source or Roshan.\nSelf-damage and HP Loss damage cannot remove charges.\nMovement speed buff does not stack."
+}
+]
+},
+{
+"review_id": "a21820793ab04c0c5693",
+"subject": "visage_gravekeepers_cloak",
+"subject_zh": "维萨吉·陵卫斗篷",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Visage generates a layered barrier that protects him from damage.",
+"value": "Visage generates a layered barrier that protects him from damage.  If he receives damage from a player, one layer is removed, and takes time to recover.Visage's Familiars are protected by his cloak when within %radius% range of him, based on the number of layers Visage has.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/90/abilities/2/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Gravekeeper's Cloak",
+"name_zh": "陵卫斗篷",
+"description_en": "Visage generates a layered barrier that protects him from damage.  If he receives damage from a player, one layer is removed, and takes time to recover.Visage's Familiars are protected by his cloak when within %radius% range of him, based on the number of layers Visage has.",
+"description_zh": "维萨吉产生数层屏障来保护他，降低受到的伤害。每当他受到来自玩家的伤害，就会失去一层屏障，失去的屏障需要一定时间才能恢复。维萨吉的佣兽在%radius%范围内也会受到斗篷的保护，承伤降低的数值取决于维萨吉拥有的层数。",
+"notes_en": [
+"Each time Visage receives damage greater than the Minimum Damage that was not self-inflicted and was from a player owned source, a layer is removed.",
+"Familiars within %radius% range of Visage will receive the current damage reduction from Gravekeeper's Cloak.",
+"Break disables the gaining of new stacks.",
+"Break does not disable the bonuses from existing stacks."
+],
+"notes_zh": [
+"每次维萨吉受到来自其他玩家的伤害超过最小伤害时，保护层就会移除一层。",
+"佣兽在维萨吉周围%radius%范围内将获得当前陵卫斗篷的承伤降低效果。",
+"破坏会使技能无法获得新的叠加效果。",
+"破坏不会使现有叠加效果提供的加成失效。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Gains an active component, allowing Visage to use Stone Form, stunning enemies for 0.8 / 1.0 / 1.2 seconds in an 375 area around it, dealing 60 / 100 / 140 damage and becoming invulnerable for 6 seconds.  Restores up to %shard_hp_restoration_pct%%% of your health.",
+"zh": "获得主动效果，维萨吉可以化作石像形态，对身边375范围内的敌人造成0.8/1.0/1.2秒眩晕，同时造成60/100/140点伤害，获得6秒无敌状态。最多恢复%shard_hp_restoration_pct%%%生命值。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "add7c06a75f6759f1fa9",
+"subject": "solar_crest",
+"subject_zh": "炎阳纹章",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "When cast on an ally, grants them 5 armor, 60 attack speed, 15% movement speed and a 350 physical damage barrier.",
+"value": "When cast on an ally, grants them 5 armor, 60 attack speed, 15% movement speed and a 350 physical damage barrier. \n\nDoes not grant bonus armor, movement or attack speed if used on self. \n\nDuration: 7",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/solar_crest/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Shares cooldown with Pavise.",
+"lore": "A talisman forged to honor the daytime sky."
+}
+]
+},
+{
+"review_id": "cb2c3f6f91609387f4e2",
+"subject": "obsidian_destroyer_objurgation",
+"subject_zh": "殁境神蚀者·责难",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "施放后，殁境神蚀者获得全伤害护盾，数值为固定值 + 最大魔法值的一定百分比。",
+"value": "提升殁境神蚀者的最大魔法值。施放后，殁境神蚀者获得全伤害护盾，数值为固定值 + 最大魔法值的一定百分比。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/74/abilities/2/description_zh"
+}
+},
+{
+"quote": "When cast, protects Outworld Destroyer with an all damage barrier equal to a flat amount and a percentage of his maximum mana.",
+"value": "Increases Outworld Destroyer's maximum mana. When cast, protects Outworld Destroyer with an all damage barrier equal to a flat amount and a percentage of his maximum mana.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/74/abilities/2/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Objurgation",
+"name_zh": "责难",
+"description_en": "Increases Outworld Destroyer's maximum mana. When cast, protects Outworld Destroyer with an all damage barrier equal to a flat amount and a percentage of his maximum mana.",
+"description_zh": "提升殁境神蚀者的最大魔法值。施放后，殁境神蚀者获得全伤害护盾，数值为固定值 + 最大魔法值的一定百分比。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Increases max mana to barrier. Damage that would bring Outworld Destroyer below %automatic_trigger_threshold%%% health is prevented. When that happens, Outworld Destroyer receives a strong dispel and gains an undispellable instance of Objurgation. This effect cannot occur more than once every %automatic_trigger_cd% seconds.",
+"zh": "提升最大魔法值转为护盾的比例。阻止让殁境神蚀者的血量低于%automatic_trigger_threshold%%%的伤害。阻止生效时，殁境神蚀者获得一次强驱散，和不可驱散的责难效果。这个效果每%automatic_trigger_cd%秒只能触发一次。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2052",
+"damage": 0,
+"dispellable": 2,
+"immunity": 0,
+"max_level": 4,
+"target_team": 1,
+"target_type": 1,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "e07b592a711dcc6e45cd",
+"subject": "ursa_enrage",
+"subject_zh": "熊战士·激怒",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "乌尔萨进入狂怒状态，承受的伤害降低并获得状态抗性。",
+"value": "乌尔萨进入狂怒状态，承受的伤害降低并获得状态抗性。施放时将移除所受的负面效果。\n\n驱散类型：强驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/68/abilities/4/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Enrage",
+"name_zh": "激怒",
+"description_en": "Ursa goes into a frenzy, providing damage reduction and status resistance. Removes any existing debuffs.\n\nDISPEL TYPE: Strong Dispel",
+"description_zh": "乌尔萨进入狂怒状态，承受的伤害降低并获得状态抗性。施放时将移除所受的负面效果。\n\n驱散类型：强驱散",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Reduces cooldown and allows Ursa to use Enrage while disabled.",
+"zh": "减少冷却时间，而且熊战士可以在被控制的状态下使用激怒。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2052",
+"damage": 0,
+"dispellable": 3,
+"immunity": 3,
+"max_level": 3,
+"target_team": 0,
+"target_type": 0,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "e531761c1a75af3bcc9b",
+"subject": "luna_lunar_orbit",
+"subject_zh": "露娜·环月",
+"mechanism": "damage_block",
+"mechanism_zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+"definition_note": "U33、U35：延迟伤害算减伤",
+"condition": {
+"context": "shard_upgrade",
+"requires_scepter": false,
+"requires_shard": true
+},
+"evidence": [
+{
+"quote": "提升伤害降低效果。",
+"value": "提升伤害降低效果。开启时，露娜获得%bonus_movement_speed%%%移动速度加成。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/46/abilities/1/upgrade_text/shard_loc/zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Lunar Orbit",
+"name_zh": "环月",
+"description_en": "Creates %rotating_glaives% glaives that rotate %rotating_glaives_movement_radius% radius around Luna. Any enemy unit that collides with a glaive will take a percentage of Luna's Attack Damage.",
+"description_zh": "产生%rotating_glaives%个月刃在露娜身旁%rotating_glaives_movement_radius%范围内旋转。任何碰到月刃的敌方单位都会受到露娜攻击伤害的一定百分比。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Increases damage reduction. While active, Luna gains %bonus_movement_speed%%% bonus movement speed.",
+"zh": "提升伤害降低效果。开启时，露娜获得%bonus_movement_speed%%%移动速度加成。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8390660",
+"damage": 1,
+"dispellable": 3,
+"immunity": 3,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "136a2bf4ccc72b44160e",
+"subject": "legion_commander_press_the_attack",
+"subject_zh": "军团指挥官·强攻",
+"mechanism": "applies_strong_dispel",
+"mechanism_zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "驱散类型：强驱散",
+"value": "移除友方目标单位的负面效果和控制技能，并提升其移动速度和生命恢复，持续一定时间。\n\n驱散类型：强驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/102/abilities/1/description_zh"
+}
+},
+{
+"quote": "DISPEL TYPE: Strong Dispel",
+"value": "Removes debuffs and disables from the target friendly unit, and grants bonus movement speed and health regen for a short time.\n\nDISPEL TYPE: Strong Dispel",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/102/abilities/1/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Press The Attack",
+"name_zh": "强攻",
+"description_en": "Removes debuffs and disables from the target friendly unit, and grants bonus movement speed and health regen for a short time.\n\nDISPEL TYPE: Strong Dispel",
+"description_zh": "移除友方目标单位的负面效果和控制技能，并提升其移动速度和生命恢复，持续一定时间。\n\n驱散类型：强驱散",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Increases movement speed and becomes an %radius% area of effect ability, and always affects Legion Commander when used.",
+"zh": "提升移动速度，变为%radius%范围型技能，而且使用时总是会作用于军团指挥官。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 0,
+"dispellable": 2,
+"immunity": 2,
+"max_level": 4,
+"target_team": 1,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "355fa674836ea818ae86",
+"subject": "oracle_false_promise",
+"subject_zh": "神谕者·虚妄之诺",
+"mechanism": "applies_strong_dispel",
+"mechanism_zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "驱散类型：强驱散",
+"value": "暂时篡改队友的命运，技能期间受到的任何治疗和伤害效果将在虚妄之诺结束后结算，其中治疗效果结算时效果更强。施放时将移除目标身上大部分的负面状态效果。\n\n驱散类型：强驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/107/abilities/4/description_zh"
+}
+},
+{
+"quote": "DISPEL TYPE: Strong Dispel",
+"value": "Temporarily alters an ally's destiny, delaying any healing or damage taken until False Promise ends. Any healing that is delayed by False Promise is amplified. Removes most negative status effects and disables on initial cast.\n\nDISPEL TYPE: Strong Dispel",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/107/abilities/4/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "False Promise",
+"name_zh": "虚妄之诺",
+"description_en": "Temporarily alters an ally's destiny, delaying any healing or damage taken until False Promise ends. Any healing that is delayed by False Promise is amplified. Removes most negative status effects and disables on initial cast.\n\nDISPEL TYPE: Strong Dispel",
+"description_zh": "暂时篡改队友的命运，技能期间受到的任何治疗和伤害效果将在虚妄之诺结束后结算，其中治疗效果结算时效果更强。施放时将移除目标身上大部分的负面状态效果。\n\n驱散类型：强驱散",
+"notes_en": [
+"Delayed damage and healing will take armor and magic resistance reductions into account when received.",
+"The delayed damage and healing takes effect as soon as the target becomes vulnerable."
+],
+"notes_zh": [
+"伤害和治疗效果虽然被延缓结算，但是结算时依然会考虑护甲和魔法抗性的减免。",
+"经过延缓的伤害和治疗效果在目标失去本技能效果后立刻结算。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 0,
+"dispellable": 3,
+"immunity": 1,
+"max_level": 3,
+"target_team": 1,
+"target_type": 1,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "b3792bc9cfa0a763b57c",
+"subject": "phoenix_supernova",
+"subject_zh": "凤凰·超新星",
+"mechanism": "applies_strong_dispel",
+"mechanism_zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "驱散类型：强驱散",
+"value": "凤凰十分乐意终结自己现在的生命来换取重生。将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。恒星受到敌方英雄一定次数的攻击后将会被摧毁。经过%abilityduration%秒后恒星将会爆炸，眩晕周围所有敌人。而凤凰的生命和魔法值都会回到满状态，并且所有技能的冷却时间都会刷新。\n\n驱散类型：强驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/106/abilities/4/description_zh"
+}
+},
+{
+"quote": "DISPEL TYPE: Strong Dispel",
+"value": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n\nDISPEL TYPE: Strong Dispel",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/106/abilities/4/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Supernova",
+"name_zh": "超新星",
+"description_en": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n\nDISPEL TYPE: Strong Dispel",
+"description_zh": "凤凰十分乐意终结自己现在的生命来换取重生。将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。恒星受到敌方英雄一定次数的攻击后将会被摧毁。经过%abilityduration%秒后恒星将会爆炸，眩晕周围所有敌人。而凤凰的生命和魔法值都会回到满状态，并且所有技能的冷却时间都会刷新。\n\n驱散类型：强驱散",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Increases number of attacks to destroy Supernova and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together.",
+"zh": "摧毁超新星所需的攻击次数增加，凤凰可以对友方英雄施放超新星，使双方共同变为恒星进行重生。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "33554436",
+"damage": 2,
+"dispellable": 3,
+"immunity": 3,
+"max_level": 3,
+"target_team": 1,
+"target_type": 1,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "bed86f2673e5f991f541",
+"subject": "slark_dark_pact",
+"subject_zh": "斯拉克·黑暗契约",
+"mechanism": "applies_strong_dispel",
+"mechanism_zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "DISPEL TYPE: Strong Dispel",
+"value": "After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes %self_damage_pct%%% of the damage.\n\nDISPEL TYPE: Strong Dispel",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/91/abilities/0/description_en"
+}
+},
+{
+"quote": "驱散类型：强驱散",
+"value": "短暂延迟后，斯拉克牺牲部分生命力，清除大部分负面状态并对自己和周围敌方单位造成伤害。斯拉克自身只受到造成伤害的%self_damage_pct%%%。\n\n驱散类型：强驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/91/abilities/0/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Dark Pact",
+"name_zh": "黑暗契约",
+"description_en": "After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes %self_damage_pct%%% of the damage.\n\nDISPEL TYPE: Strong Dispel",
+"description_zh": "短暂延迟后，斯拉克牺牲部分生命力，清除大部分负面状态并对自己和周围敌方单位造成伤害。斯拉克自身只受到造成伤害的%self_damage_pct%%%。\n\n驱散类型：强驱散",
+"notes_en": [
+"%delay% seconds after cast, a series of %total_pulses% pulses separated by %pulse_interval% seconds deal the damage.",
+"Each pulse also removes debuffs from Slark.",
+"You can't kill yourself with this skill.",
+"The pulses stop if Slark dies."
+],
+"notes_zh": [
+"经过%delay%秒施法延迟后，每隔%pulse_interval%秒释放1道伤害波造成伤害，总共%total_pulses%道。",
+"每道伤害波还会移除斯拉克身上的负面效果。",
+"不能使用此技能自杀。",
+"如果斯拉克死亡，伤害波将停止释放。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2052",
+"damage": 2,
+"dispellable": 0,
+"immunity": 4,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "f326696738e9506b9b76",
+"subject": "juggernaut_blade_fury",
+"subject_zh": "主宰·剑刃风暴",
+"mechanism": "applies_strong_dispel",
+"mechanism_zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "旋转结束时施加强驱散效果。",
+"value": "舞起具有破坏性力量的剑刃风暴，使主宰获得减益免疫状态，魔法抗性提升%immunity_resist%%%，并且每%blade_fury_damage_tick%秒对主宰周围的敌方单位造成伤害。旋转结束时施加强驱散效果。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/7/abilities/0/description_zh"
+}
+},
+{
+"quote": "Applies a strong dispel at the end of the spin.",
+"value": "Causes a bladestorm of destructive force around Juggernaut, rendering him debuff immune with %immunity_resist%%% magic resistance and dealing damage every %blade_fury_damage_tick%s to nearby enemy units. Applies a strong dispel at the end of the spin.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/7/abilities/0/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Blade Fury",
+"name_zh": "剑刃风暴",
+"description_en": "Causes a bladestorm of destructive force around Juggernaut, rendering him debuff immune with %immunity_resist%%% magic resistance and dealing damage every %blade_fury_damage_tick%s to nearby enemy units. Applies a strong dispel at the end of the spin.",
+"description_zh": "舞起具有破坏性力量的剑刃风暴，使主宰获得减益免疫状态，魔法抗性提升%immunity_resist%%%，并且每%blade_fury_damage_tick%秒对主宰周围的敌方单位造成伤害。旋转结束时施加强驱散效果。",
+"notes_en": [
+"You can use items during Blade Fury.",
+"Juggernaut can still perform attacks while in Blade Fury. However, only units that are not affected by Blade Fury, such as wards or structures, will take damage from these attacks."
+],
+"notes_zh": [
+"剑刃风暴期间可以使用物品。",
+"主宰在施放剑刃风暴的过程中依然可以进行物理攻击。但是只有不受剑刃风暴伤害的单位，如守卫和建筑才会受到这些物理伤害。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Increases radius and slows enemies in the area of effect. Juggernaut preforms an attack on affected enemies every %attack_interval%s.",
+"zh": "提升作用范围并减速范围内的敌人。主宰每%attack_interval%秒对作用的敌人发动一次攻击。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4196356",
+"damage": 2,
+"dispellable": 3,
+"immunity": 4,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "60a99ae539a64ab120c9",
+"subject": "spirit_breaker_greater_bash",
+"subject_zh": "裂魂人·巨力重击",
+"mechanism": "bash",
+"mechanism_zh": "重击",
+"definition": "攻击有概率眩晕目标",
+"definition_note": "",
+"condition": {
+"context": "scepter_upgrade",
+"requires_scepter": true,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "如果击退的敌人又撞到了一个敌人，这个敌人也会被重击（非英雄单位只受到%cascading_bashes_creep_penalty%%%伤害），并且原目标再次受到%cascading_bashes_damage_multiplier%%%的巨力重击伤害。",
+"value": "击退效果提升。如果击退的敌人又撞到了一个敌人，这个敌人也会被重击（非英雄单位只受到%cascading_bashes_creep_penalty%%%伤害），并且原目标再次受到%cascading_bashes_damage_multiplier%%%的巨力重击伤害。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/2/upgrade_text/scepter_loc/zh"
+}
+},
+{
+"quote": "If a knocked-back enemy collides with another enemy, the second enemy is bashed (creeps only receive %cascading_bashes_creep_penalty%%% damage), and the original target takes %cascading_bashes_damage_multiplier%%% of Greater Bash's damage again.",
+"value": "Increases knockback. If a knocked-back enemy collides with another enemy, the second enemy is bashed (creeps only receive %cascading_bashes_creep_penalty%%% damage), and the original target takes %cascading_bashes_damage_multiplier%%% of Greater Bash's damage again.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/2/upgrade_text/scepter_loc/en"
+}
+}
+],
+"context": [
+{
+"name_en": "Greater Bash",
+"name_zh": "巨力重击",
+"description_en": "Gives a chance to stun and knockback an enemy unit on an attack. Deals a percentage of movement speed as damage.",
+"description_zh": "攻击时有一定概率眩晕并击退敌方单位。重击的伤害值为移动速度的一定百分比。",
+"notes_en": [
+"Does not stack with Skull Basher.",
+"Break disables the passive percent Chance to Bash. Does not disable Greater Bash application from Charge of Darkness or Nether Strike."
+],
+"notes_zh": [
+"不与碎颅锤叠加。",
+"破坏会使攻击触发巨力重击失效。暗影冲刺或幽冥一击还是会施加巨力重击。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Increases knockback. If a knocked-back enemy collides with another enemy, the second enemy is bashed (creeps only receive %cascading_bashes_creep_penalty%%% damage), and the original target takes %cascading_bashes_damage_multiplier%%% of Greater Bash's damage again.",
+"zh": "击退效果提升。如果击退的敌人又撞到了一个敌人，这个敌人也会被重击（非英雄单位只受到%cascading_bashes_creep_penalty%%%伤害），并且原目标再次受到%cascading_bashes_damage_multiplier%%%的巨力重击伤害。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2",
+"damage": 2,
+"dispellable": 1,
+"immunity": 3,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "dfbe6bc76b82823c356e",
+"subject": "spirit_breaker_greater_bash",
+"subject_zh": "裂魂人·巨力重击",
+"mechanism": "bash",
+"mechanism_zh": "重击",
+"definition": "攻击有概率眩晕目标",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "暗影冲刺或幽冥一击还是会施加巨力重击。",
+"value": "破坏会使攻击触发巨力重击失效。暗影冲刺或幽冥一击还是会施加巨力重击。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/2/notes_zh/1"
+}
+},
+{
+"quote": "Break disables the passive percent Chance to Bash.",
+"value": "Break disables the passive percent Chance to Bash. Does not disable Greater Bash application from Charge of Darkness or Nether Strike.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/2/notes_en/1"
+}
+},
+{
+"quote": "破坏会使攻击触发巨力重击失效。",
+"value": "破坏会使攻击触发巨力重击失效。暗影冲刺或幽冥一击还是会施加巨力重击。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/2/notes_zh/1"
+}
+},
+{
+"quote": "重击的伤害值为移动速度的一定百分比。",
+"value": "攻击时有一定概率眩晕并击退敌方单位。重击的伤害值为移动速度的一定百分比。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/2/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Greater Bash",
+"name_zh": "巨力重击",
+"description_en": "Gives a chance to stun and knockback an enemy unit on an attack. Deals a percentage of movement speed as damage.",
+"description_zh": "攻击时有一定概率眩晕并击退敌方单位。重击的伤害值为移动速度的一定百分比。",
+"notes_en": [
+"Does not stack with Skull Basher.",
+"Break disables the passive percent Chance to Bash. Does not disable Greater Bash application from Charge of Darkness or Nether Strike."
+],
+"notes_zh": [
+"不与碎颅锤叠加。",
+"破坏会使攻击触发巨力重击失效。暗影冲刺或幽冥一击还是会施加巨力重击。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Increases knockback. If a knocked-back enemy collides with another enemy, the second enemy is bashed (creeps only receive %cascading_bashes_creep_penalty%%% damage), and the original target takes %cascading_bashes_damage_multiplier%%% of Greater Bash's damage again.",
+"zh": "击退效果提升。如果击退的敌人又撞到了一个敌人，这个敌人也会被重击（非英雄单位只受到%cascading_bashes_creep_penalty%%%伤害），并且原目标再次受到%cascading_bashes_damage_multiplier%%%的巨力重击伤害。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2",
+"damage": 2,
+"dispellable": 1,
+"immunity": 3,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "1822d35476ce3ca4220e",
+"subject": "phantom_lancer_spirit_lance",
+"subject_zh": "幻影长矛手·灵魂之矛",
+"mechanism": "illusions",
+"mechanism_zh": "幻象",
+"definition": "制造自身或他人的幻象",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。",
+"value": "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/11/abilities/0/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Spirit Lance",
+"name_zh": "灵魂之矛",
+"description_en": "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit.",
+"description_zh": "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。",
+"notes_en": [
+"Illusions within %fake_lance_distance% range of Phantom Lancer will mimic the cast animation."
+],
+"notes_zh": [
+"幻影长矛手附近%fake_lance_distance%范围内的幻象也会模仿施法动作。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Spirit Lance bounces once on enemies, prioritizing Heroes. Increases Spirit Lance illusion damage.",
+"zh": "灵魂之矛可以向范围内敌人弹射一次，以英雄优先。提升灵魂之矛的幻象继承攻击力。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "2faa5b9b82d0e0499db4",
+"subject": "vengefulspirit_command_aura",
+"subject_zh": "复仇之魂·复仇光环",
+"mechanism": "illusions",
+"mechanism_zh": "幻象",
+"definition": "制造自身或他人的幻象",
+"definition_note": "",
+"condition": {
+"context": "scepter_upgrade",
+"requires_scepter": true,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "死亡时产生一个复仇之魂的强幻象，继承全额攻击力，可以施放自己的所有技能。",
+"value": "提升自身加成系数。死亡时产生一个复仇之魂的强幻象，继承全额攻击力，可以施放自己的所有技能。复仇之魂复活时若幻象依然存在，则自身会直接将其取代。幻象获得的经验将给予英雄。强幻象不会被相关技能秒杀。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/19/abilities/2/upgrade_text/scepter_loc/zh"
+}
+},
+{
+"quote": "Upon death, creates a strong illusion of Vengeful Spirit that deals full damage, and can cast all of her spells.",
+"value": "Increases self multiplier. Upon death, creates a strong illusion of Vengeful Spirit that deals full damage, and can cast all of her spells.If the illusion is alive when Vengeful Spirit respawn, she will take its place. XP earned by her illusion is given to her. Strong Illusions are not instantly killed by spells.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/19/abilities/2/upgrade_text/scepter_loc/en"
+}
+}
+],
+"context": [
+{
+"name_en": "Vengeance Aura",
+"name_zh": "复仇光环",
+"description_en": "Vengeful Spirit's presence increases the damage of nearby friendly heroes. Vengeful Spirit herself receives %self_multiplier%%% extra bonus.",
+"description_zh": "复仇之魂的存在提升了附近友方英雄的攻击力。复仇之魂自身获得%self_multiplier%%%额外加成。",
+"notes_en": [
+"Break disables the damage aura."
+],
+"notes_zh": [
+"破坏会使攻击力光环失效。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Increases self multiplier. Upon death, creates a strong illusion of Vengeful Spirit that deals full damage, and can cast all of her spells.If the illusion is alive when Vengeful Spirit respawn, she will take its place. XP earned by her illusion is given to her. Strong Illusions are not instantly killed by spells.",
+"zh": "提升自身加成系数。死亡时产生一个复仇之魂的强幻象，继承全额攻击力，可以施放自己的所有技能。复仇之魂复活时若幻象依然存在，则自身会直接将其取代。幻象获得的经验将给予英雄。强幻象不会被相关技能秒杀。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "65538",
+"damage": 0,
+"dispellable": 0,
+"immunity": 1,
+"max_level": 4,
+"target_team": 1,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "8c509a9b8626cf757710",
+"subject": "phantom_lancer_doppelwalk",
+"subject_zh": "幻影长矛手·神行百变",
+"mechanism": "illusions",
+"mechanism_zh": "幻象",
+"definition": "制造自身或他人的幻象",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "经过%delay%秒，幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置，并产生两个新的幻象。",
+"value": "幻影长矛手暂时从战场上消失。经过%delay%秒，幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置，并产生两个新的幻象。施放技能后延长所有幻象的持续时间。新加的两个幻象拥有不同的特性：一个承受正常百分比的伤害，不具有攻击力，另一个额外承受%illusion_2_damage_in_pct%%%伤害，继承的攻击力相比本体减少%illusion_2_damage_out_pct%%%。\n\n驱散类型：弱驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/11/abilities/1/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Doppelganger",
+"name_zh": "神行百变",
+"description_en": "Phantom Lancer briefly vanishes from the battlefield. After %delay% second, Phantom Lancer and any of his nearby illusions reappear at a random position within the targeted location, along with two additional doppelgangers. Extends duration of all illusions. The two added doppelgangers have different properties: one takes normal damage and deals none, while the other takes %illusion_2_damage_in_pct%%% bonus damage and deals %illusion_2_damage_out_pct%%% less damage.\n\nDISPEL TYPE: Basic Dispel",
+"description_zh": "幻影长矛手暂时从战场上消失。经过%delay%秒，幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置，并产生两个新的幻象。施放技能后延长所有幻象的持续时间。新加的两个幻象拥有不同的特性：一个承受正常百分比的伤害，不具有攻击力，另一个额外承受%illusion_2_damage_in_pct%%%伤害，继承的攻击力相比本体减少%illusion_2_damage_out_pct%%%。\n\n驱散类型：弱驱散",
+"notes_en": [
+"This ability can be used to dodge projectiles, and dispel debuffs.",
+"Trees near a reappearing unit will be destroyed.",
+"Phantom Lancer and his allies can see which illusion is the 100% damage illusion."
+],
+"notes_zh": [
+"这个技能可以躲避攻击和技能弹道，并且驱散负面效果。",
+"重新现身的单位附近的树木将会被摧毁。",
+"幻影长矛手和他的队友可以分辨出哪个幻象承受100%伤害。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "524336",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "e445aaa8a3b37e3cdd65",
+"subject": "hoodwink_decoy",
+"subject_zh": "森海飞霞·诱敌奇术",
+"mechanism": "illusions",
+"mechanism_zh": "幻象",
+"definition": "制造自身或他人的幻象",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": true,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "森海飞霞变为隐身，提升移动速度，并且产生一个引诱敌人的幻象，幻象会瞄准最近的敌方英雄开始蓄力准备发射伤害较低的一箭穿心。",
+"value": "森海飞霞变为隐身，提升移动速度，并且产生一个引诱敌人的幻象，幻象会瞄准最近的敌方英雄开始蓄力准备发射伤害较低的一箭穿心。如果幻象被攻击或被指向性技能击中，幻象将被摧毁并且攻击者将受到较弱的野地奇袭效果。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/119/abilities/3/description_zh"
+}
+},
+{
+"quote": "Hoodwink turns invisible, increasing her movement speed, and creates a decoy illusion that starts aiming a decreased damage Sharpshooter at the nearest enemy hero.",
+"value": "Hoodwink turns invisible, increasing her movement speed, and creates a decoy illusion that starts aiming a decreased damage Sharpshooter at the nearest enemy hero. If the illusion is attacked or hit by a targeted ability, it is destroyed and it throws a lesser bushwhack towards the enemy.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/119/abilities/3/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Decoy",
+"name_zh": "诱敌奇术",
+"description_en": "Hoodwink turns invisible, increasing her movement speed, and creates a decoy illusion that starts aiming a decreased damage Sharpshooter at the nearest enemy hero. If the illusion is attacked or hit by a targeted ability, it is destroyed and it throws a lesser bushwhack towards the enemy.",
+"description_zh": "森海飞霞变为隐身，提升移动速度，并且产生一个引诱敌人的幻象，幻象会瞄准最近的敌方英雄开始蓄力准备发射伤害较低的一箭穿心。如果幻象被攻击或被指向性技能击中，幻象将被摧毁并且攻击者将受到较弱的野地奇袭效果。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": true,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8589936709",
+"damage": 0,
+"dispellable": 2,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "fdc09f34c975c0be5de7",
+"subject": "terrorblade_conjure_image",
+"subject_zh": "恐怖利刃·惑幻",
+"mechanism": "illusions",
+"mechanism_zh": "幻象",
+"definition": "制造自身或他人的幻象",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Creates an illusion of Terrorblade that deals damage.",
+"value": "Creates an illusion of Terrorblade that deals damage.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/105/abilities/1/description_en"
+}
+},
+{
+"quote": "惑幻产生的幻象在外观上与普通幻象不同。",
+"value": "惑幻产生的幻象在外观上与普通幻象不同。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/105/abilities/1/notes_zh/0"
+}
+},
+{
+"quote": "创造一个恐怖利刃的幻象，可以攻击敌人造成伤害。",
+"value": "创造一个恐怖利刃的幻象，可以攻击敌人造成伤害。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/105/abilities/1/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Conjure Image",
+"name_zh": "惑幻",
+"description_en": "Creates an illusion of Terrorblade that deals damage.",
+"description_zh": "创造一个恐怖利刃的幻象，可以攻击敌人造成伤害。",
+"notes_en": [
+"Illusions created by Conjure Image are visually different for enemies."
+],
+"notes_zh": [
+"惑幻产生的幻象在外观上与普通幻象不同。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "1d29eb4d1a0c64ca5fdd",
+"subject": "bane_fiends_grip",
+"subject_zh": "祸乱之源·魔爪",
+"mechanism": "mana_burn",
+"mechanism_zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+"value": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/2/abilities/3/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Fiend's Grip",
+"name_zh": "魔爪",
+"description_en": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+"description_zh": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack.",
+"zh": "魔爪的冷却时间减少%bonus_AbilityCooldown%秒。魔爪将产生两个不可控制的幻象，幻象也将对目标持续施放魔爪。幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。伤害不会叠加。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "136",
+"damage": 4,
+"dispellable": 1,
+"immunity": 3,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "6ff66cde6d8643ad15f6",
+"subject": "nyx_assassin_neuro_sting",
+"subject_zh": "司夜刺客·法力燃烧",
+"mechanism": "mana_burn",
+"mechanism_zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Nyx Assassin's damage on enemies also burns mana as a percentage of the damage dealt.",
+"value": "Nyx Assassin's damage on enemies also burns mana as a percentage of the damage dealt.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/86/abilities/4/description_en"
+}
+},
+{
+"quote": "司夜刺客对敌人造成伤害还会燃烧造成伤害一定百分比的魔法。",
+"value": "司夜刺客对敌人造成伤害还会燃烧造成伤害一定百分比的魔法。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/86/abilities/4/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Mana Burn",
+"name_zh": "法力燃烧",
+"description_en": "Nyx Assassin's damage on enemies also burns mana as a percentage of the damage dealt.",
+"description_zh": "司夜刺客对敌人造成伤害还会燃烧造成伤害一定百分比的魔法。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "562949953421315",
+"damage": 0,
+"dispellable": 3,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "9d989fbf45a3c4ed4108",
+"subject": "nyx_assassin_jolt",
+"subject_zh": "司夜刺客·神智爆裂",
+"mechanism": "mana_burn",
+"mechanism_zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "造成等同于目标最大魔法值一定百分比的伤害，并燃烧部分魔法。",
+"value": "造成等同于目标最大魔法值一定百分比的伤害，并燃烧部分魔法。另外还会根据过去%damage_echo_duration%秒内目标受到来自司夜刺客的伤害再造成一定百分比的伤害。施加伤害前会重置累计伤害。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/86/abilities/1/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Mind Flare",
+"name_zh": "神智爆裂",
+"description_en": "Deals damage equal to a percentage of the target's Max Mana and burns part of it away. Deals additional damage equal to a percentage of the damage the target has taken from Nyx Assassin in the last %damage_echo_duration%s. Resets accumulated damage before applying damage.",
+"description_zh": "造成等同于目标最大魔法值一定百分比的伤害，并燃烧部分魔法。另外还会根据过去%damage_echo_duration%秒内目标受到来自司夜刺客的伤害再造成一定百分比的伤害。施加伤害前会重置累计伤害。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134217768",
+"damage": 2,
+"dispellable": 0,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "be8f09a21737b12bf187",
+"subject": "necronomicon_3",
+"subject_zh": "死灵书",
+"mechanism": "mana_burn",
+"mechanism_zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Warrior: Burns mana every hit, and deals magical damage to whoever kills it.",
+"value": "Summons a Warrior and an Archer to fight for you for 60 seconds.\n\nWarrior: Burns mana every hit, and deals magical damage to whoever kills it. Gains True Sight at level 3.\nHealth: 800\nDamage: 25\nMana Break Damage: 30\nLast Will Damage: 600\n\nArcher: Has a passive movement and attack speed aura. Gains Purge at Level 3.\nHealth: 800\nDamage: 37\nAura Move Speed: 5\nAura Radius: 1200",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/necronomicon_3/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"lore": "Considered the ultimate in necromancy and demonology, a powerful malefic force is locked within its pages."
+}
+]
+}
+]

@@ -1,0 +1,2048 @@
+[
+{
+"review_id": "61a3018927dd8c4e61c6",
+"subject": "lich_chain_frost",
+"subject_zh": "巫妖·连环霜冻",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/24/abilities/5/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/24/abilities/5/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Chain Frost",
+"name_zh": "连环霜冻",
+"description_en": "Releases an orb of frost that bounces between nearby enemy units up to %jumps% times, slowing and damaging each time it hits. Each bounce increases the damage for the subsequent bounces. Chain Frost lingers on its last target if it fails to bounce and can bounce again if new targets become available.",
+"description_zh": "释放一个在敌人间弹跳至多%jumps%次的霜冻之球，每次击中敌人后都会造成伤害和减速效果。每次弹跳后会提升后续的伤害。连环霜冻无法弹跳时会停留在上个目标身上，如果出现新目标可以再次弹跳。",
+"notes_en": [
+"Chain Frost cannot be disjointed.",
+"Chain Frost has a movement speed of %projectile_speed%.",
+"Chain Frost doesn't bounce to Zombies."
+],
+"notes_zh": [
+"连环霜冻无法被躲避。",
+"连环霜冻的移动速度为%projectile_speed%。",
+"连环霜冻不会弹跳到墓碑召唤的僵尸身上。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "629cda520d28e440a01f",
+"subject": "bane_fiends_grip",
+"subject_zh": "祸乱之源·魔爪",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/2/abilities/3/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"136\"",
+"value": "136",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/2/abilities/3/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Fiend's Grip",
+"name_zh": "魔爪",
+"description_en": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+"description_zh": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack.",
+"zh": "魔爪的冷却时间减少%bonus_AbilityCooldown%秒。魔爪将产生两个不可控制的幻象，幻象也将对目标持续施放魔爪。幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。伤害不会叠加。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "136",
+"damage": 4,
+"dispellable": 1,
+"immunity": 3,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "64bb52dc098d75e92c8c",
+"subject": "centaur_double_edge",
+"subject_zh": "半人马战行者·双刃剑",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/94/abilities/1/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"40\"",
+"value": "40",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/94/abilities/1/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Double Edge",
+"name_zh": "双刃剑",
+"description_en": "Centaur strikes a mighty blow at melee range, damaging both himself and a small area around the target. Deals extra damage based on your strength. Centaur cannot die from Double Edge.",
+"description_zh": "半人马战行者以猛烈的力量进行近战攻击，对目标周围单位和自身造成伤害。将基于力量值造成额外伤害。此技能无法用于自杀。",
+"notes_en": [
+"Double Edge deals magic type damage to both the targets and himself."
+],
+"notes_zh": [
+"双刃剑对目标和自身都造成魔法伤害。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Causes Double Edge to slow enemy heroes and increase Centaur's strength per hero hit for a short time. Duration refreshes per stack, up to a max of %shard_max_stacks% stacks.",
+"zh": "双刃剑可以对敌人造成减速，并且每击中一名英雄都会暂时提升半人马战行者的力量值。每次叠加都会刷新持续时间，最多叠加%shard_max_stacks%次。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "40",
+"damage": 2,
+"dispellable": 0,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "66c83fd19d03f7870d8d",
+"subject": "bane_nightmare",
+"subject_zh": "祸乱之源·噩梦",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "3",
+"value": 3,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/2/abilities/2/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"1099545182216\"",
+"value": "1099545182216",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/2/abilities/2/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Nightmare",
+"name_zh": "噩梦",
+"description_en": "Puts the target enemy or friendly Hero to sleep. Sleeping units walk in Bane's chosen direction and are awakened when damaged. If the target was directly attacked, the Nightmare passes to the attacking unit. Bane can attack and damage Nightmared targets freely. Can be put on alt-cast to have the target stand still.",
+"description_zh": "让目标敌方或友方英雄进入沉睡。睡着的单位会向祸乱之源选定的方向走去，受到攻击便会醒来。目标被直接攻击时，噩梦将转移到攻击者身上。祸乱之源可以随意攻击噩梦中的目标或造成伤害，而且获得额外攻击速度。可以设为多样施法（右键点击技能栏图标），让目标站立不动。",
+"notes_en": [
+"In the first second of Nightmare, the unit is invulnerable.",
+"Bane can wake himself from Nightmare.",
+"On cast, replaced with Nightmare End: Ends all ongoing Nightmares on any affected units."
+],
+"notes_zh": [
+"在噩梦的第一秒，作用单位是无敌状态。",
+"祸乱之源可以把自己从噩梦中唤醒。",
+"施放后将替换为结束噩梦：结束所有受作用单位身上的噩梦。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "1099545182216",
+"damage": 0,
+"dispellable": 2,
+"immunity": 2,
+"max_level": 4,
+"target_team": 3,
+"target_type": 3,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "68fe3f7f449a3a27826f",
+"subject": "rubick_fade_bolt",
+"subject_zh": "拉比克·弱化能流",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/84/abilities/1/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/84/abilities/1/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Fade Bolt",
+"name_zh": "弱化能流",
+"description_en": "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack and spell damage. Each jump deals less damage.",
+"description_zh": "拉比克制造一道强大的奥术能量流，在多个敌方单位之间流动，造成伤害并降低他们的攻击力和技能伤害。每次跳跃造成的伤害递减。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "704bf8f05db03f967670",
+"subject": "spirit_breaker_planar_pocket",
+"subject_zh": "裂魂人·位面空洞",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": true
+},
+"evidence": [
+{
+"quote": "3",
+"value": 3,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/3/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"8589936649\"",
+"value": "8589936649",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/3/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Planar Pocket",
+"name_zh": "位面空洞",
+"description_en": "Barathrum gains magic resistance and distorts reality around the selected hero, making any unit-targeted spells cast by enemy heroes get redirected towards Spirit Breaker. Can be cast on both allied and enemy heroes, but only spells cast by enemies of Spirit Breaker will be redirected.",
+"description_zh": "巴拉森获得魔法抗性，并扭曲选定英雄附近的现实，使敌方英雄施放的任意指向性技能转向裂魂人。可以对友方和敌方英雄施放，但是只有裂魂人的敌人施放的技能才会转向。",
+"notes_en": [
+"Planar Pocket's effect stops if Barathrum moves %break_distance% units away from the target."
+],
+"notes_zh": [
+"如果裂魂人和目标之间的距离超过%break_distance%，位面空洞效果会停止。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": true,
+"raw_mechanics": {
+"behavior": "8589936649",
+"damage": 0,
+"dispellable": 1,
+"immunity": 4,
+"max_level": 1,
+"target_team": 3,
+"target_type": 1,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "716e8354f0ced1f1e0c8",
+"subject": "phantom_lancer_spirit_lance",
+"subject_zh": "幻影长矛手·灵魂之矛",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/11/abilities/0/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/11/abilities/0/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Spirit Lance",
+"name_zh": "灵魂之矛",
+"description_en": "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit.",
+"description_zh": "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。",
+"notes_en": [
+"Illusions within %fake_lance_distance% range of Phantom Lancer will mimic the cast animation."
+],
+"notes_zh": [
+"幻影长矛手附近%fake_lance_distance%范围内的幻象也会模仿施法动作。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Spirit Lance bounces once on enemies, prioritizing Heroes. Increases Spirit Lance illusion damage.",
+"zh": "灵魂之矛可以向范围内敌人弹射一次，以英雄优先。提升灵魂之矛的幻象继承攻击力。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "7ade8e5dc9b973841fa9",
+"subject": "lion_voodoo",
+"subject_zh": "莱恩·妖术",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/25/abilities/1/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/25/abilities/1/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Hex",
+"name_zh": "妖术",
+"description_en": "Transforms an enemy unit into a harmless beast, with all special abilities disabled.",
+"description_zh": "将一个敌方单位变成人畜无害的动物，受害者无法使用所有特殊能力。",
+"notes_en": [
+"Instantly destroys illusions.",
+"The target will have a base movement speed of %movespeed%, but buffs granting maximum movement speed won't be disabled."
+],
+"notes_zh": [
+"即刻摧毁幻象。",
+"目标的基础移动速度为%movespeed%，但是如果目标有满速状态则移速不受影响。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 0,
+"dispellable": 1,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "7e8235d873944929715b",
+"subject": "luna_lucent_beam",
+"subject_zh": "露娜·月光",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/46/abilities/0/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/46/abilities/0/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Lucent Beam",
+"name_zh": "月光",
+"description_en": "Calls a beam of lunar energy down upon an enemy, damaging and briefly stunning them.",
+"description_zh": "召唤一道月能的光束打击敌人，造成伤害并短暂眩晕目标。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Grants Luna an attack damage bonus buff every time an enemy hero is hit by Lucent Beam. Lucent Beams created by Eclipse grant %damage_buff_from_eclipse_pct%%% of the damage amount.",
+"zh": "每次一名敌方英雄被月光击中时，露娜都会获得一个攻击力加成的状态效果。月蚀的月光提供%damage_buff_from_eclipse_pct%%%数值。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 2,
+"dispellable": 1,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "829e966b46986c14a5f0",
+"subject": "winter_wyvern_splinter_blast",
+"subject_zh": "寒冬飞龙·碎裂冲击",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "3",
+"value": 3,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/109/abilities/1/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"40\"",
+"value": "40",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/109/abilities/1/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Splinter Blast",
+"name_zh": "碎裂冲击",
+"description_en": "Launches a ball of brittle ice toward a unit. The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a %split_radius% base radius. Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%.",
+"description_zh": "向一个单位发射一团易碎的冰球。冰球一击中目标就会碎裂，而目标单位将不会受到任何效果，但是附近%split_radius%基础范围内敌人都将因碎片的冲击受到伤害，并且移动速度减缓%movespeed_slow_tooltip%%%。",
+"notes_en": [
+"The primary projectile moves at %projectile_speed% movement speed.",
+"The primary projectile cannot be disjointed and cannot be targeted towards Winter Wyvern herself."
+],
+"notes_zh": [
+"主弹道的移动速度为%projectile_speed%。",
+"主弹道无法被躲避，而且不能以寒冬飞龙自身为目标。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "40",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 3,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "8b0a56168cc9f9cffb21",
+"subject": "furion_wrath_of_nature",
+"subject_zh": "自然先知·自然之怒",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/51/abilities/5/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"24\"",
+"value": "24",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/51/abilities/5/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Wrath of Nature",
+"name_zh": "自然之怒",
+"description_en": "Damaging energy bounces around the map, striking enemies that are in vision starting with those closest to the cast point. Each enemy hit beyond the first adds damage, up to the maximum after %max_targets% are hit.",
+"description_zh": "伤害性的能量在全地图跳跃，打击视野中的敌人，会先从距目标点最近的敌人开始打击。每击中一个敌人伤害都会增加，击中%max_targets%个目标后达到最高伤害。",
+"notes_en": [
+"Wrath of Nature will not hit units out of vision.",
+"Can be cast through the minimap; the nearest valid target will be selected."
+],
+"notes_zh": [
+"自然的愤怒只能伤害视野内的单位。",
+"可以通过点击小地图施放；初始目标将选择施放地点最近的有效单位。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Entangles all enemies it hits. Duration scales from %scepter_min_entangle_duration%s up to %scepter_max_entangle_duration%s seconds at max bounce.",
+"zh": "缠绕所有击中的敌人。持续时间根据弹跳次序从%scepter_min_entangle_duration%秒开始增加，弹跳数达到上限时为%scepter_max_entangle_duration%秒。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "24",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 3,
+"target_team": 2,
+"target_type": 3,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "8f2c1d308b08415fc752",
+"subject": "slardar_amplify_damage",
+"subject_zh": "斯拉达·侵蚀雾霭",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/27/abilities/4/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/27/abilities/4/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Corrosive Haze",
+"name_zh": "侵蚀雾霭",
+"description_en": "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility. The enemy unit leaves a trail of water behind it.",
+"description_zh": "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。敌方单位将在身后留下水迹。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 0,
+"dispellable": 2,
+"immunity": 3,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "9610e18b579364e11367",
+"subject": "beastmaster_primal_roar",
+"subject_zh": "兽王·原始咆哮",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/36/abilities/5/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/36/abilities/5/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Primal Roar",
+"name_zh": "原始咆哮",
+"description_en": "Beastmaster lets loose a deafening roar that stuns, and shoves open a path to its target. All units in the path of the roar are damaged, while units shoved aside by the roar have their movement and attack speed slowed. Additionally, Beastmaster and his units gain %movement_speed%%% movement speed for %movement_speed_duration% seconds.",
+"description_zh": "兽王发出震耳欲聋的咆哮，使目标敌方单位受到伤害并眩晕，同时在兽王和他的猎物之间清出一条通道。通道上的所有单位都被震开，也受到伤害并被降低移动和攻击速度。另外，兽王和他的单位获得%movement_speed%%%移动速度提升，持续%movement_speed_duration%秒。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 2,
+"dispellable": 1,
+"immunity": 3,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "9d4d30a763a32904ed8e",
+"subject": "medusa_mystic_snake",
+"subject_zh": "美杜莎·秘术异蛇",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/92/abilities/1/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/92/abilities/1/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Mystic Snake",
+"name_zh": "秘术异蛇",
+"description_en": "A mystic snake made of energy jumps from target to target dealing damage. Damage and speed increases with each jump. After it reaches its last target, it returns to Medusa to replenish her with mana. The snake returns a percentage of the targets' total mana.",
+"description_zh": "放出一条秘术异蛇在敌人之间跳跃，造成伤害。每次跳跃后伤害和速度都会增加。抵达最后一个目标后，它会返回到美杜莎身上为其恢复魔法值。异蛇会返还所有目标最大魔法值一定百分比的魔法。",
+"notes_en": [
+"Mystic Snake cannot be disjointed."
+],
+"notes_zh": [
+"秘术异蛇无法躲避。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 2,
+"dispellable": 0,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "9f99d198d77cf2f9bb72",
+"subject": "spirit_breaker_nether_strike",
+"subject_zh": "裂魂人·幽冥一击",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"134742024\"",
+"value": "134742024",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/5/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/69/abilities/5/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Nether Strike",
+"name_zh": "幽冥一击",
+"description_en": "Spirit Breaker slips into the nether realm, reappearing next to his hapless victim. Upon reappearing, a Greater Bash of the current level occurs and deals bonus damage. Knocks back for double the normal distance.",
+"description_zh": "裂魂人遁入幽冥领域，从不幸的目标身旁再次出现，发动当前等级的巨力重击并造成额外伤害。击退距离为平常的两倍。",
+"notes_en": [
+"Spirit Breaker appears behind the target to deliver the bash."
+],
+"notes_zh": [
+"裂魂人将在目标身后出现并发动巨力重击。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Greatly increases knockback.",
+"zh": "大幅提升击退效果。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134742024",
+"damage": 2,
+"dispellable": 1,
+"immunity": 3,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "a6ce82d782dead1a41ad",
+"subject": "sniper_assassinate",
+"subject_zh": "狙击手·暗杀",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"67108872\"",
+"value": "67108872",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/33/abilities/5/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/33/abilities/5/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Assassinate",
+"name_zh": "暗杀",
+"description_en": "Sniper locks onto a target enemy unit and, after a short aiming duration, fires a devastating shot that deals Sniper's attack damage plus bonus damage at long range and mini-stuns the target. Whenever Sniper kills an enemy hero, Assassinate is refreshed.",
+"description_zh": "狙击手锁定一个目标敌方单位，经过短时间瞄准后射出一发毁灭性的子弹，从远距离对目标造成狙击手的攻击伤害 + 额外伤害，并且短暂眩晕目标。每当狙击手击杀敌方英雄，暗杀的冷却时间就会重置。",
+"notes_en": [
+"Crosshair effect is only visible to allies.",
+"Invisibility doesn't disjoint the projectile."
+],
+"notes_zh": [
+"准星效果只对队友可见。",
+"隐身不能躲避该技能弹道。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Causes Assassinate to fire quicker and stun the enemy target.",
+"zh": "暗杀释放得更快，并且敌方目标的眩晕时间更久。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "67108872",
+"damage": 2,
+"dispellable": 3,
+"immunity": 4,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "ac177e2a391e82a39f74",
+"subject": "marci_grapple",
+"subject_zh": "玛西·过肩摔",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/121/abilities/0/raw_mechanics/behavior"
+}
+},
+{
+"quote": "3",
+"value": 3,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/121/abilities/0/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Dispose",
+"name_zh": "过肩摔",
+"description_en": "Marci grabs an allied or enemy target and throws it effortlessly behind her, damaging and slowing the unit if it's an enemy. Any enemy units in the landing area will also be damaged and slowed.",
+"description_zh": "玛西抓起一个友方或敌方目标，将其轻松地向她身后摔去，敌方目标将受到伤害并被减速。落地区域内所有敌方单位也会受到伤害并被减速。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 3,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "b191adef9793c1cf912e",
+"subject": "ancient_apparition_chilling_touch",
+"subject_zh": "远古冰魄·极寒之触",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"135176\"",
+"value": "135176",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/67/abilities/2/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/67/abilities/2/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Chilling Touch",
+"name_zh": "极寒之触",
+"description_en": "Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.",
+"description_zh": "使自己的普通攻击附带距离提升，高额魔法伤害和减速效果。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Removes cooldown.",
+"zh": "移除了冷却时间。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "135176",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "b2daf44cd3cb04172986",
+"subject": "rubick_telekinesis",
+"subject_zh": "拉比克·隔空取物",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/84/abilities/0/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"134217736\"",
+"value": "134217736",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/84/abilities/0/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Telekinesis",
+"name_zh": "隔空取物",
+"description_en": "Rubick uses his telekinetic powers to lift the enemy into the air briefly and then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.",
+"description_zh": "拉比克利用他的隔空取物能力，将敌人短暂抬到空中，然后猛投向地面。被投下的单位会砸晕落地点附近的敌人。",
+"notes_en": [
+"While the target is in the air, Rubick may use a secondary ability to throw the enemy in a targeted direction.",
+"When the unit lands, it isn't affected by the area of effect stun."
+],
+"notes_zh": [
+"目标滞空时，拉比克可以使用次级技能将目标扔往目标方向。",
+"单位落地后，自身不会受到范围眩晕效果。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Allows you to target yourself or allies with Telekinesis. Throw distance is increased to %max_land_distance% and throw delay is reduced to %shard_teammate_throw_delay% seconds.",
+"zh": "可以对自身或友军施放隔空取物。投掷距离增加至%max_land_distance%，投掷延迟降低至%shard_teammate_throw_delay%秒。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134217736",
+"damage": 0,
+"dispellable": 1,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "b4dd067193a945a44cc9",
+"subject": "chen_holy_persuasion",
+"subject_zh": "陈·神圣劝化",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"33554440\"",
+"value": "33554440",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/1/raw_mechanics/behavior"
+}
+},
+{
+"quote": "3",
+"value": 3,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/64/abilities/1/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Holy Persuasion",
+"name_zh": "神圣劝化",
+"description_en": "Chen takes control of an enemy or neutral creep and receives a percentage of its bounty. Its maximum health is set to %health_min%. Converted creeps will have increased movement speed and bonus damage. Chen may globally target his own creep if it has not taken damage in the last %unsummon_time% seconds to unsummon it.",
+"description_zh": "陈控制住敌方小兵或者中立生物，并获得击杀金钱一定百分比的金钱。被劝化目标的最大生命值会被设为%health_min%。被劝化的单位将提升移动速度和伤害输出。陈自己的单位如果在%unsummon_time%秒内未受到伤害可以在全地图范围内成为技能的目标，施放后取消劝化。",
+"notes_en": [
+"Persuading a new creep above max unit count causes the oldest persuaded creep to die.",
+"Can target Ancient creeps when Chen has Aghanim's Shard.",
+"The health of creeps already under Chen's control does not update to the new level upon leveling Holy Persuasion further.",
+"Fully restores the creep's mana upon converting."
+],
+"notes_zh": [
+"如果达到劝化生物的数量上限后再劝化生物，最早劝化的单位将立即死亡。",
+"拥有阿哈利姆魔晶后可以对远古中立生物施放本技能。",
+"升级此技能后在升级前劝化的单位并不会增加生命值。",
+"劝化时单位的魔法恢复至满魔。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Allows Holy Persuasion to target Ancient creeps. Can control up to 1/2/3 Ancient creeps based on Hand of God's level. Additionally levels up some abilities of creeps by 1 level.",
+"zh": "神圣劝化可以对远古中立生物施放。根据上帝之手等级可以控制最多1/2/3个远古生物。使中立生物的部分技能额外升1级。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "33554440",
+"damage": 0,
+"dispellable": 3,
+"immunity": 3,
+"max_level": 4,
+"target_team": 3,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "b9b74a5ce572e08f5dd2",
+"subject": "dazzle_poison_touch",
+"subject_zh": "戴泽·剧毒之触",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/48/abilities/0/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/48/abilities/0/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Poison Touch",
+"name_zh": "剧毒之触",
+"description_en": "Releases a cone of poison that strikes multiple enemy units. Deals damage over time and slows the targets. Anytime the targets get attacked by Dazzle, the debuff duration is refreshed and slow is increased.",
+"description_zh": "施放一股锥形的毒素，可以打击多个敌方单位。造成持续伤害和减速。每当目标受到戴泽的攻击，负面效果的持续时间都会刷新，减速效果也会提升。",
+"notes_en": [
+"The damage is not reduced by damage block abilities."
+],
+"notes_zh": [
+"伤害格挡类技能不能减少该技能伤害。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 1,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "be0d95543a57660db386",
+"subject": "furion_sprout",
+"subject_zh": "自然先知·发芽",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"24\"",
+"value": "24",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/51/abilities/0/raw_mechanics/behavior"
+}
+},
+{
+"quote": "3",
+"value": 3,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/51/abilities/0/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Sprout",
+"name_zh": "发芽",
+"description_en": "Sprouts a ring of trees around a unit, damaging and trapping it in place and providing vision in a %vision_range% radius.",
+"description_zh": "使一圈树木在一个单位的周围发芽，将其困在其中并造成伤害，提供%vision_range%范围内的视野。",
+"notes_en": [
+"Sprout can be cast on any unit, or the ground.",
+"Trees created by Sprout have the same interactions with abilities as regular trees."
+],
+"notes_zh": [
+"发芽的施放目标可以是任何单位或者地面。",
+"发芽产生的树木跟英雄技能的相互作用与平常树木相同。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "24",
+"damage": 2,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 4,
+"target_team": 3,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "c0b284d96d6c570035a7",
+"subject": "kez_grappling_claw",
+"subject_zh": "凯·制敌爪钩",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/125/abilities/1/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"135004168\"",
+"value": "135004168",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/125/abilities/1/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Grappling Claw",
+"name_zh": "制敌爪钩",
+"description_en": "Kez swings on a grappling hook towards the target unit or tree.  When the grappling hook collides with the target, that unit has slowed movement speed. Upon reaching the enemy target, Kez lands an attack on them.",
+"description_zh": "凯向目标单位或者树木发射一枚抓钩并摆荡过去。抓钩碰到目标后，该单位会被减速。凯到达敌方目标时，落地会发动一次攻击。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "135004168",
+"damage": 0,
+"dispellable": 0,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 83,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "c4edd5471615128972cf",
+"subject": "ancient_apparition_cold_feet",
+"subject_zh": "远古冰魄·寒霜之足",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/67/abilities/0/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"134217736\"",
+"value": "134217736",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/67/abilities/0/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Cold Feet",
+"name_zh": "寒霜之足",
+"description_en": "Places a curse on an enemy, dealing damage over time.  If the enemy unit doesn't move outside of the given range from the initial location, it will be stunned and frozen in place after %AbilityDuration% seconds.",
+"description_zh": "对一个敌人施加诅咒，造成持续伤害。如果目标没有在%AbilityDuration%秒内远离初始地点走出足够距离，那么将被眩晕并冻在原地。",
+"notes_en": [
+"Deals damage every half second."
+],
+"notes_zh": [
+"每0.5秒造成一次伤害。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134217736",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "c6c7905d0721107e63be",
+"subject": "magnataur_shockwave",
+"subject_zh": "马格纳斯·震荡波",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"24\"",
+"value": "24",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/95/abilities/0/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/95/abilities/0/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Shockwave",
+"name_zh": "震荡波",
+"description_en": "Magnus sends out a wave of force, damaging enemy units in a line, pulling them towards him, and slowing them for a brief period.",
+"description_zh": "马格纳斯放出一道能量波，对一条直线上的敌方单位造成伤害，并将他们朝自身牵引，同时受到短暂减速效果。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "24",
+"damage": 2,
+"dispellable": 0,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "ceaa6206e064fedca3eb",
+"subject": "huskar_burning_spear",
+"subject_zh": "哈斯卡·沸血之矛",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/57/abilities/1/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"135176\"",
+"value": "135176",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/57/abilities/1/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Burning Spear",
+"name_zh": "沸血之矛",
+"description_en": "Huskar sets his spears aflame, dealing damage over time with his regular attack.  Multiple attacks will stack additional damage.  Each attack drains some of Huskar's health.",
+"description_zh": "哈斯卡将其长矛点燃，在普通攻击的同时对敌方单位造成持续伤害。多次攻击会造成持续伤害叠加。每次攻击都将牺牲哈斯卡部分生命值。",
+"notes_en": [
+"Burning Spear stacks additively when used multiple times on one target.  There is no cap.",
+"Huskar cannot kill himself with this skill.",
+"Incendiary does not deal extra Max Health Burn Damage to Roshan."
+],
+"notes_zh": [
+"沸血之矛在多次施放到目标身上效果可以叠加。没有叠加上限。",
+"哈斯卡不能使用此技能自杀。",
+"炙矛可热不会对肉山造成额外的最大生命值烧灼伤害。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Burning Spears launches an additional %multishot_targets% spears onto random enemies within Huskar's attack range.",
+"zh": "沸血之矛会对哈斯卡攻击距离内随机敌人额外发射%multishot_targets%支长矛。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "135176",
+"damage": 2,
+"dispellable": 3,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "dc49bd34b62d8598dad3",
+"subject": "disruptor_thunder_strike",
+"subject_zh": "干扰者·风雷之击",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"134217736\"",
+"value": "134217736",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/85/abilities/0/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/85/abilities/0/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Thunder Strike",
+"name_zh": "风雷之击",
+"description_en": "Repeatedly strikes the targeted unit with lightning.  Each strike damages nearby enemy units in a small radius and slows enemy movement and attack speed by %slow_amount%%% for %slow_duration% seconds.  Provides vision of its target.",
+"description_zh": "用闪电反复打击目标单位。每次打击会伤害附近小范围内的敌方单位，并施加%slow_duration%秒的%slow_amount%%%攻击速度和移动速度降低效果。提供目标的视野。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Increases the cast range and strike count of Thunder Strike. It can now also be ground targeted, where it will lie dormant for up to %shard_ground_delay% seconds and attach to the first enemy that comes within the radius.",
+"zh": "提升风雷之击的施法距离和打击次数。还可以对地施放，使风雷之击先潜伏最多%shard_ground_delay%秒，并附着到第一个进入作用范围的敌人身上。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134217736",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "de4d3fc735ab132dc86c",
+"subject": "enchantress_impetus",
+"subject_zh": "魅惑魔女·推进",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/56/abilities/0/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"135176\"",
+"value": "135176",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/56/abilities/0/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Impetus",
+"name_zh": "推进",
+"description_en": "Places an enchantment on each attack while activated, causing it to deal additional damage based on how far away the target is.  The farther the target, the greater the damage dealt. Deals double damage to illusions.",
+"description_zh": "激活后每次攻击都有附魔效果，根据与目标的距离造成额外伤害。目标越远，伤害越高。对幻象造成双倍伤害。",
+"notes_en": [
+"The damage is capped at %distance_cap% distance.",
+"Distance to target is measured when the projectile hits."
+],
+"notes_zh": [
+"造成伤害上限的距离是%distance_cap%。",
+"计算与目标之间的距离在攻击弹道击中目标时。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "135176",
+"damage": 4,
+"dispellable": 0,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "e0af26270370f77ae0b7",
+"subject": "axe_culling_blade",
+"subject_zh": "斧王·淘汰之刃",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/1/abilities/3/raw_mechanics/behavior"
+}
+},
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/1/abilities/3/raw_mechanics/target_team"
+}
+}
+],
+"context": [
+{
+"name_en": "Culling Blade",
+"name_zh": "淘汰之刃",
+"description_en": "Axe spots a weakness and strikes, dealing pure damage. When an enemy hero is killed with Culling Blade, its cooldown is reset, and all nearby allied units gain bonus movement speed and armor.\n\nAxe permanently drenches his blade every time he kills an enemy Hero with Culling Blade, gaining bonus armor for each stack.",
+"description_zh": "斧王洞察到弱点并出击，造成纯粹伤害。淘汰之刃击杀敌方英雄时将重置冷却时间，而附近所有友军单位获得移动速度和护甲加成。\n\n每当斧王通过淘汰之刃击杀敌方英雄，他的战刃就会浸满鲜血，获得永久叠加效果，每层都会提供护甲加成。",
+"notes_en": [
+"Culling Blade death cannot be prevented with other abilities like Shallow Grave."
+],
+"notes_zh": [
+"淘汰之刃的斩杀效果无法被薄葬等技能阻止。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 4,
+"dispellable": 2,
+"immunity": 3,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "e6b6b1a9658bc34c0ef8",
+"subject": "phantom_assassin_stifling_dagger",
+"subject_zh": "幻影刺客·窒碍短匕",
+"mechanism": "unit_target_spell",
+"mechanism_zh": "单体指向技能",
+"definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+"definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "2",
+"value": 2,
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/42/abilities/0/raw_mechanics/target_team"
+}
+},
+{
+"quote": "\"8\"",
+"value": "8",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/42/abilities/0/raw_mechanics/behavior"
+}
+}
+],
+"context": [
+{
+"name_en": "Stifling Dagger",
+"name_zh": "窒碍短匕",
+"description_en": "Throws a dagger slowing the enemy unit's movement speed, dealing %base_damage%+%attack_factor_tooltip%%% of Phantom Assassin's attack damage as physical damage and applying attack effects from items and abilities.",
+"description_zh": "对敌方单位掷出一把匕首，减缓其移动速度，并造成物理伤害，数值为%base_damage%+幻影刺客攻击伤害的%attack_factor_tooltip%%%，同时继承物品和技能的攻击效果。",
+"notes_en": [
+"If an attack effect is chance-based, the chance of its application will be the same as its chance to occur.",
+"Spell-immune enemies are not affected by Stifling Dagger's slow.",
+"Stifling Dagger grants vision around its location while it travels and upon impact."
+],
+"notes_zh": [
+"如果攻击效果为几率触发，匕首的触发几率与原几率相同。",
+"减益免疫下的敌人不会受到窒碍短匕的减速影响。",
+"窒碍短匕在行进途中和击中目标时都会提供附近的视野。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 1,
+"dispellable": 2,
+"immunity": 0,
+"max_level": 4,
+"target_team": 2,
+"target_type": 3,
+"type": 0
+}
+}
+]
+}
+]

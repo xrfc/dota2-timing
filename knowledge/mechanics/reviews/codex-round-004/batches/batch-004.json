@@ -1,0 +1,1686 @@
+[
+ {
+  "review_id": "f977607053076e6a3665",
+  "subject": "angels_demise",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "3"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "subject_zh": "Khanda",
+  "context": {
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Empower Spell",
+     "description": "The next Unit Target spell you cast on an enemy deals a separate 250 additional damage, disables their passives, and slows their movement speed by 30% for 4s."
+    }
+   ],
+   "notes": "The slow debuff is dispellable.\nThe break debuff is not dispellable.",
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "450"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "450"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "8"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "7"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "3"
+    },
+    {
+     "key": "slow",
+     "value": "30"
+    },
+    {
+     "key": "slow_duration",
+     "value": "4"
+    },
+    {
+     "key": "bonus_spell_damage",
+     "value": "250"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "b601a0e9329ff91392f8",
+  "subject": "arcane_ring",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_restore": "30",
+   "mana_restore_pct": "3"
+  },
+  "game_file_labels": {
+   "mana_restore": null,
+   "mana_restore_pct": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "subject_zh": "Arcane Ring",
+  "context": {
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Replenish Mana",
+     "description": "Restores mana equal to 30 + 3% of the caster's maximum mana pool to all nearby allies. \n\n Radius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "mana_restore",
+     "value": "30"
+    },
+    {
+     "key": "mana_restore_pct",
+     "value": "3"
+    },
+    {
+     "key": "radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "68164baa76ca09d4cd8d",
+  "subject": "bfury",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "2.75"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "Battle Fury",
+  "context": {
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Chop Tree",
+     "description": "Destroy a target tree."
+    },
+    {
+     "type": "passive",
+     "title": "Quell",
+     "description": "Increases attack damage against non-hero units by 10 for melee heroes, and 5 for ranged."
+    },
+    {
+     "type": "passive",
+     "title": "Cleave",
+     "description": "Deals 60% of attack damage as physical damage in a cone up to 650 around the target. Deals 40% against creeps. (Melee Only)"
+    }
+   ],
+   "notes": "Cleave damage goes through spell immunity.\nIf multiple sources of Cleave are present, each Cleave's damage is applied separately.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "50"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "7.5"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2.75"
+    },
+    {
+     "key": "cleave_damage_percent",
+     "value": "60"
+    },
+    {
+     "key": "cleave_damage_percent_creep",
+     "value": "40"
+    },
+    {
+     "key": "quelling_bonus",
+     "value": "10"
+    },
+    {
+     "key": "quelling_bonus_ranged",
+     "value": "5"
+    },
+    {
+     "key": "cleave_starting_width",
+     "value": "150"
+    },
+    {
+     "key": "cleave_ending_width",
+     "value": "360"
+    },
+    {
+     "key": "cleave_distance",
+     "value": "650"
+    },
+    {
+     "key": "upgraded_cleave_bonus",
+     "value": "25"
+    },
+    {
+     "key": "upgraded_damage_bonus",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "e57e91809a3631493e3c",
+  "subject": "bloodthorn",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "4"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "subject_zh": "Bloodthorn",
+  "context": {
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Rend",
+     "description": "Silences a target for 5 seconds. At the end of the silence, an additional 60% of all damage taken during the silence will be dealt to the target as magical damage.\n\nAll attacks on the silenced target will deal additional damage equal to 50 if the attacker is a hero, and 25, if the attacker is a creep. Provides True Strike for your attacks and attacks from your controlled units against the silenced target."
+    },
+    {
+     "type": "passive",
+     "title": "Pierce",
+     "description": "Grants each attack a 40% chance to pierce through evasion and deal 60 bonus magical damage."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "25"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "70"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "4"
+    },
+    {
+     "key": "silence_duration",
+     "value": "5"
+    },
+    {
+     "key": "silence_damage_percent",
+     "value": "60"
+    },
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "20"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    },
+    {
+     "key": "spell_amp_debuff",
+     "value": "35"
+    },
+    {
+     "key": "proc_damage_heroes",
+     "value": "50"
+    },
+    {
+     "key": "proc_damage_creeps",
+     "value": "25"
+    },
+    {
+     "key": "passive_proc_damage",
+     "value": "60"
+    },
+    {
+     "key": "proc_chance",
+     "value": "40"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "b2c63f68cc3af7bafeff",
+  "subject": "cornucopia",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "2"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Cornucopia",
+  "context": {
+   "attrib": [
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "5"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2"
+    },
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "7"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "f6eec67353b80b92db5d",
+  "subject": "cyclone",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "2.5"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "subject_zh": "Eul's Scepter of Divinity",
+  "context": {
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Cyclone",
+     "description": "Sweeps a target unit up into a cyclone, making them invulnerable for 2.5 seconds. Cyclone can only be cast on enemy units or yourself.\n\nEnemy units take 50 magical damage upon landing.\nDispel Type: Basic Dispel"
+    }
+   ],
+   "notes": "You cannot cyclone allies.\nCyclones cast on yourself go through spell immunity.\nCyclone can dispel some buffs and debuffs.\nCyclone duration is unaffected by status resistance.",
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2.5"
+    },
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "20"
+    },
+    {
+     "key": "cyclone_duration",
+     "value": "2.5"
+    },
+    {
+     "key": "tooltip_drop_damage",
+     "value": "50"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "d8a05d30a92fce6a3fca",
+  "subject": "devastator",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "1.5"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Parasma",
+  "context": {
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Witch Blade",
+     "description": "Causes your next attack to have true strike, apply a poison for 4 seconds, slowing by 25% and dealing 0.75x your intelligence as damage every second."
+    },
+    {
+     "type": "passive",
+     "title": "Magic Corruption",
+     "description": "Your attacks reduce the enemy's Magic resistance by 20% for 4 seconds."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "40"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "40"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "7"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.5"
+    },
+    {
+     "key": "projectile_speed",
+     "display": "+ {value} Projectile Speed",
+     "value": "300"
+    },
+    {
+     "key": "int_damage_multiplier",
+     "value": "0.75"
+    },
+    {
+     "key": "slow",
+     "value": "25"
+    },
+    {
+     "key": "slow_duration",
+     "value": "4"
+    },
+    {
+     "key": "active_mres_reduction",
+     "value": "20"
+    },
+    {
+     "key": "passive_cooldown",
+     "value": "4"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "e67887d5f6a80fe30680",
+  "subject": "echo_sabre",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "1.75"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Echo Sabre",
+  "context": {
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Echo Strike",
+     "description": "Causes melee attacks to attack twice in quick succession. The double attacks apply a 100% movement slow for 0.8 seconds on the first strike."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "20"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "15"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.75"
+    },
+    {
+     "key": "movement_slow",
+     "value": "100"
+    },
+    {
+     "key": "slow_duration",
+     "value": "0.8"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "3f1ac75ab23f590116d5",
+  "subject": "enhancement_keen_eyed",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "1 1.5 2"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Keen-eyed",
+  "context": {
+   "attrib": [
+    {
+     "key": "cast_range_bonus",
+     "display": "+ {value} Cast Range",
+     "value": "125 / 135 / 145"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1 / 1.5 / 2"
+    },
+    {
+     "key": "mana_reduction_pct",
+     "display": "- {value}% Max Mana",
+     "value": "10 / 12 / 14"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "bb70e0896b9308e717fc",
+  "subject": "enhancement_mystical",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_regen": "0.8 1.6 2.4 3.2"
+  },
+  "game_file_labels": {
+   "mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Mystical",
+  "context": {
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.8 / 1.6 / 2.4 / 3.2"
+    },
+    {
+     "key": "magic_res",
+     "display": "+ {value}% Magic Resistance",
+     "value": "0 / 10 / 13 / 16"
+    },
+    {
+     "key": "manacost_reduction",
+     "display": "+ {value}% Mana Cost/Mana Loss Reduction",
+     "value": "0 / 0 / 0 / 15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "6c13e01a6e55d9af2012",
+  "subject": "enhancement_thick",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "3"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Thick",
+  "context": {
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "240"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "3"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "7"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "16b61ac9c149864cccde",
+  "subject": "essence_distiller",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_regen": "1.5"
+  },
+  "game_file_labels": {
+   "mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "subject_zh": "Essence Distiller",
+  "context": {
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "Provides 40 health regeneration when cast on allies.\n\nCan be ground targeted to lie dormant for up to 15s and attach to the first enemy that comes within 450 radius. When on enemies, deals 25 damage per second and provides True Sight over them and shares their vision with the wearer's team.\n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units."
+    }
+   ],
+   "notes": "Empty distillers gain 2 charges.\nOnly the closest Essence Distiller to the dying hero will gain a charge.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.\nWhile dormant, provides vision in 450 radius. Vision lingers for 0.5s after latching.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.5"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "3"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "6"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "150"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "40"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    },
+    {
+     "key": "ground_duration",
+     "value": "15.0"
+    },
+    {
+     "key": "latch_range",
+     "value": "450"
+    },
+    {
+     "key": "latch_vision",
+     "value": "450"
+    },
+    {
+     "key": "linger_after_latch_duration",
+     "value": "0.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "b1dd5c01b68d176e5145",
+  "subject": "eye_of_the_vizier",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "1 1.5"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Eye of the Vizier",
+  "context": {
+   "attrib": [
+    {
+     "key": "cast_range_bonus",
+     "display": "+ {value} Cast Range",
+     "value": "125 / 135"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1 / 1.5"
+    },
+    {
+     "key": "mana_reduction_pct",
+     "display": "- {value}% Max Mana",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "fca98f589e55147f6242",
+  "subject": "falcon_blade",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "1.8"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Falcon Blade",
+  "context": {
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "200"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.8"
+    },
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "14"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "29524114ea1e9d0de1be",
+  "subject": "harpoon",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "2.0"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CUSTOM | DOTA_UNIT_TARGET_TREE"
+  },
+  "subject_zh": "Harpoon",
+  "context": {
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Draw Forth",
+     "description": "When targeting an enemy, fire a harpoon at them, that pulls you and the target closer together, up to 35% of the distance between you and your target. If the caster is melee, the hero and target are always pulled to within melee distance of each other. Targeting a tree always pulls you all the way to that tree."
+    },
+    {
+     "type": "passive",
+     "title": "Echo Strike",
+     "description": "Causes melee attacks to attack twice in quick succession. The double attacks apply a 100% movement slow for 1 seconds on the first strike. Echo Strike cooldown: 5s"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "25"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "25"
+    },
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "10"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2.0"
+    },
+    {
+     "key": "passive_cooldown",
+     "value": "5"
+    },
+    {
+     "key": "movement_slow",
+     "value": "100"
+    },
+    {
+     "key": "slow_duration",
+     "value": "1.0"
+    },
+    {
+     "key": "pull_duration",
+     "value": "0.3"
+    },
+    {
+     "key": "pull_distance_pct",
+     "value": "35"
+    },
+    {
+     "key": "min_distance",
+     "value": "100"
+    },
+    {
+     "key": "max_distance",
+     "value": "1000"
+    },
+    {
+     "key": "cast_range_enemy",
+     "value": "700"
+    },
+    {
+     "key": "push_length",
+     "value": "600"
+    },
+    {
+     "key": "projectile_speed",
+     "value": "2000"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "0e5926a8d784d069e15d",
+  "subject": "infused_raindrop",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_regen": "0.6"
+  },
+  "game_file_labels": {
+   "mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Infused Raindrops",
+  "context": {
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Magical Damage Block",
+     "description": "Consumes a charge to block 120 magic damage from damage instances over 75 damage. \n\nComes with 6 charges. When the charges are gone, the item disappears."
+    }
+   ],
+   "notes": "Uses at most one charge per damage instance.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.6"
+    },
+    {
+     "key": "magic_damage_block",
+     "value": "120"
+    },
+    {
+     "key": "min_damage",
+     "value": "75"
+    },
+    {
+     "key": "initial_charges",
+     "value": "6"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "3c4d15cec20660fda248",
+  "subject": "kaya",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_regen_multiplier": "20"
+  },
+  "game_file_labels": {
+   "mana_regen_multiplier": "%+Mana Regen Amplification"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Kaya",
+  "context": {
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "16"
+    },
+    {
+     "key": "spell_amp",
+     "display": "+ {value}% Spell Amplification",
+     "value": "10"
+    },
+    {
+     "key": "mana_regen_multiplier",
+     "display": "+ {value}% Mana Regen Amplification",
+     "value": "20"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "9ce58b76e83e3dbc4a31",
+  "subject": "kaya_and_sange",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_regen_multiplier": "30"
+  },
+  "game_file_labels": {
+   "mana_regen_multiplier": "%+Mana Regen Amplification"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Kaya and Sange",
+  "context": {
+   "attrib": [
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "16"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "16"
+    },
+    {
+     "key": "slow_resistance",
+     "display": "+ {value}% Slow Resistance",
+     "value": "25"
+    },
+    {
+     "key": "mana_regen_multiplier",
+     "display": "+ {value}% Mana Regen Amplification",
+     "value": "30"
+    },
+    {
+     "key": "spell_amp",
+     "display": "+ {value}% Spell Amplification",
+     "value": "12"
+    },
+    {
+     "key": "hp_regen_amp",
+     "display": "+ {value}% Health Restoration",
+     "value": "16"
+    },
+    {
+     "key": "manacost_reduction",
+     "display": "+ {value}% Mana Cost/Mana Loss Reduction",
+     "value": "25"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "c3ff9645cf6a9e28d10a",
+  "subject": "keen_optic",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "1.25"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Keen Optic",
+  "context": {
+   "attrib": [
+    {
+     "key": "cast_range_bonus",
+     "display": "+ {value} Cast Range",
+     "value": "75"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.25"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "b88f2a84aca49f906e33",
+  "subject": "lich_death_charge",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "active_mana_restore_pct_of_health": {
+    "value": "42",
+    "hero_levelup": "3"
+   }
+  },
+  "game_file_labels": {
+   "active_mana_restore_pct_of_health": "%CURRENT HEALTH CONVERTED:"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_BASIC"
+  },
+  "subject_zh": "巫妖·献身",
+  "context": {
+   "description_en": "Sacrifice an allied creep to convert its current health into mana for Lich and give Lich its experience bounty.Begins the game on cooldown and with no charges.",
+   "description_zh": "牺牲一个友方非英雄单位，把它的当前生命值转化为巫妖的魔法，并且巫妖获得它的击杀经验。游戏开始时处于冷却，没有能量点数。",
+   "notes_en": [
+    "Cannot sacrifice ancients or creep-heroes.",
+    "Sacrificed creeps count as denies and can give experience to enemy heroes. Lich's experience bounty and enemy heroes' deny experience are independent."
+   ],
+   "notes_zh": [
+    "无法牺牲远古或类英雄单位。",
+    "被牺牲的非英雄单位记为反补，会对敌方英雄提供经验。巫妖获得的击杀经验和敌方英雄获得的反补经验为分开计算。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "0c858379c01152d71980",
+  "subject": "light_collector",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_regen": "6"
+  },
+  "game_file_labels": {
+   "mana_regen": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "subject_zh": "Light Collector",
+  "context": {
+   "attrib": [
+    {
+     "key": "health_regen",
+     "value": "10"
+    },
+    {
+     "key": "mana_regen",
+     "value": "6"
+    },
+    {
+     "key": "penalty",
+     "value": "75"
+    },
+    {
+     "key": "movespeed_pct",
+     "value": "5"
+    },
+    {
+     "key": "radius",
+     "value": "200"
+    },
+    {
+     "key": "tree_destruction_radius",
+     "value": "325"
+    },
+    {
+     "key": "miss_rate",
+     "value": "30"
+    },
+    {
+     "key": "duration",
+     "value": "2.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "34d37295b687e13e950e",
+  "subject": "lotus_orb",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "4.0"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "subject_zh": "Lotus Orb",
+  "context": {
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Echo Shell",
+     "description": "Applies a shield to the target unit for 5 seconds which re-casts most targeted spells back to their caster.\n\nThe shielded unit will still take damage from the spell.\nDispel Type: Basic Dispel"
+    }
+   ],
+   "notes": "Targeted abilities from neutral items do not trigger Echo Shell.",
+   "attrib": [
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "10"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "6.5"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "4.0"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "250"
+    },
+    {
+     "key": "active_duration",
+     "value": "5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "4e59191ba5764f291d48",
+  "subject": "mage_slayer",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "2.5"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "subject_zh": "Mage Slayer",
+  "context": {
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Mage Slayer",
+     "description": "Places a debuff when you attack enemies, dealing 35 physical damage per second and causing them to do 40% less spell damage for 3 seconds."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_magical_armor",
+     "display": "+ {value}% Magic Resistance",
+     "value": "18"
+    },
+    {
+     "key": "spell_amp_debuff",
+     "value": "40"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "5.5"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2.5"
+    },
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "12"
+    },
+    {
+     "key": "duration",
+     "value": "3"
+    },
+    {
+     "key": "dps",
+     "value": "35"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "20b7b20b7a5a4660f8ef",
+  "subject": "mana_draught",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_restore": "70",
+   "mana_restore_pct": {
+    "value": "3",
+    "apply_curio_bonus": "1"
+   }
+  },
+  "game_file_labels": {
+   "mana_restore": null,
+   "mana_restore_pct": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "subject_zh": "Mana Draught",
+  "context": {
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Bottoms Up",
+     "description": "Restores 70 + 3% of the caster's maximum mana over 6 seconds. If the hero is attacked by an enemy hero or Roshan, the effect is lost.\n\nHold Control to use on an allied hero."
+    },
+    {
+     "type": "passive",
+     "title": "Fill Up",
+     "description": "Cooldown Speed of Mana Draught is increased by 30% while in water."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "mana_restore",
+     "value": "70"
+    },
+    {
+     "key": "mana_restore_pct",
+     "value": "3"
+    },
+    {
+     "key": "heal_duration",
+     "value": "6"
+    },
+    {
+     "key": "water_acceleration",
+     "value": "30"
+    }
+   ],
+   "tier": 2
+  }
+ },
+ {
+  "review_id": "d3233ec39d303caa9574",
+  "subject": "meteor_hammer",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_regen_multiplier": "25"
+  },
+  "game_file_labels": {
+   "mana_regen_multiplier": "%+Mana Regen Amplification"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityChannelTime": "2"
+  },
+  "subject_zh": "Meteor Hammer",
+  "context": {
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Meteor Hammer",
+     "description": "CHANNELED - After a successful channel, summons a meteor that strikes a 400 AoE, stunning enemies for 0.75 seconds and dealing impact damage. Continues to deal damage over time to enemies units and buildings for 6 seconds. Non-building units are also slowed for 20% for the duration of the burn. \n\nBuilding Impact Damage: 90 \nBuilding Over Time Damage: 50 \n\nNon-Building Impact Damage: 130 \nNon-Building Over Time Damage: 50 \n\nChannel Duration: 2 seconds.\nLanding Time: 0.5 seconds."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "6"
+    },
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "6"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "24"
+    },
+    {
+     "key": "spell_amp",
+     "display": "+ {value}% Spell Amplification",
+     "value": "10"
+    },
+    {
+     "key": "mana_regen_multiplier",
+     "display": "+ {value}% Mana Regen Amplification",
+     "value": "25"
+    },
+    {
+     "key": "burn_dps_buildings",
+     "value": "50"
+    },
+    {
+     "key": "burn_dps_units",
+     "value": "50"
+    },
+    {
+     "key": "burn_slow",
+     "value": "20"
+    },
+    {
+     "key": "burn_duration",
+     "value": "6"
+    },
+    {
+     "key": "stun_duration",
+     "value": "0.75"
+    },
+    {
+     "key": "burn_interval",
+     "value": "1.0"
+    },
+    {
+     "key": "land_time",
+     "value": ".5"
+    },
+    {
+     "key": "impact_radius",
+     "value": "400"
+    },
+    {
+     "key": "max_duration",
+     "value": "2"
+    },
+    {
+     "key": "impact_damage_buildings",
+     "value": "90"
+    },
+    {
+     "key": "impact_damage_units",
+     "value": "130"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "fdc3da1417dc54d2b58a",
+  "subject": "null_talisman",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "1.0"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Null Talisman",
+  "context": {
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "5"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "2"
+    },
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "2"
+    },
+    {
+     "key": "bonus_max_mana_percentage",
+     "display": "+ {value}% Max Mana",
+     "value": "3"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "132216459076ba9f1462",
+  "subject": "nyx_assassin_burrow",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_regen_rate": "1"
+  },
+  "game_file_labels": {
+   "mana_regen_rate": "%MAX MANA REGEN:"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "subject_zh": "司夜刺客·钻地",
+  "context": {
+   "description_en": "Nyx Assassin buries himself beneath the battlefield over a short duration. Once burrowed, Spiked Carapace instantly stuns nearby enemies when cast, the range of Mind Flare and Impale is increased, and Impale's cooldown is decreased. While burrowed, Nyx Assassin is stationary, unable to attack, and invisible. Nyx Assassin gains damage reduction from all damage sources.",
+   "description_zh": "司夜刺客经过短时间的掘地后钻入地下。钻地后尖刺外壳一施放就会直接眩晕附近所有敌人，神智爆裂和穿刺的施法距离提升，穿刺的冷却时间减少。钻地后司夜刺客固定在原地，无法攻击，并且是隐身状态。同时司夜刺客受到的所有伤害都会降低。",
+   "notes_en": [
+    "Casting Vendetta will cancel burrow."
+   ],
+   "notes_zh": [
+    "施放复仇将取消钻地状态。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "",
+     "zh": ""
+    },
+    "shard_loc": {
+     "en": "",
+     "zh": ""
+    }
+   },
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "7986cd15ef99a2767950",
+  "subject": "oblivion_staff",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "1.25"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Oblivion Staff",
+  "context": {
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "35"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.25"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "917e3311e91308c80d8d",
+  "subject": "occult_bracelet",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "mana_regen": "0.4"
+  },
+  "game_file_labels": {
+   "mana_regen": null
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Occult Bracelet",
+  "context": {
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Rites of Eloshar",
+     "description": "Each time the wearer is attacked, they gain a stack of 0.4 mana regen, up to 5 stacks. Stacks last for 5 seconds."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "value": "0.4"
+    },
+    {
+     "key": "stack_limit",
+     "value": "5"
+    },
+    {
+     "key": "stack_duration",
+     "value": "5"
+    }
+   ],
+   "tier": 1
+  }
+ },
+ {
+  "review_id": "ae0e1f008b453e6edc3b",
+  "subject": "octarine_core",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+  "definition_note": "",
+  "lead": "field_name",
+  "game_file_values": {
+   "bonus_mana_regen": "6"
+  },
+  "game_file_labels": {
+   "bonus_mana_regen": "+$mana_regen"
+  },
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "subject_zh": "Octarine Core",
+  "context": {
+   "attrib": [
+    {
+     "key": "bonus_cooldown",
+     "display": "+ {value}% Cooldown Reduction",
+     "value": "25"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "450"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "450"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "6"
+    }
+   ]
+  }
+ }
+]

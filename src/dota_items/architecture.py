@@ -197,6 +197,10 @@ SCRIPTS = {
     "build_mechanics_facts_v2": _S,
     "build_mechanics_facts_v3": _S,
     "build_stale_upgrade_text": _S,
+    "fetch_game_files_snapshot": _S,
+    "check_break_against_game_files": _S,
+    "audit_mechanics_against_game_files": _S,
+    "build_retired_items": _S,
     "mechanics_cross_review": _S,
     # track A
     "analyze_cohort_splits": _A,

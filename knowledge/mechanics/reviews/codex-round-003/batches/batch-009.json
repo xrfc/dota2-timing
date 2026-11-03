@@ -1,0 +1,1760 @@
+[
+{
+"review_id": "baaa03fd9a8d6b121837",
+"subject": "cyclone",
+"subject_zh": "Eul的神圣法杖",
+"mechanism": "applies_basic_dispel",
+"mechanism_zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Dispel Type: Basic Dispel",
+"value": "Sweeps a target unit up into a cyclone, making them invulnerable for 2.5 seconds. Cyclone can only be cast on enemy units or yourself.\n\nEnemy units take 50 magical damage upon landing.\nDispel Type: Basic Dispel",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/cyclone/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "You cannot cyclone allies.\nCyclones cast on yourself go through spell immunity.\nCyclone can dispel some buffs and debuffs.\nCyclone duration is unaffected by status resistance.",
+"lore": "A mysterious scepter passed down through the ages, its disruptive winds can be used for good or evil."
+}
+]
+},
+{
+"review_id": "cab589c59855bd845dac",
+"subject": "doom_bringer_doom",
+"subject_zh": "末日使者·末日",
+"mechanism": "applies_basic_dispel",
+"mechanism_zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "驱散类型：弱驱散",
+"value": "对敌人施加末日诅咒，对其进行驱散，并且使其无法施放技能或获得任何治疗效果，同时造成持续伤害。\n\n驱散类型：弱驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/66/abilities/3/description_zh"
+}
+},
+{
+"quote": "DISPEL TYPE: Basic Dispel",
+"value": "Inflicts a curse that dispels an enemy and prevents them from casting spells or healing in any way, while taking damage over time.\n\nDISPEL TYPE: Basic Dispel",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/66/abilities/3/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Doom",
+"name_zh": "末日",
+"description_en": "Inflicts a curse that dispels an enemy and prevents them from casting spells or healing in any way, while taking damage over time.\n\nDISPEL TYPE: Basic Dispel",
+"description_zh": "对敌人施加末日诅咒，对其进行驱散，并且使其无法施放技能或获得任何治疗效果，同时造成持续伤害。\n\n驱散类型：弱驱散",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Doom applies Break to enemies. Allies in a %scepter_aura_radius% radius around the doomed target also suffer the effects of Doom. Allows Doom to be self-cast to affect enemies around himself with Doom.",
+"zh": "末日对敌人施加破坏效果。末日作用下目标%scepter_aura_radius%范围内友军也会受到末日的作用。可以对自身施放末日，使末日作用于末日使者周围的敌人。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 4,
+"dispellable": 3,
+"immunity": 3,
+"max_level": 3,
+"target_team": 3,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "e4711452d535f9ac0263",
+"subject": "nullifier",
+"subject_zh": "否决坠饰",
+"mechanism": "applies_basic_dispel",
+"mechanism_zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Dispel Type: Basic Dispel",
+"value": "Dispels the target and applies a debuff for 4 seconds. Continuously dispels and slows the target.\n\nDispel Type: Basic Dispel",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/nullifier/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Can be cast on invulnerable units."
+}
+]
+},
+{
+"review_id": "0c806faeb301cd13063f",
+"subject": "pudge_dismember",
+"subject_zh": "帕吉·肢解",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "持续施法 - 帕吉撕咬一个敌方单位，使其失去行动能力并受到持续伤害。",
+"value": "持续施法 - 帕吉撕咬一个敌方单位，使其失去行动能力并受到持续伤害。伤害量为基础伤害加上帕吉力量值的一定百分比，帕吉将回复与伤害量相等的生命。帕吉会将该单位以每秒%pull_units_per_second%的速度向自身牵引，最多牵引%pull_distance_limit%距离。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/13/abilities/4/description_zh"
+}
+},
+{
+"quote": "CHANNELED - Pudge chows down on an enemy unit, disabling it and dealing damage over time.",
+"value": "CHANNELED - Pudge chows down on an enemy unit, disabling it and dealing damage over time. Damage is increased by Pudge's Strength and heals him for the total amount. Pudge pulls the unit at a rate of %pull_units_per_second% units, up to a minimum of %pull_distance_limit% range.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/13/abilities/4/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Dismember",
+"name_zh": "肢解",
+"description_en": "CHANNELED - Pudge chows down on an enemy unit, disabling it and dealing damage over time. Damage is increased by Pudge's Strength and heals him for the total amount. Pudge pulls the unit at a rate of %pull_units_per_second% units, up to a minimum of %pull_distance_limit% range.",
+"description_zh": "持续施法 - 帕吉撕咬一个敌方单位，使其失去行动能力并受到持续伤害。伤害量为基础伤害加上帕吉力量值的一定百分比，帕吉将回复与伤害量相等的生命。帕吉会将该单位以每秒%pull_units_per_second%的速度向自身牵引，最多牵引%pull_distance_limit%距离。",
+"notes_en": [
+"If a unit becomes invisible while Dismembered, it will still be under the effects of Dismember."
+],
+"notes_zh": [
+"即使肢解的目标在受到作用的过程中隐身，还是不会脱离肢解的作用。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134217864",
+"damage": 2,
+"dispellable": 1,
+"immunity": 3,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "2007ef73cfe1b7786cb0",
+"subject": "clinkz_burning_barrage",
+"subject_zh": "克林克兹·炽烈火雨",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": true
+},
+"evidence": [
+{
+"quote": "CHANNELED - Clinkz channels and shoots multiple piercing arrows in the target direction that hit all enemy units dealing a percentage of Clinkz' attack damage and applying attack modifiers.",
+"value": "CHANNELED - Clinkz channels and shoots multiple piercing arrows in the target direction that hit all enemy units dealing a percentage of Clinkz' attack damage and applying attack modifiers.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/54/abilities/3/description_en"
+}
+},
+{
+"quote": "持续施法 - 克林克兹持续施法，朝目标方向射出多支灼热的箭矢，击中所有敌人，造成克林克兹攻击伤害的一定百分比并施加攻击特效。",
+"value": "持续施法 - 克林克兹持续施法，朝目标方向射出多支灼热的箭矢，击中所有敌人，造成克林克兹攻击伤害的一定百分比并施加攻击特效。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/54/abilities/3/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Burning Barrage",
+"name_zh": "炽烈火雨",
+"description_en": "CHANNELED - Clinkz channels and shoots multiple piercing arrows in the target direction that hit all enemy units dealing a percentage of Clinkz' attack damage and applying attack modifiers.",
+"description_zh": "持续施法 - 克林克兹持续施法，朝目标方向射出多支灼热的箭矢，击中所有敌人，造成克林克兹攻击伤害的一定百分比并施加攻击特效。",
+"notes_en": [
+"Bonus Attack Range increases the length of Burning Barrage."
+],
+"notes_zh": [
+"攻击距离加成会提升炽烈火雨的长度。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": true,
+"raw_mechanics": {
+"behavior": "8589935761",
+"damage": 1,
+"dispellable": 0,
+"immunity": 3,
+"max_level": 1,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "4016993e2d431c452569",
+"subject": "oracle_fortunes_end",
+"subject_zh": "神谕者·气运之末",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and dispels enemies of buffs in an area around the target.",
+"value": "CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and dispels enemies of buffs in an area around the target. If target is an ally it will only dispel debuffs. The root duration increases with channeling time.\n\nDISPEL TYPE: Basic Dispel",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/107/abilities/0/description_en"
+}
+},
+{
+"quote": "The root duration increases with channeling time.",
+"value": "CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and dispels enemies of buffs in an area around the target. If target is an ally it will only dispel debuffs. The root duration increases with channeling time.\n\nDISPEL TYPE: Basic Dispel",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/107/abilities/0/description_en"
+}
+},
+{
+"quote": "缠绕时间随着持续施法时间逐渐提升。",
+"value": "持续施法 - 将神谕者的力量汇聚为一股蕴含荡涤之力的能量，对敌方目标释放这股能量可以对其造成伤害，使其被缠绕，并且驱散其附近区域的魔法效果。如果目标是友军，将只造成驱散效果。缠绕时间随着持续施法时间逐渐提升。\n\n驱散类型：弱驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/107/abilities/0/description_zh"
+}
+},
+{
+"quote": "持续施法 - 将神谕者的力量汇聚为一股蕴含荡涤之力的能量，对敌方目标释放这股能量可以对其造成伤害，使其被缠绕，并且驱散其附近区域的魔法效果。",
+"value": "持续施法 - 将神谕者的力量汇聚为一股蕴含荡涤之力的能量，对敌方目标释放这股能量可以对其造成伤害，使其被缠绕，并且驱散其附近区域的魔法效果。如果目标是友军，将只造成驱散效果。缠绕时间随着持续施法时间逐渐提升。\n\n驱散类型：弱驱散",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/107/abilities/0/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Fortune's End",
+"name_zh": "气运之末",
+"description_en": "CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and dispels enemies of buffs in an area around the target. If target is an ally it will only dispel debuffs. The root duration increases with channeling time.\n\nDISPEL TYPE: Basic Dispel",
+"description_zh": "持续施法 - 将神谕者的力量汇聚为一股蕴含荡涤之力的能量，对敌方目标释放这股能量可以对其造成伤害，使其被缠绕，并且驱散其附近区域的魔法效果。如果目标是友军，将只造成驱散效果。缠绕时间随着持续施法时间逐渐提升。\n\n驱散类型：弱驱散",
+"notes_en": [
+"Affects invulnerable units."
+],
+"notes_zh": [
+"可以作用无敌单位。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "536871080",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 3,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "4698c47ede2b729b1bea",
+"subject": "warlock_upheaval",
+"subject_zh": "术士·剧变",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled.",
+"value": "CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled. Lasts up to %abilitychanneltime% seconds. Enemies are slowed for %duration% second after leaving the area or the spell ends.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/35/abilities/2/description_en"
+}
+},
+{
+"quote": "持续施法 - 随施法时间增强的减速气流，还会造成伤害。",
+"value": "持续施法 - 随施法时间增强的减速气流，还会造成伤害。持续最多%abilitychanneltime%秒。在魔法结束或目标离开生效区域后，敌人仍会被减速%duration%秒。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/35/abilities/2/description_zh"
+}
+},
+{
+"quote": "减速效果的增加是根据持续施法的时长，而不是敌人在区内停留的持续时间。",
+"value": "减速效果的增加是根据持续施法的时长，而不是敌人在区内停留的持续时间。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/35/abilities/2/notes_zh/0"
+}
+},
+{
+"quote": "The slow increase is based on length of the channel, not the duration an enemy was standing in the area.",
+"value": "The slow increase is based on length of the channel, not the duration an enemy was standing in the area.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/35/abilities/2/notes_en/0"
+}
+}
+],
+"context": [
+{
+"name_en": "Upheaval",
+"name_zh": "剧变",
+"description_en": "CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled. Lasts up to %abilitychanneltime% seconds. Enemies are slowed for %duration% second after leaving the area or the spell ends.",
+"description_zh": "持续施法 - 随施法时间增强的减速气流，还会造成伤害。持续最多%abilitychanneltime%秒。在魔法结束或目标离开生效区域后，敌人仍会被减速%duration%秒。",
+"notes_en": [
+"The slow increase is based on length of the channel, not the duration an enemy was standing in the area."
+],
+"notes_zh": [
+"减速效果的增加是根据持续施法的时长，而不是敌人在区内停留的持续时间。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "While channeling, Warlock spawns a minor imp every %imps_interval% seconds that lasts for %minor_imp_duration% seconds and explodes dealing damage to all enemies around them upon death.",
+"zh": "持续施法时每%imps_interval%秒术士会召唤一个魔童，持续%minor_imp_duration%秒，魔童死亡时会爆炸，对周围所有敌人造成伤害。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "176",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "8fd74f4712faf3d48f4f",
+"subject": "puck_phase_shift",
+"subject_zh": "帕克·相位转移",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "持续施法 - 帕克暂时将自己转移到另一个位面，从而免疫伤害。",
+"value": "持续施法 - 帕克暂时将自己转移到另一个位面，从而免疫伤害。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/12/abilities/2/description_zh"
+}
+},
+{
+"quote": "CHANNELED - Puck briefly shifts into another dimension where it is immune from harm.",
+"value": "CHANNELED - Puck briefly shifts into another dimension where it is immune from harm.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/12/abilities/2/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Phase Shift",
+"name_zh": "相位转移",
+"description_en": "CHANNELED - Puck briefly shifts into another dimension where it is immune from harm.",
+"description_zh": "持续施法 - 帕克暂时将自己转移到另一个位面，从而免疫伤害。",
+"notes_en": [
+"Puck retains collision size while under the effects of Phase Shift.",
+"Issuing any action will cancel Phase Shift.",
+"Puck is invulnerable during Phase Shift."
+],
+"notes_zh": [
+"帕克在相位转移状态下依然具有碰撞体积。",
+"进行任何动作都会中止相位转移。",
+"帕克在相位转移状态下无敌。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Puck's attacks deal bonus magic damage. Puck attacks all enemies within its attack range every time it phase shifts.",
+"zh": "帕克的攻击造成额外魔法伤害。帕克每次施放相位转移时对攻击距离内所有敌人发动一次攻击。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "33816708",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "95b9db1c3a9654525662",
+"subject": "meteor_hammer",
+"subject_zh": "陨星锤",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "CHANNELED - After a successful channel, summons a meteor that strikes a 400 AoE, stunning enemies for 0.",
+"value": "CHANNELED - After a successful channel, summons a meteor that strikes a 400 AoE, stunning enemies for 0.75 seconds and dealing impact damage. Continues to deal damage over time to enemies units and buildings for 6 seconds. Non-building units are also slowed for 20% for the duration of the burn. \n\nBuilding Impact Damage: 90 \nBuilding Over Time Damage: 50 \n\nNon-Building Impact Damage: 130 \nNon-Building Over Time Damage: 50 \n\nChannel Duration: 2 seconds.\nLanding Time: 0.5 seconds.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/meteor_hammer/abilities/0/description"
+}
+},
+{
+"quote": "Channel Duration: 2 seconds.",
+"value": "CHANNELED - After a successful channel, summons a meteor that strikes a 400 AoE, stunning enemies for 0.75 seconds and dealing impact damage. Continues to deal damage over time to enemies units and buildings for 6 seconds. Non-building units are also slowed for 20% for the duration of the burn. \n\nBuilding Impact Damage: 90 \nBuilding Over Time Damage: 50 \n\nNon-Building Impact Damage: 130 \nNon-Building Over Time Damage: 50 \n\nChannel Duration: 2 seconds.\nLanding Time: 0.5 seconds.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/meteor_hammer/abilities/0/description"
+}
+}
+],
+"context": [
+{}
+]
+},
+{
+"review_id": "a3ea0cbff4338818e3a3",
+"subject": "ringmaster_tame_the_beasts",
+"subject_zh": "百戏大王·驯兽术",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "CHANNELED - Ringmaster twirls his whip for up to %abilitychanneltime% second then cracks it.",
+"value": "CHANNELED - Ringmaster twirls his whip for up to %abilitychanneltime% second then cracks it. Whipped enemies are damaged and flee in fear from Ringmaster. Channel time exponentially increases damage and extends the fear duration, but reduces the radius.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/124/abilities/0/description_en"
+}
+},
+{
+"quote": "持续施法时间会使伤害和恐惧时间成倍增加，但是作用范围减少。",
+"value": "持续施法 - 百戏大王卷起他的鞭子，最多持续%abilitychanneltime%秒，然后猛甩出去。被鞭打的敌人会受到伤害，并且被恐惧，逃离百戏大王。持续施法时间会使伤害和恐惧时间成倍增加，但是作用范围减少。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/124/abilities/0/description_zh"
+}
+},
+{
+"quote": "持续施法 - 百戏大王卷起他的鞭子，最多持续%abilitychanneltime%秒，然后猛甩出去。",
+"value": "持续施法 - 百戏大王卷起他的鞭子，最多持续%abilitychanneltime%秒，然后猛甩出去。被鞭打的敌人会受到伤害，并且被恐惧，逃离百戏大王。持续施法时间会使伤害和恐惧时间成倍增加，但是作用范围减少。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/124/abilities/0/description_zh"
+}
+},
+{
+"quote": "Channel time exponentially increases damage and extends the fear duration, but reduces the radius.",
+"value": "CHANNELED - Ringmaster twirls his whip for up to %abilitychanneltime% second then cracks it. Whipped enemies are damaged and flee in fear from Ringmaster. Channel time exponentially increases damage and extends the fear duration, but reduces the radius.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/124/abilities/0/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Tame the Beasts",
+"name_zh": "驯兽术",
+"description_en": "CHANNELED - Ringmaster twirls his whip for up to %abilitychanneltime% second then cracks it. Whipped enemies are damaged and flee in fear from Ringmaster. Channel time exponentially increases damage and extends the fear duration, but reduces the radius.",
+"description_zh": "持续施法 - 百戏大王卷起他的鞭子，最多持续%abilitychanneltime%秒，然后猛甩出去。被鞭打的敌人会受到伤害，并且被恐惧，逃离百戏大王。持续施法时间会使伤害和恐惧时间成倍增加，但是作用范围减少。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "176",
+"damage": 2,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "ba52a2a8c1dca8dbf2fd",
+"subject": "tpscroll",
+"subject_zh": "回城卷轴",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "use",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "After channeling for 3 seconds, teleports you to a target friendly building.",
+"value": "After channeling for 3 seconds, teleports you to a target friendly building. \n\nDouble-click to teleport to your team's base fountain.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/tpscroll/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "If multiple heroes teleport to the same location in succession, the channeling time will be increased for each successive hero.\nTeleport can be prevented or canceled by Root abilities.",
+"lore": "What a hero truly needs."
+}
+]
+},
+{
+"review_id": "c6de3594d25aaa5eb99a",
+"subject": "lich_sinister_gaze",
+"subject_zh": "巫妖·阴邪凝视",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "scepter_upgrade",
+"requires_scepter": true,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Sinister Gaze allows Lich to cast other abilities while channeling it.",
+"value": "Sinister Gaze becomes an Area of Effect ability, affecting units within a radius of %aoe_scepter% in the target area. Sinister Gaze allows Lich to cast other abilities while channeling it.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/24/abilities/2/upgrade_text/scepter_loc/en"
+}
+},
+{
+"quote": "在阴邪凝视的持续施法期间可以施放其他技能。",
+"value": "阴邪凝视变成范围型技能，对目标区域%aoe_scepter%范围内所有单位生效。在阴邪凝视的持续施法期间可以施放其他技能。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/24/abilities/2/upgrade_text/scepter_loc/zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Sinister Gaze",
+"name_zh": "阴邪凝视",
+"description_en": "CHANNELED - Hypnotizes an enemy unit, causing it to move towards a point between the two of you and drains a percentage of its current mana.",
+"description_zh": "持续施法 - 使一个敌方单位着魔，缓慢走到巫妖与其之间的一点，并吸取其当前魔法值的一定百分比。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "Sinister Gaze becomes an Area of Effect ability, affecting units within a radius of %aoe_scepter% in the target area. Sinister Gaze allows Lich to cast other abilities while channeling it.",
+"zh": "阴邪凝视变成范围型技能，对目标区域%aoe_scepter%范围内所有单位生效。在阴邪凝视的持续施法期间可以施放其他技能。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "136",
+"damage": 0,
+"dispellable": 2,
+"immunity": 4,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "e2482a7066ea70a1be21",
+"subject": "templar_assassin_trap_teleport",
+"subject_zh": "圣堂刺客·灵能投射",
+"mechanism": "channeled",
+"mechanism_zh": "持续施法",
+"definition": "需要持续引导，被打断即停止",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": true,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "持续施法 - 圣堂刺客经过%abilitychanneltime%秒持续施法后可以传送至任意灵能陷阱，到达时引爆灵能陷阱，陷阱总是最大效果，并且立刻造成%extra_damage%点额外伤害。",
+"value": "持续施法 - 圣堂刺客经过%abilitychanneltime%秒持续施法后可以传送至任意灵能陷阱，到达时引爆灵能陷阱，陷阱总是最大效果，并且立刻造成%extra_damage%点额外伤害。灵能投射在持续施法时不会脱离隐匿效果。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/44/abilities/3/description_zh"
+}
+},
+{
+"quote": "CHANNELED - Allows Templar Assassin to teleport to any Psionic Trap after channeling for %abilitychanneltime% seconds, detonating it upon arrival as if it was fully charged and instantly dealing %extra_damage% bonus damage.",
+"value": "CHANNELED - Allows Templar Assassin to teleport to any Psionic Trap after channeling for %abilitychanneltime% seconds, detonating it upon arrival as if it was fully charged and instantly dealing %extra_damage% bonus damage. Channeling Psionic Projection does not break Meld.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/44/abilities/3/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Psionic Projection",
+"name_zh": "灵能投射",
+"description_en": "CHANNELED - Allows Templar Assassin to teleport to any Psionic Trap after channeling for %abilitychanneltime% seconds, detonating it upon arrival as if it was fully charged and instantly dealing %extra_damage% bonus damage. Channeling Psionic Projection does not break Meld.",
+"description_zh": "持续施法 - 圣堂刺客经过%abilitychanneltime%秒持续施法后可以传送至任意灵能陷阱，到达时引爆灵能陷阱，陷阱总是最大效果，并且立刻造成%extra_damage%点额外伤害。灵能投射在持续施法时不会脱离隐匿效果。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": true,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8589934801",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 3,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "0d46ed5bd8d5d6d4b681",
+"subject": "kez_raptor_dance",
+"subject_zh": "凯·猛禽之舞",
+"mechanism": "lifesteal",
+"mechanism_zh": "吸血",
+"definition": "按造成的伤害或目标生命恢复自身生命（攻击吸血、技能吸血、如噬魂鬼·盛宴）",
+"definition_note": "U33：盛宴（按目标最大生命）也算吸血",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Slash Lifesteal is reduced to %illusion_lifesteal_pct%%% when slashing a creep or an illusion.",
+"value": "Slash Lifesteal is reduced to %illusion_lifesteal_pct%%% when slashing a creep or an illusion.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/125/abilities/4/notes_en/0"
+}
+},
+{
+"quote": "斩击非英雄单位或幻象时吸血量减少至%illusion_lifesteal_pct%%%。",
+"value": "斩击非英雄单位或幻象时吸血量减少至%illusion_lifesteal_pct%%%。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/125/abilities/4/notes_zh/0"
+}
+}
+],
+"context": [
+{
+"name_en": "Raptor Dance",
+"name_zh": "猛禽之舞",
+"description_en": "Kez enters into an uncontrollable state for %AbilityCastPoint% second, becoming invulnerable for %invuln_period%s and receiving a basic dispel.If the cast completes successfully, Kez performs a series of deadly radial slashes around him that deal damage based on the max health of the target and heal Kez for a percentage of all damage dealt.",
+"description_zh": "凯进入不可控制的状态，持续%AbilityCastPoint%秒，%invuln_period%秒为无敌状态并获得一次弱驱散效果。如果施法成功完成，凯会对周围发动致命的辐射状斩击，基于目标的最大生命值造成伤害，并且造成伤害的一定百分比会治疗凯。",
+"notes_en": [
+"Slash Lifesteal is reduced to %illusion_lifesteal_pct%%% when slashing a creep or an illusion."
+],
+"notes_zh": [
+"斩击非英雄单位或幻象时吸血量减少至%illusion_lifesteal_pct%%%。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "134217764",
+"damage": 4,
+"dispellable": 0,
+"immunity": 3,
+"max_level": 3,
+"target_team": 2,
+"target_type": 19,
+"type": 1
+}
+}
+]
+},
+{
+"review_id": "1e16b3693506c496e1dd",
+"subject": "broodmother_insatiable_hunger",
+"subject_zh": "育母蜘蛛·极度饥渴",
+"mechanism": "lifesteal",
+"mechanism_zh": "吸血",
+"definition": "按造成的伤害或目标生命恢复自身生命（攻击吸血、技能吸血、如噬魂鬼·盛宴）",
+"definition_note": "U33：盛宴（按目标最大生命）也算吸血",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "对活物体液的强烈饥渴提高了育母蜘蛛的攻击力，并使她和她的小蜘蛛的攻击附带吸血效果。",
+"value": "对活物体液的强烈饥渴提高了育母蜘蛛的攻击力，并使她和她的小蜘蛛的攻击附带吸血效果。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/59/abilities/0/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Insatiable Hunger",
+"name_zh": "极度饥渴",
+"description_en": "A violent lust for vital fluids increases Broodmother's attack damage and gives her and her Spiderlings a vampiric attack.",
+"description_zh": "对活物体液的强烈饥渴提高了育母蜘蛛的攻击力，并使她和她的小蜘蛛的攻击附带吸血效果。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "While Hunger is active, the bonus damage is increased by %shard_damage_per_tick%%% every %shard_damage_tick_interval%s.",
+"zh": "开启极度饥渴后，攻击力加成每%shard_damage_tick_interval%秒提升%shard_damage_per_tick%%%。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4",
+"damage": 1,
+"dispellable": 3,
+"immunity": 0,
+"max_level": 4,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "2212c32e1a24e753f164",
+"subject": "marci_bodyguard",
+"subject_zh": "玛西·护卫术",
+"mechanism": "lifesteal",
+"mechanism_zh": "吸血",
+"definition": "按造成的伤害或目标生命恢复自身生命（攻击吸血、技能吸血、如噬魂鬼·盛宴）",
+"definition_note": "U33：盛宴（按目标最大生命）也算吸血",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Lifesteal effectiveness gets a %creep_lifesteal_reduction_pct%%% penalty against creeps.",
+"value": "Lifesteal effectiveness gets a %creep_lifesteal_reduction_pct%%% penalty against creeps.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/121/abilities/2/notes_en/1"
+}
+},
+{
+"quote": "对友军施放时，使其获得她的%max_partner_penalty%%%被动吸血和攻击力加成。",
+"value": "被动使玛西获得吸血和攻击力加成。\n\n对友军施放时，使其获得她的%max_partner_penalty%%%被动吸血和攻击力加成。另外马上还会给她和她的搭档制造共用的全伤害护盾。在玛西攻击英雄时，造成伤害的%shared_barrier_replenish_amount%%%会补充护盾。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/121/abilities/2/description_zh"
+}
+},
+{
+"quote": "吸血效果对非英雄单位减少%creep_lifesteal_reduction_pct%%%。",
+"value": "吸血效果对非英雄单位减少%creep_lifesteal_reduction_pct%%%。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/121/abilities/2/notes_zh/1"
+}
+},
+{
+"quote": "被动使玛西获得吸血和攻击力加成。",
+"value": "被动使玛西获得吸血和攻击力加成。\n\n对友军施放时，使其获得她的%max_partner_penalty%%%被动吸血和攻击力加成。另外马上还会给她和她的搭档制造共用的全伤害护盾。在玛西攻击英雄时，造成伤害的%shared_barrier_replenish_amount%%%会补充护盾。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/121/abilities/2/description_zh"
+}
+},
+{
+"quote": "Passively grants Marci lifesteal and bonus attack damage.",
+"value": "Passively grants Marci lifesteal and bonus attack damage.\n\nWhen cast on an ally, she provides them with %max_partner_penalty%%% of her passive lifesteal and attack damage bonus. Additionally Marci creates a shared all damage barrier for herself and her partner. As Marci attacks heroes, %shared_barrier_replenish_amount%%% of the damage dealt restores the barrier.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/121/abilities/2/description_en"
+}
+},
+{
+"quote": "When cast on an ally, she provides them with %max_partner_penalty%%% of her passive lifesteal and attack damage bonus.",
+"value": "Passively grants Marci lifesteal and bonus attack damage.\n\nWhen cast on an ally, she provides them with %max_partner_penalty%%% of her passive lifesteal and attack damage bonus. Additionally Marci creates a shared all damage barrier for herself and her partner. As Marci attacks heroes, %shared_barrier_replenish_amount%%% of the damage dealt restores the barrier.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/121/abilities/2/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Bodyguard",
+"name_zh": "护卫术",
+"description_en": "Passively grants Marci lifesteal and bonus attack damage.\n\nWhen cast on an ally, she provides them with %max_partner_penalty%%% of her passive lifesteal and attack damage bonus. Additionally Marci creates a shared all damage barrier for herself and her partner. As Marci attacks heroes, %shared_barrier_replenish_amount%%% of the damage dealt restores the barrier.",
+"description_zh": "被动使玛西获得吸血和攻击力加成。\n\n对友军施放时，使其获得她的%max_partner_penalty%%%被动吸血和攻击力加成。另外马上还会给她和她的搭档制造共用的全伤害护盾。在玛西攻击英雄时，造成伤害的%shared_barrier_replenish_amount%%%会补充护盾。",
+"notes_en": [
+"Marci cannot cast Bodyguard on herself.",
+"Lifesteal effectiveness gets a %creep_lifesteal_reduction_pct%%% penalty against creeps.",
+"The shared barrier is reduced by damage on either Marci or her partner."
+],
+"notes_zh": [
+"玛西无法对自身施放护卫术。",
+"吸血效果对非英雄单位减少%creep_lifesteal_reduction_pct%%%。",
+"不论是玛西或她的搭档受到伤害都会使共用护盾的数值减少。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "8",
+"damage": 1,
+"dispellable": 2,
+"immunity": 1,
+"max_level": 4,
+"target_team": 1,
+"target_type": 1,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "847cbcb56409d5684dfc",
+"subject": "bloodstone",
+"subject_zh": "血精石",
+"mechanism": "lifesteal",
+"mechanism_zh": "吸血",
+"definition": "按造成的伤害或目标生命恢复自身生命（攻击吸血、技能吸血、如噬魂鬼·盛宴）",
+"definition_note": "U33：盛宴（按目标最大生命）也算吸血",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Increases Bloodstone's Spell Lifesteal to 60%.",
+"value": "Increases Bloodstone's Spell Lifesteal to 60%. Lasts 5 seconds.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/bloodstone/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Spell Weakness Aura does not stack with Veil of Discord's Spell Weakness.",
+"lore": "The Bloodstone's bright ruby color is unmistakable on the battlefield, as the owner seems to have infinite vitality and spirit."
+}
+]
+},
+{
+"review_id": "b9bf6111d67cf582544a",
+"subject": "skeleton_king_vampiric_spirit",
+"subject_zh": "冥魂大帝·吸血灵魂",
+"mechanism": "lifesteal",
+"mechanism_zh": "吸血",
+"definition": "按造成的伤害或目标生命恢复自身生命（攻击吸血、技能吸血、如噬魂鬼·盛宴）",
+"definition_note": "U33：盛宴（按目标最大生命）也算吸血",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "破坏只会使被动吸血失效。",
+"value": "破坏只会使被动吸血失效。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/40/abilities/3/notes_zh/2"
+}
+},
+{
+"quote": "冥魂大帝获得吸血效果。",
+"value": "冥魂大帝获得吸血效果。被击杀时冥魂大帝变为移动无视地形的冥魂，拥有额外攻击和移动速度，持续较短时间，自身死亡延后。冥魂大帝变为冥魂后无法重生。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/40/abilities/3/description_zh"
+}
+},
+{
+"quote": "Break only disables the passive lifesteal component.",
+"value": "Break only disables the passive lifesteal component.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/40/abilities/3/notes_en/2"
+}
+},
+{
+"quote": "Grants Wraith King Lifesteal.",
+"value": "Grants Wraith King Lifesteal. When slain Wraith King turns into a free pathing Wraith with Bonus Attack and Movement Speed for a short duration, delaying his death. Wraith King cannot reincarnate after being a Wraith.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/40/abilities/3/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Vampiric Spirit",
+"name_zh": "吸血灵魂",
+"description_en": "Grants Wraith King Lifesteal. When slain Wraith King turns into a free pathing Wraith with Bonus Attack and Movement Speed for a short duration, delaying his death. Wraith King cannot reincarnate after being a Wraith.",
+"description_zh": "冥魂大帝获得吸血效果。被击杀时冥魂大帝变为移动无视地形的冥魂，拥有额外攻击和移动速度，持续较短时间，自身死亡延后。冥魂大帝变为冥魂后无法重生。",
+"notes_en": [
+"Credit for allies whose death was delayed will go to whoever struck the original killing blow.",
+"Does not affect Reincarnate deaths.",
+"Break only disables the passive lifesteal component.",
+"Respawn timer is reduced by Wraith duration."
+],
+"notes_zh": [
+"对于死亡被延缓的友军，其成为冥魂前所受的最后一击来源即为击杀者。",
+"触发绝冥再生时没有效果。",
+"破坏只会使被动吸血失效。",
+"复活时间会根据冥魂持续时间而减少。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "Turns Vampiric Spirit into an aura, allowing allied heroes to turn into wraiths when slain. Extends wraith duration.",
+"zh": "吸血灵魂变为光环，使友方英雄被击杀时也能变为冥魂。延长冥魂的持续时间。"
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "66",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "dd1273dc9511ae6230fe",
+"subject": "kez_kazurai_katana",
+"subject_zh": "凯·影武长刀",
+"mechanism": "lifesteal",
+"mechanism_zh": "吸血",
+"definition": "按造成的伤害或目标生命恢复自身生命（攻击吸血、技能吸血、如噬魂鬼·盛宴）",
+"definition_note": "U33：盛宴（按目标最大生命）也算吸血",
+"condition": {
+"context": "shard_upgrade",
+"requires_scepter": false,
+"requires_shard": true
+},
+"evidence": [
+{
+"quote": "Kez lifesteals %lifesteal_pct%%% from the impale.",
+"value": "Kez lifesteals %lifesteal_pct%%% from the impale. If the impale comes from behind the target, the target is stunned. Increases max burst stacks.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/125/abilities/2/upgrade_text/shard_loc/en"
+}
+},
+{
+"quote": "刺中后凯能从当次攻击吸血%lifesteal_pct%%%。",
+"value": "刺中后凯能从当次攻击吸血%lifesteal_pct%%%。如果从背后刺中目标，目标会被眩晕。提升最大爆发叠加数值。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/125/abilities/2/upgrade_text/shard_loc/zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Kazurai Katana",
+"name_zh": "影武长刀",
+"description_en": "Katana attacks and abilities apply a stacking damage over time to enemies that deals a percentage of the original attack's damage as additional damage over time. Kez may activate the ability to impale the target with his attack, preventing them from moving or turning. The target's Katana debuff bursts, causing some of the stacks to deal damage instantly.",
+"description_zh": "长刀的攻击和技能会对敌人施加一个可叠加的持续伤害效果，持续时间内造成原攻击伤害一定百分比的额外伤害。凯可以主动使用技能，刺中目标，阻止他们移动或转身。目标身上的影武长刀效果爆发，使部分叠加数值立刻造成伤害。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Kez lifesteals %lifesteal_pct%%% from the impale. If the impale comes from behind the target, the target is stunned. Increases max burst stacks.",
+"zh": "刺中后凯能从当次攻击吸血%lifesteal_pct%%%。如果从背后刺中目标，目标会被眩晕。提升最大爆发叠加数值。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "131080",
+"damage": 1,
+"dispellable": 2,
+"immunity": 3,
+"max_level": 4,
+"target_team": 2,
+"target_type": 19,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "11f19e747fc80a9eeec2",
+"subject": "void_spirit_intrinsic_edge",
+"subject_zh": "虚无之灵·内在优势",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "虚无之灵从每点属性获得的攻击力提升%damage_stat_bonus_pct%%%，并且从力量中获得的生命恢复、敏捷中获得的攻击速度和智力中获得的魔法恢复提升%secondary_stat_bonus_pct%%%。",
+"value": "虚无之灵从每点属性获得的攻击力提升%damage_stat_bonus_pct%%%，并且从力量中获得的生命恢复、敏捷中获得的攻击速度和智力中获得的魔法恢复提升%secondary_stat_bonus_pct%%%。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/117/abilities/3/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Intrinsic Edge",
+"name_zh": "内在优势",
+"description_en": "Void Spirit gains %damage_stat_bonus_pct%%% more attack damage per point of each attribute, and %secondary_stat_bonus_pct%%% more HP regen from Strength, attack speed from Agility, and mana regen from Intelligence.",
+"description_zh": "虚无之灵从每点属性获得的攻击力提升%damage_stat_bonus_pct%%%，并且从力量中获得的生命恢复、敏捷中获得的攻击速度和智力中获得的魔法恢复提升%secondary_stat_bonus_pct%%%。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4406636445698",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "29275805f11be0061d64",
+"subject": "arcane_blink",
+"subject_zh": "秘奥闪光",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "After teleportation, you restore 250 health and 100 mana.",
+"value": "Teleport to a target point up to 1400 units away. \n\nAfter teleportation, you restore 250 health and 100 mana.\n\nArcane Blink cannot be used for 3 seconds after taking damage from an enemy hero or Roshan.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/arcane_blink/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Self-casting will cause you to teleport in the direction of your team's fountain.",
+"lore": "A revitalizing tool to help bear the weight of arcane expenditure."
+}
+]
+},
+{
+"review_id": "352ddc0da611d80080eb",
+"subject": "guardian_greaves",
+"subject_zh": "卫士胫甲",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Restores 325 health and 200 mana to nearby allies, and removes most negative effects from the caster.",
+"value": "Restores 325 health and 200 mana to nearby allies, and removes most negative effects from the caster.\n\nRadius: 1200\nDispel Type: Basic Dispel",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/guardian_greaves/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"notes": "Mend does not affect units that have been affected by Mend or Mekansm Restore within Guardian Greaves' cooldown.",
+"lore": "One of many holy instruments constructed to honor the Omniscience."
+}
+]
+},
+{
+"review_id": "4131e8d975a57fffd9d0",
+"subject": "clarity",
+"subject_zh": "净化药水",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "use",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Grants 6 mana regeneration to the target for 25 seconds.",
+"value": "Grants 6 mana regeneration to the target for 25 seconds.\n\nIf the unit is attacked by an enemy hero or Roshan, the effect is lost.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/clarity/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"lore": "Clear water that enhances the ability to meditate."
+}
+]
+},
+{
+"review_id": "5563a93c84b259333ca1",
+"subject": "dark_willow_pixie_dust",
+"subject_zh": "邪影芳灵·仙灵粉尘",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Dark Willow gains %hp_regen_amp%%% bonus Health and Mana Regeneration, increased to %hp_regen_amp_out_of_world%%% while she is untargetable or invulnerable.",
+"value": "Dark Willow gains %hp_regen_amp%%% bonus Health and Mana Regeneration, increased to %hp_regen_amp_out_of_world%%% while she is untargetable or invulnerable.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/114/abilities/4/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Pixie Dust",
+"name_zh": "仙灵粉尘",
+"description_en": "Dark Willow gains %hp_regen_amp%%% bonus Health and Mana Regeneration, increased to %hp_regen_amp_out_of_world%%% while she is untargetable or invulnerable.",
+"description_zh": "邪影芳灵获得额外%hp_regen_amp%%%生命恢复和魔法恢复，而她无法作为目标或无敌时将提升至%hp_regen_amp_out_of_world%%%。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4406636445698",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "6318dee32317820abcf4",
+"subject": "puck_puckish",
+"subject_zh": "帕克·顽皮克敌",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。",
+"value": "每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。躲避指向性技能的弹道将回复%dodged_spell_multiplier%倍数值。防御塔的攻击不会对此生效。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/12/abilities/3/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Puckish",
+"name_zh": "顽皮克敌",
+"description_en": "Whenever Puck disjoints an attack, it restores %mana_and_health_restore_pct%%% of its max health and mana. Dodging a targeted spell projectile restores %dodged_spell_multiplier%x that amount. Does not apply to attacks by Towers.",
+"description_zh": "每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。躲避指向性技能的弹道将回复%dodged_spell_multiplier%倍数值。防御塔的攻击不会对此生效。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "2",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "6878cce99e2014ac9b97",
+"subject": "holy_locket",
+"subject_zh": "圣洁吊坠",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "item",
+"item_ability_type": "active",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Target an allied unit to increase their incoming Heal Amplification by 15% for 4s and instantly restore 17 health and 15 mana per charge stored.",
+"value": "Target an allied unit to increase their incoming Heal Amplification by 15% for 4s and instantly restore 17 health and 15 mana per charge stored. \n\nAutomatically gains a charge every 10 seconds and whenever a visible enemy within 1200 range uses an ability.",
+"pointer": {
+"file": "knowledge/items/sources/dotaconstants-items.json",
+"path": "/holy_locket/abilities/0/description"
+}
+}
+],
+"context": [
+{
+"lore": "A prized relic long thought lost forever in a failed crusade."
+}
+]
+},
+{
+"review_id": "7f1020ce6cced07e59fb",
+"subject": "dark_seer_aggrandize",
+"subject_zh": "黑暗贤者·才思敏捷",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。",
+"value": "黑暗贤者从每点智力获得%int_to_atkspd%攻击速度。\n\n黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/53/abilities/4/description_zh"
+}
+},
+{
+"quote": "When Dark Seer levels up, he restores a percentage of his max health and mana.",
+"value": "Dark Seer gains %int_to_atkspd% Attack Speed from each point of Intelligence.\n\nWhen Dark Seer levels up, he restores a percentage of his max health and mana.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/53/abilities/4/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Quick Wit",
+"name_zh": "才思敏捷",
+"description_en": "Dark Seer gains %int_to_atkspd% Attack Speed from each point of Intelligence.\n\nWhen Dark Seer levels up, he restores a percentage of his max health and mana.",
+"description_zh": "黑暗贤者从每点智力获得%int_to_atkspd%攻击速度。\n\n黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "4406636445698",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "bb6d6ad8c9a37329f6db",
+"subject": "invoker_ghost_walk",
+"subject_zh": "祈求者·幽灵漫步",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Invoker manipulates the ice and electrical energies around him, rendering his body invisible and gaining health and mana regen.",
+"value": "Invoker manipulates the ice and electrical energies around him, rendering his body invisible and gaining health and mana regen. The elemental imbalance created as a consequence slows nearby enemies based on the level of Quas, and slows Invoker as well based on the level of Wex.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/72/abilities/5/description_en"
+}
+},
+{
+"quote": "祈求者操纵冰电之力围绕自身，使自己隐形并且获得生命和魔法恢复。",
+"value": "祈求者操纵冰电之力围绕自身，使自己隐形并且获得生命和魔法恢复。各种元素的不平衡导致附近敌人的移动速度被减缓，减速效果取决于冰元素的等级，并使祈求者自身移动速度减缓，减速效果与雷元素等级成反比。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/72/abilities/5/description_zh"
+}
+}
+],
+"context": [
+{
+"name_en": "Ghost Walk",
+"name_zh": "幽灵漫步",
+"description_en": "Invoker manipulates the ice and electrical energies around him, rendering his body invisible and gaining health and mana regen. The elemental imbalance created as a consequence slows nearby enemies based on the level of Quas, and slows Invoker as well based on the level of Wex.",
+"description_zh": "祈求者操纵冰电之力围绕自身，使自己隐形并且获得生命和魔法恢复。各种元素的不平衡导致附近敌人的移动速度被减缓，减速效果取决于冰元素的等级，并使祈求者自身移动速度减缓，减速效果与雷元素等级成反比。",
+"notes_en": [
+"The slow effect does not work on Spell Immune enemies."
+],
+"notes_zh": [
+"减速效果对减益免疫状态下的单位无效。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Ghost Walk now also applies the Ice Wall Damage Per Second to enemy heroes in its area of effect.",
+"zh": "现在幽灵漫步还会对范围内的敌方英雄施加寒冰之墙的每秒伤害。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "9007207848872005",
+"damage": 0,
+"dispellable": 3,
+"immunity": 4,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "cbad3cce63ddbc88aed6",
+"subject": "invoker_emp",
+"subject_zh": "祈求者·电磁脉冲",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "If EMP drains mana from an enemy hero, Invoker gains %self_mana_restore_pct%%% of the mana drained.",
+"value": "Invoker builds up a charge of electromagnetic energy at a targeted location which automatically detonates after %delay% seconds. The detonation covers an area, draining mana based on the level of Wex. Deals damage for each point of mana drained.  If EMP drains mana from an enemy hero, Invoker gains %self_mana_restore_pct%%% of the mana drained.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/72/abilities/7/description_en"
+}
+},
+{
+"quote": "The detonation covers an area, draining mana based on the level of Wex.",
+"value": "Invoker builds up a charge of electromagnetic energy at a targeted location which automatically detonates after %delay% seconds. The detonation covers an area, draining mana based on the level of Wex. Deals damage for each point of mana drained.  If EMP drains mana from an enemy hero, Invoker gains %self_mana_restore_pct%%% of the mana drained.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/72/abilities/7/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "E.M.P.",
+"name_zh": "电磁脉冲",
+"description_en": "Invoker builds up a charge of electromagnetic energy at a targeted location which automatically detonates after %delay% seconds. The detonation covers an area, draining mana based on the level of Wex. Deals damage for each point of mana drained.  If EMP drains mana from an enemy hero, Invoker gains %self_mana_restore_pct%%% of the mana drained.",
+"description_zh": "祈求者在指定位置召唤出一道强力的自爆电磁脉冲，%delay%秒后将自动爆炸。爆炸将覆盖一定区域，并根据雷元素的等级损毁敌方的魔法值。对敌方英雄造成损毁魔法值一定百分比的伤害。祈求者将获得%self_mana_restore_pct%%%损毁的魔法。",
+"notes_en": [
+"Will not affect cycloned units (Tornado or Eul's Scepter of Divinity)."
+],
+"notes_zh": [
+"对被吹起的单位（强袭飓风或Eul的神圣法杖）无效。"
+],
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "Increases damage for each point of mana drained by EMP and pulls enemy units into the EMP's center at %drag_speed% units per second.",
+"zh": "提升电磁脉冲燃烧魔法的伤害系数，并且将敌方单位以每秒%drag_speed%距离的速度向电磁脉冲的中心牵引。"
+}
+},
+"innate": false,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "9007207978893425",
+"damage": 2,
+"dispellable": 0,
+"immunity": 4,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+},
+{
+"review_id": "d3bb03d73418daf1ea9b",
+"subject": "obsidian_destroyer_equilibrium",
+"subject_zh": "殁境神蚀者·精华变迁",
+"mechanism": "mana_gain",
+"mechanism_zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取）",
+"definition_note": "",
+"condition": {
+"context": "base",
+"requires_scepter": false,
+"requires_shard": false
+},
+"evidence": [
+{
+"quote": "Restores less mana from spells that modify attacks.",
+"value": "Passively grants a chance to restore a percentage of your max mana each time you cast an ability. Restores less mana from spells that modify attacks.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/74/abilities/3/description_en"
+}
+},
+{
+"quote": "通过攻击特效的技能回复的魔法会减少。",
+"value": "被动拥有一定几率在施放技能时回复最大魔法值的一定百分比。通过攻击特效的技能回复的魔法会减少。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/74/abilities/3/description_zh"
+}
+},
+{
+"quote": "被动拥有一定几率在施放技能时回复最大魔法值的一定百分比。",
+"value": "被动拥有一定几率在施放技能时回复最大魔法值的一定百分比。通过攻击特效的技能回复的魔法会减少。",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/74/abilities/3/description_zh"
+}
+},
+{
+"quote": "Passively grants a chance to restore a percentage of your max mana each time you cast an ability.",
+"value": "Passively grants a chance to restore a percentage of your max mana each time you cast an ability. Restores less mana from spells that modify attacks.",
+"pointer": {
+"file": "knowledge/hero-capabilities/hero-registry.json",
+"path": "/heroes/74/abilities/3/description_en"
+}
+}
+],
+"context": [
+{
+"name_en": "Essence Flux",
+"name_zh": "精华变迁",
+"description_en": "Passively grants a chance to restore a percentage of your max mana each time you cast an ability. Restores less mana from spells that modify attacks.",
+"description_zh": "被动拥有一定几率在施放技能时回复最大魔法值的一定百分比。通过攻击特效的技能回复的魔法会减少。",
+"upgrade_text": {
+"scepter_loc": {
+"en": "",
+"zh": ""
+},
+"shard_loc": {
+"en": "",
+"zh": ""
+}
+},
+"innate": true,
+"granted_by_scepter": false,
+"granted_by_shard": false,
+"raw_mechanics": {
+"behavior": "562949953421315",
+"damage": 0,
+"dispellable": 0,
+"immunity": 0,
+"max_level": 1,
+"target_team": 0,
+"target_type": 0,
+"type": 0
+}
+}
+]
+}
+]
