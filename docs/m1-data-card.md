@@ -42,6 +42,8 @@ PYTHONPATH=src .venv/bin/python scripts/build_match_table.py verify --snapshot r
 
 ## 4. 划分
 
+读取时`load_snapshot`会校验schema、关键文件、训练与验证互斥、比赛ID一致（U55）。
+
 按比赛整体划分（同一场不跨集合），按(start_time, match_id)排序，最新20%为验证：训练1595场、验证398场。
 
 局限：全部比赛只跨约15.5小时，时间划分几乎不带来补丁或环境漂移，效果接近随机划分；**这不是独立评估**（见§5）。

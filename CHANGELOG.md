@@ -1,5 +1,18 @@
 # 变更记录
 
+## 2026-11-03 U55：审查跟进
+
+- `load_snapshot`新增契约校验：关键文件必须在清单里，校验schema、训练与验证互斥、比赛ID一致，并加拒绝测试。
+- 赛前两页说明注明“每场都有主宰”。
+- v4把当前中立物品移到`deferred_rows`。
+- 计划新增B0前置：收窄源码指纹、产物用途契约。
+
+## 2026-11-03 U54：词表v4和复核后事实v4
+
+- 新增`knowledge/mechanics/vocabulary-v4.json`、`knowledge/mechanics/extractions/v4/`、`data.mechanics_facts_v4`、`scripts/build_mechanics_facts_v4.py`及测试。
+- 数量见`extractions/v4/facts-v4.json`的`counts`；退出装备和中立物品另存。v1–v3未改。
+- 新增`reviews/u5-verdicts-2026-11-03.jsonl`，保存U5页面93条标记。
+
 ## 2026-11-03 U53：远端范围
 
 - 用户确认除demo和相关对局解析文件外都可以进远端，决策记录`docs/decisions/2026-11-03-remote-scope.md`。

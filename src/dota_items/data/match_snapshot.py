@@ -10,6 +10,10 @@ import json
 from dota_items.data.source_io import parse_source_json, read_source_bytes
 from dota_items.storage import file_hash
 
+MANIFEST_SCHEMA = "m1-match-table/1"
+SPLIT_SCHEMA = "m1-time-split/1"
+REQUIRED_OUTPUTS = {"players.csv", "purchases.csv", "split.json"}
+
 
 def write_new_json(path, value):
     """Write JSON to a file that must not exist yet (no overwrite of old results)."""
@@ -36,13 +40,37 @@ def read_csv(path):
         return [{k: _value(v) for k, v in row.items()} for row in csv.DictReader(stream)]
 
 
+def check_snapshot_contract(manifest, players, purchases, split):
+    """Reject tables a correct hash cannot vouch for: wrong schema or unsafe split."""
+    if manifest.get("schema") != MANIFEST_SCHEMA:
+        raise ValueError(f"Unsupported snapshot schema: {manifest.get('schema')}")
+    if split.get("schema") != SPLIT_SCHEMA:
+        raise ValueError(f"Unsupported split schema: {split.get('schema')}")
+    train, validation = split["train"], split["validation"]
+    if not train or not validation:
+        raise ValueError("Snapshot split needs train and validation matches")
+    if len(set(train)) != len(train) or len(set(validation)) != len(validation):
+        raise ValueError("Snapshot split repeats a match")
+    if set(train) & set(validation):
+        raise ValueError("Snapshot split shares matches between train and validation")
+    assigned = set(train) | set(validation)
+    if {row["match_id"] for row in players} != assigned:
+        raise ValueError("Snapshot players do not match the split")
+    if not {row["match_id"] for row in purchases} <= assigned:
+        raise ValueError("Snapshot purchases include matches outside the split")
+
+
 def load_snapshot(snapshot):
-    """Check manifest output hashes; return (manifest, players, purchases, split)."""
+    """Check hashes and the contract; return (manifest, players, purchases, split)."""
     manifest = parse_source_json(read_source_bytes(snapshot / "manifest.json"))
+    missing = sorted(REQUIRED_OUTPUTS - set(manifest["outputs"]))
+    if missing:
+        raise ValueError(f"Snapshot manifest does not cover: {missing}")
     for name, expected in manifest["outputs"].items():
         if file_hash(snapshot / name) != expected:
             raise ValueError(f"Snapshot file changed: {name}")
     players = read_csv(snapshot / "players.csv")
     purchases = [{**p, "item": str(p["item"])} for p in read_csv(snapshot / "purchases.csv")]
     split = parse_source_json(read_source_bytes(snapshot / "split.json"))
+    check_snapshot_contract(manifest, players, purchases, split)
     return manifest, players, purchases, split

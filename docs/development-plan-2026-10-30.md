@@ -53,6 +53,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 | 编号 | 决定 | 日期 |
 |---|---|---|
+| U55 | 中立物品暂不纳入v4；补快照消费校验和页面说明；指纹范围和数据用途作为B0前置 | 2026-11-03 |
+| U54 | 开始词表v4和复核后事实v4 | 2026-11-03 |
 | U53 | 除demo和相关对局解析文件外都可以进远端 | 2026-11-03 |
 | U52 | 禽戏1秒无敌，与魔晶无关；枷锁记眩晕；其余9组按助手建议 | 2026-11-03 |
 | U51 | 退出装备不收；提升技能自身治疗量算治疗增强（改U45）；不靠概率的强化攻击算暴击；固定回血算吸血；第4轮游戏知识裁定 | 2026-11-03 |
@@ -214,7 +216,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | M2b-T6e | 第3层·推导层：由规则自动生成hero-traits v2与触发条件，每条附证据链；吸收T6b抽查意见；人工改动登记理由 |
 | ~~M2b-T7~~ | ~~问Q10~~（U26：并入T6d） |
 | M2b-T8 | 数据验证：M1训练集上有/无触发时的出装比例、样本量、区间；“先出”口径；报告`docs/m2b-triggers.md` |
-| M2b-T9 | 页面：输入敌方阵容＋可勾选已见敌方装备，列出被触发的针对装与数据依据；替换基线页；真实浏览器验收 |
+| M2b-T9 | （外部审查待办，助手建议，未单独定：一起拆开训练与推理，须先登记生产者迁移；页面分开加载、分别报不可用）页面：输入敌方阵容＋可勾选已见敌方装备，列出被触发的针对装与数据依据；替换基线页；真实浏览器验收 |
 | M2b-T10 | 用户用真实阵容评审；之后M2b结案进M3 |
 
 出口：清单经用户确认；协议先于结果冻结；如实报告；页面验收；用户评审；模型卡`docs/m2b-model-card.md`。
@@ -279,6 +281,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 出口：用户确认报告可用；问题进§8。
 
 ### 路线B：意识层面决策（B0–B5，U37，替代原M6）
+
+**B0前置（U55）：** ① 收窄`data.pipeline.code_fingerprint`：完整提交只用于追溯，生产者及必要依赖的指纹才用于判断兼容，旧产物按原规则读取；② 产物契约记录任务、视角、时间截点、允许用途、知识版本，由消费端检查，决策输入和事后标签用不同结构。
 
 设计、三类判断、四层结构、数据工程难点与现有资产见[路线B](awareness-track.md)。开始前问Q14–Q16；B0定义冻结后才写任务细分。
 
@@ -359,7 +363,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### 下一步（接手从这里开始）
 
-**2026-11-02 待用户裁定**：Codex第2轮19处分歧、U5抽查进度（93/497）及待决项已汇总到[待用户裁定汇总](handoff/user-rulings-2026-11-02.md)；19处分歧已由U39、U40全部裁定（`knowledge/mechanics/reviews/user-rulings-001.jsonl`）；U41定U5剩余组先交Codex只读复核，已完成（`knowledge/mechanics/reviews/codex-round-003/`：379组，同标签355、分歧24），分歧中H2的7组已由U42、U43裁定，召唤物规则已定（U43），H1及H3由U44、U45裁定，24组分歧全部裁定完毕（汇总H块）；U46对照游戏文件`IsBreakable`（`knowledge/mechanics/reviews/break-check-001/`）：180组中38组差异及16个漏记技能已由U47裁定，裁定后全部与标记一致；部分破坏附注已记条件（U48）；其他机制排查已完成（`knowledge/mechanics/reviews/game-files-audit-001/`），疑点已由第4轮复核（`codex-round-004/`：175组，同标签136、分歧39、都不确定9），已由U50–U52全部裁定；下一步把裁定、漏记组和定义改动写入下一版证据与词表；词表待下一版更新。
+**2026-11-02 待用户裁定**：Codex第2轮19处分歧、U5抽查进度（93/497）及待决项已汇总到[待用户裁定汇总](handoff/user-rulings-2026-11-02.md)；19处分歧已由U39、U40全部裁定（`knowledge/mechanics/reviews/user-rulings-001.jsonl`）；U41定U5剩余组先交Codex只读复核，已完成（`knowledge/mechanics/reviews/codex-round-003/`：379组，同标签355、分歧24），分歧中H2的7组已由U42、U43裁定，召唤物规则已定（U43），H1及H3由U44、U45裁定，24组分歧全部裁定完毕（汇总H块）；U46对照游戏文件`IsBreakable`（`knowledge/mechanics/reviews/break-check-001/`）：180组中38组差异及16个漏记技能已由U47裁定，裁定后全部与标记一致；部分破坏附注已记条件（U48）；其他机制排查已完成（`knowledge/mechanics/reviews/game-files-audit-001/`），疑点已由第4轮复核（`codex-round-004/`：175组，同标签136、分歧39、都不确定9），已由U50–U52全部裁定；词表v4和复核后事实v4已生成（`knowledge/mechanics/extractions/v4/`，U54），等用户确认后结束MK-T3、进入MK-T4；词表待下一版更新。
 
 **2026-11-01 Codex可选复核（U34）**：P1的389项已覆盖（387语义＋2过时处理），另核对其余17移除组；语义114接受／257排除／16不确定，19处与Claude不同，其中3处建议接受、16处待用户裁定（含9组U33先天例外适用冲突）。[完整回传](../knowledge/mechanics/reviews/codex-round-002/README.md)。旧Claude判断与正式词表未改写，P2/P3未审，不把本轮同标签计作事实认证；下一步由用户审阅PR与待定边界，后续仍按U34推进。
 
