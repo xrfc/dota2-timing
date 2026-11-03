@@ -1,0 +1,1278 @@
+[
+ {
+  "review_id": "153cf38df6ec88a41903",
+  "subject": "spectre_spectral_dagger",
+  "subject_zh": "幽鬼·幽鬼之刃",
+  "mechanism": "spell_block",
+  "mechanism_zh": "格挡指向技能",
+  "definition": "使指向自身或队友的技能失效",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Spectre flings a dagger to draw a Shadow Path, dealing damage and slowing the movement speed of any enemies along the trail. Units hit by the dagger also trail a Shadow Path. While treading the path, Spectre moves faster and phases through otherwise impassable terrain.",
+   "description_zh": "幽鬼掷出一把匕首，留下一条暗影之径，对路径上的敌人造成伤害并减缓其移动速度。被匕首击中的单位移动时也会留下暗影之径。幽鬼在暗影之径上移速提升，并且可以无视地形移动。",
+   "notes_en": [
+    "There is a %dagger_grace_period% second grace period after leaving the path where no collision is preserved.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "在离开暗影之径后%dagger_grace_period%秒内碰撞体积依然为0，作为缓冲时间。",
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "4e1a0e4cf9e2059a21ef",
+  "subject": "treant_living_armor",
+  "subject_zh": "树精卫士·活体护甲",
+  "mechanism": "spell_block",
+  "mechanism_zh": "格挡指向技能",
+  "definition": "使指向自身或队友的技能失效",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Each time this spell blocks damage, the block amount is decreased."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Infuses the target hero or structure with a protective coating which heals the target and blocks damage from player-controlled sources. Each time this spell blocks damage, the block amount is decreased. If the damage block is decreased to 0, the buff is removed early.",
+   "description_zh": "将目标英雄或建筑笼罩在保护性外壳中，治疗目标并格挡来自玩家控制来源的伤害。每次本技能格挡伤害后，下次的伤害格挡量都会减少。如果伤害格挡量降至0，加成效果会提前移除。",
+   "notes_en": [
+    "Instances of damage less than %damage_block_threshold% are ignored."
+   ],
+   "notes_zh": [
+    "低于%damage_block_threshold%点的伤害会被无视。"
+   ]
+  }
+ },
+ {
+  "review_id": "02f6515b5b7ee09fc0f8",
+  "subject": "troll_warlord_whirling_axes_ranged",
+  "subject_zh": "巨魔战将·旋风飞斧（远程）",
+  "mechanism": "spell_block",
+  "mechanism_zh": "格挡指向技能",
+  "definition": "使指向自身或队友的技能失效",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Troll hurls a fistful of five axes in a cone shape over %axe_range% range, slowing and damaging enemy units.",
+   "description_zh": "巨魔战将掷出手中的五把飞斧，减速并伤害前方%axe_range%范围锥形区域内的敌方单位。",
+   "notes_en": [
+    "Does not affect Roshan.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "无法作用于肉山。",
+    "不会触发法术抵抗或法术反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Whirling Axes (Ranged) to dispel enemies. Reduces cooldown and mana cost.DISPEL TYPE: Basic Dispel",
+     "zh": "旋风飞斧（远程）可以驱散敌人。降低冷却时间和魔法消耗。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4abc89cd5a4d4e006d0a",
+  "subject": "bristleback_quill_spray",
+  "subject_zh": "钢背兽·刺针扫射",
+  "mechanism": "spell_block",
+  "mechanism_zh": "格挡指向技能",
+  "definition": "使指向自身或队友的技能失效",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Quill Spray damage is not reduced by damage block abilities.",
+   "刺针扫射的伤害不能被伤害格挡类技能减免。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+  },
+  "context": {
+   "description_en": "Sprays enemy units with quills dealing damage in an area of effect around Bristleback.  Deals bonus damage for every time a unit was hit by Quill Spray in the last %quill_stack_duration% seconds.",
+   "description_zh": "将尖刺喷射向敌人，对钢背兽附近的敌人造成伤害。任何单位最近%quill_stack_duration%秒内每次受到刺针扫射的打击都会受到额外伤害。",
+   "notes_en": [
+    "Quill Spray damage is not reduced by damage block abilities."
+   ],
+   "notes_zh": [
+    "刺针扫射的伤害不能被伤害格挡类技能减免。"
+   ]
+  }
+ },
+ {
+  "review_id": "4181b92da62c32058cc1",
+  "subject": "black_king_bar",
+  "subject_zh": "黑皇杖",
+  "mechanism": "spell_block",
+  "mechanism_zh": "格挡指向技能",
+  "definition": "使指向自身或队友的技能失效",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "For the duration of the effect, any negative effect from enemy spells has no effect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Black King Bar",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Avatar",
+     "description": "Applies a basic dispel. Grants 60% magic resistance and immunity to reflected and pure damage. For the duration of the effect, any negative effect from enemy spells has no effect. \n\nDuration: 9s \nDispel Type: Basic Dispel"
+    }
+   ],
+   "notes": "Purchasing another Black King Bar will not reset its immunity duration.\nAvatar duration is not affected by increases to buff duration.",
+   "attrib": [
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "10"
+    },
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "24"
+    },
+    {
+     "key": "duration",
+     "value": "9 / 8 / 7"
+    },
+    {
+     "key": "max_level",
+     "value": "3"
+    },
+    {
+     "key": "model_scale",
+     "value": "30"
+    },
+    {
+     "key": "spell_reduce",
+     "value": "60"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "d92d22de1d1aed13ef71",
+  "subject": "essence_distiller",
+  "subject_zh": "精之灵器",
+  "mechanism": "spell_block",
+  "mechanism_zh": "格挡指向技能",
+  "definition": "使指向自身或队友的技能失效",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Essence Distiller",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "Provides 40 health regeneration when cast on allies.\n\nCan be ground targeted to lie dormant for up to 15s and attach to the first enemy that comes within 450 radius. When on enemies, deals 25 damage per second and provides True Sight over them and shares their vision with the wearer's team.\n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units."
+    }
+   ],
+   "notes": "Empty distillers gain 2 charges.\nOnly the closest Essence Distiller to the dying hero will gain a charge.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.\nWhile dormant, provides vision in 450 radius. Vision lingers for 0.5s after latching.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.5"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "3"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "6"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "150"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "40"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    },
+    {
+     "key": "ground_duration",
+     "value": "15.0"
+    },
+    {
+     "key": "latch_range",
+     "value": "450"
+    },
+    {
+     "key": "latch_vision",
+     "value": "450"
+    },
+    {
+     "key": "linger_after_latch_duration",
+     "value": "0.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "f01cc84822761f3c50e5",
+  "subject": "sphere",
+  "subject_zh": "林肯法球",
+  "mechanism": "spell_block",
+  "mechanism_zh": "格挡指向技能",
+  "definition": "使指向自身或队友的技能失效",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Spellblock: Blocks most targeted spells once every 14 seconds.",
+   "Transfer Spellblock: Temporarily removes Spellblock from the item's owner and transfers it to an allied unit for 14 seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Linken's Sphere",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Spellblock",
+     "description": "Blocks most targeted spells once every 14 seconds."
+    },
+    {
+     "type": "active",
+     "title": "Transfer Spellblock",
+     "description": "Temporarily removes Spellblock from the item's owner and transfers it to an allied unit for 14 seconds."
+    }
+   ],
+   "notes": "Targeted abilities from neutral items do not trigger Spellblock.",
+   "attrib": [
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "16"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "6.5"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "4.25"
+    },
+    {
+     "key": "block_cooldown",
+     "value": "14.0"
+    },
+    {
+     "key": "upgrade_absorb_duration",
+     "value": "10.0"
+    },
+    {
+     "key": "damage_absorb",
+     "value": "300"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "93db045f60d74c2f77f1",
+  "subject": "spirit_vessel",
+  "subject_zh": "魂之灵瓮",
+  "mechanism": "spell_block",
+  "mechanism_zh": "格挡指向技能",
+  "definition": "使指向自身或队友的技能失效",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Spirit Vessel",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "When used against enemies, it reduces health by 4% of current health per second, and reduces Health Restoration by 70%. Deals 25 damage per second. \n\nWhen used on allies, it provides 40 health regeneration per second. \n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units or the user dies."
+    }
+   ],
+   "notes": "Empty vessels gain 2 charges.\nOnly the closest Spirit Vessel to the dying hero will gain a charge.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.",
+   "attrib": [
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.75"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "10"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "2"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "40"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    },
+    {
+     "key": "restoration_reduction_enemy",
+     "value": "70"
+    },
+    {
+     "key": "enemy_hp_drain",
+     "value": "4"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "2da236cb9073cf147aa8",
+  "subject": "urn_of_shadows",
+  "subject_zh": "影之灵龛",
+  "mechanism": "spell_block",
+  "mechanism_zh": "格挡指向技能",
+  "definition": "使指向自身或队友的技能失效",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Urn of Shadows",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "Provides 30 health regeneration when cast on allies, and deals 25 damage per second when cast on enemies.\n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units."
+    }
+   ],
+   "notes": "Empty urns gain 2 charges.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.0"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "2"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "2"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "30"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "8645534f779abf2a8d27",
+  "subject": "antimage_counterspell",
+  "subject_zh": "敌法师·法术反制",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Counterspell may be activated to create an anti-magic shell around Anti-Mage that blocks and reflects any targeted spells.",
+   "可以主动开启法术反制，创造一个环绕敌法师的反魔法外壳，抵挡和反弹所有指向性技能。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Passively grants magic resistance. Counterspell may be activated to create an anti-magic shell around Anti-Mage that blocks and reflects any targeted spells.",
+   "description_zh": "被动提升魔法抗性。可以主动开启法术反制，创造一个环绕敌法师的反魔法外壳，抵挡和反弹所有指向性技能。",
+   "notes_en": [
+    "Break disables the passive magic resistance."
+   ],
+   "notes_zh": [
+    "破坏会使被动魔法抗性失效。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Creates a blinked fragment of Anti-Mage next to the enemy caster upon reflecting their unit-targeted spell while active.",
+     "zh": "开启后反弹指向性技能时会在敌方施法者身边制造一个敌法师的闪烁碎片。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "212f91f02dd62ed26441",
+  "subject": "antimage_counterspell",
+  "subject_zh": "敌法师·法术反制",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Creates a blinked fragment of Anti-Mage next to the enemy caster upon reflecting their unit-targeted spell while active.",
+   "开启后反弹指向性技能时会在敌方施法者身边制造一个敌法师的闪烁碎片。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Passively grants magic resistance. Counterspell may be activated to create an anti-magic shell around Anti-Mage that blocks and reflects any targeted spells.",
+   "description_zh": "被动提升魔法抗性。可以主动开启法术反制，创造一个环绕敌法师的反魔法外壳，抵挡和反弹所有指向性技能。",
+   "notes_en": [
+    "Break disables the passive magic resistance."
+   ],
+   "notes_zh": [
+    "破坏会使被动魔法抗性失效。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Creates a blinked fragment of Anti-Mage next to the enemy caster upon reflecting their unit-targeted spell while active.",
+     "zh": "开启后反弹指向性技能时会在敌方施法者身边制造一个敌法师的闪烁碎片。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f9b5b49b3b674ba53e58",
+  "subject": "morphling_replicate",
+  "subject_zh": "变体精灵·变形",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell reflect.",
+   "不会触发法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "Morphling changes his form to match the targeted enemy, gaining their basic abilities and changing his primary attribute based on his target. Can be toggled for the duration of the ability.",
+   "description_zh": "使自身向敌方目标改变，获得其基础技能，并且基于目标改变自己的主属性。技能持续时间内可以来回切换。",
+   "notes_en": [
+    "You can't target yourself with Morph.",
+    "Morph won't copy Shard/Scepter abilities unless Morphling owns the respective item.",
+    "Does not trigger spell reflect."
+   ],
+   "notes_zh": [
+    "变体精灵自身及其控制的单位不能作为变形的目标。",
+    "变形不会复制魔晶/神杖类技能，除非变体精灵自身也拥有相应物品。",
+    "不会触发法术反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Adds an alt-cast to Morph. When enabled, a strong illusion is created of the target hero that can cast all of the hero's basic abilities. If the illusion is alive when Morphling toggles the ability, he will take the place of the illusion, destroying it.",
+     "zh": "变形增加多样施法（右键点击技能栏图标）。开启后会产生目标英雄的强幻象，可以施放英雄的所有基础技能。如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "9bb35f5f5ac67b440478",
+  "subject": "razor_storm_surge",
+  "subject_zh": "雷泽·风暴涌动",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Damage done by this ability is considered reflected damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "There's a chance when attacked, and always when targeted with a spell, to release a forked lightning that strikes the target and other nearby enemies, prioritizing the unit type of the attacker, dealing damage and slowing movement speed.",
+   "description_zh": "被攻击时拥有几率、每次受到指向性技能时都会释放一道叉状闪电，击中目标和附近其他敌人，优先打击与目标类型相同的单位，造成伤害并减缓移动速度。",
+   "notes_en": [
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "While Eye of the Storm is active, strike chance is %eye_of_the_storm_chance_multiplier%x as high, strike cooldown is reduced by %strike_cd_reduction_during_storm%s, and Lightning strikes all enemies within Eye of the Storm's radius. Does not apply to the same enemy twice from a single instance.",
+     "zh": "风暴之眼开启时，打击几率为%eye_of_the_storm_chance_multiplier%倍，打击冷却时间减少%strike_cd_reduction_during_storm%秒，而且闪电会打击风暴之眼范围内所有敌人。单次伤害不会对同个敌人施加两次。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ce73af68fd533abb3f9c",
+  "subject": "sandking_burrowstrike",
+  "subject_zh": "沙王·掘地穿刺",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect.",
+   "不会触发法术抵抗或法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Adds Caustic Finale poison to heroes hit Can be put on alt-cast to immediately cast in the desired direction, without walking towards the targeted location.",
+   "description_zh": "沙王钻入地面挖掘隧道前进，穿出地面时伤害并眩晕上方的敌方单位。对击中的英雄施加腐尸毒。可以设为多样施法（右键点击技能栏图标），直接朝指定方向立刻施放，不需要走向目标地点。",
+   "notes_en": [
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "448290673ddf2d34b5c6",
+  "subject": "lina_dragon_slave",
+  "subject_zh": "莉娜·龙破斩",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect.",
+   "不会触发法术抵抗或法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Lina channels the breath of a dragon, sending out a wave of fire that scorches every enemy in its path.",
+   "description_zh": "莉娜引导龙的吐息，放出一波火焰，烧焦所有波及的敌人。",
+   "notes_en": [
+    "Dragon Slave can hit units up to 1225 units away.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "龙破斩最远能伤害1225距离外的单位。",
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "d1977aa022079ec1bf53",
+  "subject": "lion_impale",
+  "subject_zh": "莱恩·裂地尖刺",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect.",
+   "不会触发法术抵抗或法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Rock spikes burst from the earth along a straight path. Enemy units are hurled into the air, then are stunned and take damage when they fall.",
+   "description_zh": "岩石尖刺在地上沿一条直线穿刺而出。敌方单位被抛向空中，落地时被眩晕并受到伤害。",
+   "notes_en": [
+    "The spikes move at %speed% units per second.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "尖刺的移动速度是每秒%speed%码。",
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "d952e917415f360f047b",
+  "subject": "necrolyte_death_seeker",
+  "subject_zh": "瘟疫法师·死亡搜寻",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell reflect.",
+   "不会触发法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Necrophos turns into a large Death Pulse towards the target unit's position. Once it arrives to the location, the Death Pulse spreads towards nearby enemies and allies.",
+   "description_zh": "瘟疫法师变成一个大死亡脉冲，向目标单位的地点移动。到达该地点后，死亡脉冲会扩散至附近敌人和友军。",
+   "notes_en": [
+    "Does not trigger spell reflect."
+   ],
+   "notes_zh": [
+    "不会触发法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "088b970977553e3fdfbf",
+  "subject": "warlock_fatal_bonds",
+  "subject_zh": "术士·致命连接",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Damage done by this ability is considered reflected damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Binds several visible enemy units together, causing a percentage of the damage dealt to one of them to be felt by the others.",
+   "description_zh": "将数个可见的敌方单位连接在一起，其中一人所受伤害的一定百分比会被其他所有人感受到。",
+   "notes_en": [
+    "The shared damage type is the same as the type of damage inflicted.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "共享伤害的类型与原伤害相同。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "5ba243f5d1b62d8fd034",
+  "subject": "death_prophet_carrion_swarm",
+  "subject_zh": "死亡先知·地穴虫群",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect.",
+   "不会触发法术抵抗或法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Sends a swarm of winged beasts to savage enemy units in front of Death Prophet.",
+   "description_zh": "召唤一群食腐虫在死亡先知面前的敌人中肆虐。",
+   "notes_en": [
+    "Can hit units up to 1110 range away.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "最远能伤害1110距离外的单位。",
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "d9c203b011cc10bcd024",
+  "subject": "viper_corrosive_skin",
+  "subject_zh": "冥界亚龙·腐蚀皮肤",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Damage done by this ability is considered reflected damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Viper exudes an infectious toxin that damages and slows the attack speed of any enemy that damages it in a %max_range% radius. The acid exudate also increases Viper's resistance to magic.",
+   "description_zh": "蝮蛇分泌出感染性的毒素，%max_range%范围内任何伤害它的敌人都将受到伤害，同时攻击速度也被降低。这种酸性分泌物还能提高蝮蛇的魔法抗性。",
+   "notes_en": [
+    "Stacks multiplicatively with other magic damage resistance sources.",
+    "Break prevents the application of Corrosive Skin. Does not disable Corrosive Skin application from Nosedive.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "与其他提升魔法抗性的物品和技能叠加。",
+    "破坏会使腐蚀皮肤不再施加效果。极恶俯冲还是会施加腐蚀皮肤。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Corrosive Skin applies %effect_multiplier%x the attack speed slow to enemies that are within %effect_multiplier_distance% distance of Viper.  Viper's Corrosive Skin Magic Resistance and Damage per Second are gradually increased while he is in Nethertoxin, up to %nethertoxin_bonus_pct%%% increased effect after %nethertoxin_bonus_pct_max_duration_tooltip%s.",
+     "zh": "腐蚀皮肤会对距离冥界亚龙%effect_multiplier_distance%范围内的敌人施加%effect_multiplier%倍攻击速度降低效果。当冥界亚龙处于幽冥剧毒中，腐蚀皮肤的魔法抗性和每秒伤害会逐渐提升，在%nethertoxin_bonus_pct_max_duration_tooltip%秒后，达到最高的%nethertoxin_bonus_pct%%%提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "34bf284edbf459bc26b7",
+  "subject": "dragon_knight_breathe_fire",
+  "subject_zh": "龙骑士·火焰气息",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect.",
+   "不会触发法术抵抗或法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Unleashes a breath of fire in front of Dragon Knight that burns enemies and reduces the damage their attacks deal.",
+   "description_zh": "向龙骑士的前方喷射出一团火焰，烧灼碰到的敌人，并使其攻击力降低。",
+   "notes_en": [
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "9a45a4b5622ed6d01a0a",
+  "subject": "life_stealer_infest",
+  "subject_zh": "噬魂鬼·感染",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell reflect.",
+   "不会触发法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "Lifestealer infests the body of a target unit, becoming undetectable, and healing for a portion of his max hitpoints every second while inside. He can then explode from the host body, dealing damage to nearby enemies. If the infested unit is an enemy creep or a neutral creep, he can take control of the unit's ability to move and attack, and the creep loses a portion of their max hitpoints over time. Does not work on enemy heroes.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "噬魂鬼进入目标单位的身体，无法被察觉，而且自身在体内时每秒恢复最大生命值的一定百分比。接着可以从宿主体内现身，对周围所有敌方单位造成伤害。如果被感染单位是敌方非英雄单位或中立生物，噬魂鬼可以控制其进行移动和攻击，而且该生物会持续失去最大生命值的一部分。无法对敌方英雄生效。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Lifestealer gains experience while under the effects of Infest.",
+    "Creeps that are controlled while Infested gain Infest's movement speed bonus.",
+    "Does not trigger spell reflect.",
+    "Infest can be used on Ancient creeps."
+   ],
+   "notes_zh": [
+    "噬魂鬼在感染一个单位期间能够从周围死亡的单位身上获得经验。",
+    "被感染控制的单位会获得感染的移动速度加成。",
+    "不会触发法术反弹。",
+    "感染可以对远古生物使用。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range and reduces cooldown to %bonus_AbilityCooldown%s.  Infest may target enemy heroes for a short duration, attacking them from the inside while increasing Lifestealer's regeneration rate.",
+     "zh": "提升施法距离并且冷却时间降低至%bonus_AbilityCooldown%秒。感染可以对敌方英雄施放，持续时间较短，并在他们体内发动攻击，同时提升噬魂鬼的恢复速率。"
+    },
+    "shard_loc": {
+     "en": "Consuming a creep with Infest drenches enemies in blood which deals damage over time based on the host's remaining health.",
+     "zh": "吞噬感染的中立生物会使敌人沾满鲜血，根据宿主的剩余生命值造成持续伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "965157eb294cea9bfa13",
+  "subject": "jakiro_dual_breath",
+  "subject_zh": "杰奇洛·冰火交加",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect.",
+   "不会触发法术抵抗或法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "An icy blast followed by a wave of fire launches out in a path in front of Jakiro. The ice slows enemies, while the fire delivers damage over time.",
+   "description_zh": "杰奇洛对面前的敌人先后喷出寒冰和火焰。寒冰吐息减速敌人，火焰吐息对敌人造成持续伤害。",
+   "notes_en": [
+    "Can hit units up to 1025 range away.",
+    "Has a %fire_delay% second interval between each breath.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "最远能伤害1025距离外的单位。",
+    "两次吐息有%fire_delay%秒的间隔。",
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "1f24ea57d167cd05749f",
+  "subject": "spectre_spectral_dagger",
+  "subject_zh": "幽鬼·幽鬼之刃",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect.",
+   "不会触发法术抵抗或法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Spectre flings a dagger to draw a Shadow Path, dealing damage and slowing the movement speed of any enemies along the trail. Units hit by the dagger also trail a Shadow Path. While treading the path, Spectre moves faster and phases through otherwise impassable terrain.",
+   "description_zh": "幽鬼掷出一把匕首，留下一条暗影之径，对路径上的敌人造成伤害并减缓其移动速度。被匕首击中的单位移动时也会留下暗影之径。幽鬼在暗影之径上移速提升，并且可以无视地形移动。",
+   "notes_en": [
+    "There is a %dagger_grace_period% second grace period after leaving the path where no collision is preserved.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "在离开暗影之径后%dagger_grace_period%秒内碰撞体积依然为0，作为缓冲时间。",
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "1d27071ecf25d4d8090e",
+  "subject": "spectre_dispersion",
+  "subject_zh": "幽鬼·折射",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Damage done by this ability is considered reflected damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Spectre disperses part of the damage dealt to her, reflecting it to all nearby enemies. The effect lessens with distance.",
+   "description_zh": "幽灵会分散对她造成的部分伤害，将其反弹给附近的所有敌人。敌人离她越远，受到的伤害越低。",
+   "notes_en": [
+    "The reflected damage is not dealt to Spectre.",
+    "Illusions don't get this ability.",
+    "Damage is reflected before reductions, and is returned as the same damage type.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "幽鬼本身不承受被折射的伤害。",
+    "幻象并不继承此技能。",
+    "伤害在减免前折射，并且折射的伤害与原伤害类型相同。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Dispersion can be activated to increase the amount absorbed and reflected by Dispersion by %activation_bonus_pct%%% of its base values for %activation_duration%s. Cooldown %activation_cooldown%. Manacost %activation_manacost%.",
+     "zh": "折射可以主动施放，吸收和反弹的伤害比例提升%activation_bonus_pct%%%，持续%activation_duration%秒。冷却时间为%activation_cooldown%秒。魔法消耗为%activation_manacost%点。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d88d7cee0296dc4f4076",
+  "subject": "shadow_demon_disseminate",
+  "subject_zh": "暗影恶魔·散播",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Damage done by this ability is considered reflected damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Whenever the target takes damage, all enemies, including the target itself if it is an enemy, within %radius% range of the target also receive a portion of that damage. Can target enemy and allied units. Effect is paused if the target is hidden by Disruption.",
+   "description_zh": "只要目标受到伤害，目标附近%radius%范围内所有敌人，若目标为敌人那也包括目标自身，他们都将受到该伤害的一定百分比。可以对敌方或友方目标施放。敌人被崩裂禁锢隐藏时效果暂停。",
+   "notes_en": [
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "33a83b7d0613eef7fd31",
+  "subject": "meepo_megameepo_fling",
+  "subject_zh": "米波·超大米波摔扔",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell reflect.",
+   "不会触发法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "In MegaMeepo form, Meepo flings the topmost meepo towards a target within a %AbilityCastRange% range, dealing damage and slowing their movement speed.",
+   "description_zh": "在超大米波形态下，米波将最上端的米波向%AbilityCastRange%范围内目标扔出，造成伤害和减速。",
+   "notes_en": [
+    "Does not trigger spell reflect."
+   ],
+   "notes_zh": [
+    "不会触发法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "9d6f7bf4c0d7699b56cf",
+  "subject": "rubick_spell_steal",
+  "subject_zh": "拉比克·技能窃取",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell reflect.",
+   "不会触发法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own for several minutes or until he dies.",
+   "description_zh": "拉比克钻研一个敌方英雄的魔法精华之痕，学习这个英雄最后释放的技能的秘密。拉比克将可以使用这个技能，维持几分钟或直到他死亡。",
+   "notes_en": [
+    "Cannot steal item abilities.",
+    "Rubick will steal the Aghanim's Shard version of the ability, if he himself has an Aghanim's Shard.",
+    "Does not trigger spell reflect."
+   ],
+   "notes_zh": [
+    "无法窃取物品类技能。",
+    "拉比克若拥有阿哈利姆魔晶，则窃取的技能会是魔晶升级版本。",
+    "不会触发法术反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases the number of spells that can be stolen to 2. Increases cast range, and upgrades stolen spells to their Scepter version.",
+     "zh": "可窃取的技能提升至2个。提升施法距离，并且窃取的技能会升级成神杖版本。"
+    },
+    "shard_loc": {
+     "en": "Upgrades stolen spells to their Shard version.",
+     "zh": "窃取的技能升级为相应的魔晶版本。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3c47c02e3d7e5fa03b63",
+  "subject": "nyx_assassin_spiked_carapace",
+  "subject_zh": "司夜刺客·尖刺外壳",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Damage done by this ability is considered reflected damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "When activated while above ground, Spiked Carapace reflects and negates damage dealt to Nyx Assassin (max once from each source), as well as stunning the source of the damage. Activating Spiked Carapace will not break Vendetta invisibility.\n\nWhile Burrowed, Spiked Carapace instantly stuns nearby enemies when cast.",
+   "description_zh": "激活状态下，尖刺外壳可以反弹并无效化司夜刺客受到的伤害（每个攻击者最多作用一次），同时眩晕攻击者。激活尖刺外壳不会打破复仇的隐身状态。\n\n钻地状态下尖刺外壳施放后将立刻眩晕周围的敌人。",
+   "notes_en": [
+    "The damage is calculated after all reductions.",
+    "Spiked Carapace will only trigger on damage from other player controlled sources.",
+    "The damage reflected will have the same damage type as it had when it was dealt to Nyx Assassin.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "反弹的伤害与司夜刺客本应受到的实际伤害相同。",
+    "尖刺外壳只有在受到玩家控制来源的伤害后会反弹。",
+    "反弹的伤害与司夜刺客受到的伤害类型相同。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "d181fe18f6bff6020a21",
+  "subject": "troll_warlord_whirling_axes_ranged",
+  "subject_zh": "巨魔战将·旋风飞斧（远程）",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect.",
+   "不会触发法术抵抗或法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Troll hurls a fistful of five axes in a cone shape over %axe_range% range, slowing and damaging enemy units.",
+   "description_zh": "巨魔战将掷出手中的五把飞斧，减速并伤害前方%axe_range%范围锥形区域内的敌方单位。",
+   "notes_en": [
+    "Does not affect Roshan.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "无法作用于肉山。",
+    "不会触发法术抵抗或法术反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Whirling Axes (Ranged) to dispel enemies. Reduces cooldown and mana cost.DISPEL TYPE: Basic Dispel",
+     "zh": "旋风飞斧（远程）可以驱散敌人。降低冷却时间和魔法消耗。驱散类型：弱驱散"
+    }
+   }
+  }
+ }
+]

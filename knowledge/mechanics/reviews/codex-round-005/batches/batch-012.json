@@ -1,0 +1,1372 @@
+[
+ {
+  "review_id": "458154596549cb6a20f5",
+  "subject": "wisp_tether",
+  "subject_zh": "艾欧·羁绊",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "当艾欧回复生命或魔法时，连在一起的友军将获得一部分回复效果。",
+   "When Io restores health or mana, the tethered unit gains a portion of that amount."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "name_en": "Tether",
+   "name_zh": "羁绊",
+   "description_en": "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, the tethered unit gains a portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. Tether slows enemies touching it.",
+   "description_zh": "将艾欧和一个友方单位连接在一起，提高双方的移动速度。当艾欧回复生命或魔法时，连在一起的友军将获得一部分回复效果。距离过远时连接将会断开，也可以主动断开连接。羁绊会减速触碰到的敌人。",
+   "notes_en": [
+    "If you try to tether a unit that is 700 distance or further away from Io, Io will latch on and pull itself closer to the tethered unit (to a distance of 300).",
+    "The tethered unit will heal faster and will heal even if Io is at full health.",
+    "Io's movement speed matches the tethered unit's."
+   ],
+   "notes_zh": [
+    "如果羁绊的目标距离艾欧700码以外，艾欧将链接目标并将自己向目标牵引（牵引后相距300码）。",
+    "被羁绊连接的单位回复速度相比更快，艾欧满血时也能回复。",
+    "艾欧的移动速度与羁绊目标一致。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Tether damages enemies touching it. Io is healed for %damage_to_heal%%% of the damage done.",
+     "zh": "羁绊会对触碰到的敌人造成伤害。艾欧会回复%damage_to_heal%%%造成伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "97cdd4ada1b8f9605a34",
+  "subject": "disruptor_static_storm",
+  "subject_zh": "干扰者·静态风暴",
+  "mechanism": "mute",
+  "mechanism_zh": "禁用物品",
+  "definition": "目标无法使用物品",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Mutes items."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Static Storm",
+   "name_zh": "静态风暴",
+   "description_en": "Creates a damaging static storm that also silences all enemy units in the area for the duration.  The damage starts off weak, but increases in power over the duration.",
+   "description_zh": "创造一场静态风暴，在持续时间内伤害并沉默区域内的所有敌方单位。伤害刚开始时很低，但会在持续时间内逐渐增加。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Mutes items.",
+     "zh": "锁闭物品。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6b99542eea752e962f74",
+  "subject": "sheepstick",
+  "subject_zh": "邪恶镰刀",
+  "mechanism": "mute",
+  "mechanism_zh": "禁用物品",
+  "definition": "目标无法使用物品",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The target has a base movement speed of 140 and will be silenced, muted, and disarmed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Scythe of Vyse",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Hex",
+     "description": "Turns a target unit into a harmless critter for 2.8 seconds. The target has a base movement speed of 140 and will be silenced, muted, and disarmed.\nInstantly destroys illusions."
+    }
+   ],
+   "notes": "The target will have a base movement speed of 140, but buffs granting maximum movement speed won't be disabled.",
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "30"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "8.5"
+    },
+    {
+     "key": "sheep_duration",
+     "value": "2.8"
+    },
+    {
+     "key": "sheep_movement_speed",
+     "value": "140"
+    },
+    {
+     "key": "upgrade_radius",
+     "value": "200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "6b7d62cdc72b370c4032",
+  "subject": "bloodthorn",
+  "subject_zh": "血棘",
+  "mechanism": "pierce_evasion",
+  "mechanism_zh": "克敌机先",
+  "definition": "攻击无视闪避（必中）",
+  "definition_note": "U43：官方中文写法；概率必中也算，如死亡守卫50%必中（U42）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Grants each attack a 40% chance to pierce through evasion and deal 60 bonus magical damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Bloodthorn",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Rend",
+     "description": "Silences a target for 5 seconds. At the end of the silence, an additional 60% of all damage taken during the silence will be dealt to the target as magical damage.\n\nAll attacks on the silenced target will deal additional damage equal to 50 if the attacker is a hero, and 25, if the attacker is a creep. Provides True Strike for your attacks and attacks from your controlled units against the silenced target."
+    },
+    {
+     "type": "passive",
+     "title": "Pierce",
+     "description": "Grants each attack a 40% chance to pierce through evasion and deal 60 bonus magical damage."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "25"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "70"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "4"
+    },
+    {
+     "key": "silence_duration",
+     "value": "5"
+    },
+    {
+     "key": "silence_damage_percent",
+     "value": "60"
+    },
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "20"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    },
+    {
+     "key": "spell_amp_debuff",
+     "value": "35"
+    },
+    {
+     "key": "proc_damage_heroes",
+     "value": "50"
+    },
+    {
+     "key": "proc_damage_creeps",
+     "value": "25"
+    },
+    {
+     "key": "passive_proc_damage",
+     "value": "60"
+    },
+    {
+     "key": "proc_chance",
+     "value": "40"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "72703b77330b2889566e",
+  "subject": "bloodthorn",
+  "subject_zh": "血棘",
+  "mechanism": "pierce_evasion",
+  "mechanism_zh": "克敌机先",
+  "definition": "攻击无视闪避（必中）",
+  "definition_note": "U43：官方中文写法；概率必中也算，如死亡守卫50%必中（U42）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Provides True Strike for your attacks and attacks from your controlled units against the silenced target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Bloodthorn",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Rend",
+     "description": "Silences a target for 5 seconds. At the end of the silence, an additional 60% of all damage taken during the silence will be dealt to the target as magical damage.\n\nAll attacks on the silenced target will deal additional damage equal to 50 if the attacker is a hero, and 25, if the attacker is a creep. Provides True Strike for your attacks and attacks from your controlled units against the silenced target."
+    },
+    {
+     "type": "passive",
+     "title": "Pierce",
+     "description": "Grants each attack a 40% chance to pierce through evasion and deal 60 bonus magical damage."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "25"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "70"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "4"
+    },
+    {
+     "key": "silence_duration",
+     "value": "5"
+    },
+    {
+     "key": "silence_damage_percent",
+     "value": "60"
+    },
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "20"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    },
+    {
+     "key": "spell_amp_debuff",
+     "value": "35"
+    },
+    {
+     "key": "proc_damage_heroes",
+     "value": "50"
+    },
+    {
+     "key": "proc_damage_creeps",
+     "value": "25"
+    },
+    {
+     "key": "passive_proc_damage",
+     "value": "60"
+    },
+    {
+     "key": "proc_chance",
+     "value": "40"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "a84925e5f172e0232531",
+  "subject": "dark_seer_normal_punch",
+  "subject_zh": "黑暗贤者·普通一拳",
+  "mechanism": "pierce_evasion",
+  "mechanism_zh": "克敌机先",
+  "definition": "攻击无视闪避（必中）",
+  "definition_note": "U43：官方中文写法；概率必中也算，如死亡守卫50%必中（U42）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Causes Dark Seer's next attack on a hero to have True Strike, knock a replica out of the victim, damaging and stunning them based on how far Dark Seer has moved in the past %recent_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Normal Punch",
+   "name_zh": "普通一拳",
+   "description_en": "Passive ability. Causes Dark Seer's next attack on a hero to have True Strike, knock a replica out of the victim, damaging and stunning them based on how far Dark Seer has moved in the past %recent_duration% seconds. Max power is reached after %max_distance% distance moved.",
+   "description_zh": "被动技能。使黑暗贤者下次对英雄的攻击具有克敌机先效果，可以打出目标的复制体，并且根据过去%recent_duration%秒内黑暗贤者的移动距离造成伤害和眩晕。移动%max_distance%距离以上将造成最大威力。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "b66bc1ee209d0ed5431b",
+  "subject": "drow_ranger_marksmanship",
+  "subject_zh": "卓尔游侠·射手天赋",
+  "mechanism": "pierce_evasion",
+  "mechanism_zh": "克敌机先",
+  "definition": "攻击无视闪避（必中）",
+  "definition_note": "U43：官方中文写法；概率必中也算，如死亡守卫50%必中（U42）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Marksmanship procs have true strike."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Marksmanship",
+   "name_zh": "射手天赋",
+   "description_en": "Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, ignoring their base armor. This ability is disabled if there is an enemy hero within %disable_range% range.",
+   "description_zh": "卓尔游侠的战斗经验使她有概率发出极其精准高效的箭矢。箭矢将穿透敌人的防御，无视他们的基础护甲。如果%disable_range%范围内有敌方英雄，本技能没有效果。",
+   "notes_en": [
+    "Marksmanship procs have true strike."
+   ],
+   "notes_zh": [
+    "射手天赋的触发效果拥有克敌机先。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "44d0b9b85078983e9287",
+  "subject": "kez_talon_toss",
+  "subject_zh": "凯·利爪飞掷",
+  "mechanism": "pierce_evasion",
+  "mechanism_zh": "克敌机先",
+  "definition": "攻击无视闪避（必中）",
+  "definition_note": "U43：官方中文写法；概率必中也算，如死亡守卫50%必中（U42）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The fixed damage attack has True Strike."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Talon Toss",
+   "name_zh": "利爪飞掷",
+   "description_en": "Kez throws a Sai at the target unit, applying a fixed damage attack and silence.",
+   "description_zh": "凯向目标单位掷出一把钗，施加一次固定伤害的攻击，并造成沉默。",
+   "notes_en": [
+    "The fixed damage attack has True Strike."
+   ],
+   "notes_zh": [
+    "固定伤害的攻击具有克敌机先效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "69b7ff8bf3df5d7ef222",
+  "subject": "monkey_king_bar",
+  "subject_zh": "金箍棒",
+  "mechanism": "pierce_evasion",
+  "mechanism_zh": "克敌机先",
+  "definition": "攻击无视闪避（必中）",
+  "definition_note": "U43：官方中文写法；概率必中也算，如死亡守卫50%必中（U42）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Grants each attack a 80% chance to pierce through evasion and deal 70 bonus magical damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Monkey King Bar",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Pierce",
+     "description": "Grants each attack a 80% chance to pierce through evasion and deal 70 bonus magical damage."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "50"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "50"
+    },
+    {
+     "key": "bonus_chance",
+     "value": "80"
+    },
+    {
+     "key": "bonus_chance_damage",
+     "value": "70"
+    },
+    {
+     "key": "melee_attack_range",
+     "display": "+ {value} Attack Range (Melee Only)",
+     "value": "50"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "626de75ee17781438ac3",
+  "subject": "tusk_walrus_punch",
+  "subject_zh": "巨牙海民·海象神拳！",
+  "mechanism": "pierce_evasion",
+  "mechanism_zh": "克敌机先",
+  "definition": "攻击无视闪避（必中）",
+  "definition_note": "U43：官方中文写法；概率必中也算，如死亡守卫50%必中（U42）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Walrus PUNCH has true strike."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Walrus PUNCH!",
+   "name_zh": "海象神拳！",
+   "description_en": "Tusk connects with his mighty Walrus Punch, a critical strike with bonus damage so powerful it launches its victim into the air.",
+   "description_zh": "巨牙海民为他强力的海象神拳做好准备，下一次攻击将会造成额外伤害并暴击，同时将目标打到半空中。",
+   "notes_en": [
+    "Walrus PUNCH has true strike."
+   ],
+   "notes_zh": [
+    "海象神拳！拥有克敌机先效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "71e06aca0bcc44c137b8",
+  "subject": "witch_blade",
+  "subject_zh": "巫师之刃",
+  "mechanism": "pierce_evasion",
+  "mechanism_zh": "克敌机先",
+  "definition": "攻击无视闪避（必中）",
+  "definition_note": "U43：官方中文写法；概率必中也算，如死亡守卫50%必中（U42）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "This attack has True Strike."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Witch Blade",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Witch Blade",
+     "description": "Causes your next attack to apply a poison for 4 seconds, slowing by 25% and dealing 0.75x your intelligence as damage every second. This attack has True Strike."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "40"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "12"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.5"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "5"
+    },
+    {
+     "key": "int_damage_multiplier",
+     "value": "0.75"
+    },
+    {
+     "key": "slow",
+     "value": "25"
+    },
+    {
+     "key": "slow_duration",
+     "value": "4"
+    },
+    {
+     "key": "projectile_speed",
+     "display": "+ {value} Projectile Speed",
+     "value": "300"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "16dc010d7b98c691204a",
+  "subject": "abyssal_underlord_pit_of_malice",
+  "subject_zh": "孽主·怨念深渊",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "A deadly pit is conjured at the target location; any unit that enters will be damaged and rooted.",
+   "在目标区域制造致命的深渊；踏入深渊的敌方单位将受到伤害并且被缠绕。",
+   "Each enemy unit within the pit are affected by the root only every %pit_interval% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Pit of Malice",
+   "name_zh": "怨念深渊",
+   "description_en": "A deadly pit is conjured at the target location; any unit that enters will be damaged and rooted. Each enemy unit within the pit are affected by the root only every %pit_interval% seconds.",
+   "description_zh": "在目标区域制造致命的深渊；踏入深渊的敌方单位将受到伤害并且被缠绕。每个敌方单位每隔%pit_interval%秒才会再次受到作用。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "6d12792f38256f7877e5",
+  "subject": "broodmother_sticky_snare",
+  "subject_zh": "育母蜘蛛·蛛纱陷阱",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "敌方英雄穿过网线将会触发陷阱，被缠绕，在战争迷雾中显形，并持续受到伤害。",
+   "Enemy Heroes that cross the web line will spring the trap, becoming rooted, revealed in fog, and take damage over time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_CHANNELLED ",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Spinner's Snare",
+   "name_zh": "蛛纱陷阱",
+   "description_en": "Broodmother may create up to %count% invisible web lines touching any existing web. Enemy Heroes that cross the web line will spring the trap, becoming rooted, revealed in fog, and take damage over time.  Multiple Heroes can trip on the same line until it's destroyed after being initially triggered.  Broodmother's team is alerted via the minimap when an enemy has triggered the snare.",
+   "description_zh": "育母蜘蛛可以制造出最多%count%个触碰已有蛛网的隐形网线。敌方英雄穿过网线将会触发陷阱，被缠绕，在战争迷雾中显形，并持续受到伤害。网线一开始被触发后，多名英雄还可以在同根网线上被绊倒，直到网线被摧毁。只要有人触发陷阱，育母蜘蛛的队友就会在小地图上发现。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "3970ceeb79ca5882bdb9",
+  "subject": "crystal_maiden_frostbite",
+  "subject_zh": "水晶室女·冰封禁制",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Frostbite is considered a root."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Frostbite",
+   "name_zh": "冰封禁制",
+   "description_en": "Encases an enemy unit in ice, prohibiting movement and attack, while dealing damage over time. Deals %creep_multiplier%x damage to non-ancient creeps.",
+   "description_zh": "操控冰霜包围一个敌方单位，禁止移动和攻击，并持续造成伤害。对非远古的普通单位施放将造成%creep_multiplier%倍伤害。",
+   "notes_en": [
+    "Frostbite is considered a root."
+   ],
+   "notes_zh": [
+    "冰封禁制为捆缚效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "61e75a1412502eb257f2",
+  "subject": "ember_spirit_searing_chains",
+  "subject_zh": "灰烬之灵·炎阳索",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "灰烬之灵释放出火焰绳索来缠绕附近的敌人，将他们困于原地并每秒造成一定伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Searing Chains",
+   "name_zh": "炎阳索",
+   "description_en": "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, anchoring them in place and dealing damage each second.",
+   "description_zh": "灰烬之灵释放出火焰绳索来缠绕附近的敌人，将他们困于原地并每秒造成一定伤害。",
+   "notes_en": [
+    "Targets are chosen randomly around Xin.",
+    "Does not affect Debuff Immune or invisible units."
+   ],
+   "notes_zh": [
+    "将随机选取炘周围的单位作为目标。",
+    "不能作用于减益免疫或隐身单位。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "ad87397d450b3696dc66",
+  "subject": "enchantress_little_friends",
+  "subject_zh": "魅惑魔女·密友",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Enchantress roots an enemy unit.",
+   "魅惑魔女缠绕一个敌方单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Little Friends",
+   "name_zh": "密友",
+   "description_en": "Enchantress roots an enemy unit. All creeps, ally, enemy and neutral within a radius will gain bonus movement and attack speed and attack the chosen target for %duration% seconds.",
+   "description_zh": "魅惑魔女缠绕一个敌方单位。目标附近所有敌方、友方和中立非英雄单位会攻击魅惑魔女选定的目标，并且具有攻击速度和移动速度加成，持续%duration%秒。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "d171d9dd08c3899a4d58",
+  "subject": "furion_wrath_of_nature",
+  "subject_zh": "自然先知·自然之怒",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "缠绕所有击中的敌人。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+  },
+  "context": {
+   "name_en": "Wrath of Nature",
+   "name_zh": "自然之怒",
+   "description_en": "Damaging energy bounces around the map, striking enemies that are in vision starting with those closest to the cast point. Each enemy hit beyond the first adds damage, up to the maximum after %max_targets% are hit.",
+   "description_zh": "伤害性的能量在全地图跳跃，打击视野中的敌人，会先从距目标点最近的敌人开始打击。每击中一个敌人伤害都会增加，击中%max_targets%个目标后达到最高伤害。",
+   "notes_en": [
+    "Wrath of Nature will not hit units out of vision.",
+    "Can be cast through the minimap; the nearest valid target will be selected."
+   ],
+   "notes_zh": [
+    "自然的愤怒只能伤害视野内的单位。",
+    "可以通过点击小地图施放；初始目标将选择施放地点最近的有效单位。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Entangles all enemies it hits. Duration scales from %scepter_min_entangle_duration%s up to %scepter_max_entangle_duration%s seconds at max bounce.",
+     "zh": "缠绕所有击中的敌人。持续时间根据弹跳次序从%scepter_min_entangle_duration%秒开始增加，弹跳数达到上限时为%scepter_max_entangle_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a2f3f5bc4639b440bb8b",
+  "subject": "invoker_ice_wall",
+  "subject_zh": "祈求者·寒冰之墙",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Enemy heroes in its area for longer than %root_delay% seconds become rooted and take magic damage based on Quas.",
+   "在浮冰内停留超过%root_delay%秒的敌方英雄会基于冰的等级被缠绕并受到魔法伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "name_en": "Ice Wall",
+   "name_zh": "寒冰之墙",
+   "description_en": "Generates a wall of solid ice directly in front of Invoker for a duration based on the level of Quas. The bitter cold emanating from it greatly slows nearby enemies based on the level of Quas and deals damage each second based on the level of Exort.",
+   "description_zh": "在祈求者前方创造一堵寒冰之墙，持续时间取决于冰元素的等级。冰霜之墙放射出的寒冰之气将对敌方单位造成减速和伤害，减速效果取决于冰元素的等级，每秒伤害取决于火元素的等级。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Ice Wall becomes Ice Floe, Vector Targeted. After a delay, Ice Floe appears as a %wall_width% width Ice Wall. Enemy heroes in its area for longer than %root_delay% seconds become rooted and take magic damage based on Quas.",
+     "zh": "寒冰之墙变成浮冰，以矢量为目标。经过短暂延迟后，浮冰出现再产生一道%wall_width%宽度的寒冰之墙。在浮冰内停留超过%root_delay%秒的敌方英雄会基于冰的等级被缠绕并受到魔法伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c6fc8e435d0087cd3add",
+  "subject": "lone_druid_entangle",
+  "subject_zh": "独行德鲁伊·缠绕之根",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "缠绕之根会对区域内敌方英雄施加%hits_required%层叠加效果，并且作用范围提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Entangle",
+   "name_zh": "缠绕之根",
+   "description_en": "Allows Lone Druid to Entangle enemies once they gain %hits_required% stacks. Entangled enemies are rooted and take damage over time.When cast, applies %hits_incremented_on_active% stacks to each enemy hero in the area and %hits_required% stacks to enemy creeps. Also empowers Lone Druid for %lone_druid_buff_duration%s, making him apply %lone_druid_counters_applied_tooltip% stack with each attack on enemy heroes. Enemies cannot gain stacks while Entangled.Leveling this ability also levels Spirit Bear's Entangling Claws ability.",
+   "description_zh": "敌方英雄获得%hits_required%层叠加效果后独行德鲁伊可以缠绕敌方英雄。被缠绕的英雄无法移动，并受到持续伤害。施放时，对区域内每个敌方英雄施加%hits_incremented_on_active%层叠加效果，对敌方非英雄单位施加%hits_required%层。独行德鲁伊的攻击还会被强化%lone_druid_buff_duration%秒，每次攻击敌方英雄都会施加%lone_druid_counters_applied_tooltip%层叠加效果。被缠绕的英雄无法获得叠加层数。升级这个技能也会升级熊灵的缠绕之爪技能。",
+   "notes_en": [
+    "Rooted units can't use Blink abilities and are revealed if they are invisible.",
+    "Lone Druid's Empowered Buff and enemy stack counter debuff cannot be dispelled.",
+    "Entangled debuff is dispellable.",
+    "Creeps can't gain stacks from either Lone Druid's or Spirit Bear's attacks, and are Entangled only on cast.",
+    "Roshan is affected as if he were a hero."
+   ],
+   "notes_zh": [
+    "被缠绕的单位将无法使用闪烁类技能，如果进入隐身状态也会显形。",
+    "独行德鲁伊的强化增益和敌人叠加计数减益无法被驱散。",
+    "缠绕的减益效果可以被驱散。",
+    "独行德鲁伊或者熊灵的攻击不会使非英雄单位获得叠加效果，只会在施放缠绕之根时使他们被缠绕。",
+    "对肉山的作用机制和英雄相同。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Entangle applies %hits_required% stacks to enemy heroes in the area and has increased radius. Enemies no longer have protection from gaining stacks while Entangled.",
+     "zh": "缠绕之根会对区域内敌方英雄施加%hits_required%层叠加效果，并且作用范围提升。触发缠绕的敌人不再受到保护，可以继续获得新的叠加层数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "1d51343a9e137b10321d",
+  "subject": "meepo_earthbind",
+  "subject_zh": "米波·地之束缚",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Tosses a net at the target point, rooting down all enemy units in an area around it.",
+   "向目标地点扔出一张网，缠绕区域内所有敌方单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Earthbind",
+   "name_zh": "地之束缚",
+   "description_en": "Tosses a net at the target point, rooting down all enemy units in an area around it.",
+   "description_zh": "向目标地点扔出一张网，缠绕区域内所有敌方单位。",
+   "notes_en": [
+    "Affects invisible units, revealing them.",
+    "Does not work on Debuff Immune units or Roshan."
+   ],
+   "notes_zh": [
+    "地之束缚可以使敌方单位在进入隐身后显形，但是不能作用于已经隐身的单位。",
+    "对减益免疫单位和肉山无效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "855c0c95b122e6825ef3",
+  "subject": "tinker_warp_grenade",
+  "subject_zh": "修补匠·折跃耀光",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Throws a flare towards an enemy, dealing damage, teleporting them away, rooting them and reducing their Cast and Attack Range for %debuff_duration% seconds.",
+   "向一个敌人扔出一枚光弹，造成伤害，将其向远离修补匠的方向传送并且缠绕，同时降低施法和攻击距离，持续%debuff_duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_ALERT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Warp Flare",
+   "name_zh": "折跃耀光",
+   "description_en": "Throws a flare towards an enemy, dealing damage, teleporting them away, rooting them and reducing their Cast and Attack Range for %debuff_duration% seconds.The target is teleported further the closer they are to Tinker.",
+   "description_zh": "向一个敌人扔出一枚光弹，造成伤害，将其向远离修补匠的方向传送并且缠绕，同时降低施法和攻击距离，持续%debuff_duration%秒。目标距离修补匠越近，传送距离越大。",
+   "notes_en": [
+    "Max teleportation distance is %warp_distance_pct_tooltip%%% of Warp Flare's cast range, which decreases down to 0 at max cast range."
+   ],
+   "notes_zh": [
+    "最大传送距离为%warp_distance_pct_tooltip%%%折跃耀光施法距离，在最大施法距离时降至0。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ },
+ {
+  "review_id": "f910a69534f06688020c",
+  "subject": "treant_overgrowth",
+  "subject_zh": "树精卫士·疯狂生长",
+  "mechanism": "root",
+  "mechanism_zh": "定身",
+  "definition": "目标无法移动（部分会阻止闪烁类位移）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在树精卫士周围召唤出疯狂生长的伤害性藤条和枝干，造成伤害并且阻止被缠绕的敌人移动、闪烁、进入隐身或攻击。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Overgrowth",
+   "name_zh": "疯狂生长",
+   "description_en": "Summons an overgrowth of vines and branches around Treant that deal damage to afflicted enemies and prevent them from moving, blinking, going invisible, or attacking.",
+   "description_zh": "在树精卫士周围召唤出疯狂生长的伤害性藤条和枝干，造成伤害并且阻止被缠绕的敌人移动、闪烁、进入隐身或攻击。",
+   "notes_en": [
+    "Works on Debuff Immune units, but if units gain debuff immunity after the effect starts, they'll break free."
+   ],
+   "notes_zh": [
+    "效果无视减益免疫，但是在期间获得减益免疫状态将挣脱控制。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases Cooldown to %AbilityCooldown% seconds. When casting Overgrowth, Treant Protector draws power from the soil, greatly increasing his size for %bloom_duration% seconds. While enlarged, he gains phased movement with a fixed speed of %movement_speed%, %strength_bonus%%% bonus Strength, and a splashing attack that deals %splash_pct%%% of his attack damage in a %splash_radius% unit radius.",
+     "zh": "冷却时间降低至%AbilityCooldown%秒。施放疯狂生长时，树精卫士从土壤中汲取力量，他的身体急剧增大，持续%bloom_duration%秒。变大后他会获得相位移动状态，移动速度为固定%movement_speed%，%strength_bonus%%%力量加成，并且拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c989d06692066a02ad9f",
+  "subject": "abyssal_underlord_dark_portal",
+  "subject_zh": "孽主·恶魔之扉",
+  "mechanism": "self_mobility",
+  "mechanism_zh": "自身位移",
+  "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "双击会在己方基地的泉水前打开另一个传送门。",
+   "打开2个传送门，一个在孽主身旁，另一个在目标地点。",
+   "Double-click to teleport to your team's base, in front of your fountain",
+   "传送门之间的距离必须超过%minimum_distance%。",
+   "Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side.",
+   "英雄可以对一个传送门持续施法%warp_channel_duration%秒，传送至另一端。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING "
+  },
+  "context": {
+   "name_en": "Fiend's Gate",
+   "name_zh": "恶魔之扉",
+   "description_en": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side. Portals have to be at least %minimum_distance% away from each other.",
+   "description_zh": "打开2个传送门，一个在孽主身旁，另一个在目标地点。英雄可以对一个传送门持续施法%warp_channel_duration%秒，传送至另一端。传送门之间的距离必须超过%minimum_distance%。",
+   "notes_en": [
+    "Double-click to teleport to your team's base, in front of your fountain"
+   ],
+   "notes_zh": [
+    "双击会在己方基地的泉水前打开另一个传送门。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Summons a Pit of Malice around each of the portals. Reduces cooldown.",
+     "zh": "在传送门两端各召唤一个怨念深渊。减少冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "378c8dfc6c5d7612033a",
+  "subject": "antimage_blink",
+  "subject_zh": "敌法师·闪烁",
+  "mechanism": "self_mobility",
+  "mechanism_zh": "自身位移",
+  "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "You can use Blink to dodge incoming projectiles.",
+   "Short distance teleportation that allows Anti-Mage to move in and out of combat.",
+   "短距离传送，能让敌法师自由出入战场。",
+   "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "name_en": "Blink",
+   "name_zh": "闪烁",
+   "description_en": "Short distance teleportation that allows Anti-Mage to move in and out of combat.",
+   "description_zh": "短距离传送，能让敌法师自由出入战场。",
+   "notes_en": [
+    "You can use Blink to dodge incoming projectiles."
+   ],
+   "notes_zh": [
+    "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "After casting Blink, your next Mana Break within %empowered_mana_break_duration%s burns an additional %empowered_max_burn_pct_tooltip%%% max mana and prevents the target from regenerating or gaining mana for a short duration. This debuff is undispellable.",
+     "zh": "施放闪烁后，%empowered_mana_break_duration%秒内的法力损毁将额外燃烧%empowered_max_burn_pct_tooltip%%%最大魔法值，并且阻止目标在短时间内恢复或获得魔法。这个负面状态无法驱散。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "7d42e3f91f281f4ef95f",
+  "subject": "arcane_blink",
+  "subject_zh": "秘奥闪光",
+  "mechanism": "self_mobility",
+  "mechanism_zh": "自身位移",
+  "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Teleport to a target point up to 1400 units away.",
+   "After teleportation, you restore 250 health and 100 mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "dname": "Arcane Blink",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Arcane Blink",
+     "description": "Teleport to a target point up to 1400 units away. \n\nAfter teleportation, you restore 250 health and 100 mana.\n\nArcane Blink cannot be used for 3 seconds after taking damage from an enemy hero or Roshan."
+    }
+   ],
+   "notes": "Self-casting will cause you to teleport in the direction of your team's fountain.",
+   "attrib": [
+    {
+     "key": "blink_range",
+     "value": "1400"
+    },
+    {
+     "key": "blink_damage_cooldown",
+     "value": "3.0"
+    },
+    {
+     "key": "blink_range_clamp",
+     "value": "1120"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "25"
+    },
+    {
+     "key": "heal_amount",
+     "value": "250"
+    },
+    {
+     "key": "mana_amount",
+     "value": "100"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "004f1fda68643438e025",
+  "subject": "batrider_flaming_lasso",
+  "subject_zh": "蝙蝠骑士·燃烧枷锁",
+  "mechanism": "self_mobility",
+  "mechanism_zh": "自身位移",
+  "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "传送或闪烁会打破枷锁。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Flaming Lasso",
+   "name_zh": "燃烧枷锁",
+   "description_en": "Lassoes an enemy and drags them in Batrider's wake. Dragged units cannot move, attack, or use abilities.  Teleporting or blinking will break the lasso.",
+   "description_zh": "用枷锁捆住一个敌人，在蝙蝠骑士的后面拖行。被拖行的单位不能移动、攻击或使用技能。传送或闪烁会打破枷锁。",
+   "notes_en": [
+    "Killing the target or the Batrider will break the lasso before its expiration.",
+    "If Batrider moves more than 425 units in 0.05 seconds the lasso breaks.",
+    "Batrider cannot attack while using Flaming Lasso."
+   ],
+   "notes_zh": [
+    "杀死目标或蝙蝠骑士都能在技能结束前打破枷锁。",
+    "如果蝙蝠骑士在0.05秒内移动距离超过425码枷锁将会断裂。",
+    "蝙蝠骑士在使用燃烧枷锁时不能攻击。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Flaming Lasso grabs both its target, as well as the target's nearest allied hero within %grab_radius_scepter% units. The secondary target is tethered to the first.",
+     "zh": "燃烧枷锁除了抓取目标外，还能抓取目标附近%grab_radius_scepter%范围内最近的友方英雄。第二目标将与第一目标相连。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "9431bec477ffd74a78e2",
+  "subject": "blink",
+  "subject_zh": "闪烁匕首",
+  "mechanism": "self_mobility",
+  "mechanism_zh": "自身位移",
+  "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Self-casting will cause you to teleport in the direction of your team's fountain."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "dname": "Blink Dagger",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Blink",
+     "description": "Teleport to a target point up to 1200 units away. \n\nBlink Dagger cannot be used for 3 seconds after taking damage from an enemy hero or Roshan."
+    }
+   ],
+   "notes": "Self-casting will cause you to teleport in the direction of your team's fountain.",
+   "attrib": [
+    {
+     "key": "blink_range",
+     "value": "1200"
+    },
+    {
+     "key": "blink_damage_cooldown",
+     "value": "3.0"
+    },
+    {
+     "key": "blink_range_clamp",
+     "value": "960"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "e32dac85f13339928023",
+  "subject": "blink",
+  "subject_zh": "闪烁匕首",
+  "mechanism": "self_mobility",
+  "mechanism_zh": "自身位移",
+  "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Teleport to a target point up to 1200 units away."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "dname": "Blink Dagger",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Blink",
+     "description": "Teleport to a target point up to 1200 units away. \n\nBlink Dagger cannot be used for 3 seconds after taking damage from an enemy hero or Roshan."
+    }
+   ],
+   "notes": "Self-casting will cause you to teleport in the direction of your team's fountain.",
+   "attrib": [
+    {
+     "key": "blink_range",
+     "value": "1200"
+    },
+    {
+     "key": "blink_damage_cooldown",
+     "value": "3.0"
+    },
+    {
+     "key": "blink_range_clamp",
+     "value": "960"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "209106ee9d873a98041d",
+  "subject": "ember_spirit_sleight_of_fist",
+  "subject_zh": "灰烬之灵·无影拳",
+  "mechanism": "self_mobility",
+  "mechanism_zh": "自身位移",
+  "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+  },
+  "context": {
+   "name_en": "Sleight of Fist",
+   "name_zh": "无影拳",
+   "description_en": "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location.  Deals bonus damage to heroes.",
+   "description_zh": "灰烬之灵以燎原之火的速度横冲直撞，攻击目标区域内所有敌人，随后返回所在位置。对英雄造成额外伤害。",
+   "notes_en": [
+    "Targets are determined when the spell is cast.",
+    "A regular attack is done to each target every %attack_interval% seconds.",
+    "Any attack modifier that Xin has (such as Critical Strike, Bash, Cleave, or Orb effects) will be applied normally on these attacks.",
+    "Abilities and items can be used while Sleight of Fist is active."
+   ],
+   "notes_zh": [
+    "在施放技能时作用的目标就已决定。",
+    "对目标的攻击每次间隔为%attack_interval%秒。",
+    "炘拥有的攻击特效（如致命一击、重击、分裂、连锁闪电等效果）在技能攻击期间都能生效。",
+    "施放无影拳时间可以使用其他技能和物品。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "236ad290e8809e413405",
+  "subject": "enchantress_bunny_hop",
+  "subject_zh": "魅惑魔女·跃动",
+  "mechanism": "self_mobility",
+  "mechanism_zh": "自身位移",
+  "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Leaps backward, dodges incoming projectiles, and launches an Impetus attack on the %attack_targets% furthest enemy units within Enchantress' attack range + %bonus_attack_range%.",
+   "向后跳跃，躲避多种飞行过程中的攻击和技能弹道，并向魅惑魔女的攻击距离+%bonus_attack_range%范围内最远的%attack_targets%个敌方单位发动一次附有推进的攻击。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "name_en": "Sproink",
+   "name_zh": "跃动",
+   "description_en": "Leaps backward, dodges incoming projectiles, and launches an Impetus attack on the %attack_targets% furthest enemy units within Enchantress' attack range + %bonus_attack_range%.",
+   "description_zh": "向后跳跃，躲避多种飞行过程中的攻击和技能弹道，并向魅惑魔女的攻击距离+%bonus_attack_range%范围内最远的%attack_targets%个敌方单位发动一次附有推进的攻击。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ }
+]

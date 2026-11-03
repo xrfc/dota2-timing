@@ -1,0 +1,1009 @@
+[
+ {
+  "review_id": "18dccdf2ed967a3ed4df",
+  "subject": "lone_druid_entangle",
+  "subject_zh": "独行德鲁伊·缠绕之根",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Rooted units can't use Blink abilities and are revealed if they are invisible.",
+   "被缠绕的单位将无法使用闪烁类技能，如果进入隐身状态也会显形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Allows Lone Druid to Entangle enemies once they gain %hits_required% stacks. Entangled enemies are rooted and take damage over time.When cast, applies %hits_incremented_on_active% stacks to each enemy hero in the area and %hits_required% stacks to enemy creeps. Also empowers Lone Druid for %lone_druid_buff_duration%s, making him apply %lone_druid_counters_applied_tooltip% stack with each attack on enemy heroes. Enemies cannot gain stacks while Entangled.Leveling this ability also levels Spirit Bear's Entangling Claws ability.",
+   "description_zh": "敌方英雄获得%hits_required%层叠加效果后独行德鲁伊可以缠绕敌方英雄。被缠绕的英雄无法移动，并受到持续伤害。施放时，对区域内每个敌方英雄施加%hits_incremented_on_active%层叠加效果，对敌方非英雄单位施加%hits_required%层。独行德鲁伊的攻击还会被强化%lone_druid_buff_duration%秒，每次攻击敌方英雄都会施加%lone_druid_counters_applied_tooltip%层叠加效果。被缠绕的英雄无法获得叠加层数。升级这个技能也会升级熊灵的缠绕之爪技能。",
+   "notes_en": [
+    "Rooted units can't use Blink abilities and are revealed if they are invisible.",
+    "Lone Druid's Empowered Buff and enemy stack counter debuff cannot be dispelled.",
+    "Entangled debuff is dispellable.",
+    "Creeps can't gain stacks from either Lone Druid's or Spirit Bear's attacks, and are Entangled only on cast.",
+    "Roshan is affected as if he were a hero."
+   ],
+   "notes_zh": [
+    "被缠绕的单位将无法使用闪烁类技能，如果进入隐身状态也会显形。",
+    "独行德鲁伊的强化增益和敌人叠加计数减益无法被驱散。",
+    "缠绕的减益效果可以被驱散。",
+    "独行德鲁伊或者熊灵的攻击不会使非英雄单位获得叠加效果，只会在施放缠绕之根时使他们被缠绕。",
+    "对肉山的作用机制和英雄相同。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Entangle applies %hits_required% stacks to enemy heroes in the area and has increased radius. Enemies no longer have protection from gaining stacks while Entangled.",
+     "zh": "缠绕之根会对区域内敌方英雄施加%hits_required%层叠加效果，并且作用范围提升。触发缠绕的敌人不再受到保护，可以继续获得新的叠加层数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c132dab816eba978aa98",
+  "subject": "meepo_earthbind",
+  "subject_zh": "米波·地之束缚",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Affects invisible units, revealing them.",
+   "地之束缚可以使敌方单位在进入隐身后显形，但是不能作用于已经隐身的单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Tosses a net at the target point, rooting down all enemy units in an area around it.",
+   "description_zh": "向目标地点扔出一张网，缠绕区域内所有敌方单位。",
+   "notes_en": [
+    "Affects invisible units, revealing them.",
+    "Does not work on Debuff Immune units or Roshan."
+   ],
+   "notes_zh": [
+    "地之束缚可以使敌方单位在进入隐身后显形，但是不能作用于已经隐身的单位。",
+    "对减益免疫单位和肉山无效。"
+   ]
+  }
+ },
+ {
+  "review_id": "f6cf8025aead67d87bdd",
+  "subject": "slark_shadow_dance",
+  "subject_zh": "斯拉克·暗影之舞",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Attacking, casting spells, and using items will not reveal Slark, but enemies can see the cloud itself.",
+   "攻击、施法、使用物品都不会使斯拉克显形，但是敌人可以看见暗影之云。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "When not visible to the enemy team, Slark passively gains bonus movement speed and health regeneration.  If Slark is damaged by a neutral unit, the passive movement and health regeneration bonuses are lost for %neutral_disable% seconds.When activated, Slark hides himself in a cloud of shadows, becoming immune to detection. Attacking, casting spells, and using items will not reveal Slark, but enemies can see the cloud itself.",
+   "description_zh": "当斯拉克不处于敌方视野内时，他会被动获得移动速度加成和生命恢复。如果受到来自中立单位的伤害，%neutral_disable%秒内会失去被动移速和生命恢复加成。主动开启后，斯拉克将自己藏进暗影之云，变成隐身状态，不会被反隐手段发现。攻击、施法、使用物品都不会使斯拉克显形，但是敌人可以看见暗影之云。"
+  }
+ },
+ {
+  "review_id": "4a32ea6adc2cb64b6b7f",
+  "subject": "medusa_gorgon_grasp",
+  "subject_zh": "美杜莎·罗网箭阵",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Enemies struck by a volley of arrows take an initial burst of damage and then are rooted, cannot turn, are revealed to the enemy, and take damage per second."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "description_en": "Medusa fires arrows in a line that land in %volley_count% groups, with each grouping larger than the previous. Enemies struck by a volley of arrows take an initial burst of damage and then are rooted, cannot turn, are revealed to the enemy, and take damage per second.",
+   "description_zh": "美杜莎沿着一条直线射出%volley_count%组箭矢，每组的作用范围递增。齐射的箭矢击中的敌人会受到初始爆发伤害，然后被缠绕且无法转身，并对敌人可见，同时受到每秒伤害。"
+  }
+ },
+ {
+  "review_id": "b12d46f6be780ef0728d",
+  "subject": "skywrath_mage_arcane_bolt",
+  "subject_zh": "天怒法师·奥法鹰隼",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Upon impact, it will reveal the target area for 3."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.",
+   "description_zh": "天怒法师施放出缓慢移动的奥术鹰群，对敌方单位造成基于天怒法师智力值的伤害。",
+   "notes_en": [
+    "The projectile moves very slowly (500 ms), providing 325 vision around it.  Upon impact, it will reveal the target area for 3.34 seconds.",
+    "Arcane Bolt cannot be disjointed."
+   ],
+   "notes_zh": [
+    "鹰群移动得非常缓慢（500移速），提供325范围的视野。击中目标后，将给予目标区域的视野，持续3.34秒。",
+    "奥法鹰隼无法被躲避。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "When Skywrath Mage casts Arcane Bolt, %total_bolt_count% bolts are created, one aimed at the original target, and two others aimed at random enemies within %extra_bolt_search_radius% range of the original target. Heroes will take priority.",
+     "zh": "天怒法师施放奥法鹰隼时，会产生%total_bolt_count%个鹰隼，其中一个飞往原目标，而另外的两个飞往原目标附近%extra_bolt_search_radius%范围内随机敌人。以英雄为首要目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "cdd4d4dd088276752ac9",
+  "subject": "skywrath_mage_concussive_shot",
+  "subject_zh": "天怒法师·震荡光弹",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Provides 400 vision around the projectile, and reveals the target area for 3."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Skywrath Mage sets off a long range shot that hits the closest hero within a long range.  Upon impact, it deals damage and slows in an area of effect.",
+   "description_zh": "天怒法师释放一个远距离的光弹，将击中超大范围内最近的英雄。击中后会对英雄附近范围内所有单位造成伤害和减速。",
+   "notes_en": [
+    "If no enemy heroes are in range or they are in fog, Concussive Shot targets the nearest enemy creep.",
+    "Damages creeps around the impact area.",
+    "Provides 400 vision around the projectile, and reveals the target area for 3.34 seconds upon impact."
+   ],
+   "notes_zh": [
+    "如果作用范围内没有英雄或英雄处于迷雾中，震荡光弹将以最近的敌方小兵或中立生物为目标。",
+    "击中英雄后附近的非英雄单位也会受到伤害。",
+    "光弹将给予400范围的附近视野，击中后将获得目标区域的视野，持续3.34秒。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When Skywrath Mage casts Concussive Shot, a different random target within %scepter_radius% range of the original target will be hit with the same ability. Heroes will take priority.",
+     "zh": "天怒法师施放震荡光弹时，会随机对原目标附近%scepter_radius%范围内另一个敌人施放相同的技能。以英雄为首要目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "28f58f6e308168bdf40b",
+  "subject": "phoenix_fire_spirits",
+  "subject_zh": "凤凰·烈火精灵",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Fire Spirits reveal the area they strike for 1 second."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Summons 4 fire spirits that circle around Phoenix. Each spirit can be launched independently at a targeted area of effect. Affected enemy units take damage over time and have their attack speed greatly reduced.",
+   "description_zh": "召唤4只围绕凤凰飞行的烈火精灵。每一只烈火精灵都能被单独发射到指定区域。对敌人持续造成伤害并大幅降低他们的攻击速度。",
+   "notes_en": [
+    "Fire Spirits reveal the area they strike for 1 second."
+   ],
+   "notes_zh": [
+    "烈火精灵现在到达目标区域后将获得1秒的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "740d2e5e9da25a90337b",
+  "subject": "techies_land_mines",
+  "subject_zh": "工程师·感应地雷",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "埋布隐形的地雷，不会被真实视域检测到，但是有敌方单位在地雷的%radius%生效范围内会显形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityCharges": "3"
+  },
+  "context": {
+   "description_en": "Plant an invisible mine that cannot be detected by True Sight, but is visible if an enemy is within the active %radius% AoE of the mine. Mines detonate if an enemy is standing within the active AoE for %proximity_threshold% seconds dealing damage and temporarily reducing the enemy's Magic Resistance. The explosion deals full damage if the target is within %min_distance% radius and decreases down to %outer_damage%%% on the edge. Deals %building_damage_pct%%% damage to buildings.",
+   "description_zh": "埋布隐形的地雷，不会被真实视域检测到，但是有敌方单位在地雷的%radius%生效范围内会显形。敌人在生效范围内停留超过%proximity_threshold%秒会使地雷爆炸，并且魔法抗性会被暂时降低。爆炸对%min_distance%范围内目标造成全额伤害，对边缘造成的伤害减少至%outer_damage%%%。对建筑物造成%building_damage_pct%%%伤害。",
+   "notes_en": [
+    "Cannot be placed within %placement_radius% AoE of another Proximity Mine.",
+    "Proximity Mines do not block neutral creep camps from spawning.",
+    "Mines last until they explode or are destroyed.",
+    "Mines are triggered by invisible units.",
+    "Grants 30 gold if destroyed by an enemy hero."
+   ],
+   "notes_zh": [
+    "感应地雷的%placement_radius%范围内不能再放置地雷。",
+    "感应地雷不会阻止中立生物产生。",
+    "地雷持续时间没有上限，除非爆炸或被摧毁。",
+    "隐形单位也能触发地雷。",
+    "敌方英雄将地雷摧毁可以获得30金钱。"
+   ]
+  }
+ },
+ {
+  "review_id": "a84b9b99c2082adbb14d",
+  "subject": "mars_spear",
+  "subject_zh": "玛尔斯·战神迅矛",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Spear of Mars can hit invisible units and reveals them if they are stunned.",
+   "战神迅矛可以击中隐身单位，造成眩晕还使其显形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Mars throws his legendary Spear with deadly precision, damaging each enemy unit it strikes. The first enemy hero it hits is skewered on the spear, pushing it back. If a skewered hero hits a tree, building, or cliff, they will be impaled to it and stunned.",
+   "description_zh": "玛尔斯以致命的精准掷出他强大的战矛，对击中的每个敌方单位造成伤害。击中的第一个敌方英雄将被战矛刺穿，并被击退。若战矛击中树木、建筑或悬崖，目标将会被钉在上面，并受到眩晕。",
+   "notes_en": [
+    "Spear of Mars can hit invisible units and reveals them if they are stunned.",
+    "Spear of Mars will only pin a unit to cliffs onto elevated areas, otherwise it will push them off onto lower ground."
+   ],
+   "notes_zh": [
+    "战神迅矛可以击中隐身单位，造成眩晕还使其显形。",
+    "战神迅矛只会将单位从低地钉在地势变高的地方，否则会将他们推下高地。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Spear of Mars impales up to %max_impale_targets% heroes and leaves a fire trail behind that deals damage over time and slows movement speed.",
+     "zh": "战神迅矛可以刺中最多%max_impale_targets%名英雄，并留下一道火焰路径，持续造成伤害并减缓移动速度。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e3bb9db9c4bbe6788723",
+  "subject": "void_spirit_aether_remnant",
+  "subject_zh": "虚无之灵·残阴",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not reveal wards.",
+   "不会使守卫显形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Void Spirit dispatches a remnant to the target location. The remnant stands watch over the region, facing the direction of his vector. When a unit crosses its gaze, the remnant pulls it in and damages it.",
+   "description_zh": "虚无之灵向目标地点派出一个残像。残像观察着一片区域，面朝矢量的方向。当有目标进入其视线，残像会拉扯，并造成伤害。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Creates an additional watcher path that rotates around the remnant.  The remnant now provides True Sight, and no longer triggers on creeps, instead dealing %creep_damage_pct%%% damage to them every second in both paths. Does not reveal wards.",
+     "zh": "额外产生一道观察路径，会围绕残阴旋转。残阴现在会提供真实视域，不再对非英雄单位触发，而是每秒在两道路径上造成%creep_damage_pct%%%伤害。不会使守卫显形。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5460640e23f83695d76e",
+  "subject": "ringmaster_spotlight",
+  "subject_zh": "百戏大王·聚光灯",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Enemies in the light have a chance to miss their attacks and are revealed if invisible.",
+   "灯光下的敌人有几率丢失攻击，隐身状态下也会显形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "description_en": "Ringmaster shines %spotlight_count% spotlights that sweep over an area. Enemies in the light have a chance to miss their attacks and are revealed if invisible. Illusions hit by the beam fade away, losing a percentage of their maximum health each second. These effects linger for %linger_duration% seconds after leaving the light.",
+   "description_zh": "百戏大王用%spotlight_count%束聚光灯照亮一片区域。灯光下的敌人有几率丢失攻击，隐身状态下也会显形。被光束击中的幻象会逐渐消散，每秒失去一定百分比的最大生命值。这些效果在灯束离开后会粘滞%linger_duration%秒。"
+  }
+ },
+ {
+  "review_id": "8d2cb31d2e4bf853975f",
+  "subject": "dust",
+  "subject_zh": "显影之尘",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reveal: For 12 seconds, creates an area that reveals and slows invisible heroes by -20% in a 1050 radius where the caster was standing.",
+   "Invisible units revealed by dust take 25 damage.",
+   "Places a debuff on enemy units in the area that reveals them when they are invisible."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Dust of Appearance",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Reveal",
+     "description": "For 12 seconds, creates an area that reveals and slows invisible heroes by -20% in a 1050 radius where the caster was standing. Invisible units revealed by dust take 25 damage.\n\n The debuff effect on enemies lingers for 8s after leaving the area of effect."
+    }
+   ],
+   "notes": "Places a debuff on enemy units in the area that reveals them when they are invisible.",
+   "attrib": [
+    {
+     "key": "duration",
+     "value": "12"
+    },
+    {
+     "key": "radius",
+     "value": "1050"
+    },
+    {
+     "key": "movespeed",
+     "value": "-20"
+    },
+    {
+     "key": "damage",
+     "value": "25"
+    },
+    {
+     "key": "linger_duration",
+     "value": "8"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "f712a652f2d473a3bac4",
+  "subject": "gem",
+  "subject_zh": "真视宝石",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reveal: Gives True Sight over a 300 radius revealing wards and units even in Fog of War."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "dname": "Gem of True Sight",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Reveal",
+     "description": "Gives True Sight over a 300 radius revealing wards and units even in Fog of War."
+    },
+    {
+     "type": "passive",
+     "title": "True Sight",
+     "description": "Grants the ability to see invisible units and wards to any allied vision within 900 range of its carrier."
+    },
+    {
+     "type": "passive",
+     "title": "Everlasting",
+     "description": "Dropped on death, and cannot be destroyed."
+    }
+   ],
+   "notes": "Disabled while on a courier.",
+   "attrib": [
+    {
+     "key": "radius",
+     "value": "900"
+    },
+    {
+     "key": "active_radius",
+     "value": "300"
+    },
+    {
+     "key": "duration",
+     "value": "4"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "6e4f3b540a4ae6a62dcc",
+  "subject": "bloodseeker_thirst",
+  "subject_zh": "血魔·焦渴",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero.",
+   "如果生命值低于%invis_threshold_pct%%%，他还将获得该英雄的视野和真实视域。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed when an enemy hero's health falls below %min_bonus_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero. Unlocks max movement speed for Bloodseeker.",
+   "description_zh": "血魔能够感知到敌人的伤口中涌出的鲜血，敌方英雄的生命值低于%min_bonus_pct%%%，他的移动速度就会提升，而且生命值越低，提升效果越大。如果生命值低于%invis_threshold_pct%%%，他还将获得该英雄的视野和真实视域。焦渴的效果可以叠加。血魔可以突破最大速度限制。",
+   "notes_en": [
+    "Not triggered by Illusions.",
+    "Max movement speed bonus occurs when an enemy's health is at or below %max_bonus_pct%%%.",
+    "Effects linger for %linger_duration% seconds if a target dies."
+   ],
+   "notes_zh": [
+    "幻象不能触发该技能。",
+    "移动速度加成在敌人生命值低于%max_bonus_pct%%%时达到上限。",
+    "目标死亡后效果延续%linger_duration%秒。"
+   ]
+  }
+ },
+ {
+  "review_id": "afa2afc0b5a0abfb98b4",
+  "subject": "crystal_maiden_crystal_nova",
+  "subject_zh": "水晶室女·冰霜新星",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Crystal Nova provides vision in the targeted area for the duration.",
+   "冰霜新星在持续时间内提供目标区域的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "description_en": "A burst of damaging frost slows enemy movement in the targeted area.",
+   "description_zh": "召唤具有破坏性的冰爆，降低目标区域内的敌人的移动速度。",
+   "notes_en": [
+    "Crystal Nova provides vision in the targeted area for the duration."
+   ],
+   "notes_zh": [
+    "冰霜新星在持续时间内提供目标区域的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "77e30bdd8d0b4ddfb977",
+  "subject": "drow_ranger_glacier",
+  "subject_zh": "卓尔游侠·冰川",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Units on the hill gain flying vision and Drow and her ranged allies gain bonus attack range.",
+   "站在山上的单位会获得飞行视野，而卓尔游侠和她的远程友军会获得攻击距离加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Drow creates a hill of ice beneath her, knocking away nearby enemies. Units on the hill gain flying vision and Drow and her ranged allies gain bonus attack range. Drow gains additional damage while on the Glacier and attacking targets below her.The front of the hill obscures vision and cannot be moved through except by Drow. Does not interrupt Multishot when cast.",
+   "description_zh": "卓尔游侠在她脚下创造一片冰山，击退附近的敌人。站在山上的单位会获得飞行视野，而卓尔游侠和她的远程友军会获得攻击距离加成。卓尔游侠站在山上时攻击下方目标时获得额外伤害。山的前面会阻挡视野，并且除了卓尔游侠外无法穿行。施放时不会打断数箭齐发。"
+  }
+ },
+ {
+  "review_id": "0ae536b78fda7d497489",
+  "subject": "puck_illusory_orb",
+  "subject_zh": "帕克·幻象法球",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "The Illusory Orb grants unobstructed vision around its location while it travels.",
+   "幻象法球在飞行途中提供顺畅视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE"
+  },
+  "context": {
+   "description_en": "Vector Targeted. Puck launches a magic orb that travels along the path, damaging enemy units along the way. The orb deals an additional %damage_over_time_pct%%% of its impact damage every %damage_interval%s in its area of effect, but if it exceeds the max cast range it will be destroyed.\n\n At any point, Puck may teleport to the orb's location using Ethereal Jaunt. Can be put on alt-cast to launch the Orb straight ahead.",
+   "description_zh": "以矢量为目标。帕克向路线方向发出一个魔法球，对经过路径上的敌人造成伤害。法球每%damage_interval%秒会在作用范围内额外造成%damage_over_time_pct%%%击中伤害，但超过最大施法距离后法球会被摧毁。\n\n在幻象法球飞行过程中，帕克可以使用灵动之翼来传送到法球所在的位置。可以设为多样施法（右键点击技能栏图标），让法球的路线为向前的直线。",
+   "notes_en": [
+    "The Illusory Orb grants unobstructed vision around its location while it travels.",
+    "Jaunting to the Orb will disjoint projectiles."
+   ],
+   "notes_zh": [
+    "幻象法球在飞行途中提供顺畅视野。",
+    "将自己传送到幻象法球可以躲避攻击和技能弹道。"
+   ]
+  }
+ },
+ {
+  "review_id": "48b68dc125309ab28d33",
+  "subject": "storm_spirit_static_remnant",
+  "subject_zh": "风暴之灵·残影",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Remnants grant unobstructed vision for their duration."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Creates an explosively charged image of Storm Spirit that walks to the target position and lasts for %abilityduration% seconds. Will detonate and deal damage if an enemy unit comes near it.",
+   "description_zh": "风暴之灵制造一个充满爆炸性能量的自身残影，会向目标地点走去，持续%abilityduration%秒。如果有人接近就会引爆造成伤害，残影持续%abilityduration%秒。",
+   "notes_en": [
+    "Remnants take %static_remnant_delay% second to materialize after the spell is cast.",
+    "Remnants grant unobstructed vision for their duration.",
+    "The explosion actually hits units in a %static_remnant_damage_radius% radius, but will only be triggered in %static_remnant_radius%.",
+    "Can be self-cast to cast in place."
+   ],
+   "notes_zh": [
+    "残影在技能施放%static_remnant_delay%秒后才能实体化。",
+    "残影在持续时间内拥有顺畅视野。",
+    "残影爆炸将伤害%static_remnant_damage_radius%码作用范围内的单位，但是触发范围是%static_remnant_radius%码。",
+    "可以对自身施放，这样会原地施放。"
+   ]
+  }
+ },
+ {
+  "review_id": "0917161df0d192bd8f2b",
+  "subject": "vengefulspirit_wave_of_terror",
+  "subject_zh": "复仇之魂·恐怖波动",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Vengeful Spirit lets loose a wicked cry, weakening the total attack damage and armor of enemies, and giving vision of the path ahead."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "description_en": "Vengeful Spirit lets loose a wicked cry, weakening the total attack damage and armor of enemies, and giving vision of the path ahead.",
+   "description_zh": "复仇之魂放出邪恶的嚎叫，削弱敌人的总攻击力和护甲，并打开前方经过路径的视野。"
+  }
+ },
+ {
+  "review_id": "4a7db75d1a775ccf1e1b",
+  "subject": "zuus_lightning_bolt",
+  "subject_zh": "宙斯·雷击",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a %sight_radius_night% radius.",
+   "施放后，雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a %sight_radius_night% radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.",
+   "description_zh": "召唤一道闪电打击一个敌方单位，造成伤害及短暂眩晕。施放后，雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。本技能可以对地施放，将会自动作用于%spread_aoe%范围内最近的敌方英雄上。",
+   "notes_en": [
+    "You can interrupt channeling spells and items with this ability."
+   ],
+   "notes_zh": [
+    "该技能可以打断持续施法类技能和物品。"
+   ]
+  }
+ },
+ {
+  "review_id": "f138bfb79f2160d84a61",
+  "subject": "kunkka_torrent",
+  "subject_zh": "昆卡·洪流",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "The initial bubble effect is only visible to allies and provides vision in fog of war.",
+   "初始泡泡效果仅对队友可见，并且提供战争迷雾中的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Summons a rising torrent that, after a short delay, hurls enemy units into the sky, stunning, dealing damage and slowing movement speed.",
+   "description_zh": "召唤喷涌的洪流，短暂延迟后，将敌人冲上天，造成伤害、眩晕和减速。",
+   "notes_en": [
+    "The initial bubble effect is only visible to allies and provides vision in fog of war.",
+    "Units tossed in the air will be stunned and still able to be attacked."
+   ],
+   "notes_zh": [
+    "初始泡泡效果仅对队友可见，并且提供战争迷雾中的视野。",
+    "飞到半空的单位将会被眩晕并且可以被攻击。"
+   ]
+  }
+ },
+ {
+  "review_id": "b412a9cc8d4d2eabce08",
+  "subject": "slardar_amplify_damage",
+  "subject_zh": "斯拉达·侵蚀雾霭",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility. The enemy unit leaves a trail of water behind it.",
+   "description_zh": "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。敌方单位将在身后留下水迹。"
+  }
+ },
+ {
+  "review_id": "6b5449a061c3306a9c80",
+  "subject": "sniper_shrapnel",
+  "subject_zh": "狙击手·榴霰弹",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Provides vision in the targeted area.",
+   "榴霰弹将给予目标区域的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every %abilitychargerestoretime% seconds.",
+   "description_zh": "消耗一点能量射出一发带有爆炸弹片的榴霰弹，在目标区域降下弹雨。区域内的敌军受到伤害并被减速。榴霰弹将给予目标区域的视野。榴霰弹的能量每过%abilitychargerestoretime%秒恢复1点。",
+   "notes_en": [
+    "Damage is dealt 11 times, immediately at spell effect then every second.",
+    "Does not damage buildings.",
+    "Provides vision in the targeted area."
+   ],
+   "notes_zh": [
+    "总共造成11次伤害，第一次在技能生效时，接下来每秒造成一次伤害。",
+    "不会对建筑造成伤害。",
+    "将拥有目标区域的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "232a0dd704ee80c73bf3",
+  "subject": "sniper_take_aim",
+  "subject_zh": "狙击手·瞄准",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "On cast, Sniper gains increased vision, Headshot chance, and attack range."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Passively increases Sniper's attack range by %passive_attack_range_bonus%.\n\nOn cast, Sniper gains increased vision, Headshot chance, and attack range. Slows you by %slow%%% for the duration and restricts your vision to a frontal cone.",
+   "description_zh": "被动提升狙击手%passive_attack_range_bonus%攻击距离。\n\n主动开启后，狙击手的视野距离、爆头几率和攻击距离提升。自身在持续时间内减速%slow%%%，并且视野限制在前方的锥形区域内。"
+  }
+ },
+ {
+  "review_id": "906e413b39050ff6384a",
+  "subject": "phantom_assassin_stifling_dagger",
+  "subject_zh": "幻影刺客·窒碍短匕",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Stifling Dagger grants vision around its location while it travels and upon impact.",
+   "窒碍短匕在行进途中和击中目标时都会提供附近的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Throws a dagger slowing the enemy unit's movement speed, dealing %base_damage%+%attack_factor_tooltip%%% of Phantom Assassin's attack damage as physical damage and applying attack effects from items and abilities.",
+   "description_zh": "对敌方单位掷出一把匕首，减缓其移动速度，并造成物理伤害，数值为%base_damage%+幻影刺客攻击伤害的%attack_factor_tooltip%%%，同时继承物品和技能的攻击效果。",
+   "notes_en": [
+    "If an attack effect is chance-based, the chance of its application will be the same as its chance to occur.",
+    "Spell-immune enemies are not affected by Stifling Dagger's slow.",
+    "Stifling Dagger grants vision around its location while it travels and upon impact."
+   ],
+   "notes_zh": [
+    "如果攻击效果为几率触发，匕首的触发几率与原几率相同。",
+    "减益免疫下的敌人不会受到窒碍短匕的减速影响。",
+    "窒碍短匕在行进途中和击中目标时都会提供附近的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "2d79c4ddd343bbed2738",
+  "subject": "pugna_life_drain",
+  "subject_zh": "帕格纳·生命汲取",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.",
+   "持续施法 - 使用生命汲取时，帕格纳吸取目标敌方单位的生命值，并获得其视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.\n\nWhen cast on an ally, Pugna will drain his own health into his ally.",
+   "description_zh": "持续施法 - 使用生命汲取时，帕格纳吸取目标敌方单位的生命值，并获得其视野。\n\n向队友施放可以将自己的生命值转移给队友。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces cooldown by %abilitycooldown%s. When targeting an enemy hero, Pugna reduces their outgoing spell damage by %spell_amp_drain_rate%%% per second up to a maximum of %spell_amp_drain_max%%% and increases his own, up to a maximum of %max_spell_amp_drain_pct%%%. When draining through a Nether Ward using Shard, the rate of increase/decrease is %spell_amp_drain_rate_ward%%% instead. Debuff lasts %spell_amp_drain_duration% seconds.",
+     "zh": "冷却时间减少%abilitycooldown%秒。以敌方英雄为目标时，帕格纳每秒降低他们%spell_amp_drain_rate%%%技能伤害输出，最高可达到%spell_amp_drain_max%%%，并且自身的技能伤害输出提升，最高可达到%max_spell_amp_drain_pct%%%。魔晶升级下对幽冥守卫施放时降低和提升的速率为%spell_amp_drain_rate_ward%%%。负面效果持续%spell_amp_drain_duration%秒。"
+    },
+    "shard_loc": {
+     "en": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed.",
+     "zh": "生命汲取可以对幽冥守卫施放，使生命汲取可以折射至守卫附近%abilitycastrange%范围内所有敌方英雄，造成%shard_damage_pct_from_ward%%%效果。守卫被摧毁后效果将会中断。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a37fe888d2321ca6eac8",
+  "subject": "rattletrap_rocket_flare",
+  "subject_zh": "发条技师·照明火箭",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Rocket flare provides vision over the impact area for %duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Fires a global range flare that explodes over a given area. Upon impact, enemies in the area take damage and are briefly slowed. Rocket flare provides vision over the impact area for %duration% seconds.",
+   "description_zh": "向全地图范围内的指定区域发射照明弹。击中时对区域内敌人造成伤害和短暂减速。照明火箭提供%duration%秒击中区域的视野。"
+  }
+ },
+ {
+  "review_id": "dad9d62ba61de2a9196c",
+  "subject": "rattletrap_jetpack",
+  "subject_zh": "发条技师·喷气背包",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Clockwerk activates a jetpack, gaining flying movement, flying vision, and bonus movement speed.",
+   "发条技师开动喷气背包，获得飞行移动状态，飞行视野和移动速度加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "description_en": "Clockwerk activates a jetpack, gaining flying movement, flying vision, and bonus movement speed. Clockwerk has a severely-limited turn rate during this time and cannot attack. Jetpack can be toggled on and off for the duration of the buff.",
+   "description_zh": "发条技师开动喷气背包，获得飞行移动状态，飞行视野和移动速度加成。发条技师的转身速率大幅降低，并且无法攻击。在加成状态的持续时间内可以开启和关闭喷气背包。"
+  }
+ },
+ {
+  "review_id": "b649f22596a67cd0c9a9",
+  "subject": "furion_sprout",
+  "subject_zh": "自然先知·发芽",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Sprouts a ring of trees around a unit, damaging and trapping it in place and providing vision in a %vision_range% radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Sprouts a ring of trees around a unit, damaging and trapping it in place and providing vision in a %vision_range% radius.",
+   "description_zh": "使一圈树木在一个单位的周围发芽，将其困在其中并造成伤害，提供%vision_range%范围内的视野。",
+   "notes_en": [
+    "Sprout can be cast on any unit, or the ground.",
+    "Trees created by Sprout have the same interactions with abilities as regular trees."
+   ],
+   "notes_zh": [
+    "发芽的施放目标可以是任何单位或者地面。",
+    "发芽产生的树木跟英雄技能的相互作用与平常树木相同。"
+   ]
+  }
+ },
+ {
+  "review_id": "6a59377632ba7afcff80",
+  "subject": "weaver_the_swarm",
+  "subject_zh": "编织者·虫群",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Beetles provide vision.",
+   "幼虫提供视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Weaver launches a swarm of %count% young Weavers that latch on any enemy unit in their path, attacking and reducing armor until it is killed.",
+   "description_zh": "编织者放出%count%只编织者幼虫，每只幼虫都会紧紧缠住它遇到的敌人，攻击敌人并削弱他们的护甲，直到幼虫被杀死。",
+   "notes_en": [
+    "When a beetle latches on a target, it will remain there until it is killed or the duration expires.",
+    "Beetles are Spell Immune, but can be killed in %destroy_attacks% attacks from a unit. Heroes deal double damage to beetles.",
+    "Beetles provide vision."
+   ],
+   "notes_zh": [
+    "甲虫抓住目标后将一直留在目标身上，除非甲虫被击杀或持续时间结束。",
+    "甲虫免疫技能，需要一个单位的%destroy_attacks%次攻击才能被击杀。英雄造成双倍伤害。",
+    "幼虫提供视野。"
+   ]
+  }
+ }
+]

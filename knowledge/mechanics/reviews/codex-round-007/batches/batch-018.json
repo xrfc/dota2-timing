@@ -1,0 +1,1077 @@
+[
+ {
+  "review_id": "31b8be4891aadefe88ab",
+  "subject": "alchemist_chemical_rage",
+  "subject_zh": "炼金术士·化学狂暴",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Alchemist causes his Ogre to enter a chemically induced rage, reducing base attack cooldown and increasing movement speed and health regeneration."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Alchemist causes his Ogre to enter a chemically induced rage, reducing base attack cooldown and increasing movement speed and health regeneration.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "炼金术士诱发他的食人魔同伴进入化学狂暴，降低攻击间隔，提高移动速度和生命恢复。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Has a %transformation_time% second transformation time, which can be used to dodge projectiles and stuns."
+   ],
+   "notes_zh": [
+    "拥有%transformation_time%秒的变身时间，可以用来躲避攻击和技能弹道以及眩晕技能。"
+   ]
+  }
+ },
+ {
+  "review_id": "04b7c4c0f4543d15adcc",
+  "subject": "invoker_invoke",
+  "subject_zh": "祈求者·元素祈唤",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Invoke cooldown is reduced by %cooldown_reduction_per_orb% seconds for each orb level."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE"
+  },
+  "context": {
+   "description_en": "Combines the properties of the elements currently being manipulated to create a new spell for Invoker to use. Invoke cooldown is reduced by %cooldown_reduction_per_orb% seconds for each orb level.  Invoker gains a bonus ability point for his orbs at levels %first_ability_level%, %second_ability_level%, and %third_ability_level%.Invoker's vast knowledge of magic allows him to choose from Multiple Aghanim's Scepter and Shard options.  The items must be activated before they can be used, and cannot be changed after they are chosen. Click the help button to see the list of possible spells.",
+   "description_zh": "将当前掌握的元素精华融合，创造出新的法术供祈求者施放。每个元素球的等级都会减少%cooldown_reduction_per_orb%秒元素祈唤的冷却时间。祈求者达到%first_ability_level%、%second_ability_level%和%third_ability_level%时会分别额外获得一点技能点。祈求者高深的魔法学识让他可以从多个阿哈利姆神杖和魔晶升级效果中进行选择。物品必须先激活才能生效，而且选择后无法更改。点击帮助按钮可查看所有可用法术。",
+   "notes_en": [
+    "The arrangement of instances does not matter.",
+    "Invoke will not cost mana or go on cooldown if the only effect is to swap the positions of existing spells.",
+    "Invoke will not break invisibility and can be cast while channeling."
+   ],
+   "notes_zh": [
+    "生成的技能与三个球的排列顺序无关。",
+    "只是交换现有技能的位置并不会消耗魔法，也不会触发元素祈唤的冷却。",
+    "元素祈唤不会打破隐身状态，而且可以在持续施法期间施放。"
+   ]
+  }
+ },
+ {
+  "review_id": "1b38eaec3cd71a7021ce",
+  "subject": "treant_overgrowth",
+  "subject_zh": "树精卫士·疯狂生长",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Decreases Cooldown to %AbilityCooldown% seconds.",
+   "冷却时间降低至%AbilityCooldown%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Summons an overgrowth of vines and branches around Treant that deal damage to afflicted enemies and prevent them from moving, blinking, going invisible, or attacking.",
+   "description_zh": "在树精卫士周围召唤出疯狂生长的伤害性藤条和枝干，造成伤害并且阻止被缠绕的敌人移动、闪烁、进入隐身或攻击。",
+   "notes_en": [
+    "Works on Debuff Immune units, but if units gain debuff immunity after the effect starts, they'll break free."
+   ],
+   "notes_zh": [
+    "效果无视减益免疫，但是在期间获得减益免疫状态将挣脱控制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases Cooldown to %AbilityCooldown% seconds. When casting Overgrowth, Treant Protector draws power from the soil, greatly increasing his size for %bloom_duration% seconds. While enlarged, he gains phased movement with a fixed speed of %movement_speed%, %strength_bonus%%% bonus Strength, and a splashing attack that deals %splash_pct%%% of his attack damage in a %splash_radius% unit radius.",
+     "zh": "冷却时间降低至%AbilityCooldown%秒。施放疯狂生长时，树精卫士从土壤中汲取力量，他的身体急剧增大，持续%bloom_duration%秒。变大后他会获得相位移动状态，移动速度为固定%movement_speed%，%strength_bonus%%%力量加成，并且拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ac7bbfe7f19ae435155c",
+  "subject": "ogre_magi_fireblast",
+  "subject_zh": "食人魔魔法师·火焰爆轰",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Fireblast is refined, reducing cooldown by %bonus_AbilityCooldown%s and increasing cast speed by %bonus_cast_speed%%%.",
+   "很精通的火焰爆轰，冷却时间减少%bonus_AbilityCooldown%秒，施法速度提升%bonus_cast_speed%%%。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Blasts an enemy unit with a wave of fire, dealing damage and stunning the target.",
+   "description_zh": "以一波火焰轰击一个敌方单位，造成伤害并使目标眩晕。",
+   "notes_en": [
+    "When Multicast, Fireblast hits the same target each time with a %multicast_delay% seconds interval."
+   ],
+   "notes_zh": [
+    "触发多重施法时，两次火焰爆轰之间有%multicast_delay%秒的间隔。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Fireblast is refined, reducing cooldown by %bonus_AbilityCooldown%s and increasing cast speed by %bonus_cast_speed%%%.",
+     "zh": "很精通的火焰爆轰，冷却时间减少%bonus_AbilityCooldown%秒，施法速度提升%bonus_cast_speed%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "840ff070ce68d409ffcc",
+  "subject": "nyx_assassin_burrow",
+  "subject_zh": "司夜刺客·钻地",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "钻地后尖刺外壳一施放就会直接眩晕附近所有敌人，神智爆裂和穿刺的施法距离提升，穿刺的冷却时间减少。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "description_en": "Nyx Assassin buries himself beneath the battlefield over a short duration. Once burrowed, Spiked Carapace instantly stuns nearby enemies when cast, the range of Mind Flare and Impale is increased, and Impale's cooldown is decreased. While burrowed, Nyx Assassin is stationary, unable to attack, and invisible. Nyx Assassin gains damage reduction from all damage sources.",
+   "description_zh": "司夜刺客经过短时间的掘地后钻入地下。钻地后尖刺外壳一施放就会直接眩晕附近所有敌人，神智爆裂和穿刺的施法距离提升，穿刺的冷却时间减少。钻地后司夜刺客固定在原地，无法攻击，并且是隐身状态。同时司夜刺客受到的所有伤害都会降低。",
+   "notes_en": [
+    "Casting Vendetta will cancel burrow."
+   ],
+   "notes_zh": [
+    "施放复仇将取消钻地状态。"
+   ]
+  }
+ },
+ {
+  "review_id": "e769e646b43ab2347319",
+  "subject": "nyx_assassin_vendetta",
+  "subject_zh": "司夜刺客·复仇",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Decreases cooldown by %bonus_AbilityCooldown%s.",
+   "冷却时间减少%bonus_AbilityCooldown%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "description_en": "Nyx Assassin becomes invisible and gains a speed bonus. If Nyx Assassin attacks to break the invisibility, massive bonus damage is dealt with the attack that applies a break to the target. Nyx Assassin has %attack_range_bonus% additional attack range and a %attack_animation_bonus%%% faster attack animation for this attack.",
+   "description_zh": "司夜刺客进入隐身状态并获得移动速度加成。如果司夜刺客以攻击打破隐身，当次攻击将造成超高额外伤害，并对目标施加破坏效果。司夜刺客当次攻击具有%attack_range_bonus%额外攻击距离，并且攻击动作加快%attack_animation_bonus%%%。",
+   "notes_en": [
+    "If a spell is used to break the invisibility, or the invisibility expires, the bonus damage is lost.",
+    "With Aghanim's Shard, the Break is applied before the bonus damage."
+   ],
+   "notes_zh": [
+    "如果在隐身期间使用了技能，或者隐身时间结束，额外伤害的效果将会消失。",
+    "会在造成额外伤害前施加破坏效果。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Decreases cooldown by %bonus_AbilityCooldown%s. For the first %free_pathing_duration%s of Vendetta, Nyx is hasted and has unobstructed pathing.",
+     "zh": "冷却时间减少%bonus_AbilityCooldown%秒。在复仇的最初%free_pathing_duration%秒内，司夜刺客为极速状态，并且移动无视地形。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3762e658f0ffe09d7977",
+  "subject": "keeper_of_the_light_chakra_magic",
+  "subject_zh": "光之守卫·查克拉魔法",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Restores mana to the target unit and reduces cooldowns of all basic abilities currently on cooldown by a fixed amount.",
+   "Chakra Magic does not reduce the cooldown of Ultimate abilities.",
+   "恢复目标单位的魔法值，并减少所有冷却中基础技能（非大招）的冷却时间。",
+   "查克拉魔法无法减少终极技能的冷却时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Restores mana to the target unit and reduces cooldowns of all basic abilities currently on cooldown by a fixed amount. Is %self_bonus%%% more effective when used on himself.",
+   "description_zh": "恢复目标单位的魔法值，并减少所有冷却中基础技能（非大招）的冷却时间。对自身使用时效果提升%self_bonus%%%。",
+   "notes_en": [
+    "Chakra Magic does not reduce the cooldown of Ultimate abilities."
+   ],
+   "notes_zh": [
+    "查克拉魔法无法减少终极技能的冷却时间。"
+   ]
+  }
+ },
+ {
+  "review_id": "f8129bdc42280237ab0f",
+  "subject": "troll_warlord_whirling_axes_ranged",
+  "subject_zh": "巨魔战将·旋风飞斧（远程）",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reduces cooldown and mana cost.",
+   "降低冷却时间和魔法消耗。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Troll hurls a fistful of five axes in a cone shape over %axe_range% range, slowing and damaging enemy units.",
+   "description_zh": "巨魔战将掷出手中的五把飞斧，减速并伤害前方%axe_range%范围锥形区域内的敌方单位。",
+   "notes_en": [
+    "Does not affect Roshan.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "无法作用于肉山。",
+    "不会触发法术抵抗或法术反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Whirling Axes (Ranged) to dispel enemies. Reduces cooldown and mana cost.DISPEL TYPE: Basic Dispel",
+     "zh": "旋风飞斧（远程）可以驱散敌人。降低冷却时间和魔法消耗。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ef2f511b10b98a8f6e8d",
+  "subject": "troll_warlord_whirling_axes_melee",
+  "subject_zh": "巨魔战将·旋风飞斧（近战）",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reduces cooldown and mana cost.",
+   "降低冷却时间和魔法消耗。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Troll hurls two axes around him in a close range area of effect, damaging enemy units and causing them to miss some attacks.",
+   "description_zh": "巨魔战将掷出两把飞斧环绕在他周围，使敌方单位受到伤害，并且部分普通攻击将不能命中。",
+   "notes_en": [
+    "Does not affect Roshan."
+   ],
+   "notes_zh": [
+    "无法作用于肉山。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Whirling Axes (Melee) to dispel Troll Warlord. Reduces cooldown and mana cost.DISPEL TYPE: Basic Dispel",
+     "zh": "旋风飞斧（近战）可以驱散自己。降低冷却时间和魔法消耗。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "70c682228a0289255907",
+  "subject": "tusk_walrus_kick",
+  "subject_zh": "巨牙海民·海象飞踢",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Cooldown is reduced by %creep_cooldown_reduction_pct%%% if kicking a creep.",
+   "飞踢非英雄单位会使冷却时间减少%creep_cooldown_reduction_pct%%%。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Kicks the closest enemy unit in the drawn direction, stunning, damaging, and slowing them. Also deals damage to all heroes within %search_radius% radius of its landing area. Cooldown is reduced by %creep_cooldown_reduction_pct%%% if kicking a creep.",
+   "description_zh": "将最近的敌方单位向目标方向踢上一脚，对其造成眩晕，伤害和减速。另外对落地区域%search_radius%范围内所有英雄造成伤害。飞踢非英雄单位会使冷却时间减少%creep_cooldown_reduction_pct%%%。"
+  }
+ },
+ {
+  "review_id": "d6bb9969135a3a350472",
+  "subject": "elder_titan_echo_stomp",
+  "subject_zh": "上古巨神·回音重踏",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Lowers Cooldown.",
+   "减少冷却时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "description_en": "CHANNELED - Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.",
+   "description_zh": "持续施法 - 上古巨神与他的灵体游魂一起践踏地面，对敌方单位造成伤害并使他们在原地昏迷。上古巨神造成物理伤害，灵体游魂造成魔法伤害。",
+   "notes_en": [
+    "If a unit is hit by Astral Spirit and Elder Titan, they will take both instances of damage."
+   ],
+   "notes_zh": [
+    "若同时处于灵体游魂和上古巨神的回音重踏作用范围内将受到两次伤害。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Lowers Cooldown. Echo Stomp may be placed on alt-cast to allow Elder Titan to take the place of the Astral Spirit as it completes its stomp.",
+     "zh": "减少冷却时间。回音重踏可以设为多样施法（右键点击技能栏图标）状态，使上古巨神完成重踏后会取代灵体游魂。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "38bea6eab14d9004f755",
+  "subject": "earth_spirit_geomagnetic_grip",
+  "subject_zh": "大地之灵·地磁之握",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Decreases cooldown to %AbilityCooldown%s and increases allied unit cast range and pull speed.",
+   "冷却时间减少至%AbilityCooldown%秒，对友方单位的施法距离和牵引速度提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Earth Spirit pulls the target Stone Remnant or Allied Unit. Enemies struck by the gripped target will be silenced.Pulled Remnants also deal damage to struck enemies.Cast range is reduced when targeting an ally.",
+   "description_zh": "大地之灵将目标残岩或友方单位拉扯到自己所在的位置，行进路径上被击中的敌人都会被沉默并受到伤害。拉扯的残岩也会对击中的敌人造成伤害。以友军为目标时施法距离减少。",
+   "notes_en": [
+    "Will not work on a unit inside Chronosphere, Duel, or Black Hole.",
+    "Geomagnetic Grip can also target allied creeps."
+   ],
+   "notes_zh": [
+    "如果目标处于时间结界，决斗或黑洞之中则不起作用。",
+    "地磁之握还可以对友方小兵施放。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Decreases cooldown to %AbilityCooldown%s and increases allied unit cast range and pull speed.",
+     "zh": "冷却时间减少至%AbilityCooldown%秒，对友方单位的施法距离和牵引速度提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0258d77af7c0422bc1ea",
+  "subject": "winter_wyvern_cold_embrace",
+  "subject_zh": "寒冬飞龙·极寒之拥",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Reduces cooldown by %shard_cooldown_reduction% seconds.",
+   "冷却时间减少%shard_cooldown_reduction%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Encases an ally in an icy cocoon, freezing them solid while healing a base amount as well as a percentage of their maximum health each second. The cocoon blocks all physical damage.",
+   "description_zh": "将队友封入一个冰茧中，使其被冻在原地并恢复生命值，恢复数值为基础数值加上最大生命值的一定比例。冰茧将阻隔一切物理伤害。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Reduces cooldown by %shard_cooldown_reduction% seconds. Allied units gain bonus attack damage when emerging from the icy cocoon.",
+     "zh": "冷却时间减少%shard_cooldown_reduction%秒。友方单位从冰茧解冻后获得额外攻击力。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ec3c33b60fcd70c7cdd3",
+  "subject": "abyssal_underlord_dark_portal",
+  "subject_zh": "孽主·恶魔之扉",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reduces cooldown.",
+   "减少冷却时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING "
+  },
+  "context": {
+   "description_en": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side. Portals have to be at least %minimum_distance% away from each other.",
+   "description_zh": "打开2个传送门，一个在孽主身旁，另一个在目标地点。英雄可以对一个传送门持续施法%warp_channel_duration%秒，传送至另一端。传送门之间的距离必须超过%minimum_distance%。",
+   "notes_en": [
+    "Double-click to teleport to your team's base, in front of your fountain"
+   ],
+   "notes_zh": [
+    "双击会在己方基地的泉水前打开另一个传送门。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Summons a Pit of Malice around each of the portals. Reduces cooldown.",
+     "zh": "在传送门两端各召唤一个怨念深渊。减少冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "78bd00257b039773bdf3",
+  "subject": "dark_willow_cursed_crown",
+  "subject_zh": "邪影芳灵·诅咒王冠",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Cursed Crown cooldown reduced by 1.",
+   "诅咒王冠的冷却时间减少1."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Dark Willow casts an ancient fae curse on the target. After a delay, the target and nearby enemies are stunned.",
+   "description_zh": "邪影芳灵授予敌人一顶被诅咒的古老仙灵王冠。经过一定延迟后，目标和周围的所有敌人都会被眩晕。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Cursed Crown creates %shard_bramble_amount% brambles in a %shard_spawn_radius% radius around the target after the counter ends. Triggers even upon dispel. Cursed Crown cooldown reduced by 1.5 seconds.",
+     "zh": "诅咒王冠在倒计时结束时会围绕目标在%shard_spawn_radius%范围内产生%shard_bramble_amount%朵荆棘。即使效果被驱散也会触发。诅咒王冠的冷却时间减少1.5秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a6f5225fe637a5acb217",
+  "subject": "mars_arena_of_blood",
+  "subject_zh": "玛尔斯·热血竞技场",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Lowers cooldown by %bonus_AbilityCooldown%s and increases duration.",
+   "冷却时间降低%bonus_AbilityCooldown%秒，持续时间提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "After a short formation time, Mars summons an arena lined with the undead warriors of the Ash Legion, who block enemy attacks and movement. Enemy heroes near the inside edge of the arena will be attacked by spears, dealing damage and knocking them back.",
+   "description_zh": "经过短暂的列队时间，玛尔斯召唤出环绕着战士的竞技场，战士们将阻挡敌人的攻击和动向。竞技场内的敌方英雄靠近边缘时将被战矛攻击，受到伤害并被击退。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Lowers cooldown by %bonus_AbilityCooldown%s and increases duration. If an enemy is killed in the Arena, Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%%  of their max health and mana and get a %arena_kill_buff_damage_pct%%  attack damage buff for %arena_kill_buff_duration%s. This effect stacks.",
+     "zh": "冷却时间降低%bonus_AbilityCooldown%秒，持续时间提升。如果敌人在竞技场内阵亡，玛尔斯和竞技场内所有友军都会回复%arena_kill_buff_heal_pct%%%最大生命和魔法，并且获得%arena_kill_buff_damage_pct%%%攻击力加成，持续%arena_kill_buff_duration%秒。这个效果可以叠加。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "70be4206e8a59a2f2eb9",
+  "subject": "marci_unleash",
+  "subject_zh": "玛西·怒拳破",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reduces Unleash cooldown by %scepter_cooldown_reduction% seconds and causes Unleash to apply a basic dispel on Marci.",
+   "怒拳破的冷却时间减少%scepter_cooldown_reduction%秒，并且施放时对玛西施加弱驱散。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Marci taps a hidden power, gaining Fury charges that allow her to deliver a rapid sequence of strikes that slow movement and attack speed of the target for %pulse_debuff_duration%s. The last strike in every Fury combo creates a damaging pulse around the target. In between Fury combos, Marci is unable to attack for %time_between_flurries%s.\n\nMarci gains %bonus_movespeed%%% movement speed when Unleash is cast.",
+   "description_zh": "玛西释放潜藏的力量，获得狂怒的猛攻效果，使自身可以发动快速的打击，并且降低打击目标的移动和攻击速度，持续%pulse_debuff_duration%秒。每次狂怒连技的最后一击都会创造一个脉冲效果，对目标周围的敌人造成伤害。在狂怒连技的间隔，玛西无法攻击，持续%time_between_flurries%秒。\n\n玛西施放怒拳破时移动速度提升%bonus_movespeed%%%。",
+   "notes_en": [
+    "Once a Fury combo is started, each attack must be delivered within 1s or the Fury combo expires.",
+    "Removes attack speed limit."
+   ],
+   "notes_zh": [
+    "每次狂怒连技开始后，每次攻击都必须在1秒内完成，否则连技将会终止。",
+    "移除攻击速度限制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Unleash cooldown by %scepter_cooldown_reduction% seconds and causes Unleash to apply a basic dispel on Marci. While Unleash is Active, all of Marci's abilities unleash pulses when cast. All of Marci's unleash pulses will silence units for %pulse_silence_duration% seconds.DISPEL TYPE: Basic Dispel",
+     "zh": "怒拳破的冷却时间减少%scepter_cooldown_reduction%秒，并且施放时对玛西施加弱驱散。怒拳破生效期间，玛西的所有技能在施放时都会施放脉冲。玛西的所有怒拳破脉冲都会沉默敌人，持续%pulse_silence_duration%秒。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2a18f9d47affd87d28cf",
+  "subject": "travel_boots",
+  "subject_zh": "远行鞋",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Town Portal Scroll: Upgrades your Town Portal Scroll, allowing it to target units, reduces cooldown and does not consume a charge on usage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Boots of Travel",
+   "abilities": [
+    {
+     "type": "upgrade",
+     "title": "Town Portal Scroll",
+     "description": "Upgrades your Town Portal Scroll, allowing it to target units, reduces cooldown and does not consume a charge on usage."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "90"
+    },
+    {
+     "key": "maximum_distance",
+     "value": "800"
+    },
+    {
+     "key": "vision_radius",
+     "value": "200"
+    },
+    {
+     "key": "tp_cooldown",
+     "display": "TOWN PORTAL SCROLL COOLDOWN: {value}",
+     "value": "40"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "083b39d803371ebcdf38",
+  "subject": "travel_boots_2",
+  "subject_zh": "远行鞋",
+  "mechanism": "cooldown_reduction",
+  "mechanism_zh": "减冷却",
+  "definition": "缩短技能或物品的冷却",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Town Portal Scroll: Upgrades your Town Portal Scroll, allowing it to target units and heroes, reduces cooldown, channel time and does not consume a charge on usage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Boots of Travel 2",
+   "abilities": [
+    {
+     "type": "upgrade",
+     "title": "Town Portal Scroll",
+     "description": "Upgrades your Town Portal Scroll, allowing it to target units and heroes, reduces cooldown, channel time and does not consume a charge on usage."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "110"
+    },
+    {
+     "key": "maximum_distance",
+     "value": "800"
+    },
+    {
+     "key": "vision_radius",
+     "value": "200"
+    },
+    {
+     "key": "tp_cooldown",
+     "display": "TOWN PORTAL SCROLL COOLDOWN: {value}",
+     "value": "40"
+    },
+    {
+     "key": "tp_channel_time",
+     "display": "TOWN PORTAL SCROLL CHANNEL TIME: {value}",
+     "value": "2"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "f778949844863d898b95",
+  "subject": "axe_culling_blade",
+  "subject_zh": "斧王·淘汰之刃",
+  "mechanism": "cooldown_reset",
+  "mechanism_zh": "刷新冷却",
+  "definition": "立刻重置冷却",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "淘汰之刃击杀敌方英雄时将重置冷却时间，而附近所有友军单位获得移动速度和护甲加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Axe spots a weakness and strikes, dealing pure damage. When an enemy hero is killed with Culling Blade, its cooldown is reset, and all nearby allied units gain bonus movement speed and armor.\n\nAxe permanently drenches his blade every time he kills an enemy Hero with Culling Blade, gaining bonus armor for each stack.",
+   "description_zh": "斧王洞察到弱点并出击，造成纯粹伤害。淘汰之刃击杀敌方英雄时将重置冷却时间，而附近所有友军单位获得移动速度和护甲加成。\n\n每当斧王通过淘汰之刃击杀敌方英雄，他的战刃就会浸满鲜血，获得永久叠加效果，每层都会提供护甲加成。",
+   "notes_en": [
+    "Culling Blade death cannot be prevented with other abilities like Shallow Grave."
+   ],
+   "notes_zh": [
+    "淘汰之刃的斩杀效果无法被薄葬等技能阻止。"
+   ]
+  }
+ },
+ {
+  "review_id": "0bd8d1069d63499bbd4c",
+  "subject": "tinker_rearm",
+  "subject_zh": "修补匠·再装填",
+  "mechanism": "cooldown_reset",
+  "mechanism_zh": "刷新冷却",
+  "definition": "立刻重置冷却",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "CHANNELED - Resets the cooldown on Tinker's abilities.",
+   "持续施法 - 重置修补匠技能的冷却时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "description_en": "CHANNELED - Resets the cooldown on Tinker's abilities.",
+   "description_zh": "持续施法 - 重置修补匠技能的冷却时间。"
+  }
+ },
+ {
+  "review_id": "bc51cd976007f0a7ae68",
+  "subject": "night_stalker_hunter_in_the_night",
+  "subject_zh": "暗夜魔王·暗夜猎影",
+  "mechanism": "cooldown_reset",
+  "mechanism_zh": "刷新冷却",
+  "definition": "立刻重置冷却",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Killing an enemy hero resets all basic ability cooldowns.",
+   "击杀敌方英雄会重置所有基础技能的冷却时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Night Stalker is in his element at night, attacking and moving with great swiftness.",
+   "description_zh": "暗夜魔王在夜晚如鱼得水，攻击和移动都变得迅速。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases bonus movement speed by %bonus_bonus_movement_speed_pct_night%%% and attack speed by %bonus_bonus_attack_speed_night%. Killing an enemy hero resets all basic ability cooldowns.",
+     "zh": "移动速度加成提升%bonus_bonus_movement_speed_pct_night%%%，攻击速度加成提升%bonus_bonus_attack_speed_night%。击杀敌方英雄会重置所有基础技能的冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6ea2977ec76a76e488eb",
+  "subject": "grimstroke_ink_creature",
+  "subject_zh": "天涯墨客·戾影",
+  "mechanism": "cooldown_reset",
+  "mechanism_zh": "刷新冷却",
+  "definition": "立刻重置冷却",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "If she survives the full latch duration she rends her victim for heavy damage and refreshes Phantom's Embrace's cooldown.",
+   "若她在纠缠期间存活，将会撕裂目标，造成大量伤害，并刷新戾影的冷却时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Summons a phantom that moves quickly towards the target, latching to it when she arrives. Once latched, the phantom damages and silences. If she survives the full latch duration she rends her victim for heavy damage and refreshes Phantom's Embrace's cooldown.\n\nHero attacks against the phantom count as 3 attacks each.",
+   "description_zh": "召唤一个快速向目标移动的幻影，到达时将其缠住。缠住后对其造成伤害和沉默。若她在纠缠期间存活，将会撕裂目标，造成大量伤害，并刷新戾影的冷却时间。\n\n英雄对幻影的单次攻击记为3次。",
+   "notes_en": [
+    "The phantom falls off if the target becomes invisible or spell immune.",
+    "The phantom will return if the target dies during the latch."
+   ],
+   "notes_zh": [
+    "幻影在目标隐身或进入减益免疫状态后掉下。",
+    "目标在纠缠期间阵亡后幻影将会回归。"
+   ]
+  }
+ },
+ {
+  "review_id": "5f393d1493d438a4c004",
+  "subject": "kez_switch_weapons",
+  "subject_zh": "凯·流派变换",
+  "mechanism": "cooldown_reset",
+  "mechanism_zh": "刷新冷却",
+  "definition": "立刻重置冷却",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Casting any weapon ability refreshes the cooldown of Switch Discipline.",
+   "施放任何武器的技能都会重置流派变换的冷却时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE"
+  },
+  "context": {
+   "description_en": "Kez switches between his Kazurai Katana and Shodo Sai.He gains different attack capabilities and abilities based on the weapon equipped. The abilities level up together, and when an ability is used, the associated alternate weapon ability also goes on cooldown.Kez deals extra damage on the first Katana hit or ability after switching to Katana, and gains bonus speed after switching to Sai.",
+   "description_zh": "凯可以在影武长刀和翔影双钗之间变换。基于装备的武器，他会获得不同的攻击特性和技能。技能会一起升级，而且使用后，相对的武器技能也会进入冷却。凯切换到长刀后第一次长刀攻击或技能会造成额外伤害，切换到双钗后会获得额外移动速度。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Casting a weapon ability that would set its alternate weapon ability on cooldown does not do so if it's the first one used within %scepter_cooldown_timer% seconds after casting Switch Discipline or if it was already on cooldown.Casting any weapon ability refreshes the cooldown of Switch Discipline.",
+     "zh": "在使用流派变换后%scepter_cooldown_timer%秒内施放的第一个技能不会使相对的武器技能进入冷却，或者已进入冷却的技能会结束冷却。施放任何武器的技能都会重置流派变换的冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "21869ffd0a4bfe57cfb7",
+  "subject": "refresher",
+  "subject_zh": "刷新球",
+  "mechanism": "cooldown_reset",
+  "mechanism_zh": "刷新冷却",
+  "definition": "立刻重置冷却",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reset Cooldowns: Resets the cooldowns of all your abilities."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Refresher Orb",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Reset Cooldowns",
+     "description": "Resets the cooldowns of all your abilities. Shares a cooldown with Refresher Shard. This item's cooldown only progresses in your hero's main inventory."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "14"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "7.0"
+    },
+    {
+     "key": "max_level",
+     "value": "1"
+    },
+    {
+     "key": "cooldown_duration",
+     "value": "180"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "b601d02944744b109de9",
+  "subject": "refresher_shard",
+  "subject_zh": "刷新球碎片",
+  "mechanism": "cooldown_reset",
+  "mechanism_zh": "刷新冷却",
+  "definition": "立刻重置冷却",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reset Cooldowns: Resets the cooldowns of all your abilities."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Refresher Shard",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Reset Cooldowns",
+     "description": "Resets the cooldowns of all your abilities. Shares a cooldown with Refresher Orb. This item's cooldown only progresses in your hero's main inventory."
+    }
+   ],
+   "notes": "Refresher Shard is shareable."
+  }
+ },
+ {
+  "review_id": "655e436cc731512cf2f5",
+  "subject": "drow_ranger_marksmanship",
+  "subject_zh": "卓尔游侠·射手天赋",
+  "mechanism": "economy",
+  "mechanism_zh": "经济经验",
+  "definition": "提供额外金钱或经验",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "卓尔游侠的战斗经验使她有概率发出极其精准高效的箭矢。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, ignoring their base armor. This ability is disabled if there is an enemy hero within %disable_range% range.",
+   "description_zh": "卓尔游侠的战斗经验使她有概率发出极其精准高效的箭矢。箭矢将穿透敌人的防御，无视他们的基础护甲。如果%disable_range%范围内有敌方英雄，本技能没有效果。",
+   "notes_en": [
+    "Marksmanship procs have true strike."
+   ],
+   "notes_zh": [
+    "射手天赋的触发效果拥有克敌机先。"
+   ]
+  }
+ },
+ {
+  "review_id": "388c845ff979020a8fcc",
+  "subject": "vengefulspirit_command_aura",
+  "subject_zh": "复仇之魂·复仇光环",
+  "mechanism": "economy",
+  "mechanism_zh": "经济经验",
+  "definition": "提供额外金钱或经验",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "XP earned by her illusion is given to her.",
+   "幻象获得的经验将给予英雄。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Vengeful Spirit's presence increases the damage of nearby friendly heroes. Vengeful Spirit herself receives %self_multiplier%%% extra bonus.",
+   "description_zh": "复仇之魂的存在提升了附近友方英雄的攻击力。复仇之魂自身获得%self_multiplier%%%额外加成。",
+   "notes_en": [
+    "Break disables the damage aura."
+   ],
+   "notes_zh": [
+    "破坏会使攻击力光环失效。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases self multiplier. Upon death, creates a strong illusion of Vengeful Spirit that deals full damage, and can cast all of her spells.If the illusion is alive when Vengeful Spirit respawn, she will take its place. XP earned by her illusion is given to her. Strong Illusions are not instantly killed by spells.",
+     "zh": "提升自身加成系数。死亡时产生一个复仇之魂的强幻象，继承全额攻击力，可以施放自己的所有技能。复仇之魂复活时若幻象依然存在，则自身会直接将其取代。幻象获得的经验将给予英雄。强幻象不会被相关技能秒杀。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c02107ed3d222adb0fa3",
+  "subject": "zuus_cloud",
+  "subject_zh": "宙斯·雷云",
+  "mechanism": "economy",
+  "mechanism_zh": "经济经验",
+  "definition": "提供额外金钱或经验",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Grants %cloud_bounty_tooltip% gold if destroyed by an enemy hero."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "description_en": "Creates a storm cloud anywhere on the map that automatically casts Lightning Bolt on nearby enemies.",
+   "description_zh": "在地图任意地点创造一朵雷云，雷云将自动对附近敌人施放雷击。",
+   "notes_en": [
+    "Grants %cloud_bounty_tooltip% gold if destroyed by an enemy hero.",
+    "Affects the closest enemy unit with strikes from Zeus's current level of Lightning Bolt.",
+    "Towers and creeps do half damage to the Nimbus."
+   ],
+   "notes_zh": [
+    "敌方英雄将其摧毁后可以获得%cloud_bounty_tooltip%金。",
+    "以宙斯当前等级的雷击作用于最近的敌方单位。",
+    "防御塔和非英雄单位对雷云造成半额伤害。"
+   ]
+  }
+ },
+ {
+  "review_id": "f4ba8bac27eec3648b86",
+  "subject": "lich_death_charge",
+  "subject_zh": "巫妖·献身",
+  "mechanism": "economy",
+  "mechanism_zh": "经济经验",
+  "definition": "提供额外金钱或经验",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Sacrifice an allied creep to convert its current health into mana for Lich and give Lich its experience bounty.",
+   "Sacrificed creeps count as denies and can give experience to enemy heroes.",
+   "Lich's experience bounty and enemy heroes' deny experience are independent.",
+   "牺牲一个友方非英雄单位，把它的当前生命值转化为巫妖的魔法，并且巫妖获得它的击杀经验。",
+   "被牺牲的非英雄单位记为反补，会对敌方英雄提供经验。",
+   "巫妖获得的击杀经验和敌方英雄获得的反补经验为分开计算。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Sacrifice an allied creep to convert its current health into mana for Lich and give Lich its experience bounty.Begins the game on cooldown and with no charges.",
+   "description_zh": "牺牲一个友方非英雄单位，把它的当前生命值转化为巫妖的魔法，并且巫妖获得它的击杀经验。游戏开始时处于冷却，没有能量点数。",
+   "notes_en": [
+    "Cannot sacrifice ancients or creep-heroes.",
+    "Sacrificed creeps count as denies and can give experience to enemy heroes. Lich's experience bounty and enemy heroes' deny experience are independent."
+   ],
+   "notes_zh": [
+    "无法牺牲远古或类英雄单位。",
+    "被牺牲的非英雄单位记为反补，会对敌方英雄提供经验。巫妖获得的击杀经验和敌方英雄获得的反补经验为分开计算。"
+   ]
+  }
+ }
+]

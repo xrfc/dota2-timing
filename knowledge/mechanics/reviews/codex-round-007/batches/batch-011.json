@@ -1,0 +1,1537 @@
+[
+ {
+  "review_id": "6e0ec0bb1a99a2758fae",
+  "subject": "slark_essence_shift",
+  "subject_zh": "斯拉克·能量转移",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI"
+  },
+  "context": {
+   "description_en": "Slark steals the life essence of enemy heroes with his attacks, draining %stat_loss% of each of their attributes and converting them to bonus %agi_gain% Agility. If Slark kills an affected enemy hero, he permanently steals %stat_loss% Agility.",
+   "description_zh": "斯拉克的攻击会偷走敌方英雄的生命能量，每次吸取他们的%stat_loss%点全属性并转化成自身额外%agi_gain%点敏捷值。只要敌方英雄带着该效果在斯拉克300范围内阵亡，他将永久窃取%stat_loss%点敏捷。",
+   "notes_en": [
+    "Attributes cannot be dropped below 1.",
+    "Essence Shifted stats are returned to normal on death. The stat return for Slark and for the affected hero are separate.",
+    "To permanently steal Agility, Slark doesn't need to land the killing blow, as long as the enemy hero is killed within Slark's Steal Radius while having the Essence Shift debuff.",
+    "Break disables the gaining of temporary stacks. Does not disable the gaining of permanent stacks.",
+    "Break does not disable the bonuses of existing stacks."
+   ],
+   "notes_zh": [
+    "属性值最少为1点。",
+    "斯拉克或受到作用的单位死亡后，阵亡单位因能量转移变化的属性值将回归正常。但是两方的属性值相互独立，并无关联。",
+    "斯拉克无需完成击杀就能永久窃取敏捷，只要敌方英雄身上拥有能量转移状态时在斯拉克的窃取范围内阵亡即可。",
+    "破坏会使技能无法获得临时的叠加效果。依然可以获得永久的叠加效果。",
+    "破坏不会使现有叠加效果提供的加成失效。"
+   ]
+  }
+ },
+ {
+  "review_id": "c39716e1abe1a56d199d",
+  "subject": "tusk_tag_team",
+  "subject_zh": "巨牙海民·摔角行家",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Activate to temporarily apply a negative debuff aura around you, causing enemies that are attacked under it to take bonus physical damage and reduced movement speed.",
+   "主动使用后暂时施加一个具有负面效果的光环，使作用范围内的敌人被攻击时承受额外物理伤害，并且移动速度被减缓。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Activate to temporarily apply a negative debuff aura around you, causing enemies that are attacked under it to take bonus physical damage and reduced movement speed. Lasts %debuff_duration% seconds.",
+   "description_zh": "主动使用后暂时施加一个具有负面效果的光环，使作用范围内的敌人被攻击时承受额外物理伤害，并且移动速度被减缓。持续%debuff_duration%秒。",
+   "notes_en": [
+    "Affects attacks from allied heroes, Tusk or any of his units."
+   ],
+   "notes_zh": [
+    "影响来自友方英雄、巨牙海民和他控制的所有单位的普通攻击。"
+   ]
+  }
+ },
+ {
+  "review_id": "6a9c6800322fb00111eb",
+  "subject": "elder_titan_natural_order",
+  "subject_zh": "上古巨神·自然秩序",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. The armor reduction is centered around the hero, while the magic armor reduction is centered around Astral Spirit.",
+   "description_zh": "使所有元素降低至基础水平，移除附近敌方单位的基础物理护甲和魔法抗性。护甲降低效果以英雄为中心，魔法抗性降低效果以灵体游魂为中心。",
+   "notes_en": [
+    "When the Astral Spirit isn't present, both the armor and magic armor reduction is centered around Elder Titan."
+   ],
+   "notes_zh": [
+    "没有施放灵体游魂时，护甲和魔法抗性降低效果均以上古巨神为中心。"
+   ]
+  }
+ },
+ {
+  "review_id": "7e27f12f0b4f447465c7",
+  "subject": "abyssal_underlord_atrophy_aura",
+  "subject_zh": "孽主·衰退光环",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Break disables the Attack Damage Reduction aura and prevents Underlord from gaining new bonus damage.",
+   "如果敌方英雄在光环范围内死亡，孽主将获得临时的额外攻击力加成。",
+   "破坏会使攻击力降低光环失效，并且孽主无法获得新的额外攻击力。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Nearby enemy units are weakened, losing a portion of their base damage. If an enemy dies while under this effect, Underlord gains temporary bonus damage.",
+   "description_zh": "周围所有敌方单位遭到了削弱，损失部分基础攻击力。如果敌方英雄在光环范围内死亡，孽主将获得临时的额外攻击力加成。",
+   "notes_en": [
+    "Break disables the Attack Damage Reduction aura and prevents Underlord from gaining new bonus damage."
+   ],
+   "notes_zh": [
+    "破坏会使攻击力降低光环失效，并且孽主无法获得新的额外攻击力。"
+   ]
+  }
+ },
+ {
+  "review_id": "5f3b63665d87bbf411de",
+  "subject": "dawnbreaker_solar_guardian",
+  "subject_zh": "破晓辰星·天光现世",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Solar Guardian's aura follows Dawnbreaker for %scepter_aura_duration%s after landing.",
+   "天光现世的光环在破晓辰星落地后会跟随%scepter_aura_duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "CHANNELED - Dawnbreaker creates a pulsing effect at a location within %max_offset_distance% units of an allied hero anywhere on the map and creates daylight for %daytime_duration%s. Each pulse damages enemies and heals allies.After a short duration, she flies to the target location and deals additional damage and stuns enemies upon landing.Once channeled, Dawnbreaker cannot stop the ability.",
+   "description_zh": "持续施法 - 破晓辰星在地图上任意友方英雄%max_offset_distance%距离内的一个地点创造一个脉冲效果，并制造持续%daytime_duration%秒的白天。每次脉冲都会对敌人造成伤害，并治疗友军。经过一段短暂时间后，她飞向目标地点，落地时造成额外伤害并眩晕敌人。开始持续施法后，破晓辰星无法中止此技能。",
+   "notes_en": [
+    "Pulse interval is %pulse_interval%s.",
+    "Total flight duration is %abilitychanneltime% seconds of channel time + %airtime_duration% of flight time.",
+    "Instantly recalls the Hammer on cast."
+   ],
+   "notes_zh": [
+    "脉冲间隔为%pulse_interval%秒。",
+    "总飞行时间为%abilitychanneltime%秒持续施法时间 + %airtime_duration%秒飞行时间。",
+    "施放时立刻召回战锤。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Solar Guardian's aura follows Dawnbreaker for %scepter_aura_duration%s after landing.",
+     "zh": "天光现世的光环在破晓辰星落地后会跟随%scepter_aura_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6b8444c1f7bda9d4aba0",
+  "subject": "ancient_janggo",
+  "subject_zh": "韧鼓",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Swiftness Aura: Grants 15 movement speed and 2.",
+   "aura movement speed=15.",
+   "aura health regen=2."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Drum of Endurance",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Endurance",
+     "description": "Gives +35 attack speed and +13% movement speed to nearby allies for 6 seconds.\n\nRadius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Swiftness Aura",
+     "description": "Grants 15 movement speed and 2.5 health regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "aura_movement_speed",
+     "value": "15"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.5"
+    },
+    {
+     "key": "bonus_str",
+     "display": "+ {value} Strength",
+     "value": "8"
+    },
+    {
+     "key": "bonus_attack_speed_pct",
+     "value": "35"
+    },
+    {
+     "key": "bonus_movement_speed_pct",
+     "value": "13"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    },
+    {
+     "key": "radius",
+     "value": "1200"
+    },
+    {
+     "key": "charges_tooltip",
+     "value": "8"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "12b462dbda359ba1cdc5",
+  "subject": "arcane_boots",
+  "subject_zh": "奥术鞋",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Basilius Aura: Grants 1 mana regeneration to allies.",
+   "aura mana regen=1.",
+   "aura radius=1200."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Arcane Boots",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Replenish",
+     "description": "Restores 150 mana to all nearby allies.\n\nRadius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Basilius Aura",
+     "description": "Grants 1 mana regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "Does not work on Meepo clones.",
+   "attrib": [
+    {
+     "key": "bonus_movement",
+     "display": "+ {value} Movement Speed",
+     "value": "45"
+    },
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.25"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "125"
+    },
+    {
+     "key": "aura_mana_regen",
+     "value": "1"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "replenish_amount",
+     "value": "150"
+    },
+    {
+     "key": "replenish_radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "15c11c11e67aed60a78d",
+  "subject": "assault",
+  "subject_zh": "强袭胸甲",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Assault Aura: Grants 30 attack speed and 5 armor to nearby allied units and structures, and decreases nearby enemy unit and structure armor by -5.",
+   "aura radius=1200.",
+   "aura attack speed=30.",
+   "aura positive armor=5.",
+   "aura negative armor=-5."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Assault Cuirass",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Assault Aura",
+     "description": "Grants 30 attack speed and 5 armor to nearby allied units and structures, and decreases nearby enemy unit and structure armor by -5.\n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "30"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "10"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "aura_attack_speed",
+     "value": "30"
+    },
+    {
+     "key": "aura_positive_armor",
+     "value": "5"
+    },
+    {
+     "key": "aura_negative_armor",
+     "value": "-5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "da1fe5b4658a3f7f250e",
+  "subject": "bloodstone",
+  "subject_zh": "血精石",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Spell Weakness Aura: Enemy units take 10% increased damage from spells.",
+   "Spell Weakness Aura does not stack with Veil of Discord's Spell Weakness.",
+   "aura spell vulnerability=10.",
+   "aura radius=1200."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "dname": "Bloodstone",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Bloodpact",
+     "description": "Increases Bloodstone's Spell Lifesteal to 60%. Lasts 5 seconds."
+    },
+    {
+     "type": "passive",
+     "title": "Spell Weakness Aura",
+     "description": "Enemy units take 10% increased damage from spells. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "Spell Weakness Aura does not stack with Veil of Discord's Spell Weakness.",
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "625"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "450"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "15"
+    },
+    {
+     "key": "spell_lifesteal",
+     "display": "+ {value}% Spell Lifesteal",
+     "value": "20"
+    },
+    {
+     "key": "buff_duration",
+     "value": "5"
+    },
+    {
+     "key": "spell_lifesteal_while_active",
+     "value": "60"
+    },
+    {
+     "key": "aura_spell_vulnerability",
+     "value": "10"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "016a893a3da78248b2b7",
+  "subject": "boots_of_bearing",
+  "subject_zh": "宽容之靴",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Swiftness Aura: Grants 15 movement speed and 2.",
+   "aura movement speed=15.",
+   "aura health regen=2."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Boots of Bearing",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Endurance",
+     "description": "Gives +50 attack speed and +15% movement speed to nearby allies for 6 seconds. For the first 1.5 seconds allies are immune to slows.\n\n Radius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Swiftness Aura",
+     "description": "Grants 15 movement speed and 2.5 health regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "aura_movement_speed",
+     "value": "15"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.5"
+    },
+    {
+     "key": "bonus_str",
+     "display": "+ {value} Strength",
+     "value": "8"
+    },
+    {
+     "key": "bonus_attack_speed_pct",
+     "value": "50"
+    },
+    {
+     "key": "bonus_movement_speed_pct",
+     "value": "15"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    },
+    {
+     "key": "radius",
+     "value": "1200"
+    },
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "65"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "18"
+    },
+    {
+     "key": "bonus_ms_duration",
+     "value": "1.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "f4695f002d2dac8d6c19",
+  "subject": "buckler",
+  "subject_zh": "玄冥盾牌",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Buckler Aura: Grants 2 armor to allied player units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Buckler",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Buckler Aura",
+     "description": "Grants 2 armor to allied player units.\n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "armor",
+     "display": "+ {value} Armor",
+     "value": "1"
+    },
+    {
+     "key": "bonus_aoe_armor",
+     "value": "2"
+    },
+    {
+     "key": "bonus_aoe_radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "9b750f6458c514d77e10",
+  "subject": "crellas_crozier",
+  "subject_zh": "克莱拉牧杖",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Putrefaction Aura's effect is increased to 90%.",
+   "Putrefaction Aura: Reduces nearby enemy heroes' Health Restoration by 30%.",
+   "Putrefaction Aura does not redirect Health Restoration from enemy heroes that are at full health."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "dname": "Crella's Crozier",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Rite of Rumusque",
+     "description": "You enter ghost form for 4 seconds, becoming immune to physical damage, but are unable to attack and -30% more vulnerable to magic damage.\n\nSteal 6% movement speed from enemy heroes in 900 range every second. Movement speed steal lasts 2s.\n\nPutrefaction Aura's effect is increased to 90%. All of the lost Health Restoration is redirected to you every second."
+    },
+    {
+     "type": "passive",
+     "title": "Putrefaction Aura",
+     "description": "Reduces nearby enemy heroes' Health Restoration by 30%.\n\nRadius: 900"
+    }
+   ],
+   "notes": "Ghost form ends if you become Debuff Immune and will have no effect if you are already Debuff Immune.\nShares cooldown with Ghost Scepter and its upgrades.\nPutrefaction Aura does not redirect Health Restoration from enemy heroes that are at full health.",
+   "attrib": [
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "6"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "450"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "450"
+    },
+    {
+     "key": "duration",
+     "value": "4.0"
+    },
+    {
+     "key": "extra_spell_damage_percent",
+     "value": "-30"
+    },
+    {
+     "key": "radius",
+     "value": "900"
+    },
+    {
+     "key": "health_steal",
+     "value": "30"
+    },
+    {
+     "key": "interval",
+     "value": "1.0"
+    },
+    {
+     "key": "active_radius",
+     "value": "900"
+    },
+    {
+     "key": "movespeed_steal_pct",
+     "value": "6"
+    },
+    {
+     "key": "active_health_steal",
+     "value": "90"
+    },
+    {
+     "key": "stack_duration",
+     "value": "2.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "fffe110a38a1091ff123",
+  "subject": "guardian_greaves",
+  "subject_zh": "卫士胫甲",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Guardian Aura: Grants 2.",
+   "aura health regen=2.",
+   "aura mana regen=1.",
+   "aura radius=1200.",
+   "aura health regen bonus=14.",
+   "aura bonus threshold=25."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Guardian Greaves",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Mend",
+     "description": "Restores 325 health and 200 mana to nearby allies, and removes most negative effects from the caster.\n\nRadius: 1200\nDispel Type: Basic Dispel"
+    },
+    {
+     "type": "passive",
+     "title": "Guardian Aura",
+     "description": "Grants 2.5 health regeneration and 1.5 mana regeneration to allied units. If the wearer's health falls below 25%, their health regeneration is increased to 14.5. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "Mend does not affect units that have been affected by Mend or Mekansm Restore within Guardian Greaves' cooldown.",
+   "attrib": [
+    {
+     "key": "bonus_movement",
+     "display": "+ {value} Movement Speed",
+     "value": "50"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "5"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "150"
+    },
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.0"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.5"
+    },
+    {
+     "key": "aura_mana_regen",
+     "value": "1.5"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "aura_health_regen_bonus",
+     "value": "14.5"
+    },
+    {
+     "key": "aura_bonus_threshold",
+     "value": "25"
+    },
+    {
+     "key": "replenish_health",
+     "value": "325"
+    },
+    {
+     "key": "replenish_mana",
+     "value": "200"
+    },
+    {
+     "key": "replenish_radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "c25832388aefc2ef35a0",
+  "subject": "headdress",
+  "subject_zh": "恢复头巾",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Regeneration Aura: Grants 2 health regeneration to allies.",
+   "aura health regen=2.",
+   "aura radius=1200."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Headdress",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Regeneration Aura",
+     "description": "Grants 2 health regeneration to allies.\n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "0.5"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.0"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "151614bb76ac04a1b3a0",
+  "subject": "mekansm",
+  "subject_zh": "梅肯斯姆",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Mekansm Aura: Grants 2.",
+   "Multiple instances of Mekansm Aura do not stack.",
+   "aura radius=1200.",
+   "aura health regen=2."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Mekansm",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Restore",
+     "description": "Restores 250 health to allied units in a 1200 radius."
+    },
+    {
+     "type": "passive",
+     "title": "Mekansm Aura",
+     "description": "Grants 2.5 health regeneration to allied units in a 1200 radius."
+    }
+   ],
+   "notes": "Restore does not affect units that have been affected by Restore or Guardian Greaves Mend within Mekansm's cooldown.\nMultiple instances of Mekansm Aura do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "5"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.5"
+    },
+    {
+     "key": "heal_amount",
+     "value": "250"
+    },
+    {
+     "key": "heal_radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "dce4d634ee69bdcecfc6",
+  "subject": "pipe",
+  "subject_zh": "洞察烟斗",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Insight Aura: Gives allied units 8% magic resistance.",
+   "magic resistance aura=8.",
+   "aura radius=1200."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Pipe of Insight",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Barrier",
+     "description": "Gives a magic damage barrier that absorbs 425 damage to all nearby allies. Lasts 8 seconds.\n\nRadius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Insight Aura",
+     "description": "Gives allied units 8% magic resistance.\n\nRadius: 1200"
+    }
+   ],
+   "notes": "Barrier does not affect units that have been affected by Barrier within Pipe of Insight's cooldown.\nStacks multiplicatively with other sources of magic resistance.",
+   "attrib": [
+    {
+     "key": "health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "14"
+    },
+    {
+     "key": "magic_resistance",
+     "display": "+ {value}% Magic Resistance",
+     "value": "20"
+    },
+    {
+     "key": "add_nostack_debuff",
+     "value": "1"
+    },
+    {
+     "key": "magic_resistance_aura",
+     "value": "8"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "barrier_block",
+     "value": "425"
+    },
+    {
+     "key": "barrier_duration",
+     "value": "8.0"
+    },
+    {
+     "key": "barrier_radius",
+     "value": "1200"
+    },
+    {
+     "key": "barrier_block_creep",
+     "value": "425"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "0d93c5ecae7838c4c39e",
+  "subject": "radiance",
+  "subject_zh": "辉耀",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "aura damage=60.",
+   "aura damage illusions=35.",
+   "aura radius=650."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE"
+  },
+  "context": {
+   "dname": "Radiance",
+   "abilities": [
+    {
+     "type": "toggle",
+     "title": "Burn",
+     "description": "When active, scorches enemies for 60 magical damage per second. Illusions deal 35 magical damage per second.\n\nRadius: 650"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "55"
+    },
+    {
+     "key": "aura_damage",
+     "value": "60"
+    },
+    {
+     "key": "aura_damage_illusions",
+     "value": "35"
+    },
+    {
+     "key": "upgrade_day_vision",
+     "value": "250"
+    },
+    {
+     "key": "evasion",
+     "display": "+ {value}% Evasion",
+     "value": "25"
+    },
+    {
+     "key": "aura_radius",
+     "value": "650"
+    },
+    {
+     "key": "illusion_multiplier_pct",
+     "value": "100"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "4a1247be1ad52967e068",
+  "subject": "ring_of_basilius",
+  "subject_zh": "王者之戒",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Basilius Aura: Grants 1 mana regeneration to allies.",
+   "aura mana regen=1.",
+   "aura radius=1200."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Ring of Basilius",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Basilius Aura",
+     "description": "Grants 1 mana regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.25"
+    },
+    {
+     "key": "aura_mana_regen",
+     "value": "1.0"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "bd5e7f685a37cce778af",
+  "subject": "shivas_guard",
+  "subject_zh": "希瓦的守护",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Freezing Aura: Reduces the attack speed of all enemies by -40.",
+   "Multiple instances of Freezing Aura do not stack.",
+   "aura radius=1200.",
+   "aura attack speed=-40."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Shiva's Guard",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Arctic Blast",
+     "description": "Emits a freezing wave that deals 225 magical damage to enemies and slows their movement by -40% for 4 seconds.\n\nRadius: 825"
+    },
+    {
+     "type": "passive",
+     "title": "Freezing Aura",
+     "description": "Reduces the attack speed of all enemies by -40. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "The wave extends at a speed of 400 to a max size of 825.\nThe Arctic Blast follows its caster.\nMultiple instances of Freezing Aura do not stack.\nAoE bonuses from multiple Chasm Stones or its upgrades do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "17"
+    },
+    {
+     "key": "bonus_aoe",
+     "display": "+ {value} Area of Effect",
+     "value": "75"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "aura_attack_speed",
+     "value": "-40"
+    },
+    {
+     "key": "blast_damage",
+     "value": "225"
+    },
+    {
+     "key": "blast_movement_speed",
+     "value": "-40"
+    },
+    {
+     "key": "blast_debuff_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "blast_radius",
+     "value": "825"
+    },
+    {
+     "key": "blast_speed",
+     "value": "400"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "52d8fcd53caa4d880ba4",
+  "subject": "veil_of_discord",
+  "subject_zh": "纷争面纱",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Spell Weakness does not stack with Bloodstone's Spell Weakness Aura."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Veil of Discord",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Spell Weakness",
+     "description": "Cast a 900 radius blast that causes enemy heroes to take 10% increased damage from spells.\n\nCan be cast while channeling.\n\nDuration: 16 seconds."
+    }
+   ],
+   "notes": "Spell Weakness does not stack with Bloodstone's Spell Weakness Aura.",
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "175"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "spell_lifesteal",
+     "display": "+ {value}% Spell Lifesteal",
+     "value": "18"
+    },
+    {
+     "key": "spell_amp",
+     "value": "10"
+    },
+    {
+     "key": "debuff_radius",
+     "value": "900"
+    },
+    {
+     "key": "resist_debuff_duration",
+     "value": "16.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "5c6453f78d425bb40184",
+  "subject": "vladmir",
+  "subject_zh": "弗拉迪米尔的祭品",
+  "mechanism": "aura",
+  "mechanism_zh": "光环",
+  "definition": "持续影响周围单位；对友军或敌方都算，并记作用对象",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Vladmir's Aura: Grants 20% lifesteal, 18% bonus damage, 1 mana regeneration, and 2 armor to nearby allies.",
+   "armor aura=2.",
+   "mana regen aura=1.",
+   "lifesteal aura=20.",
+   "damage aura=18.",
+   "aura radius=1200."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Vladmir's Offering",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Vladmir's Aura",
+     "description": "Grants 20% lifesteal, 18% bonus damage, 1 mana regeneration, and 2 armor to nearby allies.\n\nRadius: 1200"
+    }
+   ],
+   "notes": "Lifesteal on attacks against creeps is reduced to 12%.",
+   "attrib": [
+    {
+     "key": "armor",
+     "display": "+ {value} Armor",
+     "value": "1"
+    },
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.75"
+    },
+    {
+     "key": "armor_aura",
+     "value": "2.0"
+    },
+    {
+     "key": "mana_regen_aura",
+     "value": "1"
+    },
+    {
+     "key": "lifesteal_aura",
+     "value": "20"
+    },
+    {
+     "key": "damage_aura",
+     "value": "18"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "lifesteal_creeps_tooltip",
+     "value": "12"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "043a8932d0a3c333e6f8",
+  "subject": "drow_ranger_wave_of_silence",
+  "subject_zh": "卓尔游侠·狂风",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Releases a wave that silences and knocks back and reveals invisible enemy units.",
+   "释放一阵狂风，沉默敌方单位并将其击退，同时使隐身敌人显形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "description_en": "Releases a wave that silences and knocks back and reveals invisible enemy units. Knockback distance is relative to how close they are to Drow.",
+   "description_zh": "释放一阵狂风，沉默敌方单位并将其击退，同时使隐身敌人显形。击退距离与敌人和卓尔游侠的距离成反比。"
+  }
+ },
+ {
+  "review_id": "8ba15a956199459b5a8d",
+  "subject": "mirana_invis",
+  "subject_zh": "米拉娜·月之暗面",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "If a hero is revealed, invisibility will restore after the fade delay as long as Moonlight Shadow's duration has not expired."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Turns Mirana and all allied heroes invisible and grants bonus movement speed. Mirana gains bonus outgoing damage during the duration. If a hero is revealed, invisibility will restore after the fade delay as long as Moonlight Shadow's duration has not expired.",
+   "description_zh": "让米拉娜和所有己方英雄进入隐身状态。米拉娜在持续时间内获得伤害输出加成。只要还在月光阴影的持续时间内，即使隐身被打破也会在短时间内重新淡入隐身。",
+   "notes_en": [
+    "Units affected will not auto attack enemies."
+   ],
+   "notes_zh": [
+    "受到作用的单位会自动停止攻击敌人。"
+   ]
+  }
+ },
+ {
+  "review_id": "9a01aa6a120b67a01783",
+  "subject": "sandking_sand_storm",
+  "subject_zh": "沙王·沙尘暴",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "沙王在沙尘暴中攻击或使用技能会暂时显形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "description_en": "Sand King creates a fearsome sandstorm that damages enemy units and grants Sand King Invisibility while he is in it. The effect ends when Sand King leaves the area.",
+   "description_zh": "沙王制造一起可怕的沙尘暴，对敌方单位造成伤害，同时沙王身处其中时获得隐身效果。沙王离开该区域后效果结束。",
+   "notes_en": [
+    "Sand Storm can be used to dodge projectiles.",
+    "Sand King briefly becomes visible upon attacking or using spells while in Sand Storm. Sand King will become invisible again in %fade_delay% seconds."
+   ],
+   "notes_zh": [
+    "沙尘暴可以用来躲避攻击和技能弹道。",
+    "沙王在沙尘暴中攻击或使用技能会暂时显形。%fade_delay%秒后将再次隐形。"
+   ]
+  }
+ },
+ {
+  "review_id": "2c161180502bc7b33280",
+  "subject": "slardar_amplify_damage",
+  "subject_zh": "斯拉达·侵蚀雾霭",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility. The enemy unit leaves a trail of water behind it.",
+   "description_zh": "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。敌方单位将在身后留下水迹。"
+  }
+ },
+ {
+  "review_id": "5517e56bb5ab8b24f436",
+  "subject": "riki_backstab",
+  "subject_zh": "力丸·刀光谍影",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "力丸遁入阴影，变为隐身状态，主动攻击敌人后力丸将会显形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Riki fades into the shadows, becoming invisible until he attacks. Hero kills and assists grant additional experience.",
+   "description_zh": "力丸遁入阴影，变为隐身状态，主动攻击敌人后力丸将会显形。击杀英雄和助攻会提供额外经验。"
+  }
+ },
+ {
+  "review_id": "dbcf7b41e9a1e5b721ef",
+  "subject": "sniper_shrapnel",
+  "subject_zh": "狙击手·榴霰弹",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reveals the targeted area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every %abilitychargerestoretime% seconds.",
+   "description_zh": "消耗一点能量射出一发带有爆炸弹片的榴霰弹，在目标区域降下弹雨。区域内的敌军受到伤害并被减速。榴霰弹将给予目标区域的视野。榴霰弹的能量每过%abilitychargerestoretime%秒恢复1点。",
+   "notes_en": [
+    "Damage is dealt 11 times, immediately at spell effect then every second.",
+    "Does not damage buildings.",
+    "Provides vision in the targeted area."
+   ],
+   "notes_zh": [
+    "总共造成11次伤害，第一次在技能生效时，接下来每秒造成一次伤害。",
+    "不会对建筑造成伤害。",
+    "将拥有目标区域的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "1c7abb938228523fc949",
+  "subject": "faceless_void_chronosphere",
+  "subject_zh": "虚空假面·时间结界",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Invisible enemies in the sphere will be revealed.",
+   "在其中的隐形敌人会显形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "description_en": "Creates a blister in spacetime, trapping all units caught in its sphere of influence and causes you to move very quickly inside it. Only Faceless Void and any units he controls are unaffected. Invisible enemies in the sphere will be revealed.",
+   "description_zh": "在时空中创造一个泡状遮罩，将所有位于其中的单位定住，并使虚空假面在其内部来去自如。只有虚空假面和他控制的单位不受影响。在其中的隐形敌人会显形。",
+   "notes_en": [
+    "Pauses all units and buildings, friendly or enemy, except those owned by Faceless Void.",
+    "Faceless Void is never affected by Chronospheres with any owner."
+   ],
+   "notes_zh": [
+    "能够定住所有单位和建筑，不论敌我。除了虚空假面控制的单位。",
+    "虚空假面不受任何时间结界的影响。"
+   ]
+  }
+ },
+ {
+  "review_id": "d7dd1518385fcfeb6689",
+  "subject": "furion_curse_of_the_forest",
+  "subject_zh": "自然先知·青森诅咒",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "对%range%范围内所有敌方英雄施加诅咒，使他们在迷雾中显形，根据%radius%范围内树木的数量对他们造成减速和持续伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Applies a curse on all enemy heroes within %range% range, displaying them in fog, slowing them, and dealing damage over time based on the number of trees within %radius% radius. Treants count as trees for this purpose.",
+   "description_zh": "对%range%范围内所有敌方英雄施加诅咒，使他们在迷雾中显形，根据%radius%范围内树木的数量对他们造成减速和持续伤害。在此情况下树人也被视为树木。"
+  }
+ },
+ {
+  "review_id": "28eb6765ecb56dcf725a",
+  "subject": "broodmother_sticky_snare",
+  "subject_zh": "育母蜘蛛·蛛纱陷阱",
+  "mechanism": "reveal",
+  "mechanism_zh": "显形",
+  "definition": "使隐身单位显形，不等于持续真视",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Enemy Heroes that cross the web line will spring the trap, becoming rooted, revealed in fog, and take damage over time.",
+   "敌方英雄穿过网线将会触发陷阱，被缠绕，在战争迷雾中显形，并持续受到伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_CHANNELLED ",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityCharges": "2"
+  },
+  "context": {
+   "description_en": "Broodmother may create up to %count% invisible web lines touching any existing web. Enemy Heroes that cross the web line will spring the trap, becoming rooted, revealed in fog, and take damage over time.  Multiple Heroes can trip on the same line until it's destroyed after being initially triggered.  Broodmother's team is alerted via the minimap when an enemy has triggered the snare.",
+   "description_zh": "育母蜘蛛可以制造出最多%count%个触碰已有蛛网的隐形网线。敌方英雄穿过网线将会触发陷阱，被缠绕，在战争迷雾中显形，并持续受到伤害。网线一开始被触发后，多名英雄还可以在同根网线上被绊倒，直到网线被摧毁。只要有人触发陷阱，育母蜘蛛的队友就会在小地图上发现。"
+  }
+ }
+]

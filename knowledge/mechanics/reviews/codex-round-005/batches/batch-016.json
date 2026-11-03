@@ -1,0 +1,1187 @@
+[
+ {
+  "review_id": "d6aa0f3bf630328d70a2",
+  "subject": "night_stalker_void",
+  "subject_zh": "暗夜魔王·虚空",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Creates a damaging void that slows an enemy unit and deals damage.",
+   "制造一个伤害性的虚空，对一个敌方单位造成减速及伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Void",
+   "name_zh": "虚空",
+   "description_en": "Creates a damaging void that slows an enemy unit and deals damage. At night, Void also mini-stuns, interrupting channeling abilities, and its effects lasts longer.",
+   "description_zh": "制造一个伤害性的虚空，对一个敌方单位造成减速及伤害。夜晚时虚空可以造成短暂眩晕，打断持续施法，并且效果的持续时间更长。",
+   "notes_en": [
+    "Void does not ministun enemies during the day."
+   ],
+   "notes_zh": [
+    "虚空在白天不会对敌人造成眩晕。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Void now affects all units in a radius around the target.",
+     "zh": "虚空现在影响目标范围内所有单位。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6255aff372e0878243f4",
+  "subject": "omniknight_degen_aura",
+  "subject_zh": "全能骑士·退化光环",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "削弱过于靠近的敌方单位的移动能力，降低其移动速度。",
+   "Degenerates the movement capabilities of enemy units that stray too near, slowing their movement speed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "name_en": "Degen Aura",
+   "name_zh": "退化光环",
+   "description_en": "Degenerates the movement capabilities of enemy units that stray too near, slowing their movement speed.",
+   "description_zh": "削弱过于靠近的敌方单位的移动能力，降低其移动速度。",
+   "notes_en": [
+    "Does not affect Debuff Immune units."
+   ],
+   "notes_zh": [
+    "对减益免疫单位无效。"
+   ],
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f5a8f83fc59e587a654d",
+  "subject": "omniknight_hammer_of_purity",
+  "subject_zh": "全能骑士·纯洁之锤",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "全能骑士将神圣之力注入他的战锤，使他的攻击距离提升，会根据基础攻击力的一定百分比造成纯粹伤害，并且使目标短时间内被减速。",
+   "Omniknight imbues his hammer with holy power, causing his attack to have increased range, deal pure damage based on a percentage of his base damage and slow his target for a short duration."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Hammer of Purity",
+   "name_zh": "纯洁之锤",
+   "description_en": "Omniknight imbues his hammer with holy power, causing his attack to have increased range, deal pure damage based on a percentage of his base damage and slow his target for a short duration. Omniknight heals for %heal_pct%%% of the damage dealt over %heal_duration%s.",
+   "description_zh": "全能骑士将神圣之力注入他的战锤，使他的攻击距离提升，会根据基础攻击力的一定百分比造成纯粹伤害，并且使目标短时间内被减速。全能骑士会在%heal_duration%秒内回复%heal_pct%%%造成的伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "6b4a87f559d21ecc5d8c",
+  "subject": "orb_of_frost",
+  "subject_zh": "冰霜之珠",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Your attacks slow the target's movement by -13% (-6% against melee targets), and reduces Health Restoration by 15%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Orb of Frost",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Frost",
+     "description": "Your attacks slow the target's movement by -13% (-6% against melee targets), and reduces Health Restoration by 15%. Lasts for 3 seconds."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "slow_melee",
+     "value": "-6"
+    },
+    {
+     "key": "slow_ranged",
+     "value": "-13"
+    },
+    {
+     "key": "duration",
+     "value": "3"
+    },
+    {
+     "key": "heal_reduction",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "57d38ad5357529470514",
+  "subject": "pangolier_lucky_shot",
+  "subject_zh": "石鳞剑士·幸运一击",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Grants a chance to drastically slow their attack speed and reduce armor on any damage dealt by Pangolier's attacks or abilities.",
+   "石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度，同时削弱护甲。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Lucky Shot",
+   "name_zh": "幸运一击",
+   "description_en": "Pangolier rolls the dice and lets fate decide the outcome for his enemies. Grants a chance to drastically slow their attack speed and reduce armor on any damage dealt by Pangolier's attacks or abilities.",
+   "description_zh": "石鳞剑士孤注一掷，让命运决定敌人的下场。石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度，同时削弱护甲。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8bb65250b2e042136bd8",
+  "subject": "pangolier_swashbuckle",
+  "subject_zh": "石鳞剑士·虚张声势",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "石鳞剑士先冲向目标地点，再向指示方向上的所有敌人刺出数剑并减速他们。",
+   "Pangolier dashes along the target line, then slashes and briefly slows all enemies in the drawn direction with several quick swipes."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
+  },
+  "context": {
+   "name_en": "Swashbuckle",
+   "name_zh": "虚张声势",
+   "description_en": "Pangolier dashes along the target line, then slashes and briefly slows all enemies in the drawn direction with several quick swipes.\n\nLucky Shot has a chance to activate from this damage.",
+   "description_zh": "石鳞剑士先冲向目标地点，再向指示方向上的所有敌人刺出数剑并减速他们。\n\n刺剑有几率触发幸运一击。",
+   "notes_en": [
+    "Casting Swashbuckle during Rolling Thunder ends Rolling Thunder."
+   ],
+   "notes_zh": [
+    "在地雷滚滚期间施放虚张声势将使地雷滚滚提前结束。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "060b0ebfce87092d6fbf",
+  "subject": "phantom_assassin_stifling_dagger",
+  "subject_zh": "幻影刺客·窒碍短匕",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Spell-immune enemies are not affected by Stifling Dagger's slow.",
+   "Throws a dagger slowing the enemy unit's movement speed, dealing %base_damage%+%attack_factor_tooltip%%% of Phantom Assassin's attack damage as physical damage and applying attack effects from items and abilities."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+  },
+  "context": {
+   "name_en": "Stifling Dagger",
+   "name_zh": "窒碍短匕",
+   "description_en": "Throws a dagger slowing the enemy unit's movement speed, dealing %base_damage%+%attack_factor_tooltip%%% of Phantom Assassin's attack damage as physical damage and applying attack effects from items and abilities.",
+   "description_zh": "对敌方单位掷出一把匕首，减缓其移动速度，并造成物理伤害，数值为%base_damage%+幻影刺客攻击伤害的%attack_factor_tooltip%%%，同时继承物品和技能的攻击效果。",
+   "notes_en": [
+    "If an attack effect is chance-based, the chance of its application will be the same as its chance to occur.",
+    "Spell-immune enemies are not affected by Stifling Dagger's slow.",
+    "Stifling Dagger grants vision around its location while it travels and upon impact."
+   ],
+   "notes_zh": [
+    "如果攻击效果为几率触发，匕首的触发几率与原几率相同。",
+    "减益免疫下的敌人不会受到窒碍短匕的减速影响。",
+    "窒碍短匕在行进途中和击中目标时都会提供附近的视野。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "63c213cf7081e3b61f07",
+  "subject": "phantom_lancer_spirit_lance",
+  "subject_zh": "幻影长矛手·灵魂之矛",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。",
+   "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Spirit Lance",
+   "name_zh": "灵魂之矛",
+   "description_en": "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit.",
+   "description_zh": "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。",
+   "notes_en": [
+    "Illusions within %fake_lance_distance% range of Phantom Lancer will mimic the cast animation."
+   ],
+   "notes_zh": [
+    "幻影长矛手附近%fake_lance_distance%范围内的幻象也会模仿施法动作。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8f6d1bdf00637fa34095",
+  "subject": "phylactery",
+  "subject_zh": "灵匣",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The next Unit Target spell you cast on an enemy deals a separate 150 bonus damage to the target and slows them by 30% for 3s."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Phylactery",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Empower Spell",
+     "description": "The next Unit Target spell you cast on an enemy deals a separate 150 bonus damage to the target and slows them by 30% for 3s."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "6"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "5.5"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2.25"
+    },
+    {
+     "key": "slow",
+     "value": "30"
+    },
+    {
+     "key": "bonus_spell_damage",
+     "value": "150"
+    },
+    {
+     "key": "slow_duration",
+     "value": "3"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "77c609cb6122863fbf33",
+  "subject": "primal_beast_uproar",
+  "subject_zh": "獸·咤",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When activated, Primal Beast releases a roar that slows surrounding enemies and grants the Beast additional attack damage and armor for %roar_duration% seconds based on his current stacks of Uproar.",
+   "主动施放后，獸释放出咆哮声，减速附近敌人，并且獸根据咤的当前叠加层数获得额外攻击力和护甲，持续%roar_duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Uproar",
+   "name_zh": "咤",
+   "description_en": "The Beast's temper causes every instance of %damage_limit% hero damage or more to grant a stack of Uproar.  \n\n When activated, Primal Beast releases a roar that slows surrounding enemies and grants the Beast additional attack damage and armor for %roar_duration% seconds based on his current stacks of Uproar.",
+   "description_zh": "獸的脾性使獸每次受到的敌方英雄伤害超过%damage_limit%点后就会获得咤的叠加效果。\n\n主动施放后，獸释放出咆哮声，减速附近敌人，并且獸根据咤的当前叠加层数获得额外攻击力和护甲，持续%roar_duration%秒。",
+   "notes_en": [
+    "Primal Beast cannot gain Uproar stacks from self damage.",
+    "Break disables the gaining of new stacks."
+   ],
+   "notes_zh": [
+    "獸对自身造成伤害无法获得咤的叠加效果。",
+    "破坏会使技能无法获得新的叠加效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When Primal Beast activates Uproar, he releases %projectile_waves% waves of %projectiles_per_stack% projectiles per stack of uproar each in a circle around him. Projectiles deal damage and Break enemies hit. After a short delay, each projectile splinters in two.",
+     "zh": "獸开启咤时，以自身为圆心施放出%projectile_waves%波弹道，每波每层咤的叠加效果有%projectiles_per_stack%个弹道。弹道造成伤害并对击中的敌人施加破坏效果。经过短暂延迟后每个弹道会分裂成两个。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d88b05c64e55da843f05",
+  "subject": "pudge_rot",
+  "subject_zh": "帕吉·腐烂",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "A toxic cloud that deals intense damage and slows movement--harming not only enemy units but Pudge himself."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Rot",
+   "name_zh": "腐烂",
+   "description_en": "A toxic cloud that deals intense damage and slows movement--harming not only enemy units but Pudge himself.",
+   "description_zh": "能够造成持续伤害并减缓敌人移动速度的毒性云雾——同时对敌军和自身造成伤害。",
+   "notes_en": [
+    "Using Rot doesn't interrupt channeling.",
+    "Rot hits invisible units.",
+    "If Pudge is silenced, he can't deactivate Rot if it's activated.",
+    "Rot self-damage is non-lethal."
+   ],
+   "notes_zh": [
+    "使用腐烂不会打断持续施法。",
+    "腐烂能伤害隐身单位。",
+    "即使帕吉在开启腐烂后被沉默，腐烂也不会关闭。",
+    "腐烂的对己伤害不致死。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Rot radius by %bonus_rot_radius%, damage by %bonus_rot_damage%, and causes it to reduce enemy Health Restoration by %scepter_rot_regen_reduction_pct%%%.",
+     "zh": "腐烂的作用范围提升%bonus_rot_radius%，伤害提升%bonus_rot_damage%点，并且可以降低敌人的%scepter_rot_regen_reduction_pct%%%生命回复。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "cbbc4cb973cb1cee2bc9",
+  "subject": "pugna_decrepify",
+  "subject_zh": "帕格纳·衰老",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked.",
+   "受作用的友军提升了治疗效果，而受作用的敌军会被减速，并且承受额外魔法伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "name_en": "Decrepify",
+   "name_zh": "衰老",
+   "description_en": "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked. Healing on affected allies is increased, while afflicted enemies take extra magic damage instead.",
+   "description_zh": "一个强大的驱逐咒语，能使一个单位进入虚无状态，无法攻击或受到攻击。受作用的友军提升了治疗效果，而受作用的敌军会被减速，并且承受额外魔法伤害。",
+   "notes_en": [
+    "Only magical and pure damage can affect a unit under the effects of Decrepify.",
+    "Doesn't slow allied units.",
+    "Can be used on your Nether Ward."
+   ],
+   "notes_zh": [
+    "只有魔法伤害和纯粹伤害可以作用于处于衰老状态的单位。",
+    "不会对友方单位造成减速。",
+    "可以对幽冥守卫施放。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "ac764508298f18ea04e5",
+  "subject": "rattletrap_overclocking",
+  "subject_zh": "发条技师·超速运转",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "照明火箭：伤害、视野和减速时间提升，并且发射时向目标两侧各额外发射一枚。",
+   "Clockwerk's movement and attack speed becomes slowed to a crawl after the duration runs out.",
+   "Rocket Flares: Increased damage, vision and slow duration, and fire additional rockets to either side of the target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "name_en": "Overclocking",
+   "name_zh": "超速运转",
+   "description_en": "Supercharges Clockwerks abilities:Battery Assault: Increased radius and affects all enemies in its range.Power Cogs: Radius increased, and Clockwerk's armor while near Power Cogs is increased.Rocket Flares: Increased damage, vision and slow duration, and fire additional rockets to either side of the target.Hookshot: Stun radius and duration increased.Jetpack: Moves faster.Clockwerk's movement and attack speed becomes slowed to a crawl after the duration runs out.",
+   "description_zh": "使发条技师的所有技能变得强力：弹幕冲击：作用范围提升，并且可以作用于范围内所有敌人。能量齿轮：成型范围提升，并且发条技师靠近能量齿轮时护甲提升。照明火箭：伤害、视野和减速时间提升，并且发射时向目标两侧各额外发射一枚。发射钩爪：眩晕范围和时间均有提升。喷气背包：移动得更快。持续时间结束后发条技师的移动和攻击速度降到最低。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "4a7958777189926b82dc",
+  "subject": "razor_storm_surge",
+  "subject_zh": "雷泽·风暴涌动",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "There's a chance when attacked, and always when targeted with a spell, to release a forked lightning that strikes the target and other nearby enemies, prioritizing the unit type of the attacker, dealing damage and slowing movement speed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Storm Surge",
+   "name_zh": "风暴涌动",
+   "description_en": "There's a chance when attacked, and always when targeted with a spell, to release a forked lightning that strikes the target and other nearby enemies, prioritizing the unit type of the attacker, dealing damage and slowing movement speed.",
+   "description_zh": "被攻击时拥有几率、每次受到指向性技能时都会释放一道叉状闪电，击中目标和附近其他敌人，优先打击与目标类型相同的单位，造成伤害并减缓移动速度。",
+   "notes_en": [
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "While Eye of the Storm is active, strike chance is %eye_of_the_storm_chance_multiplier%x as high, strike cooldown is reduced by %strike_cd_reduction_during_storm%s, and Lightning strikes all enemies within Eye of the Storm's radius. Does not apply to the same enemy twice from a single instance.",
+     "zh": "风暴之眼开启时，打击几率为%eye_of_the_storm_chance_multiplier%倍，打击冷却时间减少%strike_cd_reduction_during_storm%秒，而且闪电会打击风暴之眼范围内所有敌人。单次伤害不会对同个敌人施加两次。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6e048bf97500ad1661b9",
+  "subject": "riki_blink_strike",
+  "subject_zh": "力丸·闪烁突袭",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "传送到目标背后，如果是敌人对其造成%slow_pct_tooltip%%%短暂减速，并发动一次拥有额外伤害的攻击。",
+   "Teleports behind the target unit, momentarily slowing them by %slow_pct_tooltip%%% and attacking them with bonus damage if it is an enemy."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "name_en": "Blink Strike",
+   "name_zh": "闪烁突袭",
+   "description_en": "Teleports behind the target unit, momentarily slowing them by %slow_pct_tooltip%%% and attacking them with bonus damage if it is an enemy.",
+   "description_zh": "传送到目标背后，如果是敌人对其造成%slow_pct_tooltip%%%短暂减速，并发动一次拥有额外伤害的攻击。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "490457eb1fc261bedc5d",
+  "subject": "ringmaster_impalement",
+  "subject_zh": "百戏大王·尖刀戏",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If he strikes an enemy, the dagger deals impact damage, briefly slows the unit hit, and causes them to bleed.",
+   "匕首击中敌人会造成即时伤害，短暂减速击中的单位，并且使他们流血。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Impalement Arts",
+   "name_zh": "尖刀戏",
+   "description_en": "Ringmaster throws one of his daggers to a precise point of his choosing. If he strikes an enemy, the dagger deals impact damage, briefly slows the unit hit, and causes them to bleed. The bleeding deals a percentage of the victim's maximum health in damage every second to heroes and flat damage per second to creeps.",
+   "description_zh": "百戏大王向自己精心选择的地点扔出一把匕首。匕首击中敌人会造成即时伤害，短暂减速击中的单位，并且使他们流血。流血的英雄受到基于目标最大生命值一定百分比的每秒伤害，流血的非英雄单位受到每秒固定伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "44739104493e74fadbd4",
+  "subject": "ringmaster_wheel",
+  "subject_zh": "百戏大王·奇观轮",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "到达目的地后，范围内的敌人会持续受到伤害，并且被减速%aura_slow%%%。",
+   "After it reaches its target, enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Wheel of Wonder",
+   "name_zh": "奇观轮",
+   "description_en": "Ringmaster rolls the Wheel of Wonder to the targeted location, knocking aside enemies along the way. After it reaches its target, enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%.Enemy heroes who face the wheel for more than %face_duration% seconds are mesmerized and drawn towards it. The first enemy to be mesmerized triggers a timer for the wheel to explode. If the timer is not triggered, it will automatically explode after %trap_duration% seconds.",
+   "description_zh": "百戏大王推出奇观轮向目标地点滚去，击退沿途的敌人。到达目的地后，范围内的敌人会持续受到伤害，并且被减速%aura_slow%%%。敌方英雄面对转轮超过%face_duration%秒会被迷住，朝其走去。首个敌人着迷后会触发转轮爆炸的倒计时。如果没有触发倒计时，在%trap_duration%秒后转轮会自动爆炸。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "5f586102f32d34df3a81",
+  "subject": "sandking_epicenter",
+  "subject_zh": "沙王·地震",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "所有范围内的敌人会受到伤害并被减速。",
+   "All enemies caught within range will take damage and become slowed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Epicenter",
+   "name_zh": "地震",
+   "description_en": "After a cast point of %abilitycastpoint% seconds, Sand King sends a disturbance into the earth, causing it to shudder violently. All enemies caught within range will take damage and become slowed. Each subsequent pulse increases the radius of damage dealt.",
+   "description_zh": "经过%abilitycastpoint%秒施法前摇后，沙王向地中发送扰动，引起大地剧烈震动。所有范围内的敌人会受到伤害并被减速。每次后续震波都会提高伤害传播半径。",
+   "notes_en": [
+    "The pulses are centered on Sand King, not where he first cast the spell."
+   ],
+   "notes_zh": [
+    "地震波将以沙王为中心，而不是他施放技能的地点。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When the pulses start, %scepter_explosions_per_pulse% Stinger attack areas are created every %spine_tick_rate%s at random locations, each measuring %scepter_explosion_radius_pct%%% of the Epicenter's current radius, that apply %spine_damage_pct%%% of Stinger damage to enemies hit. Shard pulses cause %shard_explosions_per_pulse% attack(s).",
+     "zh": "地震的脉冲开始时每%spine_tick_rate%秒会在随机地点产生%scepter_explosions_per_pulse%片尾刺的攻击区域，每片区域为地震当前范围的%scepter_explosion_radius_pct%%%，对击中的敌人造成%spine_damage_pct%%%尾刺伤害。魔晶的地震波会产生%shard_explosions_per_pulse%次攻击。"
+    },
+    "shard_loc": {
+     "en": "Every %shard_interval%s causes a small single Epicenter Pulse around Sand King.",
+     "zh": "每%shard_interval%秒会在沙王身上产生一个较小的地震波。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "bf85b79610674ec85b3c",
+  "subject": "sandking_scorpion_strike",
+  "subject_zh": "沙王·尾刺",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Applies Caustic Finale and a slow to all enemies hit.",
+   "对所有击中的敌人施加腐尸毒和减速效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Stinger",
+   "name_zh": "尾刺",
+   "description_en": "Sand King strikes an area, performing an attack on all enemies in the area of effect, dealing extra damage to each. Enemies within an innermost radius of %inner_radius% take %inner_radius_bonus_damage_pct%%% extra damage. Applies Caustic Finale and a slow to all enemies hit.",
+   "description_zh": "沙王袭击一片区域，对范围内所有敌人发动一次攻击，对每个敌人造成额外伤害。最中心%inner_radius%范围内敌人将受到%inner_radius_bonus_damage_pct%%%额外伤害。对所有击中的敌人施加腐尸毒和减速效果。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "883cefab73fe49e0e1ac",
+  "subject": "shadow_demon_demonic_purge",
+  "subject_zh": "暗影恶魔·邪恶净化",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Purges the target enemy unit, removing positive buffs, and slowing the target for the duration.",
+   "净化目标敌方单位，移除增益魔法效果，并使目标在持续时间内减速。",
+   "减速效果起始时为%max_slow%%%，然后持续减少至%min_slow%%%。",
+   "The slow starts at %max_slow%%% and decreases over time to %min_slow%%%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Demonic Purge",
+   "name_zh": "邪恶净化",
+   "description_en": "Purges the target enemy unit, removing positive buffs, and slowing the target for the duration.  The unit slowly regains its speed until the end of the duration, upon which damage is dealt.  Units under the effect of Disruption can still be affected by Demonic Purge.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "净化目标敌方单位，移除增益魔法效果，并使目标在持续时间内减速。伤害在持续时间结束时计算，在此之前目标单位的移动速度缓慢地恢复。崩裂禁锢中的单位依然可以受到邪恶净化的影响。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "The slow starts at %max_slow%%% and decreases over time to %min_slow%%%.",
+    "Positive buffs are continously removed from the target for the duration of the Purge."
+   ],
+   "notes_zh": [
+    "减速效果起始时为%max_slow%%%，然后持续减少至%min_slow%%%。",
+    "邪恶净化的持续时间内将持续移除目标的有益状态。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Demonic Purge to break and gain %max_charges% charges.",
+     "zh": "邪恶净化具有破坏效果，并获得%max_charges%点能量点数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2a683c07e48aa391cde1",
+  "subject": "shivas_guard",
+  "subject_zh": "希瓦的守护",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Emits a freezing wave that deals 225 magical damage to enemies and slows their movement by -40% for 4 seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Shiva's Guard",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Arctic Blast",
+     "description": "Emits a freezing wave that deals 225 magical damage to enemies and slows their movement by -40% for 4 seconds.\n\nRadius: 825"
+    },
+    {
+     "type": "passive",
+     "title": "Freezing Aura",
+     "description": "Reduces the attack speed of all enemies by -40. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "The wave extends at a speed of 400 to a max size of 825.\nThe Arctic Blast follows its caster.\nMultiple instances of Freezing Aura do not stack.\nAoE bonuses from multiple Chasm Stones or its upgrades do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "17"
+    },
+    {
+     "key": "bonus_aoe",
+     "display": "+ {value} Area of Effect",
+     "value": "75"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "aura_attack_speed",
+     "value": "-40"
+    },
+    {
+     "key": "blast_damage",
+     "value": "225"
+    },
+    {
+     "key": "blast_movement_speed",
+     "value": "-40"
+    },
+    {
+     "key": "blast_debuff_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "blast_radius",
+     "value": "825"
+    },
+    {
+     "key": "blast_speed",
+     "value": "400"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "a1a38a9a20591ba95107",
+  "subject": "shredder_flamethrower",
+  "subject_zh": "伐木机·喷火装置",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Applies a debuff that deals damage per second and slows enemy movement speed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Flamethrower",
+   "name_zh": "喷火装置",
+   "description_en": "Releases a flame in the direction Timbersaw is facing. Applies a debuff that deals damage per second and slows enemy movement speed. Affects buildings for reduced damage.",
+   "description_zh": "伐木机向面朝的方向放出一道火焰。施加一个负面效果，造成每秒伤害，并减缓敌人的移动速度。对建筑造成的伤害有所减少。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ },
+ {
+  "review_id": "77e28ef26345b0e84b93",
+  "subject": "silencer_curse_of_the_silent",
+  "subject_zh": "沉默术士·奥术诅咒",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Curses the target area, dealing damage and causing enemies to take damage over time and slowing their movement speed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Arcane Curse",
+   "name_zh": "奥术诅咒",
+   "description_en": "Curses the target area, dealing damage and causing enemies to take damage over time and slowing their movement speed.Anytime affected enemies cast a spell, the duration is increased. The duration is paused as long as the target is silenced.",
+   "description_zh": "诅咒目标区域，造成伤害并使敌人持续受到伤害，并且移动速度被减缓。期间受到作用的英雄一旦施放魔法，持续时间就会延长。目标被沉默时不计入负面效果的持续时间。",
+   "notes_en": [
+    "Affects creeps."
+   ],
+   "notes_zh": [
+    "非英雄单位也会受到作用。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "972aac35756cd90267d2",
+  "subject": "skeleton_king_hellfire_blast",
+  "subject_zh": "冥魂大帝·冥火爆击",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Wraith King sears an enemy unit with spectral fire, dealing damage and stunning, then dealing damage over time and slowing the target.",
+   "冥魂大帝向一个敌方单位发射冥魂火球，造成即时伤害和眩晕，并持续对目标造成伤害和减速。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Wraithfire Blast",
+   "name_zh": "冥火爆击",
+   "description_en": "Wraith King sears an enemy unit with spectral fire, dealing damage and stunning, then dealing damage over time and slowing the target.",
+   "description_zh": "冥魂大帝向一个敌方单位发射冥魂火球，造成即时伤害和眩晕，并持续对目标造成伤害和减速。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "01240ff80c81a3d608bf",
+  "subject": "skeleton_king_reincarnation",
+  "subject_zh": "冥魂大帝·绝冥再生",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Upon death, enemy units in a %slow_radius% radius are slowed.",
+   "死亡时附近%slow_radius%范围内的敌人会被减速，会产生骷髅兵攻击附近每个敌方英雄。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CAN_SELF_CAST",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Reincarnation",
+   "name_zh": "绝冥再生",
+   "description_en": "Wraith King's form regroups after death, allowing him to resurrect when killed in battle.  Upon death, enemy units in a %slow_radius% radius are slowed. Skeletons spawn and attack each nearby enemy hero. Can be self-cast to kill Wraith King instantly.",
+   "description_zh": "冥魂大帝倒下后，他飞散的冥魂会重组，使他复活。死亡时附近%slow_radius%范围内的敌人会被减速，会产生骷髅兵攻击附近每个敌方英雄。可以对自身施放，使冥魂大帝立刻阵亡。",
+   "notes_en": [
+    "Wraith King won't revive if he doesn't have enough mana.",
+    "If Wraith King has an Aegis and Reincarnation off cooldown, Reincarnation will trigger first.",
+    "Revives with full HP and Mana."
+   ],
+   "notes_zh": [
+    "如果魔法不足冥魂大帝将不会重生。",
+    "如果冥魂大帝拥有不朽之守护，同时绝冥再生不处于冷却状态，死亡后将首先触发绝冥再生。",
+    "重生后生命值和魔法值全满。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces cooldown.",
+     "zh": "减少冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "b2c40997a7827d555922",
+  "subject": "slardar_slithereen_crush",
+  "subject_zh": "斯拉达·鱼人碎击",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "眩晕结束后还会受到减速。",
+   "After the stun, the affected units are slowed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Slithereen Crush",
+   "name_zh": "鱼人碎击",
+   "description_en": "Slams the ground, leaving a puddle of water, and stunning and damaging nearby enemy units.  After the stun, the affected units are slowed.",
+   "description_zh": "猛击地面，留下一片水洼，对附近敌方单位造成伤害并眩晕。眩晕结束后还会受到减速。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Slithereen Crush now applies Corrosive Haze for a short time to units affected.",
+     "zh": "鱼人碎击会对受到作用的单位施加短时间的侵蚀雾霭。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8f591af15e5a440a59ca",
+  "subject": "snapfire_scatterblast",
+  "subject_zh": "电炎绝手·电光石火",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "电炎绝手开枪产生大范围的爆炸，对锥形区域内的敌人造成伤害和减速。",
+   "平射距离内的伤害提升%point_blank_dmg_bonus_pct%%%，移动速度减缓、攻击速度降低和减速持续时间额外提升%point_blank_debuff_duration_pct%%%。",
+   "Damage is increased by %point_blank_dmg_bonus_pct%%% and Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.",
+   "Snapfire unloads with a wide blast that damages and slows enemies in a cone."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Scatterblast",
+   "name_zh": "电光石火",
+   "description_en": "Snapfire unloads with a wide blast that damages and slows enemies in a cone. Damage is increased by %point_blank_dmg_bonus_pct%%% and Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.",
+   "description_zh": "电炎绝手开枪产生大范围的爆炸，对锥形区域内的敌人造成伤害和减速。平射距离内的伤害提升%point_blank_dmg_bonus_pct%%%，移动速度减缓、攻击速度降低和减速持续时间额外提升%point_blank_debuff_duration_pct%%%。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "844633ed85dc2a73c8ea",
+  "subject": "snapfire_spit_creep",
+  "subject_zh": "电炎绝手·喷吐",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "留下的火痰根据蜥蜴绝吻的当前等级还将持续造成减速和伤害。",
+   "The glob leaves a pool of firespit based on the current level of Mortimer Kisses, that slows and applies damage over time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Spit Out",
+   "name_zh": "喷吐",
+   "description_en": "Mortimer spits out the unit that's in his mouth, causing impact damage and stun in a large area. The glob leaves a pool of firespit based on the current level of Mortimer Kisses, that slows and applies damage over time. Spit Out has a no minimum launch range.",
+   "description_zh": "小莫迪吐出他肚子里的单位，对大片区域造成冲击伤害和眩晕。留下的火痰根据蜥蜴绝吻的当前等级还将持续造成减速和伤害。喷吐没有最小发射距离。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "2a3aa785caaffff54a80",
+  "subject": "sniper_concussive_grenade",
+  "subject_zh": "狙击手·震荡手雷",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "受到作用的敌人被击退后还会被缴械和减速。",
+   "Enemies affected are disarmed and have their movement slowed after the knockback."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Concussive Grenade",
+   "name_zh": "震荡手雷",
+   "description_en": "Launches a grenade at the target area, dealing damage to enemies and knocking them and Sniper back. Enemies affected are disarmed and have their movement slowed after the knockback.",
+   "description_zh": "向目标区域扔出一枚手雷，对敌人造成伤害并将他们和狙击手一同击退。受到作用的敌人被击退后还会被缴械和减速。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Reduces cooldown, increases damage, and allows the knockback to affect Sniper as well.",
+     "zh": "降低冷却时间，提升伤害并允许技能也能击退狙击手。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "cebab7167f26afaa35d0",
+  "subject": "sniper_headshot",
+  "subject_zh": "狙击手·爆头",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Headshots briefly slow enemy movement and attack speed by %slow%%%.",
+   "爆头会短暂地降低敌人%slow%%%移动和攻击速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Headshot",
+   "name_zh": "爆头",
+   "description_en": "Sniper increases his accuracy, giving him a chance to deal %damage% extra damage and knock back his enemies. Knockback distance increases based on how close the enemy is to Sniper. Headshots briefly slow enemy movement and attack speed by %slow%%%.",
+   "description_zh": "狙击手提高他的精确度，有一定概率造成%damage%点额外伤害并击退敌人。敌人距离狙击手越近，击退距离越远。爆头会短暂地降低敌人%slow%%%移动和攻击速度。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ }
+]

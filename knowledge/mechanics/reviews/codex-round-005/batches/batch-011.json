@@ -1,0 +1,1458 @@
+[
+ {
+  "review_id": "8a9b3231570765ef9d60",
+  "subject": "antimage_mana_break",
+  "subject_zh": "敌法师·法力损毁",
+  "mechanism": "mana_burn",
+  "mechanism_zh": "烧蓝/法力削减",
+  "definition": "减少目标的法力值",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "提升每次攻击燃烧的最大魔法值。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Mana Break",
+   "name_zh": "法力损毁",
+   "description_en": "Burns an opponent's mana on each attack and deals damage equal to a percentage of the mana burnt.",
+   "description_zh": "每次攻击损毁目标魔法值，并造成相当于损毁魔法值一定百分比的伤害。",
+   "notes_en": [
+    "Mana Break has %illusion_percentage%%% mana burn effect if caused by illusions."
+   ],
+   "notes_zh": [
+    "幻象继承法力损毁的燃烧魔法为%illusion_percentage%%%。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Max Mana Burned per Hit.",
+     "zh": "提升每次攻击燃烧的最大魔法值。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a086c88da96613dced3d",
+  "subject": "diffusal_blade",
+  "subject_zh": "净魂之刃",
+  "mechanism": "mana_burn",
+  "mechanism_zh": "烧蓝/法力削减",
+  "definition": "减少目标的法力值",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Each attack burns 40 mana from the target, and deals 1 physical damage per burned mana.",
+   "Illusions do not burn mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Diffusal Blade",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Inhibit",
+     "description": "Targets an enemy, slowing it for 4 seconds."
+    },
+    {
+     "type": "passive",
+     "title": "Manabreak",
+     "description": "Each attack burns 40 mana from the target, and deals 1 physical damage per burned mana. \n\nIllusions do not burn mana."
+    }
+   ],
+   "notes": "Does not stack with other diffusal blades.",
+   "attrib": [
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "15"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "feedback_mana_burn",
+     "value": "40"
+    },
+    {
+     "key": "purge_rate",
+     "value": "5"
+    },
+    {
+     "key": "purge_root_duration",
+     "value": "3.0"
+    },
+    {
+     "key": "purge_slow_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "damage_per_burn",
+     "value": "1"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "41d2d65fac23fce665b9",
+  "subject": "disperser",
+  "subject_zh": "散魂剑",
+  "mechanism": "mana_burn",
+  "mechanism_zh": "烧蓝/法力削减",
+  "definition": "减少目标的法力值",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Each attack burns 40 mana from the target, and deals 1 physical damage per burned mana.",
+   "Illusions do not burn mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Disperser",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Suppress",
+     "description": "Dispels both the wearer and the target. Enemy targets are slowed for 4 seconds. Allied targets gain bonus movespeed and 40% slow resistance for 4 seconds. Caster is always granted the ally benefit on cast.\n\nBoth movement speed reduction and increase start at 100% and gradually decrease to 0% over the course of the buff duration.\nDispel Type: Basic Dispel"
+    },
+    {
+     "type": "passive",
+     "title": "Manabreak",
+     "description": "Each attack burns 40 mana from the target, and deals 1 physical damage per burned mana. \n\nIllusions do not burn mana."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "40"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "feedback_mana_burn",
+     "value": "40"
+    },
+    {
+     "key": "purge_rate",
+     "value": "5"
+    },
+    {
+     "key": "purge_root_duration",
+     "value": "3.0"
+    },
+    {
+     "key": "damage_per_burn",
+     "value": "1.0"
+    },
+    {
+     "key": "enemy_effect_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "ally_effect_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "movement_speed_buff_rate",
+     "value": "4"
+    },
+    {
+     "key": "phase_movement_speed",
+     "value": "100"
+    },
+    {
+     "key": "slow_resist",
+     "value": "40"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "971771ea5ea6063d5b46",
+  "subject": "invoker_emp",
+  "subject_zh": "祈求者·电磁脉冲",
+  "mechanism": "mana_burn",
+  "mechanism_zh": "烧蓝/法力削减",
+  "definition": "减少目标的法力值",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "爆炸将覆盖一定区域，并根据雷元素的等级损毁敌方的魔法值。",
+   "对敌方英雄造成损毁魔法值一定百分比的伤害。",
+   "The detonation covers an area, draining mana based on the level of Wex.",
+   "祈求者将获得%self_mana_restore_pct%%%损毁的魔法。",
+   "If EMP drains mana from an enemy hero, Invoker gains %self_mana_restore_pct%%% of the mana drained."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "name_en": "E.M.P.",
+   "name_zh": "电磁脉冲",
+   "description_en": "Invoker builds up a charge of electromagnetic energy at a targeted location which automatically detonates after %delay% seconds. The detonation covers an area, draining mana based on the level of Wex. Deals damage for each point of mana drained.  If EMP drains mana from an enemy hero, Invoker gains %self_mana_restore_pct%%% of the mana drained.",
+   "description_zh": "祈求者在指定位置召唤出一道强力的自爆电磁脉冲，%delay%秒后将自动爆炸。爆炸将覆盖一定区域，并根据雷元素的等级损毁敌方的魔法值。对敌方英雄造成损毁魔法值一定百分比的伤害。祈求者将获得%self_mana_restore_pct%%%损毁的魔法。",
+   "notes_en": [
+    "Will not affect cycloned units (Tornado or Eul's Scepter of Divinity)."
+   ],
+   "notes_zh": [
+    "对被吹起的单位（强袭飓风或Eul的神圣法杖）无效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases damage for each point of mana drained by EMP and pulls enemy units into the EMP's center at %drag_speed% units per second.",
+     "zh": "提升电磁脉冲燃烧魔法的伤害系数，并且将敌方单位以每秒%drag_speed%距离的速度向电磁脉冲的中心牵引。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e3ecc540da945d8df118",
+  "subject": "invoker_emp",
+  "subject_zh": "祈求者·电磁脉冲",
+  "mechanism": "mana_burn",
+  "mechanism_zh": "烧蓝/法力削减",
+  "definition": "减少目标的法力值",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "提升电磁脉冲燃烧魔法的伤害系数，并且将敌方单位以每秒%drag_speed%距离的速度向电磁脉冲的中心牵引。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "name_en": "E.M.P.",
+   "name_zh": "电磁脉冲",
+   "description_en": "Invoker builds up a charge of electromagnetic energy at a targeted location which automatically detonates after %delay% seconds. The detonation covers an area, draining mana based on the level of Wex. Deals damage for each point of mana drained.  If EMP drains mana from an enemy hero, Invoker gains %self_mana_restore_pct%%% of the mana drained.",
+   "description_zh": "祈求者在指定位置召唤出一道强力的自爆电磁脉冲，%delay%秒后将自动爆炸。爆炸将覆盖一定区域，并根据雷元素的等级损毁敌方的魔法值。对敌方英雄造成损毁魔法值一定百分比的伤害。祈求者将获得%self_mana_restore_pct%%%损毁的魔法。",
+   "notes_en": [
+    "Will not affect cycloned units (Tornado or Eul's Scepter of Divinity)."
+   ],
+   "notes_zh": [
+    "对被吹起的单位（强袭飓风或Eul的神圣法杖）无效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases damage for each point of mana drained by EMP and pulls enemy units into the EMP's center at %drag_speed% units per second.",
+     "zh": "提升电磁脉冲燃烧魔法的伤害系数，并且将敌方单位以每秒%drag_speed%距离的速度向电磁脉冲的中心牵引。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "003553bae9be6f4d48d0",
+  "subject": "lion_mana_drain",
+  "subject_zh": "莱恩·法力吸取",
+  "mechanism": "mana_burn",
+  "mechanism_zh": "烧蓝/法力削减",
+  "definition": "减少目标的法力值",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Mana Drain",
+   "name_zh": "法力吸取",
+   "description_en": "CHANNELED - Channels magical energy, taking mana and slowing enemies over time. If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%.  Can target allies to give them mana and movement speed at a %ally_pct%%% rate.",
+   "description_zh": "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。如果敌人没有魔法剩余，减速效果提升%movespeed_bonus_when_empty_pct%%%。可以对友军施放，给予他们%ally_pct%%%魔法和移动速度。",
+   "notes_en": [
+    "Prevents heroes from going invisible."
+   ],
+   "notes_zh": [
+    "阻止英雄进入隐身状态。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Causes Mana Drain to affect up to %shard_bonus_targets% additional enemies and increases break distance. Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.",
+     "zh": "法力吸取可以作用最多%shard_bonus_targets%个额外敌人，并且断裂距离增加。持续施法期间莱恩为减益免疫状态，并且获得%magic_resist%%%魔法抗性。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c8eeada3c8e88f89102a",
+  "subject": "arcane_boots",
+  "subject_zh": "奥术鞋",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Restores 150 mana to all nearby allies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Arcane Boots",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Replenish",
+     "description": "Restores 150 mana to all nearby allies.\n\nRadius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Basilius Aura",
+     "description": "Grants 1 mana regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "Does not work on Meepo clones.",
+   "attrib": [
+    {
+     "key": "bonus_movement",
+     "display": "+ {value} Movement Speed",
+     "value": "45"
+    },
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.25"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "125"
+    },
+    {
+     "key": "aura_mana_regen",
+     "value": "1"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "replenish_amount",
+     "value": "150"
+    },
+    {
+     "key": "replenish_radius",
+     "value": "1200"
+    }
+   ],
+   "hint": [
+    "Movement speed bonuses from multiple pairs of boots do not stack."
+   ]
+  }
+ },
+ {
+  "review_id": "db5562db44ae41f971df",
+  "subject": "arcane_boots",
+  "subject_zh": "奥术鞋",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Grants 1 mana regeneration to allies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Arcane Boots",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Replenish",
+     "description": "Restores 150 mana to all nearby allies.\n\nRadius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Basilius Aura",
+     "description": "Grants 1 mana regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "Does not work on Meepo clones.",
+   "attrib": [
+    {
+     "key": "bonus_movement",
+     "display": "+ {value} Movement Speed",
+     "value": "45"
+    },
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.25"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "125"
+    },
+    {
+     "key": "aura_mana_regen",
+     "value": "1"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "replenish_amount",
+     "value": "150"
+    },
+    {
+     "key": "replenish_radius",
+     "value": "1200"
+    }
+   ],
+   "hint": [
+    "Movement speed bonuses from multiple pairs of boots do not stack."
+   ]
+  }
+ },
+ {
+  "review_id": "d29d7320e605c107a8fb",
+  "subject": "bane_fiends_grip",
+  "subject_zh": "祸乱之源·魔爪",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Fiend's Grip",
+   "name_zh": "魔爪",
+   "description_en": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+   "description_zh": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack.",
+     "zh": "魔爪的冷却时间减少%bonus_AbilityCooldown%秒。魔爪将产生两个不可控制的幻象，幻象也将对目标持续施放魔爪。幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。伤害不会叠加。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "1498022f08bb77b4a6a4",
+  "subject": "bottle",
+  "subject_zh": "魔瓶",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Consumes a charge to restore 110 health and 60 mana over 2."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Bottle",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Regenerate",
+     "description": "Consumes a charge to restore 110 health and 60 mana over 2.7 seconds. If the hero is attacked by an enemy hero or Roshan, the effect is lost.\n\nThe Bottle automatically refills at the fountain.\n\nHold Control to use on an allied hero."
+    },
+    {
+     "type": "passive",
+     "title": "Store Rune",
+     "description": "Runes can be stored in the Bottle for later use by right-clicking them. Unused runes will automatically activate after 90 seconds.\n\nUsing a stored rune fully refills the Bottle."
+    }
+   ],
+   "notes": "Bottle is shareable. Stored runes cannot be shared.\nUsing a stored Bounty or Water rune fully refills the bottle if the bottle was full when the rune was stored; otherwise, it refills two charges.",
+   "attrib": [
+    {
+     "key": "health_restore",
+     "value": "110"
+    },
+    {
+     "key": "mana_restore",
+     "value": "60"
+    },
+    {
+     "key": "restore_time",
+     "value": "2.7"
+    },
+    {
+     "key": "max_charges",
+     "value": "3"
+    },
+    {
+     "key": "break_on_hero_damage",
+     "value": "1"
+    },
+    {
+     "key": "rune_expire_time",
+     "value": "90.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "846db6cb0b6a79756e27",
+  "subject": "cheese",
+  "subject_zh": "奶酪",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Instantly restores 2500 health and 1500 mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Cheese",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Fondue",
+     "description": "Instantly restores 2500 health and 1500 mana."
+    }
+   ],
+   "notes": "Cheese is shareable.",
+   "attrib": [
+    {
+     "key": "health_restore",
+     "value": "2500"
+    },
+    {
+     "key": "mana_restore",
+     "value": "1500"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "128a1bb513ff51169cd6",
+  "subject": "crystal_maiden_brilliance_aura",
+  "subject_zh": "水晶室女·奥术光环",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Crystal Maiden passively gains mana regen amplification.",
+   "Allies within a %proximity_bonus_radius% radius of Crystal Maiden receive more mana regeneration.",
+   "地图上所有友方单位获得额外魔法恢复。",
+   "水晶室女附近%proximity_bonus_radius%范围内友军获得更高的魔法恢复。",
+   "水晶室女被动获得魔法恢复增强。",
+   "Gives mana regeneration to all friendly units on the map."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "name_en": "Arcane Aura",
+   "name_zh": "奥术光环",
+   "description_en": "Gives mana regeneration to all friendly units on the map. Allies within a %proximity_bonus_radius% radius of Crystal Maiden receive more mana regeneration.Crystal Maiden passively gains mana regen amplification.",
+   "description_zh": "地图上所有友方单位获得额外魔法恢复。水晶室女附近%proximity_bonus_radius%范围内友军获得更高的魔法恢复。水晶室女被动获得魔法恢复增强。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "d56a6979cf617e7c19e7",
+  "subject": "enchanted_mango",
+  "subject_zh": "魔法芒果",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Instantly restores 100 mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Enchanted Mango",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Eat Mango",
+     "description": "Instantly restores 100 mana."
+    }
+   ],
+   "notes": "Hold Control to use on a nearby allied hero.",
+   "attrib": [
+    {
+     "key": "hp_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "0.4"
+    },
+    {
+     "key": "replenish_amount",
+     "value": "100"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "b0e1cb33818b1a6e36d5",
+  "subject": "guardian_greaves",
+  "subject_zh": "卫士胫甲",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "5 mana regeneration to allied units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Guardian Greaves",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Mend",
+     "description": "Restores 325 health and 200 mana to nearby allies, and removes most negative effects from the caster.\n\nRadius: 1200\nDispel Type: Basic Dispel"
+    },
+    {
+     "type": "passive",
+     "title": "Guardian Aura",
+     "description": "Grants 2.5 health regeneration and 1.5 mana regeneration to allied units. If the wearer's health falls below 25%, their health regeneration is increased to 14.5. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "Mend does not affect units that have been affected by Mend or Mekansm Restore within Guardian Greaves' cooldown.",
+   "attrib": [
+    {
+     "key": "bonus_movement",
+     "display": "+ {value} Movement Speed",
+     "value": "50"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "5"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "150"
+    },
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.0"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.5"
+    },
+    {
+     "key": "aura_mana_regen",
+     "value": "1.5"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "aura_health_regen_bonus",
+     "value": "14.5"
+    },
+    {
+     "key": "aura_bonus_threshold",
+     "value": "25"
+    },
+    {
+     "key": "replenish_health",
+     "value": "325"
+    },
+    {
+     "key": "replenish_mana",
+     "value": "200"
+    },
+    {
+     "key": "replenish_radius",
+     "value": "1200"
+    }
+   ],
+   "hint": [
+    "Movement speed bonuses from multiple pairs of boots do not stack."
+   ]
+  }
+ },
+ {
+  "review_id": "6c0e250994321e273766",
+  "subject": "keeper_of_the_light_chakra_magic",
+  "subject_zh": "光之守卫·查克拉魔法",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Restores mana to the target unit and reduces cooldowns of all basic abilities currently on cooldown by a fixed amount.",
+   "恢复目标单位的魔法值，并减少所有冷却中基础技能（非大招）的冷却时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Chakra Magic",
+   "name_zh": "查克拉魔法",
+   "description_en": "Restores mana to the target unit and reduces cooldowns of all basic abilities currently on cooldown by a fixed amount. Is %self_bonus%%% more effective when used on himself.",
+   "description_zh": "恢复目标单位的魔法值，并减少所有冷却中基础技能（非大招）的冷却时间。对自身使用时效果提升%self_bonus%%%。",
+   "notes_en": [
+    "Chakra Magic does not reduce the cooldown of Ultimate abilities."
+   ],
+   "notes_zh": [
+    "查克拉魔法无法减少终极技能的冷却时间。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "292b660271c020d4dd93",
+  "subject": "lich_sinister_gaze",
+  "subject_zh": "巫妖·阴邪凝视",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 使一个敌方单位着魔，缓慢走到巫妖与其之间的一点，并吸取其当前魔法值的一定百分比。",
+   "CHANNELED - Hypnotizes an enemy unit, causing it to move towards a point between the two of you and drains a percentage of its current mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED ",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Sinister Gaze",
+   "name_zh": "阴邪凝视",
+   "description_en": "CHANNELED - Hypnotizes an enemy unit, causing it to move towards a point between the two of you and drains a percentage of its current mana.",
+   "description_zh": "持续施法 - 使一个敌方单位着魔，缓慢走到巫妖与其之间的一点，并吸取其当前魔法值的一定百分比。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Sinister Gaze becomes an Area of Effect ability, affecting units within a radius of %aoe_scepter% in the target area. Sinister Gaze allows Lich to cast other abilities while channeling it.",
+     "zh": "阴邪凝视变成范围型技能，对目标区域%aoe_scepter%范围内所有单位生效。在阴邪凝视的持续施法期间可以施放其他技能。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5cf0f110c31dd8580050",
+  "subject": "magic_wand",
+  "subject_zh": "魔杖",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Instantly restores 15 health and mana per charge stored."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Magic Wand",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Charge",
+     "description": "Instantly restores 15 health and mana per charge stored. \n\nMax 20 charges. Gains a charge whenever a visible enemy within 1200 range uses an ability."
+    }
+   ],
+   "notes": "Gains charges for spells cast by visible enemies in 1200 range.\nCertain abilities and item abilities will not add charges.",
+   "attrib": [
+    {
+     "key": "max_charges",
+     "value": "20"
+    },
+    {
+     "key": "charge_radius",
+     "value": "1200"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "3"
+    },
+    {
+     "key": "restore_per_charge",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "a572a2bab20cb3744ac5",
+  "subject": "medusa_mystic_snake",
+  "subject_zh": "美杜莎·秘术异蛇",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "抵达最后一个目标后，它会返回到美杜莎身上为其恢复魔法值。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Mystic Snake",
+   "name_zh": "秘术异蛇",
+   "description_en": "A mystic snake made of energy jumps from target to target dealing damage. Damage and speed increases with each jump. After it reaches its last target, it returns to Medusa to replenish her with mana. The snake returns a percentage of the targets' total mana.",
+   "description_zh": "放出一条秘术异蛇在敌人之间跳跃，造成伤害。每次跳跃后伤害和速度都会增加。抵达最后一个目标后，它会返回到美杜莎身上为其恢复魔法值。异蛇会返还所有目标最大魔法值一定百分比的魔法。",
+   "notes_en": [
+    "Mystic Snake cannot be disjointed."
+   ],
+   "notes_zh": [
+    "秘术异蛇无法躲避。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "7f280b2dba5380cb57a6",
+  "subject": "naga_siren_song_of_the_siren",
+  "subject_zh": "娜迦海妖·海妖之歌",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "海妖之歌范围内友军每秒会恢复一定百分比的生命和魔法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Song of the Siren",
+   "name_zh": "海妖之歌",
+   "description_en": "All enemies in range of the Naga Siren are put into a magical stasis where they cannot act or be attacked. Using Song of the Siren again will end the duration early.",
+   "description_zh": "娜迦海妖周围的所有敌人受到魔法影响陷入停滞状态，既无法行动也不会受到攻击。再次使用海妖之歌可以提前停止效果。",
+   "notes_en": [
+    "Units affected by Song of the Siren are invulnerable and cannot take damage from any source.",
+    "The area of the song follows Naga, so if she moves far enough away from affected units, they will wake up."
+   ],
+   "notes_zh": [
+    "海妖之歌作用下的单位处于无敌状态，不会受到任何伤害。",
+    "海妖之歌的作用范围以娜迦海妖为中心，如果她远离了作用单位，他们将会醒来。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Allies in range of Song of the Siren recover a percentage of their health and mana per second.",
+     "zh": "海妖之歌范围内友军每秒会恢复一定百分比的生命和魔法。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "482eed8f9adbd4ac3335",
+  "subject": "necrolyte_reapers_scythe",
+  "subject_zh": "瘟疫法师·死神镰刀",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "瘟疫法师击杀敌人后将永久获得生命和魔法恢复。",
+   "If Necrophos kills an enemy this way, he'll permanently gain Health and Mana Regen."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Reaper's Scythe",
+   "name_zh": "死神镰刀",
+   "description_en": "Stuns the target enemy hero, then deals damage based on how much life it is missing. If Necrophos kills an enemy this way, he'll permanently gain Health and Mana Regen. Any kill under this effect is credited to Necrophos.",
+   "description_zh": "眩晕目标敌方英雄，然后造成基于他当前损失生命值的伤害。瘟疫法师击杀敌人后将永久获得生命和魔法恢复。如果目标在死神镰刀效果下死亡，击杀者为瘟疫法师。",
+   "notes_en": [
+    "Damage is dealt at the end of the stun."
+   ],
+   "notes_zh": [
+    "伤害在眩晕结束后结算。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "be1d8b1453b55787f8b7",
+  "subject": "night_stalker_midnight_feast",
+  "subject_zh": "暗夜魔王·午夜盛宴",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "At night, the ability can be activated to instantly destroy a non-ancient creep and restore a percentage of Night Stalker's maximum health and mana.",
+   "在夜晚可以主动施放，秒杀一个非远古非英雄单位，并回复暗夜魔王的最大生命值和最大魔法值的一定百分比。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Midnight Feast",
+   "name_zh": "午夜盛宴",
+   "description_en": "Night Stalker heals himself when attacking enemy units. At night, the ability can be activated to instantly destroy a non-ancient creep and restore a percentage of Night Stalker's maximum health and mana.",
+   "description_zh": "暗夜魔王攻击敌方单位时治疗自身。在夜晚可以主动施放，秒杀一个非远古非英雄单位，并回复暗夜魔王的最大生命值和最大魔法值的一定百分比。",
+   "notes_en": [
+    "Amount of health gained from attacking is affecting by Health Restoration and is decreased when attacking non-hero targets."
+   ],
+   "notes_zh": [
+    "攻击获得的生命值受到生命回复的影响，攻击非英雄目标时会减少。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "d0539413ded7cc10b010",
+  "subject": "ogre_magi_dumb_luck",
+  "subject_zh": "食人魔魔法师·傻福",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "He receives mana and mana regeneration from Strength.",
+   "他通过力量来获得魔法和魔法恢复。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "name_en": "Dumb Luck",
+   "name_zh": "傻福",
+   "description_en": "Ogre Magi's max Intelligence is 0. He receives mana and mana regeneration from Strength.",
+   "description_zh": "食人魔魔法师的智力值上限为0。他通过力量来获得魔法和魔法恢复。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "354a424bb6ea1ad31e5e",
+  "subject": "phoenix_supernova",
+  "subject_zh": "凤凰·超新星",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Supernova",
+   "name_zh": "超新星",
+   "description_en": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "凤凰十分乐意终结自己现在的生命来换取重生。将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。恒星受到敌方英雄一定次数的攻击后将会被摧毁。经过%abilityduration%秒后恒星将会爆炸，眩晕周围所有敌人。而凤凰的生命和魔法值都会回到满状态，并且所有技能的冷却时间都会刷新。\n\n驱散类型：强驱散",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases number of attacks to destroy Supernova and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together.",
+     "zh": "摧毁超新星所需的攻击次数增加，凤凰可以对友方英雄施放超新星，使双方共同变为恒星进行重生。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3d8d5cc8229c5bb80391",
+  "subject": "ring_of_basilius",
+  "subject_zh": "王者之戒",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Grants 1 mana regeneration to allies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Ring of Basilius",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Basilius Aura",
+     "description": "Grants 1 mana regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.25"
+    },
+    {
+     "key": "aura_mana_regen",
+     "value": "1.0"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "de5d04076add77f8f92a",
+  "subject": "shredder_exposure_therapy",
+  "subject_zh": "伐木机·暴露疗法",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Whenever Timbersaw destroys a tree, he gains mana.",
+   "伐木机只要摧毁一棵树就会获得魔法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_INNATE_UI | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+  },
+  "context": {
+   "name_en": "Exposure Therapy",
+   "name_zh": "暴露疗法",
+   "description_en": "Whenever Timbersaw destroys a tree, he gains mana.",
+   "description_zh": "伐木机只要摧毁一棵树就会获得魔法。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "77c2b38a6b3f03efe818",
+  "subject": "soul_ring",
+  "subject_zh": "灵魂之戒",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Consume %abilityhealthcost% health to temporarily gain 170 mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "dname": "Soul Ring",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Sacrifice",
+     "description": "Consume %abilityhealthcost% health to temporarily gain 170 mana. Lasts 10 seconds.\n\nIf the mana gained cannot fit in your mana pool, it creates a buffer of mana that will be used before your mana pool."
+    }
+   ],
+   "notes": "If this mana is not used before the duration ends, the extra mana is lost.",
+   "attrib": [
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "6"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "2"
+    },
+    {
+     "key": "mana_gain",
+     "value": "170"
+    },
+    {
+     "key": "duration",
+     "value": "10"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "df91fcf3bcd3ba2cb998",
+  "subject": "storm_spirit_galvanized",
+  "subject_zh": "风暴之灵·通电",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "风暴之灵每次击杀都会获得一点提供%mp_per_kill%点/秒魔法恢复的能量，每%level_divisor%级也会获得一点能量。",
+   "Additionally every time he gains a charge he also gains %perma_mp_per_kill% Mana Regen permanently.",
+   "Storm Spirit gains a charge of %mp_per_kill% mana regeneration per kill, and a charge every %level_divisor% levels."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "name_en": "Galvanized",
+   "name_zh": "通电",
+   "description_en": "Storm Spirit gains a charge of %mp_per_kill% mana regeneration per kill, and a charge every %level_divisor% levels. Loses %charges_per_death% charges per death. Additionally every time he gains a charge he also gains %perma_mp_per_kill% Mana Regen permanently.",
+   "description_zh": "风暴之灵每次击杀都会获得一点提供%mp_per_kill%点/秒魔法恢复的能量，每%level_divisor%级也会获得一点能量。每次阵亡会损失%charges_per_death%点能量。另外每次获得一点能量时他还会永久获得%perma_mp_per_kill%点/秒魔法恢复。",
+   "notes_en": [
+    "Break disables the gaining of new stacks from kills."
+   ],
+   "notes_zh": [
+    "破坏会使技能无法通过击杀获得新的叠加效果。"
+   ],
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "a423e7ed6315548d992b",
+  "subject": "techies_mutually_assured_destruction",
+  "subject_zh": "工程师·同归于尽",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "工程师获得相当于最大魔法值一定百分比的魔法恢复。",
+   "Techies gain a percentage of their mana pool as bonus mana regeneration."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_FORCE_KEYBIND"
+  },
+  "context": {
+   "name_en": "M.A.D.",
+   "name_zh": "同归于尽",
+   "description_en": "Techies gain a percentage of their mana pool as bonus mana regeneration.When Techies die, they leave behind a barrel that explodes after %explosion_delay%s, damaging enemies in an area around it. Damage is based on Techies' max mana.",
+   "description_zh": "工程师获得相当于最大魔法值一定百分比的魔法恢复。工程师阵亡时，他们会留下一个木桶，在%explosion_delay%秒后爆炸，对范围内敌人造成伤害。伤害数值是根据工程师的最大魔法值。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "M.A.D. becomes an active ability. Increases max mana as damage amount. Techies plant an M.A.D. which can be detonated manually with a sub-ability. Only one M.A.D. from the active ability can be placed at a time.",
+     "zh": "同归于尽变为主动技能。提升最大魔法值的伤害系数。工程师放置同归于尽木桶后，可以使用子技能手动引爆。同一时间主动技能只能放下一个同归于尽木桶。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e4bb2291846edf12e915",
+  "subject": "vladmir",
+  "subject_zh": "弗拉迪米尔的祭品",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Grants 20% lifesteal, 18% bonus damage, 1 mana regeneration, and 2 armor to nearby allies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Vladmir's Offering",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Vladmir's Aura",
+     "description": "Grants 20% lifesteal, 18% bonus damage, 1 mana regeneration, and 2 armor to nearby allies.\n\nRadius: 1200"
+    }
+   ],
+   "notes": "Lifesteal on attacks against creeps is reduced to 12%.",
+   "attrib": [
+    {
+     "key": "armor",
+     "display": "+ {value} Armor",
+     "value": "1"
+    },
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.75"
+    },
+    {
+     "key": "armor_aura",
+     "value": "2.0"
+    },
+    {
+     "key": "mana_regen_aura",
+     "value": "1"
+    },
+    {
+     "key": "lifesteal_aura",
+     "value": "20"
+    },
+    {
+     "key": "damage_aura",
+     "value": "18"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "lifesteal_creeps_tooltip",
+     "value": "12"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "e4b72b747d33d4154a05",
+  "subject": "weaver_time_lapse",
+  "subject_zh": "编织者·时光倒流",
+  "mechanism": "mana_gain",
+  "mechanism_zh": "自身回蓝/吸蓝",
+  "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+  "definition_note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "编织者回到五秒前的时间点，获得当时的生命值和魔法值。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Time Lapse",
+   "name_zh": "时光倒流",
+   "description_en": "Weaver warps backward to whatever position it was in five seconds earlier--regaining the HP and mana from that time. No effect on cooldown, gold or experience.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "编织者回到五秒前的时间点，获得当时的生命值和魔法值。不影响冷却时间、金钱和经验。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "Removes most negative buffs from Weaver.",
+    "Time Lapse disjoints projectiles."
+   ],
+   "notes_zh": [
+    "能够移除编织者身上大部分的负面状态。",
+    "时光倒流可以躲避攻击和技能弹道。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Time Lapse may target allied Heroes with %abilitycastrange% cast range.",
+     "zh": "时光倒流可以对%abilitycastrange%施法距离内的友方英雄施放。"
+    }
+   }
+  }
+ }
+]

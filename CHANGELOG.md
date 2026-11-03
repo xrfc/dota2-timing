@@ -1,5 +1,50 @@
 # 变更记录
 
+## 2026-11-05 U67：结束MK-T3
+
+- v6成为MK-T4、T5的输入，当前任务改为MK-T4。
+
+## 2026-11-05 升级只改数值复查
+
+- 41组中18组移到`numeric_upgrades`，折射、环月基础补减伤，版本认证放到MK-T6（U66）。v6已重建。
+
+## 2026-11-04 U65：第7轮裁定与v6
+
+- 升级只改数值不记机制；第7轮80组裁定。新增`extractions/v6/`、`data.mechanics_facts_v6`、`scripts/build_mechanics_facts_v6.py`及测试；v5测试改为校验冻结哈希。
+
+## 2026-11-04 Codex第7轮
+
+- `knowledge/mechanics/reviews/codex-round-007/`：639组，同标签564组，分歧75组，都不确定5组，写入裁定汇总L块。结果未写入事实层。
+
+## 2026-11-04 U62–U64：词表v6与治疗口径
+
+- A、B组加入词表v6，C组不进；第7轮证据639组交Codex。升级降低自身冷却算减冷却；提升治疗算治疗，陈A杖、光法魔晶、主宰治疗守卫魔晶改回接受。v5按此重建。
+
+## 2026-11-04 U62：词表A、B组
+
+- 用户决定增加A、B组，定义草稿`docs/handoff/vocabulary-v6-draft.md`待确认。
+
+## 2026-11-04 U61：陈A杖与词表缺口
+
+- 陈A杖改为不记治疗；v5已按此重建。新增`knowledge/mechanics/reviews/vocabulary-gap-001/`，候选待用户决定。
+
+## 2026-11-04 U59、U60：第5轮收尾与v5
+
+- 陈A杖算治疗，其余11组按助手判断；`user-rulings-001.jsonl`共148行。
+- 新增`vocabulary-v5.json`（含虚无）、`extractions/v5/`、`codex-round-006/`、`data.mechanics_facts_v5`、`scripts/build_mechanics_facts_v5.py`。v4测试改为校验冻结哈希。
+
+## 2026-11-04 U58：重击与虚无
+
+- 不靠概率也算重击，3组记录；词表决定增加虚无，待下一版。决策记录`docs/decisions/2026-11-04-bash-ethereal.md`。`user-rulings-001.jsonl`共136行。
+
+## 2026-11-04 U57：第5轮13组裁定
+
+- 决策记录`docs/decisions/2026-11-04-round5-rulings.md`，`user-rulings-001.jsonl`共133行。重击3组和助手建议的12组待用户回答。
+
+## 2026-11-03 U56：Codex第5轮
+
+- 用户决定先复核702组只有Claude审过的组。新增`knowledge/mechanics/reviews/codex-round-005/`：同标签674组，分歧28组，写入裁定汇总K块。结果未写入v4。
+
 ## 2026-11-03 U55：审查跟进
 
 - `load_snapshot`新增契约校验：关键文件必须在清单里，校验schema、训练与验证互斥、比赛ID一致，并加拒绝测试。

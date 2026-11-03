@@ -1,0 +1,1220 @@
+[
+ {
+  "review_id": "e92afec81579be5afde2",
+  "subject": "centaur_return",
+  "subject_zh": "半人马战行者·反伤",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Damage done by this ability is considered reflected damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Centaur counters all attacks, dealing damage back to the attacker. Returns a fixed amount plus a percentage of your strength. Deals half damage to towers.",
+   "description_zh": "半人马战行者向攻击他的单位发出反击。反弹固定伤害加上自身力量的一定百分比。对防御塔的伤害减半。",
+   "notes_en": [
+    "Retaliate triggers when the attack hits.",
+    "Retaliate deals damage to towers.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "反伤会在受到攻击时触发。",
+    "反伤能对防御塔造成伤害。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "2956214e56437ef127dd",
+  "subject": "terrorblade_reflection",
+  "subject_zh": "恐怖利刃·倒影",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Terrorblade brings forth an invulnerable dark reflection of all enemy heroes in a target area.",
+   "Reflections are untargetable, invulnerable illusions, that will be destroyed if the slow debuff is removed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "description_en": "Terrorblade brings forth an invulnerable dark reflection of all enemy heroes in a target area. Affected enemy heroes have movement and attack speeds slowed and attacked by their reflection.",
+   "description_zh": "恐怖利刃映出目标区域内所有敌方英雄的黑暗倒影对其进行反制，目标在短时间内将被自身倒影攻击，移动速度和攻击速度都会降低。倒影为无敌状态。",
+   "notes_en": [
+    "Reflections are untargetable, invulnerable illusions, that will be destroyed if the slow debuff is removed.",
+    "Reflections can only attack their source."
+   ],
+   "notes_zh": [
+    "无法以倒影的幻象为目标，并且幻象为无敌，减速效果被移除后幻象将被摧毁。",
+    "倒影只会攻击该技能指定的目标。"
+   ]
+  }
+ },
+ {
+  "review_id": "169cb18643062e4c99de",
+  "subject": "marci_companion_run",
+  "subject_zh": "玛西·回身踢",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell reflect.",
+   "不会触发法术反弹。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Marci bounds to the targeted allied unit, choosing a direction and distance she will spring away from it. Upon reaching the unit, Marci lunges to her final destination, damaging and stunning enemies where she lands.\n\nWhen Rebound is set to alt-cast, Marci brings the target ally with her to her final destination.\n\n The ally receives %ally_movespeed_pct%%% bonus movement speed for %ally_buff_duration%s.",
+   "description_zh": "玛西跃向友方目标单位，选好她要弹离的方向和距离。到达目标后玛西冲向最终的目的地，对落地点的敌人造成伤害和眩晕。\n\n回身踢设为多样施法（右键点击技能栏图标）后，玛西会把她的友军目标带向最终目的地。\n\n友军将获得%ally_movespeed_pct%%%移动速度加成，持续%ally_buff_duration%秒。",
+   "notes_en": [
+    "Marci's initial run to her target unit can be disjointed.",
+    "Does not trigger spell reflect.",
+    "Does not bring allies who are Rooted or Leashed when alt-cast."
+   ],
+   "notes_zh": [
+    "玛西冲刺时目标单位可以躲避该效果。",
+    "不会触发法术反弹。",
+    "多样施法时不会带走被缠绕或束缚的友军。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases damage. Rebound can be cast on enemies, and causes Marci to also get the speed boost when she casts it.",
+     "zh": "提升伤害。回身踢可以对敌人施放，并且玛西施放后自身也会获得加速效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a9711e16debc8161560a",
+  "subject": "essence_distiller",
+  "subject_zh": "精之灵器",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Essence Distiller",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "Provides 40 health regeneration when cast on allies.\n\nCan be ground targeted to lie dormant for up to 15s and attach to the first enemy that comes within 450 radius. When on enemies, deals 25 damage per second and provides True Sight over them and shares their vision with the wearer's team.\n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units."
+    }
+   ],
+   "notes": "Empty distillers gain 2 charges.\nOnly the closest Essence Distiller to the dying hero will gain a charge.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.\nWhile dormant, provides vision in 450 radius. Vision lingers for 0.5s after latching.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.5"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "3"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "6"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "150"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "40"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    },
+    {
+     "key": "ground_duration",
+     "value": "15.0"
+    },
+    {
+     "key": "latch_range",
+     "value": "450"
+    },
+    {
+     "key": "latch_vision",
+     "value": "450"
+    },
+    {
+     "key": "linger_after_latch_duration",
+     "value": "0.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "2ab782b380d8165f7685",
+  "subject": "lotus_orb",
+  "subject_zh": "清莲宝珠",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Echo Shell: Applies a shield to the target unit for 5 seconds which re-casts most targeted spells back to their caster."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Lotus Orb",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Echo Shell",
+     "description": "Applies a shield to the target unit for 5 seconds which re-casts most targeted spells back to their caster.\n\nThe shielded unit will still take damage from the spell.\nDispel Type: Basic Dispel"
+    }
+   ],
+   "notes": "Targeted abilities from neutral items do not trigger Echo Shell.",
+   "attrib": [
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "10"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "6.5"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "4.0"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "250"
+    },
+    {
+     "key": "active_duration",
+     "value": "5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "90806da2f8c85688b31d",
+  "subject": "spirit_vessel",
+  "subject_zh": "魂之灵瓮",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Spirit Vessel",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "When used against enemies, it reduces health by 4% of current health per second, and reduces Health Restoration by 70%. Deals 25 damage per second. \n\nWhen used on allies, it provides 40 health regeneration per second. \n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units or the user dies."
+    }
+   ],
+   "notes": "Empty vessels gain 2 charges.\nOnly the closest Spirit Vessel to the dying hero will gain a charge.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.",
+   "attrib": [
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.75"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "10"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "2"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "40"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    },
+    {
+     "key": "restoration_reduction_enemy",
+     "value": "70"
+    },
+    {
+     "key": "enemy_hp_drain",
+     "value": "4"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "be0c4f9173d00fbe941b",
+  "subject": "urn_of_shadows",
+  "subject_zh": "影之灵龛",
+  "mechanism": "spell_reflect",
+  "mechanism_zh": "反弹指向技能",
+  "definition": "把指向技能反弹给施法者",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not trigger spell block or spell reflect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Urn of Shadows",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "Provides 30 health regeneration when cast on allies, and deals 25 damage per second when cast on enemies.\n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units."
+    }
+   ],
+   "notes": "Empty urns gain 2 charges.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.0"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "2"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "2"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "30"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "022d7fc2010394019af9",
+  "subject": "antimage_blink",
+  "subject_zh": "敌法师·闪烁",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "You can use Blink to dodge incoming projectiles.",
+   "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "description_en": "Short distance teleportation that allows Anti-Mage to move in and out of combat.",
+   "description_zh": "短距离传送，能让敌法师自由出入战场。",
+   "notes_en": [
+    "You can use Blink to dodge incoming projectiles."
+   ],
+   "notes_zh": [
+    "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "After casting Blink, your next Mana Break within %empowered_mana_break_duration%s burns an additional %empowered_max_burn_pct_tooltip%%% max mana and prevents the target from regenerating or gaining mana for a short duration. This debuff is undispellable.",
+     "zh": "施放闪烁后，%empowered_mana_break_duration%秒内的法力损毁将额外燃烧%empowered_max_burn_pct_tooltip%%%最大魔法值，并且阻止目标在短时间内恢复或获得魔法。这个负面状态无法驱散。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0714f1b571dd53d8040e",
+  "subject": "crystal_maiden_crystal_clone",
+  "subject_zh": "水晶室女·冰晶克隆",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Slides in a direction, creating a crystal clone of herself in her place and disjointing incoming projectiles.",
+   "向一个方向滑行，在原地制造一个自身的冰晶克隆，并且躲避多种飞行过程中的攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Slides in a direction, creating a crystal clone of herself in her place and disjointing incoming projectiles. If the clone takes enough damage or times out, it shatters, Frostbiting enemies in a %frostbite_radius% AoE around its place. The Clone can also be destroyed by Crystal Maiden's own spells.",
+   "description_zh": "向一个方向滑行，在原地制造一个自身的冰晶克隆，并且躲避多种飞行过程中的攻击和技能弹道。如果克隆受到了足量伤害，或者超过一定时间都会碎裂，对附近%frostbite_radius%范围内敌人施加冰封禁制。克隆体也可以被水晶室女自身的技能摧毁。"
+  }
+ },
+ {
+  "review_id": "1b424ccd8968ef3fa47f",
+  "subject": "phantom_lancer_doppelwalk",
+  "subject_zh": "幻影长矛手·神行百变",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "DISPEL TYPE: Basic Dispel This ability can be used to dodge projectiles, and dispel debuffs.",
+   "驱散类型：弱驱散 这个技能可以躲避攻击和技能弹道，并且驱散负面效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+  },
+  "context": {
+   "description_en": "Phantom Lancer briefly vanishes from the battlefield. After %delay% second, Phantom Lancer and any of his nearby illusions reappear at a random position within the targeted location, along with two additional doppelgangers. Extends duration of all illusions. The two added doppelgangers have different properties: one takes normal damage and deals none, while the other takes %illusion_2_damage_in_pct%%% bonus damage and deals %illusion_2_damage_out_pct%%% less damage.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "幻影长矛手暂时从战场上消失。经过%delay%秒，幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置，并产生两个新的幻象。施放技能后延长所有幻象的持续时间。新加的两个幻象拥有不同的特性：一个承受正常百分比的伤害，不具有攻击力，另一个额外承受%illusion_2_damage_in_pct%%%伤害，继承的攻击力相比本体减少%illusion_2_damage_out_pct%%%。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "This ability can be used to dodge projectiles, and dispel debuffs.",
+    "Trees near a reappearing unit will be destroyed.",
+    "Phantom Lancer and his allies can see which illusion is the 100% damage illusion."
+   ],
+   "notes_zh": [
+    "这个技能可以躲避攻击和技能弹道，并且驱散负面效果。",
+    "重新现身的单位附近的树木将会被摧毁。",
+    "幻影长矛手和他的队友可以分辨出哪个幻象承受100%伤害。"
+   ]
+  }
+ },
+ {
+  "review_id": "2491870ed79809734265",
+  "subject": "puck_illusory_orb",
+  "subject_zh": "帕克·幻象法球",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Jaunting to the Orb will disjoint projectiles.",
+   "将自己传送到幻象法球可以躲避攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE"
+  },
+  "context": {
+   "description_en": "Vector Targeted. Puck launches a magic orb that travels along the path, damaging enemy units along the way. The orb deals an additional %damage_over_time_pct%%% of its impact damage every %damage_interval%s in its area of effect, but if it exceeds the max cast range it will be destroyed.\n\n At any point, Puck may teleport to the orb's location using Ethereal Jaunt. Can be put on alt-cast to launch the Orb straight ahead.",
+   "description_zh": "以矢量为目标。帕克向路线方向发出一个魔法球，对经过路径上的敌人造成伤害。法球每%damage_interval%秒会在作用范围内额外造成%damage_over_time_pct%%%击中伤害，但超过最大施法距离后法球会被摧毁。\n\n在幻象法球飞行过程中，帕克可以使用灵动之翼来传送到法球所在的位置。可以设为多样施法（右键点击技能栏图标），让法球的路线为向前的直线。",
+   "notes_en": [
+    "The Illusory Orb grants unobstructed vision around its location while it travels.",
+    "Jaunting to the Orb will disjoint projectiles."
+   ],
+   "notes_zh": [
+    "幻象法球在飞行途中提供顺畅视野。",
+    "将自己传送到幻象法球可以躲避攻击和技能弹道。"
+   ]
+  }
+ },
+ {
+  "review_id": "15c4dc3d57964a48f945",
+  "subject": "puck_puckish",
+  "subject_zh": "帕克·顽皮克敌",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Whenever Puck disjoints an attack, it restores %mana_and_health_restore_pct%%% of its max health and mana.",
+   "Dodging a targeted spell projectile restores %dodged_spell_multiplier%x that amount.",
+   "每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。",
+   "躲避指向性技能的弹道将回复%dodged_spell_multiplier%倍数值。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Whenever Puck disjoints an attack, it restores %mana_and_health_restore_pct%%% of its max health and mana. Dodging a targeted spell projectile restores %dodged_spell_multiplier%x that amount. Does not apply to attacks by Towers.",
+   "description_zh": "每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。躲避指向性技能的弹道将回复%dodged_spell_multiplier%倍数值。防御塔的攻击不会对此生效。"
+  }
+ },
+ {
+  "review_id": "20fd63d18a69bc506c63",
+  "subject": "sandking_sand_storm",
+  "subject_zh": "沙王·沙尘暴",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Sand Storm can be used to dodge projectiles.",
+   "沙尘暴可以用来躲避攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "description_en": "Sand King creates a fearsome sandstorm that damages enemy units and grants Sand King Invisibility while he is in it. The effect ends when Sand King leaves the area.",
+   "description_zh": "沙王制造一起可怕的沙尘暴，对敌方单位造成伤害，同时沙王身处其中时获得隐身效果。沙王离开该区域后效果结束。",
+   "notes_en": [
+    "Sand Storm can be used to dodge projectiles.",
+    "Sand King briefly becomes visible upon attacking or using spells while in Sand Storm. Sand King will become invisible again in %fade_delay% seconds."
+   ],
+   "notes_zh": [
+    "沙尘暴可以用来躲避攻击和技能弹道。",
+    "沙王在沙尘暴中攻击或使用技能会暂时显形。%fade_delay%秒后将再次隐形。"
+   ]
+  }
+ },
+ {
+  "review_id": "79e16731aac3e2e8f737",
+  "subject": "windrunner_shackleshot",
+  "subject_zh": "风行者·束缚击",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Shackleshot can be disjointed.",
+   "束缚击可以被躲避。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Shackles the target to an enemy unit or tree in a line directly behind it.  If no unit or tree is present, the stun duration is reduced to %fail_stun_duration%.",
+   "description_zh": "将目标束缚在正对其后的一个敌方单位或树上。若目标后面没有其它敌方单位或树木，则眩晕时间减少至%fail_stun_duration%秒。",
+   "notes_en": [
+    "This spell can shackle two enemies together, stunning them both.",
+    "Can shackle the target to an enemy unit or tree at most %shackle_distance% behind the target.",
+    "Shackleshot can be disjointed."
+   ],
+   "notes_zh": [
+    "该技能可以将两个敌人一起束缚，使他们同时眩晕。",
+    "束缚击能将目标束缚在身后最多%shackle_distance%距离的敌方单位或树木。",
+    "束缚击可以被躲避。"
+   ]
+  }
+ },
+ {
+  "review_id": "71504dd06681ca04c1fc",
+  "subject": "lina_laguna_blade",
+  "subject_zh": "莉娜·神灭斩",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "神灭斩在技能施放到伤害生效有%damage_delay%秒延迟，因此有若干技能可以躲避该伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Fires off a bolt of lightning at a single enemy unit, dealing massive damage.",
+   "description_zh": "对单个敌方单位射出闪电，造成大量伤害。",
+   "notes_en": [
+    "Laguna Blade has a %damage_delay% delay before the damage is applied after the spell is cast, allowing certain abilities to avoid the damage."
+   ],
+   "notes_zh": [
+    "神灭斩在技能施放到伤害生效有%damage_delay%秒延迟，因此有若干技能可以躲避该伤害。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Casting Laguna Blade temporarily supercharges Lina, granting her stacks of Fiery Soul.",
+     "zh": "施放神灭斩会暂时让莉娜的能量达到顶峰，给予炽魂的叠加效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "aaeeeed45344d2f6e8d3",
+  "subject": "lion_finger_of_death",
+  "subject_zh": "莱恩·死亡之指",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "死亡一指在技能施放到伤害生效有%damage_delay%秒延迟，因此有若干技能可以躲避该伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Rips at an enemy unit, trying to turn it inside-out, dealing massive damage to the target.After using Finger of Death, Lion's hand becomes empowered, allowing him to use a cleaving melee attack with %punch_attack_range% range with bonus movement speed.Finger of Death gains permanent bonus damage for it and the fist for each enemy Hero it or the fist kills. The melee attack may be disabled by setting the ability to Alt Cast.",
+   "description_zh": "撕裂一个敌方单位，将其折磨得死去活来，并造成巨大伤害。使用死亡之指后，莱恩的手臂增强了力量，使他可以发动带有分裂效果的近战攻击，攻击距离为%punch_attack_range%，并拥有移动速度加成。每次技能或重拳击杀英雄后都会分别使技能和重拳永久获得额外伤害和攻击力。技能设为（右键点击技能栏图标）后可以禁用近战攻击。",
+   "notes_en": [
+    "Finger of Death has a %damage_delay% delay before the damage is applied after the spell is cast, allowing certain abilities to avoid the damage.",
+    "Finger of Death only gains damage if the enemy hero dies within %grace_period% seconds of being affected by Finger of Death."
+   ],
+   "notes_zh": [
+    "死亡一指在技能施放到伤害生效有%damage_delay%秒延迟，因此有若干技能可以躲避该伤害。",
+    "只有在敌方英雄受到死亡之指作用后%grace_period%秒内死亡才会使死亡之指额外提升伤害。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Finger of Death gains area of effect damage on the initial cast, and increases duration and cleave damage on its subsequent melee attacks.",
+     "zh": "死亡之指的初始施法获得范围型伤害，并且后续的近战攻击提升持续时间和分裂伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a362b7ff19a0d3af24ef",
+  "subject": "sniper_assassinate",
+  "subject_zh": "狙击手·暗杀",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Invisibility doesn't disjoint the projectile."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Sniper locks onto a target enemy unit and, after a short aiming duration, fires a devastating shot that deals Sniper's attack damage plus bonus damage at long range and mini-stuns the target. Whenever Sniper kills an enemy hero, Assassinate is refreshed.",
+   "description_zh": "狙击手锁定一个目标敌方单位，经过短时间瞄准后射出一发毁灭性的子弹，从远距离对目标造成狙击手的攻击伤害 + 额外伤害，并且短暂眩晕目标。每当狙击手击杀敌方英雄，暗杀的冷却时间就会重置。",
+   "notes_en": [
+    "Crosshair effect is only visible to allies.",
+    "Invisibility doesn't disjoint the projectile."
+   ],
+   "notes_zh": [
+    "准星效果只对队友可见。",
+    "隐身不能躲避该技能弹道。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Assassinate to fire quicker and stun the enemy target.",
+     "zh": "暗杀释放得更快，并且敌方目标的眩晕时间更久。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8f7842d73a63f72c3a26",
+  "subject": "queenofpain_blink",
+  "subject_zh": "痛苦女王·闪烁",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "You can use Blink to dodge incoming projectiles.",
+   "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "description_en": "Short distance teleportation that allows Queen of Pain to move in and out of combat.",
+   "description_zh": "短距离传送，能让痛苦女王自由出入战场。",
+   "notes_en": [
+    "You can use Blink to dodge incoming projectiles."
+   ],
+   "notes_zh": [
+    "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Releases a sonic boom when Queen of Pain blinks, at both her starting and ending locations. Deals %shard_damage% damage in a %shard_aoe% AoE and silences the target for %shard_duration% seconds.",
+     "zh": "在痛苦女王的闪烁起点和落地点各释放一次音爆。在%shard_aoe%范围内造成%shard_damage%点伤害，并沉默%shard_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "32050a2734c2f1236be8",
+  "subject": "phantom_assassin_blur",
+  "subject_zh": "幻影刺客·魅影无形",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Phantom Assassin blurs her body, disjointing incoming projectiles, increasing her movement speed, causing her to be impossible to see until she comes near enemy heroes or towers."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Phantom Assassin blurs her body, disjointing incoming projectiles, increasing her movement speed, causing her to be impossible to see until she comes near enemy heroes or towers.",
+   "description_zh": "幻影刺客模糊自己的身形，躲避多种飞行过程中的攻击和技能弹道，提升她的移动速度，使她无法被看到，直到她靠近敌方英雄或防御塔。",
+   "notes_en": [
+    "Attacking Roshan with a regular attack will dispel Blur."
+   ],
+   "notes_zh": [
+    "通过普通攻击攻击肉山会驱散魅影无形。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Decreases Cooldown by %bonus_AbilityCooldown%s. Any time Phantom Assassin gets a hero kill, her ability cooldowns advance %cooldown_refund_pct%%% of their max cooldown values.",
+     "zh": "冷却时间减少%bonus_AbilityCooldown%秒。只要幻影刺客击杀英雄，她的技能冷却时间都会加快%cooldown_refund_pct%%%最高冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "fb8fa3e98ce045dbafd9",
+  "subject": "enchantress_bunny_hop",
+  "subject_zh": "魅惑魔女·跃动",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Leaps backward, dodges incoming projectiles, and launches an Impetus attack on the %attack_targets% furthest enemy units within Enchantress' attack range + %bonus_attack_range%.",
+   "向后跳跃，躲避多种飞行过程中的攻击和技能弹道，并向魅惑魔女的攻击距离+%bonus_attack_range%范围内最远的%attack_targets%个敌方单位发动一次附有推进的攻击。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "description_en": "Leaps backward, dodges incoming projectiles, and launches an Impetus attack on the %attack_targets% furthest enemy units within Enchantress' attack range + %bonus_attack_range%.",
+   "description_zh": "向后跳跃，躲避多种飞行过程中的攻击和技能弹道，并向魅惑魔女的攻击距离+%bonus_attack_range%范围内最远的%attack_targets%个敌方单位发动一次附有推进的攻击。"
+  }
+ },
+ {
+  "review_id": "75fc39e5211f6545b620",
+  "subject": "broodmother_incapacitating_bite",
+  "subject_zh": "育母蜘蛛·麻痹之咬",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "The miss chance stacks with evasion and terrain dodge chance."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Broodmother's venom cripples enemy units, causing her attacks to slow and giving the affected unit a chance to miss its attacks and extra damage from attacks.",
+   "description_zh": "育母蜘蛛用毒液削弱敌方单位，使她的攻击带有减速效果，中毒单位的攻击有一定概率落空，并且被攻击时承受额外伤害。",
+   "notes_en": [
+    "The miss chance stacks with evasion and terrain dodge chance."
+   ],
+   "notes_zh": [
+    "攻击落空几率与闪避和上下坡丢失叠加。"
+   ]
+  }
+ },
+ {
+  "review_id": "18b9488a8925f18509f6",
+  "subject": "weaver_time_lapse",
+  "subject_zh": "编织者·时光倒流",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Time Lapse disjoints projectiles.",
+   "时光倒流可以躲避攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Weaver warps backward to whatever position it was in five seconds earlier--regaining the HP and mana from that time. No effect on cooldown, gold or experience.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "编织者回到五秒前的时间点，获得当时的生命值和魔法值。不影响冷却时间、金钱和经验。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "Removes most negative buffs from Weaver.",
+    "Time Lapse disjoints projectiles."
+   ],
+   "notes_zh": [
+    "能够移除编织者身上大部分的负面状态。",
+    "时光倒流可以躲避攻击和技能弹道。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Time Lapse may target allied Heroes with %abilitycastrange% cast range.",
+     "zh": "时光倒流可以对%abilitycastrange%施法距离内的友方英雄施放。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e5669fcfc5e753a3fd2f",
+  "subject": "alchemist_chemical_rage",
+  "subject_zh": "炼金术士·化学狂暴",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "DISPEL TYPE: Basic Dispel Has a %transformation_time% second transformation time, which can be used to dodge projectiles and stuns.",
+   "驱散类型：弱驱散 拥有%transformation_time%秒的变身时间，可以用来躲避攻击和技能弹道以及眩晕技能。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Alchemist causes his Ogre to enter a chemically induced rage, reducing base attack cooldown and increasing movement speed and health regeneration.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "炼金术士诱发他的食人魔同伴进入化学狂暴，降低攻击间隔，提高移动速度和生命恢复。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Has a %transformation_time% second transformation time, which can be used to dodge projectiles and stuns."
+   ],
+   "notes_zh": [
+    "拥有%transformation_time%秒的变身时间，可以用来躲避攻击和技能弹道以及眩晕技能。"
+   ]
+  }
+ },
+ {
+  "review_id": "6e9db32dc629aa0fe2d4",
+  "subject": "chaos_knight_phantasm",
+  "subject_zh": "混沌骑士·混沌之军",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Chaos Knight is invulnerable for %invuln_duration% seconds when casting, allowing him to dodge stuns and damage.",
+   "混沌骑士在施放时有%invuln_duration%秒的无敌时间，可以躲避眩晕和伤害技能。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Summons several phantasmal copies of the Chaos Knight from alternate dimensions. The phantasms are illusions that deal %outgoing_damage_tooltip%%% damage, but take %incoming_damage_tooltip%%% damage.\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "从其他维度召唤若干个混沌骑士的幻象。幻象继承%outgoing_damage_tooltip%%%攻击力，但是承受%incoming_damage_tooltip%%%伤害。\n驱散类型：弱驱散",
+   "notes_en": [
+    "Removes most negative buffs from Chaos Knight.",
+    "Chaos Knight is invulnerable for %invuln_duration% seconds when casting, allowing him to dodge stuns and damage."
+   ],
+   "notes_zh": [
+    "能够移除混沌骑士的大部分负面状态。",
+    "混沌骑士在施放时有%invuln_duration%秒的无敌时间，可以躲避眩晕和伤害技能。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Gains a passive component.  When an illusion of Chaos Knight is created, there is a %bonus_illusion_chance%%% chance to create an additional illusion under Chaos Knight's control.When Phantasm is activated, also creates an illusion of allied heroes globally.",
+     "zh": "增加被动效果。混沌骑士产生幻象时都会有%bonus_illusion_chance%%%几率额外产生一个在其控制下的幻象。施放混沌之军时，会产生全地图上所有友方英雄的一个幻象。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ea10685e5c739d77dd37",
+  "subject": "naga_siren_mirror_image",
+  "subject_zh": "娜迦海妖·镜像",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "DISPEL TYPE: Basic Dispel Naga Siren is invulnerable for %invuln_duration% seconds when casting, allowing her to dodge stuns and damage.",
+   "驱散类型：弱驱散 娜迦海妖在施法时有%invuln_duration%秒的无敌时间，可以用来躲避眩晕和伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Creates multiple images of Naga Siren under her control.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "制造多个受娜迦海妖控制的镜像。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Naga Siren is invulnerable for %invuln_duration% seconds when casting, allowing her to dodge stuns and damage.",
+    "Upon casting, most effects are removed from Naga Siren.",
+    "Upon casting, existing Mirror Image illusions are destroyed."
+   ],
+   "notes_zh": [
+    "娜迦海妖在施法时有%invuln_duration%秒的无敌时间，可以用来躲避眩晕和伤害。",
+    "施放后，将会移除娜迦海妖身上大部分效果。",
+    "施放时现有的镜像幻象将被摧毁。"
+   ]
+  }
+ },
+ {
+  "review_id": "c7ee0e6ad1507dc2ae11",
+  "subject": "dark_willow_shadow_realm",
+  "subject_zh": "邪影芳灵·暗影之境",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Disjoints projectiles upon cast.",
+   "施法时能躲避弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "description_en": "Dark Willow recedes into the shadows, becoming untargetable.  Her next attack has %attack_range_bonus% bonus attack range and deals bonus magic damage, and will end Shadow Realm. Damage scales based on how long she remains under the effects of Shadow Realm, the maximum being reached after %max_damage_duration% seconds.",
+   "description_zh": "邪影芳灵遁入暗影之境，无法成为攻击或技能的目标。她的下次攻击具有%attack_range_bonus%额外攻击距离，并且造成额外魔法伤害，暗影之境技能也会随之结束。在暗影中时间越长，伤害越高。在暗影之境内的时间超过%max_damage_duration%秒将达到最高伤害。",
+   "notes_en": [
+    "Disjoints projectiles upon cast.",
+    "Grants phased movement.",
+    "Spells which require vision cannot affect Dark Willow in the Shadow Realm."
+   ],
+   "notes_zh": [
+    "施法时能躲避弹道。",
+    "获得相位移动状态。",
+    "需要视野的技能无法作用于暗影之境中的邪影芳灵。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Attacking no longer takes Dark Willow out of Shadow Realm. Each attack still has bonus damage based on the duration of the buff.",
+     "zh": "发动普通攻击不再使邪影芳灵脱离暗影之境。持续时间内每次攻击都带有额外伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c0fb291188964b090b2b",
+  "subject": "marci_companion_run",
+  "subject_zh": "玛西·回身踢",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Marci's initial run to her target unit can be disjointed.",
+   "玛西冲刺时目标单位可以躲避该效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Marci bounds to the targeted allied unit, choosing a direction and distance she will spring away from it. Upon reaching the unit, Marci lunges to her final destination, damaging and stunning enemies where she lands.\n\nWhen Rebound is set to alt-cast, Marci brings the target ally with her to her final destination.\n\n The ally receives %ally_movespeed_pct%%% bonus movement speed for %ally_buff_duration%s.",
+   "description_zh": "玛西跃向友方目标单位，选好她要弹离的方向和距离。到达目标后玛西冲向最终的目的地，对落地点的敌人造成伤害和眩晕。\n\n回身踢设为多样施法（右键点击技能栏图标）后，玛西会把她的友军目标带向最终目的地。\n\n友军将获得%ally_movespeed_pct%%%移动速度加成，持续%ally_buff_duration%秒。",
+   "notes_en": [
+    "Marci's initial run to her target unit can be disjointed.",
+    "Does not trigger spell reflect.",
+    "Does not bring allies who are Rooted or Leashed when alt-cast."
+   ],
+   "notes_zh": [
+    "玛西冲刺时目标单位可以躲避该效果。",
+    "不会触发法术反弹。",
+    "多样施法时不会带走被缠绕或束缚的友军。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases damage. Rebound can be cast on enemies, and causes Marci to also get the speed boost when she casts it.",
+     "zh": "提升伤害。回身踢可以对敌人施放，并且玛西施放后自身也会获得加速效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "7ca488d376126344676f",
+  "subject": "muerta_pierce_the_veil",
+  "subject_zh": "琼英碧灵·越界",
+  "mechanism": "projectile_dodge",
+  "mechanism_zh": "躲避弹道",
+  "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "DISPEL TYPE: Basic Dispel Muerta will dodge projectiles upon transformation.",
+   "驱散类型：弱驱散 琼英碧灵在变身期间可以躲避弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Muerta transforms, becoming ethereal, gaining bonus base damage and phased movement.Passively allows Muerta to always attack ethereal targets and attack when she is ethereal. When either she or her target is ethereal, all of her attack damage is dealt as magical damage and her physical lifesteal is treated as spell lifesteal.DISPEL TYPE: Basic Dispel",
+   "description_zh": "琼英碧灵变身，成为虚无状态，获得基础攻击力加成和相位移动状态。被动使总是可以攻击虚无状态下的目标，并且她在虚无状态下也能攻击。在她或目标处于虚无时，她的所有攻击伤害均为魔法伤害，她的物理吸血被视为技能吸血。驱散类型：弱驱散",
+   "notes_en": [
+    "Muerta will dodge projectiles upon transformation.",
+    "Muerta cannot attack buildings while transformed."
+   ],
+   "notes_zh": [
+    "琼英碧灵在变身期间可以躲避弹道。",
+    "琼英碧灵在变身后无法攻击建筑。"
+   ]
+  }
+ },
+ {
+  "review_id": "ad2e6f6bf320668956f4",
+  "subject": "bane_fiends_grip",
+  "subject_zh": "祸乱之源·魔爪",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted.",
+   "幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+   "description_zh": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack.",
+     "zh": "魔爪的冷却时间减少%bonus_AbilityCooldown%秒。魔爪将产生两个不可控制的幻象，幻象也将对目标持续施放魔爪。幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。伤害不会叠加。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "37369ba7b1dfe86898d8",
+  "subject": "crystal_maiden_freezing_field",
+  "subject_zh": "水晶室女·极寒领域",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Can still be interrupted by enemies.",
+   "仍然可以被敌人打断。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "description_en": "CHANNELED - Surrounds Crystal Maiden with %num_explosions% random icy explosions that slow enemies and deal massive damage. Lasts %abilitychanneltime% seconds.",
+   "description_zh": "持续施法 - 以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害。持续%abilitychanneltime%秒。",
+   "notes_en": [
+    "The slow is applied on all enemies in the radius, even if they aren't hit by an explosion (lasts %slow_duration% second).",
+    "Explosions occur every %explosion_interval_tooltip% seconds."
+   ],
+   "notes_zh": [
+    "减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害（效果持续%slow_duration%秒）。",
+    "每%explosion_interval_tooltip%秒产生一次爆炸。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Allows you to move, cast and attack during Freezing Field. Can still be interrupted by enemies. You move %shard_self_movement_speed_slow_pct%%% slower during this. Increases total number of explosions by %shard_bonus_explosion%%%. Applies Frostbite to any unit that has been standing in the Freezing Field for over %frostbite_delay%s.",
+     "zh": "使自身在极寒领域期间可以移动、施法和攻击。仍然可以被敌人打断。在此期间移动速度降低%shard_self_movement_speed_slow_pct%%%。冰爆总数提升%shard_bonus_explosion%%%。对极寒领域内停留超过%frostbite_delay%秒的所有单位都会施加冰封禁制。"
+    }
+   }
+  }
+ }
+]

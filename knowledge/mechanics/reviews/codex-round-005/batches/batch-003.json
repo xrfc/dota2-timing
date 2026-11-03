@@ -1,0 +1,1319 @@
+[
+ {
+  "review_id": "7c2911cf7844f3051597",
+  "subject": "pugna_life_drain",
+  "subject_zh": "帕格纳·生命汲取",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 使用生命汲取时，帕格纳吸取目标敌方单位的生命值，并获得其视野。",
+   "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Life Drain",
+   "name_zh": "生命汲取",
+   "description_en": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.\n\nWhen cast on an ally, Pugna will drain his own health into his ally.",
+   "description_zh": "持续施法 - 使用生命汲取时，帕格纳吸取目标敌方单位的生命值，并获得其视野。\n\n向队友施放可以将自己的生命值转移给队友。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces cooldown by %abilitycooldown%s. When targeting an enemy hero, Pugna reduces their outgoing spell damage by %spell_amp_drain_rate%%% per second up to a maximum of %spell_amp_drain_max%%% and increases his own, up to a maximum of %max_spell_amp_drain_pct%%%. When draining through a Nether Ward using Shard, the rate of increase/decrease is %spell_amp_drain_rate_ward%%% instead. Debuff lasts %spell_amp_drain_duration% seconds.",
+     "zh": "冷却时间减少%abilitycooldown%秒。以敌方英雄为目标时，帕格纳每秒降低他们%spell_amp_drain_rate%%%技能伤害输出，最高可达到%spell_amp_drain_max%%%，并且自身的技能伤害输出提升，最高可达到%max_spell_amp_drain_pct%%%。魔晶升级下对幽冥守卫施放时降低和提升的速率为%spell_amp_drain_rate_ward%%%。负面效果持续%spell_amp_drain_duration%秒。"
+    },
+    "shard_loc": {
+     "en": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed.",
+     "zh": "生命汲取可以对幽冥守卫施放，使生命汲取可以折射至守卫附近%abilitycastrange%范围内所有敌方英雄，造成%shard_damage_pct_from_ward%%%效果。守卫被摧毁后效果将会中断。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "421eadd1b2aeec0d765c",
+  "subject": "riki_tricks_of_the_trade",
+  "subject_zh": "力丸·绝杀秘技",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "CHANNELED - Riki phases out of the world and periodically strikes %interval_targets% random enemy units from behind in an area around him.",
+   "持续施法 - 力丸转移出现实位面，每隔一段时间从背后随机攻击附近的%interval_targets%个随机敌方单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Tricks of the Trade",
+   "name_zh": "绝杀秘技",
+   "description_en": "CHANNELED - Riki phases out of the world and periodically strikes %interval_targets% random enemy units from behind in an area around him. He has fixed attack damage while phased out.",
+   "description_zh": "持续施法 - 力丸转移出现实位面，每隔一段时间从背后随机攻击附近的%interval_targets%个随机敌方单位。期间他的攻击伤害为固定值。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Cast Range to %AbilityCastRange%. Allows you to target an allied unit, hiding inside them for the duration. While hiding in an allied unit, they have %scepter_movespeed%%% bonus movement speed, and Tricks of the Trade lasts %scepter_bonus_duration%s longer and does an additional %scepter_bonus_attacks% attacks.",
+     "zh": "提升施法距离至%AbilityCastRange%。可以对友方单位施放，持续时间内藏在他们体内。藏在友方单位体内时，他会拥有%scepter_movespeed%%%移动速度加成，同时绝杀秘技的持续时间提升%scepter_bonus_duration%秒，并且额外发动%scepter_bonus_attacks%次攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e50e63864dcc4d69ece4",
+  "subject": "tinker_rearm",
+  "subject_zh": "修补匠·再装填",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 重置修补匠技能的冷却时间。",
+   "CHANNELED - Resets the cooldown on Tinker's abilities."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "name_en": "Rearm",
+   "name_zh": "再装填",
+   "description_en": "CHANNELED - Resets the cooldown on Tinker's abilities.",
+   "description_zh": "持续施法 - 重置修补匠技能的冷却时间。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "95b1a84d97ea14b987af",
+  "subject": "tiny_tree_channel",
+  "subject_zh": "小小·树木连掷",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 小小进行持续施法，随机将自身周围的树木扔向目标范围。",
+   "CHANNELED - Tiny channels to throw random trees within range towards the targeted area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_CHANNELLED  | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "name_en": "Tree Volley",
+   "name_zh": "树木连掷",
+   "description_en": "CHANNELED - Tiny channels to throw random trees within range towards the targeted area. Deals Tiny's attack with Tree Throw bonuses.",
+   "description_zh": "持续施法 - 小小进行持续施法，随机将自身周围的树木扔向目标范围。每棵树对该区域内敌人造成的伤害为小小的攻击伤害加上扔树的额外伤害。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "46f6d28889bb773908b5",
+  "subject": "tpscroll",
+  "subject_zh": "回城卷轴",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If multiple heroes teleport to the same location in succession, the channeling time will be increased for each successive hero."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_BUILDING"
+  },
+  "context": {
+   "dname": "Town Portal Scroll",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Teleport",
+     "description": "After channeling for 3 seconds, teleports you to a target friendly building. \n\nDouble-click to teleport to your team's base fountain."
+    }
+   ],
+   "notes": "If multiple heroes teleport to the same location in succession, the channeling time will be increased for each successive hero.\nTeleport can be prevented or canceled by Root abilities.",
+   "attrib": [
+    {
+     "key": "minimum_distance",
+     "value": "70"
+    },
+    {
+     "key": "maximum_distance",
+     "value": "800"
+    },
+    {
+     "key": "vision_radius",
+     "value": "200"
+    },
+    {
+     "key": "tooltip_channel_time",
+     "value": "3.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "cfa044bdf5c41b6923a2",
+  "subject": "warlock_upheaval",
+  "subject_zh": "术士·剧变",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "持续施法时每%imps_interval%秒术士会召唤一个魔童，持续%minor_imp_duration%秒，魔童死亡时会爆炸，对周围所有敌人造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Upheaval",
+   "name_zh": "剧变",
+   "description_en": "CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled. Lasts up to %abilitychanneltime% seconds. Enemies are slowed for %duration% second after leaving the area or the spell ends.",
+   "description_zh": "持续施法 - 随施法时间增强的减速气流，还会造成伤害。持续最多%abilitychanneltime%秒。在魔法结束或目标离开生效区域后，敌人仍会被减速%duration%秒。",
+   "notes_en": [
+    "The slow increase is based on length of the channel, not the duration an enemy was standing in the area."
+   ],
+   "notes_zh": [
+    "减速效果的增加是根据持续施法的时长，而不是敌人在区内停留的持续时间。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "While channeling, Warlock spawns a minor imp every %imps_interval% seconds that lasts for %minor_imp_duration% seconds and explodes dealing damage to all enemies around them upon death.",
+     "zh": "持续施法时每%imps_interval%秒术士会召唤一个魔童，持续%minor_imp_duration%秒，魔童死亡时会爆炸，对周围所有敌人造成伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "b6bbcf39e8f5f7b2f412",
+  "subject": "windrunner_powershot",
+  "subject_zh": "风行者·强力击",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 风行者为她的弓蓄力，射出一支强力的箭矢，最长可蓄力%abilitychanneltime%秒，其间可以打断蓄力，蓄力时间越长，箭矢伤害越高。",
+   "CHANNELED - Windranger charges her bow for up to %abilitychanneltime% second for a single powerful shot, which deals more damage the longer it is charged."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "name_en": "Powershot",
+   "name_zh": "强力击",
+   "description_en": "CHANNELED - Windranger charges her bow for up to %abilitychanneltime% second for a single powerful shot, which deals more damage the longer it is charged. The arrow damages and slows enemies' movement speed along its path. For each enemy that Powershot hits, its damage and slow is reduced.",
+   "description_zh": "持续施法 - 风行者为她的弓蓄力，射出一支强力的箭矢，最长可蓄力%abilitychanneltime%秒，其间可以打断蓄力，蓄力时间越长，箭矢伤害越高。这支箭会对穿过的所有敌方单位造成伤害和减速效果，并破坏树木。每伤害一个单位，箭矢的伤害和减速效果都会降低。",
+   "notes_en": [
+    "Powershot will destroy trees in its area of effect."
+   ],
+   "notes_zh": [
+    "强力击将摧毁作用范围内的树木。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "de4431af99d5b459eee0",
+  "subject": "witch_doctor_death_ward",
+  "subject_zh": "巫医·死亡守卫",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 召唤一个死亡守卫，会优先攻击其攻击距离内的敌方英雄。",
+   "CHANNELED - Summons a deadly ward to attack enemy heroes within its attack range."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Death Ward",
+   "name_zh": "死亡守卫",
+   "description_en": "CHANNELED - Summons a deadly ward to attack enemy heroes within its attack range. Lasts a maximum of %abilitychanneltime% seconds. Death Ward has %bonus_accuracy%%% bonus accuracy.",
+   "description_zh": "持续施法 - 召唤一个死亡守卫，会优先攻击其攻击距离内的敌方英雄。最多持续%abilitychanneltime%秒。死亡守卫拥有%bonus_accuracy%%%额外必中率。",
+   "notes_en": [
+    "The Death Ward is invulnerable, and is only destroyed if Witch Doctor is interrupted or its duration expires.",
+    "The Death Ward can be controlled, and made to attack a specific target.",
+    "Death Ward attacks once every 0.22 seconds."
+   ],
+   "notes_zh": [
+    "死亡守卫是无敌的，只有在巫医被打断或持续时间结束后才会被摧毁。",
+    "死亡守卫可以受到控制，选择攻击特定目标。",
+    "死亡守卫每0.22秒攻击一次。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Death Ward attacks bounce between nearby enemies.",
+     "zh": "死亡守卫的攻击会向附近英雄弹射。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3a925cc5e4fb4fd8d608",
+  "subject": "brewmaster_drunken_brawler",
+  "subject_zh": "酒仙·醉拳",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算",
+  "definition_note": "U51：不靠概率的强化攻击也算（如冥魂大帝·本命一击、巨人之槌）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Fire Brawler gains bonus Attack Speed and chance to critical strike.",
+   "烈火拳法 - 获得攻击速度加成，并且拥有几率造成致命一击伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE"
+  },
+  "context": {
+   "name_en": "Drunken Brawler",
+   "name_zh": "醉拳",
+   "description_en": "Brewmaster can switch stances based on the elements he controls.Whenever Brewmaster casts an ability, he becomes Brewed Up, increasing his stance power by %brewed_up_bonus%%% for %brewed_up_duration%s.  If he casts another ability while Brewed Up, the duration is extended by %brewed_up_duration_extend%s. After Brewed Up expires, he is hungover and cannot Brew Up again for %hangover_time%s.Earth Brawler gains bonus Magic Resistance and Armor.Storm Brawler gains bonus Evasion and Movement Speed.Fire Brawler gains bonus Attack Speed and chance to critical strike.",
+   "description_zh": "酒仙可以根据操控的元素来切换拳法。每当酒仙施放技能，他都会进入浸酒状态，拳法的威力提升%brewed_up_bonus%%%，持续%brewed_up_duration%秒。如果他在浸酒状态下又施放了技能，持续时间会延长%brewed_up_duration_extend%秒。浸酒状态结束后，他会进入大醉状态，%hangover_time%秒内无法再次进入浸酒状态。大地拳法 - 获得护甲和魔法抗性加成。狂风拳法 - 获得闪避和移动速度加成。烈火拳法 - 获得攻击速度加成，并且拥有几率造成致命一击伤害。",
+   "notes_en": [
+    "Stacks diminishingly with other sources of Evasion."
+   ],
+   "notes_zh": [
+    "与其他闪避效果为非线性叠加。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "7785a9c89a34d1d92f0a",
+  "subject": "chaos_knight_chaos_strike",
+  "subject_zh": "混沌骑士·混沌一击",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算",
+  "definition_note": "U51：不靠概率的强化攻击也算（如冥魂大帝·本命一击、巨人之槌）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "混沌骑士和他的幻象在攻击时有几率造成威力不一的致命一击，并且触发时具有吸血效果。",
+   "Chaos Knight and his illusions' attacks have a chance to deal a critical strike of varying strength with bonus lifesteal."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Chaos Strike",
+   "name_zh": "混沌一击",
+   "description_en": "Chaos Knight and his illusions' attacks have a chance to deal a critical strike of varying strength with bonus lifesteal. Lifesteal from creeps is reduced.",
+   "description_zh": "混沌骑士和他的幻象在攻击时有几率造成威力不一的致命一击，并且触发时具有吸血效果。对非英雄单位的吸血效果减少。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "ecd5a8cfa0dcae8e579f",
+  "subject": "juggernaut_blade_dance",
+  "subject_zh": "主宰·剑舞",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算",
+  "definition_note": "U51：不靠概率的强化攻击也算（如冥魂大帝·本命一击、巨人之槌）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "主宰有一定概率在攻击时触发致命一击。",
+   "Gives Juggernaut a chance to deal critical damage with Blade Fury and on each attack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Blade Dance",
+   "name_zh": "剑舞",
+   "description_en": "Gives Juggernaut a chance to deal critical damage with Blade Fury and on each attack.",
+   "description_zh": "主宰有一定概率在攻击时触发致命一击。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8b18a1eff9621f1f1a10",
+  "subject": "kez_shodo_sai",
+  "subject_zh": "凯·翔影之钗",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算",
+  "definition_note": "U51：不靠概率的强化攻击也算（如冥魂大帝·本命一击、巨人之槌）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "装备双钗时凯的攻击有几率对敌人造成致命一击。",
+   "When a Marked target is attacked by Kez, it will guarantee a critical strike and stun the target.",
+   "如果有敌方英雄的攻击被招架，该英雄会被眩晕%parry_stun_duration%秒并获得印记，拥有印记的目标被凯攻击时必定会造成致命一击，并且被眩晕。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "name_en": "Shodo Sai",
+   "name_zh": "翔影之钗",
+   "description_en": "Kez has a chance to critically strike the target when attacking with Sais.Kez may activate the ability to disarm himself, lock his facing, and parry attacks and attack effects from the targeted direction for %parry_duration% seconds. If an attack is parried from an enemy Hero in this way, that Hero is stunned for %parry_stun_duration%s and gains a Mark.  When a Marked target is attacked by Kez, it will guarantee a critical strike and stun the target.The sub-ability may be used to cancel the blocking early.",
+   "description_zh": "装备双钗时凯的攻击有几率对敌人造成致命一击。凯可以主动开启技能，使自身被缴械，面朝方向被锁定，招架来自目标方向的攻击和攻击效果，持续%parry_duration%秒。如果有敌方英雄的攻击被招架，该英雄会被眩晕%parry_stun_duration%秒并获得印记，拥有印记的目标被凯攻击时必定会造成致命一击，并且被眩晕。子技能可以用于提前取消招架状态。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Parrying creates a stronger Mark that deals additional stun and critical damage.",
+     "zh": "招架会产生更强的印记，造成额外眩晕和致命一击伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "90f1a18e69a6e6c7785f",
+  "subject": "lycan_shapeshift",
+  "subject_zh": "狼人·变身",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算",
+  "definition_note": "U51：不靠概率的强化攻击也算（如冥魂大帝·本命一击、巨人之槌）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "狼人展现出他的凶狼形态，获得致命一击的能力，并且提升夜间视野。",
+   "Movement and critical strike bonuses are also applied to all units under Lycan's control.",
+   "Lycan assumes his lupine form, granting him critical strikes and added vision at night.",
+   "移动速度和致命一击也会施加给狼人控制下的所有单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Shapeshift",
+   "name_zh": "变身",
+   "description_en": "Lycan assumes his lupine form, granting him critical strikes and added vision at night. During Shapeshift, Lycan moves at increased speed and cannot be slowed.  Movement and critical strike bonuses are also applied to all units under Lycan's control.",
+   "description_zh": "狼人展现出他的凶狼形态，获得致命一击的能力，并且提升夜间视野。在变身期间，狼人达到超高移动速度，并且不能被减速。移动速度和致命一击也会施加给狼人控制下的所有单位。",
+   "notes_en": [
+    "Hex doesn't remove Lycan's movement speed."
+   ],
+   "notes_zh": [
+    "狼人的移动速度不会受到妖术的影响。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "97fbac5f04a1df58a307",
+  "subject": "monkey_king_boundless_strike",
+  "subject_zh": "齐天大圣·棒击大地",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算",
+  "definition_note": "U51：不靠概率的强化攻击也算（如冥魂大帝·本命一击、巨人之槌）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Monkey King enlarges his staff and slams it against the ground, stunning enemies in a line and damaging them with bonus damage and a critical hit based on his attack.",
+   "齐天大圣让金箍棒变大，并将其挥起猛击地面，眩晕一条直线上的敌人并造成额外伤害和基于他普通攻击的致命一击伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Boundless Strike",
+   "name_zh": "棒击大地",
+   "description_en": "Monkey King enlarges his staff and slams it against the ground, stunning enemies in a line and damaging them with bonus damage and a critical hit based on his attack. Has True Strike.",
+   "description_zh": "齐天大圣让金箍棒变大，并将其挥起猛击地面，眩晕一条直线上的敌人并造成额外伤害和基于他普通攻击的致命一击伤害。具有克敌机先效果。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Boundless Strike applies Primal Spring with %spring_channel_pct%%% of the max channeling duration power to enemies along the staff and at the end of the staff. When Boundless Strike is set to alt-cast, Monkey King leaps to the end of his staff.",
+     "zh": "棒击大地对沿途和末端的敌人施加乾坤之跃，威力为最长持续施法时间的%spring_channel_pct%%%。棒击大地设为多样施法（右键点击技能栏图标）后，齐天大圣还会跳跃至金箍棒的另一端。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "373bad5e1b62a0fa41d0",
+  "subject": "revenants_brooch",
+  "subject_zh": "英灵胸针",
+  "mechanism": "critical",
+  "mechanism_zh": "暴击",
+  "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算",
+  "definition_note": "U51：不靠概率的强化攻击也算（如冥魂大帝·本命一击、巨人之槌）",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Counts as a Critical Strike for purposes of stacking with other sources of Critical Strike."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Revenant's Brooch",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Phantom Critical",
+     "description": "Grants each attack a 30% chance to deal an additional 80% of the attack's damage as bonus magic damage."
+    }
+   ],
+   "notes": "Counts as a Critical Strike for purposes of stacking with other sources of Critical Strike.\nPhantom Critical does not work against buildings.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "35"
+    },
+    {
+     "key": "spell_lifesteal",
+     "display": "+ {value}% Spell Lifesteal",
+     "value": "15"
+    },
+    {
+     "key": "crit_chance",
+     "value": "30"
+    },
+    {
+     "key": "crit_multiplier",
+     "value": "80"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "9d3ad9c6b3f29bbb0980",
+  "subject": "cyclone",
+  "subject_zh": "Eul的神圣法杖",
+  "mechanism": "cyclone_banish",
+  "mechanism_zh": "吹风/放逐",
+  "definition": "使目标短暂离开战场，期间无敌或不可被选取",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Cyclone can only be cast on enemy units or yourself.",
+   "Sweeps a target unit up into a cyclone, making them invulnerable for 2."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "dname": "Eul's Scepter of Divinity",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Cyclone",
+     "description": "Sweeps a target unit up into a cyclone, making them invulnerable for 2.5 seconds. Cyclone can only be cast on enemy units or yourself.\n\nEnemy units take 50 magical damage upon landing.\nDispel Type: Basic Dispel"
+    }
+   ],
+   "notes": "You cannot cyclone allies.\nCyclones cast on yourself go through spell immunity.\nCyclone can dispel some buffs and debuffs.\nCyclone duration is unaffected by status resistance.",
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2.5"
+    },
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "20"
+    },
+    {
+     "key": "cyclone_duration",
+     "value": "2.5"
+    },
+    {
+     "key": "tooltip_drop_damage",
+     "value": "50"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "ebacbcbebe480d52959f",
+  "subject": "cyclone",
+  "subject_zh": "Eul的神圣法杖",
+  "mechanism": "cyclone_banish",
+  "mechanism_zh": "吹风/放逐",
+  "definition": "使目标短暂离开战场，期间无敌或不可被选取",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Cyclone can dispel some buffs and debuffs."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "dname": "Eul's Scepter of Divinity",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Cyclone",
+     "description": "Sweeps a target unit up into a cyclone, making them invulnerable for 2.5 seconds. Cyclone can only be cast on enemy units or yourself.\n\nEnemy units take 50 magical damage upon landing.\nDispel Type: Basic Dispel"
+    }
+   ],
+   "notes": "You cannot cyclone allies.\nCyclones cast on yourself go through spell immunity.\nCyclone can dispel some buffs and debuffs.\nCyclone duration is unaffected by status resistance.",
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2.5"
+    },
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "20"
+    },
+    {
+     "key": "cyclone_duration",
+     "value": "2.5"
+    },
+    {
+     "key": "tooltip_drop_damage",
+     "value": "50"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "8081de344bac18007e77",
+  "subject": "pugna_decrepify",
+  "subject_zh": "帕格纳·衰老",
+  "mechanism": "cyclone_banish",
+  "mechanism_zh": "吹风/放逐",
+  "definition": "使目标短暂离开战场，期间无敌或不可被选取",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "name_en": "Decrepify",
+   "name_zh": "衰老",
+   "description_en": "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked. Healing on affected allies is increased, while afflicted enemies take extra magic damage instead.",
+   "description_zh": "一个强大的驱逐咒语，能使一个单位进入虚无状态，无法攻击或受到攻击。受作用的友军提升了治疗效果，而受作用的敌军会被减速，并且承受额外魔法伤害。",
+   "notes_en": [
+    "Only magical and pure damage can affect a unit under the effects of Decrepify.",
+    "Doesn't slow allied units.",
+    "Can be used on your Nether Ward."
+   ],
+   "notes_zh": [
+    "只有魔法伤害和纯粹伤害可以作用于处于衰老状态的单位。",
+    "不会对友方单位造成减速。",
+    "可以对幽冥守卫施放。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "5991fbaf7387e26a1eb7",
+  "subject": "abaddon_aphotic_shield",
+  "subject_zh": "亚巴顿·无光之盾",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "召唤黑暗能量环绕友方单位，驱散他们并创造一个全伤害护盾，护盾在消失前能吸收一定量的伤害。",
+   "不论护盾因持续时间结束或吸收足够伤害后被摧毁都将造成最大伤害。",
+   "The max damage is always dealt whether the barrier is destroyed by expiring or absorbing damage.",
+   "When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it.",
+   "护盾消失或被摧毁后将会爆炸，对附近区域的单位造成伤害，伤害值为护盾的最大吸收量。",
+   "Summons dark energies around an ally unit, dispelling them and creating an all damage barrier that absorbs a set amount of damage before expiring."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Aphotic Shield",
+   "name_zh": "无光之盾",
+   "description_en": "Summons dark energies around an ally unit, dispelling them and creating an all damage barrier that absorbs a set amount of damage before expiring. When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "召唤黑暗能量环绕友方单位，驱散他们并创造一个全伤害护盾，护盾在消失前能吸收一定量的伤害。护盾消失或被摧毁后将会爆炸，对附近区域的单位造成伤害，伤害值为护盾的最大吸收量。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "The max damage is always dealt whether the barrier is destroyed by expiring or absorbing damage.",
+    "The explosion does not damage units hidden by the fog of war."
+   ],
+   "notes_zh": [
+    "不论护盾因持续时间结束或吸收足够伤害后被摧毁都将造成最大伤害。",
+    "爆炸将不会对战争迷雾内单位造成伤害。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.",
+     "zh": "会对附近敌人造成吸收伤害的%absorb_to_damage%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "325afb07ca5141e24d40",
+  "subject": "abyssal_blade",
+  "subject_zh": "深渊之刃",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Multiple sources of damage block do not stack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Abyssal Blade",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Overwhelm",
+     "description": "Stuns a target enemy unit for 1.6 seconds. \n\nPierces Debuff Immunity."
+    },
+    {
+     "type": "passive",
+     "title": "Bash",
+     "description": "Grants melee heroes a 25% chance on hit to stun the target for 1.2 seconds and deal 120 bonus physical damage. Bash chance for ranged heroes is 10%."
+    }
+   ],
+   "notes": "The stun is melee range.\nDoes not stack with other bashes, and does not grant bash to Clones and Tempest Doubles.\nMultiple sources of damage block do not stack.\nThe following heroes cannot trigger Bash on this item: Spirit Breaker, Faceless Void, Slardar, and Kez while in Sai mode.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "35"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "30"
+    },
+    {
+     "key": "slow_resistance",
+     "display": "+ {value}% Slow Resistance",
+     "value": "30"
+    },
+    {
+     "key": "hp_regen_amp",
+     "display": "+ {value}% Health Restoration",
+     "value": "16"
+    },
+    {
+     "key": "bash_chance_melee",
+     "value": "25"
+    },
+    {
+     "key": "bash_chance_ranged",
+     "value": "10"
+    },
+    {
+     "key": "bash_duration",
+     "value": "1.2"
+    },
+    {
+     "key": "bash_cooldown",
+     "value": "2.3"
+    },
+    {
+     "key": "bonus_chance_damage",
+     "value": "120"
+    },
+    {
+     "key": "stun_duration",
+     "value": "1.6"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "c5c60221b29ab7606e25",
+  "subject": "abyssal_underlord_raid_boss",
+  "subject_zh": "孽主·侵略大军",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "友方英雄传送后会临时获得承受伤害降低和移动速度加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "name_en": "Invading Force",
+   "name_zh": "侵略大军",
+   "description_en": "After an allied hero Teleports, they temporarily gain Damage Reduction and Movement Speed. Allies receive %dark_portal_multiplier%x bonuses if teleporting via Fiend's Gate.",
+   "description_zh": "友方英雄传送后会临时获得承受伤害降低和移动速度加成。友军通过恶魔之扉传送后会获得%dark_portal_multiplier%倍加成。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "a66f10aab173f53f255e",
+  "subject": "crimson_guard",
+  "subject_zh": "赤红甲",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Multiple sources of damage block do not stack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Crimson Guard",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Guard",
+     "description": "For 7 seconds, grant nearby allied heroes and buildings a 100% chance to block damage equal to 70 plus 2% of the caster's max health value from each incoming attack.\n\nRadius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Damage Block",
+     "description": "Grants a 60% chance to block 75 damage from incoming attacks on melee heroes, and 50 damage on ranged."
+    }
+   ],
+   "notes": "Multiple sources of damage block do not stack.\nWhen the Guard buff is applied to ranged heroes, Guard blocks 25 less damage.\nGuard does not affect units that have been affected by Guard within Crimson Guard's cooldown.",
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "250"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "12"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "6"
+    },
+    {
+     "key": "block_damage_melee",
+     "value": "75"
+    },
+    {
+     "key": "block_damage_ranged",
+     "value": "50"
+    },
+    {
+     "key": "block_chance",
+     "value": "60"
+    },
+    {
+     "key": "duration",
+     "value": "7"
+    },
+    {
+     "key": "bonus_aoe_radius",
+     "value": "1200"
+    },
+    {
+     "key": "block_damage_active",
+     "value": "70"
+    },
+    {
+     "key": "block_chance_active",
+     "value": "100"
+    },
+    {
+     "key": "block_penalty_ranged",
+     "value": "25"
+    },
+    {
+     "key": "max_hp_pct",
+     "value": "2.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "6d838d8f57cbfad8a8c0",
+  "subject": "ember_spirit_flame_guard",
+  "subject_zh": "灰烬之灵·烈火罩",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "护盾消失后将失去伤害效果。",
+   "魔法伤害的吸收伤害值计算先于任何伤害减免效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Flame Guard",
+   "name_zh": "烈火罩",
+   "description_en": "Ember Spirit surrounds himself with a ring of fire that consumes incoming magic damage, absorbing a percentage of the damage taken. Flame Guard deals damage per second in an area around Ember Spirit while Flame Guard is active. If the shield is broken, the damage is also lost.",
+   "description_zh": "灰烬之灵用火焰之环将自己包裹起来，会消耗受到的魔法伤害，使受到的魔法伤害被吸收一定百分比。烈火罩开启后会对灰烬之灵周围的敌人造成每秒伤害。护盾消失后将失去伤害效果。",
+   "notes_en": [
+    "Magic damage reduction is calculated before any reductions.",
+    "The damage lingers for an additional %linger_duration% seconds after application."
+   ],
+   "notes_zh": [
+    "魔法伤害的吸收伤害值计算先于任何伤害减免效果。",
+    "伤害在施加后会额外粘滞%linger_duration%秒。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8c8d355aafc58e4701dd",
+  "subject": "furion_teleportation",
+  "subject_zh": "自然先知·传送",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Gains a barrier after arriving to its destination.",
+   "到达地点后获得一个护盾。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Teleportation",
+   "name_zh": "传送",
+   "description_en": "Teleports to any point on the map. Gains a barrier after arriving to its destination.",
+   "description_zh": "传送到地图上任何位置。到达地点后获得一个护盾。",
+   "notes_en": [
+    "Mana and cooldown take effect when the cast is completed.  Nature's Prophet will not use any mana or waste the cooldown if the spell is interrupted while casting.",
+    "When the cast begins, an effect is created at the target location, which is visible to allies and enemies."
+   ],
+   "notes_zh": [
+    "魔耗和冷却时间都是在技能施放结束后结算。自然先知在施放技能时被打断将不会耗费魔法或使技能进入冷却。",
+    "施法开始后，目标地点将产生视觉特效，对队友和敌人均可见。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "da560f636802aa0119e5",
+  "subject": "glimmer_cape",
+  "subject_zh": "微光披风",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "5 second delay, grants invisibility, 20 movement speed and a magic damage barrier that absorbs up to 375 damage to you or a target allied unit for 5 seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Glimmer Cape",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Glimmer",
+     "description": "After a 0.5 second delay, grants invisibility, 20 movement speed and a magic damage barrier that absorbs up to 375 damage to you or a target allied unit for 5 seconds.\n\nCan be cast while channeling."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "initial_fade_delay",
+     "value": "0.5"
+    },
+    {
+     "key": "secondary_fade_delay",
+     "value": "0.5"
+    },
+    {
+     "key": "active_movement_speed",
+     "value": "20"
+    },
+    {
+     "key": "duration",
+     "value": "5"
+    },
+    {
+     "key": "bonus_magical_armor",
+     "display": "+ {value}% Magic Resistance",
+     "value": "20"
+    },
+    {
+     "key": "barrier_block",
+     "value": "375"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "d7ed05993029d123aa15",
+  "subject": "legion_commander_overwhelming_odds",
+  "subject_zh": "军团指挥官·压倒性优势",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Overwhelming Odds has larger radius and grants an all damage barrier based on the damage it deals to enemy heroes.",
+   "压倒性优势的范围更大，会根据对敌方英雄造成的伤害提供全伤害护盾。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Overwhelming Odds",
+   "name_zh": "压倒性优势",
+   "description_en": "Turns the foes' numbers against them, dealing a %movement_slow%%% impact slow for %slow_duration%s and damage to all enemies in the area. Damage increases with each enemy unit or hero in the area, and grants Legion Commander bonus attack speed.",
+   "description_zh": "用敌人的数量反制他们，对附近的所有敌人造成伤害，击中时施加%movement_slow%%%减速，持续%slow_duration%秒。范围内每个敌方单位和英雄都会使伤害提升。另外还会向军团指挥官提供攻击速度加成。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Overwhelming Odds has larger radius and grants an all damage barrier based on the damage it deals to enemy heroes.",
+     "zh": "压倒性优势的范围更大，会根据对敌方英雄造成的伤害提供全伤害护盾。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e1925c21fa9dbe8aa332",
+  "subject": "marci_bodyguard",
+  "subject_zh": "玛西·护卫术",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "As Marci attacks heroes, %shared_barrier_replenish_amount%%% of the damage dealt restores the barrier.",
+   "在玛西攻击英雄时，造成伤害的%shared_barrier_replenish_amount%%%会补充护盾。",
+   "The shared barrier is reduced by damage on either Marci or her partner.",
+   "另外马上还会给她和她的搭档制造共用的全伤害护盾。",
+   "Additionally Marci creates a shared all damage barrier for herself and her partner.",
+   "不论是玛西或她的搭档受到伤害都会使共用护盾的数值减少。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Bodyguard",
+   "name_zh": "护卫术",
+   "description_en": "Passively grants Marci lifesteal and bonus attack damage.\n\nWhen cast on an ally, she provides them with %max_partner_penalty%%% of her passive lifesteal and attack damage bonus. Additionally Marci creates a shared all damage barrier for herself and her partner. As Marci attacks heroes, %shared_barrier_replenish_amount%%% of the damage dealt restores the barrier.",
+   "description_zh": "被动使玛西获得吸血和攻击力加成。\n\n对友军施放时，使其获得她的%max_partner_penalty%%%被动吸血和攻击力加成。另外马上还会给她和她的搭档制造共用的全伤害护盾。在玛西攻击英雄时，造成伤害的%shared_barrier_replenish_amount%%%会补充护盾。",
+   "notes_en": [
+    "Marci cannot cast Bodyguard on herself.",
+    "Lifesteal effectiveness gets a %creep_lifesteal_reduction_pct%%% penalty against creeps.",
+    "The shared barrier is reduced by damage on either Marci or her partner."
+   ],
+   "notes_zh": [
+    "玛西无法对自身施放护卫术。",
+    "吸血效果对非英雄单位减少%creep_lifesteal_reduction_pct%%%。",
+    "不论是玛西或她的搭档受到伤害都会使共用护盾的数值减少。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "e559bfaf21dd9091be96",
+  "subject": "medusa_mana_shield",
+  "subject_zh": "美杜莎·魔法盾",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "创造一个魔法护盾，消耗美杜莎的魔法值以吸收%absorption_pct%%%的伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "name_en": "Mana Shield",
+   "name_zh": "魔法盾",
+   "description_en": "Creates a shield that absorbs %absorption_pct%%% of incoming damage in exchange for Medusa's mana. Illusions absorb %illusion_percentage%%% less damage per point of mana.",
+   "description_zh": "创造一个魔法护盾，消耗美杜莎的魔法值以吸收%absorption_pct%%%的伤害。幻象的伤害吸收系数减少%illusion_percentage%%%。",
+   "notes_en": [
+    "Absorbs damage before any damage reduction takes place, meaning that armor will not reduce the amount of mana needed to absorb damage."
+   ],
+   "notes_zh": [
+    "伤害的吸收先于任何伤害减免机制，所以提高物理护甲，物理格挡和魔法抗性都不能减少吸收相同伤害所需的魔法。"
+   ],
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "aaec6a55fe0e79dc1885",
+  "subject": "obsidian_destroyer_objurgation",
+  "subject_zh": "殁境神蚀者·责难",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "提升最大魔法值转为护盾的比例。",
+   "Increases max mana to barrier."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Objurgation",
+   "name_zh": "责难",
+   "description_en": "Increases Outworld Destroyer's maximum mana. When cast, protects Outworld Destroyer with an all damage barrier equal to a flat amount and a percentage of his maximum mana.",
+   "description_zh": "提升殁境神蚀者的最大魔法值。施放后，殁境神蚀者获得全伤害护盾，数值为固定值 + 最大魔法值的一定百分比。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases max mana to barrier. Damage that would bring Outworld Destroyer below %automatic_trigger_threshold%%% health is prevented. When that happens, Outworld Destroyer receives a strong dispel and gains an undispellable instance of Objurgation. This effect cannot occur more than once every %automatic_trigger_cd% seconds.",
+     "zh": "提升最大魔法值转为护盾的比例。阻止让殁境神蚀者的血量低于%automatic_trigger_threshold%%%的伤害。阻止生效时，殁境神蚀者获得一次强驱散，和不可驱散的责难效果。这个效果每%automatic_trigger_cd%秒只能触发一次。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ae41b539256d703aaa7b",
+  "subject": "ogre_magi_smash",
+  "subject_zh": "食人魔魔法师·烈火护盾",
+  "mechanism": "damage_block",
+  "mechanism_zh": "护盾/伤害吸收/减伤",
+  "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+  "definition_note": "U33、U35：延迟伤害算减伤",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "创造一个围绕友军目标的护盾，吸收接下来%attacks%次来自敌方英雄攻击的一定百分比伤害。",
+   "触发多重施法时，%multicast_fireshield_aoe%范围内的友方单位将随机获得烈火护盾效果。",
+   "吸收伤害后向攻击者发射火球。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+  },
+  "context": {
+   "name_en": "Fire Shield",
+   "name_zh": "烈火护盾",
+   "description_en": "Creates a shield around the target ally, absorbing a percentage of the damage of next %attacks% attacks from enemy heroes. When damage is absorbed, a fireball is launched at the attacker. Can be cast on towers.",
+   "description_zh": "创造一个围绕友军目标的护盾，吸收接下来%attacks%次来自敌方英雄攻击的一定百分比伤害。吸收伤害后向攻击者发射火球。可以对防御塔施放。",
+   "notes_en": [
+    "When multicast, nearby allies will be selected randomly in an %multicast_fireshield_aoe% area of effect to receive Fire Shield."
+   ],
+   "notes_zh": [
+    "触发多重施法时，%multicast_fireshield_aoe%范围内的友方单位将随机获得烈火护盾效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ }
+]

@@ -1,0 +1,1179 @@
+[
+ {
+  "review_id": "3de4bd126928a1c7057b",
+  "subject": "sniper_shrapnel",
+  "subject_zh": "狙击手·榴霰弹",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Enemies are subject to damage and slowed movement.",
+   "区域内的敌军受到伤害并被减速。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Shrapnel",
+   "name_zh": "榴霰弹",
+   "description_en": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every %abilitychargerestoretime% seconds.",
+   "description_zh": "消耗一点能量射出一发带有爆炸弹片的榴霰弹，在目标区域降下弹雨。区域内的敌军受到伤害并被减速。榴霰弹将给予目标区域的视野。榴霰弹的能量每过%abilitychargerestoretime%秒恢复1点。",
+   "notes_en": [
+    "Damage is dealt 11 times, immediately at spell effect then every second.",
+    "Does not damage buildings.",
+    "Provides vision in the targeted area."
+   ],
+   "notes_zh": [
+    "总共造成11次伤害，第一次在技能生效时，接下来每秒造成一次伤害。",
+    "不会对建筑造成伤害。",
+    "将拥有目标区域的视野。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "4853c9169a72c7b2ac5f",
+  "subject": "spectre_spectral_dagger",
+  "subject_zh": "幽鬼·幽鬼之刃",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Spectre flings a dagger to draw a Shadow Path, dealing damage and slowing the movement speed of any enemies along the trail."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Spectral Dagger",
+   "name_zh": "幽鬼之刃",
+   "description_en": "Spectre flings a dagger to draw a Shadow Path, dealing damage and slowing the movement speed of any enemies along the trail. Units hit by the dagger also trail a Shadow Path. While treading the path, Spectre moves faster and phases through otherwise impassable terrain.",
+   "description_zh": "幽鬼掷出一把匕首，留下一条暗影之径，对路径上的敌人造成伤害并减缓其移动速度。被匕首击中的单位移动时也会留下暗影之径。幽鬼在暗影之径上移速提升，并且可以无视地形移动。",
+   "notes_en": [
+    "There is a %dagger_grace_period% second grace period after leaving the path where no collision is preserved.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "在离开暗影之径后%dagger_grace_period%秒内碰撞体积依然为0，作为缓冲时间。",
+    "不会触发法术抵抗或法术反弹。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "b1b308e00a2da3b05d3e",
+  "subject": "templar_assassin_psionic_trap",
+  "subject_zh": "圣堂刺客·灵能陷阱",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When sprung at her command, they exert a slowing influence of %movement_speed_min%%% in a %trap_radius% radius.",
+   "Trap movement slow charges up to %movement_speed_max%%% after %trap_max_charge_duration% seconds.",
+   "引爆后将减缓%trap_radius%范围内敌人的移动速度，陷阱放置时间越久，引爆后减速效果越强，最低为%movement_speed_min%%%，放置%trap_max_charge_duration%秒后引爆将达到最大减速效果，为%movement_speed_max%%%，并且还能造成额外伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Psionic Trap",
+   "name_zh": "灵能陷阱",
+   "description_en": "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of %movement_speed_min%%% in a %trap_radius% radius. Trap movement slow charges up to %movement_speed_max%%% after %trap_max_charge_duration% seconds. Deals damage after %trap_max_charge_duration%s.",
+   "description_zh": "圣堂刺客放下一个隐形的神秘陷阱监视敌人的动向。引爆后将减缓%trap_radius%范围内敌人的移动速度，陷阱放置时间越久，引爆后减速效果越强，最低为%movement_speed_min%%%，放置%trap_max_charge_duration%秒后引爆将达到最大减速效果，为%movement_speed_max%%%，并且还能造成额外伤害。",
+   "notes_en": [
+    "Traps last indefinitely.",
+    "They have invisibility that fades in over %trap_fade_time% seconds and spell immunity. They take 2 hits to kill by ranged heroes, 1 by melee heroes, and 4 by creeps.",
+    "Traps have 250/250 vision range and don't prevent neutral camps from spawning."
+   ],
+   "notes_zh": [
+    "陷阱没有时间限制。",
+    "他们拥有隐形效果，渐隐时间为%trap_fade_time%秒，还拥有技能免疫状态。他们可以承受2次远程英雄的攻击，1次近战英雄的攻击，或4次非英雄单位的攻击。",
+    "陷阱的视野是250/250，不能阻止中立生物刷新。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When activated, traps now silence affected enemies.",
+     "zh": "现在陷阱引爆后还会沉默受到作用的敌人。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d30f7d06a11ffafda394",
+  "subject": "tidehunter_gush",
+  "subject_zh": "潮汐猎人·巨浪",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "召唤一股巨浪攻击一个敌方单位，减速并削弱护甲。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Gush",
+   "name_zh": "巨浪",
+   "description_en": "Summons a gush of water to damage an enemy unit, reducing their movement speed and armor.",
+   "description_zh": "召唤一股巨浪攻击一个敌方单位，减速并削弱护甲。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Gush becomes a ground targeted wave ability that affects enemy units in a line.  Decreases cooldown.",
+     "zh": "巨浪变成点地施放的波形技能，可以作用于直线上的单位。降低冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6b00644af376d4c69cae",
+  "subject": "tiny_grow",
+  "subject_zh": "小小·长大",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "现在投掷扔出的单位，扔树和树木连掷扔出的树木都会在落地点的更大范围内造成额外伤害和减速效果。",
+   "Units tossed by Toss or trees tossed by Tree Throw or Tree Volley now deal additional damage and slow in a larger area of effect at their landing location."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Grow",
+   "name_zh": "长大",
+   "description_en": "Tiny gains craggy mass, increasing his attack damage, movement speed and armor, and toss power while slowing his attack speed.",
+   "description_zh": "小小崎岖的身体不断成长，提升了攻击力、移动速度、护甲和投掷的威力，但攻击速度降低。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Units tossed by Toss or trees tossed by Tree Throw or Tree Volley now deal additional damage and slow in a larger area of effect at their landing location.",
+     "zh": "现在投掷扔出的单位，扔树和树木连掷扔出的树木都会在落地点的更大范围内造成额外伤害和减速效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "b56373940b0b6cdc9d27",
+  "subject": "treant_natures_grasp",
+  "subject_zh": "树精卫士·自然卷握",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Vines slow down and deal damage to enemies that walk through.",
+   "藤蔓对穿过的敌人造成减速和伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_TREE"
+  },
+  "context": {
+   "name_en": "Nature's Grasp",
+   "name_zh": "自然卷握",
+   "description_en": "Creates vines towards the target location. Vines slow down and deal damage to enemies that walk through. Does %creep_penalty%%% less damage to creeps.",
+   "description_zh": "朝目标地点制造藤蔓。藤蔓对穿过的敌人造成减速和伤害。对非英雄单位造成的伤害减少%creep_penalty%%%。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "4a47a8d0b3c72d8d160a",
+  "subject": "troll_warlord_berserkers_rage",
+  "subject_zh": "巨魔战将·狂战士之怒",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When in ranged form, Troll Warlord's attacks have a chance to Maim the target, dealing bonus damage, and slowing the target's movement and attack speed.",
+   "远程形态下巨魔战将的攻击有几率使目标残废，造成额外伤害，并且降低目标的移动和攻击速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Berserker's Rage",
+   "name_zh": "狂战士之怒",
+   "description_en": "While in melee form, Troll Warlord's attacks have a chance to ensnare, preventing the target from moving or using mobility spells and has additional movement speed.When in ranged form, Troll Warlord's attacks have a chance to Maim the target, dealing bonus damage, and slowing the target's movement and attack speed.",
+   "description_zh": "近战形态下巨魔战将的攻击有几率触发诱捕，阻止目标移动或使用位移类技能。另外近战形态下还拥有额外移动速度。远程形态下巨魔战将的攻击有几率使目标残废，造成额外伤害，并且降低目标的移动和攻击速度。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "eb9597b6395eda34ad77",
+  "subject": "tusk_bitter_chill",
+  "subject_zh": "巨牙海民·严寒",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Passively slows the attack speed of all enemy heroes within a %radius% unit radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "name_en": "Bitter Chill",
+   "name_zh": "严寒",
+   "description_en": "Passively slows the attack speed of all enemy heroes within a %radius% unit radius.",
+   "description_zh": "被动降低%radius%范围内所有敌方英雄的攻击速度。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "0a39308ad5b967818b19",
+  "subject": "tusk_walrus_kick",
+  "subject_zh": "巨牙海民·海象飞踢",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "将最近的敌方单位向目标方向踢上一脚，对其造成眩晕，伤害和减速。",
+   "Kicks the closest enemy unit in the drawn direction, stunning, damaging, and slowing them."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Walrus Kick",
+   "name_zh": "海象飞踢",
+   "description_en": "Kicks the closest enemy unit in the drawn direction, stunning, damaging, and slowing them. Also deals damage to all heroes within %search_radius% radius of its landing area. Cooldown is reduced by %creep_cooldown_reduction_pct%%% if kicking a creep.",
+   "description_zh": "将最近的敌方单位向目标方向踢上一脚，对其造成眩晕，伤害和减速。另外对落地区域%search_radius%范围内所有英雄造成伤害。飞踢非英雄单位会使冷却时间减少%creep_cooldown_reduction_pct%%%。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "7e3174a9258041fc1557",
+  "subject": "undying_flesh_golem",
+  "subject_zh": "不朽尸王·血肉傀儡",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "While in this state, he gains a percentage increase to strength, bonus movement speed, and causes attacks to slow, apply damage amplification, and spawn Tombstone zombies.",
+   "在这个状态下，他获得一定百分比的力量加成，移动速度加成，并且攻击附带减速和伤害加深效果，还会产生墓碑的僵尸。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "name_en": "Flesh Golem",
+   "name_zh": "血肉傀儡",
+   "description_en": "Undying transforms into a horrifying flesh golem.  While in this state, he gains a percentage increase to strength, bonus movement speed, and causes attacks to slow, apply damage amplification, and spawn Tombstone zombies.",
+   "description_zh": "不朽尸王变身为一具令人毛骨悚然的血肉傀儡。在这个状态下，他获得一定百分比的力量加成，移动速度加成，并且攻击附带减速和伤害加深效果，还会产生墓碑的僵尸。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "44c08947f7032fa76e4a",
+  "subject": "undying_tombstone",
+  "subject_zh": "不朽尸王·墓碑",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie.",
+   "僵尸拥有死亡渴望技能，使他们的攻击带有减速效果，并且若目标的生命值低于一定百分比，僵尸的攻击和移动速度会提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Tombstone",
+   "name_zh": "墓碑",
+   "description_en": "Summons a tombstone at the target point.  Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them.  Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie.",
+   "description_zh": "在目标位置召唤一座墓碑。墓碑会不断在其附近的每个敌方单位身边产生僵尸攻击他们。僵尸拥有死亡渴望技能，使他们的攻击带有减速效果，并且若目标的生命值低于一定百分比，僵尸的攻击和移动速度会提升。",
+   "notes_en": [
+    "Tombstone is Spell Immune, but can be healed by Soul Rip.",
+    "Zombies and Tombstone are Spell Immune.",
+    "If their initial target dies or goes out of vision, the Zombie will die."
+   ],
+   "notes_zh": [
+    "墓碑免疫技能，但是可以被噬魂治疗。",
+    "僵尸和墓碑均免疫技能。",
+    "如果初始目标死亡或丢失视野，僵尸将会死亡。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Tombstone can be cast on an allied hero to bunker inside of the tombstone. Heroes that enter the Tombstone cannot leave for %tombstone_bunker_cd% seconds nor can they re-enter after leaving. If the tombstone is destroyed with a hero inside, that hero gets stunned for %tombstone_stun_penalty% seconds.",
+     "zh": "墓碑可以对友方英雄施放，让他们躲进墓碑。进入墓碑的英雄%tombstone_bunker_cd%秒内无法离开，离开后同样的时间内无法再次进入。如果英雄在内时墓碑被摧毁，该英雄会被眩晕%tombstone_stun_penalty%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0d885e8120919e44b01c",
+  "subject": "ursa_earthshock",
+  "subject_zh": "熊战士·震撼大地",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Ursa leaps forward %hop_distance% units and slams the earth, causing a powerful shock to damage and slow all enemy units in a nearby area for %abilityduration% seconds.",
+   "熊战士向前跳跃%hop_distance%距离并猛击地面带来强烈的冲击，对附近范围内的所有敌方单位造成伤害并减速%abilityduration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Earthshock",
+   "name_zh": "震撼大地",
+   "description_en": "Ursa leaps forward %hop_distance% units and slams the earth, causing a powerful shock to damage and slow all enemy units in a nearby area for %abilityduration% seconds.",
+   "description_zh": "熊战士向前跳跃%hop_distance%距离并猛击地面带来强烈的冲击，对附近范围内的所有敌方单位造成伤害并减速%abilityduration%秒。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Earthshock applies %fury_swipe_stacks_on_hit% Fury Swipes to enemies hit.",
+     "zh": "震撼大地对击中的敌人施加%fury_swipe_stacks_on_hit%层怒意狂击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c7b0dd90c51c17e0d1f2",
+  "subject": "venomancer_noxious_plague",
+  "subject_zh": "剧毒术士·恶性瘟疫",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Infects an enemy with a plague that does damage on application then slows the target and deals damage over time based on their maximum health.",
+   "使一名敌人感染致命的瘟疫，施加时造成伤害，然后减速目标，并且基于目标的最大生命值造成持续伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Noxious Plague",
+   "name_zh": "恶性瘟疫",
+   "description_en": "Infects an enemy with a plague that does damage on application then slows the target and deals damage over time based on their maximum health. When the debuff ends for any reason, all debuffs from Venomancer on the initial target and the plague are spread to nearby targets. Additional spreads beyond the first do not deal impact damage.",
+   "description_zh": "使一名敌人感染致命的瘟疫，施加时造成伤害，然后减速目标，并且基于目标的最大生命值造成持续伤害。不论负面状态以何种方式消失，瘟疫都会带着剧毒术士施加给初始目标的所有负面状态一起扩散到附近目标。第一次以外的额外扩散不会造成初始伤害。",
+   "notes_en": [
+    "Spread debuffs have fixed duration and are not modified by status resistance or debuff amplification."
+   ],
+   "notes_zh": [
+    "扩散的负面状态拥有固定的持续时间，不会受到状态抗性和负面状态增强的影响。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases cooldown by %bonus_AbilityCooldown% seconds. Infected units have decreased magic resistance. Additional spreads from hero targets deal full impact damage.",
+     "zh": "冷却时间减少%bonus_AbilityCooldown%秒。感染的单位拥有的魔法抗性会降低。来自英雄目标的额外扩散会造成全额的击中伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "22dc577213717d30df94",
+  "subject": "venomancer_poison_sting",
+  "subject_zh": "剧毒术士·毒刺",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "剧毒的攻击会持续减速敌人并造成伤害。",
+   "Venomancer's attacks slow enemies and deal damage over time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "name_en": "Poison Sting",
+   "name_zh": "毒刺",
+   "description_en": "Venomancer's attacks slow enemies and deal damage over time.",
+   "description_zh": "剧毒的攻击会持续减速敌人并造成伤害。",
+   "notes_en": [
+    "Poison Sting damage can be lethal.",
+    "Damage from Poison Sting does not interrupt healing from items, nor does it activate the cooldown on Blink Dagger."
+   ],
+   "notes_zh": [
+    "毒刺的伤害可以致死。",
+    "毒刺造成的持续性伤害不会打断物品的回复效果，也不能使闪烁匕首进行冷却状态。"
+   ],
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "b1e784b097aa409a4ae0",
+  "subject": "venomancer_venomous_gale",
+  "subject_zh": "剧毒术士·瘴气",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Launches a ball of venom in a line, poisoning enemy units so that they take both initial damage and damage over time, as well as suffering slowed movement.",
+   "Slow starts at %movement_slow%%%, and decreases as time passes.",
+   "初始减速效果为%movement_slow%%%，减速效果将逐渐降低。",
+   "沿直线射出一个毒液球，碰到的敌人受到初始伤害和持续伤害，并受到减速效果影响。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Venomous Gale",
+   "name_zh": "瘴气",
+   "description_en": "Launches a ball of venom in a line, poisoning enemy units so that they take both initial damage and damage over time, as well as suffering slowed movement.  Venomous Gale deals damage every 3 seconds over its duration.",
+   "description_zh": "沿直线射出一个毒液球，碰到的敌人受到初始伤害和持续伤害，并受到减速效果影响。瘴气在持续时间内每3秒造成一次持续伤害。",
+   "notes_en": [
+    "Venomous Gale can be lethal.",
+    "Duration damage is dealt every %tick_interval% seconds.",
+    "Slow starts at %movement_slow%%%, and decreases as time passes."
+   ],
+   "notes_zh": [
+    "瘴气可以致死。",
+    "技能持续时间内每%tick_interval%秒造成一次伤害。",
+    "初始减速效果为%movement_slow%%%，减速效果将逐渐降低。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases cast range and projectile speed by %shard_travel_tooltip%%%. When Venomous Gale impacts enemy heroes, %num_created_wards_tooltip% Plague Wards are created around them.",
+     "zh": "施法距离和弹道速度提升%shard_travel_tooltip%%%。瘴气只要击中每个敌方英雄就会在他们周围制造%num_created_wards_tooltip%个瘟疫守卫。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3b5b5e70f188aa193016",
+  "subject": "viper_corrosive_skin",
+  "subject_zh": "冥界亚龙·腐蚀皮肤",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Viper exudes an infectious toxin that damages and slows the attack speed of any enemy that damages it in a %max_range% radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Corrosive Skin",
+   "name_zh": "腐蚀皮肤",
+   "description_en": "Viper exudes an infectious toxin that damages and slows the attack speed of any enemy that damages it in a %max_range% radius. The acid exudate also increases Viper's resistance to magic.",
+   "description_zh": "蝮蛇分泌出感染性的毒素，%max_range%范围内任何伤害它的敌人都将受到伤害，同时攻击速度也被降低。这种酸性分泌物还能提高蝮蛇的魔法抗性。",
+   "notes_en": [
+    "Stacks multiplicatively with other magic damage resistance sources.",
+    "Break prevents the application of Corrosive Skin. Does not disable Corrosive Skin application from Nosedive.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "与其他提升魔法抗性的物品和技能叠加。",
+    "破坏会使腐蚀皮肤不再施加效果。极恶俯冲还是会施加腐蚀皮肤。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Corrosive Skin applies %effect_multiplier%x the attack speed slow to enemies that are within %effect_multiplier_distance% distance of Viper.  Viper's Corrosive Skin Magic Resistance and Damage per Second are gradually increased while he is in Nethertoxin, up to %nethertoxin_bonus_pct%%% increased effect after %nethertoxin_bonus_pct_max_duration_tooltip%s.",
+     "zh": "腐蚀皮肤会对距离冥界亚龙%effect_multiplier_distance%范围内的敌人施加%effect_multiplier%倍攻击速度降低效果。当冥界亚龙处于幽冥剧毒中，腐蚀皮肤的魔法抗性和每秒伤害会逐渐提升，在%nethertoxin_bonus_pct_max_duration_tooltip%秒后，达到最高的%nethertoxin_bonus_pct%%%提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "858efabe317daf135b8f",
+  "subject": "viper_nethertoxin",
+  "subject_zh": "冥界亚龙·幽冥剧毒",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Units in it have their attack speed slowed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Nethertoxin",
+   "name_zh": "幽冥剧毒",
+   "description_en": "Viper releases a Nethertoxin at the targeted area. Units in that area take an increasing damage over time based on how long they remain in it. Units in it have their attack speed slowed.",
+   "description_zh": "蝮蛇向目标区域释放幽冥剧毒。范围内的单位持续受到伤害，在区域内停留的时间越长，受到的伤害也越高。同时他们的攻击速度会被降低。",
+   "notes_en": [
+    "Multiple Nethertoxins do not stack."
+   ],
+   "notes_zh": [
+    "多个幽冥剧毒不会叠加。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "6c85439cb254a199d068",
+  "subject": "viper_poison_attack",
+  "subject_zh": "冥界亚龙·毒性攻击",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "蝮蛇的毒液得到强化，使他的普通攻击附带效果，可以降低目标的移动速度和魔法抗性，并持续造成伤害。",
+   "Intensifies Viper's venom, adding an effect to his normal attack that applies a stacking movement speed slow and magic resistance deduction while dealing damage over time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Poison Attack",
+   "name_zh": "毒性攻击",
+   "description_en": "Intensifies Viper's venom, adding an effect to his normal attack that applies a stacking movement speed slow and magic resistance deduction while dealing damage over time. Stacks up to %max_stacks% times.",
+   "description_zh": "蝮蛇的毒液得到强化，使他的普通攻击附带效果，可以降低目标的移动速度和魔法抗性，并持续造成伤害。效果可以叠加，最多叠加%max_stacks%次。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases max stacks, and causes Poison Attack to lower armor per stack and to affect buildings for reduced damage.",
+     "zh": "提升最大叠加次数，毒性攻击可以降低护甲，并且可以作用于建筑，造成的伤害有所降低。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0769471dacdf52de0231",
+  "subject": "viper_viper_strike",
+  "subject_zh": "冥界亚龙·蝮蛇突袭",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "蝮蛇降低敌方目标单位的移动和攻击速度，同时破坏其被动技能并造成持续毒素伤害。",
+   "Viper slows the targeted enemy unit's movement and attack speed while also disabling their passives and dealing poison damage over time.",
+   "The slowing effect reduces over the duration of the poison."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Viper Strike",
+   "name_zh": "蝮蛇突袭",
+   "description_en": "Viper slows the targeted enemy unit's movement and attack speed while also disabling their passives and dealing poison damage over time. The slowing effect reduces over the duration of the poison.",
+   "description_zh": "蝮蛇降低敌方目标单位的移动和攻击速度，同时破坏其被动技能并造成持续毒素伤害。移动和攻击速度会在毒素的持续时间内逐渐恢复。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "6158f65495cc94ac218d",
+  "subject": "void_spirit_astral_step",
+  "subject_zh": "虚无之灵·太虚之径",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "此次攻击将施加一个太虚印记，造成%pop_damage_delay%秒减速，然后引爆。",
+   "This attack inflicts a void mark that slows for %pop_damage_delay% seconds and then detonates."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Astral Step",
+   "name_zh": "太虚之径",
+   "description_en": "Void Spirit tears a rift through the astral plane to appear at the target location, attacking all enemies along the path. This attack inflicts a void mark that slows for %pop_damage_delay% seconds and then detonates.",
+   "description_zh": "虚无之灵撕裂现实进入精神位面，再出现在目标地点，对沿途的所有敌人造成伤害。此次攻击将施加一个太虚印记，造成%pop_damage_delay%秒减速，然后引爆。",
+   "notes_en": [
+    "Astral Step attacks do not cleave."
+   ],
+   "notes_zh": [
+    "太虚之径的攻击不会分裂。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "a913c31735d346c466d8",
+  "subject": "warlock_upheaval",
+  "subject_zh": "术士·剧变",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The slow increase is based on length of the channel, not the duration an enemy was standing in the area.",
+   "Enemies are slowed for %duration% second after leaving the area or the spell ends.",
+   "CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled.",
+   "减速效果的增加是根据持续施法的时长，而不是敌人在区内停留的持续时间。",
+   "在魔法结束或目标离开生效区域后，敌人仍会被减速%duration%秒。",
+   "持续施法 - 随施法时间增强的减速气流，还会造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Upheaval",
+   "name_zh": "剧变",
+   "description_en": "CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled. Lasts up to %abilitychanneltime% seconds. Enemies are slowed for %duration% second after leaving the area or the spell ends.",
+   "description_zh": "持续施法 - 随施法时间增强的减速气流，还会造成伤害。持续最多%abilitychanneltime%秒。在魔法结束或目标离开生效区域后，敌人仍会被减速%duration%秒。",
+   "notes_en": [
+    "The slow increase is based on length of the channel, not the duration an enemy was standing in the area."
+   ],
+   "notes_zh": [
+    "减速效果的增加是根据持续施法的时长，而不是敌人在区内停留的持续时间。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "While channeling, Warlock spawns a minor imp every %imps_interval% seconds that lasts for %minor_imp_duration% seconds and explodes dealing damage to all enemies around them upon death.",
+     "zh": "持续施法时每%imps_interval%秒术士会召唤一个魔童，持续%minor_imp_duration%秒，魔童死亡时会爆炸，对周围所有敌人造成伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "382aee02d8fe96376ff0",
+  "subject": "weaver_threads_of_fate",
+  "subject_zh": "编织者·命运之线",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每当编织者的攻击或技能对敌方英雄造成伤害后，如果编织者在他们%thread_setup_distance%范围内停留达到%thread_setup_time%秒，他就会织出命运之线，短暂减速敌人并把他们与编织者相连。",
+   "Whenever Weaver deals damage to an enemy hero with an attack or ability, if he remains within %thread_setup_distance% range of them for %thread_setup_time%s, he establishes a Thread of Fate that briefly slows the enemy and ties Weaver and the enemy together."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "name_en": "Threads of Fate",
+   "name_zh": "命运之线",
+   "description_en": "Whenever Weaver deals damage to an enemy hero with an attack or ability, if he remains within %thread_setup_distance% range of them for %thread_setup_time%s, he establishes a Thread of Fate that briefly slows the enemy and ties Weaver and the enemy together. Each established thread of fate grants bonus damage to Weaver.",
+   "description_zh": "每当编织者的攻击或技能对敌方英雄造成伤害后，如果编织者在他们%thread_setup_distance%范围内停留达到%thread_setup_time%秒，他就会织出命运之线，短暂减速敌人并把他们与编织者相连。每织出一条命运之线就会使编织者获得攻击力加成。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "9e0af0bd393a892003fd",
+  "subject": "windrunner_powershot",
+  "subject_zh": "风行者·强力击",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每伤害一个单位，箭矢的伤害和减速效果都会降低。",
+   "The arrow damages and slows enemies' movement speed along its path.",
+   "For each enemy that Powershot hits, its damage and slow is reduced.",
+   "这支箭会对穿过的所有敌方单位造成伤害和减速效果，并破坏树木。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "name_en": "Powershot",
+   "name_zh": "强力击",
+   "description_en": "CHANNELED - Windranger charges her bow for up to %abilitychanneltime% second for a single powerful shot, which deals more damage the longer it is charged. The arrow damages and slows enemies' movement speed along its path. For each enemy that Powershot hits, its damage and slow is reduced.",
+   "description_zh": "持续施法 - 风行者为她的弓蓄力，射出一支强力的箭矢，最长可蓄力%abilitychanneltime%秒，其间可以打断蓄力，蓄力时间越长，箭矢伤害越高。这支箭会对穿过的所有敌方单位造成伤害和减速效果，并破坏树木。每伤害一个单位，箭矢的伤害和减速效果都会降低。",
+   "notes_en": [
+    "Powershot will destroy trees in its area of effect."
+   ],
+   "notes_zh": [
+    "强力击将摧毁作用范围内的树木。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "adcefb692f703b4be676",
+  "subject": "winter_wyvern_splinter_blast",
+  "subject_zh": "寒冬飞龙·碎裂冲击",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Splinter Blast",
+   "name_zh": "碎裂冲击",
+   "description_en": "Launches a ball of brittle ice toward a unit. The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a %split_radius% base radius. Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%.",
+   "description_zh": "向一个单位发射一团易碎的冰球。冰球一击中目标就会碎裂，而目标单位将不会受到任何效果，但是附近%split_radius%基础范围内敌人都将因碎片的冲击受到伤害，并且移动速度减缓%movespeed_slow_tooltip%%%。",
+   "notes_en": [
+    "The primary projectile moves at %projectile_speed% movement speed.",
+    "The primary projectile cannot be disjointed and cannot be targeted towards Winter Wyvern herself."
+   ],
+   "notes_zh": [
+    "主弹道的移动速度为%projectile_speed%。",
+    "主弹道无法被躲避，而且不能以寒冬飞龙自身为目标。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "60ac333618fa27fa5ebe",
+  "subject": "wisp_spirits",
+  "subject_zh": "艾欧·幽魂",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Spirits colliding with enemy Heroes slows them briefly.",
+   "幽魂撞到英雄会将其短暂减速。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "name_en": "Spirits",
+   "name_zh": "幽魂",
+   "description_en": "Summon five particle spirits that dance in a circle around Io. If a particle collides with an enemy hero, it explodes, damaging all enemy units in an area around it.  Creeps take minor damage from touching a particle spirit, but do not cause them to explode.  When its duration ends, any remaining Spirits explode.",
+   "description_zh": "召唤五个围绕艾欧起舞的幽魂，对所有碰触到的单位造成伤害。如果碰到的是敌方英雄，幽魂会爆炸，对其附近的所有敌人造成伤害。普通单位碰到幽魂会受到轻微伤害，但是不会使其爆炸。持续时间结束后，幽魂将自动爆炸。",
+   "notes_en": [
+    "After summoning, Io can call the spirits in and out."
+   ],
+   "notes_zh": [
+    "召唤后艾欧可以拉近或拉远幽魂。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Spirits now passively spawn around Io constantly every second up to the max. Spirits colliding with enemy Heroes slows them briefly. Can be activated to explode spirits.",
+     "zh": "每秒被动产生幽魂围绕艾欧，直至数量上限。幽魂撞到英雄会将其短暂减速。可以主动施放来引爆幽魂。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a79aa111892c3e894c50",
+  "subject": "wisp_tether",
+  "subject_zh": "艾欧·羁绊",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "羁绊会减速触碰到的敌人。",
+   "Tether slows enemies touching it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "name_en": "Tether",
+   "name_zh": "羁绊",
+   "description_en": "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, the tethered unit gains a portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. Tether slows enemies touching it.",
+   "description_zh": "将艾欧和一个友方单位连接在一起，提高双方的移动速度。当艾欧回复生命或魔法时，连在一起的友军将获得一部分回复效果。距离过远时连接将会断开，也可以主动断开连接。羁绊会减速触碰到的敌人。",
+   "notes_en": [
+    "If you try to tether a unit that is 700 distance or further away from Io, Io will latch on and pull itself closer to the tethered unit (to a distance of 300).",
+    "The tethered unit will heal faster and will heal even if Io is at full health.",
+    "Io's movement speed matches the tethered unit's."
+   ],
+   "notes_zh": [
+    "如果羁绊的目标距离艾欧700码以外，艾欧将链接目标并将自己向目标牵引（牵引后相距300码）。",
+    "被羁绊连接的单位回复速度相比更快，艾欧满血时也能回复。",
+    "艾欧的移动速度与羁绊目标一致。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Tether damages enemies touching it. Io is healed for %damage_to_heal%%% of the damage done.",
+     "zh": "羁绊会对触碰到的敌人造成伤害。艾欧会回复%damage_to_heal%%%造成伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "91e7478648ee97e75a78",
+  "subject": "mask_of_madness",
+  "subject_zh": "疯狂面具",
+  "mechanism": "slow_resistance",
+  "mechanism_zh": "减速抗性",
+  "definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Gives 100 attack speed, 6% / 12% movement speed (ranged/melee), and 15%/30% slow resistance (ranged/melee), but reduces your armor by 7 and silences you."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Mask of Madness",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Berserk",
+     "description": "Gives 100 attack speed, 6% / 12% movement speed (ranged/melee), and 15%/30% slow resistance (ranged/melee), but reduces your armor by 7 and silences you. Lasts 6 seconds."
+    },
+    {
+     "type": "passive",
+     "title": "Lifesteal",
+     "description": "Heals the attacker for a percentage of physical damage dealt."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "20"
+    },
+    {
+     "key": "lifesteal_percent",
+     "display": "+ {value}% Lifesteal",
+     "value": "22"
+    },
+    {
+     "key": "berserk_bonus_attack_speed",
+     "value": "100"
+    },
+    {
+     "key": "berserk_bonus_movement_speed_melee",
+     "value": "12"
+    },
+    {
+     "key": "berserk_bonus_movement_speed",
+     "value": "6"
+    },
+    {
+     "key": "berserk_armor_reduction",
+     "value": "7"
+    },
+    {
+     "key": "berserk_slow_resist_melee",
+     "value": "30"
+    },
+    {
+     "key": "berserk_slow_resist",
+     "value": "15"
+    },
+    {
+     "key": "berserk_duration",
+     "value": "6.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "616bb1bffe4cdae8db85",
+  "subject": "morphling_ebb_and_flow",
+  "subject_zh": "变体精灵·潮涨潮落",
+  "mechanism": "slow_resistance",
+  "mechanism_zh": "减速抗性",
+  "definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Morphling receives bonus cast range and slow resistance based on his current Strength, and attack range and movement speed based on his current Agility.",
+   "变体精灵根据当前力量值获得额外施法距离和减速抗性，根据当前敏捷值获得攻击距离和移动速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "name_en": "Ebb and Flow",
+   "name_zh": "潮涨潮落",
+   "description_en": "Morphling receives bonus cast range and slow resistance based on his current Strength, and attack range and movement speed based on his current Agility. These bonuses persist if he is morphed into another hero.",
+   "description_zh": "变体精灵根据当前力量值获得额外施法距离和减速抗性，根据当前敏捷值获得攻击距离和移动速度。这些效果在他变形为其他英雄时仍然有效。",
+   "notes_en": [
+    "Attack range bonuses during morph only apply when morphed into a Ranged hero."
+   ],
+   "notes_zh": [
+    "变形期间的攻击距离加成只有在变形为远程英雄时有效。"
+   ],
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "e508371d842a282a8e44",
+  "subject": "primal_beast_colossal",
+  "subject_zh": "獸·庞",
+  "mechanism": "slow_resistance",
+  "mechanism_zh": "减速抗性",
+  "definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "獸拥有%base_slow_resist%%%基础减速抗性，每拥有%hp_per_threshold%点生命上限就获得+%aoe_per_threshold%%%作用范围加成和+%slow_resistance_per_threshold%%%减速抗性。",
+   "Primal Beast has %base_slow_resist%%% base Slow Resistance and gains %aoe_per_threshold%%% bonus Area of Effect and %slow_resistance_per_threshold%%% Slow Resistance for every %hp_per_threshold% Max Health."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_INNATE_UI"
+  },
+  "context": {
+   "name_en": "Colossal",
+   "name_zh": "庞",
+   "description_en": "Primal Beast has %base_slow_resist%%% base Slow Resistance and gains %aoe_per_threshold%%% bonus Area of Effect and %slow_resistance_per_threshold%%% Slow Resistance for every %hp_per_threshold% Max Health.",
+   "description_zh": "獸拥有%base_slow_resist%%%基础减速抗性，每拥有%hp_per_threshold%点生命上限就获得+%aoe_per_threshold%%%作用范围加成和+%slow_resistance_per_threshold%%%减速抗性。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "48ecf1be45f2e6837ca3",
+  "subject": "ringmaster_the_box",
+  "subject_zh": "百戏大王·逃生技",
+  "mechanism": "slow_resistance",
+  "mechanism_zh": "减速抗性",
+  "definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "友军被装入后拥有相位移动状态，获得额外魔法抗性、减速抗性和移动速度。",
+   "Boxed units gain phased movement, slow resistance, bonus magic resistance, and bonus movement speed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Escape Act",
+   "name_zh": "逃生技",
+   "description_en": "Ringmaster packs himself or an allied hero into a mobile, extradimensional box. Boxed units gain phased movement, slow resistance, bonus magic resistance, and bonus movement speed. They are also untargetable, muted, silenced, and disarmed. The box will pop open after the effect expires or it moves out of the initial area.",
+   "description_zh": "把一名友方英雄装进可动的异维度箱子。友军被装入后拥有相位移动状态，获得额外魔法抗性、减速抗性和移动速度。并且无法成为目标，被锁闭、沉默和缴械。效果结束后或者移动到初始区域之外箱子都会打开。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Escape Act has %max_charges% charges. When the box pops open, Impalement Art daggers are thrown in all directions, and all enemies around it take damage.",
+     "zh": "逃生技拥有%max_charges%点能量点数。逃生箱打开时会朝所有方向放出尖刀戏匕首，并且范围内所有敌人受到伤害。"
+    }
+   }
+  }
+ }
+]

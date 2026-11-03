@@ -1,0 +1,1337 @@
+[
+ {
+  "review_id": "5749ab853da56d2c0dcb",
+  "subject": "silver_edge",
+  "subject_zh": "白银之锋",
+  "mechanism": "applies_break",
+  "mechanism_zh": "施加破坏",
+  "definition": "使目标的被动技能暂时失效",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Attacking to end the invisibility will deal 300 bonus physical damage, disable their passive abilities for 5 seconds, and cap their movement speed to 200."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Silver Edge",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Shadow Walk",
+     "description": "Makes you invisible for 17 seconds, or until you attack or cast a spell. While invisible, you move 20% faster and can move through units. \n\nAttacking to end the invisibility will deal 300 bonus physical damage, disable their passive abilities for 5 seconds, and cap their movement speed to 200."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "70"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "35"
+    },
+    {
+     "key": "windwalk_duration",
+     "value": "17.0"
+    },
+    {
+     "key": "windwalk_movement_speed",
+     "value": "20"
+    },
+    {
+     "key": "windwalk_fade_time",
+     "value": "0.3"
+    },
+    {
+     "key": "windwalk_bonus_damage",
+     "value": "300"
+    },
+    {
+     "key": "backstab_duration",
+     "value": "5"
+    },
+    {
+     "key": "max_movement_speed",
+     "value": "200"
+    },
+    {
+     "key": "visibility_radius",
+     "value": "1025"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "ecb86845a281bf965219",
+  "subject": "abaddon_aphotic_shield",
+  "subject_zh": "亚巴顿·无光之盾",
+  "mechanism": "applies_strong_dispel",
+  "mechanism_zh": "施加强驱散",
+  "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "DISPEL TYPE: Strong Dispel",
+   "驱散类型：强驱散"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Aphotic Shield",
+   "name_zh": "无光之盾",
+   "description_en": "Summons dark energies around an ally unit, dispelling them and creating an all damage barrier that absorbs a set amount of damage before expiring. When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "召唤黑暗能量环绕友方单位，驱散他们并创造一个全伤害护盾，护盾在消失前能吸收一定量的伤害。护盾消失或被摧毁后将会爆炸，对附近区域的单位造成伤害，伤害值为护盾的最大吸收量。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "The max damage is always dealt whether the barrier is destroyed by expiring or absorbing damage.",
+    "The explosion does not damage units hidden by the fog of war."
+   ],
+   "notes_zh": [
+    "不论护盾因持续时间结束或吸收足够伤害后被摧毁都将造成最大伤害。",
+    "爆炸将不会对战争迷雾内单位造成伤害。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.",
+     "zh": "会对附近敌人造成吸收伤害的%absorb_to_damage%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "524ea5a99b66274e609c",
+  "subject": "abaddon_borrowed_time",
+  "subject_zh": "亚巴顿·回光返照",
+  "mechanism": "applies_strong_dispel",
+  "mechanism_zh": "施加强驱散",
+  "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "DISPEL TYPE: Strong Dispel",
+   "驱散类型：强驱散"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+  },
+  "context": {
+   "name_en": "Borrowed Time",
+   "name_zh": "回光返照",
+   "description_en": "When activated, dispels you and all damage dealt to you will heal instead of harm. If the ability is not on cooldown, it will automatically activate if your health falls below %hp_threshold%.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "启动后驱散自身，所有受到的伤害转而产生治疗效果。只要技能不在冷却中，在生命值低于%hp_threshold%点时技能会自动启动。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "Borrowed Time can be manually activated while Abaddon is disabled, but not while silenced.  The passive activation can still occur while silenced.",
+    "Aphotic Shield does not block any damage to Abaddon when Borrowed Time is active, allowing him to heal.",
+    "Break prevents Borrowed Time from automatically activating."
+   ],
+   "notes_zh": [
+    "在亚巴顿受到眩晕作用时依然可以手动开启回光返照，但是受到沉默作用时不可以。不过被沉默时被动效果依然能生效。",
+    "无光之盾在回光返照生效期间不会吸收伤害，因此也不会影响治疗效果。",
+    "破坏会使回光返照无法自动触发。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases duration. While Borrowed Time is active, anytime an ally takes more than %ally_threshold_scepter% damage while within Mist Coil's cast range of Abaddon, an individual Mist Coil will automatically fire towards that ally.",
+     "zh": "提升持续时间。启动回光返照后，亚巴顿附近迷雾缠绕的施法距离内友方英雄受到的伤害超过%ally_threshold_scepter%点时亚巴顿就会自动对其施放迷雾缠绕。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "bcc16c8da9967454456e",
+  "subject": "aeon_disk",
+  "subject_zh": "永恒之盘",
+  "mechanism": "applies_strong_dispel",
+  "mechanism_zh": "施加强驱散",
+  "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Dispel Type: Strong Dispel",
+   "When you take damage and your health falls below 70%, a strong dispel is applied and you gain a 2."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Aeon Disk",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Combo Breaker",
+     "description": "When you take damage and your health falls below 70%, a strong dispel is applied and you gain a 2.5 second buff that provides +75% Status Resistance and causes all damage you deal and are dealt to be reduced to zero. Only triggers on player based damage. Cooldown increases every time it triggers.Dispel Type: Strong Dispel"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "250"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "300"
+    },
+    {
+     "key": "health_threshold_pct",
+     "value": "70"
+    },
+    {
+     "key": "status_resistance",
+     "value": "75"
+    },
+    {
+     "key": "buff_duration",
+     "value": "2.5"
+    },
+    {
+     "key": "max_level",
+     "value": "4"
+    },
+    {
+     "key": "cooldown_duration",
+     "display": "COOLDOWN: {value}",
+     "value": "105.0 / 125.0 / 145.0 / 165.0"
+    },
+    {
+     "key": "initial_cooldown",
+     "value": "6"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "d9e63c29c044266ccad3",
+  "subject": "obsidian_destroyer_objurgation",
+  "subject_zh": "殁境神蚀者·责难",
+  "mechanism": "applies_strong_dispel",
+  "mechanism_zh": "施加强驱散",
+  "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When that happens, Outworld Destroyer receives a strong dispel and gains an undispellable instance of Objurgation.",
+   "阻止生效时，殁境神蚀者获得一次强驱散，和不可驱散的责难效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Objurgation",
+   "name_zh": "责难",
+   "description_en": "Increases Outworld Destroyer's maximum mana. When cast, protects Outworld Destroyer with an all damage barrier equal to a flat amount and a percentage of his maximum mana.",
+   "description_zh": "提升殁境神蚀者的最大魔法值。施放后，殁境神蚀者获得全伤害护盾，数值为固定值 + 最大魔法值的一定百分比。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases max mana to barrier. Damage that would bring Outworld Destroyer below %automatic_trigger_threshold%%% health is prevented. When that happens, Outworld Destroyer receives a strong dispel and gains an undispellable instance of Objurgation. This effect cannot occur more than once every %automatic_trigger_cd% seconds.",
+     "zh": "提升最大魔法值转为护盾的比例。阻止让殁境神蚀者的血量低于%automatic_trigger_threshold%%%的伤害。阻止生效时，殁境神蚀者获得一次强驱散，和不可驱散的责难效果。这个效果每%automatic_trigger_cd%秒只能触发一次。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "be94dcee83197e6b9c39",
+  "subject": "shadow_shaman_fowl_play",
+  "subject_zh": "暗影萨满·禽戏",
+  "mechanism": "applies_strong_dispel",
+  "mechanism_zh": "施加强驱散",
+  "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "受到致死伤害时，暗影萨满会获得强驱散效果，并且以1点生命的小鸡继续存活。",
+   "When taking lethal damage, Shadow Shaman receives a strong dispel and survives as a 1 HP chicken with increased movement speed.",
+   "驱散类型：强驱散",
+   "DISPEL TYPE: Strong Dispel"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Fowl Play",
+   "name_zh": "禽戏",
+   "description_en": "When taking lethal damage, Shadow Shaman receives a strong dispel and survives as a 1 HP chicken with increased movement speed. Incoming damage is reduced to zero for a short duration and additional chickens are created to confuse the enemy. Cooldown resets when Shadow Shaman respawns.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "受到致死伤害时，暗影萨满会获得强驱散效果，并且以1点生命的小鸡继续存活。受到的伤害将降为零，持续较短时间，并且额外产生若干只小鸡，迷惑敌人。冷却时间会在暗影萨满复活时重置。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "Lethal Damage from Axe's Culling Blade and Necrophos's Reaper's Scythe will not be prevented.",
+    "Incoming damage reduction buff will prevent certain sources of HP removal from killing Shadow Shaman."
+   ],
+   "notes_zh": [
+    "无法阻止斧王的淘汰之刃和瘟疫法师的死神镰刀的致死伤害。",
+    "受到的伤害减免效果会阻止生命移除类效果杀死暗影萨满。"
+   ],
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "32f05f2bb59134b58eaa",
+  "subject": "tidehunter_kraken_shell",
+  "subject_zh": "潮汐猎人·海妖外壳",
+  "mechanism": "applies_strong_dispel",
+  "mechanism_zh": "施加强驱散",
+  "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "驱散类型：强驱散",
+   "DISPEL TYPE: Strong Dispel"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "name_en": "Kraken Shell",
+   "name_zh": "海妖外壳",
+   "description_en": "Thickens Tidehunter's hide to passively block a portion of any incoming physical attack damage. Reduced block amount versus creeps. The hide also removes negative status effects if the damage taken crosses a threshold.\n\nCan be activated to double the block amount at the cost of %active_move_speed_penalty_pct%%% movement speed. Lasts %active_duration%s.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "加厚潮汐猎人的外皮，可以被动格挡物理伤害。对非英雄单位的格挡伤害有所减少。潮汐猎人的外皮在他受到的伤害超过临界值后还将移除负面的状态效果。\n\n可以主动开启，以%active_move_speed_penalty_pct%%%移动速度的代价使伤害格挡量加倍。持续%active_duration%秒。\n\n驱散类型：强驱散",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "89eb0df90455e6f40b1d",
+  "subject": "ursa_enrage",
+  "subject_zh": "熊战士·激怒",
+  "mechanism": "applies_strong_dispel",
+  "mechanism_zh": "施加强驱散",
+  "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "DISPEL TYPE: Strong Dispel",
+   "驱散类型：强驱散"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "name_en": "Enrage",
+   "name_zh": "激怒",
+   "description_en": "Ursa goes into a frenzy, providing damage reduction and status resistance. Removes any existing debuffs.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "乌尔萨进入狂怒状态，承受的伤害降低并获得状态抗性。施放时将移除所受的负面效果。\n\n驱散类型：强驱散",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces cooldown and allows Ursa to use Enrage while disabled.",
+     "zh": "减少冷却时间，而且熊战士可以在被控制的状态下使用激怒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2a6d72dbfbcb44a2d6df",
+  "subject": "weaver_time_lapse",
+  "subject_zh": "编织者·时光倒流",
+  "mechanism": "applies_strong_dispel",
+  "mechanism_zh": "施加强驱散",
+  "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "DISPEL TYPE: Strong Dispel",
+   "驱散类型：强驱散"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Time Lapse",
+   "name_zh": "时光倒流",
+   "description_en": "Weaver warps backward to whatever position it was in five seconds earlier--regaining the HP and mana from that time. No effect on cooldown, gold or experience.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "编织者回到五秒前的时间点，获得当时的生命值和魔法值。不影响冷却时间、金钱和经验。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "Removes most negative buffs from Weaver.",
+    "Time Lapse disjoints projectiles."
+   ],
+   "notes_zh": [
+    "能够移除编织者身上大部分的负面状态。",
+    "时光倒流可以躲避攻击和技能弹道。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Time Lapse may target allied Heroes with %abilitycastrange% cast range.",
+     "zh": "时光倒流可以对%abilitycastrange%施法距离内的友方英雄施放。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "cd98da73ae5e3687e164",
+  "subject": "abyssal_blade",
+  "subject_zh": "深渊之刃",
+  "mechanism": "bash",
+  "mechanism_zh": "重击",
+  "definition": "攻击有概率眩晕目标",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Bash chance for ranged heroes is 10%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Abyssal Blade",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Overwhelm",
+     "description": "Stuns a target enemy unit for 1.6 seconds. \n\nPierces Debuff Immunity."
+    },
+    {
+     "type": "passive",
+     "title": "Bash",
+     "description": "Grants melee heroes a 25% chance on hit to stun the target for 1.2 seconds and deal 120 bonus physical damage. Bash chance for ranged heroes is 10%."
+    }
+   ],
+   "notes": "The stun is melee range.\nDoes not stack with other bashes, and does not grant bash to Clones and Tempest Doubles.\nMultiple sources of damage block do not stack.\nThe following heroes cannot trigger Bash on this item: Spirit Breaker, Faceless Void, Slardar, and Kez while in Sai mode.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "35"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "30"
+    },
+    {
+     "key": "slow_resistance",
+     "display": "+ {value}% Slow Resistance",
+     "value": "30"
+    },
+    {
+     "key": "hp_regen_amp",
+     "display": "+ {value}% Health Restoration",
+     "value": "16"
+    },
+    {
+     "key": "bash_chance_melee",
+     "value": "25"
+    },
+    {
+     "key": "bash_chance_ranged",
+     "value": "10"
+    },
+    {
+     "key": "bash_duration",
+     "value": "1.2"
+    },
+    {
+     "key": "bash_cooldown",
+     "value": "2.3"
+    },
+    {
+     "key": "bonus_chance_damage",
+     "value": "120"
+    },
+    {
+     "key": "stun_duration",
+     "value": "1.6"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "4e036070674d288ff9f1",
+  "subject": "basher",
+  "subject_zh": "碎颅锤",
+  "mechanism": "bash",
+  "mechanism_zh": "重击",
+  "definition": "攻击有概率眩晕目标",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Bash chance for ranged heroes is 10%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Skull Basher",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Bash",
+     "description": "Grants melee heroes a 25% chance on hit to stun the target for 1.2 seconds and deal 100 bonus physical damage. Bash chance for ranged heroes is 10%."
+    }
+   ],
+   "notes": "Does not stack with other sources of Bash.\nThe following heroes cannot trigger Bash on this item: Spirit Breaker, Faceless Void, Slardar, and Kez while in Sai mode.\nDoes not grant Bash to Clones and Tempest Doubles.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "30"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "10"
+    },
+    {
+     "key": "bash_chance_melee",
+     "value": "25"
+    },
+    {
+     "key": "bash_chance_ranged",
+     "value": "10"
+    },
+    {
+     "key": "bash_duration",
+     "value": "1.2"
+    },
+    {
+     "key": "bash_cooldown",
+     "value": "2.3"
+    },
+    {
+     "key": "bonus_chance_damage",
+     "value": "100"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "adc363e86b409f76339f",
+  "subject": "slardar_bash",
+  "subject_zh": "斯拉达·深海重击",
+  "mechanism": "bash",
+  "mechanism_zh": "重击",
+  "definition": "攻击有概率眩晕目标",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "After %attack_count% attacks, your next attack will bash the target.",
+   "%attack_count%次攻击后，下次攻击会重击目标。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Bash of the Deep",
+   "name_zh": "深海重击",
+   "description_en": "After %attack_count% attacks, your next attack will bash the target.",
+   "description_zh": "%attack_count%次攻击后，下次攻击会重击目标。",
+   "notes_en": [
+    "Does not stack with Skull Basher."
+   ],
+   "notes_zh": [
+    "不能与碎颅锤叠加。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f84c099e556df0aee8dc",
+  "subject": "spirit_breaker_charge_of_darkness",
+  "subject_zh": "裂魂人·暗影冲刺",
+  "mechanism": "bash",
+  "mechanism_zh": "重击",
+  "definition": "攻击有概率眩晕目标",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "途中经过的所有敌方单位和目标单位都将受到巨力重击。",
+   "All enemy units passed through and the targeted unit will be hit by a Greater Bash."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_ALERT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Charge of Darkness",
+   "name_zh": "暗影冲刺",
+   "description_en": "Spirit Breaker fixes his sight on an enemy unit and starts charging through all objects, starting at %min_movespeed_bonus_pct%%% of the bonus speed and reaching his max speed after %windup_time%s.All enemy units passed through and the targeted unit will be hit by a Greater Bash.  If the targeted unit dies, Spirit Breaker will change his target to the nearest enemy unit to that location.",
+   "description_zh": "裂魂人盯紧一个敌方单位，开始无视一切物体的冲刺，起始为%min_movespeed_bonus_pct%%%额外移速，%windup_time%秒后达到最大速度。途中经过的所有敌方单位和目标单位都将受到巨力重击。如果目标单位在到达前阵亡，裂魂人将他的目标改为原路径上最近的一个敌方单位。",
+   "notes_en": [
+    "Spirit Breaker passes through trees, cliffs, and units.",
+    "The charge indicator is visible only to allies.",
+    "Spirit Breaker gains shared vision of the target."
+   ],
+   "notes_zh": [
+    "裂魂人在冲刺过程中能穿过树木，悬崖和任何单位。",
+    "冲刺指示特效仅对队友可见。",
+    "裂魂人将获得并共享目标的视野。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "46e9fe361fd7d11cf370",
+  "subject": "spirit_breaker_nether_strike",
+  "subject_zh": "裂魂人·幽冥一击",
+  "mechanism": "bash",
+  "mechanism_zh": "重击",
+  "definition": "攻击有概率眩晕目标",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "裂魂人遁入幽冥领域，从不幸的目标身旁再次出现，发动当前等级的巨力重击并造成额外伤害。",
+   "Upon reappearing, a Greater Bash of the current level occurs and deals bonus damage.",
+   "裂魂人将在目标身后出现并发动巨力重击。",
+   "Spirit Breaker appears behind the target to deliver the bash."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Nether Strike",
+   "name_zh": "幽冥一击",
+   "description_en": "Spirit Breaker slips into the nether realm, reappearing next to his hapless victim. Upon reappearing, a Greater Bash of the current level occurs and deals bonus damage. Knocks back for double the normal distance.",
+   "description_zh": "裂魂人遁入幽冥领域，从不幸的目标身旁再次出现，发动当前等级的巨力重击并造成额外伤害。击退距离为平常的两倍。",
+   "notes_en": [
+    "Spirit Breaker appears behind the target to deliver the bash."
+   ],
+   "notes_zh": [
+    "裂魂人将在目标身后出现并发动巨力重击。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Greatly increases knockback.",
+     "zh": "大幅提升击退效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "00f92072dcb3fd2b2def",
+  "subject": "keeper_of_the_light_blinding_light",
+  "subject_zh": "光之守卫·致盲之光",
+  "mechanism": "blind",
+  "mechanism_zh": "致盲",
+  "definition": "使敌方单位的攻击有概率落空",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "A blinding light flashes over the targeted area, knocking back units to the edge of the area and blinding them, causing them to miss some attacks."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Blinding Light",
+   "name_zh": "致盲之光",
+   "description_en": "A blinding light flashes over the targeted area, knocking back units to the edge of the area and blinding them, causing them to miss some attacks. Minimum knockback distance is %knockback_distance% range over %knockback_duration% seconds.",
+   "description_zh": "一道致盲之光在目标区域闪现，把区域内的单位击退到区域边缘，并造成致盲，使他们的部分攻击不能命中。最短击退距离是在%knockback_duration%秒内击退%knockback_distance%距离。",
+   "notes_en": [
+    "Upon landing, units will destroy trees in a 150 radius."
+   ],
+   "notes_zh": [
+    "落地后受作用单位将摧毁150范围内的树木。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f6040d5a63f076002e31",
+  "subject": "tinker_laser",
+  "subject_zh": "修补匠·激光",
+  "mechanism": "blind",
+  "mechanism_zh": "致盲",
+  "definition": "使敌方单位的攻击有概率落空",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Blinded targets miss all physical attacks.",
+   "Fires an intense energy beam, damaging and blinding the target.",
+   "被致盲的单位，所有物理攻击都会落空。",
+   "发射强烈的能量光束，对目标造成伤害和致盲。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Laser",
+   "name_zh": "激光",
+   "description_en": "Fires an intense energy beam, damaging and blinding the target. Blinded targets miss all physical attacks.",
+   "description_zh": "发射强烈的能量光束，对目标造成伤害和致盲。被致盲的单位，所有物理攻击都会落空。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Upgrades Tinker's Laser into a Shrink Ray, reducing the main target's size, current health, and maximum health by %scepter_reduction_pct%%% (stacking). Does not pierce debuff immunity.",
+     "zh": "修补匠的激光升级成缩小射线，使主目标的模型大小、当前生命值和最大生命值减少%scepter_reduction_pct%%%（可以叠加）。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "7d7ee27fa905964fff9b",
+  "subject": "bane_fiends_grip",
+  "subject_zh": "祸乱之源·魔爪",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Fiend's Grip",
+   "name_zh": "魔爪",
+   "description_en": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+   "description_zh": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack.",
+     "zh": "魔爪的冷却时间减少%bonus_AbilityCooldown%秒。魔爪将产生两个不可控制的幻象，幻象也将对目标持续施放魔爪。幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。伤害不会叠加。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e683545cf52a65e6276f",
+  "subject": "bane_fiends_grip",
+  "subject_zh": "祸乱之源·魔爪",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+   "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Fiend's Grip",
+   "name_zh": "魔爪",
+   "description_en": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+   "description_zh": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack.",
+     "zh": "魔爪的冷却时间减少%bonus_AbilityCooldown%秒。魔爪将产生两个不可控制的幻象，幻象也将对目标持续施放魔爪。幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。伤害不会叠加。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "616b7fba3af9f01b0c1b",
+  "subject": "chen_hand_of_god",
+  "subject_zh": "陈·上帝之手",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Decreases the cooldown of Hand of God to %AbilityCooldown%s and it becomes a channelled spell that lasts for up to %AbilityChannelTime% seconds.",
+   "初始治疗会在持续施法起始时发生，持续施法期间其他附近友方单位变为减益免疫状态，拥有%debuff_immune_resist%%%魔法抗性，而且持续治疗的威力提升%nearby_hot_boost%%%。",
+   "上帝之手的冷却时间降低至%AbilityCooldown%秒，并且变为持续施法型技能，持续最多%AbilityChannelTime%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Hand of God",
+   "name_zh": "上帝之手",
+   "description_en": "Heals all allied heroes on the map as well as all units under Chen's control. A large heal is applied at first and a slow heal over time is applied for %hot_duration% seconds afterwards.",
+   "description_zh": "治疗地图上的所有友军英雄以及陈控制的所有单位。一开始先施加高额治疗，在之后%hot_duration%秒内持续进行小额治疗。",
+   "notes_en": [
+    "Can heal invulnerable and hidden/banished allies."
+   ],
+   "notes_zh": [
+    "可以治疗无敌和被隐藏/放逐友军。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases the cooldown of Hand of God to %AbilityCooldown%s and it becomes a channelled spell that lasts for up to %AbilityChannelTime% seconds. The initial heal happens at the start of the channel, and while channeling other nearby allied units become debuff immune with %debuff_immune_resist%%% magic resistance and the power of the heal over time is increased by %nearby_hot_boost%%%.",
+     "zh": "上帝之手的冷却时间降低至%AbilityCooldown%秒，并且变为持续施法型技能，持续最多%AbilityChannelTime%秒。初始治疗会在持续施法起始时发生，持续施法期间其他附近友方单位变为减益免疫状态，拥有%debuff_immune_resist%%%魔法抗性，而且持续治疗的威力提升%nearby_hot_boost%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c58b008786e3107054ef",
+  "subject": "crystal_maiden_freezing_field",
+  "subject_zh": "水晶室女·极寒领域",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "CHANNELED - Surrounds Crystal Maiden with %num_explosions% random icy explosions that slow enemies and deal massive damage.",
+   "持续施法 - 以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "name_en": "Freezing Field",
+   "name_zh": "极寒领域",
+   "description_en": "CHANNELED - Surrounds Crystal Maiden with %num_explosions% random icy explosions that slow enemies and deal massive damage. Lasts %abilitychanneltime% seconds.",
+   "description_zh": "持续施法 - 以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害。持续%abilitychanneltime%秒。",
+   "notes_en": [
+    "The slow is applied on all enemies in the radius, even if they aren't hit by an explosion (lasts %slow_duration% second).",
+    "Explosions occur every %explosion_interval_tooltip% seconds."
+   ],
+   "notes_zh": [
+    "减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害（效果持续%slow_duration%秒）。",
+    "每%explosion_interval_tooltip%秒产生一次爆炸。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Allows you to move, cast and attack during Freezing Field. Can still be interrupted by enemies. You move %shard_self_movement_speed_slow_pct%%% slower during this. Increases total number of explosions by %shard_bonus_explosion%%%. Applies Frostbite to any unit that has been standing in the Freezing Field for over %frostbite_delay%s.",
+     "zh": "使自身在极寒领域期间可以移动、施法和攻击。仍然可以被敌人打断。在此期间移动速度降低%shard_self_movement_speed_slow_pct%%%。冰爆总数提升%shard_bonus_explosion%%%。对极寒领域内停留超过%frostbite_delay%秒的所有单位都会施加冰封禁制。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "fea179e0adcc04941487",
+  "subject": "dawnbreaker_solar_guardian",
+  "subject_zh": "破晓辰星·天光现世",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 破晓辰星在地图上任意友方英雄%max_offset_distance%距离内的一个地点创造一个脉冲效果，并制造持续%daytime_duration%秒的白天。",
+   "Total flight duration is %abilitychanneltime% seconds of channel time + %airtime_duration% of flight time.",
+   "总飞行时间为%abilitychanneltime%秒持续施法时间 + %airtime_duration%秒飞行时间。",
+   "CHANNELED - Dawnbreaker creates a pulsing effect at a location within %max_offset_distance% units of an allied hero anywhere on the map and creates daylight for %daytime_duration%s."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Solar Guardian",
+   "name_zh": "天光现世",
+   "description_en": "CHANNELED - Dawnbreaker creates a pulsing effect at a location within %max_offset_distance% units of an allied hero anywhere on the map and creates daylight for %daytime_duration%s. Each pulse damages enemies and heals allies.After a short duration, she flies to the target location and deals additional damage and stuns enemies upon landing.Once channeled, Dawnbreaker cannot stop the ability.",
+   "description_zh": "持续施法 - 破晓辰星在地图上任意友方英雄%max_offset_distance%距离内的一个地点创造一个脉冲效果，并制造持续%daytime_duration%秒的白天。每次脉冲都会对敌人造成伤害，并治疗友军。经过一段短暂时间后，她飞向目标地点，落地时造成额外伤害并眩晕敌人。开始持续施法后，破晓辰星无法中止此技能。",
+   "notes_en": [
+    "Pulse interval is %pulse_interval%s.",
+    "Total flight duration is %abilitychanneltime% seconds of channel time + %airtime_duration% of flight time.",
+    "Instantly recalls the Hammer on cast."
+   ],
+   "notes_zh": [
+    "脉冲间隔为%pulse_interval%秒。",
+    "总飞行时间为%abilitychanneltime%秒持续施法时间 + %airtime_duration%秒飞行时间。",
+    "施放时立刻召回战锤。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Solar Guardian's aura follows Dawnbreaker for %scepter_aura_duration%s after landing.",
+     "zh": "天光现世的光环在破晓辰星落地后会跟随%scepter_aura_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "944b6d9f4db13eaa67b0",
+  "subject": "drow_ranger_multishot",
+  "subject_zh": "卓尔游侠·数箭齐发",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 卓尔游侠在最多%abilitychanneltime%秒内不断地射出阵阵箭矢，对卓尔游侠攻击距离 + %arrow_range_base%的距离内击中的敌人造成额外伤害，并施加霜冻之箭效果。",
+   "CHANNELED - Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying Frost Arrows with a range of Drow's Attack Range + %arrow_range_base%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Multishot",
+   "name_zh": "数箭齐发",
+   "description_en": "CHANNELED - Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying Frost Arrows with a range of Drow's Attack Range + %arrow_range_base%. Lasts up to %abilitychanneltime% seconds.Drow can move slowly and use items while casting Multishot.",
+   "description_zh": "持续施法 - 卓尔游侠在最多%abilitychanneltime%秒内不断地射出阵阵箭矢，对卓尔游侠攻击距离 + %arrow_range_base%的距离内击中的敌人造成额外伤害，并施加霜冻之箭效果。卓尔游侠在施放数箭齐发时可以缓慢移动和使用物品。",
+   "notes_en": [
+    "Arrow base damage pierces magic immunity.",
+    "Frost Arrows' damage and slow do not pierce magic immunity."
+   ],
+   "notes_zh": [
+    "箭矢的基础伤害无视减益免疫。",
+    "霜冻之箭的额外伤害和减速效果不无视减益免疫。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "d1dd070eb4befbce3826",
+  "subject": "elder_titan_echo_stomp",
+  "subject_zh": "上古巨神·回音重踏",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 上古巨神与他的灵体游魂一起践踏地面，对敌方单位造成伤害并使他们在原地昏迷。",
+   "CHANNELED - Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "name_en": "Echo Stomp",
+   "name_zh": "回音重踏",
+   "description_en": "CHANNELED - Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.",
+   "description_zh": "持续施法 - 上古巨神与他的灵体游魂一起践踏地面，对敌方单位造成伤害并使他们在原地昏迷。上古巨神造成物理伤害，灵体游魂造成魔法伤害。",
+   "notes_en": [
+    "If a unit is hit by Astral Spirit and Elder Titan, they will take both instances of damage."
+   ],
+   "notes_zh": [
+    "若同时处于灵体游魂和上古巨神的回音重踏作用范围内将受到两次伤害。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Lowers Cooldown. Echo Stomp may be placed on alt-cast to allow Elder Titan to take the place of the Astral Spirit as it completes its stomp.",
+     "zh": "减少冷却时间。回音重踏可以设为多样施法（右键点击技能栏图标）状态，使上古巨神完成重踏后会取代灵体游魂。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5b4e4b531192f8215f79",
+  "subject": "enigma_black_hole",
+  "subject_zh": "谜团·黑洞",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "CHANNELED - Summons a vortex that sucks in nearby enemy units.",
+   "持续施法 - 召唤一个强引力漩涡吸住敌方单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "name_en": "Black Hole",
+   "name_zh": "黑洞",
+   "description_en": "CHANNELED - Summons a vortex that sucks in nearby enemy units.  Enemies affected by Black Hole cannot move, attack, or cast spells.",
+   "description_zh": "持续施法 - 召唤一个强引力漩涡吸住敌方单位。被黑洞影响的单位不能移动、攻击或施法。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Black Hole deals additional damage equivalent to %scepter_pct_damage%%% of the unit's Max Health per second and does a non-interrupting pull towards it in a %scepter_radius% AoE. Pulls at a rate of %scepter_drag_speed%.",
+     "zh": "黑洞额外造成等同于单位%scepter_pct_damage%%%最大生命值的每秒伤害，并且产生一个%scepter_radius%范围，没有打断效果的牵引效果。牵引速度为%scepter_drag_speed%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "294f6bc7e9bb1f3b7700",
+  "subject": "keeper_of_the_light_illuminate",
+  "subject_zh": "光之守卫·冲击波",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The longer it is channeled, the more damage is dealt.",
+   "持续施法 - 引导光的能量，持续施法的时间越长，威力越大。",
+   "CHANNELED - Channels light energy, building power the longer it's channeled.",
+   "在持续施法期间获得的视野不断增大。",
+   "Gives increasing vision over the channeling time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "name_en": "Illuminate",
+   "name_zh": "冲击波",
+   "description_en": "CHANNELED - Channels light energy, building power the longer it's channeled.  Once released, a wave is sent forth that deals damage and gives vision in its path.  The longer it is channeled, the more damage is dealt.",
+   "description_zh": "持续施法 - 引导光的能量，持续施法的时间越长，威力越大。释放后，光波沿直线向前发出，造成伤害并获得沿途的视野。",
+   "notes_en": [
+    "Gives increasing vision over the channeling time."
+   ],
+   "notes_zh": [
+    "在持续施法期间获得的视野不断增大。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f39e7f8ecd4d9481193f",
+  "subject": "lich_sinister_gaze",
+  "subject_zh": "巫妖·阴邪凝视",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 使一个敌方单位着魔，缓慢走到巫妖与其之间的一点，并吸取其当前魔法值的一定百分比。",
+   "CHANNELED - Hypnotizes an enemy unit, causing it to move towards a point between the two of you and drains a percentage of its current mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED ",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Sinister Gaze",
+   "name_zh": "阴邪凝视",
+   "description_en": "CHANNELED - Hypnotizes an enemy unit, causing it to move towards a point between the two of you and drains a percentage of its current mana.",
+   "description_zh": "持续施法 - 使一个敌方单位着魔，缓慢走到巫妖与其之间的一点，并吸取其当前魔法值的一定百分比。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Sinister Gaze becomes an Area of Effect ability, affecting units within a radius of %aoe_scepter% in the target area. Sinister Gaze allows Lich to cast other abilities while channeling it.",
+     "zh": "阴邪凝视变成范围型技能，对目标区域%aoe_scepter%范围内所有单位生效。在阴邪凝视的持续施法期间可以施放其他技能。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0211dd6f7223f9b027da",
+  "subject": "lion_mana_drain",
+  "subject_zh": "莱恩·法力吸取",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "持续施法期间莱恩为减益免疫状态，并且获得%magic_resist%%%魔法抗性。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Mana Drain",
+   "name_zh": "法力吸取",
+   "description_en": "CHANNELED - Channels magical energy, taking mana and slowing enemies over time. If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%.  Can target allies to give them mana and movement speed at a %ally_pct%%% rate.",
+   "description_zh": "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。如果敌人没有魔法剩余，减速效果提升%movespeed_bonus_when_empty_pct%%%。可以对友军施放，给予他们%ally_pct%%%魔法和移动速度。",
+   "notes_en": [
+    "Prevents heroes from going invisible."
+   ],
+   "notes_zh": [
+    "阻止英雄进入隐身状态。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Causes Mana Drain to affect up to %shard_bonus_targets% additional enemies and increases break distance. Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.",
+     "zh": "法力吸取可以作用最多%shard_bonus_targets%个额外敌人，并且断裂距离增加。持续施法期间莱恩为减益免疫状态，并且获得%magic_resist%%%魔法抗性。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "529a113893b89069d98e",
+  "subject": "lion_mana_drain",
+  "subject_zh": "莱恩·法力吸取",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。",
+   "CHANNELED - Channels magical energy, taking mana and slowing enemies over time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Mana Drain",
+   "name_zh": "法力吸取",
+   "description_en": "CHANNELED - Channels magical energy, taking mana and slowing enemies over time. If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%.  Can target allies to give them mana and movement speed at a %ally_pct%%% rate.",
+   "description_zh": "持续施法 - 引导魔法能量，持续吸取魔法并减缓敌人的移动速度。如果敌人没有魔法剩余，减速效果提升%movespeed_bonus_when_empty_pct%%%。可以对友军施放，给予他们%ally_pct%%%魔法和移动速度。",
+   "notes_en": [
+    "Prevents heroes from going invisible."
+   ],
+   "notes_zh": [
+    "阻止英雄进入隐身状态。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Causes Mana Drain to affect up to %shard_bonus_targets% additional enemies and increases break distance. Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.",
+     "zh": "法力吸取可以作用最多%shard_bonus_targets%个额外敌人，并且断裂距离增加。持续施法期间莱恩为减益免疫状态，并且获得%magic_resist%%%魔法抗性。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "7056861bb759c22212b6",
+  "subject": "meepo_poof",
+  "subject_zh": "米波·忽悠",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for %cast_duration% seconds, damaging the enemy in both the departure and arrival locations."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Poof",
+   "name_zh": "忽悠",
+   "description_en": "Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for %cast_duration% seconds, damaging the enemy in both the departure and arrival locations. If the ability is in alt-cast state, all Meepos will also cast Poof to the target. When cast on the ground, all Meepos except the selected one will Poof to the closest location.",
+   "description_zh": "通过从大地中汲取神秘的能量，一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处，在离开和到达的区域都对敌人造成伤害。如果技能设为多样施法（右键点击技能栏图标）状态，所有米波也会对目标施放忽悠。对地施放后，除了选中的米波外所有米波会忽悠至最近的地点。",
+   "notes_en": [
+    "Can be cast through the minimap.",
+    "Can teleport to Meepo illusions."
+   ],
+   "notes_zh": [
+    "可以点击小地图施放。",
+    "可以传送至米波的幻象。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "c31704f7de34d0252899",
+  "subject": "primal_beast_pulverize",
+  "subject_zh": "獸·捶",
+  "mechanism": "channeled",
+  "mechanism_zh": "持续施法",
+  "definition": "施法者自身需要持续引导，被打断即停止",
+  "definition_note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "CHANNELED - Primal Beast channels his rage, grabbing the target enemy and slamming them into the ground repeatedly, damaging and mini-stunning any enemies caught in the AoE.",
+   "持续施法 - 獸释放出他的怒火，抓起敌方目标，反复将其向地面捶击，对范围内所有敌人造成伤害和短暂眩晕。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_CHANNELLED  | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Pulverize",
+   "name_zh": "捶",
+   "description_en": "CHANNELED - Primal Beast channels his rage, grabbing the target enemy and slamming them into the ground repeatedly, damaging and mini-stunning any enemies caught in the AoE. Each consecutive hit deals bonus damage. Lasts %channel_time% seconds.",
+   "description_zh": "持续施法 - 獸释放出他的怒火，抓起敌方目标，反复将其向地面捶击，对范围内所有敌人造成伤害和短暂眩晕。每次连续击中会造成额外伤害。持续%channel_time%秒。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ }
+]

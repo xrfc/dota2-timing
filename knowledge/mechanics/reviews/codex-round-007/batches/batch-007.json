@@ -1,0 +1,995 @@
+[
+ {
+  "review_id": "c601d1e74e2898e60f4a",
+  "subject": "tidehunter_dead_in_the_water",
+  "subject_zh": "潮汐猎人·重如铁锚",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "The hero is leashed while attached to the anchor.",
+   "被栓到锚上的英雄处于被束缚状态。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Tidehunter attaches a heavy anchor to an enemy hero. The hero is leashed while attached to the anchor. Attempting to move more than %chain_length% units away from the anchor forces the hero to %max_movement_speed% move speed, dragging the anchor behind them. The anchor can be destroyed with %attacks_to_destroy% hero attacks.",
+   "description_zh": "潮汐猎人将一只重锚栓到一名敌方英雄身上。被栓到锚上的英雄处于被束缚状态。尝试移动到距离巨锚%chain_length%距离外会导致英雄的移动速度降低至%max_movement_speed%，而且会一直拽着长锚。巨锚承受%attacks_to_destroy%次英雄攻击后会被摧毁。"
+  }
+ },
+ {
+  "review_id": "cb7a683e248d16b60939",
+  "subject": "necrolyte_heartstopper_aura",
+  "subject_zh": "瘟疫法师·竭心光环",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Damage won't disable items like Blink Dagger."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Necrophos stills the hearts of his opponents, causing nearby enemy units to lose a percentage of their max health over time.",
+   "description_zh": "瘟疫法师让敌人的心脏停跳，使附近敌方单位按最大生命值一定百分比持续流失生命。",
+   "notes_en": [
+    "Damage won't disable items like Blink Dagger.",
+    "Does not affect ancient creeps."
+   ],
+   "notes_zh": [
+    "伤害不会禁用像闪烁匕首等物品。",
+    "不能作用于远古生物。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Heartstopper Aura's Health Decay is increased by %heal_regen_to_damage%%% of Necrophos's current health regeneration.",
+     "zh": "竭心光环的生命流失伤害提升，数值为瘟疫法师当前生命恢复的%heal_regen_to_damage%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2d9accd355c2c9900b6b",
+  "subject": "death_prophet_exorcism",
+  "subject_zh": "死亡先知·驱使恶灵",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Unleashes evil spirits to drain the life of nearby enemy units and structures."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Unleashes evil spirits to drain the life of nearby enemy units and structures. Spirits need to return back to Death Prophet in order to attack again. At the end of the spell's duration, Death Prophet is healed in proportion to the damage dealt. Deals 50% damage to buildings. Lasts %abilityduration% seconds.",
+   "description_zh": "释放恶灵偷走敌方单位和建筑的生命。恶灵需要回到她身上才能再次攻击。持续时间结束后，死亡先知根据造成的伤害量，获得一定比例的治疗。对建筑造成50%%伤害。持续%abilityduration%秒。",
+   "notes_en": [
+    "Radius represents the area in which the spirits will acquire targets around Death Prophet.",
+    "Spirit damage isn't reduced by damage block abilities."
+   ],
+   "notes_zh": [
+    "作用范围代表死亡先知周围的恶灵寻找目标的范围。",
+    "伤害格挡类技能不能减少恶灵伤害。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Whenever an enemy is affected by Death Prophet's spells or when she attacks an enemy, a ghost will fly out and hit the enemy for an increased bonus of its usual damage then return to her with life.",
+     "zh": "敌人受到死亡先知的技能作用，或被死亡先知攻击时，会有一只恶灵飞出攻击敌人，造成高于平常的伤害，再返回使自身回复生命。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6ad2ecd0e9404d6ca153",
+  "subject": "dragon_knight_breathe_fire",
+  "subject_zh": "龙骑士·火焰气息",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Unleashes a breath of fire in front of Dragon Knight that burns enemies and reduces the damage their attacks deal."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Unleashes a breath of fire in front of Dragon Knight that burns enemies and reduces the damage their attacks deal.",
+   "description_zh": "向龙骑士的前方喷射出一团火焰，烧灼碰到的敌人，并使其攻击力降低。",
+   "notes_en": [
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "e3b1dd87d70a02c54ea4",
+  "subject": "dazzle_nothl_projection",
+  "subject_zh": "戴泽·虚无投影",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "When Dazzle's spirit is further than %leash_start% units from the body, the tether will begin to pull him back."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "description_en": "Dazzle departs his body, traveling through the Nothl Realm as an invulnerable spirit that can cast spells, attack, and use items, leaving his body behind in the world with a visible tether. While active, Dazzle's basic abilities are empowered: Poison Touch hexes enemies, Shallow Grave heals upon expiration, and Shadow Wave has a shorter cooldown. The effect can be ended early, and Dazzle returns to the body at the end.",
+   "description_zh": "戴泽的灵魂离开身体，穿过虚无之境变成无敌的幽灵，可以施放技能、攻击和使用物品，他的身体还留在这个世界，和灵魂之间存在着可见的连接。在灵魂形态下，戴泽的基础技能都已强化：剧毒之触带有妖术效果；薄葬结束时会治疗；暗影波的冷却时间变短。效果可以提前结束，效果结束时戴泽的灵魂会返回身体。",
+   "notes_en": [
+    "When Dazzle's spirit is further than %leash_start% units from the body, the tether will begin to pull him back. The strength of the pull increases with distance.",
+    "Dazzle's Soul cannot attack buildings."
+   ],
+   "notes_zh": [
+    "戴泽的灵魂离开身体超过%leash_start%距离后会被拉向身体。戴泽的灵魂移动得越远，拉力就越大。",
+    "戴泽的灵魂不能攻击建筑。"
+   ]
+  }
+ },
+ {
+  "review_id": "49af1e538b31b4173f4b",
+  "subject": "invoker_tornado",
+  "subject_zh": "祈求者·强袭飓风",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Unleashes a fast moving tornado that picks up enemy units in its path, suspending them helplessly in the air shortly before allowing them to plummet to their doom."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "description_en": "Unleashes a fast moving tornado that picks up enemy units in its path, suspending them helplessly in the air shortly before allowing them to plummet to their doom. Travels further based on the level of Wex. Holds enemies in the air for a duration based on the level of Quas. Deals base damage plus added damage based on levels in Wex.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "释放出一道快速移动的飓风，将路径上的敌方单位卷起，使其在空中无助地漂浮一段时间，然后落地受死。最大距离取决于雷元素等级。滞空时间取决于冰元素等级。落地伤害取决于雷元素的等级。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Units are invulnerable while affected by Tornado, and the damage is dealt when landing."
+   ],
+   "notes_zh": [
+    "被强袭飓风吹起时单位处于无敌状态，落地时受到伤害。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Tornado spawns twisters along its path. They persist for Tornado's duration plus additional time based on Quas, dealing damage based on Wex in a %twister_radius% radius every %twister_tick_rate% seconds. (half damage to creeps.)",
+     "zh": "强袭飓风会沿其路径产生气旋。气旋在飓风的持续时间内会一直持续，并且飓风消失后还会基于冰的等级额外持续数秒。气旋每%twister_tick_rate%秒在%twister_radius%范围内基于雷的等级造成伤害。（对非英雄单位造成半额伤害。）"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2d9614cdc9c01abc8e6e",
+  "subject": "invoker_deafening_blast",
+  "subject_zh": "祈求者·超震声波",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Invoker unleashes a mighty sonic wave in front of him, dealing damage to any enemy unit it collides with based on the level of Exort."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "description_en": "Invoker unleashes a mighty sonic wave in front of him, dealing damage to any enemy unit it collides with based on the level of Exort. The sheer impact from the blast is enough to knock those enemy units back for a duration based on the level of Quas, then disarm their attacks for a duration based on the level of Wex.",
+   "description_zh": "祈求者在自己前方释放出超强的声波，对所有敌方单位造成伤害，伤害量取决于火元素的等级。声波的绝对冲击能够将敌方单位击退，击退时间取决于冰元素的等级，同时让他们无法进行攻击，禁止攻击时间取决于雷元素的等级。"
+  }
+ },
+ {
+  "review_id": "6e4366d12a352c7828d8",
+  "subject": "obsidian_destroyer_sanity_eclipse",
+  "subject_zh": "殁境神蚀者·神智之蚀",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Unleashes a psychic blast that deals damage to enemies based on the difference between your max mana and the target's max mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "description_en": "Unleashes a psychic blast that deals damage to enemies based on the difference between your max mana and the target's max mana. Sanity's Eclipse can hit units trapped by Astral Imprisonment.",
+   "description_zh": "释放出一道神智冲击波，伤害数值基于自身与目标的最大魔法值之差。神智之蚀可以作用于星体禁锢中的单位。"
+  }
+ },
+ {
+  "review_id": "14c5ef27da8522c39d1e",
+  "subject": "lone_druid_spirit_bear",
+  "subject_zh": "独行德鲁伊·熊灵伙伴",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "If the bear moves %bear_attack_leash_range% distance away from the Lone Druid, it cannot attack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Summons a powerful Spirit Bear companion that can equip items.If the bear moves %bear_attack_leash_range% distance away from the Lone Druid, it cannot attack.  Lone Druid suffers %backlash_damage%%% of his max health as backlash damage if the Spirit Bear dies.\nSpirit Bear has Demolish, Return, Entangling Claws, Savage Roar, and Spirit Link abilities.",
+   "description_zh": "召唤一只可以装备物品的熊灵伙伴。若熊灵与独行德鲁伊的距离超过%bear_attack_leash_range%，则不能攻击。如果熊灵死亡，独行德鲁伊会受到自身最大生命值的%backlash_damage%%%作为反冲伤害。\n熊灵拥有粉碎击、回归、缠绕之爪、野蛮咆哮和灵魂链接技能。",
+   "notes_en": [
+    "Most spells interact with the Spirit Bear in the same way as they do with heroes.",
+    "Spirit Bear has 0 base attributes, 0 base armor, and %base_magic_resistance%%% base magic resistance. Attributes from buffs or items fully affect the bear as they would for Universal heroes.",
+    "Spirit Bear cannot gain experience. The Spirit Bear levels up when Lone Druid levels up.",
+    "Spirit Bear has its own Aghanim's Scepter and Shard upgrades.",
+    "Spirit Bear receives a copy of Lone Druid's Neutral Item that has an independent cooldown."
+   ],
+   "notes_zh": [
+    "熊灵受到的大多数技能效果与英雄相同。",
+    "熊灵的基础属性为0，基础护甲为0并拥有%base_magic_resistance%%%基础魔法抗性。熊灵装备的物品或享受的加成效果具有的属性对熊灵的加成效果与全才英雄类似。",
+    "熊灵无法获得经验。熊灵会跟随独行德鲁伊一起升级。",
+    "熊灵拥有自己的阿哈利姆神杖和魔晶升级效果。",
+    "熊灵会获得独行德鲁伊身上中立物品的复制品。这件复制品拥有独立的冷却时间。"
+   ]
+  }
+ },
+ {
+  "review_id": "fd3206ee05440b105aed",
+  "subject": "meepo_earthbind",
+  "subject_zh": "米波·地之束缚",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "地之束缚可以使敌方单位在进入隐身后显形，但是不能作用于已经隐身的单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Tosses a net at the target point, rooting down all enemy units in an area around it.",
+   "description_zh": "向目标地点扔出一张网，缠绕区域内所有敌方单位。",
+   "notes_en": [
+    "Affects invisible units, revealing them.",
+    "Does not work on Debuff Immune units or Roshan."
+   ],
+   "notes_zh": [
+    "地之束缚可以使敌方单位在进入隐身后显形，但是不能作用于已经隐身的单位。",
+    "对减益免疫单位和肉山无效。"
+   ]
+  }
+ },
+ {
+  "review_id": "773ba5996ef4e42fed86",
+  "subject": "meepo_megameepo",
+  "subject_zh": "米波·超大米波",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "生效时地之束缚会产生额外的网，身上每只米波都会使忽悠造成额外%poof_damage_factor%%%伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "description_en": "Primary Meepo mounts all other Meepos in a %radius% radius around him on top of his shoulders. While in this form, he gains %stats_pct%%% of the other Meepo stats and can Fling them at enemies, dealing damage and slowing them.\n\n When cast, Earthbind generates additional nets and Poof deals %poof_damage_factor%%% more damage for each Meepo on top.",
+   "description_zh": "主米波将%radius%范围内其他米波放到自己的肩膀上。在这个形态下，他会获得其他米波%stats_pct%%%的属性，并且可以把他们扔向敌人，造成伤害和减速。\n\n生效时地之束缚会产生额外的网，身上每只米波都会使忽悠造成额外%poof_damage_factor%%%伤害。"
+  }
+ },
+ {
+  "review_id": "eae19c7c40d2a7cfbb2c",
+  "subject": "treant_overgrowth",
+  "subject_zh": "树精卫士·疯狂生长",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Summons an overgrowth of vines and branches around Treant that deal damage to afflicted enemies and prevent them from moving, blinking, going invisible, or attacking."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Summons an overgrowth of vines and branches around Treant that deal damage to afflicted enemies and prevent them from moving, blinking, going invisible, or attacking.",
+   "description_zh": "在树精卫士周围召唤出疯狂生长的伤害性藤条和枝干，造成伤害并且阻止被缠绕的敌人移动、闪烁、进入隐身或攻击。",
+   "notes_en": [
+    "Works on Debuff Immune units, but if units gain debuff immunity after the effect starts, they'll break free."
+   ],
+   "notes_zh": [
+    "效果无视减益免疫，但是在期间获得减益免疫状态将挣脱控制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases Cooldown to %AbilityCooldown% seconds. When casting Overgrowth, Treant Protector draws power from the soil, greatly increasing his size for %bloom_duration% seconds. While enlarged, he gains phased movement with a fixed speed of %movement_speed%, %strength_bonus%%% bonus Strength, and a splashing attack that deals %splash_pct%%% of his attack damage in a %splash_radius% unit radius.",
+     "zh": "冷却时间降低至%AbilityCooldown%秒。施放疯狂生长时，树精卫士从土壤中汲取力量，他的身体急剧增大，持续%bloom_duration%秒。变大后他会获得相位移动状态，移动速度为固定%movement_speed%，%strength_bonus%%%力量加成，并且拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "34f67098585e5f2cbb51",
+  "subject": "naga_siren_ensnare",
+  "subject_zh": "娜迦海妖·诱捕",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Interrupts the target and traps them in place, preventing movement or blinking."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Interrupts the target and traps them in place, preventing movement or blinking. Can target units affected by Song of the Siren.",
+   "description_zh": "打断目标的动作并将其困在原地，使其无法移动或闪烁。可以对海妖之歌作用下的单位施放。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range and projectile speed.  Allows Ensnare to target and affect Debuff Immune units. Ensnare applies Break.",
+     "zh": "提升施法距离和弹道速度。诱捕可以对减益免疫单位施放并且生效。诱捕会施加破坏效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "1839e0d7c494a20dc372",
+  "subject": "wisp_relocate",
+  "subject_zh": "艾欧·降临",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "You can break the tether at any time to prevent that hero from teleporting with you."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "description_en": "Teleports Io and a tethered ally to any location. After the spell expires, Io and the tethered ally will return to their original location. Double-click to teleport to your team's base fountain.",
+   "description_zh": "将艾欧和与其连接的友军传送到地图上任何位置。持续时间结束后艾欧和相连的友军会被传送回原位。双击将传送回己方的泉水。",
+   "notes_en": [
+    "Enemies receive a visual indicator in the world and on the minimap of the target location during the cast delay.",
+    "If Io is disabled during the cast delay, Relocate is cancelled.",
+    "If an allied hero is Tethered, that hero will teleport along with you. You can break the tether at any time to prevent that hero from teleporting with you.",
+    "Only heroes, creep heroes, and illusions can be relocated."
+   ],
+   "notes_zh": [
+    "敌人在施法延迟期间会在大地图和小地图上目标区域都收到视觉特效提示。",
+    "如果艾欧在施法延迟期间被控制，降临将会取消。",
+    "如果羁绊连接了友方英雄，该英雄将和你一起被传送。你可以随时断开连接，防止英雄和你一同传送。",
+    "只有英雄、类英雄单位和幻象可以降临。"
+   ]
+  }
+ },
+ {
+  "review_id": "46d63d1494c4cbb7cc84",
+  "subject": "slark_pounce",
+  "subject_zh": "斯拉克·突袭",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Slark leaps forward, leashing and applying Essence Shift stacks to the first hero he connects.",
+   "Debuff Immune units cannot be leashed.",
+   "斯拉克向前跳跃，束缚第一个碰到的英雄并施加能量转移的叠加效果。",
+   "不能束缚减益免疫单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+  },
+  "context": {
+   "description_en": "Slark leaps forward, leashing and applying Essence Shift stacks to the first hero he connects. That unit can only move a limited distance away from Slark's landing position.",
+   "description_zh": "斯拉克向前跳跃，束缚第一个碰到的英雄并施加能量转移的叠加效果。该单位只能在斯拉克着地点附近的有限范围内移动。",
+   "notes_en": [
+    "On cast, Slark leaps forward at a speed of %pounce_speed%, stopping when he latches onto an enemy hero or has traveled %pounce_distance% distance.",
+    "Debuff Immune units cannot be leashed.",
+    "Trees will be destroyed around Slark's landing location."
+   ],
+   "notes_zh": [
+    "施放后斯拉克以%pounce_speed%的速度向前跳跃，抓住敌方英雄或跳跃%pounce_distance%距离后停下。",
+    "不能束缚减益免疫单位。",
+    "斯拉克落地点附近的树木将会被摧毁。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Provides charges and increases range.",
+     "zh": "变为充能型技能，并且提升距离。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "9bd4550711a313d6dc2c",
+  "subject": "troll_warlord_berserkers_rage",
+  "subject_zh": "巨魔战将·狂战士之怒",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "近战形态下巨魔战将的攻击有几率触发诱捕，阻止目标移动或使用位移类技能。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "While in melee form, Troll Warlord's attacks have a chance to ensnare, preventing the target from moving or using mobility spells and has additional movement speed.When in ranged form, Troll Warlord's attacks have a chance to Maim the target, dealing bonus damage, and slowing the target's movement and attack speed.",
+   "description_zh": "近战形态下巨魔战将的攻击有几率触发诱捕，阻止目标移动或使用位移类技能。另外近战形态下还拥有额外移动速度。远程形态下巨魔战将的攻击有几率使目标残废，造成额外伤害，并且降低目标的移动和攻击速度。"
+  }
+ },
+ {
+  "review_id": "46eca8ce8aa87b4d190b",
+  "subject": "troll_warlord_battle_trance",
+  "subject_zh": "巨魔战将·战斗专注",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Troll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "description_en": "Troll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes. Damage does not kill you during this mode. Grants you bonus lifesteal, attack speed, slow resistance and movement speed. Applies a Basic Dispel.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "巨魔战将释放出强大的战斗专注，强迫自身持续攻击%range%距离内最近的敌方单位，以英雄优先。专注期间不会因伤害而阵亡。提供额外吸血，攻击速度，减速抗性和移动速度。施放时施加弱驱散。 \n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Troll can still use his items and abilities while affected by Battle Trance, but not other commands.",
+    "Troll can still be killed with Axe's Culling Blade.",
+    "Troll is granted vision over the target."
+   ],
+   "notes_zh": [
+    "巨魔战将在战斗专注作用下仍然可以使用他的物品技能，但是无法执行其他指令。",
+    "斧王的淘汰之刃还是能斩杀巨魔战将。",
+    "巨魔战将会获得目标的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "a9e03273b85cb642d566",
+  "subject": "ember_spirit_searing_chains",
+  "subject_zh": "灰烬之灵·炎阳索",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, anchoring them in place and dealing damage each second."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, anchoring them in place and dealing damage each second.",
+   "description_zh": "灰烬之灵释放出火焰绳索来缠绕附近的敌人，将他们困于原地并每秒造成一定伤害。",
+   "notes_en": [
+    "Targets are chosen randomly around Xin.",
+    "Does not affect Debuff Immune or invisible units."
+   ],
+   "notes_zh": [
+    "将随机选取炘周围的单位作为目标。",
+    "不能作用于减益免疫或隐身单位。"
+   ]
+  }
+ },
+ {
+  "review_id": "6a0747abebee385b69d5",
+  "subject": "grimstroke_soul_chain",
+  "subject_zh": "天涯墨客·缚魂",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "If bound to another unit, affected units are leashed and prevented from blinking.",
+   "Provides vision of both leashed units.",
+   "将一名敌方英雄与束缚作用范围内最接近的队友相连，阻止他们远离彼此。",
+   "如果与另一个单位一起被束缚，作用下单位均被束缚，而且无法使用闪烁类技能。",
+   "被束缚的单位都将提供视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Binds a targeted enemy hero to its nearest allied hero within the bind radius, preventing both from moving away from each other. Any unit-targeted ability that either bound hero receives also gets cast on the other hero. If the bind is broken before the duration expires, the initial target will be bound to its nearest allied hero in the radius.",
+   "description_zh": "将一名敌方英雄与束缚作用范围内最接近的队友相连，阻止他们远离彼此。任何指向性技能击中任一英雄时，这两名敌方英雄都会受到作用。若连接在效果截止前断裂，初始目标将再次与其距离内最接近的队友相连。",
+   "notes_en": [
+    "If bound to another unit, affected units are leashed and prevented from blinking.",
+    "Provides vision of both leashed units."
+   ],
+   "notes_zh": [
+    "如果与另一个单位一起被束缚，作用下单位均被束缚，而且无法使用闪烁类技能。",
+    "被束缚的单位都将提供视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "2a14dc89ce3c263c2544",
+  "subject": "marci_companion_run",
+  "subject_zh": "玛西·回身踢",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not bring allies who are Rooted or Leashed when alt-cast.",
+   "多样施法时不会带走被缠绕或束缚的友军。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Marci bounds to the targeted allied unit, choosing a direction and distance she will spring away from it. Upon reaching the unit, Marci lunges to her final destination, damaging and stunning enemies where she lands.\n\nWhen Rebound is set to alt-cast, Marci brings the target ally with her to her final destination.\n\n The ally receives %ally_movespeed_pct%%% bonus movement speed for %ally_buff_duration%s.",
+   "description_zh": "玛西跃向友方目标单位，选好她要弹离的方向和距离。到达目标后玛西冲向最终的目的地，对落地点的敌人造成伤害和眩晕。\n\n回身踢设为多样施法（右键点击技能栏图标）后，玛西会把她的友军目标带向最终目的地。\n\n友军将获得%ally_movespeed_pct%%%移动速度加成，持续%ally_buff_duration%秒。",
+   "notes_en": [
+    "Marci's initial run to her target unit can be disjointed.",
+    "Does not trigger spell reflect.",
+    "Does not bring allies who are Rooted or Leashed when alt-cast."
+   ],
+   "notes_zh": [
+    "玛西冲刺时目标单位可以躲避该效果。",
+    "不会触发法术反弹。",
+    "多样施法时不会带走被缠绕或束缚的友军。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases damage. Rebound can be cast on enemies, and causes Marci to also get the speed boost when she casts it.",
+     "zh": "提升伤害。回身踢可以对敌人施放，并且玛西施放后自身也会获得加速效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0af00855cd32ba950adf",
+  "subject": "marci_unleash",
+  "subject_zh": "玛西·怒拳破",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Marci gains %bonus_movespeed%%% movement speed when Unleash is cast."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Marci taps a hidden power, gaining Fury charges that allow her to deliver a rapid sequence of strikes that slow movement and attack speed of the target for %pulse_debuff_duration%s. The last strike in every Fury combo creates a damaging pulse around the target. In between Fury combos, Marci is unable to attack for %time_between_flurries%s.\n\nMarci gains %bonus_movespeed%%% movement speed when Unleash is cast.",
+   "description_zh": "玛西释放潜藏的力量，获得狂怒的猛攻效果，使自身可以发动快速的打击，并且降低打击目标的移动和攻击速度，持续%pulse_debuff_duration%秒。每次狂怒连技的最后一击都会创造一个脉冲效果，对目标周围的敌人造成伤害。在狂怒连技的间隔，玛西无法攻击，持续%time_between_flurries%秒。\n\n玛西施放怒拳破时移动速度提升%bonus_movespeed%%%。",
+   "notes_en": [
+    "Once a Fury combo is started, each attack must be delivered within 1s or the Fury combo expires.",
+    "Removes attack speed limit."
+   ],
+   "notes_zh": [
+    "每次狂怒连技开始后，每次攻击都必须在1秒内完成，否则连技将会终止。",
+    "移除攻击速度限制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Unleash cooldown by %scepter_cooldown_reduction% seconds and causes Unleash to apply a basic dispel on Marci. While Unleash is Active, all of Marci's abilities unleash pulses when cast. All of Marci's unleash pulses will silence units for %pulse_silence_duration% seconds.DISPEL TYPE: Basic Dispel",
+     "zh": "怒拳破的冷却时间减少%scepter_cooldown_reduction%秒，并且施放时对玛西施加弱驱散。怒拳破生效期间，玛西的所有技能在施放时都会施放脉冲。玛西的所有怒拳破脉冲都会沉默敌人，持续%pulse_silence_duration%秒。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "855bbccbcaaea123b519",
+  "subject": "marci_unleash",
+  "subject_zh": "玛西·怒拳破",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reduces Unleash cooldown by %scepter_cooldown_reduction% seconds and causes Unleash to apply a basic dispel on Marci.",
+   "While Unleash is Active, all of Marci's abilities unleash pulses when cast.",
+   "All of Marci's unleash pulses will silence units for %pulse_silence_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Marci taps a hidden power, gaining Fury charges that allow her to deliver a rapid sequence of strikes that slow movement and attack speed of the target for %pulse_debuff_duration%s. The last strike in every Fury combo creates a damaging pulse around the target. In between Fury combos, Marci is unable to attack for %time_between_flurries%s.\n\nMarci gains %bonus_movespeed%%% movement speed when Unleash is cast.",
+   "description_zh": "玛西释放潜藏的力量，获得狂怒的猛攻效果，使自身可以发动快速的打击，并且降低打击目标的移动和攻击速度，持续%pulse_debuff_duration%秒。每次狂怒连技的最后一击都会创造一个脉冲效果，对目标周围的敌人造成伤害。在狂怒连技的间隔，玛西无法攻击，持续%time_between_flurries%秒。\n\n玛西施放怒拳破时移动速度提升%bonus_movespeed%%%。",
+   "notes_en": [
+    "Once a Fury combo is started, each attack must be delivered within 1s or the Fury combo expires.",
+    "Removes attack speed limit."
+   ],
+   "notes_zh": [
+    "每次狂怒连技开始后，每次攻击都必须在1秒内完成，否则连技将会终止。",
+    "移除攻击速度限制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Unleash cooldown by %scepter_cooldown_reduction% seconds and causes Unleash to apply a basic dispel on Marci. While Unleash is Active, all of Marci's abilities unleash pulses when cast. All of Marci's unleash pulses will silence units for %pulse_silence_duration% seconds.DISPEL TYPE: Basic Dispel",
+     "zh": "怒拳破的冷却时间减少%scepter_cooldown_reduction%秒，并且施放时对玛西施加弱驱散。怒拳破生效期间，玛西的所有技能在施放时都会施放脉冲。玛西的所有怒拳破脉冲都会沉默敌人，持续%pulse_silence_duration%秒。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6d614cb713be19a24053",
+  "subject": "earthshaker_enchant_totem",
+  "subject_zh": "撼地者·强化图腾",
+  "mechanism": "cleave",
+  "mechanism_zh": "分裂溅射",
+  "definition": "攻击伤害波及周围单位",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Grants Enchant Totem a cleaving attack.",
+   "强化图腾拥有分裂效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Empowers Earthshaker's totem, causing it to deal extra damage and have %bonus_attack_range% bonus attack range on the next attack.",
+   "description_zh": "强化撼地者的图腾，使下次攻击拥有额外攻击力和%bonus_attack_range%攻击距离加成。",
+   "notes_en": [
+    "Bonus damage is based on base damage and that given by primary attribute."
+   ],
+   "notes_zh": [
+    "攻击力加成是基于基础攻击力和主属性数值。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Enchant Totem becomes a ground target ability, causing Earthshaker to jump in the air and land at the target spot, casting Enchant Totem there.  Self-casting the ability will behave in the original form, without jumping. Grants Enchant Totem a cleaving attack.",
+     "zh": "强化图腾可以对地施放，施放后会跳至半空中再降落至目标地点，在目标地点施放强化图腾。双击技能会按原技能施放，不会跳跃。强化图腾拥有分裂效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "69af2fe1cb3d627fa0b2",
+  "subject": "sven_great_cleave",
+  "subject_zh": "斯温·巨力挥舞",
+  "mechanism": "cleave",
+  "mechanism_zh": "分裂溅射",
+  "definition": "攻击伤害波及周围单位",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Sven strikes with great force, cleaving all nearby enemy units with his attack.",
+   "斯温以巨力攻击，并对所有附近的敌方单位造成分裂攻击伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Sven strikes with great force, cleaving all nearby enemy units with his attack.",
+   "description_zh": "斯温以巨力攻击，并对所有附近的敌方单位造成分裂攻击伤害。"
+  }
+ },
+ {
+  "review_id": "7b2125391ce3d5281f97",
+  "subject": "tiny_tree_grab",
+  "subject_zh": "小小·抓树",
+  "mechanism": "cleave",
+  "mechanism_zh": "分裂溅射",
+  "definition": "攻击伤害波及周围单位",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Grabs a tree and causes Tiny to have bonus range, damage, and a splashing attack for a limited number of attacks.",
+   "抓起一棵树，使小小在有限次数的攻击里获得攻击距离加成、攻击力加成和溅射攻击。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "Grabs a tree and causes Tiny to have bonus range, damage, and a splashing attack for a limited number of attacks.  The tree can be thrown, to deal your attack to a unit at a distance.",
+   "description_zh": "抓起一棵树，使小小在有限次数的攻击里获得攻击距离加成、攻击力加成和溅射攻击。可以将树木扔出，对远距离的敌人造成攻击伤害。",
+   "notes_en": [
+    "The cooldown begins when the tree is thrown."
+   ],
+   "notes_zh": [
+    "树木扔出后技能进入冷却。"
+   ]
+  }
+ },
+ {
+  "review_id": "b67d7adeb233b5e7d674",
+  "subject": "tiny_toss_tree",
+  "subject_zh": "小小·扔树",
+  "mechanism": "cleave",
+  "mechanism_zh": "分裂溅射",
+  "definition": "攻击伤害波及周围单位",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Throws the tree at the target unit, proccing your attack on it and splashing damage around the target.",
+   "将树木扔向目标单位，触发自身对其的攻击，并且对周围目标造成溅射伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Throws the tree at the target unit, proccing your attack on it and splashing damage around the target.",
+   "description_zh": "将树木扔向目标单位，触发自身对其的攻击，并且对周围目标造成溅射伤害。"
+  }
+ },
+ {
+  "review_id": "271348090c4ee27b4ef3",
+  "subject": "kunkka_tidebringer",
+  "subject_zh": "昆卡·潮汐使者",
+  "mechanism": "cleave",
+  "mechanism_zh": "分裂溅射",
+  "definition": "攻击伤害波及周围单位",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Kunkka's legendary sword grants increased damage and cleaves a large area of effect in front of him for a single strike.",
+   "昆卡的传奇之剑使他的下一次攻击附加额外的攻击力并在前方造成大范围的分裂攻击伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Kunkka's legendary sword grants increased damage and cleaves a large area of effect in front of him for a single strike.",
+   "description_zh": "昆卡的传奇之剑使他的下一次攻击附加额外的攻击力并在前方造成大范围的分裂攻击伤害。"
+  }
+ },
+ {
+  "review_id": "ba3574881c419cb72fd1",
+  "subject": "lion_finger_of_death",
+  "subject_zh": "莱恩·死亡之指",
+  "mechanism": "cleave",
+  "mechanism_zh": "分裂溅射",
+  "definition": "攻击伤害波及周围单位",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "After using Finger of Death, Lion's hand becomes empowered, allowing him to use a cleaving melee attack with %punch_attack_range% range with bonus movement speed.",
+   "使用死亡之指后，莱恩的手臂增强了力量，使他可以发动带有分裂效果的近战攻击，攻击距离为%punch_attack_range%，并拥有移动速度加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Rips at an enemy unit, trying to turn it inside-out, dealing massive damage to the target.After using Finger of Death, Lion's hand becomes empowered, allowing him to use a cleaving melee attack with %punch_attack_range% range with bonus movement speed.Finger of Death gains permanent bonus damage for it and the fist for each enemy Hero it or the fist kills. The melee attack may be disabled by setting the ability to Alt Cast.",
+   "description_zh": "撕裂一个敌方单位，将其折磨得死去活来，并造成巨大伤害。使用死亡之指后，莱恩的手臂增强了力量，使他可以发动带有分裂效果的近战攻击，攻击距离为%punch_attack_range%，并拥有移动速度加成。每次技能或重拳击杀英雄后都会分别使技能和重拳永久获得额外伤害和攻击力。技能设为（右键点击技能栏图标）后可以禁用近战攻击。",
+   "notes_en": [
+    "Finger of Death has a %damage_delay% delay before the damage is applied after the spell is cast, allowing certain abilities to avoid the damage.",
+    "Finger of Death only gains damage if the enemy hero dies within %grace_period% seconds of being affected by Finger of Death."
+   ],
+   "notes_zh": [
+    "死亡一指在技能施放到伤害生效有%damage_delay%秒延迟，因此有若干技能可以躲避该伤害。",
+    "只有在敌方英雄受到死亡之指作用后%grace_period%秒内死亡才会使死亡之指额外提升伤害。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Finger of Death gains area of effect damage on the initial cast, and increases duration and cleave damage on its subsequent melee attacks.",
+     "zh": "死亡之指的初始施法获得范围型伤害，并且后续的近战攻击提升持续时间和分裂伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "16997b934c116ffd005d",
+  "subject": "lion_finger_of_death",
+  "subject_zh": "莱恩·死亡之指",
+  "mechanism": "cleave",
+  "mechanism_zh": "分裂溅射",
+  "definition": "攻击伤害波及周围单位",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Finger of Death gains area of effect damage on the initial cast, and increases duration and cleave damage on its subsequent melee attacks.",
+   "死亡之指的初始施法获得范围型伤害，并且后续的近战攻击提升持续时间和分裂伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Rips at an enemy unit, trying to turn it inside-out, dealing massive damage to the target.After using Finger of Death, Lion's hand becomes empowered, allowing him to use a cleaving melee attack with %punch_attack_range% range with bonus movement speed.Finger of Death gains permanent bonus damage for it and the fist for each enemy Hero it or the fist kills. The melee attack may be disabled by setting the ability to Alt Cast.",
+   "description_zh": "撕裂一个敌方单位，将其折磨得死去活来，并造成巨大伤害。使用死亡之指后，莱恩的手臂增强了力量，使他可以发动带有分裂效果的近战攻击，攻击距离为%punch_attack_range%，并拥有移动速度加成。每次技能或重拳击杀英雄后都会分别使技能和重拳永久获得额外伤害和攻击力。技能设为（右键点击技能栏图标）后可以禁用近战攻击。",
+   "notes_en": [
+    "Finger of Death has a %damage_delay% delay before the damage is applied after the spell is cast, allowing certain abilities to avoid the damage.",
+    "Finger of Death only gains damage if the enemy hero dies within %grace_period% seconds of being affected by Finger of Death."
+   ],
+   "notes_zh": [
+    "死亡一指在技能施放到伤害生效有%damage_delay%秒延迟，因此有若干技能可以躲避该伤害。",
+    "只有在敌方英雄受到死亡之指作用后%grace_period%秒内死亡才会使死亡之指额外提升伤害。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Finger of Death gains area of effect damage on the initial cast, and increases duration and cleave damage on its subsequent melee attacks.",
+     "zh": "死亡之指的初始施法获得范围型伤害，并且后续的近战攻击提升持续时间和分裂伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6d077ae2a11d4f6b19f3",
+  "subject": "enigma_malefice",
+  "subject_zh": "谜团·憎恶",
+  "mechanism": "cleave",
+  "mechanism_zh": "分裂溅射",
+  "definition": "攻击伤害波及周围单位",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "这些虚灵体不会再次分裂。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Focuses Enigma's power on a target, causing it to take damage and become repeatedly stunned for multiple instances.  An instance strikes every %tick_rate% seconds.",
+   "description_zh": "将谜团的力量集中于一个目标，使它受到多次伤害并反复被眩晕。每%tick_rate%秒眩晕一次。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases Malefice stun duration by %shard_bonus_stun_duration_tooltip%s and creates an Eidolon next to the target every instance of Malefice stun. These Eidolons will not multiply further.",
+     "zh": "憎恶的眩晕时间增加%shard_bonus_stun_duration_tooltip%秒，并且每次眩晕都会在目标身旁产生一个虚灵体。这些虚灵体不会再次分裂。"
+    }
+   }
+  }
+ }
+]

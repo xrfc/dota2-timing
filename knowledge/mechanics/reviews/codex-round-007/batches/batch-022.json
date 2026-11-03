@@ -1,0 +1,588 @@
+[
+ {
+  "review_id": "431bd2a12d756115deef",
+  "subject": "infused_raindrop",
+  "subject_zh": "凝魂之露",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Magical Damage Block: Consumes a charge to block 120 magic damage from damage instances over 75 damage.",
+   "Comes with 6 charges.",
+   "When the charges are gone, the item disappears.",
+   "Uses at most one charge per damage instance.",
+   "initial charges=6."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Infused Raindrops",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Magical Damage Block",
+     "description": "Consumes a charge to block 120 magic damage from damage instances over 75 damage. \n\nComes with 6 charges. When the charges are gone, the item disappears."
+    }
+   ],
+   "notes": "Uses at most one charge per damage instance.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.6"
+    },
+    {
+     "key": "magic_damage_block",
+     "value": "120"
+    },
+    {
+     "key": "min_damage",
+     "value": "75"
+    },
+    {
+     "key": "initial_charges",
+     "value": "6"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "ca9d67650f3ca2684a57",
+  "subject": "magic_stick",
+  "subject_zh": "魔棒",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Energy Charge: Instantly restores 15 health and mana per charge stored.",
+   "Max 10 charges.",
+   "Gains a charge whenever a visible enemy within 1200 range uses an ability.",
+   "Gains charges for spells cast by visible enemies in 1200 range.",
+   "Certain abilities and item abilities will not add charges.",
+   "max charges=10."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Magic Stick",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Charge",
+     "description": "Instantly restores 15 health and mana per charge stored.\n\n Max 10 charges. Gains a charge whenever a visible enemy within 1200 range uses an ability."
+    }
+   ],
+   "notes": "Gains charges for spells cast by visible enemies in 1200 range.\nCertain abilities and item abilities will not add charges.",
+   "attrib": [
+    {
+     "key": "max_charges",
+     "value": "10"
+    },
+    {
+     "key": "charge_radius",
+     "value": "1200"
+    },
+    {
+     "key": "restore_per_charge",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "bc5d69ebb45c10baabc7",
+  "subject": "magic_wand",
+  "subject_zh": "魔杖",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Energy Charge: Instantly restores 15 health and mana per charge stored.",
+   "Max 20 charges.",
+   "Gains a charge whenever a visible enemy within 1200 range uses an ability.",
+   "Gains charges for spells cast by visible enemies in 1200 range.",
+   "Certain abilities and item abilities will not add charges.",
+   "max charges=20."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Magic Wand",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Charge",
+     "description": "Instantly restores 15 health and mana per charge stored. \n\nMax 20 charges. Gains a charge whenever a visible enemy within 1200 range uses an ability."
+    }
+   ],
+   "notes": "Gains charges for spells cast by visible enemies in 1200 range.\nCertain abilities and item abilities will not add charges.",
+   "attrib": [
+    {
+     "key": "max_charges",
+     "value": "20"
+    },
+    {
+     "key": "charge_radius",
+     "value": "1200"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "3"
+    },
+    {
+     "key": "restore_per_charge",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "a7b2f4fa5f8c2108ffd9",
+  "subject": "mjollnir",
+  "subject_zh": "雷神之锤",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Static Charge: Places a charged shield on a target unit for 12 seconds which has a 20% chance to release a 225 magical damage shocking bolt at a nearby attacker and 4 additional enemies.",
+   "Static Charge cannot trigger more than once per second.",
+   "Static Charge's shock deals magical damage centered on hero with the Static Charge.",
+   "Static Charge's targets cannot be more than 900 range away.",
+   "Static Charge procs will not bounce to heroes that are invisible or hidden by Fog of War."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Mjollnir",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Static Charge",
+     "description": "Places a charged shield on a target unit for 12 seconds which has a 20% chance to release a 225 magical damage shocking bolt at a nearby attacker and 4 additional enemies."
+    },
+    {
+     "type": "passive",
+     "title": "Chain Lightning",
+     "description": "Grants a 25% chance on attack to release a bolt of electricity that leaps between 12 targets within a 650 radius, dealing 180 magical damage to each. Lightning proc pierces evasion."
+    }
+   ],
+   "notes": "Static Charge cannot trigger more than once per second.\nStatic Charge's shock deals magical damage centered on hero with the Static Charge. Static Charge's targets cannot be more than 900 range away.\nStatic Charge procs will not bounce to heroes that are invisible or hidden by Fog of War.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "25"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "90"
+    },
+    {
+     "key": "static_duration",
+     "value": "12.0"
+    },
+    {
+     "key": "static_chance",
+     "value": "20"
+    },
+    {
+     "key": "static_strikes",
+     "value": "4"
+    },
+    {
+     "key": "static_damage",
+     "value": "225"
+    },
+    {
+     "key": "static_primary_radius",
+     "value": "600"
+    },
+    {
+     "key": "static_seconary_radius",
+     "value": "900"
+    },
+    {
+     "key": "static_radius",
+     "value": "900"
+    },
+    {
+     "key": "static_cooldown",
+     "value": "1.0"
+    },
+    {
+     "key": "chain_chance",
+     "value": "25"
+    },
+    {
+     "key": "chain_damage",
+     "value": "180"
+    },
+    {
+     "key": "chain_strikes",
+     "value": "12"
+    },
+    {
+     "key": "chain_radius",
+     "value": "650"
+    },
+    {
+     "key": "chain_delay",
+     "value": "0.25"
+    },
+    {
+     "key": "chain_cooldown",
+     "value": "0.2"
+    },
+    {
+     "key": "illusion_multiplier_pct",
+     "value": "100"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "429f298e3b600523cccc",
+  "subject": "spirit_vessel",
+  "subject_zh": "魂之灵瓮",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Gains charges every time an enemy hero dies within 1500 units or the user dies.",
+   "Empty vessels gain 2 charges.",
+   "Only the closest Spirit Vessel to the dying hero will gain a charge.",
+   "soul initial charge=2.",
+   "soul additional charges=1."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Spirit Vessel",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "When used against enemies, it reduces health by 4% of current health per second, and reduces Health Restoration by 70%. Deals 25 damage per second. \n\nWhen used on allies, it provides 40 health regeneration per second. \n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units or the user dies."
+    }
+   ],
+   "notes": "Empty vessels gain 2 charges.\nOnly the closest Spirit Vessel to the dying hero will gain a charge.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.",
+   "attrib": [
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.75"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "10"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "2"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "40"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    },
+    {
+     "key": "restoration_reduction_enemy",
+     "value": "70"
+    },
+    {
+     "key": "enemy_hp_drain",
+     "value": "4"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "4bef80bcdfbff69aae25",
+  "subject": "tango",
+  "subject_zh": "树之祭祀",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Comes with 3 charges.",
+   "tooltip charges=3."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "dname": "Tango",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Devour",
+     "description": "Consumes a target tree to gain 7 health regeneration for 16 seconds. Consuming an Ironwood Tree doubles the heal duration.\n\nComes with 3 charges. Can be used on an allied hero to give them one Tango.\n\nTree Range: 165"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "health_regen",
+     "value": "7.0"
+    },
+    {
+     "key": "buff_duration",
+     "value": "16.0"
+    },
+    {
+     "key": "tooltip_charges",
+     "value": "3"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "df5d57c68005e75df81a",
+  "subject": "travel_boots",
+  "subject_zh": "远行鞋",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Town Portal Scroll: Upgrades your Town Portal Scroll, allowing it to target units, reduces cooldown and does not consume a charge on usage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Boots of Travel",
+   "abilities": [
+    {
+     "type": "upgrade",
+     "title": "Town Portal Scroll",
+     "description": "Upgrades your Town Portal Scroll, allowing it to target units, reduces cooldown and does not consume a charge on usage."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "90"
+    },
+    {
+     "key": "maximum_distance",
+     "value": "800"
+    },
+    {
+     "key": "vision_radius",
+     "value": "200"
+    },
+    {
+     "key": "tp_cooldown",
+     "display": "TOWN PORTAL SCROLL COOLDOWN: {value}",
+     "value": "40"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "f7e7ad679724fe30552b",
+  "subject": "travel_boots_2",
+  "subject_zh": "远行鞋",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Town Portal Scroll: Upgrades your Town Portal Scroll, allowing it to target units and heroes, reduces cooldown, channel time and does not consume a charge on usage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Boots of Travel 2",
+   "abilities": [
+    {
+     "type": "upgrade",
+     "title": "Town Portal Scroll",
+     "description": "Upgrades your Town Portal Scroll, allowing it to target units and heroes, reduces cooldown, channel time and does not consume a charge on usage."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "110"
+    },
+    {
+     "key": "maximum_distance",
+     "value": "800"
+    },
+    {
+     "key": "vision_radius",
+     "value": "200"
+    },
+    {
+     "key": "tp_cooldown",
+     "display": "TOWN PORTAL SCROLL COOLDOWN: {value}",
+     "value": "40"
+    },
+    {
+     "key": "tp_channel_time",
+     "display": "TOWN PORTAL SCROLL CHANNEL TIME: {value}",
+     "value": "2"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "d80aa2eda6cca675cb3e",
+  "subject": "urn_of_shadows",
+  "subject_zh": "影之灵龛",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Gains charges every time an enemy hero dies within 1500 units.",
+   "Empty urns gain 2 charges.",
+   "soul initial charge=2.",
+   "soul additional charges=1."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Urn of Shadows",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "Provides 30 health regeneration when cast on allies, and deals 25 damage per second when cast on enemies.\n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units."
+    }
+   ],
+   "notes": "Empty urns gain 2 charges.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.0"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "2"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "2"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "30"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    }
+   ]
+  }
+ }
+]

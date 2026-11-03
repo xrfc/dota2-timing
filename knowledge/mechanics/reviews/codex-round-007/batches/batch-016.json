@@ -1,0 +1,1386 @@
+[
+ {
+  "review_id": "1ccda914fe15056953e6",
+  "subject": "bfury",
+  "subject_zh": "狂战斧",
+  "mechanism": "tree_destroy",
+  "mechanism_zh": "砍树",
+  "definition": "能摧毁树木",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Chop Tree: Destroy a target tree."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "dname": "Battle Fury",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Chop Tree",
+     "description": "Destroy a target tree."
+    },
+    {
+     "type": "passive",
+     "title": "Quell",
+     "description": "Increases attack damage against non-hero units by 10 for melee heroes, and 5 for ranged."
+    },
+    {
+     "type": "passive",
+     "title": "Cleave",
+     "description": "Deals 60% of attack damage as physical damage in a cone up to 650 around the target. Deals 40% against creeps. (Melee Only)"
+    }
+   ],
+   "notes": "Cleave damage goes through spell immunity.\nIf multiple sources of Cleave are present, each Cleave's damage is applied separately.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "50"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "7.5"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2.75"
+    },
+    {
+     "key": "cleave_damage_percent",
+     "value": "60"
+    },
+    {
+     "key": "cleave_damage_percent_creep",
+     "value": "40"
+    },
+    {
+     "key": "quelling_bonus",
+     "value": "10"
+    },
+    {
+     "key": "quelling_bonus_ranged",
+     "value": "5"
+    },
+    {
+     "key": "cleave_starting_width",
+     "value": "150"
+    },
+    {
+     "key": "cleave_ending_width",
+     "value": "360"
+    },
+    {
+     "key": "cleave_distance",
+     "value": "650"
+    },
+    {
+     "key": "upgraded_cleave_bonus",
+     "value": "25"
+    },
+    {
+     "key": "upgraded_damage_bonus",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "da8f172180d6ba1fa638",
+  "subject": "quelling_blade",
+  "subject_zh": "压制之刃",
+  "mechanism": "tree_destroy",
+  "mechanism_zh": "砍树",
+  "definition": "能摧毁树木",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Chop Tree: Destroy a target tree."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "dname": "Quelling Blade",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Chop Tree",
+     "description": "Destroy a target tree."
+    },
+    {
+     "type": "passive",
+     "title": "Quell",
+     "description": "Increases attack damage against non-hero units by 8 for melee heroes, and 4 for ranged."
+    }
+   ],
+   "notes": "Effects of multiple quelling blades do not stack.",
+   "attrib": [
+    {
+     "key": "damage_bonus",
+     "value": "8"
+    },
+    {
+     "key": "damage_bonus_ranged",
+     "value": "4"
+    },
+    {
+     "key": "quelling_range_tooltip",
+     "value": "350"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "e2d9624208fd3ed9e232",
+  "subject": "vengefulspirit_command_aura",
+  "subject_zh": "复仇之魂·复仇光环",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "If the illusion is alive when Vengeful Spirit respawn, she will take its place.",
+   "复仇之魂复活时若幻象依然存在，则自身会直接将其取代。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Vengeful Spirit's presence increases the damage of nearby friendly heroes. Vengeful Spirit herself receives %self_multiplier%%% extra bonus.",
+   "description_zh": "复仇之魂的存在提升了附近友方英雄的攻击力。复仇之魂自身获得%self_multiplier%%%额外加成。",
+   "notes_en": [
+    "Break disables the damage aura."
+   ],
+   "notes_zh": [
+    "破坏会使攻击力光环失效。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases self multiplier. Upon death, creates a strong illusion of Vengeful Spirit that deals full damage, and can cast all of her spells.If the illusion is alive when Vengeful Spirit respawn, she will take its place. XP earned by her illusion is given to her. Strong Illusions are not instantly killed by spells.",
+     "zh": "提升自身加成系数。死亡时产生一个复仇之魂的强幻象，继承全额攻击力，可以施放自己的所有技能。复仇之魂复活时若幻象依然存在，则自身会直接将其取代。幻象获得的经验将给予英雄。强幻象不会被相关技能秒杀。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "71bde1bc2270af04a332",
+  "subject": "lion_to_hell_and_back",
+  "subject_zh": "莱恩·下地狱再上来",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Lion gains %spell_amp%%% spell amplification for %duration%s after respawning or resurrecting or until he gets a kill or assist.",
+   "击杀英雄或助攻会向莱恩提供%debuff_amp%%%负面效果持续时间，持续到该英雄复活。",
+   "而莱恩复活时，他就会获得持续%duration%秒的%spell_amp%%%技能增强，直到他完成击杀或得到助攻。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "description_en": "Lion gains %debuff_amp%%% debuff duration after killing or assisting in a Hero kill while that Hero is dead.Lion gains %spell_amp%%% spell amplification for %duration%s after respawning or resurrecting or until he gets a kill or assist.",
+   "description_zh": "击杀英雄或助攻会向莱恩提供%debuff_amp%%%负面效果持续时间，持续到该英雄复活。而莱恩复活时，他就会获得持续%duration%秒的%spell_amp%%%技能增强，直到他完成击杀或得到助攻。"
+  }
+ },
+ {
+  "review_id": "a4bdf83b8f11d943a8ad",
+  "subject": "shadow_shaman_fowl_play",
+  "subject_zh": "暗影萨满·禽戏",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Cooldown resets when Shadow Shaman respawns.",
+   "冷却时间会在暗影萨满复活时重置。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "When taking lethal damage, Shadow Shaman receives a strong dispel and survives as a 1 HP chicken with increased movement speed. Incoming damage is reduced to zero for a short duration and additional chickens are created to confuse the enemy. Cooldown resets when Shadow Shaman respawns.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "受到致死伤害时，暗影萨满会获得强驱散效果，并且以1点生命的小鸡继续存活。受到的伤害将降为零，持续较短时间，并且额外产生若干只小鸡，迷惑敌人。冷却时间会在暗影萨满复活时重置。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "Lethal Damage from Axe's Culling Blade and Necrophos's Reaper's Scythe will not be prevented.",
+    "Incoming damage reduction buff will prevent certain sources of HP removal from killing Shadow Shaman."
+   ],
+   "notes_zh": [
+    "无法阻止斧王的淘汰之刃和瘟疫法师的死神镰刀的致死伤害。",
+    "受到的伤害减免效果会阻止生命移除类效果杀死暗影萨满。"
+   ]
+  }
+ },
+ {
+  "review_id": "3f766387df29867f96c6",
+  "subject": "skeleton_king_bone_guard",
+  "subject_zh": "冥魂大帝·白骨护卫",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Activate to spend all charges, summoning skeletons that respawn once when killed.",
+   "可以主动使用，消耗所有能量点数召唤可以复活一次的骷髅兵。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Gains a Charge for every 2 creeps killed and 2 charges per hero killed. Activate to spend all charges, summoning skeletons that respawn once when killed. Skeletons benefit from Vampiric Spirit's lifesteal.",
+   "description_zh": "击杀2个非英雄单位可获得1点能量，击杀1名英雄可获得2点能量。可以主动使用，消耗所有能量点数召唤可以复活一次的骷髅兵。骷髅兵享受吸血灵魂的吸血效果。",
+   "notes_en": [
+    "Break disables the gaining of new stacks.",
+    "Casting Wraithfire Blast on an enemy causes the skeletons to attack that enemy."
+   ],
+   "notes_zh": [
+    "破坏会使技能无法获得新的叠加效果。",
+    "对敌人施放冥火爆击会导致骷髅兵攻击该敌人。"
+   ]
+  }
+ },
+ {
+  "review_id": "b0c848b87a3cac881932",
+  "subject": "skeleton_king_vampiric_spirit",
+  "subject_zh": "冥魂大帝·吸血灵魂",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Wraith King cannot reincarnate after being a Wraith.",
+   "Does not affect Reincarnate deaths.",
+   "Respawn timer is reduced by Wraith duration.",
+   "冥魂大帝变为冥魂后无法重生。",
+   "复活时间会根据冥魂持续时间而减少。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+  },
+  "context": {
+   "description_en": "Grants Wraith King Lifesteal. When slain Wraith King turns into a free pathing Wraith with Bonus Attack and Movement Speed for a short duration, delaying his death. Wraith King cannot reincarnate after being a Wraith.",
+   "description_zh": "冥魂大帝获得吸血效果。被击杀时冥魂大帝变为移动无视地形的冥魂，拥有额外攻击和移动速度，持续较短时间，自身死亡延后。冥魂大帝变为冥魂后无法重生。",
+   "notes_en": [
+    "Credit for allies whose death was delayed will go to whoever struck the original killing blow.",
+    "Does not affect Reincarnate deaths.",
+    "Break only disables the passive lifesteal component.",
+    "Respawn timer is reduced by Wraith duration."
+   ],
+   "notes_zh": [
+    "对于死亡被延缓的友军，其成为冥魂前所受的最后一击来源即为击杀者。",
+    "触发绝冥再生时没有效果。",
+    "破坏只会使被动吸血失效。",
+    "复活时间会根据冥魂持续时间而减少。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Turns Vampiric Spirit into an aura, allowing allied heroes to turn into wraiths when slain. Extends wraith duration.",
+     "zh": "吸血灵魂变为光环，使友方英雄被击杀时也能变为冥魂。延长冥魂的持续时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a97f1e72583304de73c2",
+  "subject": "skeleton_king_reincarnation",
+  "subject_zh": "冥魂大帝·绝冥再生",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Wraith King's form regroups after death, allowing him to resurrect when killed in battle.",
+   "Wraith King won't revive if he doesn't have enough mana.",
+   "If Wraith King has an Aegis and Reincarnation off cooldown, Reincarnation will trigger first.",
+   "Revives with full HP and Mana.",
+   "冥魂大帝倒下后，他飞散的冥魂会重组，使他复活。",
+   "如果魔法不足冥魂大帝将不会重生。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CAN_SELF_CAST",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Wraith King's form regroups after death, allowing him to resurrect when killed in battle.  Upon death, enemy units in a %slow_radius% radius are slowed. Skeletons spawn and attack each nearby enemy hero. Can be self-cast to kill Wraith King instantly.",
+   "description_zh": "冥魂大帝倒下后，他飞散的冥魂会重组，使他复活。死亡时附近%slow_radius%范围内的敌人会被减速，会产生骷髅兵攻击附近每个敌方英雄。可以对自身施放，使冥魂大帝立刻阵亡。",
+   "notes_en": [
+    "Wraith King won't revive if he doesn't have enough mana.",
+    "If Wraith King has an Aegis and Reincarnation off cooldown, Reincarnation will trigger first.",
+    "Revives with full HP and Mana."
+   ],
+   "notes_zh": [
+    "如果魔法不足冥魂大帝将不会重生。",
+    "如果冥魂大帝拥有不朽之守护，同时绝冥再生不处于冷却状态，死亡后将首先触发绝冥再生。",
+    "重生后生命值和魔法值全满。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces cooldown.",
+     "zh": "减少冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2708bb0bbfdc5acfb72e",
+  "subject": "chen_zealot",
+  "subject_zh": "陈·狂热者",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Whenever Chen respawns, he is joined by a Zealot, a melee warrior creep with the ability to sacrifice itself to heal or deal damage to an enemy.",
+   "The Zealot respawns next to Chen.",
+   "陈复活时都会带着一个狂热者加入战斗，这是近战小兵战士，可以牺牲自己治疗友军，或者对敌人造成伤害。",
+   "狂热者会在陈身边复活。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Whenever Chen respawns, he is joined by a Zealot, a melee warrior creep with the ability to sacrifice itself to heal or deal damage to an enemy.  The Zealot receives Holy Persuasion's benefits and scales up with other lane melee creeps as game time increases and gains extra base damage.  The Zealot respawns next to Chen.Zealot may be activated to teleport a unit under your control to Chen after a %teleport_delay% second delay.  If Chen is targeted, it will teleport all units you control. Taking damage from enemy heroes or their units will cancel the teleport.",
+   "description_zh": "陈复活时都会带着一个狂热者加入战斗，这是近战小兵战士，可以牺牲自己治疗友军，或者对敌人造成伤害。狂热者会获得神圣劝化的加成效果，并且和其他线上近战小兵一样随着游戏时间的增加提升属性，获得额外基础攻击力。狂热者会在陈身边复活。狂热者技能可以主动使用，在%teleport_delay%秒延迟后把控制下的目标单位传送到陈的身边。如果陈是技能的目标，将传送控制的所有单位。受到来自敌方英雄及其单位的伤害会中止传送过程。"
+  }
+ },
+ {
+  "review_id": "d847d6ccab42280a1a5e",
+  "subject": "brewmaster_primal_split",
+  "subject_zh": "酒仙·元素分离",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "只要其中任何一个在召唤时间结束后存活下来，酒仙就能重生。",
+   "技能结束后，酒仙会根据大地→狂风→烈火的顺序选择未阵亡的元素重生。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Splits Brewmaster into elements, forming 3 specialized warriors, adept at survival, each with their own abilities. If any of them survive until the end of their summoned timer, the Brewmaster is reborn.  Each Warrior gains its respective Drunken Brawler stance.",
+   "description_zh": "酒仙分裂成元素，产生3个各有所长的战士，生存能力极强，每个都拥有独特技能。只要其中任何一个在召唤时间结束后存活下来，酒仙就能重生。每个战士都会获得对应的醉拳拳法。",
+   "notes_en": [
+    "The Earth Element will carry all auras that the Brewmaster has, as well as True Sight.",
+    "The Fire Element has phased movement.",
+    "When the spell ends, Brewmaster will take the place of an element in this order, assuming they are alive: Earth, Storm, Fire."
+   ],
+   "notes_zh": [
+    "大地战士将继承酒仙的所有光环，以及真视宝石的真视效果。",
+    "烈火战士拥有相位移动的能力。",
+    "技能结束后，酒仙会根据大地→狂风→烈火的顺序选择未阵亡的元素重生。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Primal Split gains %scepter_bonus_levels% max and current level, improving the Brewlings and their abilities.Allows Primal Split to be cancelled early, and causes the Brewlings to be Brewed Up when Primal Split begins.",
+     "zh": "元素分离获得%scepter_bonus_levels%级最高和当前等级，强化元素战士和他们的技能。元素分离可以提前结束，而且元素分离开始时元素战士是浸酒状态。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "09c4ebf7ef84233cccc4",
+  "subject": "undying_ceaseless_dirge",
+  "subject_zh": "不朽尸王·挽歌犹唱",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "When Undying dies he will instantly respawn in the fountain.",
+   "不朽尸王阵亡时会立刻在泉水复活。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "description_en": "When Undying dies he will instantly respawn in the fountain. Begins the game on cooldown. Cannot be refreshed.",
+   "description_zh": "不朽尸王阵亡时会立刻在泉水复活。比赛开始时处于冷却状态。无法被刷新。"
+  }
+ },
+ {
+  "review_id": "9b506f6f2bfe56ca4851",
+  "subject": "phoenix_supernova",
+  "subject_zh": "凤凰·超新星",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "凤凰十分乐意终结自己现在的生命来换取重生。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "凤凰十分乐意终结自己现在的生命来换取重生。将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。恒星受到敌方英雄一定次数的攻击后将会被摧毁。经过%abilityduration%秒后恒星将会爆炸，眩晕周围所有敌人。而凤凰的生命和魔法值都会回到满状态，并且所有技能的冷却时间都会刷新。\n\n驱散类型：强驱散",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases number of attacks to destroy Supernova and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together.",
+     "zh": "摧毁超新星所需的攻击次数增加，凤凰可以对友方英雄施放超新星，使双方共同变为恒星进行重生。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "b08e4fe99ceb96405382",
+  "subject": "phoenix_supernova",
+  "subject_zh": "凤凰·超新星",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "摧毁超新星所需的攻击次数增加，凤凰可以对友方英雄施放超新星，使双方共同变为恒星进行重生。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "凤凰十分乐意终结自己现在的生命来换取重生。将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。恒星受到敌方英雄一定次数的攻击后将会被摧毁。经过%abilityduration%秒后恒星将会爆炸，眩晕周围所有敌人。而凤凰的生命和魔法值都会回到满状态，并且所有技能的冷却时间都会刷新。\n\n驱散类型：强驱散",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases number of attacks to destroy Supernova and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together.",
+     "zh": "摧毁超新星所需的攻击次数增加，凤凰可以对友方英雄施放超新星，使双方共同变为恒星进行重生。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "cca6cfb5a6615c1dd0b8",
+  "subject": "oracle_prognosticate",
+  "subject_zh": "神谕者·预言",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Oracle will predict and announce to allies, where the next power rune will spawn (top or bottom) as well as Roshan's exact respawn time.",
+   "神谕者将预测并对友军宣布，下个强化神符出现的地点（上路或下路），以及肉山的准确复活时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS | DOTA_ABILITY_BEHAVIOR_INNATE_UI"
+  },
+  "context": {
+   "description_en": "Oracle will predict and announce to allies, where the next power rune will spawn (top or bottom) as well as Roshan's exact respawn time.",
+   "description_zh": "神谕者将预测并对友军宣布，下个强化神符出现的地点（上路或下路），以及肉山的准确复活时间。"
+  }
+ },
+ {
+  "review_id": "d0b9ed4f2de01f39785e",
+  "subject": "aegis",
+  "subject_zh": "不朽之守护",
+  "mechanism": "respawn",
+  "mechanism_zh": "重生",
+  "definition": "死亡后复活，或影响复活",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Reincarnation: Brings you to life with full health and mana 5 seconds after you die, at the location where you died.",
+   "Reincarnation must be used within 5 minutes or Aegis of the Immortal disappears.",
+   "reincarnate time=5."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Aegis of the Immortal",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Reincarnation",
+     "description": "Brings you to life with full health and mana 5 seconds after you die, at the location where you died. \n\nReincarnation must be used within 5 minutes or Aegis of the Immortal disappears. If it expires, it will heal you over 5 seconds (dispels on damage)."
+    }
+   ],
+   "notes": "Pronounced as ayy jis.",
+   "attrib": [
+    {
+     "key": "reincarnate_time",
+     "value": "5.0"
+    },
+    {
+     "key": "disappear_time",
+     "value": "300.0"
+    },
+    {
+     "key": "disappear_time_minutes_tooltip",
+     "value": "5"
+    },
+    {
+     "key": "disappear_time_turbo",
+     "value": "240.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "0d3e4c482d88004fb58d",
+  "subject": "axe_culling_blade",
+  "subject_zh": "斧王·淘汰之刃",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "When an enemy hero is killed with Culling Blade, its cooldown is reset, and all nearby allied units gain bonus movement speed and armor.",
+   "Axe permanently drenches his blade every time he kills an enemy Hero with Culling Blade, gaining bonus armor for each stack.",
+   "Culling Blade death cannot be prevented with other abilities like Shallow Grave.",
+   "淘汰之刃的斩杀效果无法被薄葬等技能阻止。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Axe spots a weakness and strikes, dealing pure damage. When an enemy hero is killed with Culling Blade, its cooldown is reset, and all nearby allied units gain bonus movement speed and armor.\n\nAxe permanently drenches his blade every time he kills an enemy Hero with Culling Blade, gaining bonus armor for each stack.",
+   "description_zh": "斧王洞察到弱点并出击，造成纯粹伤害。淘汰之刃击杀敌方英雄时将重置冷却时间，而附近所有友军单位获得移动速度和护甲加成。\n\n每当斧王通过淘汰之刃击杀敌方英雄，他的战刃就会浸满鲜血，获得永久叠加效果，每层都会提供护甲加成。",
+   "notes_en": [
+    "Culling Blade death cannot be prevented with other abilities like Shallow Grave."
+   ],
+   "notes_zh": [
+    "淘汰之刃的斩杀效果无法被薄葬等技能阻止。"
+   ]
+  }
+ },
+ {
+  "review_id": "e136e69d032ca4bad7ed",
+  "subject": "mirana_arrow",
+  "subject_zh": "米拉娜·月神之箭",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Instantly kills the first non-ancient creep it hits."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Fires a long-range arrow with deadly precision, which stuns and damages the first enemy unit it strikes. The stun duration ranges from %arrow_min_stun% to %arrow_max_stun% seconds, with bonus damage up to %arrow_bonus_damage% added, based on the distance the arrow travels to its target. Instantly kills the first non-ancient creep it hits.",
+   "description_zh": "射出一支绝对精准的箭矢，对第一个击中的敌人造成伤害并眩晕目标。目标距离越远，眩晕时间越长，最短%arrow_min_stun%秒，最长可达%arrow_max_stun%秒。根据箭矢飞行的距离还将对目标额外造成最多%arrow_bonus_damage%点伤害。若击中的是非远古的普通单位，将直接秒杀。",
+   "notes_en": [
+    "For every 150 distance the arrow travels, the stun duration upon impact increases by 0.5 seconds, and the bonus damage added increases by 14.",
+    "Sacred Arrow can hit invisible units.",
+    "Starstruck does not apply to the second Starstorm from Aghanim's Scepter."
+   ],
+   "notes_zh": [
+    "神箭每飞行150码，中箭后眩晕的持续时间将提高0.5秒，额外伤害增加14点。",
+    "月神之箭可以射中隐身单位。",
+    "流星赶月不会对阿哈利姆神杖升级群星风暴的第二次流星生效。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Sacred Arrow to release a Starstorm on enemies along the travel path of the primary arrow, releasing a second Starstorm that deals less damage to the impacted unit.",
+     "zh": "月神之箭在主神箭行进途中对敌人释放群星风暴。对击中的单位施放第二个群星风暴，造成的伤害有所降低。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "13f5d1790ed82c78c663",
+  "subject": "vengefulspirit_command_aura",
+  "subject_zh": "复仇之魂·复仇光环",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Strong Illusions are not instantly killed by spells."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Vengeful Spirit's presence increases the damage of nearby friendly heroes. Vengeful Spirit herself receives %self_multiplier%%% extra bonus.",
+   "description_zh": "复仇之魂的存在提升了附近友方英雄的攻击力。复仇之魂自身获得%self_multiplier%%%额外加成。",
+   "notes_en": [
+    "Break disables the damage aura."
+   ],
+   "notes_zh": [
+    "破坏会使攻击力光环失效。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases self multiplier. Upon death, creates a strong illusion of Vengeful Spirit that deals full damage, and can cast all of her spells.If the illusion is alive when Vengeful Spirit respawn, she will take its place. XP earned by her illusion is given to her. Strong Illusions are not instantly killed by spells.",
+     "zh": "提升自身加成系数。死亡时产生一个复仇之魂的强幻象，继承全额攻击力，可以施放自己的所有技能。复仇之魂复活时若幻象依然存在，则自身会直接将其取代。幻象获得的经验将给予英雄。强幻象不会被相关技能秒杀。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c755a2c02f064a102785",
+  "subject": "shadow_shaman_fowl_play",
+  "subject_zh": "暗影萨满·禽戏",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "DISPEL TYPE: Strong Dispel Lethal Damage from Axe's Culling Blade and Necrophos's Reaper's Scythe will not be prevented."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "When taking lethal damage, Shadow Shaman receives a strong dispel and survives as a 1 HP chicken with increased movement speed. Incoming damage is reduced to zero for a short duration and additional chickens are created to confuse the enemy. Cooldown resets when Shadow Shaman respawns.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "受到致死伤害时，暗影萨满会获得强驱散效果，并且以1点生命的小鸡继续存活。受到的伤害将降为零，持续较短时间，并且额外产生若干只小鸡，迷惑敌人。冷却时间会在暗影萨满复活时重置。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "Lethal Damage from Axe's Culling Blade and Necrophos's Reaper's Scythe will not be prevented.",
+    "Incoming damage reduction buff will prevent certain sources of HP removal from killing Shadow Shaman."
+   ],
+   "notes_zh": [
+    "无法阻止斧王的淘汰之刃和瘟疫法师的死神镰刀的致死伤害。",
+    "受到的伤害减免效果会阻止生命移除类效果杀死暗影萨满。"
+   ]
+  }
+ },
+ {
+  "review_id": "760e3f09453a6fb8cb0b",
+  "subject": "dazzle_shallow_grave",
+  "subject_zh": "戴泽·薄葬",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "HP cannot go below 1 while under the effects of Shallow Grave, but Axe's Culling Blade will still kill the hero.",
+   "在薄葬作用下生命值至少为1点，但是斧王的淘汰之刃还是可以斩杀目标英雄。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "An ally blessed with Shallow Grave, no matter how close to death, cannot die while under its protection. Healing on that ally is also amplified for the duration based on the hero's HP.",
+   "description_zh": "友军身受薄葬的福佑，在其保护下不论受到多大的伤害都不会阵亡。对该友军的治疗效果在持续时间内也会根据其生命值得到增强。",
+   "notes_en": [
+    "HP cannot go below 1 while under the effects of Shallow Grave, but Axe's Culling Blade will still kill the hero."
+   ],
+   "notes_zh": [
+    "在薄葬作用下生命值至少为1点，但是斧王的淘汰之刃还是可以斩杀目标英雄。"
+   ]
+  }
+ },
+ {
+  "review_id": "447c2150e295f830da79",
+  "subject": "ancient_apparition_ice_blast",
+  "subject_zh": "远古冰魄·冰晶爆轰",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "斩杀效果对幻象无效。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "description_en": "Launches a tracer toward any location on the battlefield, which must be triggered again to mark the area to be blasted by a damaging explosion of hail. The further the tracer travels, the larger the explosion will be. Enemies caught in the explosion, or who touch the icy ball of hail as it travels, are Frostbitten, taking damage over time and prevented from regenerating or healing. If a Frostbitten unit's health drops below a certain percentage, they will instantly shatter.",
+   "description_zh": "向地图的任意位置发出爆炸冰球，在冰球飞行时再次施放此技能将使其停下，使所在区域产生毁灭性的冰爆。冰球飞行的距离越长，冰爆影响的范围也将越大。冰爆范围内的所有敌方单位将马上受到大量伤害，而处于冰球飞行路径上的敌方英雄将与冰爆范围内的敌方英雄一同受到寒霜诅咒的作用，持续受到小幅伤害，同时无法恢复生命值。在此期间如果生命值低于一定百分比，该英雄将立刻死亡。",
+   "notes_en": [
+    "Upon cast, this ability is replaced by Release, used to stop the tracer on the target area.",
+    "The area of effect is %radius_min% + %radius_grow%*TimeTraveled, capped at %radius_max%.",
+    "Kill will be granted to the source of the damage that triggers the shatter.",
+    "The shatter effect doesn't work on illusions.",
+    "The HP Freeze prevents most kinds of healing, including the fountain, except Sunder, Time Lapse and Supernova."
+   ],
+   "notes_zh": [
+    "施放后本技能替换为释放，将使指向球停在目标区域。",
+    "作用范围的大小是%radius_min% + %radius_grow%*指向球的飞行时间，上限为%radius_max%。",
+    "击杀目标的英雄由触发即死的伤害来源决定。",
+    "斩杀效果对幻象无效。",
+    "寒霜诅咒的负面状态无法被驱散，包括身处泉水附近，但魂断、时光倒流和超新星除外。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Freezes enemies hit with the current level of Cold Feet for %cold_feet_stun_duration_pct%%% of the duration.",
+     "zh": "冻结击中的敌人，持续时间为当前等级寒霜之足眩晕时间的%cold_feet_stun_duration_pct%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6cd7821554d61da6555f",
+  "subject": "disruptor_glimpse",
+  "subject_zh": "干扰者·恶念瞥视",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Instantly kills illusions."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Teleports the target hero back to where it was %backtrack_time% seconds ago.  Instantly kills illusions. Deals damage equal to a percentage of the distance glimpsed, that cannot go over a damage maximum.",
+   "description_zh": "将目标英雄传送回他%backtrack_time%秒前所在位置。瞬间消灭幻象单位。根据瞥视距离的一定百分比造成伤害，不能超过最大伤害。",
+   "notes_en": [
+    "The travel time is a function of the distance the target will travel."
+   ],
+   "notes_zh": [
+    "飞行时间由目标的飞行距离决定。"
+   ]
+  }
+ },
+ {
+  "review_id": "17ae2e8e0664321b8aef",
+  "subject": "troll_warlord_battle_trance",
+  "subject_zh": "巨魔战将·战斗专注",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Troll can still be killed with Axe's Culling Blade.",
+   "斧王的淘汰之刃还是能斩杀巨魔战将。"
+  ],
+  "game_file_fields": {},
+  "context": {
+   "description_en": "Troll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes. Damage does not kill you during this mode. Grants you bonus lifesteal, attack speed, slow resistance and movement speed. Applies a Basic Dispel.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "巨魔战将释放出强大的战斗专注，强迫自身持续攻击%range%距离内最近的敌方单位，以英雄优先。专注期间不会因伤害而阵亡。提供额外吸血，攻击速度，减速抗性和移动速度。施放时施加弱驱散。 \n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Troll can still use his items and abilities while affected by Battle Trance, but not other commands.",
+    "Troll can still be killed with Axe's Culling Blade.",
+    "Troll is granted vision over the target."
+   ],
+   "notes_zh": [
+    "巨魔战将在战斗专注作用下仍然可以使用他的物品技能，但是无法执行其他指令。",
+    "斧王的淘汰之刃还是能斩杀巨魔战将。",
+    "巨魔战将会获得目标的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "89a98b7ffc798c4c2851",
+  "subject": "dagon",
+  "subject_zh": "达贡之神力",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Instantly kills illusions."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "dname": "Dagon",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Burst",
+     "description": "Emits a powerful burst of magical damage upon a targeted enemy unit. Upgradable.\n\nDamage: 400\n Mana Cost: 120"
+    }
+   ],
+   "notes": "Instantly kills illusions.\nCast Range bonuses from Aether Lens and Dagon do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "6 / 7 / 8 / 9 / 10"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "200 / 210 / 220 / 230 / 240"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "350 / 375 / 400 / 425 / 450"
+    },
+    {
+     "key": "damage",
+     "value": "400 / 500 / 600 / 700 / 800"
+    },
+    {
+     "key": "mana_cost_tooltip",
+     "value": "120 / 140 / 160 / 180 / 200"
+    },
+    {
+     "key": "cast_range_bonus",
+     "display": "+ {value} Cast Range",
+     "value": "60 / 90 / 120 / 150 / 180"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "3aacbb11163f3682af74",
+  "subject": "dagon_2",
+  "subject_zh": "达贡之神力",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Instantly kills illusions."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "dname": "Dagon",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Burst",
+     "description": "Emits a powerful burst of magical damage upon a targeted enemy unit. Upgradable.\n\nDamage: 400\n Mana Cost: 120"
+    }
+   ],
+   "notes": "Instantly kills illusions.\nCast Range bonuses from Aether Lens and Dagon do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "6 / 7 / 8 / 9 / 10"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "200 / 210 / 220 / 230 / 240"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "350 / 375 / 400 / 425 / 450"
+    },
+    {
+     "key": "damage",
+     "value": "400 / 500 / 600 / 700 / 800"
+    },
+    {
+     "key": "mana_cost_tooltip",
+     "value": "120 / 140 / 160 / 180 / 200"
+    },
+    {
+     "key": "cast_range_bonus",
+     "display": "+ {value} Cast Range",
+     "value": "60 / 90 / 120 / 150 / 180"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "b851c222721fc28657f0",
+  "subject": "dagon_3",
+  "subject_zh": "达贡之神力",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Instantly kills illusions."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "dname": "Dagon",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Burst",
+     "description": "Emits a powerful burst of magical damage upon a targeted enemy unit. Upgradable.\n\nDamage: 400\n Mana Cost: 120"
+    }
+   ],
+   "notes": "Instantly kills illusions.\nCast Range bonuses from Aether Lens and Dagon do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "6 / 7 / 8 / 9 / 10"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "200 / 210 / 220 / 230 / 240"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "350 / 375 / 400 / 425 / 450"
+    },
+    {
+     "key": "damage",
+     "value": "400 / 500 / 600 / 700 / 800"
+    },
+    {
+     "key": "mana_cost_tooltip",
+     "value": "120 / 140 / 160 / 180 / 200"
+    },
+    {
+     "key": "cast_range_bonus",
+     "display": "+ {value} Cast Range",
+     "value": "60 / 90 / 120 / 150 / 180"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "12a25ab56befb49eecf6",
+  "subject": "dagon_4",
+  "subject_zh": "达贡之神力",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Instantly kills illusions."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "dname": "Dagon",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Burst",
+     "description": "Emits a powerful burst of magical damage upon a targeted enemy unit. Upgradable.\n\nDamage: 400\n Mana Cost: 120"
+    }
+   ],
+   "notes": "Instantly kills illusions.\nCast Range bonuses from Aether Lens and Dagon do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "6 / 7 / 8 / 9 / 10"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "200 / 210 / 220 / 230 / 240"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "350 / 375 / 400 / 425 / 450"
+    },
+    {
+     "key": "damage",
+     "value": "400 / 500 / 600 / 700 / 800"
+    },
+    {
+     "key": "mana_cost_tooltip",
+     "value": "120 / 140 / 160 / 180 / 200"
+    },
+    {
+     "key": "cast_range_bonus",
+     "display": "+ {value} Cast Range",
+     "value": "60 / 90 / 120 / 150 / 180"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "07ff37f429b4617dc309",
+  "subject": "dagon_5",
+  "subject_zh": "达贡之神力",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Instantly kills illusions."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "dname": "Dagon",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Burst",
+     "description": "Emits a powerful burst of magical damage upon a targeted enemy unit. \n\nDamage: 400\n Mana Cost: 120"
+    }
+   ],
+   "notes": "Instantly kills illusions.\nCast Range bonuses from Aether Lens and Dagon do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "6 / 7 / 8 / 9 / 10"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "200 / 210 / 220 / 230 / 240"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "350 / 375 / 400 / 425 / 450"
+    },
+    {
+     "key": "damage",
+     "value": "400 / 500 / 600 / 700 / 800"
+    },
+    {
+     "key": "mana_cost_tooltip",
+     "value": "120 / 140 / 160 / 180 / 200"
+    },
+    {
+     "key": "cast_range_bonus",
+     "display": "+ {value} Cast Range",
+     "value": "60 / 90 / 120 / 150 / 180"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "31c6810518318cb074b0",
+  "subject": "helm_of_the_dominator",
+  "subject_zh": "支配头盔",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Dominated unit's bounty is set to 100 gold and it can no longer be killed by abilities that instantly kill creeps otherwise."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "dname": "Helm of the Dominator",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Dominate",
+     "description": "Takes control of one neutral, non-ancient target unit and sets its movement speed to 370 and max health to a minimum of 1000. Also provides the unit with +25 base attack damage, +12 health regen, +4 mana regen and +4 armor. \n\nDominated units with a max health of greater than 1000 retain their original max health. Grants the caster 50% of the gold and experience bounty of the dominated creep. Dominated unit's bounty is set to 100 gold and it can no longer be killed by abilities that instantly kill creeps otherwise.\n\nThe Helm cannot be used for 3 seconds after the dominated creep takes damage from an enemy hero or Roshan."
+    }
+   ],
+   "notes": "Cannot dominate more than one unit at a time. If a new unit is dominated, the old one will die.\nCan also Dominate enemy lane creeps and summoned units.\nSelling Helm of the Dominator will cause dominated units to die.",
+   "attrib": [
+    {
+     "key": "bonus_stats",
+     "display": "+ {value} All Attributes",
+     "value": "6"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "6"
+    },
+    {
+     "key": "bonus_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "6"
+    },
+    {
+     "key": "health_min",
+     "value": "1000"
+    },
+    {
+     "key": "speed_base",
+     "value": "370"
+    },
+    {
+     "key": "bounty_gold",
+     "value": "100"
+    },
+    {
+     "key": "creep_bonus_damage",
+     "value": "25"
+    },
+    {
+     "key": "creep_bonus_hp_regen",
+     "value": "12"
+    },
+    {
+     "key": "creep_bonus_mp_regen",
+     "value": "4"
+    },
+    {
+     "key": "creep_bonus_armor",
+     "value": "4"
+    },
+    {
+     "key": "count_limit",
+     "value": "1"
+    },
+    {
+     "key": "creep_damage_taken_cooldown",
+     "value": "3"
+    },
+    {
+     "key": "bounty_pct",
+     "value": "50"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "da0db8818641c2b5a3f4",
+  "subject": "helm_of_the_overlord",
+  "subject_zh": "统御头盔",
+  "mechanism": "execute",
+  "mechanism_zh": "斩杀",
+  "definition": "目标低于生命阈值时直接杀死",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Dominated unit's bounty is set to 250 gold and it can no longer be killed by abilities that instantly kill creeps otherwise."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "dname": "Helm of the Overlord",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Dominate",
+     "description": "Takes control of one neutral target unit and sets its movement speed to 380 and max health to a minimum of 1900. Also provides the unit with +70 base attack damage, +12 health regen, +4 mana regen, +7 armor, and levels up some abilities of the target by 1 level. \n\nDominated units with a max health of greater than 1900 retain their original max health. Grants the caster the gold and experience bounty of the dominated creep. Dominated unit's bounty is set to 250 gold and it can no longer be killed by abilities that instantly kill creeps otherwise.\n\nThe Helm cannot be used for 3 seconds after the dominated creep takes damage from an enemy hero or Roshan."
+    }
+   ],
+   "notes": "Can also Dominate enemy lane creeps and summoned units.\nSelling will cause dominated units to die.",
+   "attrib": [
+    {
+     "key": "bonus_stats",
+     "display": "+ {value} All Attributes",
+     "value": "21"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "7"
+    },
+    {
+     "key": "bonus_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "7"
+    },
+    {
+     "key": "health_min",
+     "value": "1900"
+    },
+    {
+     "key": "speed_base",
+     "value": "380"
+    },
+    {
+     "key": "bounty_gold",
+     "value": "250"
+    },
+    {
+     "key": "creep_bonus_damage",
+     "value": "70"
+    },
+    {
+     "key": "creep_bonus_hp_regen",
+     "value": "12"
+    },
+    {
+     "key": "creep_bonus_mp_regen",
+     "value": "4"
+    },
+    {
+     "key": "creep_bonus_armor",
+     "value": "7"
+    },
+    {
+     "key": "model_scale",
+     "value": "20"
+    },
+    {
+     "key": "count_limit",
+     "value": "1"
+    },
+    {
+     "key": "creep_ability_level_increase",
+     "value": "1"
+    },
+    {
+     "key": "is_overlord",
+     "value": "1"
+    },
+    {
+     "key": "creep_damage_taken_cooldown",
+     "value": "3"
+    },
+    {
+     "key": "bounty_pct",
+     "value": "100"
+    }
+   ]
+  }
+ }
+]

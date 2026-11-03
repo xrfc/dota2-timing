@@ -1,0 +1,1308 @@
+[
+ {
+  "review_id": "43b337c5ee02e95f2e5c",
+  "subject": "drow_ranger_wave_of_silence",
+  "subject_zh": "卓尔游侠·狂风",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "击退距离与敌人和卓尔游侠的距离成反比。",
+   "释放一阵狂风，沉默敌方单位并将其击退，同时使隐身敌人显形。",
+   "Knockback distance is relative to how close they are to Drow.",
+   "Releases a wave that silences and knocks back and reveals invisible enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Gust",
+   "name_zh": "狂风",
+   "description_en": "Releases a wave that silences and knocks back and reveals invisible enemy units. Knockback distance is relative to how close they are to Drow.",
+   "description_zh": "释放一阵狂风，沉默敌方单位并将其击退，同时使隐身敌人显形。击退距离与敌人和卓尔游侠的距离成反比。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "b723d0032230ccc0cf2d",
+  "subject": "earth_spirit_geomagnetic_grip",
+  "subject_zh": "大地之灵·地磁之握",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Decreases cooldown to %AbilityCooldown%s and increases allied unit cast range and pull speed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+  },
+  "context": {
+   "name_en": "Geomagnetic Grip",
+   "name_zh": "地磁之握",
+   "description_en": "Earth Spirit pulls the target Stone Remnant or Allied Unit. Enemies struck by the gripped target will be silenced.Pulled Remnants also deal damage to struck enemies.Cast range is reduced when targeting an ally.",
+   "description_zh": "大地之灵将目标残岩或友方单位拉扯到自己所在的位置，行进路径上被击中的敌人都会被沉默并受到伤害。拉扯的残岩也会对击中的敌人造成伤害。以友军为目标时施法距离减少。",
+   "notes_en": [
+    "Will not work on a unit inside Chronosphere, Duel, or Black Hole.",
+    "Geomagnetic Grip can also target allied creeps."
+   ],
+   "notes_zh": [
+    "如果目标处于时间结界，决斗或黑洞之中则不起作用。",
+    "地磁之握还可以对友方小兵施放。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Decreases cooldown to %AbilityCooldown%s and increases allied unit cast range and pull speed.",
+     "zh": "冷却时间减少至%AbilityCooldown%秒，对友方单位的施法距离和牵引速度提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "40d6a0938c5d81ec2187",
+  "subject": "enigma_black_hole",
+  "subject_zh": "谜团·黑洞",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Black Hole deals additional damage equivalent to %scepter_pct_damage%%% of the unit's Max Health per second and does a non-interrupting pull towards it in a %scepter_radius% AoE.",
+   "Pulls at a rate of %scepter_drag_speed%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "name_en": "Black Hole",
+   "name_zh": "黑洞",
+   "description_en": "CHANNELED - Summons a vortex that sucks in nearby enemy units.  Enemies affected by Black Hole cannot move, attack, or cast spells.",
+   "description_zh": "持续施法 - 召唤一个强引力漩涡吸住敌方单位。被黑洞影响的单位不能移动、攻击或施法。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Black Hole deals additional damage equivalent to %scepter_pct_damage%%% of the unit's Max Health per second and does a non-interrupting pull towards it in a %scepter_radius% AoE. Pulls at a rate of %scepter_drag_speed%.",
+     "zh": "黑洞额外造成等同于单位%scepter_pct_damage%%%最大生命值的每秒伤害，并且产生一个%scepter_radius%范围，没有打断效果的牵引效果。牵引速度为%scepter_drag_speed%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f593d5325706dcaa094b",
+  "subject": "force_staff",
+  "subject_zh": "原力法杖",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Pushes any target unit 600 units in the direction it is facing."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH | DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "dname": "Force Staff",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Force",
+     "description": "Pushes any target unit 600 units in the direction it is facing."
+    }
+   ],
+   "notes": "Self-cast will cause you to use Force on yourself.\nForce Staff doesn't interrupt the target's actions.\nWill not work on a unit inside Chronosphere, Duel, or Black Hole.\nForce Staff has 850 cast range when cast on enemies.",
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "175"
+    },
+    {
+     "key": "push_length",
+     "value": "600"
+    },
+    {
+     "key": "enemy_cast_range",
+     "value": "850"
+    },
+    {
+     "key": "push_time",
+     "value": "0.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "ea3a147e74d3fefd74b7",
+  "subject": "harpoon",
+  "subject_zh": "鱼叉",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If the caster is melee, the hero and target are always pulled to within melee distance of each other.",
+   "Targeting a tree always pulls you all the way to that tree.",
+   "When targeting an enemy, fire a harpoon at them, that pulls you and the target closer together, up to 35% of the distance between you and your target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CUSTOM | DOTA_UNIT_TARGET_TREE"
+  },
+  "context": {
+   "dname": "Harpoon",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Draw Forth",
+     "description": "When targeting an enemy, fire a harpoon at them, that pulls you and the target closer together, up to 35% of the distance between you and your target. If the caster is melee, the hero and target are always pulled to within melee distance of each other. Targeting a tree always pulls you all the way to that tree."
+    },
+    {
+     "type": "passive",
+     "title": "Echo Strike",
+     "description": "Causes melee attacks to attack twice in quick succession. The double attacks apply a 100% movement slow for 1 seconds on the first strike. Echo Strike cooldown: 5s"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "25"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "25"
+    },
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "10"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "2.0"
+    },
+    {
+     "key": "passive_cooldown",
+     "value": "5"
+    },
+    {
+     "key": "movement_slow",
+     "value": "100"
+    },
+    {
+     "key": "slow_duration",
+     "value": "1.0"
+    },
+    {
+     "key": "pull_duration",
+     "value": "0.3"
+    },
+    {
+     "key": "pull_distance_pct",
+     "value": "35"
+    },
+    {
+     "key": "min_distance",
+     "value": "100"
+    },
+    {
+     "key": "max_distance",
+     "value": "1000"
+    },
+    {
+     "key": "cast_range_enemy",
+     "value": "700"
+    },
+    {
+     "key": "push_length",
+     "value": "600"
+    },
+    {
+     "key": "projectile_speed",
+     "value": "2000"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "af16518a0fa2aa452c45",
+  "subject": "hoodwink_bushwhack",
+  "subject_zh": "森海飞霞·野地奇袭",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Affected enemies take damage over time and are pulled towards the tree nearest to them within the target area, and have their vision reduced to 0 for the duration of the stun."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+  },
+  "context": {
+   "name_en": "Bushwhack",
+   "name_zh": "野地奇袭",
+   "description_en": "Tosses a net trap that stuns enemies if they are near a tree in the area.  Affected enemies take damage over time and are pulled towards the tree nearest to them within the target area, and have their vision reduced to 0 for the duration of the stun.",
+   "description_zh": "扔出一张网，对区域内靠近树木的敌人造成眩晕。敌人会持续受到伤害并被拖拽到目标区域内最近的树上，并且眩晕期间视野降低至0。",
+   "notes_en": [
+    "Units can be freed from the stun by destroying the tree.",
+    "Bushwhack does not hit invisible units."
+   ],
+   "notes_zh": [
+    "若树木被摧毁，被影响的单位将解除眩晕。",
+    "野地奇袭不会击中隐身单位。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "9b04793b8f7bbf9ae62c",
+  "subject": "hurricane_pike",
+  "subject_zh": "飓风长戟",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Can be cast on self or allies to push the target 600 units in the direction it is facing."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH | DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "dname": "Hurricane Pike",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Hurricane Thrust",
+     "description": "Pushes you and target enemy 425 units away from each other, and for 5 seconds, allows you to make 5 attacks against the target without range restrictions and with +100 attack speed.\n\nCan be cast on self or allies to push the target 600 units in the direction it is facing.\nEnemy Range: 425"
+    }
+   ],
+   "notes": "Self-cast will use Hurricane Pike on yourself.\nHurricane Pike doesn't interrupt the target's actions.\nWill not work on a unit inside Chronosphere, Duel, or Black Hole.\nAttack Range bonuses from Monkey King Bar and Dragon Lance and its upgrades do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "15"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "200"
+    },
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "20"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "15"
+    },
+    {
+     "key": "base_attack_range",
+     "display": "+ {value} Attack Range (Ranged Only)",
+     "value": "130"
+    },
+    {
+     "key": "push_length",
+     "value": "600"
+    },
+    {
+     "key": "enemy_length",
+     "value": "425"
+    },
+    {
+     "key": "range_duration",
+     "value": "5"
+    },
+    {
+     "key": "cast_range_enemy",
+     "value": "425"
+    },
+    {
+     "key": "max_attacks",
+     "value": "5"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "value": "100"
+    },
+    {
+     "key": "push_time",
+     "value": "0.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "c7606e81de1df75c7e0e",
+  "subject": "huskar_inner_fire",
+  "subject_zh": "哈斯卡·心炎",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在炽烈的狂暴下将附近所有敌人击退至固定距离外，造成伤害和沉默。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Inner Fire",
+   "name_zh": "心炎",
+   "description_en": "In a fiery rage, knocks all nearby enemies away from you to a fixed distance, dealing damage and silencing them.",
+   "description_zh": "在炽烈的狂暴下将附近所有敌人击退至固定距离外，造成伤害和沉默。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "943644663794109c304d",
+  "subject": "invoker_emp",
+  "subject_zh": "祈求者·电磁脉冲",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Increases damage for each point of mana drained by EMP and pulls enemy units into the EMP's center at %drag_speed% units per second."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "name_en": "E.M.P.",
+   "name_zh": "电磁脉冲",
+   "description_en": "Invoker builds up a charge of electromagnetic energy at a targeted location which automatically detonates after %delay% seconds. The detonation covers an area, draining mana based on the level of Wex. Deals damage for each point of mana drained.  If EMP drains mana from an enemy hero, Invoker gains %self_mana_restore_pct%%% of the mana drained.",
+   "description_zh": "祈求者在指定位置召唤出一道强力的自爆电磁脉冲，%delay%秒后将自动爆炸。爆炸将覆盖一定区域，并根据雷元素的等级损毁敌方的魔法值。对敌方英雄造成损毁魔法值一定百分比的伤害。祈求者将获得%self_mana_restore_pct%%%损毁的魔法。",
+   "notes_en": [
+    "Will not affect cycloned units (Tornado or Eul's Scepter of Divinity)."
+   ],
+   "notes_zh": [
+    "对被吹起的单位（强袭飓风或Eul的神圣法杖）无效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases damage for each point of mana drained by EMP and pulls enemy units into the EMP's center at %drag_speed% units per second.",
+     "zh": "提升电磁脉冲燃烧魔法的伤害系数，并且将敌方单位以每秒%drag_speed%距离的速度向电磁脉冲的中心牵引。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "966132ce8a7dbd52af00",
+  "subject": "magnataur_reverse_polarity",
+  "subject_zh": "马格纳斯·两极反转",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Magnus changes properties of matter, pulling all nearby enemies in front of him and stunning them with a damaging slam."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Reverse Polarity",
+   "name_zh": "两极反转",
+   "description_en": "Magnus changes properties of matter, pulling all nearby enemies in front of him and stunning them with a damaging slam.",
+   "description_zh": "马格纳斯改变物质的属性，将附近的敌人拖拽至他的前方，并且以震击对他们造成伤害和眩晕。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "758f74c07814f2b065c9",
+  "subject": "mars_gods_rebuke",
+  "subject_zh": "玛尔斯·神之谴戒",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "玛尔斯举起他的战盾粉碎前方的敌人，将他们击退并且基于自身攻击力造成致命一击伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "God's Rebuke",
+   "name_zh": "神之谴戒",
+   "description_en": "Mars smashes enemies in front of him with his shield, knocking them back and damaging them with a critical hit based on his attack. Bonus damage is added when hitting heroes. Has True Strike.",
+   "description_zh": "玛尔斯举起他的战盾粉碎前方的敌人，将他们击退并且基于自身攻击力造成致命一击伤害。攻击英雄时攻击伤害提升。具有克敌机先效果。",
+   "notes_en": [
+    "Attack modifiers have a chance to proc on God's Rebuke attacks."
+   ],
+   "notes_zh": [
+    "神之谴戒的攻击也有几率触发攻击特效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "2cea6ef0fb197e2b87e3",
+  "subject": "morphling_adaptive_strike_agi",
+  "subject_zh": "变体精灵·变体打击",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If his strength is 50% higher than his agility, the maximum knockback distance and stun duration is used.",
+   "如果变体精灵的力量比敏捷高50%%，将造成最大击退和眩晕。",
+   "Knockback distance and stun duration are based on Morphling's strength.",
+   "用猛烈的水波打击一个敌方单位，将其击退并眩晕，同时造成伤害，伤害量为基础伤害加上变体精灵自身敏捷值乘以伤害系数的额外伤害。",
+   "击退距离和眩晕时间是根据变体精灵的力量值。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Adaptive Strike",
+   "name_zh": "变体打击",
+   "description_en": "Launches a surge of water toward an enemy unit, stunning them, knocking them back, and dealing base damage plus additional damage based on Morphling's agility times a multiplier.  If Morphling's agility is 50% higher than strength, the maximum agility multiplier is used.\n\nKnockback distance and stun duration are based on Morphling's strength. If his strength is 50% higher than his agility, the maximum knockback distance and stun duration is used.",
+   "description_zh": "用猛烈的水波打击一个敌方单位，将其击退并眩晕，同时造成伤害，伤害量为基础伤害加上变体精灵自身敏捷值乘以伤害系数的额外伤害。如果变体精灵的敏捷比力量高50%%，将采用最高伤害系数。\n\n击退距离和眩晕时间是根据变体精灵的力量值。如果变体精灵的力量比敏捷高50%%，将造成最大击退和眩晕。",
+   "notes_en": [
+    "Projectile moves at %projectile_speed% speed."
+   ],
+   "notes_zh": [
+    "弹道移动速度为%projectile_speed%。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "d3f541bd5ed1ba3decf0",
+  "subject": "pangolier_gyroshell",
+  "subject_zh": "石鳞剑士·地雷滚滚",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "敌人被击中后会被击退，然后受到与他的攻击力成正比的伤害，并且被眩晕。",
+   "即使石鳞剑士在滚动时被控制，他依然会对范围内敌人造成眩晕和击退。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Rolling Thunder",
+   "name_zh": "地雷滚滚",
+   "description_en": "Pangolier curls into a debuff immune ball with %magic_resistance%%% magic resistance and rolls out. When rolling, he moves at an increased speed and can move through trees, but has a decreased ability to turn. Striking enemies knocks them back, inflicting damage proportional to his attack damage and stunning them when they land. \n\nColliding with walls or cliffs will cause a temporary pause while Pangolier reverses in direction.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "石鳞剑士卷成一个减益免疫状态的圆球，拥有%magic_resistance%%%魔法抗性，隆隆地向前滚去。滚动时移动速度提升，可以碾过树木，但是转身速率降低。敌人被击中后会被击退，然后受到与他的攻击力成正比的伤害，并且被眩晕。\n\n与地形障碍相撞后会暂时停止滚动，并且滚动方向变反。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Enemies can be stunned multiple times per use, but cannot be affected a subsequent time until the previous stun duration ends.",
+    "If Pangolier is disabled while rolling, he will continue to stun and knock enemies that come within range.",
+    "It takes Pangolier %move_speed_ramp_up_time%s to reach full roll speed."
+   ],
+   "notes_zh": [
+    "敌人在技能期间可以多次被眩晕，但是只有上一次眩晕结束后才会再次被眩晕。",
+    "即使石鳞剑士在滚动时被控制，他依然会对范围内敌人造成眩晕和击退。",
+    "石鳞剑士需要%move_speed_ramp_up_time%秒才能达到全额的滚动速度。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f096c34469c7f53d90ba",
+  "subject": "primal_beast_onslaught",
+  "subject_zh": "獸·突",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "獸积蓄力量再向选定方向冲去，将敌人和队友同时击退。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Onslaught",
+   "name_zh": "突",
+   "description_en": "Primal Beast charges up and then runs in the chosen direction, knocking back enemies and allies alike. Enemy units are damaged and stunned on impact. The longer the charge duration, the farther Primal Beast's momentum will carry him. \n\n Can be cancelled at any time with the Stop command.",
+   "description_zh": "獸积蓄力量再向选定方向冲去，将敌人和队友同时击退。敌方单位被撞时受到伤害，并且被眩晕。蓄力时间越长，獸冲的距离越远。\n\n可以随时使用停止指令来中止。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "c1c0a6a1acb19862a69b",
+  "subject": "pudge_dismember",
+  "subject_zh": "帕吉·肢解",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "帕吉会将该单位以每秒%pull_units_per_second%的速度向自身牵引，最多牵引%pull_distance_limit%距离。",
+   "Pudge pulls the unit at a rate of %pull_units_per_second% units, up to a minimum of %pull_distance_limit% range."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Dismember",
+   "name_zh": "肢解",
+   "description_en": "CHANNELED - Pudge chows down on an enemy unit, disabling it and dealing damage over time. Damage is increased by Pudge's Strength and heals him for the total amount. Pudge pulls the unit at a rate of %pull_units_per_second% units, up to a minimum of %pull_distance_limit% range.",
+   "description_zh": "持续施法 - 帕吉撕咬一个敌方单位，使其失去行动能力并受到持续伤害。伤害量为基础伤害加上帕吉力量值的一定百分比，帕吉将回复与伤害量相等的生命。帕吉会将该单位以每秒%pull_units_per_second%的速度向自身牵引，最多牵引%pull_distance_limit%距离。",
+   "notes_en": [
+    "If a unit becomes invisible while Dismembered, it will still be under the effects of Dismember."
+   ],
+   "notes_zh": [
+    "即使肢解的目标在受到作用的过程中隐身，还是不会脱离肢解的作用。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "5f5e03d8a276a1f2b8ef",
+  "subject": "pudge_meat_hook",
+  "subject_zh": "帕吉·肉钩",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Meat Hook",
+   "name_zh": "肉钩",
+   "description_en": "Launches a bloody hook toward a unit or location. The hook will snag the first unit it encounters, dragging the unit back to Pudge, killing it if it's a non-ancient creep and dealing damage if it is an enemy otherwise.",
+   "description_zh": "向一个单位或方向射出血腥的肉钩。勾住第一个遭遇的单位，并将它拖到帕吉身边，如果是非远古单位会被秒杀，其他敌方单位则是受到伤害。",
+   "notes_en": [
+    "Interrupts channeling spells of the primary target if it's an enemy.",
+    "Meat Hook hits invisible units.",
+    "Meat Hook can go through trees, cliffs, buildings, ancient units and Roshan.",
+    "Meat Hook can drag friendly units, but they won't be damaged.",
+    "Meat Hook can hit and drag runes to Pudge, refunding the Hook's mana cost."
+   ],
+   "notes_zh": [
+    "钩中敌人后将打断持续施法类技能。",
+    "肉钩能击中隐身单位。",
+    "肉钩可以穿过树木、地形、建筑、远古生物和肉山。",
+    "肉钩可以拖拽友方单位，不过他们不会受到伤害。",
+    "肉钩可以将神符拖拽至帕吉身旁，并返还肉钩的魔法消耗。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled.When Meat Hook hits an ally, Meat Hook's cooldown is reduced by %cooldown_reduction_pct_allied_hook%%%.",
+     "zh": "肉钩击中敌人时会根据牵引距离造成额外伤害。肉钩击中友军时，肉钩的冷却时间会减少%cooldown_reduction_pct_allied_hook%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2a052dce4eaf5a6a46ad",
+  "subject": "queenofpain_sonic_wave",
+  "subject_zh": "痛苦女王·超声冲击波",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "痛苦女王在她面前制造出强大的声波，对其轨迹上的所有敌人造成大量伤害，并将他们击退。",
+   "Creates a gigantic wave of sound in front of Queen of Pain, dealing heavy damage to all enemy units in its wake and pushing them back."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Sonic Wave",
+   "name_zh": "超声冲击波",
+   "description_en": "Creates a gigantic wave of sound in front of Queen of Pain, dealing heavy damage to all enemy units in its wake and pushing them back.",
+   "description_zh": "痛苦女王在她面前制造出强大的声波，对其轨迹上的所有敌人造成大量伤害，并将他们击退。",
+   "notes_en": [
+    "Sonic Wave can hit units up to 1150 units away."
+   ],
+   "notes_zh": [
+    "超声冲击波最远能伤害1150距离外的单位。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "539ab89ad0ae8730141b",
+  "subject": "rattletrap_power_cogs",
+  "subject_zh": "发条技师·能量齿轮",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Cogs can be destroyed by enemy attacks, but Clockwerk can push them up to %projectile_distance% distance away with one hit."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Power Cogs",
+   "name_zh": "能量齿轮",
+   "description_en": "Forms a ring of energized cogs around Clockwerk, trapping any units that are near. Enemies outside the trap that touch a cog are knocked back, losing health and mana. Once a cog has delivered a shock, it will power down. Damage is increased by %mana_burn_as_damage_pct%%% of the mana burned. Cogs can be destroyed by enemy attacks, but Clockwerk can push them up to %projectile_distance% distance away with one hit. Clockwerk can move through the cogs freely, disabling them as he passes over.",
+   "description_zh": "在发条技师周围形成一圈通电的齿轮，困住附近的单位。在外侧的敌人碰到齿轮会被电流震退，损失一定的生命和魔法。并且%mana_burn_as_damage_pct%%%损失魔法也会加入到伤害。一个齿轮发动过一次震击后就会报废。敌人攻击齿轮数次后可将其摧毁，而发条技师需要攻击一次会将齿轮推出%projectile_distance%距离。发条技师可以自由穿行齿轮，穿行时会使齿轮失效。",
+   "notes_en": [
+    "Cogs can shock invisible units."
+   ],
+   "notes_zh": [
+    "齿轮可以震退隐身单位。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "bc2dcdcfc8e115255bb5",
+  "subject": "ringmaster_wheel",
+  "subject_zh": "百戏大王·奇观轮",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "百戏大王推出奇观轮向目标地点滚去，击退沿途的敌人。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Wheel of Wonder",
+   "name_zh": "奇观轮",
+   "description_en": "Ringmaster rolls the Wheel of Wonder to the targeted location, knocking aside enemies along the way. After it reaches its target, enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%.Enemy heroes who face the wheel for more than %face_duration% seconds are mesmerized and drawn towards it. The first enemy to be mesmerized triggers a timer for the wheel to explode. If the timer is not triggered, it will automatically explode after %trap_duration% seconds.",
+   "description_zh": "百戏大王推出奇观轮向目标地点滚去，击退沿途的敌人。到达目的地后，范围内的敌人会持续受到伤害，并且被减速%aura_slow%%%。敌方英雄面对转轮超过%face_duration%秒会被迷住，朝其走去。首个敌人着迷后会触发转轮爆炸的倒计时。如果没有触发倒计时，在%trap_duration%秒后转轮会自动爆炸。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "2c190f61a1423bd32266",
+  "subject": "rubick_telekinesis",
+  "subject_zh": "拉比克·隔空取物",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "投掷距离增加至%max_land_distance%，投掷延迟降低至%shard_teammate_throw_delay%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Telekinesis",
+   "name_zh": "隔空取物",
+   "description_en": "Rubick uses his telekinetic powers to lift the enemy into the air briefly and then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.",
+   "description_zh": "拉比克利用他的隔空取物能力，将敌人短暂抬到空中，然后猛投向地面。被投下的单位会砸晕落地点附近的敌人。",
+   "notes_en": [
+    "While the target is in the air, Rubick may use a secondary ability to throw the enemy in a targeted direction.",
+    "When the unit lands, it isn't affected by the area of effect stun."
+   ],
+   "notes_zh": [
+    "目标滞空时，拉比克可以使用次级技能将目标扔往目标方向。",
+    "单位落地后，自身不会受到范围眩晕效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Allows you to target yourself or allies with Telekinesis. Throw distance is increased to %max_land_distance% and throw delay is reduced to %shard_teammate_throw_delay% seconds.",
+     "zh": "可以对自身或友军施放隔空取物。投掷距离增加至%max_land_distance%，投掷延迟降低至%shard_teammate_throw_delay%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ab25bb312ce805b47e65",
+  "subject": "sniper_concussive_grenade",
+  "subject_zh": "狙击手·震荡手雷",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Enemies affected are disarmed and have their movement slowed after the knockback.",
+   "受到作用的敌人被击退后还会被缴械和减速。",
+   "向目标区域扔出一枚手雷，对敌人造成伤害并将他们和狙击手一同击退。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Concussive Grenade",
+   "name_zh": "震荡手雷",
+   "description_en": "Launches a grenade at the target area, dealing damage to enemies and knocking them and Sniper back. Enemies affected are disarmed and have their movement slowed after the knockback.",
+   "description_zh": "向目标区域扔出一枚手雷，对敌人造成伤害并将他们和狙击手一同击退。受到作用的敌人被击退后还会被缴械和减速。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Reduces cooldown, increases damage, and allows the knockback to affect Sniper as well.",
+     "zh": "降低冷却时间，提升伤害并允许技能也能击退狙击手。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3a02b64a0eb3301743b1",
+  "subject": "spirit_breaker_greater_bash",
+  "subject_zh": "裂魂人·巨力重击",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "如果击退的敌人又撞到了一个敌人，这个敌人也会被重击（非英雄单位只受到%cascading_bashes_creep_penalty%%%伤害），并且原目标再次受到%cascading_bashes_damage_multiplier%%%的巨力重击伤害。",
+   "Increases knockback.",
+   "击退效果提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Greater Bash",
+   "name_zh": "巨力重击",
+   "description_en": "Gives a chance to stun and knockback an enemy unit on an attack. Deals a percentage of movement speed as damage.",
+   "description_zh": "攻击时有一定概率眩晕并击退敌方单位。重击的伤害值为移动速度的一定百分比。",
+   "notes_en": [
+    "Does not stack with Skull Basher.",
+    "Break disables the passive percent Chance to Bash. Does not disable Greater Bash application from Charge of Darkness or Nether Strike."
+   ],
+   "notes_zh": [
+    "不与碎颅锤叠加。",
+    "破坏会使攻击触发巨力重击失效。暗影冲刺或幽冥一击还是会施加巨力重击。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases knockback. If a knocked-back enemy collides with another enemy, the second enemy is bashed (creeps only receive %cascading_bashes_creep_penalty%%% damage), and the original target takes %cascading_bashes_damage_multiplier%%% of Greater Bash's damage again.",
+     "zh": "击退效果提升。如果击退的敌人又撞到了一个敌人，这个敌人也会被重击（非英雄单位只受到%cascading_bashes_creep_penalty%%%伤害），并且原目标再次受到%cascading_bashes_damage_multiplier%%%的巨力重击伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4a72bbbb2385347aa0fe",
+  "subject": "spirit_breaker_greater_bash",
+  "subject_zh": "裂魂人·巨力重击",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "攻击时有一定概率眩晕并击退敌方单位。",
+   "Gives a chance to stun and knockback an enemy unit on an attack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Greater Bash",
+   "name_zh": "巨力重击",
+   "description_en": "Gives a chance to stun and knockback an enemy unit on an attack. Deals a percentage of movement speed as damage.",
+   "description_zh": "攻击时有一定概率眩晕并击退敌方单位。重击的伤害值为移动速度的一定百分比。",
+   "notes_en": [
+    "Does not stack with Skull Basher.",
+    "Break disables the passive percent Chance to Bash. Does not disable Greater Bash application from Charge of Darkness or Nether Strike."
+   ],
+   "notes_zh": [
+    "不与碎颅锤叠加。",
+    "破坏会使攻击触发巨力重击失效。暗影冲刺或幽冥一击还是会施加巨力重击。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases knockback. If a knocked-back enemy collides with another enemy, the second enemy is bashed (creeps only receive %cascading_bashes_creep_penalty%%% damage), and the original target takes %cascading_bashes_damage_multiplier%%% of Greater Bash's damage again.",
+     "zh": "击退效果提升。如果击退的敌人又撞到了一个敌人，这个敌人也会被重击（非英雄单位只受到%cascading_bashes_creep_penalty%%%伤害），并且原目标再次受到%cascading_bashes_damage_multiplier%%%的巨力重击伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "51f8c3b4c509de716714",
+  "subject": "spirit_breaker_nether_strike",
+  "subject_zh": "裂魂人·幽冥一击",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Knocks back for double the normal distance.",
+   "击退距离为平常的两倍。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Nether Strike",
+   "name_zh": "幽冥一击",
+   "description_en": "Spirit Breaker slips into the nether realm, reappearing next to his hapless victim. Upon reappearing, a Greater Bash of the current level occurs and deals bonus damage. Knocks back for double the normal distance.",
+   "description_zh": "裂魂人遁入幽冥领域，从不幸的目标身旁再次出现，发动当前等级的巨力重击并造成额外伤害。击退距离为平常的两倍。",
+   "notes_en": [
+    "Spirit Breaker appears behind the target to deliver the bash."
+   ],
+   "notes_zh": [
+    "裂魂人将在目标身后出现并发动巨力重击。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Greatly increases knockback.",
+     "zh": "大幅提升击退效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "b5bc3e9a97556e106aba",
+  "subject": "storm_spirit_electric_vortex",
+  "subject_zh": "风暴之灵·电子涡流",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "A vortex that pulls an enemy unit to Storm Spirit's location."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Electric Vortex",
+   "name_zh": "电子涡流",
+   "description_en": "A vortex that pulls an enemy unit to Storm Spirit's location.",
+   "description_zh": "将一个敌人拖到风暴之灵所在位置的涡流。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Electric Vortex affects all enemies within a radius around Storm Spirit.",
+     "zh": "电子涡流变成范围型技能，可以作用于风暴之灵周围所有敌人。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "22d25f4c17860bf90ebe",
+  "subject": "tiny_toss",
+  "subject_zh": "小小·投掷",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "投掷对建筑物造成33%的伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_RUNE_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "name_en": "Toss",
+   "name_zh": "投掷",
+   "description_en": "Grabs the nearest unit in a %grab_radius% radius around Tiny, ally or enemy, and launches it at the target unit or rune to deal damage where they land.",
+   "description_zh": "抓起小小身旁%grab_radius%范围内最近的单位，不论敌友，扔向目标单位或神符，落地时将造成伤害。",
+   "notes_en": [
+    "You can toss allies, but they don't take damage.",
+    "Toss deals 33% of its damage to buildings.",
+    "Debuff Immune units can be targeted but cannot be tossed.",
+    "Flight time is %duration%s."
+   ],
+   "notes_zh": [
+    "你可以投掷队友，但他们不会受到伤害。",
+    "投掷对建筑物造成33%的伤害。",
+    "可以对减益免疫单位施放，但是不能将他们扔起，或对他们造成伤害。",
+    "飞行时间是%duration%秒。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "ded9522bee6f9eaafa3e",
+  "subject": "tusk_drinking_buddies",
+  "subject_zh": "巨牙海民·酒友",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Tusk reaches out to tag an allied unit, pulling them closer."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Drinking Buddies",
+   "name_zh": "酒友",
+   "description_en": "Tusk reaches out to tag an allied unit, pulling them closer. Once tagged, both Tusk and his tagged ally gain movement speed and armor.",
+   "description_zh": "巨牙海民伸出手来触碰友方单位，拉近彼此。触碰后巨牙海民和他的友军获得移动速度和护甲加成。",
+   "notes_en": [
+    "Doesn't pull Tusk or targeted ally if they are within %min_distance% range of each other.",
+    "Cannot be used during Snowball."
+   ],
+   "notes_zh": [
+    "如果巨牙海民和目标友军相距在%min_distance%距离以内，就不会拉动他们。",
+    "在雪球期间无法使用。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ },
+ {
+  "review_id": "50b537d16ba4badd9384",
+  "subject": "vengefulspirit_nether_swap",
+  "subject_zh": "复仇之魂·移形换位",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Channeling spells are interrupted by Nether Swap.",
+   "与一个目标英雄瞬间交换位置，不论敌我。",
+   "Vengeful Spirit and allied swapped units gain a barrier equal to the damage dealt.",
+   "Enemy Swapped units take damage.",
+   "Instantaneously swaps positions with a target Hero, friend or enemy.",
+   "Nether Swap interrupts channeling abilities on the target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "name_en": "Nether Swap",
+   "name_zh": "移形换位",
+   "description_en": "Instantaneously swaps positions with a target Hero, friend or enemy. Nether Swap interrupts channeling abilities on the target. Enemy Swapped units take damage. Vengeful Spirit and allied swapped units gain a barrier equal to the damage dealt.",
+   "description_zh": "与一个目标英雄瞬间交换位置，不论敌我。移形换位会打断目标的持续施法。敌方英雄被交换后受到伤害。复仇之魂和被交换的友方英雄都会获得等同于造成伤害的护盾。",
+   "notes_en": [
+    "Works on Spell Immune units.",
+    "Trees near Vengeful Spirit and the target will be destroyed when the spell is cast.",
+    "Channeling spells are interrupted by Nether Swap."
+   ],
+   "notes_zh": [
+    "对减益免疫单位有效。",
+    "技能施放后复仇之魂和目标附近的树木将会被摧毁。",
+    "移形换位能够打断持续施法。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "1f4e61fb7215e18e8cec",
+  "subject": "void_spirit_aether_remnant",
+  "subject_zh": "虚无之灵·残阴",
+  "mechanism": "displace_other",
+  "mechanism_zh": "位移他人",
+  "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When a unit crosses its gaze, the remnant pulls it in and damages it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Aether Remnant",
+   "name_zh": "残阴",
+   "description_en": "Void Spirit dispatches a remnant to the target location. The remnant stands watch over the region, facing the direction of his vector. When a unit crosses its gaze, the remnant pulls it in and damages it.",
+   "description_zh": "虚无之灵向目标地点派出一个残像。残像观察着一片区域，面朝矢量的方向。当有目标进入其视线，残像会拉扯，并造成伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Creates an additional watcher path that rotates around the remnant.  The remnant now provides True Sight, and no longer triggers on creeps, instead dealing %creep_damage_pct%%% damage to them every second in both paths. Does not reveal wards.",
+     "zh": "额外产生一道观察路径，会围绕残阴旋转。残阴现在会提供真实视域，不再对非英雄单位触发，而是每秒在两道路径上造成%creep_damage_pct%%%伤害。不会使守卫显形。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "84900c0d14d0d430a780",
+  "subject": "butterfly",
+  "subject_zh": "蝴蝶",
+  "mechanism": "evasion",
+  "mechanism_zh": "闪避",
+  "definition": "自身有概率使敌方攻击落空",
+  "definition_note": "U30：用户确认闪避与致盲分开（金箍棒只穿透闪避，致盲靠驱散或离开范围）；v3：装备属性中的闪避（如蝴蝶、闪避护符、辉耀）也作为字段证据",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Stacks diminishingly with other sources of Evasion."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Butterfly",
+   "notes": "Stacks diminishingly with other sources of Evasion.",
+   "attrib": [
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "30"
+    },
+    {
+     "key": "bonus_evasion",
+     "display": "+ {value}% Evasion",
+     "value": "35"
+    },
+    {
+     "key": "bonus_attack_speed_pct",
+     "display": "+ {value}% Base Attack Speed Percentage",
+     "value": "20"
+    },
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "30"
+    }
+   ]
+  }
+ }
+]

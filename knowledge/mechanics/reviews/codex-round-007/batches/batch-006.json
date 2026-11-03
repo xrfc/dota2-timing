@@ -1,0 +1,1146 @@
+[
+ {
+  "review_id": "f359e5614da2aa232185",
+  "subject": "drow_ranger_glacier",
+  "subject_zh": "卓尔游侠·冰川",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not interrupt Multishot when cast.",
+   "施放时不会打断数箭齐发。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Drow creates a hill of ice beneath her, knocking away nearby enemies. Units on the hill gain flying vision and Drow and her ranged allies gain bonus attack range. Drow gains additional damage while on the Glacier and attacking targets below her.The front of the hill obscures vision and cannot be moved through except by Drow. Does not interrupt Multishot when cast.",
+   "description_zh": "卓尔游侠在她脚下创造一片冰山，击退附近的敌人。站在山上的单位会获得飞行视野，而卓尔游侠和她的远程友军会获得攻击距离加成。卓尔游侠站在山上时攻击下方目标时获得额外伤害。山的前面会阻挡视野，并且除了卓尔游侠外无法穿行。施放时不会打断数箭齐发。"
+  }
+ },
+ {
+  "review_id": "5ee3b680453f2297c6bc",
+  "subject": "pudge_meat_hook",
+  "subject_zh": "帕吉·肉钩",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Interrupts channeling spells of the primary target if it's an enemy.",
+   "钩中敌人后将打断持续施法类技能。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Launches a bloody hook toward a unit or location. The hook will snag the first unit it encounters, dragging the unit back to Pudge, killing it if it's a non-ancient creep and dealing damage if it is an enemy otherwise.",
+   "description_zh": "向一个单位或方向射出血腥的肉钩。勾住第一个遭遇的单位，并将它拖到帕吉身边，如果是非远古单位会被秒杀，其他敌方单位则是受到伤害。",
+   "notes_en": [
+    "Interrupts channeling spells of the primary target if it's an enemy.",
+    "Meat Hook hits invisible units.",
+    "Meat Hook can go through trees, cliffs, buildings, ancient units and Roshan.",
+    "Meat Hook can drag friendly units, but they won't be damaged.",
+    "Meat Hook can hit and drag runes to Pudge, refunding the Hook's mana cost."
+   ],
+   "notes_zh": [
+    "钩中敌人后将打断持续施法类技能。",
+    "肉钩能击中隐身单位。",
+    "肉钩可以穿过树木、地形、建筑、远古生物和肉山。",
+    "肉钩可以拖拽友方单位，不过他们不会受到伤害。",
+    "肉钩可以将神符拖拽至帕吉身旁，并返还肉钩的魔法消耗。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled.When Meat Hook hits an ally, Meat Hook's cooldown is reduced by %cooldown_reduction_pct_allied_hook%%%.",
+     "zh": "肉钩击中敌人时会根据牵引距离造成额外伤害。肉钩击中友军时，肉钩的冷却时间会减少%cooldown_reduction_pct_allied_hook%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "71385d8b278f320e1f38",
+  "subject": "pudge_rot",
+  "subject_zh": "帕吉·腐烂",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Using Rot doesn't interrupt channeling.",
+   "使用腐烂不会打断持续施法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "A toxic cloud that deals intense damage and slows movement--harming not only enemy units but Pudge himself.",
+   "description_zh": "能够造成持续伤害并减缓敌人移动速度的毒性云雾——同时对敌军和自身造成伤害。",
+   "notes_en": [
+    "Using Rot doesn't interrupt channeling.",
+    "Rot hits invisible units.",
+    "If Pudge is silenced, he can't deactivate Rot if it's activated.",
+    "Rot self-damage is non-lethal."
+   ],
+   "notes_zh": [
+    "使用腐烂不会打断持续施法。",
+    "腐烂能伤害隐身单位。",
+    "即使帕吉在开启腐烂后被沉默，腐烂也不会关闭。",
+    "腐烂的对己伤害不致死。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Rot radius by %bonus_rot_radius%, damage by %bonus_rot_damage%, and causes it to reduce enemy Health Restoration by %scepter_rot_regen_reduction_pct%%%.",
+     "zh": "腐烂的作用范围提升%bonus_rot_radius%，伤害提升%bonus_rot_damage%点，并且可以降低敌人的%scepter_rot_regen_reduction_pct%%%生命回复。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "1470e4cea035f91b7efb",
+  "subject": "vengefulspirit_nether_swap",
+  "subject_zh": "复仇之魂·移形换位",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Nether Swap interrupts channeling abilities on the target.",
+   "Channeling spells are interrupted by Nether Swap.",
+   "移形换位会打断目标的持续施法。",
+   "移形换位能够打断持续施法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "Instantaneously swaps positions with a target Hero, friend or enemy. Nether Swap interrupts channeling abilities on the target. Enemy Swapped units take damage. Vengeful Spirit and allied swapped units gain a barrier equal to the damage dealt.",
+   "description_zh": "与一个目标英雄瞬间交换位置，不论敌我。移形换位会打断目标的持续施法。敌方英雄被交换后受到伤害。复仇之魂和被交换的友方英雄都会获得等同于造成伤害的护盾。",
+   "notes_en": [
+    "Works on Spell Immune units.",
+    "Trees near Vengeful Spirit and the target will be destroyed when the spell is cast.",
+    "Channeling spells are interrupted by Nether Swap."
+   ],
+   "notes_zh": [
+    "对减益免疫单位有效。",
+    "技能施放后复仇之魂和目标附近的树木将会被摧毁。",
+    "移形换位能够打断持续施法。"
+   ]
+  }
+ },
+ {
+  "review_id": "732c4aff61ff9c5f9250",
+  "subject": "windrunner_powershot",
+  "subject_zh": "风行者·强力击",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "持续施法 - 风行者为她的弓蓄力，射出一支强力的箭矢，最长可蓄力%abilitychanneltime%秒，其间可以打断蓄力，蓄力时间越长，箭矢伤害越高。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "description_en": "CHANNELED - Windranger charges her bow for up to %abilitychanneltime% second for a single powerful shot, which deals more damage the longer it is charged. The arrow damages and slows enemies' movement speed along its path. For each enemy that Powershot hits, its damage and slow is reduced.",
+   "description_zh": "持续施法 - 风行者为她的弓蓄力，射出一支强力的箭矢，最长可蓄力%abilitychanneltime%秒，其间可以打断蓄力，蓄力时间越长，箭矢伤害越高。这支箭会对穿过的所有敌方单位造成伤害和减速效果，并破坏树木。每伤害一个单位，箭矢的伤害和减速效果都会降低。",
+   "notes_en": [
+    "Powershot will destroy trees in its area of effect."
+   ],
+   "notes_zh": [
+    "强力击将摧毁作用范围内的树木。"
+   ]
+  }
+ },
+ {
+  "review_id": "9596cfd20c479425a11d",
+  "subject": "zuus_lightning_bolt",
+  "subject_zh": "宙斯·雷击",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "You can interrupt channeling spells and items with this ability.",
+   "该技能可以打断持续施法类技能和物品。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a %sight_radius_night% radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.",
+   "description_zh": "召唤一道闪电打击一个敌方单位，造成伤害及短暂眩晕。施放后，雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。本技能可以对地施放，将会自动作用于%spread_aoe%范围内最近的敌方英雄上。",
+   "notes_en": [
+    "You can interrupt channeling spells and items with this ability."
+   ],
+   "notes_zh": [
+    "该技能可以打断持续施法类技能和物品。"
+   ]
+  }
+ },
+ {
+  "review_id": "560a89507021ede7a0b0",
+  "subject": "slardar_sprint",
+  "subject_zh": "斯拉达·守卫冲刺",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Activating this skill doesn't interrupt channeling abilities.",
+   "开启此技能不会打断持续施法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "description_en": "Slardar slithers ahead, moving significantly faster and passing through units. Slardar has %slow_resistance_tooltip%%% slow resistance for the first %speed_burst_max_duration%s. The slow resistance gradually fades over the remaining sprint duration.",
+   "description_zh": "斯拉达向前蜿行，移动速度得到显著提升，并且可以穿越单位。在最初%speed_burst_max_duration%内斯拉达获得%slow_resistance_tooltip%%%减速抗性。减速抗性会在剩余的冲刺时间内逐渐衰减。",
+   "notes_en": [
+    "Activating this skill doesn't interrupt channeling abilities."
+   ],
+   "notes_zh": [
+    "开启此技能不会打断持续施法。"
+   ]
+  }
+ },
+ {
+  "review_id": "6267c32ee4522d48065d",
+  "subject": "witch_doctor_death_ward",
+  "subject_zh": "巫医·死亡守卫",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "The Death Ward is invulnerable, and is only destroyed if Witch Doctor is interrupted or its duration expires.",
+   "死亡守卫是无敌的，只有在巫医被打断或持续时间结束后才会被摧毁。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "description_en": "CHANNELED - Summons a deadly ward to attack enemy heroes within its attack range. Lasts a maximum of %abilitychanneltime% seconds. Death Ward has %bonus_accuracy%%% bonus accuracy.",
+   "description_zh": "持续施法 - 召唤一个死亡守卫，会优先攻击其攻击距离内的敌方英雄。最多持续%abilitychanneltime%秒。死亡守卫拥有%bonus_accuracy%%%额外必中率。",
+   "notes_en": [
+    "The Death Ward is invulnerable, and is only destroyed if Witch Doctor is interrupted or its duration expires.",
+    "The Death Ward can be controlled, and made to attack a specific target.",
+    "Death Ward attacks once every 0.22 seconds."
+   ],
+   "notes_zh": [
+    "死亡守卫是无敌的，只有在巫医被打断或持续时间结束后才会被摧毁。",
+    "死亡守卫可以受到控制，选择攻击特定目标。",
+    "死亡守卫每0.22秒攻击一次。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Death Ward attacks bounce between nearby enemies.",
+     "zh": "死亡守卫的攻击会向附近英雄弹射。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d8066069c01639f06e44",
+  "subject": "enigma_black_hole",
+  "subject_zh": "谜团·黑洞",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Black Hole deals additional damage equivalent to %scepter_pct_damage%%% of the unit's Max Health per second and does a non-interrupting pull towards it in a %scepter_radius% AoE.",
+   "黑洞额外造成等同于单位%scepter_pct_damage%%%最大生命值的每秒伤害，并且产生一个%scepter_radius%范围，没有打断效果的牵引效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "description_en": "CHANNELED - Summons a vortex that sucks in nearby enemy units.  Enemies affected by Black Hole cannot move, attack, or cast spells.",
+   "description_zh": "持续施法 - 召唤一个强引力漩涡吸住敌方单位。被黑洞影响的单位不能移动、攻击或施法。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Black Hole deals additional damage equivalent to %scepter_pct_damage%%% of the unit's Max Health per second and does a non-interrupting pull towards it in a %scepter_radius% AoE. Pulls at a rate of %scepter_drag_speed%.",
+     "zh": "黑洞额外造成等同于单位%scepter_pct_damage%%%最大生命值的每秒伤害，并且产生一个%scepter_radius%范围，没有打断效果的牵引效果。牵引速度为%scepter_drag_speed%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "44fb55a1acc22f14f459",
+  "subject": "venomancer_poison_sting",
+  "subject_zh": "剧毒术士·毒刺",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Damage from Poison Sting does not interrupt healing from items, nor does it activate the cooldown on Blink Dagger.",
+   "毒刺造成的持续性伤害不会打断物品的回复效果，也不能使闪烁匕首进行冷却状态。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Venomancer's attacks slow enemies and deal damage over time.",
+   "description_zh": "剧毒的攻击会持续减速敌人并造成伤害。",
+   "notes_en": [
+    "Poison Sting damage can be lethal.",
+    "Damage from Poison Sting does not interrupt healing from items, nor does it activate the cooldown on Blink Dagger."
+   ],
+   "notes_zh": [
+    "毒刺的伤害可以致死。",
+    "毒刺造成的持续性伤害不会打断物品的回复效果，也不能使闪烁匕首进行冷却状态。"
+   ]
+  }
+ },
+ {
+  "review_id": "183ab2109f1ba7b83e72",
+  "subject": "pugna_life_drain",
+  "subject_zh": "帕格纳·生命汲取",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "The effect is interrupted if the ward is destroyed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.\n\nWhen cast on an ally, Pugna will drain his own health into his ally.",
+   "description_zh": "持续施法 - 使用生命汲取时，帕格纳吸取目标敌方单位的生命值，并获得其视野。\n\n向队友施放可以将自己的生命值转移给队友。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces cooldown by %abilitycooldown%s. When targeting an enemy hero, Pugna reduces their outgoing spell damage by %spell_amp_drain_rate%%% per second up to a maximum of %spell_amp_drain_max%%% and increases his own, up to a maximum of %max_spell_amp_drain_pct%%%. When draining through a Nether Ward using Shard, the rate of increase/decrease is %spell_amp_drain_rate_ward%%% instead. Debuff lasts %spell_amp_drain_duration% seconds.",
+     "zh": "冷却时间减少%abilitycooldown%秒。以敌方英雄为目标时，帕格纳每秒降低他们%spell_amp_drain_rate%%%技能伤害输出，最高可达到%spell_amp_drain_max%%%，并且自身的技能伤害输出提升，最高可达到%max_spell_amp_drain_pct%%%。魔晶升级下对幽冥守卫施放时降低和提升的速率为%spell_amp_drain_rate_ward%%%。负面效果持续%spell_amp_drain_duration%秒。"
+    },
+    "shard_loc": {
+     "en": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed.",
+     "zh": "生命汲取可以对幽冥守卫施放，使生命汲取可以折射至守卫附近%abilitycastrange%范围内所有敌方英雄，造成%shard_damage_pct_from_ward%%%效果。守卫被摧毁后效果将会中断。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "7e18d64c1129bf154c66",
+  "subject": "furion_teleportation",
+  "subject_zh": "自然先知·传送",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Nature's Prophet will not use any mana or waste the cooldown if the spell is interrupted while casting.",
+   "自然先知在施放技能时被打断将不会耗费魔法或使技能进入冷却。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+  },
+  "context": {
+   "description_en": "Teleports to any point on the map. Gains a barrier after arriving to its destination.",
+   "description_zh": "传送到地图上任何位置。到达地点后获得一个护盾。",
+   "notes_en": [
+    "Mana and cooldown take effect when the cast is completed.  Nature's Prophet will not use any mana or waste the cooldown if the spell is interrupted while casting.",
+    "When the cast begins, an effect is created at the target location, which is visible to allies and enemies."
+   ],
+   "notes_zh": [
+    "魔耗和冷却时间都是在技能施放结束后结算。自然先知在施放技能时被打断将不会耗费魔法或使技能进入冷却。",
+    "施法开始后，目标地点将产生视觉特效，对队友和敌人均可见。"
+   ]
+  }
+ },
+ {
+  "review_id": "955383b5f050a1c1a869",
+  "subject": "dark_seer_vacuum",
+  "subject_zh": "黑暗贤者·真空",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "This ability interrupts channeling.",
+   "黑暗贤者在目标区域制造一个真空环境，将周围的敌方单位吸入，具有打断效果并造成伤害。",
+   "此技能可以打断持续施法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "description_en": "Dark Seer creates a vacuum over the target area that sucks in enemy units, disrupting them and dealing damage.",
+   "description_zh": "黑暗贤者在目标区域制造一个真空环境，将周围的敌方单位吸入，具有打断效果并造成伤害。",
+   "notes_en": [
+    "This ability interrupts channeling.",
+    "Pulls units over %duration% seconds before dealing damage.",
+    "Trees near the center of the vacuum will be destroyed."
+   ],
+   "notes_zh": [
+    "此技能可以打断持续施法。",
+    "牵引过程为%duration%秒，伤害在牵引后产生。",
+    "真空中央附近的树木将会被摧毁。"
+   ]
+  }
+ },
+ {
+  "review_id": "99483f57b37b3f9a7698",
+  "subject": "night_stalker_void",
+  "subject_zh": "暗夜魔王·虚空",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "At night, Void also mini-stuns, interrupting channeling abilities, and its effects lasts longer.",
+   "夜晚时虚空可以造成短暂眩晕，打断持续施法，并且效果的持续时间更长。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Creates a damaging void that slows an enemy unit and deals damage. At night, Void also mini-stuns, interrupting channeling abilities, and its effects lasts longer.",
+   "description_zh": "制造一个伤害性的虚空，对一个敌方单位造成减速及伤害。夜晚时虚空可以造成短暂眩晕，打断持续施法，并且效果的持续时间更长。",
+   "notes_en": [
+    "Void does not ministun enemies during the day."
+   ],
+   "notes_zh": [
+    "虚空在白天不会对敌人造成眩晕。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Void now affects all units in a radius around the target.",
+     "zh": "虚空现在影响目标范围内所有单位。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d79cea01edef8201f179",
+  "subject": "bounty_hunter_wind_walk",
+  "subject_zh": "赏金猎人·暗影步",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "开启后不会打断大多数持续施法技能。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "description_en": "Bounty Hunter becomes invisible and gains bonus movement speed and the ability to move through other units until he attacks or casts a spell.  If he breaks the invisibility with an attack, that attack will stun the target for a short duration.",
+   "description_zh": "赏金猎人进入隐身，获得移动速度加成，并能够穿越其它单位，直到他攻击或使用技能。破隐一击会短暂眩晕目标。",
+   "notes_en": [
+    "Will not break most channeling of spells upon activation."
+   ],
+   "notes_zh": [
+    "开启后不会打断大多数持续施法技能。"
+   ]
+  }
+ },
+ {
+  "review_id": "ebcea031c2dbe85c0f84",
+  "subject": "doom_bringer_infernal_blade",
+  "subject_zh": "末日使者·阎刃",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Interrupts channeling abilities.",
+   "可以打断持续施法类技能。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Doom swings his burning sword, igniting the enemy. Stuns for %ministun_duration% seconds and applies a %burn_duration% second burn that deals a base damage plus a percentage of the target's Max HP as damage per second.",
+   "description_zh": "末日挥舞他的炽烈之剑，将敌人点燃。造成%ministun_duration%秒眩晕，并施加一个燃烧效果，持续%burn_duration%秒，每秒造成伤害，数值为基础伤害+目标最大生命值的一定百分比。",
+   "notes_en": [
+    "Interrupts channeling abilities."
+   ],
+   "notes_zh": [
+    "可以打断持续施法类技能。"
+   ]
+  }
+ },
+ {
+  "review_id": "60a948c7f489ddffca2c",
+  "subject": "naga_siren_ensnare",
+  "subject_zh": "娜迦海妖·诱捕",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Interrupts the target and traps them in place, preventing movement or blinking.",
+   "打断目标的动作并将其困在原地，使其无法移动或闪烁。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Interrupts the target and traps them in place, preventing movement or blinking. Can target units affected by Song of the Siren.",
+   "description_zh": "打断目标的动作并将其困在原地，使其无法移动或闪烁。可以对海妖之歌作用下的单位施放。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range and projectile speed.  Allows Ensnare to target and affect Debuff Immune units. Ensnare applies Break.",
+     "zh": "提升施法距离和弹道速度。诱捕可以对减益免疫单位施放并且生效。诱捕会施加破坏效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4e50b08c4545e4e6ef46",
+  "subject": "naga_siren_rip_tide",
+  "subject_zh": "娜迦海妖·激流",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Using Rip Tide doesn't interrupt channeling.",
+   "使用激流不会打断持续施法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Naga Siren and her illusions deal bonus damage to enemies and reduce their armor for %duration% seconds every %hits% attacks.",
+   "description_zh": "娜迦海妖和她的幻象每经过%hits%次攻击后就会对敌人造成额外伤害，并降低他们的护甲，持续%duration%秒。",
+   "notes_en": [
+    "Using Rip Tide doesn't interrupt channeling."
+   ],
+   "notes_zh": [
+    "使用激流不会打断持续施法。"
+   ]
+  }
+ },
+ {
+  "review_id": "2f1b151e7bf0c85e2eca",
+  "subject": "keeper_of_the_light_will_o_wisp",
+  "subject_zh": "光之守卫·灵光",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Ignus Fatuus applies a non-interrupting pull towards it on all enemies within the radius.",
+   "幻火会对作用范围内所有敌人施加朝其牵引的效果，该牵引效果不会打断。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Summons Ignis Fatuus at the targeted area. Alternates on and off, drawing enemies closer with its mesmerising flicker.",
+   "description_zh": "在目标区域召唤幻火。幻火交替闪亮和闪灭。闪亮时蛊惑敌人靠近，并造成伤害。",
+   "notes_en": [
+    "Ignus Fatuus applies a non-interrupting pull towards it on all enemies within the radius."
+   ],
+   "notes_zh": [
+    "幻火会对作用范围内所有敌人施加朝其牵引的效果，该牵引效果不会打断。"
+   ]
+  }
+ },
+ {
+  "review_id": "c979642af1618ba2b8de",
+  "subject": "magnataur_skewer",
+  "subject_zh": "马格纳斯·巨角冲撞",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Skewer is interrupted if Magnus is stunned, hexed or banished.",
+   "马格纳斯受到眩晕、妖术或放逐作用时，巨角冲撞都会被打断。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+  },
+  "context": {
+   "description_en": "Magnus rushes forward, goring enemy units on his massive tusk. Heroes hit on the way will be dragged to the destination, then damaged and affected by slowed movement speed. The damage is increased based on distance traveled.",
+   "description_zh": "马格纳斯向前冲刺，用他巨大的犀角将敌人挑起。被击中的英雄将被拽至终点，然后受到伤害并且移动速度被减缓。根据行进的距离伤害也会提升。",
+   "notes_en": [
+    "Skewer is interrupted if Magnus is stunned, hexed or banished."
+   ],
+   "notes_zh": [
+    "马格纳斯受到眩晕、妖术或放逐作用时，巨角冲撞都会被打断。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases range and deals additional damage when skewering enemies into trees or cliffs.",
+     "zh": "提升距离，并且使敌人穿过树木和高台时造成额外伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ed42c8c2537976e46a87",
+  "subject": "phoenix_sun_ray",
+  "subject_zh": "凤凰·烈日炙烤",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "凤凰可以使用物品和其他技能，不会打断烈日炙烤。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "description_en": "Phoenix expels a beam of light at the cost of its own health. The beam damages enemies and heals allies for a base amount plus a percentage of their max health. The percentage increases as the beam continues to fire.",
+   "description_zh": "凤凰以损失生命能量为代价，向前射出一束炽热的光线炙烤敌人。光线对敌人造成伤害，并且能治疗友军，伤害和治疗的数值均为基础数值加上目标最大生命值的一定百分比。随着光线不断炙烤，百分比也会不断增加。",
+   "notes_en": [
+    "Sun Ray has a width of %radius% units, and a length of %abilitycastrange% units.",
+    "Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.",
+    "Phoenix can use items and abilities without canceling Sun Ray."
+   ],
+   "notes_zh": [
+    "烈日炙烤的宽度为%radius%，长度为%abilitycastrange%。",
+    "凤凰受到眩晕、沉默、飓风、妖术或睡眠等效果时烈日炙烤将会中断。",
+    "凤凰可以使用物品和其他技能，不会打断烈日炙烤。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Allows Sun Ray to be cast during Supernova.",
+     "zh": "超新星期间可以施放烈日炙烤。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ea54592f9d73e5167ab3",
+  "subject": "monkey_king_tree_dance",
+  "subject_zh": "齐天大圣·丛林之舞",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Movement is interrupted if Monkey King is stunned, hexed or banished.",
+   "齐天大圣受到眩晕、妖术或放逐作用时位移都会被打断。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Monkey King jumps to a tree and perches atop it. While perched, he gains the Primal Spring ability-a channeled leap attack. If Monkey King's tree is destroyed, he falls and is stunned for %unperched_stunned_duration%s. Taking damage while on the ground puts Tree Dance on cooldown.",
+   "description_zh": "齐天大圣跳上一棵树并停在上面。停留时获得乾坤之跃技能——需要持续施法的跳跃式攻击。如果树木被摧毁，他将从树上掉下，并眩晕%unperched_stunned_duration%秒。在地面受到伤害时丛林之舞将在一定时间内无法使用，处于冷却状态。",
+   "notes_en": [
+    "Tree Dance cooldown starts upon landing.",
+    "Right-clicking the ground will have Monkey King drop from the tree.",
+    "Movement is interrupted if Monkey King is stunned, hexed or banished."
+   ],
+   "notes_zh": [
+    "丛林之舞在落地时进入冷却。",
+    "右键点击地面后齐天大圣会从树上跳下。",
+    "齐天大圣受到眩晕、妖术或放逐作用时位移都会被打断。"
+   ]
+  }
+ },
+ {
+  "review_id": "727742bbf1e047e88863",
+  "subject": "dark_willow_bramble_maze",
+  "subject_zh": "邪影芳灵·荆棘迷宫",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not interrupt channeling spells upon rooting.",
+   "缠绕无法打断持续施法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Dark Willow creates a %placement_range% AoE maze of %placement_count% brambles that grow in the target area after %initial_creation_delay% seconds. Enemies that walk into a bramble are rooted and take damage over time. Lasts %placement_duration% seconds.",
+   "description_zh": "%initial_creation_delay%秒后邪影芳灵在目标区域创造出%placement_range%范围的迷宫，迷宫拥有%placement_count%棵荆棘。进入荆棘的敌人将被缠绕，并且持续受到伤害。迷宫持续%placement_duration%秒。",
+   "notes_en": [
+    "Does not interrupt channeling spells upon rooting."
+   ],
+   "notes_zh": [
+    "缠绕无法打断持续施法。"
+   ]
+  }
+ },
+ {
+  "review_id": "25cd2befd5561643ce77",
+  "subject": "armlet",
+  "subject_zh": "莫尔迪基安的臂章",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Activating or deactivating Unholy Strength does not interrupt channeling."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Armlet of Mordiggian",
+   "abilities": [
+    {
+     "type": "toggle",
+     "title": "Unholy Strength",
+     "description": "When active, Unholy Strength grants +35 damage, +25 strength and +4 armor, but drains 45 health per second.\n\n You cannot die from the health drain when Unholy Strength is activated, nor from the strength loss when Unholy Strength is deactivated."
+    }
+   ],
+   "notes": "The strength change will affect both maximum and current HP, but you cannot die from the change.\nThe strength change occurs over 0.6 seconds.\nActivating or deactivating Unholy Strength does not interrupt channeling.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "15"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "25"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "6"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "5"
+    },
+    {
+     "key": "unholy_bonus_damage",
+     "value": "35"
+    },
+    {
+     "key": "unholy_bonus_strength",
+     "value": "25"
+    },
+    {
+     "key": "unholy_bonus_armor",
+     "value": "4"
+    },
+    {
+     "key": "unholy_health_drain_per_second",
+     "value": "45"
+    },
+    {
+     "key": "toggle_cooldown",
+     "value": "0.036"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "5221fe038e1e4bb245fd",
+  "subject": "force_staff",
+  "subject_zh": "原力法杖",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Force Staff doesn't interrupt the target's actions."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH | DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "dname": "Force Staff",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Force",
+     "description": "Pushes any target unit 600 units in the direction it is facing."
+    }
+   ],
+   "notes": "Self-cast will cause you to use Force on yourself.\nForce Staff doesn't interrupt the target's actions.\nWill not work on a unit inside Chronosphere, Duel, or Black Hole.\nForce Staff has 850 cast range when cast on enemies.",
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "175"
+    },
+    {
+     "key": "push_length",
+     "value": "600"
+    },
+    {
+     "key": "enemy_cast_range",
+     "value": "850"
+    },
+    {
+     "key": "push_time",
+     "value": "0.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "4997b69e9101d1828ef9",
+  "subject": "hurricane_pike",
+  "subject_zh": "飓风长戟",
+  "mechanism": "channel_interrupt",
+  "mechanism_zh": "打断持续施法",
+  "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Hurricane Pike doesn't interrupt the target's actions."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH | DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "dname": "Hurricane Pike",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Hurricane Thrust",
+     "description": "Pushes you and target enemy 425 units away from each other, and for 5 seconds, allows you to make 5 attacks against the target without range restrictions and with +100 attack speed.\n\nCan be cast on self or allies to push the target 600 units in the direction it is facing.\nEnemy Range: 425"
+    }
+   ],
+   "notes": "Self-cast will use Hurricane Pike on yourself.\nHurricane Pike doesn't interrupt the target's actions.\nWill not work on a unit inside Chronosphere, Duel, or Black Hole.\nAttack Range bonuses from Monkey King Bar and Dragon Lance and its upgrades do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "15"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "200"
+    },
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "20"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "15"
+    },
+    {
+     "key": "base_attack_range",
+     "display": "+ {value} Attack Range (Ranged Only)",
+     "value": "130"
+    },
+    {
+     "key": "push_length",
+     "value": "600"
+    },
+    {
+     "key": "enemy_length",
+     "value": "425"
+    },
+    {
+     "key": "range_duration",
+     "value": "5"
+    },
+    {
+     "key": "cast_range_enemy",
+     "value": "425"
+    },
+    {
+     "key": "max_attacks",
+     "value": "5"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "value": "100"
+    },
+    {
+     "key": "push_time",
+     "value": "0.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "124fd1215dad2067e65f",
+  "subject": "nevermore_necromastery",
+  "subject_zh": "影魔·支配死灵",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "影魔死亡时%soul_release_tooltip%%%的灵魂将逃离他的束缚。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Shadow Fiend steals the soul from units he kills, gaining %necromastery_damage_per_soul% bonus damage per soul. Hero kills grant %souls_per_hero_kill% souls. On death, he releases %soul_release_tooltip%%% of them from bondage.",
+   "description_zh": "影魔每杀死一个单位都会窃取其灵魂，每个灵魂获得%necromastery_damage_per_soul%点额外攻击力。击杀英雄会获得%souls_per_hero_kill%个灵魂。影魔死亡时%soul_release_tooltip%%%的灵魂将逃离他的束缚。",
+   "notes_en": [
+    "Denies and neutral creeps also provide bonus damage through Necromastery.",
+    "Break disables the gaining of new stacks.",
+    "Break does not disable the bonuses from existing stacks."
+   ],
+   "notes_zh": [
+    "反补、杀死中立生物也能收集到灵魂。",
+    "破坏会使技能无法获得新的叠加效果。",
+    "破坏不会使现有叠加效果提供的加成失效。"
+   ]
+  }
+ },
+ {
+  "review_id": "d5b9f097eb8be3376f2f",
+  "subject": "puck_dream_coil",
+  "subject_zh": "帕克·梦境缠绕",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Creates a coil of volatile magic that latches onto enemy Heroes, damaging and leashing them.",
+   "创造一个变化无常的的魔法梦境来困住敌方英雄，对他们造成伤害和束缚。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "description_en": "Creates a coil of volatile magic that latches onto enemy Heroes, damaging and leashing them.  If the enemy hero stretches the coil by moving too far away, it snaps, stunning and dealing additional damage.",
+   "description_zh": "创造一个变化无常的的魔法梦境来困住敌方英雄，对他们造成伤害和束缚。如果被困住的敌方英雄试图挣脱缠绕走出梦境，将因为梦境破碎而受到眩晕和额外伤害。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "All enemies affected by Dream Coil are attacked at a rate equal to %attack_rate_pct%%% of Puck's attack rate. The attacks continue while the target is stunned if they break the Dream Coil.",
+     "zh": "梦境缠绕作用下的所有敌人都会被帕克攻击，攻击频率基于帕克攻击频率的%attack_rate_pct%%%。即使目标挣脱梦境，被眩晕时攻击也会继续。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4d6f56752dc6a3940b4b",
+  "subject": "sven_storm_bolt",
+  "subject_zh": "斯温·风暴之拳",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Sven unleashes his magical gauntlet that deals damage and stuns enemy units in a small area around the target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Sven unleashes his magical gauntlet that deals damage and stuns enemy units in a small area around the target.",
+   "description_zh": "斯温用他充满魔力的手套对目标周围内所有敌人造成伤害和眩晕。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range and applies a basic dispel on the target. Affects invulnerable units. If alt-cast, it deals an additional %scepter_bonus_damage% damage and Sven travels with the Storm Hammer.",
+     "zh": "提升施法距离，并且对目标施加弱驱散效果。可以影响无敌目标。设为多样施法（右键点击技能栏图标）后，额外造成%scepter_bonus_damage%点伤害并且斯温会跟随风暴之拳行进。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4cdcf472bc22a7abdbc7",
+  "subject": "windrunner_shackleshot",
+  "subject_zh": "风行者·束缚击",
+  "mechanism": "mobility_lock",
+  "mechanism_zh": "限制位移",
+  "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "将目标束缚在正对其后的一个敌方单位或树上。",
+   "该技能可以将两个敌人一起束缚，使他们同时眩晕。",
+   "束缚击能将目标束缚在身后最多%shackle_distance%距离的敌方单位或树木。",
+   "束缚击可以被躲避。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Shackles the target to an enemy unit or tree in a line directly behind it.  If no unit or tree is present, the stun duration is reduced to %fail_stun_duration%.",
+   "description_zh": "将目标束缚在正对其后的一个敌方单位或树上。若目标后面没有其它敌方单位或树木，则眩晕时间减少至%fail_stun_duration%秒。",
+   "notes_en": [
+    "This spell can shackle two enemies together, stunning them both.",
+    "Can shackle the target to an enemy unit or tree at most %shackle_distance% behind the target.",
+    "Shackleshot can be disjointed."
+   ],
+   "notes_zh": [
+    "该技能可以将两个敌人一起束缚，使他们同时眩晕。",
+    "束缚击能将目标束缚在身后最多%shackle_distance%距离的敌方单位或树木。",
+    "束缚击可以被躲避。"
+   ]
+  }
+ }
+]

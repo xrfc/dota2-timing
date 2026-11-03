@@ -1,0 +1,942 @@
+[
+ {
+  "review_id": "d582d13fea779a90de58",
+  "subject": "weaver_geminate_attack",
+  "subject_zh": "编织者·连击",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Allows Weaver to dispatch two attacks at once.",
+   "description_zh": "允许编织者立刻发动两次攻击。",
+   "notes_en": [
+    "Additional attacks leave Weaver %delay% seconds after the previous one, and have no range limit.",
+    "Bonus damage only applies to the geminated attack and not the original attack."
+   ],
+   "notes_zh": [
+    "第二次攻击将在编织者第一次攻击的%delay%秒后发出，并且没有距离限制。",
+    "额外伤害仅对连击的攻击有效，初始攻击没有额外伤害。"
+   ]
+  }
+ },
+ {
+  "review_id": "0f29d053129284533c84",
+  "subject": "jakiro_liquid_fire",
+  "subject_zh": "杰奇洛·液态火",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_AOE"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Jakiro burns his enemies in an area of effect with fire added to his attack, while slowing their attacks. Shares a cooldown with Liquid Frost.",
+   "description_zh": "杰奇洛的火焰燃烧效果范围内的敌人，并降低他们的攻击速度。和液态冰共用冷却时间。",
+   "notes_en": [
+    "Works on both units and buildings."
+   ],
+   "notes_zh": [
+    "对单位和建筑都有效。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Jakiro's Liquid Fire has no mana cost and no longer shares a cooldown with Liquid Frost.",
+     "zh": "杰奇洛的液态火没有魔法消耗，并且不再和液态冰共用冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "700caba8c1797ad16f55",
+  "subject": "jakiro_liquid_ice",
+  "subject_zh": "杰奇洛·液态冰",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Jakiro chill his enemies with ice added to his attack, slowing movement for %duration% seconds and increasing damage taken from Jakiro's attacks and abilities. This effect does not apply to buildings. Shares a cooldown with Liquid Fire.",
+   "description_zh": "杰奇洛的攻击使他的敌人受寒，减缓其移动速度，持续%duration%秒，并且被杰奇洛的攻击和其他技能击中后承受额外伤害。这个效果对建筑无效。与液态火共用冷却时间。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Jakiro's Liquid Frost has no mana cost and no longer shares a cooldown with Liquid Fire.",
+     "zh": "杰奇洛的液态冰没有魔法消耗，并且不再和液态火共用冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a6225b66643c91a2125a",
+  "subject": "doom_bringer_infernal_blade",
+  "subject_zh": "末日使者·阎刃",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Doom swings his burning sword, igniting the enemy. Stuns for %ministun_duration% seconds and applies a %burn_duration% second burn that deals a base damage plus a percentage of the target's Max HP as damage per second.",
+   "description_zh": "末日挥舞他的炽烈之剑，将敌人点燃。造成%ministun_duration%秒眩晕，并施加一个燃烧效果，持续%burn_duration%秒，每秒造成伤害，数值为基础伤害+目标最大生命值的一定百分比。",
+   "notes_en": [
+    "Interrupts channeling abilities."
+   ],
+   "notes_zh": [
+    "可以打断持续施法类技能。"
+   ]
+  }
+ },
+ {
+  "review_id": "6e2259ca556fe474e521",
+  "subject": "ancient_apparition_chilling_touch",
+  "subject_zh": "远古冰魄·极寒之触",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.",
+   "description_zh": "使自己的普通攻击附带距离提升，高额魔法伤害和减速效果。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Removes cooldown.",
+     "zh": "移除了冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3ac2f189ccf9f8b69402",
+  "subject": "gyrocopter_flak_cannon",
+  "subject_zh": "矮人直升机·高射火炮",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "只有主要目标会受到致命一击等攻击特效。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Gyrocopter's attacks hit all enemy units in an area around it for a limited number of attacks.  Only the main target of attacks will receive attack bonuses such as Critical Strike.  Lasts %abilityduration% seconds or until the attacks are used.",
+   "description_zh": "矮人直升机的攻击会击中目标周围一定范围内的所有敌人，持续一定次数的攻击。只有主要目标会受到致命一击等攻击特效。持续%abilityduration%秒或攻击次数耗尽。",
+   "notes_en": [
+    "Attack range for the primary attack is unchanged."
+   ],
+   "notes_zh": [
+    "对主目标的攻击距离没有改变。"
+   ]
+  }
+ },
+ {
+  "review_id": "06e572d4bf492c0e9b74",
+  "subject": "silencer_glaives_of_wisdom",
+  "subject_zh": "沉默术士·智慧之刃",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Silencer enchants his glaives with his wisdom, stealing his target's Intelligence with each hit and dealing additional damage based on his Intelligence.",
+   "description_zh": "沉默术士用他的智慧强化刀刃，每次攻击窃取目标的智力，并造成基于他智力值的额外伤害。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Causes Glaives of Wisdom to bounce %bounce_count% time to a random enemy within %bounce_range% range and increases intelligence steal.",
+     "zh": "使智慧之刃向%bounce_range% 范围内的随机敌人弹射%bounce_count%次，并提升智力窃取。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2a7471a357209304a9ae",
+  "subject": "obsidian_destroyer_arcane_orb",
+  "subject_zh": "殁境神蚀者·奥术天球",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Adds extra pure damage to Outworld Destroyer's attacks, based on his remaining mana pool.",
+   "description_zh": "殁境神蚀者的攻击附带基于剩余魔法值的额外纯粹伤害。",
+   "notes_en": [
+    "The damage is calculated after the mana cost is spent."
+   ],
+   "notes_zh": [
+    "根据使用此技能后的魔法值计算附加伤害。"
+   ]
+  }
+ },
+ {
+  "review_id": "88d821912971cb118ec7",
+  "subject": "obsidian_destroyer_equilibrium",
+  "subject_zh": "殁境神蚀者·精华变迁",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "通过攻击特效的技能回复的魔法会减少。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Passively grants a chance to restore a percentage of your max mana each time you cast an ability. Restores less mana from spells that modify attacks.",
+   "description_zh": "被动拥有一定几率在施放技能时回复最大魔法值的一定百分比。通过攻击特效的技能回复的魔法会减少。"
+  }
+ },
+ {
+  "review_id": "58b60079be3658705c3a",
+  "subject": "treant_leech_seed",
+  "subject_zh": "树精卫士·寄生种子",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Treant's attack plants a life-sapping seed in an enemy unit. That unit takes additional magic damage, is rooted and disarmed for a short duration, and emits %healing_pulse_count% healing pulses to up to %max_heal_units% nearby allies of Treant Protector based on the damage dealt by the attack.",
+   "description_zh": "树精卫士的攻击会对敌方单位种下一颗吸取生命的种子。该单位会受到额外魔法伤害，被缠绕和缴械一小段时间，并放出%healing_pulse_count%次治疗脉冲，最多对附近%max_heal_units%名友军根据当次攻击造成的伤害进行治疗。"
+  }
+ },
+ {
+  "review_id": "2ca48821208e18dd3f64",
+  "subject": "nyx_assassin_impale",
+  "subject_zh": "司夜刺客·穿刺",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "穿刺不会被林肯法球格挡。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Rock spikes burst from the earth along a straight path. Enemy units take damage, then are hurled into the air and stunned.",
+   "description_zh": "岩石尖刺在地上沿一条直线穿刺而出。敌方单位受到伤害，然后被抛向空中，落地时被眩晕。",
+   "notes_en": [
+    "The spikes move at %speed% units per second, over %length% range.",
+    "Impale cannot be blocked by Linken's Sphere."
+   ],
+   "notes_zh": [
+    "尖刺的移动速度是每秒%speed%，最远作用距离为%length%。",
+    "穿刺不会被林肯法球格挡。"
+   ]
+  }
+ },
+ {
+  "review_id": "5e23a2e5b80d5894e110",
+  "subject": "slark_saltwater_shiv",
+  "subject_zh": "斯拉克·海浪短刀",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AUTOCAST",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Slark slices the target with his salty shiv, stealing a portion of the target's movement speed, Health Regen and Health Restoration.These effects stack independently.",
+   "description_zh": "斯拉克用他的海浪短刀划开目标，窃取目标一部分的移动速度、生命恢复和生命回复。这个效果独立叠加。"
+  }
+ },
+ {
+  "review_id": "119abdd4ad864fa3ae6f",
+  "subject": "medusa_split_shot",
+  "subject_zh": "美杜莎·分裂箭",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "额外目标不会受到其他攻击特效（比如致命一击）的作用。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE | DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE"
+  },
+  "context": {
+   "description_en": "Medusa magically splits her shot into several arrows. These arrows deal a lower percent of her normal damage.The extra targets will not receive other attack effects (such as critical strike).",
+   "description_zh": "美杜莎施展魔法将她的箭分裂成若干支箭矢。分裂箭造成的伤害为正常攻击力的一定百分比。额外目标不会受到其他攻击特效（比如致命一击）的作用。",
+   "notes_en": [
+    "Secondary targets will be the closest enemy units excluding the primary target.",
+    "If illusions of Medusa are created while Split Shot is active, they will also have this ability."
+   ],
+   "notes_zh": [
+    "次级目标将是除了主要目标外距离最近的敌方单位。",
+    "如果在分裂箭激活的状态下创造幻象，幻象也将继承此技能。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Allows on-hit effects to apply to the secondary attacks from Split Shot. Increases arrow count.",
+     "zh": "使分裂箭的次级攻击也能继承攻击特效，并且目标数量提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0897e93a2f9d23aee86f",
+  "subject": "medusa_split_shot",
+  "subject_zh": "美杜莎·分裂箭",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "使分裂箭的次级攻击也能继承攻击特效，并且目标数量提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE | DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE"
+  },
+  "context": {
+   "description_en": "Medusa magically splits her shot into several arrows. These arrows deal a lower percent of her normal damage.The extra targets will not receive other attack effects (such as critical strike).",
+   "description_zh": "美杜莎施展魔法将她的箭分裂成若干支箭矢。分裂箭造成的伤害为正常攻击力的一定百分比。额外目标不会受到其他攻击特效（比如致命一击）的作用。",
+   "notes_en": [
+    "Secondary targets will be the closest enemy units excluding the primary target.",
+    "If illusions of Medusa are created while Split Shot is active, they will also have this ability."
+   ],
+   "notes_zh": [
+    "次级目标将是除了主要目标外距离最近的敌方单位。",
+    "如果在分裂箭激活的状态下创造幻象，幻象也将继承此技能。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Allows on-hit effects to apply to the secondary attacks from Split Shot. Increases arrow count.",
+     "zh": "使分裂箭的次级攻击也能继承攻击特效，并且目标数量提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6302da680977b6c3bf5a",
+  "subject": "tusk_walrus_punch",
+  "subject_zh": "巨牙海民·海象神拳！",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Tusk connects with his mighty Walrus Punch, a critical strike with bonus damage so powerful it launches its victim into the air.",
+   "description_zh": "巨牙海民为他强力的海象神拳做好准备，下一次攻击将会造成额外伤害并暴击，同时将目标打到半空中。",
+   "notes_en": [
+    "Walrus PUNCH has true strike."
+   ],
+   "notes_zh": [
+    "海象神拳！拥有克敌机先效果。"
+   ]
+  }
+ },
+ {
+  "review_id": "e5f428aec77bbdc85e37",
+  "subject": "ember_spirit_sleight_of_fist",
+  "subject_zh": "灰烬之灵·无影拳",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Any attack modifier that Xin has (such as Critical Strike, Bash, Cleave, or Orb effects) will be applied normally on these attacks.",
+   "炘拥有的攻击特效（如致命一击、重击、分裂、连锁闪电等效果）在技能攻击期间都能生效。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+  },
+  "context": {
+   "description_en": "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location.  Deals bonus damage to heroes.",
+   "description_zh": "灰烬之灵以燎原之火的速度横冲直撞，攻击目标区域内所有敌人，随后返回所在位置。对英雄造成额外伤害。",
+   "notes_en": [
+    "Targets are determined when the spell is cast.",
+    "A regular attack is done to each target every %attack_interval% seconds.",
+    "Any attack modifier that Xin has (such as Critical Strike, Bash, Cleave, or Orb effects) will be applied normally on these attacks.",
+    "Abilities and items can be used while Sleight of Fist is active."
+   ],
+   "notes_zh": [
+    "在施放技能时作用的目标就已决定。",
+    "对目标的攻击每次间隔为%attack_interval%秒。",
+    "炘拥有的攻击特效（如致命一击、重击、分裂、连锁闪电等效果）在技能攻击期间都能生效。",
+    "施放无影拳时间可以使用其他技能和物品。"
+   ]
+  }
+ },
+ {
+  "review_id": "377fb6b35c700fca53ab",
+  "subject": "pangolier_fortune_favors_the_bold",
+  "subject_zh": "石鳞剑士·天佑勇者",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "附近敌人攻击石鳞剑士时，他们触发物品和技能的随机类攻击特效的几率有所降低。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Random item and ability effects of enemies near Pangolier have a reduced chance to affect him.",
+   "description_zh": "附近敌人攻击石鳞剑士时，他们触发物品和技能的随机类攻击特效的几率有所降低。",
+   "notes_en": [
+    "Applies to hero abilities and items.",
+    "Effect is a relative reduction in chance for effects to happen."
+   ],
+   "notes_zh": [
+    "对英雄技能和物品有效。",
+    "效果是特效发生的几率相对降低。"
+   ]
+  }
+ },
+ {
+  "review_id": "9fbc294bc1d8bca5de73",
+  "subject": "mars_gods_rebuke",
+  "subject_zh": "玛尔斯·神之谴戒",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Attack modifiers have a chance to proc on God's Rebuke attacks.",
+   "神之谴戒的攻击也有几率触发攻击特效。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Mars smashes enemies in front of him with his shield, knocking them back and damaging them with a critical hit based on his attack. Bonus damage is added when hitting heroes. Has True Strike.",
+   "description_zh": "玛尔斯举起他的战盾粉碎前方的敌人，将他们击退并且基于自身攻击力造成致命一击伤害。攻击英雄时攻击伤害提升。具有克敌机先效果。",
+   "notes_en": [
+    "Attack modifiers have a chance to proc on God's Rebuke attacks."
+   ],
+   "notes_zh": [
+    "神之谴戒的攻击也有几率触发攻击特效。"
+   ]
+  }
+ },
+ {
+  "review_id": "071b44d49a7d1b22263b",
+  "subject": "snapfire_lil_shredder",
+  "subject_zh": "电炎绝手·霹雳铁手",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Attack modifiers have a chance to proc on Lil' Shredder attacks.",
+   "霹雳铁手的攻击也有几率触发攻击特效。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Snapfire heats up her mounted turret to rapidly fire %buffed_attacks% attacks dealing fixed damage plus a percentage of her attack damage. Each attack reduces the enemy's armor. Provides bonus attack range for the duration.",
+   "description_zh": "电炎绝手开动蜥蜴坐骑上的加农炮，快速发动%buffed_attacks%次固定伤害加上自身攻击伤害一定百分比的攻击。每次攻击都将削弱敌人的护甲。在持续时间内提供攻击距离加成。",
+   "notes_en": [
+    "Sets base attack time to %base_attack_time%s for the duration.",
+    "Attack modifiers have a chance to proc on Lil' Shredder attacks."
+   ],
+   "notes_zh": [
+    "持续时间内基础攻击间隔变为%base_attack_time%。",
+    "霹雳铁手的攻击也有几率触发攻击特效。"
+   ]
+  }
+ },
+ {
+  "review_id": "c1a031cada6169337934",
+  "subject": "muerta_gunslinger",
+  "subject_zh": "琼英碧灵·神枪在手",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "The secondary shot can trigger attack modifiers.",
+   "第二枪可以触发攻击特效。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE |  DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE"
+  },
+  "context": {
+   "description_en": "Toggleable. When toggled on, Muerta's attacks have a chance to fire a second shot at another target.",
+   "description_zh": "可以开关。开启后，琼英碧灵攻击时有几率对另一个目标再射一枪。",
+   "notes_en": [
+    "If no other units are in range, she fires both guns at the original target.",
+    "Secondary shots can hit units within Muerta's attack range plus %target_search_bonus_range%.",
+    "The secondary shot can trigger attack modifiers.",
+    "Prioritizes heroes, then non-hero units, then buildings."
+   ],
+   "notes_zh": [
+    "如果距离内没有其他单位，她会向原目标发射两枪。",
+    "第二枪可以击中琼英碧灵攻击距离加上%target_search_bonus_range%范围内的单位。",
+    "第二枪可以触发攻击特效。",
+    "以英雄优先，然后是非英雄单位，然后是建筑。"
+   ]
+  }
+ },
+ {
+  "review_id": "44ed9a73e019cca42fa1",
+  "subject": "kez_kazurai_katana",
+  "subject_zh": "凯·影武长刀",
+  "mechanism": "attack_modifier",
+  "mechanism_zh": "攻击特效",
+  "definition": "给攻击附加效果的法球类技能",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityBehavior=DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Katana attacks and abilities apply a stacking damage over time to enemies that deals a percentage of the original attack's damage as additional damage over time. Kez may activate the ability to impale the target with his attack, preventing them from moving or turning. The target's Katana debuff bursts, causing some of the stacks to deal damage instantly.",
+   "description_zh": "长刀的攻击和技能会对敌人施加一个可叠加的持续伤害效果，持续时间内造成原攻击伤害一定百分比的额外伤害。凯可以主动使用技能，刺中目标，阻止他们移动或转身。目标身上的影武长刀效果爆发，使部分叠加数值立刻造成伤害。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Kez lifesteals %lifesteal_pct%%% from the impale. If the impale comes from behind the target, the target is stunned. Increases max burst stacks.",
+     "zh": "刺中后凯能从当次攻击吸血%lifesteal_pct%%%。如果从背后刺中目标，目标会被眩晕。提升最大爆发叠加数值。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5f805ffd825b867b3d96",
+  "subject": "bloodseeker_bloodrage",
+  "subject_zh": "血魔·血怒",
+  "mechanism": "spell_amp",
+  "mechanism_zh": "法术放大",
+  "definition": "提高技能造成的伤害",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Drives Bloodseeker into a bloodthirsty rage which causes him to attack faster and deal more spell damage at the cost of a percentage of his health per second.",
+   "使血魔陷入渴望鲜血的狂怒中，以每秒流失一定百分比生命的代价获得攻击速度和技能增强加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Drives Bloodseeker into a bloodthirsty rage which causes him to attack faster and deal more spell damage at the cost of a percentage of his health per second.",
+   "description_zh": "使血魔陷入渴望鲜血的狂怒中，以每秒流失一定百分比生命的代价获得攻击速度和技能增强加成。",
+   "notes_en": [
+    "Damage dealt to Bloodseeker is non-lethal."
+   ],
+   "notes_zh": [
+    "对血魔造成的伤害不致死。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Bloodseeker's Bloodrage attacks now deal %max_health_dmg_pct%%% of the target's max health as Pure damage.",
+     "zh": "血怒下血魔的攻击现在造成%max_health_dmg_pct%%%目标最大生命值的纯粹伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "cf0bbd8cb0c25ec1a766",
+  "subject": "lina_flame_cloak",
+  "subject_zh": "莉娜·腾焰斗篷",
+  "mechanism": "spell_amp",
+  "mechanism_zh": "法术放大",
+  "definition": "提高技能造成的伤害",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Grants Lina unobstructed movement and increases her spell damage and magic resistance.",
+   "使莉娜获得顺畅的移动状态，并且提升技能伤害和魔法抗性。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Grants Lina unobstructed movement and increases her spell damage and magic resistance. Grants max fiery soul stacks on activation.",
+   "description_zh": "使莉娜获得顺畅的移动状态，并且提升技能伤害和魔法抗性。开启时获得炽魂的最高叠加层数。"
+  }
+ },
+ {
+  "review_id": "a5933756a651555e2172",
+  "subject": "lion_to_hell_and_back",
+  "subject_zh": "莱恩·下地狱再上来",
+  "mechanism": "spell_amp",
+  "mechanism_zh": "法术放大",
+  "definition": "提高技能造成的伤害",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Lion gains %spell_amp%%% spell amplification for %duration%s after respawning or resurrecting or until he gets a kill or assist.",
+   "而莱恩复活时，他就会获得持续%duration%秒的%spell_amp%%%技能增强，直到他完成击杀或得到助攻。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "description_en": "Lion gains %debuff_amp%%% debuff duration after killing or assisting in a Hero kill while that Hero is dead.Lion gains %spell_amp%%% spell amplification for %duration%s after respawning or resurrecting or until he gets a kill or assist.",
+   "description_zh": "击杀英雄或助攻会向莱恩提供%debuff_amp%%%负面效果持续时间，持续到该英雄复活。而莱恩复活时，他就会获得持续%duration%秒的%spell_amp%%%技能增强，直到他完成击杀或得到助攻。"
+  }
+ },
+ {
+  "review_id": "a5b1044c371b677bbca6",
+  "subject": "venomancer_plague_ward",
+  "subject_zh": "剧毒术士·瘟疫守卫",
+  "mechanism": "spell_amp",
+  "mechanism_zh": "法术放大",
+  "definition": "提高技能造成的伤害",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "守卫拥有毒刺攻击，效果与毒刺技能的当前等级相同，造成50%的原技能伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "description_en": "Summons a plague ward to attack enemy units and structures. The ward is immune to magic. Wards gain the Poison Sting level from Venomancer, dealing 50% of the full damage.",
+   "description_zh": "召唤一个瘟疫守卫来攻击敌方单位和建筑。守卫对魔法免疫。守卫拥有毒刺攻击，效果与毒刺技能的当前等级相同，造成50%的原技能伤害。"
+  }
+ },
+ {
+  "review_id": "c59ab23ddd895aa8e553",
+  "subject": "pugna_oblivion_savant",
+  "subject_zh": "帕格纳·湮灭专家",
+  "mechanism": "spell_amp",
+  "mechanism_zh": "法术放大",
+  "definition": "提高技能造成的伤害",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Pugna receives %tower_scale%%% spell amplification per destroyed tower.",
+   "每摧毁一座防御塔，帕格纳都会获得%tower_scale%%%技能增强。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Pugna can cast spells and use items while channeling.\n\nPugna receives %tower_scale%%% spell amplification per destroyed tower.",
+   "description_zh": "帕格纳可以在持续施法期间施放技能和使用物品。\n\n每摧毁一座防御塔，帕格纳都会获得%tower_scale%%%技能增强。"
+  }
+ },
+ {
+  "review_id": "959b59da03f5fcc0e46f",
+  "subject": "pugna_life_drain",
+  "subject_zh": "帕格纳·生命汲取",
+  "mechanism": "spell_amp",
+  "mechanism_zh": "法术放大",
+  "definition": "提高技能造成的伤害",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "When targeting an enemy hero, Pugna reduces their outgoing spell damage by %spell_amp_drain_rate%%% per second up to a maximum of %spell_amp_drain_max%%% and increases his own, up to a maximum of %max_spell_amp_drain_pct%%%.",
+   "以敌方英雄为目标时，帕格纳每秒降低他们%spell_amp_drain_rate%%%技能伤害输出，最高可达到%spell_amp_drain_max%%%，并且自身的技能伤害输出提升，最高可达到%max_spell_amp_drain_pct%%%。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.\n\nWhen cast on an ally, Pugna will drain his own health into his ally.",
+   "description_zh": "持续施法 - 使用生命汲取时，帕格纳吸取目标敌方单位的生命值，并获得其视野。\n\n向队友施放可以将自己的生命值转移给队友。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces cooldown by %abilitycooldown%s. When targeting an enemy hero, Pugna reduces their outgoing spell damage by %spell_amp_drain_rate%%% per second up to a maximum of %spell_amp_drain_max%%% and increases his own, up to a maximum of %max_spell_amp_drain_pct%%%. When draining through a Nether Ward using Shard, the rate of increase/decrease is %spell_amp_drain_rate_ward%%% instead. Debuff lasts %spell_amp_drain_duration% seconds.",
+     "zh": "冷却时间减少%abilitycooldown%秒。以敌方英雄为目标时，帕格纳每秒降低他们%spell_amp_drain_rate%%%技能伤害输出，最高可达到%spell_amp_drain_max%%%，并且自身的技能伤害输出提升，最高可达到%max_spell_amp_drain_pct%%%。魔晶升级下对幽冥守卫施放时降低和提升的速率为%spell_amp_drain_rate_ward%%%。负面效果持续%spell_amp_drain_duration%秒。"
+    },
+    "shard_loc": {
+     "en": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed.",
+     "zh": "生命汲取可以对幽冥守卫施放，使生命汲取可以折射至守卫附近%abilitycastrange%范围内所有敌方英雄，造成%shard_damage_pct_from_ward%%%效果。守卫被摧毁后效果将会中断。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "9db63c151aaa34e1222b",
+  "subject": "dazzle_poison_touch",
+  "subject_zh": "戴泽·剧毒之触",
+  "mechanism": "spell_amp",
+  "mechanism_zh": "法术放大",
+  "definition": "提高技能造成的伤害",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "伤害格挡类技能不能减少该技能伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Releases a cone of poison that strikes multiple enemy units. Deals damage over time and slows the targets. Anytime the targets get attacked by Dazzle, the debuff duration is refreshed and slow is increased.",
+   "description_zh": "施放一股锥形的毒素，可以打击多个敌方单位。造成持续伤害和减速。每当目标受到戴泽的攻击，负面效果的持续时间都会刷新，减速效果也会提升。",
+   "notes_en": [
+    "The damage is not reduced by damage block abilities."
+   ],
+   "notes_zh": [
+    "伤害格挡类技能不能减少该技能伤害。"
+   ]
+  }
+ },
+ {
+  "review_id": "5f4b9f6778a26d56c606",
+  "subject": "doom_bringer_devour",
+  "subject_zh": "末日使者·吞噬",
+  "mechanism": "spell_amp",
+  "mechanism_zh": "法术放大",
+  "definition": "提高技能造成的伤害",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Stolen creep abilities have %bonus_aoe_pct%%% increased AoE and %bonus_spell_amp_pct%%% increased spell amplification.",
+   "获得的野怪技能拥有%bonus_aoe_pct%%%额外作用范围和%bonus_spell_amp_pct%%%额外技能增强。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "Consumes an enemy or neutral creep, acquiring any special abilities that it possessed. If alt-cast is activated, Doom will not acquire the creep's abilities. Duration is equal to the cooldown.",
+   "description_zh": "消化一个敌军或中立生物，获得其特殊技能。开启多样施法（右键点击技能栏图标）后，末日使者不会获得其技能。持续时间与冷却时间相同。",
+   "notes_en": [
+    "Gives Doom the original bounty of the creep, along with the bonus gold.",
+    "If you devour a creep without abilities, you'll keep the abilities you had previously."
+   ],
+   "notes_zh": [
+    "末日使者将获得该生物的正常金钱，还有技能的额外金钱。",
+    "如果吞噬的单位没有技能，之前获得的技能将会保留。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Devour has %AbilityCharges% charges and can target Ancients. Stolen creep abilities have %bonus_aoe_pct%%% increased AoE and %bonus_spell_amp_pct%%% increased spell amplification.",
+     "zh": "吞噬拥有%AbilityCharges%点能量点数，能以远古生物为目标。获得的野怪技能拥有%bonus_aoe_pct%%%额外作用范围和%bonus_spell_amp_pct%%%额外技能增强。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c84e0d2ea4af8ffdf183",
+  "subject": "rubick_fade_bolt",
+  "subject_zh": "拉比克·弱化能流",
+  "mechanism": "spell_amp",
+  "mechanism_zh": "法术放大",
+  "definition": "提高技能造成的伤害",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack and spell damage.",
+   "拉比克制造一道强大的奥术能量流，在多个敌方单位之间流动，造成伤害并降低他们的攻击力和技能伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack and spell damage. Each jump deals less damage.",
+   "description_zh": "拉比克制造一道强大的奥术能量流，在多个敌方单位之间流动，造成伤害并降低他们的攻击力和技能伤害。每次跳跃造成的伤害递减。"
+  }
+ }
+]

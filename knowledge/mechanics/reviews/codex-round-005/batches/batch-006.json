@@ -1,0 +1,1314 @@
+[
+ {
+  "review_id": "c5fe94d57f6b36bcf09b",
+  "subject": "phantom_assassin_immaterial",
+  "subject_zh": "幻影刺客·飘忽不定",
+  "mechanism": "evasion",
+  "mechanism_zh": "闪避",
+  "definition": "自身有概率使敌方攻击落空",
+  "definition_note": "U30：用户确认闪避与致盲分开（金箍棒只穿透闪避，致盲靠驱散或离开范围）；v3：装备属性中的闪避（如蝴蝶、闪避护符、辉耀）也作为字段证据",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Phantom Assassin focuses inward, increasing her ability to evade enemy attacks.",
+   "幻影刺客专注一心，闪避敌人攻击的技艺得到提升。",
+   "Stacks diminishingly with other sources of Evasion.",
+   "与其他闪避效果为非线性叠加。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Immaterial",
+   "name_zh": "飘忽不定",
+   "description_en": "Phantom Assassin focuses inward, increasing her ability to evade enemy attacks.\n\nStacks diminishingly with other sources of Evasion.",
+   "description_zh": "幻影刺客专注一心，闪避敌人攻击的技艺得到提升。\n\n与其他闪避效果为非线性叠加。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "6477ea2181fa90cc3ef0",
+  "subject": "phantom_lancer_phantom_edge",
+  "subject_zh": "幻影长矛手·幻影冲锋",
+  "mechanism": "evasion",
+  "mechanism_zh": "闪避",
+  "definition": "自身有概率使敌方攻击落空",
+  "definition_note": "U30：用户确认闪避与致盲分开（金箍棒只穿透闪避，致盲靠驱散或离开范围）；v3：装备属性中的闪避（如蝴蝶、闪避护符、辉耀）也作为字段证据",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When targeting an enemy for an attack, Phantom Lancer quickly charges into range, gaining increased movement speed and evasion.",
+   "对目标发动攻击后，幻影长矛手将快速向其冲去，获得移动速度和闪避提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE"
+  },
+  "context": {
+   "name_en": "Phantom Rush",
+   "name_zh": "幻影冲锋",
+   "description_en": "When targeting an enemy for an attack, Phantom Lancer quickly charges into range, gaining increased movement speed and evasion.",
+   "description_zh": "对目标发动攻击后，幻影长矛手将快速向其冲去，获得移动速度和闪避提升。",
+   "notes_en": [
+    "If the attack order is cancelled, the movement speed bonus is lost.",
+    "Rush movement speed is %bonus_speed%."
+   ],
+   "notes_zh": [
+    "如果冲锋中途取消攻击指令，那么移动速度加成就会消失。",
+    "冲锋过程中移动速度为%bonus_speed%。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Range. Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them. Additionally, every %illusion_spawn_travel_distance% units rushed creates a Juxtapose illusion that rushes to the target alongside Phantom Lancer.",
+     "zh": "提升距离。每当幻影长矛手冲锋时穿过敌人，他就会制造并列幻象攻击他们。另外，每冲锋%illusion_spawn_travel_distance%距离还会在幻影长矛手身旁制造一个并列幻象，向目标冲去。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "24c4a833637d5dd6cc87",
+  "subject": "talisman_of_evasion",
+  "subject_zh": "闪避护符",
+  "mechanism": "evasion",
+  "mechanism_zh": "闪避",
+  "definition": "自身有概率使敌方攻击落空",
+  "definition_note": "U30：用户确认闪避与致盲分开（金箍棒只穿透闪避，致盲靠驱散或离开范围）；v3：装备属性中的闪避（如蝴蝶、闪避护符、辉耀）也作为字段证据",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Stacks diminishingly with other sources of Evasion."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Talisman of Evasion",
+   "notes": "Stacks diminishingly with other sources of Evasion.",
+   "attrib": [
+    {
+     "key": "bonus_evasion",
+     "display": "+ {value}% Evasion",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "2028c69d4d06f729cd22",
+  "subject": "windrunner_windrun",
+  "subject_zh": "风行者·风行",
+  "mechanism": "evasion",
+  "mechanism_zh": "闪避",
+  "definition": "自身有概率使敌方攻击落空",
+  "definition_note": "U30：用户确认闪避与致盲分开（金箍棒只穿透闪避，致盲靠驱散或离开范围）；v3：装备属性中的闪避（如蝴蝶、闪避护符、辉耀）也作为字段证据",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "提升移动速度，并闪避一切物理攻击。",
+   "Increases movement speed and adds evasion from all physical attacks."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "name_en": "Windrun",
+   "name_zh": "风行",
+   "description_en": "Increases movement speed and adds evasion from all physical attacks.",
+   "description_zh": "提升移动速度，并闪避一切物理攻击。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "991b88a4bed0081d0cb1",
+  "subject": "death_prophet_spirit_siphon",
+  "subject_zh": "死亡先知·吸魂巫术",
+  "mechanism": "forced_action",
+  "mechanism_zh": "强制行为",
+  "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）",
+  "definition_note": "U35",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "吸魂巫术的能量点数提升%shard_bonus_charges%点，敌人连续%shard_consecutive_siphon_duration%秒受到吸魂巫术作用后会被恐惧%shard_fear_duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Spirit Siphon",
+   "name_zh": "吸魂巫术",
+   "description_en": "Creates a spirit link between Death Prophet and an enemy unit, draining health from the enemy.",
+   "description_zh": "创造一个灵魂连接，将死亡先知与一个敌方单位相连。每秒吸取生命值。",
+   "notes_en": [
+    "Cannot cast multiple on same target."
+   ],
+   "notes_zh": [
+    "多个连接不能同时作用于一个目标。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases Spirit Siphon charges by %shard_bonus_charges% and causes enemies to be feared for %shard_fear_duration% seconds if they are siphoned for %shard_consecutive_siphon_duration% seconds consecutively.",
+     "zh": "吸魂巫术的能量点数提升%shard_bonus_charges%点，敌人连续%shard_consecutive_siphon_duration%秒受到吸魂巫术作用后会被恐惧%shard_fear_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c5528d105c1742fb8809",
+  "subject": "enchantress_little_friends",
+  "subject_zh": "魅惑魔女·密友",
+  "mechanism": "forced_action",
+  "mechanism_zh": "强制行为",
+  "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）",
+  "definition_note": "U35",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "目标附近所有敌方、友方和中立非英雄单位会攻击魅惑魔女选定的目标，并且具有攻击速度和移动速度加成，持续%duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Little Friends",
+   "name_zh": "密友",
+   "description_en": "Enchantress roots an enemy unit. All creeps, ally, enemy and neutral within a radius will gain bonus movement and attack speed and attack the chosen target for %duration% seconds.",
+   "description_zh": "魅惑魔女缠绕一个敌方单位。目标附近所有敌方、友方和中立非英雄单位会攻击魅惑魔女选定的目标，并且具有攻击速度和移动速度加成，持续%duration%秒。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "50aa3fa65238155e267e",
+  "subject": "lone_druid_savage_roar",
+  "subject_zh": "独行德鲁伊·野蛮咆哮",
+  "mechanism": "forced_action",
+  "mechanism_zh": "强制行为",
+  "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）",
+  "definition_note": "U35",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "独行德鲁伊和熊灵发出野性的咆哮，使周围敌人恐惧，朝自己的基地狂奔。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Savage Roar",
+   "name_zh": "野蛮咆哮",
+   "description_en": "Lone Druid and the Spirit Bear roar fiercely causing nearby enemies to flee towards their base in terror. Their movement speed is increased by %bonus_speed%%%.",
+   "description_zh": "独行德鲁伊和熊灵发出野性的咆哮，使周围敌人恐惧，朝自己的基地狂奔。敌人的移动速度将增加%bonus_speed%%%。",
+   "notes_en": [
+    "An entangled hero will not be able to move.",
+    "Cooldown is shared with Spirit Bear."
+   ],
+   "notes_zh": [
+    "被缠绕的英雄将无法移动。",
+    "与熊灵共享冷却时间。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Applies a basic dispel and grants allies in an area around the caster bonus movement and attack speed. Replicates between Lone Druid and Spirit Bear regardless of castability on the other.DISPEL TYPE: Basic Dispel",
+     "zh": "施加弱驱散效果，并对施法者附近范围内友军提供移动速度和攻击速度加成。施法效果会在独行德鲁伊和熊灵之间复制，不论双方是否可以施法。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d41681d8819296b9a475",
+  "subject": "muerta_dead_shot",
+  "subject_zh": "琼英碧灵·弹无虚发",
+  "mechanism": "forced_action",
+  "mechanism_zh": "强制行为",
+  "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）",
+  "definition_note": "U35",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "弹无虚发的作用范围在弹跳后会扩大，并且跳弹恐惧敌人时会穿过敌方英雄。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE"
+  },
+  "context": {
+   "name_en": "Dead Shot",
+   "name_zh": "弹无虚发",
+   "description_en": "Muerta fires a ghostly trickshot at an enemy unit or tree. When the bullet strikes, it damages and briefly slows, then ricochets in the targeted direction.The ricochet damages all units that it passes through, stopping when it hits a hero. Heroes hit by the ricochet are feared away from the impact.",
+   "description_zh": "琼英碧灵向一个敌方单位或一棵树发射一颗幽灵子弹。子弹击中时会对敌人造成伤害和短暂减速，然后沿矢量目标的方向弹去。跳弹将会对穿过的所有单位造成伤害，击中英雄后停下。被跳弹击中的英雄会被恐惧。",
+   "notes_en": [
+    "Feared enemies are phased and unslowable.",
+    "The ricochet will travel %ricochet_distance_multiplier%x Dead Shot's cast range.",
+    "Can ricochet off of magic immune targets."
+   ],
+   "notes_zh": [
+    "被恐惧的敌人为相位状态，无法被减速。",
+    "跳弹的行进距离为弹无虚发施法距离的%ricochet_distance_multiplier%倍。",
+    "可以弹离减益免疫目标。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Dead Shot damage is increased. Dead Shot expands after it ricochets and pierces through enemy heroes as it fears them.",
+     "zh": "弹无虚发的伤害提升。弹无虚发的作用范围在弹跳后会扩大，并且跳弹恐惧敌人时会穿过敌方英雄。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "fea4b9cd3f0ffc2fb3f5",
+  "subject": "muerta_dead_shot",
+  "subject_zh": "琼英碧灵·弹无虚发",
+  "mechanism": "forced_action",
+  "mechanism_zh": "强制行为",
+  "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）",
+  "definition_note": "U35",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "被跳弹击中的英雄会被恐惧。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE"
+  },
+  "context": {
+   "name_en": "Dead Shot",
+   "name_zh": "弹无虚发",
+   "description_en": "Muerta fires a ghostly trickshot at an enemy unit or tree. When the bullet strikes, it damages and briefly slows, then ricochets in the targeted direction.The ricochet damages all units that it passes through, stopping when it hits a hero. Heroes hit by the ricochet are feared away from the impact.",
+   "description_zh": "琼英碧灵向一个敌方单位或一棵树发射一颗幽灵子弹。子弹击中时会对敌人造成伤害和短暂减速，然后沿矢量目标的方向弹去。跳弹将会对穿过的所有单位造成伤害，击中英雄后停下。被跳弹击中的英雄会被恐惧。",
+   "notes_en": [
+    "Feared enemies are phased and unslowable.",
+    "The ricochet will travel %ricochet_distance_multiplier%x Dead Shot's cast range.",
+    "Can ricochet off of magic immune targets."
+   ],
+   "notes_zh": [
+    "被恐惧的敌人为相位状态，无法被减速。",
+    "跳弹的行进距离为弹无虚发施法距离的%ricochet_distance_multiplier%倍。",
+    "可以弹离减益免疫目标。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Dead Shot damage is increased. Dead Shot expands after it ricochets and pierces through enemy heroes as it fears them.",
+     "zh": "弹无虚发的伤害提升。弹无虚发的作用范围在弹跳后会扩大，并且跳弹恐惧敌人时会穿过敌方英雄。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c8a1b185a2233b86d3e5",
+  "subject": "ringmaster_tame_the_beasts",
+  "subject_zh": "百戏大王·驯兽术",
+  "mechanism": "forced_action",
+  "mechanism_zh": "强制行为",
+  "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）",
+  "definition_note": "U35",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Channel time exponentially increases damage and extends the fear duration, but reduces the radius.",
+   "Whipped enemies are damaged and flee in fear from Ringmaster.",
+   "持续施法时间会使伤害和恐惧时间成倍增加，但是作用范围减少。",
+   "被鞭打的敌人会受到伤害，并且被恐惧，逃离百戏大王。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "name_en": "Tame the Beasts",
+   "name_zh": "驯兽术",
+   "description_en": "CHANNELED - Ringmaster twirls his whip for up to %abilitychanneltime% second then cracks it. Whipped enemies are damaged and flee in fear from Ringmaster. Channel time exponentially increases damage and extends the fear duration, but reduces the radius.",
+   "description_zh": "持续施法 - 百戏大王卷起他的鞭子，最多持续%abilitychanneltime%秒，然后猛甩出去。被鞭打的敌人会受到伤害，并且被恐惧，逃离百戏大王。持续施法时间会使伤害和恐惧时间成倍增加，但是作用范围减少。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "e01b9b2edfa9f9f9bd99",
+  "subject": "spectre_haunt",
+  "subject_zh": "幽鬼·鬼影重重",
+  "mechanism": "forced_action",
+  "mechanism_zh": "强制行为",
+  "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）",
+  "definition_note": "U35",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "幽鬼第一次对鬼影重重的幻象使用空降时，目标附近%fear_aoe%范围内的敌人会被恐惧，朝远离幽鬼的方向奔跑%fear_duration%秒，并且移动速度降低%fear_movespeed_slow%%%。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Haunt",
+   "name_zh": "鬼影重重",
+   "description_en": "Creates a spectral nemesis to haunt all enemy Heroes.Haunt illusions are uncontrollable, take extra damage, and deal less damage than Spectre herself.  They ignore terrain.The Reality sub-ability may be used to teleport to the illusion, destroying it.",
+   "description_zh": "创造一个复仇鬼影分别攻击每个敌方英雄。鬼影无法控制，受到额外伤害，造成的伤害低于幽鬼本体。鬼影移动无视地形。子技能空降可以将本体传送至幻象，并将其摧毁。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "The first time Spectre uses Reality on a Haunt illusion, enemies in a %fear_aoe% area around the target are Feared away from Spectre for %fear_duration%s and have their movement speed slowed by %fear_movespeed_slow%%%.Reduces cooldown by %scepter_cooldown_reduction_tooltip%s.",
+     "zh": "幽鬼第一次对鬼影重重的幻象使用空降时，目标附近%fear_aoe%范围内的敌人会被恐惧，朝远离幽鬼的方向奔跑%fear_duration%秒，并且移动速度降低%fear_movespeed_slow%%%。冷却时间减少%scepter_cooldown_reduction_tooltip%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e1ec21f38d2fe9c92939",
+  "subject": "terrorblade_terror_wave",
+  "subject_zh": "恐怖利刃·怵潮",
+  "mechanism": "forced_action",
+  "mechanism_zh": "强制行为",
+  "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）",
+  "definition_note": "U35",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "放出一道能量波，朝所有方向向外行进，击中敌方英雄将使其恐惧并造成伤害，同时恐怖利刃短时间内获得魔化状态。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Terror Wave",
+   "name_zh": "怵潮",
+   "description_en": "Causes a wave to travel outwards in all directions forcing enemy heroes to become Feared upon impact and dealing damage, and grants Terrorblade Metamorphosis for a short time.",
+   "description_zh": "放出一道能量波，朝所有方向向外行进，击中敌方英雄将使其恐惧并造成伤害，同时恐怖利刃短时间内获得魔化状态。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "023b1cfedc31aaaf3dcb",
+  "subject": "abaddon_withering_mist",
+  "subject_zh": "亚巴顿·凋零迷雾",
+  "mechanism": "heal_reduction",
+  "mechanism_zh": "治疗削减",
+  "definition": "降低目标受到的治疗与生命恢复",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Affected enemies have their Health Restoration reduced by %heal_reduction_pct%%% if they are below %hp_threshold_pct%%% HP."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI"
+  },
+  "context": {
+   "name_en": "Withering Mist",
+   "name_zh": "凋零迷雾",
+   "description_en": "Damaging enemies applies the Withering Mist debuff for %duration%s. Affected enemies have their Health Restoration reduced by %heal_reduction_pct%%% if they are below %hp_threshold_pct%%% HP.",
+   "description_zh": "对敌人造成伤害时会施加凋零迷雾的负面效果，持续%duration%秒。受作用敌人如果血量低于%hp_threshold_pct%%%，那么生命回复会降低%heal_reduction_pct%%%。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "d06682399b851a8469bd",
+  "subject": "crellas_crozier",
+  "subject_zh": "克莱拉牧杖",
+  "mechanism": "heal_reduction",
+  "mechanism_zh": "治疗削减",
+  "definition": "降低目标受到的治疗与生命恢复",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Reduces nearby enemy heroes' Health Restoration by 30%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "dname": "Crella's Crozier",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Rite of Rumusque",
+     "description": "You enter ghost form for 4 seconds, becoming immune to physical damage, but are unable to attack and -30% more vulnerable to magic damage.\n\nSteal 6% movement speed from enemy heroes in 900 range every second. Movement speed steal lasts 2s.\n\nPutrefaction Aura's effect is increased to 90%. All of the lost Health Restoration is redirected to you every second."
+    },
+    {
+     "type": "passive",
+     "title": "Putrefaction Aura",
+     "description": "Reduces nearby enemy heroes' Health Restoration by 30%.\n\nRadius: 900"
+    }
+   ],
+   "notes": "Ghost form ends if you become Debuff Immune and will have no effect if you are already Debuff Immune.\nShares cooldown with Ghost Scepter and its upgrades.\nPutrefaction Aura does not redirect Health Restoration from enemy heroes that are at full health.",
+   "attrib": [
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "6"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "450"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "450"
+    },
+    {
+     "key": "duration",
+     "value": "4.0"
+    },
+    {
+     "key": "extra_spell_damage_percent",
+     "value": "-30"
+    },
+    {
+     "key": "radius",
+     "value": "900"
+    },
+    {
+     "key": "health_steal",
+     "value": "30"
+    },
+    {
+     "key": "interval",
+     "value": "1.0"
+    },
+    {
+     "key": "active_radius",
+     "value": "900"
+    },
+    {
+     "key": "movespeed_steal_pct",
+     "value": "6"
+    },
+    {
+     "key": "active_health_steal",
+     "value": "90"
+    },
+    {
+     "key": "stack_duration",
+     "value": "2.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "55b515032e6bf744934c",
+  "subject": "oracle_rain_of_destiny",
+  "subject_zh": "神谕者·天命之雨",
+  "mechanism": "heal_reduction",
+  "mechanism_zh": "治疗削减",
+  "definition": "降低目标受到的治疗与生命恢复",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Enemies standing in the area receive damage and have reduced Heal Amplification."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Rain of Destiny",
+   "name_zh": "天命之雨",
+   "description_en": "Brings forth rain to the target area. Enemies standing in the area receive damage and have reduced Heal Amplification. Allies in the area heal and have increased incoming Heal Amplification.",
+   "description_zh": "在目标范围内降下大雨。站在该区域的敌人受到每秒伤害，并且治疗增强被削弱。区域内友军被治疗，并且具有治疗增强效果。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ },
+ {
+  "review_id": "6a8428bde7538e2dce83",
+  "subject": "orb_of_frost",
+  "subject_zh": "冰霜之珠",
+  "mechanism": "heal_reduction",
+  "mechanism_zh": "治疗削减",
+  "definition": "降低目标受到的治疗与生命恢复",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Your attacks slow the target's movement by -13% (-6% against melee targets), and reduces Health Restoration by 15%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Orb of Frost",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Frost",
+     "description": "Your attacks slow the target's movement by -13% (-6% against melee targets), and reduces Health Restoration by 15%. Lasts for 3 seconds."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "slow_melee",
+     "value": "-6"
+    },
+    {
+     "key": "slow_ranged",
+     "value": "-13"
+    },
+    {
+     "key": "duration",
+     "value": "3"
+    },
+    {
+     "key": "heal_reduction",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "fd07c8327c98f752d71a",
+  "subject": "spirit_vessel",
+  "subject_zh": "魂之灵瓮",
+  "mechanism": "heal_reduction",
+  "mechanism_zh": "治疗削减",
+  "definition": "降低目标受到的治疗与生命恢复",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When used against enemies, it reduces health by 4% of current health per second, and reduces Health Restoration by 70%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Spirit Vessel",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "When used against enemies, it reduces health by 4% of current health per second, and reduces Health Restoration by 70%. Deals 25 damage per second. \n\nWhen used on allies, it provides 40 health regeneration per second. \n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units or the user dies."
+    }
+   ],
+   "notes": "Empty vessels gain 2 charges.\nOnly the closest Spirit Vessel to the dying hero will gain a charge.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.",
+   "attrib": [
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.75"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "10"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "2"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "40"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    },
+    {
+     "key": "restoration_reduction_enemy",
+     "value": "70"
+    },
+    {
+     "key": "enemy_hp_drain",
+     "value": "4"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "7f888fc2eb8cd385bef3",
+  "subject": "abaddon_borrowed_time",
+  "subject_zh": "亚巴顿·回光返照",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "启动后驱散自身，所有受到的伤害转而产生治疗效果。",
+   "When activated, dispels you and all damage dealt to you will heal instead of harm."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+  },
+  "context": {
+   "name_en": "Borrowed Time",
+   "name_zh": "回光返照",
+   "description_en": "When activated, dispels you and all damage dealt to you will heal instead of harm. If the ability is not on cooldown, it will automatically activate if your health falls below %hp_threshold%.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "启动后驱散自身，所有受到的伤害转而产生治疗效果。只要技能不在冷却中，在生命值低于%hp_threshold%点时技能会自动启动。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "Borrowed Time can be manually activated while Abaddon is disabled, but not while silenced.  The passive activation can still occur while silenced.",
+    "Aphotic Shield does not block any damage to Abaddon when Borrowed Time is active, allowing him to heal.",
+    "Break prevents Borrowed Time from automatically activating."
+   ],
+   "notes_zh": [
+    "在亚巴顿受到眩晕作用时依然可以手动开启回光返照，但是受到沉默作用时不可以。不过被沉默时被动效果依然能生效。",
+    "无光之盾在回光返照生效期间不会吸收伤害，因此也不会影响治疗效果。",
+    "破坏会使回光返照无法自动触发。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases duration. While Borrowed Time is active, anytime an ally takes more than %ally_threshold_scepter% damage while within Mist Coil's cast range of Abaddon, an individual Mist Coil will automatically fire towards that ally.",
+     "zh": "提升持续时间。启动回光返照后，亚巴顿附近迷雾缠绕的施法距离内友方英雄受到的伤害超过%ally_threshold_scepter%点时亚巴顿就会自动对其施放迷雾缠绕。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "20edb99c69c051d7946b",
+  "subject": "alchemist_chemical_rage",
+  "subject_zh": "炼金术士·化学狂暴",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Alchemist causes his Ogre to enter a chemically induced rage, reducing base attack cooldown and increasing movement speed and health regeneration.",
+   "炼金术士诱发他的食人魔同伴进入化学狂暴，降低攻击间隔，提高移动速度和生命恢复。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Chemical Rage",
+   "name_zh": "化学狂暴",
+   "description_en": "Alchemist causes his Ogre to enter a chemically induced rage, reducing base attack cooldown and increasing movement speed and health regeneration.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "炼金术士诱发他的食人魔同伴进入化学狂暴，降低攻击间隔，提高移动速度和生命恢复。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Has a %transformation_time% second transformation time, which can be used to dodge projectiles and stuns."
+   ],
+   "notes_zh": [
+    "拥有%transformation_time%秒的变身时间，可以用来躲避攻击和技能弹道以及眩晕技能。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "6bfdd52c47781dd4f0d9",
+  "subject": "ancient_janggo",
+  "subject_zh": "韧鼓",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "5 health regeneration to allies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Drum of Endurance",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Endurance",
+     "description": "Gives +35 attack speed and +13% movement speed to nearby allies for 6 seconds.\n\nRadius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Swiftness Aura",
+     "description": "Grants 15 movement speed and 2.5 health regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "aura_movement_speed",
+     "value": "15"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.5"
+    },
+    {
+     "key": "bonus_str",
+     "display": "+ {value} Strength",
+     "value": "8"
+    },
+    {
+     "key": "bonus_attack_speed_pct",
+     "value": "35"
+    },
+    {
+     "key": "bonus_movement_speed_pct",
+     "value": "13"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    },
+    {
+     "key": "radius",
+     "value": "1200"
+    },
+    {
+     "key": "charges_tooltip",
+     "value": "8"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "ee4efca2197c20e479f8",
+  "subject": "bane_brain_sap",
+  "subject_zh": "祸乱之源·蚀脑",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "次级目标只有%shard_secondary_target_heal_pct%%%治疗效果。",
+   "Secondary targets only heal for %shard_secondary_target_heal_pct%%%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Brain Sap",
+   "name_zh": "蚀脑",
+   "description_en": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.",
+   "description_zh": "暴食一个敌方单位的生命能量，造成伤害并回复自身生命值。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Reduces cooldown by %bonus_AbilityCooldown%. Causes Brain Sap to become a %shard_radius% AoE spell. Secondary targets only heal for %shard_secondary_target_heal_pct%%%.",
+     "zh": "减少%bonus_AbilityCooldown%秒冷却时间。蚀脑变成%shard_radius%作用范围的技能。次级目标只有%shard_secondary_target_heal_pct%%%治疗效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "509cf3880151f8127b43",
+  "subject": "beastmaster_drums_of_slom",
+  "subject_zh": "兽王·斯洛姆战鼓",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "兽王或周围他控制的单位攻击敌人都会使他敲下战鼓，对附近单位造成伤害，并且治疗自身和他控制的单位，数值为造成伤害的一定百分比。",
+   "Attacks from Beastmaster or a nearby unit he controls will cause him bang his drum, dealing damage to nearby units and healing Beastmaster and units under his control for a portion of the damage dealt."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Drums of Slom",
+   "name_zh": "斯洛姆战鼓",
+   "description_en": "Attacks from Beastmaster or a nearby unit he controls will cause him bang his drum, dealing damage to nearby units and healing Beastmaster and units under his control for a portion of the damage dealt. Every attack decreases the interval between drum hits down to a minimum of %min_drum_hit_interval%s between hits after %max_stacks% attacks. If no attacks are made, the intervals gradually increase.Using Primal Roar counts as %primal_roar_stacks% attacks.",
+   "description_zh": "兽王或周围他控制的单位攻击敌人都会使他敲下战鼓，对附近单位造成伤害，并且治疗自身和他控制的单位，数值为造成伤害的一定百分比。每次攻击都会降低敲鼓的间隔，%max_stacks%次攻击后降低至最短%min_drum_hit_interval%秒敲击一次。如果没有发动攻击，敲鼓间隔会逐渐变长。使用原始咆哮时自动增加%primal_roar_stacks%层敲鼓叠加效果。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "82575df4377ae353ddd9",
+  "subject": "boots_of_bearing",
+  "subject_zh": "宽容之靴",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "5 health regeneration to allies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Boots of Bearing",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Endurance",
+     "description": "Gives +50 attack speed and +15% movement speed to nearby allies for 6 seconds. For the first 1.5 seconds allies are immune to slows.\n\n Radius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Swiftness Aura",
+     "description": "Grants 15 movement speed and 2.5 health regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "aura_movement_speed",
+     "value": "15"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.5"
+    },
+    {
+     "key": "bonus_str",
+     "display": "+ {value} Strength",
+     "value": "8"
+    },
+    {
+     "key": "bonus_attack_speed_pct",
+     "value": "50"
+    },
+    {
+     "key": "bonus_movement_speed_pct",
+     "value": "15"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    },
+    {
+     "key": "radius",
+     "value": "1200"
+    },
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "65"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "18"
+    },
+    {
+     "key": "bonus_ms_duration",
+     "value": "1.5"
+    }
+   ],
+   "hint": [
+    "Movement speed bonuses from multiple pairs of boots do not stack."
+   ]
+  }
+ },
+ {
+  "review_id": "dcd38a673d30f957f0d4",
+  "subject": "bottle",
+  "subject_zh": "魔瓶",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Consumes a charge to restore 110 health and 60 mana over 2."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Bottle",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Regenerate",
+     "description": "Consumes a charge to restore 110 health and 60 mana over 2.7 seconds. If the hero is attacked by an enemy hero or Roshan, the effect is lost.\n\nThe Bottle automatically refills at the fountain.\n\nHold Control to use on an allied hero."
+    },
+    {
+     "type": "passive",
+     "title": "Store Rune",
+     "description": "Runes can be stored in the Bottle for later use by right-clicking them. Unused runes will automatically activate after 90 seconds.\n\nUsing a stored rune fully refills the Bottle."
+    }
+   ],
+   "notes": "Bottle is shareable. Stored runes cannot be shared.\nUsing a stored Bounty or Water rune fully refills the bottle if the bottle was full when the rune was stored; otherwise, it refills two charges.",
+   "attrib": [
+    {
+     "key": "health_restore",
+     "value": "110"
+    },
+    {
+     "key": "mana_restore",
+     "value": "60"
+    },
+    {
+     "key": "restore_time",
+     "value": "2.7"
+    },
+    {
+     "key": "max_charges",
+     "value": "3"
+    },
+    {
+     "key": "break_on_hero_damage",
+     "value": "1"
+    },
+    {
+     "key": "rune_expire_time",
+     "value": "90.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "74ef47b600ee8227e970",
+  "subject": "broodmother_spiders_milk",
+  "subject_zh": "育母蜘蛛·蜘蛛奶",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "育母蜘蛛击杀一个单位后，她和%kill_heal_aoe%范围内她控制的所有单位都会获得持续%kill_heal_duration%秒的状态效果，每%tick_rate%秒治疗一定生命，治疗量为遇害者生命值的一定百分比。",
+   "Whenever Broodmother kills a unit, she and all units under her control in a %kill_heal_aoe% radius receive a buff for %kill_heal_duration%s that heals them for a percentage of the victim's health every %tick_rate% seconds.",
+   "Healing from creeps is reduced by %kill_creeps_penalty%%%.",
+   "非英雄单位提供的治疗量减少%kill_creeps_penalty%%%。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "name_en": "Spider's Milk",
+   "name_zh": "蜘蛛奶",
+   "description_en": "Whenever Broodmother kills a unit, she and all units under her control in a %kill_heal_aoe% radius receive a buff for %kill_heal_duration%s that heals them for a percentage of the victim's health every %tick_rate% seconds. Healing from creeps is reduced by %kill_creeps_penalty%%%.",
+   "description_zh": "育母蜘蛛击杀一个单位后，她和%kill_heal_aoe%范围内她控制的所有单位都会获得持续%kill_heal_duration%秒的状态效果，每%tick_rate%秒治疗一定生命，治疗量为遇害者生命值的一定百分比。非英雄单位提供的治疗量减少%kill_creeps_penalty%%%。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8e4ec203d47c4c381fb0",
+  "subject": "cheese",
+  "subject_zh": "奶酪",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Instantly restores 2500 health and 1500 mana."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Cheese",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Fondue",
+     "description": "Instantly restores 2500 health and 1500 mana."
+    }
+   ],
+   "notes": "Cheese is shareable.",
+   "attrib": [
+    {
+     "key": "health_restore",
+     "value": "2500"
+    },
+    {
+     "key": "mana_restore",
+     "value": "1500"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "3487aac99041f6125d2e",
+  "subject": "chen_hand_of_god",
+  "subject_zh": "陈·上帝之手",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The initial heal happens at the start of the channel, and while channeling other nearby allied units become debuff immune with %debuff_immune_resist%%% magic resistance and the power of the heal over time is increased by %nearby_hot_boost%%%.",
+   "初始治疗会在持续施法起始时发生，持续施法期间其他附近友方单位变为减益免疫状态，拥有%debuff_immune_resist%%%魔法抗性，而且持续治疗的威力提升%nearby_hot_boost%%%。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Hand of God",
+   "name_zh": "上帝之手",
+   "description_en": "Heals all allied heroes on the map as well as all units under Chen's control. A large heal is applied at first and a slow heal over time is applied for %hot_duration% seconds afterwards.",
+   "description_zh": "治疗地图上的所有友军英雄以及陈控制的所有单位。一开始先施加高额治疗，在之后%hot_duration%秒内持续进行小额治疗。",
+   "notes_en": [
+    "Can heal invulnerable and hidden/banished allies."
+   ],
+   "notes_zh": [
+    "可以治疗无敌和被隐藏/放逐友军。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases the cooldown of Hand of God to %AbilityCooldown%s and it becomes a channelled spell that lasts for up to %AbilityChannelTime% seconds. The initial heal happens at the start of the channel, and while channeling other nearby allied units become debuff immune with %debuff_immune_resist%%% magic resistance and the power of the heal over time is increased by %nearby_hot_boost%%%.",
+     "zh": "上帝之手的冷却时间降低至%AbilityCooldown%秒，并且变为持续施法型技能，持续最多%AbilityChannelTime%秒。初始治疗会在持续施法起始时发生，持续施法期间其他附近友方单位变为减益免疫状态，拥有%debuff_immune_resist%%%魔法抗性，而且持续治疗的威力提升%nearby_hot_boost%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6c70df57fa809cc68e1b",
+  "subject": "chen_zealot",
+  "subject_zh": "陈·狂热者",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Whenever Chen respawns, he is joined by a Zealot, a melee warrior creep with the ability to sacrifice itself to heal or deal damage to an enemy.",
+   "陈复活时都会带着一个狂热者加入战斗，这是近战小兵战士，可以牺牲自己治疗友军，或者对敌人造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+  },
+  "context": {
+   "name_en": "Zealot",
+   "name_zh": "狂热者",
+   "description_en": "Whenever Chen respawns, he is joined by a Zealot, a melee warrior creep with the ability to sacrifice itself to heal or deal damage to an enemy.  The Zealot receives Holy Persuasion's benefits and scales up with other lane melee creeps as game time increases and gains extra base damage.  The Zealot respawns next to Chen.Zealot may be activated to teleport a unit under your control to Chen after a %teleport_delay% second delay.  If Chen is targeted, it will teleport all units you control. Taking damage from enemy heroes or their units will cancel the teleport.",
+   "description_zh": "陈复活时都会带着一个狂热者加入战斗，这是近战小兵战士，可以牺牲自己治疗友军，或者对敌人造成伤害。狂热者会获得神圣劝化的加成效果，并且和其他线上近战小兵一样随着游戏时间的增加提升属性，获得额外基础攻击力。狂热者会在陈身边复活。狂热者技能可以主动使用，在%teleport_delay%秒延迟后把控制下的目标单位传送到陈的身边。如果陈是技能的目标，将传送控制的所有单位。受到来自敌方英雄及其单位的伤害会中止传送过程。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8bb1ddd6ecbc2d06d72c",
+  "subject": "clinkz_death_pact",
+  "subject_zh": "克林克兹·死亡契约",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Clinkz consumes the target enemy creep or friendly Skeleton Archer, healing and gaining max health.",
+   "克林克兹以敌方非英雄单位或友方骷髅弓手为吞噬的目标，治疗并获得最大生命值。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "name_en": "Death Pact",
+   "name_zh": "死亡契约",
+   "description_en": "Clinkz consumes the target enemy creep or friendly Skeleton Archer, healing and gaining max health. Does not take Clinkz out of Skeleton Walk.",
+   "description_zh": "克林克兹以敌方非英雄单位或友方骷髅弓手为吞噬的目标，治疗并获得最大生命值。不会使克林克兹脱离骨隐步。",
+   "notes_en": [
+    "If the target is an enemy, Clinkz will gain the correct experience and gold.",
+    "Increases Clinkz' current and max HP.",
+    "When the duration ends, max HP returns to normal, but current HP stays the same."
+   ],
+   "notes_zh": [
+    "如果目标是敌方单位，克林克兹将获得经验和金钱。",
+    "克林克兹的当前血量和生命值上限都将提高。",
+    "持续时间结束后，血量上限回到正常值，但是当前生命值不变（不会高于血量上限）。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "3ce6f9c00c953fd713ff",
+  "subject": "dark_seer_aggrandize",
+  "subject_zh": "黑暗贤者·才思敏捷",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "name_en": "Quick Wit",
+   "name_zh": "才思敏捷",
+   "description_en": "Dark Seer gains %int_to_atkspd% Attack Speed from each point of Intelligence.\n\nWhen Dark Seer levels up, he restores a percentage of his max health and mana.",
+   "description_zh": "黑暗贤者从每点智力获得%int_to_atkspd%攻击速度。\n\n黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ }
+]

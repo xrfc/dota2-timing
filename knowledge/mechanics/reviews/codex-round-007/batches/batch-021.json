@@ -1,0 +1,1214 @@
+[
+ {
+  "review_id": "24016d027ebcfcc413c3",
+  "subject": "visage_soul_assumption",
+  "subject_zh": "维萨吉·灵魂超度",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Visage gathers charges of soul essence each time nearby heroes take more than %damage_limit% damage.",
+   "When the essence is released, it deals base damage as well as damage for each gathered soul charge.",
+   "Charges are only gained for damage greater than %damage_min% and less than %damage_max% that is dealt by a player or Roshan."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Visage gathers charges of soul essence each time nearby heroes take more than %damage_limit% damage. When the essence is released, it deals base damage as well as damage for each gathered soul charge.",
+   "description_zh": "每次附近英雄（不论敌我）受到的伤害超过%damage_limit%点，维萨吉就能集聚灵魂精华的能量。将精华释放后，会对目标单位造成基础伤害，每一点集聚的能量还将造成额外伤害。",
+   "notes_en": [
+    "Charges are only gained for damage greater than %damage_min% and less than %damage_max% that is dealt by a player or Roshan.  Self-damage or Soul Assumption damage isn't counted."
+   ],
+   "notes_zh": [
+    "能量点数只计算来自玩家或肉山的伤害，必须大于%damage_min%点小于%damage_max%点。自残型伤害和灵魂超度造成的伤害不计算在内。"
+   ]
+  }
+ },
+ {
+  "review_id": "4dc45f44447c50705030",
+  "subject": "slark_pounce",
+  "subject_zh": "斯拉克·突袭",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Provides charges and increases range.",
+   "变为充能型技能，并且提升距离。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+  },
+  "context": {
+   "description_en": "Slark leaps forward, leashing and applying Essence Shift stacks to the first hero he connects. That unit can only move a limited distance away from Slark's landing position.",
+   "description_zh": "斯拉克向前跳跃，束缚第一个碰到的英雄并施加能量转移的叠加效果。该单位只能在斯拉克着地点附近的有限范围内移动。",
+   "notes_en": [
+    "On cast, Slark leaps forward at a speed of %pounce_speed%, stopping when he latches onto an enemy hero or has traveled %pounce_distance% distance.",
+    "Debuff Immune units cannot be leashed.",
+    "Trees will be destroyed around Slark's landing location."
+   ],
+   "notes_zh": [
+    "施放后斯拉克以%pounce_speed%的速度向前跳跃，抓住敌方英雄或跳跃%pounce_distance%距离后停下。",
+    "不能束缚减益免疫单位。",
+    "斯拉克落地点附近的树木将会被摧毁。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Provides charges and increases range.",
+     "zh": "变为充能型技能，并且提升距离。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "b44e9f5fc31aa2b4631a",
+  "subject": "centaur_stampede",
+  "subject_zh": "半人马战行者·奔袭冲撞",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Centaur leads all allies into a vicious charge causing them to move through units at max speed and slow any enemy units they trample."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Centaur leads all allies into a vicious charge causing them to move through units at max speed and slow any enemy units they trample. Trampled enemies take damage based on Centaur Warrunner's strength. Each enemy can be trampled once.",
+   "description_zh": "半人马战行者带领所有队友向胜利冲锋，所有友方英雄达到极限移动速度，并使踩到的敌人减速。每个敌人只会受到一次踩踏作用，并受到基于半人马战行者力量值的伤害。"
+  }
+ },
+ {
+  "review_id": "669d62977fb1ef93fe1a",
+  "subject": "ember_spirit_fire_remnant",
+  "subject_zh": "灰烬之灵·残焰",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Starts with 3 charges (maximum)."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityCharges": "3"
+  },
+  "context": {
+   "description_en": "Sends a Fire Remnant that runs to the target location at %speed_multiplier%%% Ember Spirit's speed. Using Activate Fire Remnant, Ember Spirit will dash out to all active Fire Remnants, destroying them and dealing damage in an area and then moving to the nearest Remnant.  Ember Spirit will end at the Remnant closest to the targeted location.",
+   "description_zh": "可以放出一个残焰，向目标地点冲去，速度为灰烬之灵移动速度的%speed_multiplier%%%。使用“激活残焰”技能后，灰烬之灵向所有残焰像冲去，将其摧毁并造成范围伤害，并移动至最近的残焰像。灰烬之灵最后会到达离目标地点最近的残焰像。",
+   "notes_en": [
+    "Starts with 3 charges (maximum)."
+   ],
+   "notes_zh": [
+    "学习后马上拥有3个残焰（上限数量）。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range, initial remnant speed, and maximum charges.",
+     "zh": "提升施法距离、初始残焰速度和最大能量点数。"
+    },
+    "shard_loc": {
+     "en": "If an enemy hero dies near Ember Spirit, a Fire Remnant charge will be replenished. Additionally, when Ember Spirit dies a Fire Remnant is spawned at his location.",
+     "zh": "灰烬之灵附近范围内有敌方英雄阵亡时，恢复一点残焰能量点数。另外，灰烬之灵阵亡时会在原地留下一个残焰。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "72f7a6bdcecca8fd71c3",
+  "subject": "ember_spirit_fire_remnant",
+  "subject_zh": "灰烬之灵·残焰",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Increases cast range, initial remnant speed, and maximum charges."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityCharges": "3"
+  },
+  "context": {
+   "description_en": "Sends a Fire Remnant that runs to the target location at %speed_multiplier%%% Ember Spirit's speed. Using Activate Fire Remnant, Ember Spirit will dash out to all active Fire Remnants, destroying them and dealing damage in an area and then moving to the nearest Remnant.  Ember Spirit will end at the Remnant closest to the targeted location.",
+   "description_zh": "可以放出一个残焰，向目标地点冲去，速度为灰烬之灵移动速度的%speed_multiplier%%%。使用“激活残焰”技能后，灰烬之灵向所有残焰像冲去，将其摧毁并造成范围伤害，并移动至最近的残焰像。灰烬之灵最后会到达离目标地点最近的残焰像。",
+   "notes_en": [
+    "Starts with 3 charges (maximum)."
+   ],
+   "notes_zh": [
+    "学习后马上拥有3个残焰（上限数量）。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range, initial remnant speed, and maximum charges.",
+     "zh": "提升施法距离、初始残焰速度和最大能量点数。"
+    },
+    "shard_loc": {
+     "en": "If an enemy hero dies near Ember Spirit, a Fire Remnant charge will be replenished. Additionally, when Ember Spirit dies a Fire Remnant is spawned at his location.",
+     "zh": "灰烬之灵附近范围内有敌方英雄阵亡时，恢复一点残焰能量点数。另外，灰烬之灵阵亡时会在原地留下一个残焰。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "1a44988de900ace6a702",
+  "subject": "ember_spirit_fire_remnant",
+  "subject_zh": "灰烬之灵·残焰",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "If an enemy hero dies near Ember Spirit, a Fire Remnant charge will be replenished."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityCharges": "3"
+  },
+  "context": {
+   "description_en": "Sends a Fire Remnant that runs to the target location at %speed_multiplier%%% Ember Spirit's speed. Using Activate Fire Remnant, Ember Spirit will dash out to all active Fire Remnants, destroying them and dealing damage in an area and then moving to the nearest Remnant.  Ember Spirit will end at the Remnant closest to the targeted location.",
+   "description_zh": "可以放出一个残焰，向目标地点冲去，速度为灰烬之灵移动速度的%speed_multiplier%%%。使用“激活残焰”技能后，灰烬之灵向所有残焰像冲去，将其摧毁并造成范围伤害，并移动至最近的残焰像。灰烬之灵最后会到达离目标地点最近的残焰像。",
+   "notes_en": [
+    "Starts with 3 charges (maximum)."
+   ],
+   "notes_zh": [
+    "学习后马上拥有3个残焰（上限数量）。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range, initial remnant speed, and maximum charges.",
+     "zh": "提升施法距离、初始残焰速度和最大能量点数。"
+    },
+    "shard_loc": {
+     "en": "If an enemy hero dies near Ember Spirit, a Fire Remnant charge will be replenished. Additionally, when Ember Spirit dies a Fire Remnant is spawned at his location.",
+     "zh": "灰烬之灵附近范围内有敌方英雄阵亡时，恢复一点残焰能量点数。另外，灰烬之灵阵亡时会在原地留下一个残焰。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "fcf44279ab944ef44d37",
+  "subject": "earth_spirit_stone_caller",
+  "subject_zh": "大地之灵·残岩",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Calling a Stone Remnant consumes a charge, which recharge over time.",
+   "Stone Remnant has %AbilityCharges% charges.",
+   "Earth Spirit passively gains %attack_damage_per_stone%%% bonus damage per unused Stone Remnant charge, and gains an additional %attack_damage_per_stone_used%%% bonus damage for %buff_duration%s when a Stone Remnant is targeted with an ability (does not stack)."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "description_en": "Call a Stone Remnant to the target location.  Stone Remnants have no vision and are invulnerable, and can be used with Earth Spirit's abilities.  Calling a Stone Remnant consumes a charge, which recharge over time. Stone Remnant has %AbilityCharges% charges.Earth Spirit passively gains %attack_damage_per_stone%%% bonus damage per unused Stone Remnant charge, and gains an additional %attack_damage_per_stone_used%%% bonus damage for %buff_duration%s when a Stone Remnant is targeted with an ability (does not stack).",
+   "description_zh": "在指定位置召唤一块残岩。残岩没有视野，为无敌状态，可以加强大地之灵的技能效果。召唤残岩需要消耗一点能量点数，能量点数会随时间恢复。残岩拥有%AbilityCharges%点能量点数。每点未使用的残岩能量都会使大地之灵被动获得%attack_damage_per_stone%%%攻击力加成，并且技能用过残岩后会额外获得%attack_damage_per_stone_used%%%攻击力加成，持续%buff_duration%秒（无法叠加）。"
+  }
+ },
+ {
+  "review_id": "ba28fdb96d5dad492dd0",
+  "subject": "techies_reactive_tazer",
+  "subject_zh": "工程师·活性电击",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Techies trigger an electric charge on the target ally, giving them bonus movement speed for a short period of time.",
+   "At the end of the effect or if detonated early with the sub-ability, the charge explodes, disarming all enemies within the radius and dealing damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Techies trigger an electric charge on the target ally, giving them bonus movement speed for a short period of time. Enemies attacking the target take damage and are temporarily disarmed and get a Basic Dispel.At the end of the effect or if detonated early with the sub-ability, the charge explodes, disarming all enemies within the radius and dealing damage.",
+   "description_zh": "工程师对友军目标放出电荷，使他们短时间内获得移动速度加成。攻击目标的敌人会受到伤害被暂时缴械，并且受到弱驱散效果。效果结束时，或者用子技能提前引爆后电荷将会爆炸，使范围内所有敌人缴械并受到伤害。"
+  }
+ },
+ {
+  "review_id": "776f548de7a74fb88881",
+  "subject": "techies_suicide",
+  "subject_zh": "工程师·爆破起飞！",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and stun enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and stun enemies. Upon landing, the assault deals Techies non-lethal damage equal to a percentage of their current health.",
+   "description_zh": "工程师冲到敌人中间，在相遇时引爆炸药，造成大量范围伤害，并眩晕敌人。引爆时会对工程师造成当前生命值一定百分比的非致死伤害。",
+   "notes_en": [
+    "The self-damage Techies receive from this blast is pure and non-lethal.",
+    "This ability destroys trees."
+   ],
+   "notes_zh": [
+    "工程师在此次爆炸中受到的自身伤害为纯粹伤害，而且不会致死。",
+    "此技能将摧毁树木。"
+   ]
+  }
+ },
+ {
+  "review_id": "fa99e427702a4c46dd6b",
+  "subject": "techies_land_mines",
+  "subject_zh": "工程师·感应地雷",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityCharges=3"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityCharges": "3"
+  },
+  "context": {
+   "description_en": "Plant an invisible mine that cannot be detected by True Sight, but is visible if an enemy is within the active %radius% AoE of the mine. Mines detonate if an enemy is standing within the active AoE for %proximity_threshold% seconds dealing damage and temporarily reducing the enemy's Magic Resistance. The explosion deals full damage if the target is within %min_distance% radius and decreases down to %outer_damage%%% on the edge. Deals %building_damage_pct%%% damage to buildings.",
+   "description_zh": "埋布隐形的地雷，不会被真实视域检测到，但是有敌方单位在地雷的%radius%生效范围内会显形。敌人在生效范围内停留超过%proximity_threshold%秒会使地雷爆炸，并且魔法抗性会被暂时降低。爆炸对%min_distance%范围内目标造成全额伤害，对边缘造成的伤害减少至%outer_damage%%%。对建筑物造成%building_damage_pct%%%伤害。",
+   "notes_en": [
+    "Cannot be placed within %placement_radius% AoE of another Proximity Mine.",
+    "Proximity Mines do not block neutral creep camps from spawning.",
+    "Mines last until they explode or are destroyed.",
+    "Mines are triggered by invisible units.",
+    "Grants 30 gold if destroyed by an enemy hero."
+   ],
+   "notes_zh": [
+    "感应地雷的%placement_radius%范围内不能再放置地雷。",
+    "感应地雷不会阻止中立生物产生。",
+    "地雷持续时间没有上限，除非爆炸或被摧毁。",
+    "隐形单位也能触发地雷。",
+    "敌方英雄将地雷摧毁可以获得30金钱。"
+   ]
+  }
+ },
+ {
+  "review_id": "ca5b8b28be76ee60befc",
+  "subject": "monkey_king_jingu_mastery",
+  "subject_zh": "齐天大圣·如意棒法",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Upon the fourth hit on the same enemy hero, Monkey King earns %charges% charged attacks that have bonus damage and lifesteal.",
+   "Hit charges on enemies cannot be dispelled."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Monkey King's attacks awaken the Jingu Bang's power. Upon the fourth hit on the same enemy hero, Monkey King earns %charges% charged attacks that have bonus damage and lifesteal.",
+   "description_zh": "齐天大圣的攻击唤醒了金箍棒的力量。连续攻击四次同个敌方英雄后，齐天大圣的下%charges%次攻击得到加强，拥有攻击力加成和吸血效果。",
+   "notes_en": [
+    "Hitting an enemy with Boundless Strike adds to the hit counter.",
+    "Repeatedly hitting an enemy refreshes the Jingu Mastery debuff duration.",
+    "Hit charges on enemies cannot be dispelled.",
+    "Jingu Mastery buff on self can be dispelled.",
+    "Break disables the gaining of new stacks.",
+    "Break does not disable the bonuses from existing stacks."
+   ],
+   "notes_zh": [
+    "棒击大地击中敌人时也会计入攻击次数。",
+    "再次攻击敌人将刷新如意棒法的计数持续时间。",
+    "敌人身上的计数效果无法被驱散。",
+    "自身的如意棒法效果可以被驱散。",
+    "破坏会使技能无法获得新的叠加效果。",
+    "破坏不会使现有叠加效果提供的加成失效。"
+   ]
+  }
+ },
+ {
+  "review_id": "00f08d4b98c1162d60ee",
+  "subject": "monkey_king_wukongs_command",
+  "subject_zh": "齐天大圣·猴子猴孙",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Soldiers can now gain Jingu Mastery charges independently."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
+  },
+  "context": {
+   "description_en": "Monkey King creates a circular formation of soldiers that spread out from his position. If Monkey King leaves the area his soldiers disperse. The soldiers have Monkey King's attack that attacks at a fixed rate of %attack_speed%s, and only targets enemy Heroes. Monkey King is granted bonus armor for the spell's duration.Monkey King can transform into any one of his soldiers during Wukong's command, taking its place for a short duration, becoming indistinguishable from other soldiers, and leaving another soldier in his stead.",
+   "description_zh": "齐天大圣变出圆形的猴子猴孙阵列，猴子猴孙从他的位置散开。若齐天大圣离开范围，猴子猴孙将会消失。猴子猴孙继承齐天大圣的攻击力，攻击频率为固定的%attack_speed%秒，并且只会以敌方英雄为目标。在技能持续时间内齐天大圣获得护甲加成。齐天大圣可以在猴子猴孙期间变成其中一个猴子猴孙，短时间内取代其位置，无法和其他猴子猴孙相区分，并且在原地留下一个猴子猴孙。",
+   "notes_en": [
+    "Soldiers do not receive Jingu Mastery bonuses.",
+    "Soldiers do not copy Basher or Abyssal."
+   ],
+   "notes_zh": [
+    "猴子猴孙不会获得如意棒法的加成效果。",
+    "猴子猴孙不会继承碎颅锤和深渊之刃的效果。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Spawns a monkey soldier near Monkey King at regular intervals. Soldiers do not spawn while invisible or on trees. Soldiers only attack buildings when Monkey King himself is nearby. Soldiers can now gain Jingu Mastery charges independently.",
+     "zh": "每隔一段时间在齐天大圣附近产生一个猴子猴孙。隐身或上树时不会产生。只有齐天大圣在附近时猴子猴孙才会攻击建筑。猴子猴孙现在独立获得如意棒法的效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0f2c9e3fa3e95847040f",
+  "subject": "void_spirit_resonant_pulse",
+  "subject_zh": "虚无之灵·共鸣脉冲",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Causes Resonant Pulse to silence and gain %max_charges% charges."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Void Spirit wraps himself in a protective shield that absorbs physical damage and emits a single damaging pulse around him. The shield gains increased damage absorption for each enemy hero the pulse hits.",
+   "description_zh": "虚无之灵将自己包裹在保护性护盾之中，可以吸收物理伤害，并围绕自身发出一次伤害性脉冲。脉冲每击中一名敌方英雄，护盾的伤害吸收量都会提升。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Resonant Pulse to silence and gain %max_charges% charges.",
+     "zh": "共鸣脉冲可以沉默敌人，并获得%max_charges%点能量点数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "47597754feb8bc9ee512",
+  "subject": "void_spirit_astral_step",
+  "subject_zh": "虚无之灵·太虚之径",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityCharges=2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityCharges": "2"
+  },
+  "context": {
+   "description_en": "Void Spirit tears a rift through the astral plane to appear at the target location, attacking all enemies along the path. This attack inflicts a void mark that slows for %pop_damage_delay% seconds and then detonates.",
+   "description_zh": "虚无之灵撕裂现实进入精神位面，再出现在目标地点，对沿途的所有敌人造成伤害。此次攻击将施加一个太虚印记，造成%pop_damage_delay%秒减速，然后引爆。",
+   "notes_en": [
+    "Astral Step attacks do not cleave."
+   ],
+   "notes_zh": [
+    "太虚之径的攻击不会分裂。"
+   ]
+  }
+ },
+ {
+  "review_id": "f990071c12149ccf704d",
+  "subject": "hoodwink_sharpshooter",
+  "subject_zh": "森海飞霞·一箭穿心",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Hoodwink charges up and fires a deadly bolt from her crossbow, dealing heavy damage, break and slow to an enemy Hero."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Hoodwink charges up and fires a deadly bolt from her crossbow, dealing heavy damage, break and slow to an enemy Hero.  The damage and debuff duration scale up to max after %max_charge_time% seconds, and the bolt is fired automatically after %misfire_time% seconds.\nHoodwink is knocked backwards for a distance of %recoil_distance% from the force of the shot. Creeps hit by the bolt are damaged for half the values.",
+   "description_zh": "森海飞霞装载她的弩机，射出致命的一箭，对一名敌方英雄造成高额伤害，并施加破坏和减速效果。伤害和负面状态持续时间随着装载时间增加，%max_charge_time%秒后达到最大效果，弩箭在%misfire_time%秒后自动发射。\n由于弩箭的威力，森海飞霞后退%recoil_distance%距离。弩箭穿过的非英雄单位会受到半额伤害。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases arrow speed and movement speed slow.",
+     "zh": "提升箭矢速度和减速效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "12dea793f380e1dc27b0",
+  "subject": "marci_unleash",
+  "subject_zh": "玛西·怒拳破",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Marci taps a hidden power, gaining Fury charges that allow her to deliver a rapid sequence of strikes that slow movement and attack speed of the target for %pulse_debuff_duration%s."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Marci taps a hidden power, gaining Fury charges that allow her to deliver a rapid sequence of strikes that slow movement and attack speed of the target for %pulse_debuff_duration%s. The last strike in every Fury combo creates a damaging pulse around the target. In between Fury combos, Marci is unable to attack for %time_between_flurries%s.\n\nMarci gains %bonus_movespeed%%% movement speed when Unleash is cast.",
+   "description_zh": "玛西释放潜藏的力量，获得狂怒的猛攻效果，使自身可以发动快速的打击，并且降低打击目标的移动和攻击速度，持续%pulse_debuff_duration%秒。每次狂怒连技的最后一击都会创造一个脉冲效果，对目标周围的敌人造成伤害。在狂怒连技的间隔，玛西无法攻击，持续%time_between_flurries%秒。\n\n玛西施放怒拳破时移动速度提升%bonus_movespeed%%%。",
+   "notes_en": [
+    "Once a Fury combo is started, each attack must be delivered within 1s or the Fury combo expires.",
+    "Removes attack speed limit."
+   ],
+   "notes_zh": [
+    "每次狂怒连技开始后，每次攻击都必须在1秒内完成，否则连技将会终止。",
+    "移除攻击速度限制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Unleash cooldown by %scepter_cooldown_reduction% seconds and causes Unleash to apply a basic dispel on Marci. While Unleash is Active, all of Marci's abilities unleash pulses when cast. All of Marci's unleash pulses will silence units for %pulse_silence_duration% seconds.DISPEL TYPE: Basic Dispel",
+     "zh": "怒拳破的冷却时间减少%scepter_cooldown_reduction%秒，并且施放时对玛西施加弱驱散。怒拳破生效期间，玛西的所有技能在施放时都会施放脉冲。玛西的所有怒拳破脉冲都会沉默敌人，持续%pulse_silence_duration%秒。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4f776c3c44aaaf2579d4",
+  "subject": "primal_beast_onslaught",
+  "subject_zh": "獸·突",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Primal Beast charges up and then runs in the chosen direction, knocking back enemies and allies alike.",
+   "The longer the charge duration, the farther Primal Beast's momentum will carry him."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Primal Beast charges up and then runs in the chosen direction, knocking back enemies and allies alike. Enemy units are damaged and stunned on impact. The longer the charge duration, the farther Primal Beast's momentum will carry him. \n\n Can be cancelled at any time with the Stop command.",
+   "description_zh": "獸积蓄力量再向选定方向冲去，将敌人和队友同时击退。敌方单位被撞时受到伤害，并且被眩晕。蓄力时间越长，獸冲的距离越远。\n\n可以随时使用停止指令来中止。"
+  }
+ },
+ {
+  "review_id": "d20e1af7673f2a14c8fb",
+  "subject": "ringmaster_the_box",
+  "subject_zh": "百戏大王·逃生技",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Escape Act has %max_charges% charges."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Ringmaster packs himself or an allied hero into a mobile, extradimensional box. Boxed units gain phased movement, slow resistance, bonus magic resistance, and bonus movement speed. They are also untargetable, muted, silenced, and disarmed. The box will pop open after the effect expires or it moves out of the initial area.",
+   "description_zh": "把一名友方英雄装进可动的异维度箱子。友军被装入后拥有相位移动状态，获得额外魔法抗性、减速抗性和移动速度。并且无法成为目标，被锁闭、沉默和缴械。效果结束后或者移动到初始区域之外箱子都会打开。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Escape Act has %max_charges% charges. When the box pops open, Impalement Art daggers are thrown in all directions, and all enemies around it take damage.",
+     "zh": "逃生技拥有%max_charges%点能量点数。逃生箱打开时会朝所有方向放出尖刀戏匕首，并且范围内所有敌人受到伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0b564f8f391b24c01d7c",
+  "subject": "ringmaster_dark_carnival_souvenirs",
+  "subject_zh": "百戏大王·暗黑狂欢主持",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Additional Souvenirs are held as charges."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Ringmaster receives a random single-use Dark Carnival Souvenir whenever an enemy hero dies within %souvenir_collection_range% units of him. Additional Souvenirs are held as charges.If Ringmaster does not have a Souvenir when he dies he will be granted one.",
+   "description_zh": "只要百戏大王附近%souvenir_collection_range%范围内有敌方英雄阵亡，他就会随机获得一件可用一次的暗黑狂欢纪念品。额外的纪念品会以能量的形式存下。如果百戏大王没有纪念品，阵亡时会获得一件。"
+  }
+ },
+ {
+  "review_id": "5f21849dccfb8ef3c076",
+  "subject": "ringmaster_funhouse_mirror",
+  "subject_zh": "百戏大王·哈哈镜",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityCharges=99"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE | DOTA_ABILITY_BEHAVIOR_AFFECTED_BY_MUTE | DOTA_ABILITY_BEHAVIOR_IS_FAKE_ITEM | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityCharges": "99"
+  },
+  "context": {
+   "description_en": "Use: Proportion DistortionCreates %images_count% imperfect image of your hero that lasts %illusion_duration% seconds. Your illusion deals %tooltip_damage_outgoing_ranged%%% and takes  %tooltip_damage_incoming_total_pct%%% damage.",
+   "description_zh": "使用：比例失真制造英雄的%images_count%个不完美幻象，持续%illusion_duration%秒。幻象继承%tooltip_damage_outgoing_ranged%%%攻击力，承受%tooltip_damage_incoming_total_pct%%%伤害。",
+   "notes_en": [
+    "Has a %invuln_duration% second cast time during which you are invulnerable."
+   ],
+   "notes_zh": [
+    "有%invuln_duration%秒的施法时间，其间处于无敌状态。"
+   ]
+  }
+ },
+ {
+  "review_id": "9f20dbef085e373422f2",
+  "subject": "ringmaster_strongman_tonic",
+  "subject_zh": "百戏大王·强力水",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityCharges=99"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE | DOTA_ABILITY_BEHAVIOR_AFFECTED_BY_MUTE | DOTA_ABILITY_BEHAVIOR_IS_FAKE_ITEM | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityCharges": "99"
+  },
+  "context": {
+   "description_en": "Use: Forcefully ImbibeTemporarily increases an allied hero's Strength by %strength_bonus_base% plus %strength_bonus_per_level% per Ringmaster's level for %duration% seconds. The effect holds for %effect_strength_max_duration% seconds and then deteriorates over the duration.",
+   "description_zh": "使用：强力吸收暂时提升友方英雄的力量，数值为%strength_bonus_base% + %strength_bonus_per_level% * 百戏大王等级，持续%duration%秒。效果会维持%effect_strength_max_duration%秒然后在持续时间内不断减弱。"
+  }
+ },
+ {
+  "review_id": "876a6e6d15c1fe96df6e",
+  "subject": "ringmaster_whoopee_cushion",
+  "subject_zh": "百戏大王·整蛊垫",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityCharges=99"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE | DOTA_ABILITY_BEHAVIOR_AFFECTED_BY_MUTE | DOTA_ABILITY_BEHAVIOR_IS_FAKE_ITEM | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityCharges": "99"
+  },
+  "context": {
+   "description_en": "Use: WhoopsiePropels your hero forward %leap_distance% units. Leaves a %fart_cloud_radius% radius stink cloud behind for %fart_cloud_duration% seconds that slows enemies by %fart_cloud_slow%%%.",
+   "description_zh": "使用：噗把英雄向前推动%leap_distance%距离。在身后留下一团%fart_cloud_radius%范围的臭云，持续%fart_cloud_duration%秒，使敌人减速%fart_cloud_slow%%%。"
+  }
+ },
+ {
+  "review_id": "83012038adc359f5d0e7",
+  "subject": "ringmaster_summon_unicycle",
+  "subject_zh": "百戏大王·独轮车",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityCharges=99"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE | DOTA_ABILITY_BEHAVIOR_AFFECTED_BY_MUTE | DOTA_ABILITY_BEHAVIOR_IS_FAKE_ITEM | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityCharges": "99"
+  },
+  "context": {
+   "description_en": "Use: Saddle UpSummons a speedy unicycle to ride around on for %mount_duration% seconds. %damage_grace_period%s after mounting the unicycle, taking damage from enemy hero sources greater than %damage_threshold% dismounts the rider. Crashing into trees destroys them and slows the unicycle. Attacking, using channeled abilities, or crashing into units and other obstacles also dismounts the rider.",
+   "description_zh": "使用：上车召唤一辆快速的独轮车并骑上去，持续%mount_duration%秒。上车%damage_grace_period%秒后受到来自敌方英雄的伤害超过%damage_threshold%点会让他下车。撞到树木会将其摧毁，并且独轮车会减速。攻击、使用持续施法类技能或者撞到单位和其他障碍物都会使他下车。"
+  }
+ },
+ {
+  "review_id": "955cbb343893552a5f0a",
+  "subject": "ancient_janggo",
+  "subject_zh": "韧鼓",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "charges tooltip=8."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Drum of Endurance",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Endurance",
+     "description": "Gives +35 attack speed and +13% movement speed to nearby allies for 6 seconds.\n\nRadius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Swiftness Aura",
+     "description": "Grants 15 movement speed and 2.5 health regeneration to allies. \n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "aura_movement_speed",
+     "value": "15"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.5"
+    },
+    {
+     "key": "bonus_str",
+     "display": "+ {value} Strength",
+     "value": "8"
+    },
+    {
+     "key": "bonus_attack_speed_pct",
+     "value": "35"
+    },
+    {
+     "key": "bonus_movement_speed_pct",
+     "value": "13"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    },
+    {
+     "key": "radius",
+     "value": "1200"
+    },
+    {
+     "key": "charges_tooltip",
+     "value": "8"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "52eb735f878c943f5f4a",
+  "subject": "black_grimoire",
+  "subject_zh": "Black Grimoire\n(Warlock)",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Profane Knowledge: Hero kills and assists empower the Black Grimoire, granting it charges.",
+   "Right-click to consume and grant 200 experience per charge.",
+   "xp per charge=200."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_UNSWAPPABLE"
+  },
+  "context": {
+   "dname": "Black Grimoire\\n(Warlock)",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Profane Knowledge",
+     "description": "Hero kills and assists empower the Black Grimoire, granting it charges. Right-click to consume and grant 200 experience per charge. Starts on cooldown. \nThis item cannot be dropped."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "xp_per_charge",
+     "value": "200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "b897ec82996533972496",
+  "subject": "bottle",
+  "subject_zh": "魔瓶",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Regenerate: Consumes a charge to restore 110 health and 60 mana over 2.",
+   "Using a stored Bounty or Water rune fully refills the bottle if the bottle was full when the rune was stored; otherwise, it refills two charges.",
+   "max charges=3."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Bottle",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Regenerate",
+     "description": "Consumes a charge to restore 110 health and 60 mana over 2.7 seconds. If the hero is attacked by an enemy hero or Roshan, the effect is lost.\n\nThe Bottle automatically refills at the fountain.\n\nHold Control to use on an allied hero."
+    },
+    {
+     "type": "passive",
+     "title": "Store Rune",
+     "description": "Runes can be stored in the Bottle for later use by right-clicking them. Unused runes will automatically activate after 90 seconds.\n\nUsing a stored rune fully refills the Bottle."
+    }
+   ],
+   "notes": "Bottle is shareable. Stored runes cannot be shared.\nUsing a stored Bounty or Water rune fully refills the bottle if the bottle was full when the rune was stored; otherwise, it refills two charges.",
+   "attrib": [
+    {
+     "key": "health_restore",
+     "value": "110"
+    },
+    {
+     "key": "mana_restore",
+     "value": "60"
+    },
+    {
+     "key": "restore_time",
+     "value": "2.7"
+    },
+    {
+     "key": "max_charges",
+     "value": "3"
+    },
+    {
+     "key": "break_on_hero_damage",
+     "value": "1"
+    },
+    {
+     "key": "rune_expire_time",
+     "value": "90.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "e5c8921f4139e1224d5f",
+  "subject": "consecrated_wraps",
+  "subject_zh": "圣化护服",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Hallowed: Gain a charge every 4s, up to a maximum of 3 charges.",
+   "Upon gaining a charge, your movement speed is increased by 15% for 5s.",
+   "Whenever you take damage from a player-controlled source or Roshan, consume all charges to gain an all damage barrier for 5s that absorbs 120 damage per charge (360 max).",
+   "Charges cannot be gained for 4s after you take damage from a player-controlled source or Roshan.",
+   "Self-damage and HP Loss damage cannot remove charges."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityCharges": "3"
+  },
+  "context": {
+   "dname": "Consecrated Wraps",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Hallowed",
+     "description": "Gain a charge every 4s, up to a maximum of 3 charges. Upon gaining a charge, your movement speed is increased by 15% for 5s.\n\nWhenever you take damage from a player-controlled source or Roshan, consume all charges to gain an all damage barrier for 5s that absorbs 120 damage per charge (360 max)."
+    }
+   ],
+   "notes": "Charges cannot be gained for 4s after you take damage from a player-controlled source or Roshan.\nSelf-damage and HP Loss damage cannot remove charges.\nMovement speed buff does not stack.",
+   "attrib": [
+    {
+     "key": "bonus_spell_resist",
+     "display": "+ {value}% Magic Resistance",
+     "value": "12"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "5"
+    },
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "250"
+    },
+    {
+     "key": "movement_speed_pct_on_stack_gain",
+     "value": "15"
+    },
+    {
+     "key": "duration",
+     "value": "5"
+    },
+    {
+     "key": "barrier_per_stack",
+     "value": "120"
+    },
+    {
+     "key": "max_barrier_tooltip",
+     "value": "360"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "6511e3ff0d64871e1188",
+  "subject": "essence_distiller",
+  "subject_zh": "精之灵器",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Gains charges every time an enemy hero dies within 1500 units.",
+   "Empty distillers gain 2 charges.",
+   "Only the closest Essence Distiller to the dying hero will gain a charge.",
+   "soul initial charge=2.",
+   "soul additional charges=1."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Essence Distiller",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "Provides 40 health regeneration when cast on allies.\n\nCan be ground targeted to lie dormant for up to 15s and attach to the first enemy that comes within 450 radius. When on enemies, deals 25 damage per second and provides True Sight over them and shares their vision with the wearer's team.\n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units."
+    }
+   ],
+   "notes": "Empty distillers gain 2 charges.\nOnly the closest Essence Distiller to the dying hero will gain a charge.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.\nWhile dormant, provides vision in 450 radius. Vision lingers for 0.5s after latching.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.5"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "3"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "6"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "150"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "40"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    },
+    {
+     "key": "ground_duration",
+     "value": "15.0"
+    },
+    {
+     "key": "latch_range",
+     "value": "450"
+    },
+    {
+     "key": "latch_vision",
+     "value": "450"
+    },
+    {
+     "key": "linger_after_latch_duration",
+     "value": "0.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "ba3b8445a923e36a4124",
+  "subject": "hand_of_midas",
+  "subject_zh": "迈达斯之手",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "field",
+  "evidence": [
+   "AbilityCharges=2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityCharges": "2"
+  },
+  "context": {
+   "dname": "Hand of Midas",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Transmute",
+     "description": "Kills a non-hero target for 160 gold. Killing a neutral creep additionally grants a madstone bundle. \n\n Cannot be used on Ancient creeps."
+    }
+   ],
+   "notes": "The gold given is unreliable gold (you do not get the normal creep bounty).\nExperience gained by using Transmute is not shared.",
+   "attrib": [
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "40"
+    },
+    {
+     "key": "bonus_gold",
+     "value": "160"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "367a729ae3510c5ec9e6",
+  "subject": "holy_locket",
+  "subject_zh": "圣洁吊坠",
+  "mechanism": "charges",
+  "mechanism_zh": "充能",
+  "definition": "技能或物品按充能次数使用",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Energy Charge: Target an allied unit to increase their incoming Heal Amplification by 15% for 4s and instantly restore 17 health and 15 mana per charge stored.",
+   "Automatically gains a charge every 10 seconds and whenever a visible enemy within 1200 range uses an ability.",
+   "max charges=25.",
+   "charge radius=1200.",
+   "health restore per charge=17.",
+   "mana restore per charge=15."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityCharges": "25"
+  },
+  "context": {
+   "dname": "Holy Locket",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Charge",
+     "description": "Target an allied unit to increase their incoming Heal Amplification by 15% for 4s and instantly restore 17 health and 15 mana per charge stored. \n\nAutomatically gains a charge every 10 seconds and whenever a visible enemy within 1200 range uses an ability."
+    },
+    {
+     "type": "passive",
+     "title": "Holy Blessing",
+     "description": "Amplifies heals you provide by 10%."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "heal_increase_passive",
+     "value": "10"
+    },
+    {
+     "key": "max_charges",
+     "value": "25"
+    },
+    {
+     "key": "charge_radius",
+     "value": "1200"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "7"
+    },
+    {
+     "key": "health_restore_per_charge",
+     "value": "17"
+    },
+    {
+     "key": "mana_restore_per_charge",
+     "value": "15"
+    },
+    {
+     "key": "incoming_heal_increase_active",
+     "value": "15"
+    },
+    {
+     "key": "active_buff_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "charge_gain_timer",
+     "value": "10"
+    },
+    {
+     "key": "use_cooldown",
+     "display": "COOLDOWN: {value}",
+     "value": "13"
+    }
+   ]
+  }
+ }
+]

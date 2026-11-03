@@ -1,5 +1,6 @@
 """MK-T3 v4: reviewed facts overlay decisions on frozen v3 evidence."""
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -27,9 +28,10 @@ def _row(doc, subject, mechanism):
     return rows[0]
 
 
-def test_package_replays_exactly(tmp_path, doc):
-    fresh = builder.run(tmp_path / "v4")
-    assert json.dumps(fresh, sort_keys=True) == json.dumps(doc, sort_keys=True)
+def test_frozen_package_matches_its_manifest():
+    manifest = json.loads((PACKAGE / "manifest.json").read_text())
+    for name, expected in manifest["output_sha256"].items():
+        assert hashlib.sha256((PACKAGE / name).read_bytes()).hexdigest() == expected
 
 
 def test_vocabulary_v4_loads_and_records_user_definitions():

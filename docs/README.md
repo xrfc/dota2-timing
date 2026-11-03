@@ -100,6 +100,7 @@
 - [MK-T3交Claude全量交叉复核](handoff/mk-claude-cross-review.md)
 - [请Codex复核Claude第1轮结果（可选）](handoff/mk-codex-review-of-claude.md)
 - [待用户裁定汇总（2026-11-02）](handoff/user-rulings-2026-11-02.md)
+- [词表v6新增机制草稿](handoff/vocabulary-v6-draft.md)
 - 历史交接：[双分支上下文（10-16）](handoff/2026-10-16-context.md) · [单目录整合（10-16）](handoff/single-workspace-2026-10-16.md) · [数据接口交接](handoff/purchase-data-interface.md) · [数据agent提示词](handoff/data-agent-prompt.md) · [模型agent提示词](handoff/model-agent-prompt.md)
 
 ## 6. 历史归档

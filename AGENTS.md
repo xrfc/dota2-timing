@@ -57,7 +57,7 @@
 - 唯一执行计划：`docs/development-plan-2026-10-30.md`（共享底座MK＋路线A推荐M0–M5＋路线B意识决策B0–B5）。接手先读其§0与§7，只做当前任务的下一个未勾选项；两条线不分主次；先做完共享底座MK，之后两线各自推进（U38）。
 - 架构入口：`docs/architecture.md`。每个模块/脚本须在`src/dota_items/architecture.py`登记线与状态；共享底座不导入任一线，A、B两线互不导入（测试强制）。冻结产物指纹记录源码路径，**不搬迁文件**，物理整理须先登记生产者迁移并单独提出。
 - 2026-11-01交接：当前里程碑MK（机制知识底座），详细待办见`docs/handoff/mk-handoff-2026-11-01.md`。
-- U32：MK-T3改为先交Codex/Claude交叉复核，当前入口`docs/handoff/mk-claude-cross-review.md`；全部清单已打包，未审条目不能当作AI一致或用户批准。
+- U67（2026-11-05）：MK-T3已结束，当前任务MK-T4；输入是`knowledge/mechanics/extractions/v6/`和`vocabulary-v6.json`，`basis`不是`user*`的条目不算用户批准。
 - 用户决定记录在`docs/decisions/`；计划§2“待决”项必须先问用户。
 - 账号ID只在未跟踪的`configs/user.local.json`，不得写入跟踪文件或推送。
 

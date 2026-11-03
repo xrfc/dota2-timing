@@ -1,0 +1,1424 @@
+[
+ {
+  "review_id": "4dd00b1efdc13bf7a6e7",
+  "subject": "dawnbreaker_luminosity",
+  "subject_zh": "破晓辰星·熠熠生辉",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Creeps and neutral enemies provide less healing.",
+   "熠熠生辉的治疗效果可以通过生命回复增强效果获得提升。",
+   "对友军的治疗量为%allied_healing_pct%%%。",
+   "After a number of attacks, Dawnbreaker powers up, charging her next attack with a critical hit that heals all allied heroes within %heal_radius% units around her for a portion of attack damage dealt.",
+   "Luminosity Heal is increased by sources of Health Restoration Amplification.",
+   "破晓辰星在数次攻击后提升了力量，她的下一次攻击会造成致命一击，并治疗她附近%heal_radius%范围内所有友方英雄，治疗量为攻击伤害的一定百分比。",
+   "攻击小兵和野怪产生的治疗量有所减少。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "name_en": "Luminosity",
+   "name_zh": "熠熠生辉",
+   "description_en": "After a number of attacks, Dawnbreaker powers up, charging her next attack with a critical hit that heals all allied heroes within %heal_radius% units around her for a portion of attack damage dealt. Creeps and neutral enemies provide less healing. Allies are healed for %allied_healing_pct%%% of the amount.",
+   "description_zh": "破晓辰星在数次攻击后提升了力量，她的下一次攻击会造成致命一击，并治疗她附近%heal_radius%范围内所有友方英雄，治疗量为攻击伤害的一定百分比。攻击小兵和野怪产生的治疗量有所减少。对友军的治疗量为%allied_healing_pct%%%。",
+   "notes_en": [
+    "Luminosity Heal is increased by sources of Health Restoration Amplification.",
+    "Break disables the gaining of new stacks."
+   ],
+   "notes_zh": [
+    "熠熠生辉的治疗效果可以通过生命回复增强效果获得提升。",
+    "破坏会使技能无法获得新的叠加效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "2f52036e3285bae6ee31",
+  "subject": "dawnbreaker_solar_guardian",
+  "subject_zh": "破晓辰星·天光现世",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每次脉冲都会对敌人造成伤害，并治疗友军。",
+   "Each pulse damages enemies and heals allies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Solar Guardian",
+   "name_zh": "天光现世",
+   "description_en": "CHANNELED - Dawnbreaker creates a pulsing effect at a location within %max_offset_distance% units of an allied hero anywhere on the map and creates daylight for %daytime_duration%s. Each pulse damages enemies and heals allies.After a short duration, she flies to the target location and deals additional damage and stuns enemies upon landing.Once channeled, Dawnbreaker cannot stop the ability.",
+   "description_zh": "持续施法 - 破晓辰星在地图上任意友方英雄%max_offset_distance%距离内的一个地点创造一个脉冲效果，并制造持续%daytime_duration%秒的白天。每次脉冲都会对敌人造成伤害，并治疗友军。经过一段短暂时间后，她飞向目标地点，落地时造成额外伤害并眩晕敌人。开始持续施法后，破晓辰星无法中止此技能。",
+   "notes_en": [
+    "Pulse interval is %pulse_interval%s.",
+    "Total flight duration is %abilitychanneltime% seconds of channel time + %airtime_duration% of flight time.",
+    "Instantly recalls the Hammer on cast."
+   ],
+   "notes_zh": [
+    "脉冲间隔为%pulse_interval%秒。",
+    "总飞行时间为%abilitychanneltime%秒持续施法时间 + %airtime_duration%秒飞行时间。",
+    "施放时立刻召回战锤。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Solar Guardian's aura follows Dawnbreaker for %scepter_aura_duration%s after landing.",
+     "zh": "天光现世的光环在破晓辰星落地后会跟随%scepter_aura_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e141a2d57a89b0e6b4bf",
+  "subject": "dazzle_nothl_projection",
+  "subject_zh": "戴泽·虚无投影",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "While active, Dazzle's basic abilities are empowered: Poison Touch hexes enemies, Shallow Grave heals upon expiration, and Shadow Wave has a shorter cooldown.",
+   "在灵魂形态下，戴泽的基础技能都已强化：剧毒之触带有妖术效果；薄葬结束时会治疗；暗影波的冷却时间变短。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Nothl Projection",
+   "name_zh": "虚无投影",
+   "description_en": "Dazzle departs his body, traveling through the Nothl Realm as an invulnerable spirit that can cast spells, attack, and use items, leaving his body behind in the world with a visible tether. While active, Dazzle's basic abilities are empowered: Poison Touch hexes enemies, Shallow Grave heals upon expiration, and Shadow Wave has a shorter cooldown. The effect can be ended early, and Dazzle returns to the body at the end.",
+   "description_zh": "戴泽的灵魂离开身体，穿过虚无之境变成无敌的幽灵，可以施放技能、攻击和使用物品，他的身体还留在这个世界，和灵魂之间存在着可见的连接。在灵魂形态下，戴泽的基础技能都已强化：剧毒之触带有妖术效果；薄葬结束时会治疗；暗影波的冷却时间变短。效果可以提前结束，效果结束时戴泽的灵魂会返回身体。",
+   "notes_en": [
+    "When Dazzle's spirit is further than %leash_start% units from the body, the tether will begin to pull him back. The strength of the pull increases with distance.",
+    "Dazzle's Soul cannot attack buildings."
+   ],
+   "notes_zh": [
+    "戴泽的灵魂离开身体超过%leash_start%距离后会被拉向身体。戴泽的灵魂移动得越远，拉力就越大。",
+    "戴泽的灵魂不能攻击建筑。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "771f615b7fc5c8481b50",
+  "subject": "dazzle_shadow_wave",
+  "subject_zh": "戴泽·暗影波",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When bouncing to an enemy, they will take damage and heal nearby allies equal to %scepter_heal_pct%%% of the normal healing and damage values.",
+   "弹跳至敌人时，他们会受到伤害，并且治疗附近友军，数值为%scepter_heal_pct%%%平常治疗和伤害量。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Shadow Wave",
+   "name_zh": "暗影波",
+   "description_en": "Sends out a bolt of power that arcs between allies, healing them while damaging any enemy units standing nearby.  Dazzle is always healed by Shadow Wave.",
+   "description_zh": "放出一道能量弧，可以瞬间跳跃至目标附近的队友，治疗的同时还将对附近的敌方单位造成伤害。施放暗影波时戴泽必定会享受到治疗效果。",
+   "notes_en": [
+    "Prioritizes allied heroes over creeps.",
+    "If enemies are near multiple allied units affected by Shadow Wave, they will take multiple instances of damage."
+   ],
+   "notes_zh": [
+    "优先治疗友方英雄",
+    "如果敌军附近有多个我方单位，那么他将受到多重暗影波的伤害。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Shadow Wave can now target and bounce between enemies in addition to allies. When bouncing to an enemy, they will take damage and heal nearby allies equal to %scepter_heal_pct%%% of the normal healing and damage values. Dazzle will also perform an attack against any enemy that Shadow Wave bounces to.",
+     "zh": "暗影波现在也可对敌人施放，在友军和敌人之间都可以弹跳。弹跳至敌人时，他们会受到伤害，并且治疗附近友军，数值为%scepter_heal_pct%%%平常治疗和伤害量。戴泽还会对暗影波弹跳到的每个敌人发动一次攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d27deb5cc39247959220",
+  "subject": "dazzle_shadow_wave",
+  "subject_zh": "戴泽·暗影波",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "放出一道能量弧，可以瞬间跳跃至目标附近的队友，治疗的同时还将对附近的敌方单位造成伤害。",
+   "Sends out a bolt of power that arcs between allies, healing them while damaging any enemy units standing nearby.",
+   "施放暗影波时戴泽必定会享受到治疗效果。",
+   "优先治疗友方英雄"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Shadow Wave",
+   "name_zh": "暗影波",
+   "description_en": "Sends out a bolt of power that arcs between allies, healing them while damaging any enemy units standing nearby.  Dazzle is always healed by Shadow Wave.",
+   "description_zh": "放出一道能量弧，可以瞬间跳跃至目标附近的队友，治疗的同时还将对附近的敌方单位造成伤害。施放暗影波时戴泽必定会享受到治疗效果。",
+   "notes_en": [
+    "Prioritizes allied heroes over creeps.",
+    "If enemies are near multiple allied units affected by Shadow Wave, they will take multiple instances of damage."
+   ],
+   "notes_zh": [
+    "优先治疗友方英雄",
+    "如果敌军附近有多个我方单位，那么他将受到多重暗影波的伤害。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Shadow Wave can now target and bounce between enemies in addition to allies. When bouncing to an enemy, they will take damage and heal nearby allies equal to %scepter_heal_pct%%% of the normal healing and damage values. Dazzle will also perform an attack against any enemy that Shadow Wave bounces to.",
+     "zh": "暗影波现在也可对敌人施放，在友军和敌人之间都可以弹跳。弹跳至敌人时，他们会受到伤害，并且治疗附近友军，数值为%scepter_heal_pct%%%平常治疗和伤害量。戴泽还会对暗影波弹跳到的每个敌人发动一次攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d88096fd63d70fb63eb3",
+  "subject": "death_prophet_exorcism",
+  "subject_zh": "死亡先知·驱使恶灵",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续时间结束后，死亡先知根据造成的伤害量，获得一定比例的治疗。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Exorcism",
+   "name_zh": "驱使恶灵",
+   "description_en": "Unleashes evil spirits to drain the life of nearby enemy units and structures. Spirits need to return back to Death Prophet in order to attack again. At the end of the spell's duration, Death Prophet is healed in proportion to the damage dealt. Deals 50% damage to buildings. Lasts %abilityduration% seconds.",
+   "description_zh": "释放恶灵偷走敌方单位和建筑的生命。恶灵需要回到她身上才能再次攻击。持续时间结束后，死亡先知根据造成的伤害量，获得一定比例的治疗。对建筑造成50%%伤害。持续%abilityduration%秒。",
+   "notes_en": [
+    "Radius represents the area in which the spirits will acquire targets around Death Prophet.",
+    "Spirit damage isn't reduced by damage block abilities."
+   ],
+   "notes_zh": [
+    "作用范围代表死亡先知周围的恶灵寻找目标的范围。",
+    "伤害格挡类技能不能减少恶灵伤害。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Whenever an enemy is affected by Death Prophet's spells or when she attacks an enemy, a ghost will fly out and hit the enemy for an increased bonus of its usual damage then return to her with life.",
+     "zh": "敌人受到死亡先知的技能作用，或被死亡先知攻击时，会有一只恶灵飞出攻击敌人，造成高于平常的伤害，再返回使自身回复生命。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "941a2aa7b329800adf22",
+  "subject": "doom_bringer_scorched_earth",
+  "subject_zh": "末日使者·焦土",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "用火焰覆盖周围的土地，对敌人造成伤害，同时末日使者的移动速度和生命恢复得到提升。",
+   "Carpets the nearby earth in flames which damage enemies, while also granting Doom increased movement speed and health regeneration."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Scorched Earth",
+   "name_zh": "焦土",
+   "description_en": "Carpets the nearby earth in flames which damage enemies, while also granting Doom increased movement speed and health regeneration.",
+   "description_zh": "用火焰覆盖周围的土地，对敌人造成伤害，同时末日使者的移动速度和生命恢复得到提升。",
+   "notes_en": [
+    "Scorched Earth follows Doom, centered on his location."
+   ],
+   "notes_zh": [
+    "焦土会跟随末日使者，以他所在位置为中心。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "46ee0c2da109795a55b4",
+  "subject": "dragon_knight_dragon_blood",
+  "subject_zh": "龙骑士·龙族血统",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在古龙形态下生命恢复和护甲均提升%regen_and_armor_multiplier_during_dragon_form%%%。",
+   "神龙的生命之血提升了龙骑士的生命恢复和护甲。",
+   "The life blood of the Dragon improves Dragon Knight's health regeneration and armor."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE  |  DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+  },
+  "context": {
+   "name_en": "Dragon Blood",
+   "name_zh": "龙族血统",
+   "description_en": "The life blood of the Dragon improves Dragon Knight's health regeneration and armor.  Regen and armor are increased by %regen_and_armor_multiplier_during_dragon_form%%% during Elder Dragon Form.",
+   "description_zh": "神龙的生命之血提升了龙骑士的生命恢复和护甲。在古龙形态下生命恢复和护甲均提升%regen_and_armor_multiplier_during_dragon_form%%%。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "cba2eb6ac4678dd8b56e",
+  "subject": "faerie_fire",
+  "subject_zh": "仙灵之火",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Instantly restores 85 health."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Faerie Fire",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Imbue",
+     "description": "Instantly restores 85 health."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "2"
+    },
+    {
+     "key": "hp_restore",
+     "value": "85"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "8551e1c08b5be2aca75f",
+  "subject": "flask",
+  "subject_zh": "治疗药膏",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Grants 30 health regeneration to the target for 13 seconds.",
+   "Heals for half the amount per second when cast on an ally."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Healing Salve",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Salve",
+     "description": "Grants 30 health regeneration to the target for 13 seconds.\n\nIf the unit is attacked by an enemy hero or Roshan, the effect is lost.\n\nHeals for half the amount per second when cast on an ally."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "buff_duration",
+     "value": "13"
+    },
+    {
+     "key": "health_regen",
+     "value": "30"
+    },
+    {
+     "key": "break_on_hero_damage",
+     "value": "1"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "62a813f6e3fa1f91694a",
+  "subject": "guardian_greaves",
+  "subject_zh": "卫士胫甲",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Restores 325 health and 200 mana to nearby allies, and removes most negative effects from the caster."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Guardian Greaves",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Mend",
+     "description": "Restores 325 health and 200 mana to nearby allies, and removes most negative effects from the caster.\n\nRadius: 1200\nDispel Type: Basic Dispel"
+    },
+    {
+     "type": "passive",
+     "title": "Guardian Aura",
+     "description": "Grants 2.5 health regeneration and 1.5 mana regeneration to allied units. If the wearer's health falls below 25%, their health regeneration is increased to 14.5. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "Mend does not affect units that have been affected by Mend or Mekansm Restore within Guardian Greaves' cooldown.",
+   "attrib": [
+    {
+     "key": "bonus_movement",
+     "display": "+ {value} Movement Speed",
+     "value": "50"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "5"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "150"
+    },
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.0"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.5"
+    },
+    {
+     "key": "aura_mana_regen",
+     "value": "1.5"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "aura_health_regen_bonus",
+     "value": "14.5"
+    },
+    {
+     "key": "aura_bonus_threshold",
+     "value": "25"
+    },
+    {
+     "key": "replenish_health",
+     "value": "325"
+    },
+    {
+     "key": "replenish_mana",
+     "value": "200"
+    },
+    {
+     "key": "replenish_radius",
+     "value": "1200"
+    }
+   ],
+   "hint": [
+    "Movement speed bonuses from multiple pairs of boots do not stack."
+   ]
+  }
+ },
+ {
+  "review_id": "b8c8c99076b3d0c29f51",
+  "subject": "headdress",
+  "subject_zh": "恢复头巾",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Grants 2 health regeneration to allies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Headdress",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Regeneration Aura",
+     "description": "Grants 2 health regeneration to allies.\n\nRadius: 1200"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "0.5"
+    },
+    {
+     "key": "aura_health_regen",
+     "value": "2.0"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "9daacd4d97df7ca7c2c3",
+  "subject": "heart",
+  "subject_zh": "恐鳌之心",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Your health regeneration is increased by 1."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Heart of Tarrasque",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Behemoth's Blood",
+     "description": "Your health regeneration is increased by 1.5% of your missing health."
+    }
+   ],
+   "notes": "Multiple instances of Behemoth's Blood do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "40"
+    },
+    {
+     "key": "hp_regen",
+     "display": "+ {value}% Max Health Regen",
+     "value": "1"
+    },
+    {
+     "key": "missing_health_regen",
+     "value": "1.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "41067bd31b1da3d75367",
+  "subject": "helm_of_the_overlord",
+  "subject_zh": "统御头盔",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Also provides the unit with +70 base attack damage, +12 health regen, +4 mana regen, +7 armor, and levels up some abilities of the target by 1 level."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CREEP"
+  },
+  "context": {
+   "dname": "Helm of the Overlord",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Dominate",
+     "description": "Takes control of one neutral target unit and sets its movement speed to 380 and max health to a minimum of 1900. Also provides the unit with +70 base attack damage, +12 health regen, +4 mana regen, +7 armor, and levels up some abilities of the target by 1 level. \n\nDominated units with a max health of greater than 1900 retain their original max health. Grants the caster the gold and experience bounty of the dominated creep. Dominated unit's bounty is set to 250 gold and it can no longer be killed by abilities that instantly kill creeps otherwise.\n\nThe Helm cannot be used for 3 seconds after the dominated creep takes damage from an enemy hero or Roshan."
+    }
+   ],
+   "notes": "Can also Dominate enemy lane creeps and summoned units.\nSelling will cause dominated units to die.",
+   "attrib": [
+    {
+     "key": "bonus_stats",
+     "display": "+ {value} All Attributes",
+     "value": "21"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "7"
+    },
+    {
+     "key": "bonus_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "7"
+    },
+    {
+     "key": "health_min",
+     "value": "1900"
+    },
+    {
+     "key": "speed_base",
+     "value": "380"
+    },
+    {
+     "key": "bounty_gold",
+     "value": "250"
+    },
+    {
+     "key": "creep_bonus_damage",
+     "value": "70"
+    },
+    {
+     "key": "creep_bonus_hp_regen",
+     "value": "12"
+    },
+    {
+     "key": "creep_bonus_mp_regen",
+     "value": "4"
+    },
+    {
+     "key": "creep_bonus_armor",
+     "value": "7"
+    },
+    {
+     "key": "model_scale",
+     "value": "20"
+    },
+    {
+     "key": "count_limit",
+     "value": "1"
+    },
+    {
+     "key": "creep_ability_level_increase",
+     "value": "1"
+    },
+    {
+     "key": "is_overlord",
+     "value": "1"
+    },
+    {
+     "key": "creep_damage_taken_cooldown",
+     "value": "3"
+    },
+    {
+     "key": "bounty_pct",
+     "value": "100"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "bf23e33ed21d08fb396f",
+  "subject": "holy_locket",
+  "subject_zh": "圣洁吊坠",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Target an allied unit to increase their incoming Heal Amplification by 15% for 4s and instantly restore 17 health and 15 mana per charge stored."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Holy Locket",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Charge",
+     "description": "Target an allied unit to increase their incoming Heal Amplification by 15% for 4s and instantly restore 17 health and 15 mana per charge stored. \n\nAutomatically gains a charge every 10 seconds and whenever a visible enemy within 1200 range uses an ability."
+    },
+    {
+     "type": "passive",
+     "title": "Holy Blessing",
+     "description": "Amplifies heals you provide by 10%."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "heal_increase_passive",
+     "value": "10"
+    },
+    {
+     "key": "max_charges",
+     "value": "25"
+    },
+    {
+     "key": "charge_radius",
+     "value": "1200"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "7"
+    },
+    {
+     "key": "health_restore_per_charge",
+     "value": "17"
+    },
+    {
+     "key": "mana_restore_per_charge",
+     "value": "15"
+    },
+    {
+     "key": "incoming_heal_increase_active",
+     "value": "15"
+    },
+    {
+     "key": "active_buff_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "charge_gain_timer",
+     "value": "10"
+    },
+    {
+     "key": "use_cooldown",
+     "display": "COOLDOWN: {value}",
+     "value": "13"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "19cc7b49e8854b5788af",
+  "subject": "huskar_berserkers_blood",
+  "subject_zh": "哈斯卡·狂战士之血",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Dispels Huskar, then after a delay, heals for the amount of health consumed plus an additional bonus per debuff dispelled."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Berserker's Blood",
+   "name_zh": "狂战士之血",
+   "description_en": "Huskar's injuries feed his power, giving increased attack speed, magic resistance and health regen based on missing health. Health regen is a percentage of your strength.",
+   "description_zh": "哈斯卡的伤痛赐予他力量，根据他损失的生命值将获得攻击速度、魔法抗性和生命恢复加成。生命恢复为力量的一定百分比。",
+   "notes_en": [
+    "Bonuses are provided linearly, no bonus at Full HP and full bonus at strictly less than %hp_threshold_max%%% HP."
+   ],
+   "notes_zh": [
+    "加成效果为线性增加，满血时没有加成，%hp_threshold_max%%%生命时达到最大加成。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Huskar can activate Berserker's Blood for a health cost to cauterize himself. Dispels Huskar, then after a delay, heals for the amount of health consumed plus an additional bonus per debuff dispelled.DISPEL TYPE: Basic Dispel",
+     "zh": "哈斯卡可以消耗一定生命来主动开启狂战士之血，炙疗哈斯卡。进行驱散，然后在一定延迟后回复消耗的生命，并且每驱散一个负面状态，他就会额外回复生命。\n\n驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2129d188654c4973c554",
+  "subject": "huskar_berserkers_blood",
+  "subject_zh": "哈斯卡·狂战士之血",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Huskar's injuries feed his power, giving increased attack speed, magic resistance and health regen based on missing health.",
+   "生命恢复为力量的一定百分比。",
+   "哈斯卡的伤痛赐予他力量，根据他损失的生命值将获得攻击速度、魔法抗性和生命恢复加成。",
+   "Health regen is a percentage of your strength."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Berserker's Blood",
+   "name_zh": "狂战士之血",
+   "description_en": "Huskar's injuries feed his power, giving increased attack speed, magic resistance and health regen based on missing health. Health regen is a percentage of your strength.",
+   "description_zh": "哈斯卡的伤痛赐予他力量，根据他损失的生命值将获得攻击速度、魔法抗性和生命恢复加成。生命恢复为力量的一定百分比。",
+   "notes_en": [
+    "Bonuses are provided linearly, no bonus at Full HP and full bonus at strictly less than %hp_threshold_max%%% HP."
+   ],
+   "notes_zh": [
+    "加成效果为线性增加，满血时没有加成，%hp_threshold_max%%%生命时达到最大加成。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Huskar can activate Berserker's Blood for a health cost to cauterize himself. Dispels Huskar, then after a delay, heals for the amount of health consumed plus an additional bonus per debuff dispelled.DISPEL TYPE: Basic Dispel",
+     "zh": "哈斯卡可以消耗一定生命来主动开启狂战士之血，炙疗哈斯卡。进行驱散，然后在一定延迟后回复消耗的生命，并且每驱散一个负面状态，他就会额外回复生命。\n\n驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "9802f5a4f2be2453e6be",
+  "subject": "invoker_quas",
+  "subject_zh": "祈求者·冰",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每个活跃的冰元素会让祈求者获得生命恢复加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE"
+  },
+  "context": {
+   "name_en": "Quas",
+   "name_zh": "冰",
+   "description_en": "Allows manipulation of ice elements. Active Quas instances imbue Invoker with bonus hp regeneration. Passively grants bonus strength per level of Quas.",
+   "description_zh": "允许祈求者掌控冰元素。每个活跃的冰元素会让祈求者获得生命恢复加成。每级冰被动提供额外力量。",
+   "notes_en": [
+    "Invoker can only have 3 of any instance.",
+    "Will not break invisibility and can be cast while channeling."
+   ],
+   "notes_zh": [
+    "祈求者最多只有3个元素。",
+    "不会打破隐身状态，而且可以在持续施法期间施放。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Grants %scepter_bonus_levels% current and max level.",
+     "zh": "提供%scepter_bonus_levels%级当前和最高等级。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f3094bee1ae808d5f1cf",
+  "subject": "kez_raptor_dance",
+  "subject_zh": "凯·猛禽之舞",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If the cast completes successfully, Kez performs a series of deadly radial slashes around him that deal damage based on the max health of the target and heal Kez for a percentage of all damage dealt.",
+   "如果施法成功完成，凯会对周围发动致命的辐射状斩击，基于目标的最大生命值造成伤害，并且造成伤害的一定百分比会治疗凯。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Raptor Dance",
+   "name_zh": "猛禽之舞",
+   "description_en": "Kez enters into an uncontrollable state for %AbilityCastPoint% second, becoming invulnerable for %invuln_period%s and receiving a basic dispel.If the cast completes successfully, Kez performs a series of deadly radial slashes around him that deal damage based on the max health of the target and heal Kez for a percentage of all damage dealt.",
+   "description_zh": "凯进入不可控制的状态，持续%AbilityCastPoint%秒，%invuln_period%秒为无敌状态并获得一次弱驱散效果。如果施法成功完成，凯会对周围发动致命的辐射状斩击，基于目标的最大生命值造成伤害，并且造成伤害的一定百分比会治疗凯。",
+   "notes_en": [
+    "Slash Lifesteal is reduced to %illusion_lifesteal_pct%%% when slashing a creep or an illusion."
+   ],
+   "notes_zh": [
+    "斩击非英雄单位或幻象时吸血量减少至%illusion_lifesteal_pct%%%。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "7dc61ffd245ed6757635",
+  "subject": "largo_catchy_lick",
+  "subject_zh": "朗戈·动人之舐",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Killing or dispelling an effect from a target grants Largo temporary health regeneration.",
+   "击杀目标或驱散目标的效果后都会使朗戈暂时获得生命恢复。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_RUNE_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "name_en": "Catchy Lick",
+   "name_zh": "动人之舐",
+   "description_en": "Largo licks the targeted unit with his tongue, pulling it back a short distance, applying a basic dispel, and dealing damage if it's an enemy.\n\nKilling or dispelling an effect from a target grants Largo temporary health regeneration.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "朗戈用他的舌头舔舐目标单位，把它拉回一小段距离，施加弱驱散，如果是敌人还会造成伤害。\n\n击杀目标或驱散目标的效果后都会使朗戈暂时获得生命恢复。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Can lick runes to pull them."
+   ],
+   "notes_zh": [
+    "可以舔舐神符，将其牵引。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8de52a1022429003bbd3",
+  "subject": "largo_song_good_vibrations",
+  "subject_zh": "朗戈·大屿灵药",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Largo plays a song that heals nearby friendly heroes.",
+   "朗戈弹奏的乐曲会治疗附近友方英雄。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "name_en": "Island Elixir",
+   "name_zh": "大屿灵药",
+   "description_en": "Largo plays a song that heals nearby friendly heroes.",
+   "description_zh": "朗戈弹奏的乐曲会治疗附近友方英雄。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "63992e5449b19eb0c26f",
+  "subject": "legion_commander_press_the_attack",
+  "subject_zh": "军团指挥官·强攻",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "移除友方目标单位的负面效果和控制技能，并提升其移动速度和生命恢复，持续一定时间。",
+   "Removes debuffs and disables from the target friendly unit, and grants bonus movement speed and health regen for a short time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Press The Attack",
+   "name_zh": "强攻",
+   "description_en": "Removes debuffs and disables from the target friendly unit, and grants bonus movement speed and health regen for a short time.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "移除友方目标单位的负面效果和控制技能，并提升其移动速度和生命恢复，持续一定时间。\n\n驱散类型：强驱散",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases movement speed and becomes an %radius% area of effect ability, and always affects Legion Commander when used.",
+     "zh": "提升移动速度，变为%radius%范围型技能，而且使用时总是会作用于军团指挥官。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5bd57d05a91336a3a658",
+  "subject": "lich_ice_spire",
+  "subject_zh": "巫妖·寒冰尖柱",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "冰霜魔盾每次造成伤害时会治疗尖柱，使其回复1次英雄攻击次数。",
+   "Each Frost Shield tick will heal the spire by 1 hero attack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "name_en": "Ice Spire",
+   "name_zh": "寒冰尖柱",
+   "description_en": "Creates an Ice Spire at the target spot, slowing enemies around it. Can take %max_hero_attacks% hero hits or %max_creep_attacks% creep hits and when destroyed it will create a Frost Blast around it.Chain Frost can be cast on the Spire and can bounce to the Spire and damage the spire by 1 hero attack if there are no other enemies in range.Lich can cast Frost Shield on the Spire. Each Frost Shield tick will heal the spire by 1 hero attack.",
+   "description_zh": "在目标地点创造一根寒冰尖柱，减缓范围内敌人的移动速度。可以承受%max_hero_attacks%次英雄攻击或%max_creep_attacks%次非英雄攻击，并且被摧毁时会在附近产生一个寒霜爆发的效果。连环霜冻可以对尖柱施放，并且范围内没有其他敌人时可以弹跳至冰柱上，同时对尖柱造成1点英雄攻击。巫妖可以对其施放冰霜魔盾。冰霜魔盾每次造成伤害时会治疗尖柱，使其回复1次英雄攻击次数。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ },
+ {
+  "review_id": "02d8e202a2237dc6f898",
+  "subject": "life_stealer_feast",
+  "subject_zh": "噬魂鬼·盛宴",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Lifestealer's attacks deal damage and provide heal for a percentage of his target's max health.",
+   "噬魂鬼每次攻击时还会根据目标最大生命值的一定百分比造成伤害，同时获得治疗。",
+   "The heal is independent of the damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Feast",
+   "name_zh": "盛宴",
+   "description_en": "Lifestealer's attacks deal damage and provide heal for a percentage of his target's max health. He gains permanent max HP whenever he kills a unit.",
+   "description_zh": "噬魂鬼每次攻击时还会根据目标最大生命值的一定百分比造成伤害，同时获得治疗。每次击杀单位他都会获得永久生命上限。",
+   "notes_en": [
+    "Works on allies and enemies. Does not affect Roshan.",
+    "The heal is independent of the damage.",
+    "Break disables the gaining of new stacks.",
+    "Break does not disable the bonuses from existing stacks."
+   ],
+   "notes_zh": [
+    "对友军和敌人有效。对肉山无效。",
+    "回复量与造成伤害相互独立。",
+    "破坏会使技能无法获得新的叠加效果。",
+    "破坏不会使现有叠加效果提供的加成失效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "3896eb6a185ea5d94dc2",
+  "subject": "lycan_feral_impulse",
+  "subject_zh": "狼人·野性驱使",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "提升狼人和所有他控制的单位的生命恢复和攻击力。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Feral Impulse",
+   "name_zh": "野性驱使",
+   "description_en": "Increases the HP regeneration and damage of Lycan and all units under his control.",
+   "description_zh": "提升狼人和所有他控制的单位的生命恢复和攻击力。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "5005580668d9564e4782",
+  "subject": "magic_stick",
+  "subject_zh": "魔棒",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Instantly restores 15 health and mana per charge stored."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Magic Stick",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Charge",
+     "description": "Instantly restores 15 health and mana per charge stored.\n\n Max 10 charges. Gains a charge whenever a visible enemy within 1200 range uses an ability."
+    }
+   ],
+   "notes": "Gains charges for spells cast by visible enemies in 1200 range.\nCertain abilities and item abilities will not add charges.",
+   "attrib": [
+    {
+     "key": "max_charges",
+     "value": "10"
+    },
+    {
+     "key": "charge_radius",
+     "value": "1200"
+    },
+    {
+     "key": "restore_per_charge",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "d421d071bb7cd79bb58c",
+  "subject": "magic_wand",
+  "subject_zh": "魔杖",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Instantly restores 15 health and mana per charge stored."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Magic Wand",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Energy Charge",
+     "description": "Instantly restores 15 health and mana per charge stored. \n\nMax 20 charges. Gains a charge whenever a visible enemy within 1200 range uses an ability."
+    }
+   ],
+   "notes": "Gains charges for spells cast by visible enemies in 1200 range.\nCertain abilities and item abilities will not add charges.",
+   "attrib": [
+    {
+     "key": "max_charges",
+     "value": "20"
+    },
+    {
+     "key": "charge_radius",
+     "value": "1200"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "3"
+    },
+    {
+     "key": "restore_per_charge",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "0a5127ce075162242110",
+  "subject": "mask_of_madness",
+  "subject_zh": "疯狂面具",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Heals the attacker for a percentage of physical damage dealt."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Mask of Madness",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Berserk",
+     "description": "Gives 100 attack speed, 6% / 12% movement speed (ranged/melee), and 15%/30% slow resistance (ranged/melee), but reduces your armor by 7 and silences you. Lasts 6 seconds."
+    },
+    {
+     "type": "passive",
+     "title": "Lifesteal",
+     "description": "Heals the attacker for a percentage of physical damage dealt."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "20"
+    },
+    {
+     "key": "lifesteal_percent",
+     "display": "+ {value}% Lifesteal",
+     "value": "22"
+    },
+    {
+     "key": "berserk_bonus_attack_speed",
+     "value": "100"
+    },
+    {
+     "key": "berserk_bonus_movement_speed_melee",
+     "value": "12"
+    },
+    {
+     "key": "berserk_bonus_movement_speed",
+     "value": "6"
+    },
+    {
+     "key": "berserk_armor_reduction",
+     "value": "7"
+    },
+    {
+     "key": "berserk_slow_resist_melee",
+     "value": "30"
+    },
+    {
+     "key": "berserk_slow_resist",
+     "value": "15"
+    },
+    {
+     "key": "berserk_duration",
+     "value": "6.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "4ca362a8405b4c4e9335",
+  "subject": "meepo_geomancy",
+  "subject_zh": "米波·地卜术",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "如果%tree_radius%范围内有树木，他会获得%tree_regen%点/秒生命恢复。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "name_en": "Geomancy",
+   "name_zh": "地卜术",
+   "description_en": "Meepo grants stacking bonuses to himself and his clones based on their terrain.  Each Meepo grants his bonus to the other Meepos.If there is a tree within %tree_radius% range, he receives %tree_regen% HP regen.If he is standing on dirt, he receives %dirt_move_speed%%% bonus movement speed.If he is in the water, his attacks slow the target by %water_move_slow%%% for %water_slow_duration% seconds.",
+   "description_zh": "米波会根据所在地形给予自身和克隆体可叠加的加成效果。每个米波都会给予其他米波自身的加成。如果%tree_radius%范围内有树木，他会获得%tree_regen%点/秒生命恢复。如果他站在土地上，他会获得%dirt_move_speed%%%移动速度加成。如果他在水中，他的攻击会减缓目标%water_move_slow%%%移速，持续%water_slow_duration%秒。",
+   "notes_en": [
+    "Dirt includes any terrain that is not water."
+   ],
+   "notes_zh": [
+    "土地包括所有水之外的地形。"
+   ],
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "309bd56fa1ca2113a91b",
+  "subject": "meepo_ransack",
+  "subject_zh": "米波·洗劫",
+  "mechanism": "healing",
+  "mechanism_zh": "治疗/回复",
+  "definition": "恢复生命值（治疗、生命恢复）",
+  "definition_note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50、U51：治疗增强不算治疗，提升技能自身治疗量也算治疗增强（基础组仍记治疗）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Steals health from the enemy with each strike and heals all other Meepos for that amount.",
+   "每次攻击都会窃取敌人的生命值，并治疗所有其他米波相同数值生命。",
+   "治疗数值会被生命回复增强效果提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Ransack",
+   "name_zh": "洗劫",
+   "description_en": "Steals health from the enemy with each strike and heals all other Meepos for that amount.Reduced to 60% against creeps.",
+   "description_zh": "每次攻击都会窃取敌人的生命值，并治疗所有其他米波相同数值生命。对非英雄单位的效果减少至60%。",
+   "notes_en": [
+    "Amount healed is amplified by Health Restoration Amplification"
+   ],
+   "notes_zh": [
+    "治疗数值会被生命回复增强效果提升。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ }
+]

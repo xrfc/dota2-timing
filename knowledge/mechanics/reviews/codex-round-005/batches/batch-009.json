@@ -1,0 +1,1235 @@
+[
+ {
+  "review_id": "ef844c73cf4f01b4a226",
+  "subject": "chaos_knight_phantasm",
+  "subject_zh": "混沌骑士·混沌之军",
+  "mechanism": "illusions",
+  "mechanism_zh": "幻象",
+  "definition": "制造自身或他人的幻象",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When Phantasm is activated, also creates an illusion of allied heroes globally.",
+   "When an illusion of Chaos Knight is created, there is a %bonus_illusion_chance%%% chance to create an additional illusion under Chaos Knight's control.",
+   "施放混沌之军时，会产生全地图上所有友方英雄的一个幻象。",
+   "混沌骑士产生幻象时都会有%bonus_illusion_chance%%%几率额外产生一个在其控制下的幻象。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Phantasm",
+   "name_zh": "混沌之军",
+   "description_en": "Summons several phantasmal copies of the Chaos Knight from alternate dimensions. The phantasms are illusions that deal %outgoing_damage_tooltip%%% damage, but take %incoming_damage_tooltip%%% damage.\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "从其他维度召唤若干个混沌骑士的幻象。幻象继承%outgoing_damage_tooltip%%%攻击力，但是承受%incoming_damage_tooltip%%%伤害。\n驱散类型：弱驱散",
+   "notes_en": [
+    "Removes most negative buffs from Chaos Knight.",
+    "Chaos Knight is invulnerable for %invuln_duration% seconds when casting, allowing him to dodge stuns and damage."
+   ],
+   "notes_zh": [
+    "能够移除混沌骑士的大部分负面状态。",
+    "混沌骑士在施放时有%invuln_duration%秒的无敌时间，可以躲避眩晕和伤害技能。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Gains a passive component.  When an illusion of Chaos Knight is created, there is a %bonus_illusion_chance%%% chance to create an additional illusion under Chaos Knight's control.When Phantasm is activated, also creates an illusion of allied heroes globally.",
+     "zh": "增加被动效果。混沌骑士产生幻象时都会有%bonus_illusion_chance%%%几率额外产生一个在其控制下的幻象。施放混沌之军时，会产生全地图上所有友方英雄的一个幻象。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e8a8be80dbb326f72a46",
+  "subject": "dark_seer_wall_of_replica",
+  "subject_zh": "黑暗贤者·复制之墙",
+  "mechanism": "illusions",
+  "mechanism_zh": "幻象",
+  "definition": "制造自身或他人的幻象",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每堵光墙同一时间产生的为一名英雄产生的幻象只有一个。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
+  },
+  "context": {
+   "name_en": "Wall of Replica",
+   "name_zh": "复制之墙",
+   "description_en": "Raises a wall of warping light that slows, damages, and creates replicas of any enemy hero who crosses it. Enemy replicas serve at the Dark Seer's will. Replicas last until they are destroyed, or until the wall's duration ends.",
+   "description_zh": "制造一堵扭曲的光墙，对穿过的敌方英雄造成伤害和减速，并复制一个其自身的幻象，幻象由黑暗贤者控制，持续到光墙消失，或者被敌人消灭。",
+   "notes_en": [
+    "Doesn't create illusions from other illusions.",
+    "There cannot be more than one illusion per player per wall."
+   ],
+   "notes_zh": [
+    "幻象不会产生幻象。",
+    "每堵光墙同一时间产生的为一名英雄产生的幻象只有一个。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "537fa7ccf80ca313ed93",
+  "subject": "grimstroke_dark_portrait",
+  "subject_zh": "天涯墨客·暗绘",
+  "mechanism": "illusions",
+  "mechanism_zh": "幻象",
+  "definition": "制造自身或他人的幻象",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Creates an ink illusion of a target enemy hero.",
+   "制造目标敌方英雄的墨色幻象。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Dark Portrait",
+   "name_zh": "暗绘",
+   "description_en": "Creates an ink illusion of a target enemy hero. Illusion is debuff immune, has %immunity_resist%%% magic resistance, and has bonus movement speed and attack damage.",
+   "description_zh": "制造目标敌方英雄的墨色幻象。幻象为减益免疫状态，拥有%immunity_resist%%%魔法抗性，移动速度和继承攻击力超过本体。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "5614558f4d72acbb6188",
+  "subject": "morphling_replicate",
+  "subject_zh": "变体精灵·变形",
+  "mechanism": "illusions",
+  "mechanism_zh": "幻象",
+  "definition": "制造自身或他人的幻象",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "开启后会产生目标英雄的强幻象，可以施放英雄的所有基础技能。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_CUSTOM"
+  },
+  "context": {
+   "name_en": "Morph",
+   "name_zh": "变形",
+   "description_en": "Morphling changes his form to match the targeted enemy, gaining their basic abilities and changing his primary attribute based on his target. Can be toggled for the duration of the ability.",
+   "description_zh": "使自身向敌方目标改变，获得其基础技能，并且基于目标改变自己的主属性。技能持续时间内可以来回切换。",
+   "notes_en": [
+    "You can't target yourself with Morph.",
+    "Morph won't copy Shard/Scepter abilities unless Morphling owns the respective item.",
+    "Does not trigger spell reflect."
+   ],
+   "notes_zh": [
+    "变体精灵自身及其控制的单位不能作为变形的目标。",
+    "变形不会复制魔晶/神杖类技能，除非变体精灵自身也拥有相应物品。",
+    "不会触发法术反弹。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Adds an alt-cast to Morph. When enabled, a strong illusion is created of the target hero that can cast all of the hero's basic abilities. If the illusion is alive when Morphling toggles the ability, he will take the place of the illusion, destroying it.",
+     "zh": "变形增加多样施法（右键点击技能栏图标）。开启后会产生目标英雄的强幻象，可以施放英雄的所有基础技能。如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "006b642f01d90ce6f782",
+  "subject": "phantom_lancer_juxtapose",
+  "subject_zh": "幻影长矛手·并列",
+  "mechanism": "illusions",
+  "mechanism_zh": "幻象",
+  "definition": "制造自身或他人的幻象",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "使幻影长矛手进入隐身，最多持续%invis_duration%秒，同时产生一个复制幻象来迷惑敌人。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Juxtapose",
+   "name_zh": "并列",
+   "description_en": "Phantom Lancer has a chance to fracture his presence on an attack, creating an illusion of himself. Illusions also have a chance to fracture further. Illusions created from Phantom Lancer last for %illusion_duration% seconds, while illusions created from other illusions last %illusion_from_illusion_duration% seconds.",
+   "description_zh": "幻影长矛手的攻击有一定几率使自己的存在破碎，产生自身的幻象。幻象也有几率进一步破碎，再产生幻象。幻影长矛手产生的幻象持续%illusion_duration%秒，幻象产生的幻象则持续%illusion_from_illusion_duration%秒。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Adds an active ability to Juxtapose. Renders Phantom Lancer invisible for up to %invis_duration% seconds while generating a duplicate image to confuse enemies. His movement speed is increased by %invis_movespeed%%% during this invisibility.",
+     "zh": "并列增加主动技能。使幻影长矛手进入隐身，最多持续%invis_duration%秒，同时产生一个复制幻象来迷惑敌人。隐身期间自身移动速度提升%invis_movespeed%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "19b6d5160bc86c8ae9be",
+  "subject": "phantom_lancer_juxtapose",
+  "subject_zh": "幻影长矛手·并列",
+  "mechanism": "illusions",
+  "mechanism_zh": "幻象",
+  "definition": "制造自身或他人的幻象",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "幻象也有几率进一步破碎，再产生幻象。",
+   "幻影长矛手产生的幻象持续%illusion_duration%秒，幻象产生的幻象则持续%illusion_from_illusion_duration%秒。",
+   "幻影长矛手的攻击有一定几率使自己的存在破碎，产生自身的幻象。",
+   "Phantom Lancer has a chance to fracture his presence on an attack, creating an illusion of himself.",
+   "Illusions created from Phantom Lancer last for %illusion_duration% seconds, while illusions created from other illusions last %illusion_from_illusion_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Juxtapose",
+   "name_zh": "并列",
+   "description_en": "Phantom Lancer has a chance to fracture his presence on an attack, creating an illusion of himself. Illusions also have a chance to fracture further. Illusions created from Phantom Lancer last for %illusion_duration% seconds, while illusions created from other illusions last %illusion_from_illusion_duration% seconds.",
+   "description_zh": "幻影长矛手的攻击有一定几率使自己的存在破碎，产生自身的幻象。幻象也有几率进一步破碎，再产生幻象。幻影长矛手产生的幻象持续%illusion_duration%秒，幻象产生的幻象则持续%illusion_from_illusion_duration%秒。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Adds an active ability to Juxtapose. Renders Phantom Lancer invisible for up to %invis_duration% seconds while generating a duplicate image to confuse enemies. His movement speed is increased by %invis_movespeed%%% during this invisibility.",
+     "zh": "并列增加主动技能。使幻影长矛手进入隐身，最多持续%invis_duration%秒，同时产生一个复制幻象来迷惑敌人。隐身期间自身移动速度提升%invis_movespeed%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "aacb5765f531c8f16595",
+  "subject": "phantom_lancer_phantom_edge",
+  "subject_zh": "幻影长矛手·幻影冲锋",
+  "mechanism": "illusions",
+  "mechanism_zh": "幻象",
+  "definition": "制造自身或他人的幻象",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "另外，每冲锋%illusion_spawn_travel_distance%距离还会在幻影长矛手身旁制造一个并列幻象，向目标冲去。",
+   "每当幻影长矛手冲锋时穿过敌人，他就会制造并列幻象攻击他们。",
+   "Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them.",
+   "Additionally, every %illusion_spawn_travel_distance% units rushed creates a Juxtapose illusion that rushes to the target alongside Phantom Lancer."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE"
+  },
+  "context": {
+   "name_en": "Phantom Rush",
+   "name_zh": "幻影冲锋",
+   "description_en": "When targeting an enemy for an attack, Phantom Lancer quickly charges into range, gaining increased movement speed and evasion.",
+   "description_zh": "对目标发动攻击后，幻影长矛手将快速向其冲去，获得移动速度和闪避提升。",
+   "notes_en": [
+    "If the attack order is cancelled, the movement speed bonus is lost.",
+    "Rush movement speed is %bonus_speed%."
+   ],
+   "notes_zh": [
+    "如果冲锋中途取消攻击指令，那么移动速度加成就会消失。",
+    "冲锋过程中移动速度为%bonus_speed%。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Range. Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them. Additionally, every %illusion_spawn_travel_distance% units rushed creates a Juxtapose illusion that rushes to the target alongside Phantom Lancer.",
+     "zh": "提升距离。每当幻影长矛手冲锋时穿过敌人，他就会制造并列幻象攻击他们。另外，每冲锋%illusion_spawn_travel_distance%距离还会在幻影长矛手身旁制造一个并列幻象，向目标冲去。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "cd1b6d6c3d0388af8a27",
+  "subject": "shadow_demon_disruption",
+  "subject_zh": "暗影恶魔·崩裂禁锢",
+  "mechanism": "illusions",
+  "mechanism_zh": "幻象",
+  "definition": "制造自身或他人的幻象",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "回归时会产生该单位的2个具有额外基础攻击力的幻象，受暗影恶魔控制。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Disruption",
+   "name_zh": "崩裂禁锢",
+   "description_en": "Banishes the targeted unit from the battlefield for a short duration.  Upon returning, two illusions of the banished unit with bonus base damage are created under Shadow Demon's control.",
+   "description_zh": "将目标单位从战场上放逐一段时间。回归时会产生该单位的2个具有额外基础攻击力的幻象，受暗影恶魔控制。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "90d83f5b9a30c4d9d767",
+  "subject": "arc_warden_tempest_double",
+  "subject_zh": "天穹守望者·风暴双雄",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "风暴双雄产生时带有奥术、隐身和极速神符的效果，持续%rune_duration%秒。",
+   "The Tempest Double is infused with the bonuses of Arcane, Invisibility, and Haste Runes for %rune_duration%s when created."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Tempest Double",
+   "name_zh": "风暴双雄",
+   "description_en": "Briefly refocusing its fractured elements into a single form, the Arc Warden is able to create a perfect electrical duplication of itself. The duplicate can use all of Arc Warden's current items and spells, except most consumables and items that drop on death. The duplicate has separate item and ability cooldowns.The Tempest Double loses its sense of self and fractures over time, becoming slower and less accurate.",
+   "description_zh": "天穹守望者将破碎的自我汇聚到一起，创造出自身的完美电子复制体。复制体可以使用天穹守望者的当前所有物品和基础技能，但是大部分消耗品以及死亡时会掉落的物品除外。复制体的物品和技能冷却时间会独立计算。复制体会逐渐失去自我意识，移动速度变慢，攻击准确度下降。",
+   "notes_en": [
+    "Tempest Double and Refresher Orb cannot be used by the duplicate."
+   ],
+   "notes_zh": [
+    "复制体无法使用风暴双雄或刷新球。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "The Tempest Double is infused with the bonuses of Arcane, Invisibility, and Haste Runes for %rune_duration%s when created.Does not trigger Runic Infusion.",
+     "zh": "风暴双雄产生时带有奥术、隐身和极速神符的效果，持续%rune_duration%秒。不会触发神符灌注。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "fe95f9901a60f35e5a9e",
+  "subject": "bounty_hunter_wind_walk",
+  "subject_zh": "赏金猎人·暗影步",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If he breaks the invisibility with an attack, that attack will stun the target for a short duration.",
+   "赏金猎人进入隐身，获得移动速度加成，并能够穿越其它单位，直到他攻击或使用技能。",
+   "Bounty Hunter becomes invisible and gains bonus movement speed and the ability to move through other units until he attacks or casts a spell."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "name_en": "Shadow Walk",
+   "name_zh": "暗影步",
+   "description_en": "Bounty Hunter becomes invisible and gains bonus movement speed and the ability to move through other units until he attacks or casts a spell.  If he breaks the invisibility with an attack, that attack will stun the target for a short duration.",
+   "description_zh": "赏金猎人进入隐身，获得移动速度加成，并能够穿越其它单位，直到他攻击或使用技能。破隐一击会短暂眩晕目标。",
+   "notes_en": [
+    "Will not break most channeling of spells upon activation."
+   ],
+   "notes_zh": [
+    "开启后不会打断大多数持续施法技能。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "feb813747352a22ce1c5",
+  "subject": "broodmother_sticky_snare",
+  "subject_zh": "育母蜘蛛·蛛纱陷阱",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Broodmother may create up to %count% invisible web lines touching any existing web."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_CHANNELLED ",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Spinner's Snare",
+   "name_zh": "蛛纱陷阱",
+   "description_en": "Broodmother may create up to %count% invisible web lines touching any existing web. Enemy Heroes that cross the web line will spring the trap, becoming rooted, revealed in fog, and take damage over time.  Multiple Heroes can trip on the same line until it's destroyed after being initially triggered.  Broodmother's team is alerted via the minimap when an enemy has triggered the snare.",
+   "description_zh": "育母蜘蛛可以制造出最多%count%个触碰已有蛛网的隐形网线。敌方英雄穿过网线将会触发陷阱，被缠绕，在战争迷雾中显形，并持续受到伤害。网线一开始被触发后，多名英雄还可以在同根网线上被绊倒，直到网线被摧毁。只要有人触发陷阱，育母蜘蛛的队友就会在小地图上发现。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "780598e893d516f921b5",
+  "subject": "glimmer_cape",
+  "subject_zh": "微光披风",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "5 second delay, grants invisibility, 20 movement speed and a magic damage barrier that absorbs up to 375 damage to you or a target allied unit for 5 seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Glimmer Cape",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Glimmer",
+     "description": "After a 0.5 second delay, grants invisibility, 20 movement speed and a magic damage barrier that absorbs up to 375 damage to you or a target allied unit for 5 seconds.\n\nCan be cast while channeling."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "initial_fade_delay",
+     "value": "0.5"
+    },
+    {
+     "key": "secondary_fade_delay",
+     "value": "0.5"
+    },
+    {
+     "key": "active_movement_speed",
+     "value": "20"
+    },
+    {
+     "key": "duration",
+     "value": "5"
+    },
+    {
+     "key": "bonus_magical_armor",
+     "display": "+ {value}% Magic Resistance",
+     "value": "20"
+    },
+    {
+     "key": "barrier_block",
+     "value": "375"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "75b5a464137769751c19",
+  "subject": "hoodwink_decoy",
+  "subject_zh": "森海飞霞·诱敌奇术",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "森海飞霞变为隐身，提升移动速度，并且产生一个引诱敌人的幻象，幻象会瞄准最近的敌方英雄开始蓄力准备发射伤害较低的一箭穿心。",
+   "Hoodwink turns invisible, increasing her movement speed, and creates a decoy illusion that starts aiming a decreased damage Sharpshooter at the nearest enemy hero."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+  },
+  "context": {
+   "name_en": "Decoy",
+   "name_zh": "诱敌奇术",
+   "description_en": "Hoodwink turns invisible, increasing her movement speed, and creates a decoy illusion that starts aiming a decreased damage Sharpshooter at the nearest enemy hero. If the illusion is attacked or hit by a targeted ability, it is destroyed and it throws a lesser bushwhack towards the enemy.",
+   "description_zh": "森海飞霞变为隐身，提升移动速度，并且产生一个引诱敌人的幻象，幻象会瞄准最近的敌方英雄开始蓄力准备发射伤害较低的一箭穿心。如果幻象被攻击或被指向性技能击中，幻象将被摧毁并且攻击者将受到较弱的野地奇袭效果。",
+   "innate": false,
+   "granted_by_scepter": true,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "9d8f0a023d6085f3f59b",
+  "subject": "invis_sword",
+  "subject_zh": "影刃",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If attacking to end the invisibility, you gain 175 bonus physical damage on that attack.",
+   "Makes you invisible for 17 seconds, or until you attack or cast a spell."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Shadow Blade",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Shadow Walk",
+     "description": "Makes you invisible for 17 seconds, or until you attack or cast a spell. While Shadow Walk is active, you move 20% faster and can move through units. \n\nIf attacking to end the invisibility, you gain 175 bonus physical damage on that attack."
+    }
+   ],
+   "notes": "Has a 0.3 second fade time.\nIf the invisibility ends without attacking, the bonus damage is lost.",
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "25"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "35"
+    },
+    {
+     "key": "windwalk_duration",
+     "value": "17.0"
+    },
+    {
+     "key": "windwalk_movement_speed",
+     "value": "20"
+    },
+    {
+     "key": "windwalk_fade_time",
+     "value": "0.3"
+    },
+    {
+     "key": "windwalk_bonus_damage",
+     "value": "175"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "64d5297ad3d1982cdb28",
+  "subject": "invoker_ghost_walk",
+  "subject_zh": "祈求者·幽灵漫步",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Invoker manipulates the ice and electrical energies around him, rendering his body invisible and gaining health and mana regen."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "name_en": "Ghost Walk",
+   "name_zh": "幽灵漫步",
+   "description_en": "Invoker manipulates the ice and electrical energies around him, rendering his body invisible and gaining health and mana regen. The elemental imbalance created as a consequence slows nearby enemies based on the level of Quas, and slows Invoker as well based on the level of Wex.",
+   "description_zh": "祈求者操纵冰电之力围绕自身，使自己隐形并且获得生命和魔法恢复。各种元素的不平衡导致附近敌人的移动速度被减缓，减速效果取决于冰元素的等级，并使祈求者自身移动速度减缓，减速效果与雷元素等级成反比。",
+   "notes_en": [
+    "The slow effect does not work on Spell Immune enemies."
+   ],
+   "notes_zh": [
+    "减速效果对减益免疫状态下的单位无效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Ghost Walk now also applies the Ice Wall Damage Per Second to enemy heroes in its area of effect.",
+     "zh": "现在幽灵漫步还会对范围内的敌方英雄施加寒冰之墙的每秒伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f4d4cd9fba1b58888bef",
+  "subject": "kez_ravens_veil",
+  "subject_zh": "凯·渡鸦之纱",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "凯获得弱驱散效果、移动速度加成和隐身状态，直到他攻击或施法。",
+   "Kez receives a basic dispel and gains bonus movement speed and invisibility until he attacks or casts a spell."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Raven's Veil",
+   "name_zh": "渡鸦之纱",
+   "description_en": "Kez releases a wave of smoke that applies his Mark to nearby enemy heroes, briefly reducing their vision. Kez receives a basic dispel and gains bonus movement speed and invisibility until he attacks or casts a spell.",
+   "description_zh": "凯释放出一阵迷烟，对附近敌方英雄施加标记，暂时削弱他们的视野。凯获得弱驱散效果、移动速度加成和隐身状态，直到他攻击或施法。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "5f58acf585f6f55a16a9",
+  "subject": "lycan_summon_wolves",
+  "subject_zh": "狼人·召狼",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "3级精灵狼获得永久隐身，4级精灵狼获得致残技能，20%几率使目标残废，造成每秒8点伤害，并失去60攻击速度，持续4秒。",
+   "At level 3, wolves gain Permanent Invisibility, and at level 4 wolves gain Cripple that gives 20% chance to cripple the target, causing 8 damage per second and lose 60 attack speed for 4 seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Summon Wolves",
+   "name_zh": "召狼",
+   "description_en": "Summons %wolf_count% wolves to aid Lycan in battle. At level 3, wolves gain Permanent Invisibility, and at level 4 wolves gain Cripple that gives 20% chance to cripple the target, causing 8 damage per second and lose 60 attack speed for 4 seconds.",
+   "description_zh": "召唤%wolf_count%头精灵狼为狼人战斗。3级精灵狼获得永久隐身，4级精灵狼获得致残技能，20%几率使目标残废，造成每秒8点伤害，并失去60攻击速度，持续4秒。",
+   "notes_en": [
+    "Using this spell will replace currently active summoned Wolves."
+   ],
+   "notes_zh": [
+    "使用此技能后原来的狼群将会死亡。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases the number of wolves summoned. Grants all summoned wolves the ability Hightail, an active ability that gives them phased movement, evasion, movespeed, and attack speed.",
+     "zh": "召唤的精灵狼的数量提升。所有召唤的精灵狼获得健步如飞技能，这个主动技能使精灵狼获得相位移动，闪避，移动速度和攻击速度。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "dd69bd2a8a76b9811761",
+  "subject": "mirana_invis",
+  "subject_zh": "米拉娜·月之暗面",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "让米拉娜和所有己方英雄进入隐身状态。",
+   "Turns Mirana and all allied heroes invisible and grants bonus movement speed.",
+   "只要还在月光阴影的持续时间内，即使隐身被打破也会在短时间内重新淡入隐身。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Moonlight Shadow",
+   "name_zh": "月之暗面",
+   "description_en": "Turns Mirana and all allied heroes invisible and grants bonus movement speed. Mirana gains bonus outgoing damage during the duration. If a hero is revealed, invisibility will restore after the fade delay as long as Moonlight Shadow's duration has not expired.",
+   "description_zh": "让米拉娜和所有己方英雄进入隐身状态。米拉娜在持续时间内获得伤害输出加成。只要还在月光阴影的持续时间内，即使隐身被打破也会在短时间内重新淡入隐身。",
+   "notes_en": [
+    "Units affected will not auto attack enemies."
+   ],
+   "notes_zh": [
+    "受到作用的单位会自动停止攻击敌人。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8667f0cc5b16a8f9c53f",
+  "subject": "nyx_assassin_vendetta",
+  "subject_zh": "司夜刺客·复仇",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "如果司夜刺客以攻击打破隐身，当次攻击将造成超高额外伤害，并对目标施加破坏效果。",
+   "If Nyx Assassin attacks to break the invisibility, massive bonus damage is dealt with the attack that applies a break to the target.",
+   "If a spell is used to break the invisibility, or the invisibility expires, the bonus damage is lost.",
+   "司夜刺客进入隐身状态并获得移动速度加成。",
+   "如果在隐身期间使用了技能，或者隐身时间结束，额外伤害的效果将会消失。",
+   "Nyx Assassin becomes invisible and gains a speed bonus."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "name_en": "Vendetta",
+   "name_zh": "复仇",
+   "description_en": "Nyx Assassin becomes invisible and gains a speed bonus. If Nyx Assassin attacks to break the invisibility, massive bonus damage is dealt with the attack that applies a break to the target. Nyx Assassin has %attack_range_bonus% additional attack range and a %attack_animation_bonus%%% faster attack animation for this attack.",
+   "description_zh": "司夜刺客进入隐身状态并获得移动速度加成。如果司夜刺客以攻击打破隐身，当次攻击将造成超高额外伤害，并对目标施加破坏效果。司夜刺客当次攻击具有%attack_range_bonus%额外攻击距离，并且攻击动作加快%attack_animation_bonus%%%。",
+   "notes_en": [
+    "If a spell is used to break the invisibility, or the invisibility expires, the bonus damage is lost.",
+    "With Aghanim's Shard, the Break is applied before the bonus damage."
+   ],
+   "notes_zh": [
+    "如果在隐身期间使用了技能，或者隐身时间结束，额外伤害的效果将会消失。",
+    "会在造成额外伤害前施加破坏效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Decreases cooldown by %bonus_AbilityCooldown%s. For the first %free_pathing_duration%s of Vendetta, Nyx is hasted and has unobstructed pathing.",
+     "zh": "冷却时间减少%bonus_AbilityCooldown%秒。在复仇的最初%free_pathing_duration%秒内，司夜刺客为极速状态，并且移动无视地形。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f9e97d0e987b7c1f3f62",
+  "subject": "riki_backstab",
+  "subject_zh": "力丸·刀光谍影",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Riki fades into the shadows, becoming invisible until he attacks."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Cloak and Dagger",
+   "name_zh": "刀光谍影",
+   "description_en": "Riki fades into the shadows, becoming invisible until he attacks. Hero kills and assists grant additional experience.",
+   "description_zh": "力丸遁入阴影，变为隐身状态，主动攻击敌人后力丸将会显形。击杀英雄和助攻会提供额外经验。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "0daf0c9fb61b0642e581",
+  "subject": "sandking_sand_storm",
+  "subject_zh": "沙王·沙尘暴",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Sand King will become invisible again in %fade_delay% seconds.",
+   "Sand King creates a fearsome sandstorm that damages enemy units and grants Sand King Invisibility while he is in it.",
+   "沙王制造一起可怕的沙尘暴，对敌方单位造成伤害，同时沙王身处其中时获得隐身效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "name_en": "Sand Storm",
+   "name_zh": "沙尘暴",
+   "description_en": "Sand King creates a fearsome sandstorm that damages enemy units and grants Sand King Invisibility while he is in it. The effect ends when Sand King leaves the area.",
+   "description_zh": "沙王制造一起可怕的沙尘暴，对敌方单位造成伤害，同时沙王身处其中时获得隐身效果。沙王离开该区域后效果结束。",
+   "notes_en": [
+    "Sand Storm can be used to dodge projectiles.",
+    "Sand King briefly becomes visible upon attacking or using spells while in Sand Storm. Sand King will become invisible again in %fade_delay% seconds."
+   ],
+   "notes_zh": [
+    "沙尘暴可以用来躲避攻击和技能弹道。",
+    "沙王在沙尘暴中攻击或使用技能会暂时显形。%fade_delay%秒后将再次隐形。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "ebab3f12565234d7e50d",
+  "subject": "shadow_amulet",
+  "subject_zh": "暗影护符",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "5s for the hero to fully fade into invisibility."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Shadow Amulet",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Fade",
+     "description": "Grants invisibility to you or a target allied hero for 3.5s. Movement speed during the invisibility is reduced by 35%."
+    }
+   ],
+   "notes": "Takes 1.25s of the 3.5s for the hero to fully fade into invisibility.",
+   "attrib": [
+    {
+     "key": "fade_time",
+     "display": "FADE TIME: {value}",
+     "value": "1.25"
+    },
+    {
+     "key": "movement_speed_reduction",
+     "value": "35"
+    },
+    {
+     "key": "fade_duration",
+     "value": "3.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "01f675bae159e5f00287",
+  "subject": "slardar_amplify_damage",
+  "subject_zh": "斯拉达·侵蚀雾霭",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Corrosive Haze",
+   "name_zh": "侵蚀雾霭",
+   "description_en": "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility. The enemy unit leaves a trail of water behind it.",
+   "description_zh": "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。敌方单位将在身后留下水迹。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "adbfdd2c755c69bf84d1",
+  "subject": "smoke_of_deceit",
+  "subject_zh": "诡计之雾",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Attacking or moving within 1025 range of an enemy hero or tower, will break the invisibility.",
+   "Turns the caster and all allied player-controlled targets in a 1200 radius invisible, and grants 15% bonus movement speed for 45 seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "dname": "Smoke of Deceit",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Disguise",
+     "description": "Turns the caster and all allied player-controlled targets in a 1200 radius invisible, and grants 15% bonus movement speed for 45 seconds. \n\n While the caster is still disguised, any allies that come within 300 range of them will also get the buff applied to them. Each smoke can only be applied once to allies. \n\nAttacking or moving within 1025 range of an enemy hero or tower, will break the invisibility. \n\nDisguise grants invisibility that is immune to True Sight. \n\nSmoke of Deceit is usable from the backpack and has no cooldown when swapped into the main inventory."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "application_radius",
+     "value": "1200"
+    },
+    {
+     "key": "visibility_radius",
+     "value": "1025"
+    },
+    {
+     "key": "bonus_movement_speed",
+     "value": "15"
+    },
+    {
+     "key": "duration",
+     "value": "45.0"
+    },
+    {
+     "key": "second_cast_cooldown",
+     "value": "2.0"
+    },
+    {
+     "key": "secondary_application_radius",
+     "value": "300"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "e08cef693bab8063bf9e",
+  "subject": "templar_assassin_meld",
+  "subject_zh": "圣堂刺客·隐匿",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Templar Assassin conceals herself, becoming invisible as long as she remains still.",
+   "只要在隐匿状态下攻击敌人打破隐身，拉娜娅的攻击将对敌人造成额外伤害，并降低其护甲，持续%debuff_duration%秒。",
+   "圣堂刺客将自己隐藏起来，只要静止不动将一直处于隐身状态。",
+   "If Meld's invisibility is broken by attacking an enemy, Lanaya's attack will deal bonus damage to the enemy and reduce their armor for %debuff_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "name_en": "Meld",
+   "name_zh": "隐匿",
+   "description_en": "Templar Assassin conceals herself, becoming invisible as long as she remains still. If Meld's invisibility is broken by attacking an enemy, Lanaya's attack will deal bonus damage to the enemy and reduce their armor for %debuff_duration% seconds. Bonus damage and debuffs from Meld are applied to all enemies in the Psi Blades split range.",
+   "description_zh": "圣堂刺客将自己隐藏起来，只要静止不动将一直处于隐身状态。只要在隐匿状态下攻击敌人打破隐身，拉娜娅的攻击将对敌人造成额外伤害，并降低其护甲，持续%debuff_duration%秒。额外伤害和隐匿的负面效果会施加给灵能之刃飞溅距离内所有敌人。",
+   "notes_en": [
+    "Meld is broken by any action other than staying in position or channeling Psionic Projection.",
+    "Meld's armor reduction does not work against towers."
+   ],
+   "notes_zh": [
+    "除了停留在原地或持续施放灵能投射，其他任何动作都会打破隐匿效果。",
+    "隐匿的护甲降低作用对防御塔无效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "6c7e8e38672e2ebe8307",
+  "subject": "templar_assassin_psionic_trap",
+  "subject_zh": "圣堂刺客·灵能陷阱",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "They have invisibility that fades in over %trap_fade_time% seconds and spell immunity.",
+   "Templar Assassin places mystical traps that invisibly monitor enemy movement."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Psionic Trap",
+   "name_zh": "灵能陷阱",
+   "description_en": "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of %movement_speed_min%%% in a %trap_radius% radius. Trap movement slow charges up to %movement_speed_max%%% after %trap_max_charge_duration% seconds. Deals damage after %trap_max_charge_duration%s.",
+   "description_zh": "圣堂刺客放下一个隐形的神秘陷阱监视敌人的动向。引爆后将减缓%trap_radius%范围内敌人的移动速度，陷阱放置时间越久，引爆后减速效果越强，最低为%movement_speed_min%%%，放置%trap_max_charge_duration%秒后引爆将达到最大减速效果，为%movement_speed_max%%%，并且还能造成额外伤害。",
+   "notes_en": [
+    "Traps last indefinitely.",
+    "They have invisibility that fades in over %trap_fade_time% seconds and spell immunity. They take 2 hits to kill by ranged heroes, 1 by melee heroes, and 4 by creeps.",
+    "Traps have 250/250 vision range and don't prevent neutral camps from spawning."
+   ],
+   "notes_zh": [
+    "陷阱没有时间限制。",
+    "他们拥有隐形效果，渐隐时间为%trap_fade_time%秒，还拥有技能免疫状态。他们可以承受2次远程英雄的攻击，1次近战英雄的攻击，或4次非英雄单位的攻击。",
+    "陷阱的视野是250/250，不能阻止中立生物刷新。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When activated, traps now silence affected enemies.",
+     "zh": "现在陷阱引爆后还会沉默受到作用的敌人。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ac533a4e9088176e89ef",
+  "subject": "treant_eyes_in_the_forest",
+  "subject_zh": "树精卫士·丛林之眼",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "The eyes last for %duration% seconds and are invisible, but are destroyed if their host tree is destroyed or if they are attacked directly."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_TREE"
+  },
+  "context": {
+   "name_en": "Eyes In The Forest",
+   "name_zh": "丛林之眼",
+   "description_en": "Treant Protector enchants a tree, which grants him unobstructed vision in that location. The eyes last for %duration% seconds and are invisible, but are destroyed if their host tree is destroyed or if they are attacked directly.",
+   "description_zh": "树精卫士对目标树木灌注魔力。注魔后树木将拥有周围的顺畅视野。树眼持续%duration%秒，为隐形状态，但是寄生的树木被摧毁或者树眼直接被攻击后都会被摧毁。",
+   "notes_en": [
+    "Being entangled by Overgrowth through enchanted trees from Eyes in the Forest does damage.",
+    "If the enemy has True Sight, they will be able to see which trees are enchanted."
+   ],
+   "notes_zh": [
+    "丛林之眼的树木产生的疯狂生长效果也可以造成伤害。",
+    "如果敌人拥有真实视域，他们将会发现被灌注魔力的树木。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ },
+ {
+  "review_id": "147833f273685fdc74c6",
+  "subject": "visage_silent_as_the_grave",
+  "subject_zh": "维萨吉·静如古墓",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Turns Visage and familiars invisible for the duration until the flying movement is lost.",
+   "维萨吉和佣兽在持续时间内为隐身状态，直到失去飞行移动状态。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "name_en": "Silent as the Grave",
+   "name_zh": "静如古墓",
+   "description_en": "Visage gains flying movement and bonus movement speed.  Upon attacking or casting, the speed and flying movement are lost and Visage and his familiars deal additional attack damage for %bonus_duration%s.",
+   "description_zh": "维萨吉获得飞行移动状态和移动速度加成。攻击或施法后，将失去移速加成和飞行移动状态，同时维萨吉和他的佣兽在%bonus_duration%秒内拥有额外攻击力。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases movement speed, damage, and duration. Turns Visage and familiars invisible for the duration until the flying movement is lost.",
+     "zh": "移动速度、额外攻击力和持续时间提升。维萨吉和佣兽在持续时间内为隐身状态，直到失去飞行移动状态。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6fdb2e3951a27f2b53a2",
+  "subject": "ward_sentry",
+  "subject_zh": "岗哨守卫",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Plants a Sentry Ward, an invisible watcher that grants True Sight, the ability to see invisible enemy units and wards, to any existing allied vision within a 1050 radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Sentry Ward",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Plant",
+     "description": "Plants a Sentry Ward, an invisible watcher that grants True Sight, the ability to see invisible enemy units and wards, to any existing allied vision within a 1050 radius.\nLasts 7 minutes.\n\nDoes not grant ground vision.\nHold Control to give one Sentry Ward to an allied hero."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "lifetime",
+     "value": "420"
+    },
+    {
+     "key": "true_sight_range",
+     "value": "1050"
+    },
+    {
+     "key": "health",
+     "value": "200"
+    },
+    {
+     "key": "duration_minutes_tooltip",
+     "value": "7"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "1bdc1b2dcaeb75501332",
+  "subject": "weaver_shukuchi",
+  "subject_zh": "编织者·缩地",
+  "mechanism": "invisibility",
+  "mechanism_zh": "隐身",
+  "definition": "使自身或队友隐身（可被真视识破）",
+  "definition_note": "U40：工程师·感应地雷不算隐身，另记事实备注",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "编织者进入隐身身，达到移动速度上限，在穿过敌方单位时还将造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "name_en": "Shukuchi",
+   "name_zh": "缩地",
+   "description_en": "Weaver shifts out of visibility, gaining max movement speed and doing harm to any enemies it passes through.",
+   "description_zh": "编织者进入隐身身，达到移动速度上限，在穿过敌方单位时还将造成伤害。",
+   "notes_en": [
+    "Can only damage the same unit once per cast."
+   ],
+   "notes_zh": [
+    "每次施放的技能只能对相同单位造成一次伤害。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Shukuchi puts a mark on enemies it damages that last %geminate_attack_mark_duration% seconds. %shukuchi_attack_delay%s after Weaver exits Shukuchi, enemies with a mark within %shukuchi_attack_mark_radius% range will also be attacked with a secondary Geminate attack",
+     "zh": "缩地在造成伤害的敌人身上留下一个标记，持续%geminate_attack_mark_duration%秒。编织者脱离缩地状态%shukuchi_attack_delay%秒后，附近%shukuchi_attack_mark_radius%范围内拥有印记的敌人都会被连击的第二次攻击击中。"
+    }
+   }
+  }
+ }
+]

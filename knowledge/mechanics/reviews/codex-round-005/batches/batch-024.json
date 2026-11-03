@@ -1,0 +1,448 @@
+[
+ {
+  "review_id": "2ed6da092266d3ef89a6",
+  "subject": "venomancer_snakebite",
+  "subject_zh": "剧毒术士·毒蛇撕咬",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"8\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Snakebite",
+   "name_zh": "毒蛇撕咬",
+   "description_en": "Venomancer summons a Spawn of Aktok to sink its fangs into a target, dealing magic damage and applying a toxin that does damage every second. When the target attacks while infected, they take the initial damage again.",
+   "description_zh": "剧毒术士召唤阿克特克的幼体，把它的毒牙刺入一个敌人，造成魔法伤害，并施加造成每秒伤害的剧毒。目标在感染时发动攻击，他就会再次受到初始伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "df82019276832b36c044",
+  "subject": "viper_poison_attack",
+  "subject_zh": "冥界亚龙·毒性攻击",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"135176\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Poison Attack",
+   "name_zh": "毒性攻击",
+   "description_en": "Intensifies Viper's venom, adding an effect to his normal attack that applies a stacking movement speed slow and magic resistance deduction while dealing damage over time. Stacks up to %max_stacks% times.",
+   "description_zh": "蝮蛇的毒液得到强化，使他的普通攻击附带效果，可以降低目标的移动速度和魔法抗性，并持续造成伤害。效果可以叠加，最多叠加%max_stacks%次。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases max stacks, and causes Poison Attack to lower armor per stack and to affect buildings for reduced damage.",
+     "zh": "提升最大叠加次数，毒性攻击可以降低护甲，并且可以作用于建筑，造成的伤害有所降低。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "21603cf0eaaa9d15aa2c",
+  "subject": "viper_viper_strike",
+  "subject_zh": "冥界亚龙·蝮蛇突袭",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"8\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Viper Strike",
+   "name_zh": "蝮蛇突袭",
+   "description_en": "Viper slows the targeted enemy unit's movement and attack speed while also disabling their passives and dealing poison damage over time. The slowing effect reduces over the duration of the poison.",
+   "description_zh": "蝮蛇降低敌方目标单位的移动和攻击速度，同时破坏其被动技能并造成持续毒素伤害。移动和攻击速度会在毒素的持续时间内逐渐恢复。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f55e17f0341a3ff58ca7",
+  "subject": "visage_grave_chill",
+  "subject_zh": "维萨吉·黄泉颤抖",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"8\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Grave Chill",
+   "name_zh": "黄泉颤抖",
+   "description_en": "Visage drains the movement and attack speed of the targeted unit, gaining the drained speed for itself and nearby Familiars.",
+   "description_zh": "维萨吉吸取目标单位的移动和攻击速度，自身和附近的佣兽获得等量加成。",
+   "notes_en": [
+    "The two buffs can be removed separately by dispels.",
+    "The speed gained is independent of the speed lost on the target.",
+    "Familiars within %radius% range of Visage will also receive bonuses from Grave Chill."
+   ],
+   "notes_zh": [
+    "两个状态效果是分开驱散的。",
+    "速度加成和目标的速度减少相互独立。",
+    "维萨吉周围%radius%内的佣兽也将获得黄泉颤抖的加成效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "ec2558966ed94a656186",
+  "subject": "visage_soul_assumption",
+  "subject_zh": "维萨吉·灵魂超度",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "2",
+   "\"8\""
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Soul Assumption",
+   "name_zh": "灵魂超度",
+   "description_en": "Visage gathers charges of soul essence each time nearby heroes take more than %damage_limit% damage. When the essence is released, it deals base damage as well as damage for each gathered soul charge.",
+   "description_zh": "每次附近英雄（不论敌我）受到的伤害超过%damage_limit%点，维萨吉就能集聚灵魂精华的能量。将精华释放后，会对目标单位造成基础伤害，每一点集聚的能量还将造成额外伤害。",
+   "notes_en": [
+    "Charges are only gained for damage greater than %damage_min% and less than %damage_max% that is dealt by a player or Roshan.  Self-damage or Soul Assumption damage isn't counted."
+   ],
+   "notes_zh": [
+    "能量点数只计算来自玩家或肉山的伤害，必须大于%damage_min%点小于%damage_max%点。自残型伤害和灵魂超度造成的伤害不计算在内。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "455939d31d64cda00394",
+  "subject": "warlock_fatal_bonds",
+  "subject_zh": "术士·致命连接",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"35184506306568\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Fatal Bonds",
+   "name_zh": "致命连接",
+   "description_en": "Binds several visible enemy units together, causing a percentage of the damage dealt to one of them to be felt by the others.",
+   "description_zh": "将数个可见的敌方单位连接在一起，其中一人所受伤害的一定百分比会被其他所有人感受到。",
+   "notes_en": [
+    "The shared damage type is the same as the type of damage inflicted.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "共享伤害的类型与原伤害相同。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "97c310b8fab89f5abebd",
+  "subject": "warlock_shadow_word",
+  "subject_zh": "术士·暗言术",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"8\"",
+   "3"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Shadow Word",
+   "name_zh": "暗言术",
+   "description_en": "Warlock whispers an incantation, casting a spell on a unit that makes it deal damage to nearby enemy units and heal nearby ally units. Target Unit will also heal or be damaged depending on whether they are ally or enemy.",
+   "description_zh": "术士低声说出一个咒语，对一个单位施展法术，使周围的敌方单位受到伤害，周围的友方单位被治疗。目标单位也会被治疗或受到伤害，取决于他是友军还是敌人。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "ff58a1b29732e06cd2b8",
+  "subject": "windrunner_focusfire",
+  "subject_zh": "风行者·集中火力",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"134217736\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+  },
+  "context": {
+   "name_en": "Focus Fire",
+   "name_zh": "集中火力",
+   "description_en": "Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.",
+   "description_zh": "风行者受风的引领，攻击敌方单位或建筑的攻击速度增加%bonus_attack_speed%，但是攻击力降低。不过次级物品效果的额外伤害不会降低。",
+   "notes_en": [
+    "Issuing a Hold Position command will pause Windranger's attacks.",
+    "Windranger can move while attacking."
+   ],
+   "notes_zh": [
+    "下达停在原地的指令会暂停风行者的攻击。",
+    "风行者在攻击时可以移动。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "b9cd515c0708898b4c25",
+  "subject": "windrunner_shackleshot",
+  "subject_zh": "风行者·束缚击",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"8\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Shackleshot",
+   "name_zh": "束缚击",
+   "description_en": "Shackles the target to an enemy unit or tree in a line directly behind it.  If no unit or tree is present, the stun duration is reduced to %fail_stun_duration%.",
+   "description_zh": "将目标束缚在正对其后的一个敌方单位或树上。若目标后面没有其它敌方单位或树木，则眩晕时间减少至%fail_stun_duration%秒。",
+   "notes_en": [
+    "This spell can shackle two enemies together, stunning them both.",
+    "Can shackle the target to an enemy unit or tree at most %shackle_distance% behind the target.",
+    "Shackleshot can be disjointed."
+   ],
+   "notes_zh": [
+    "该技能可以将两个敌人一起束缚，使他们同时眩晕。",
+    "束缚击能将目标束缚在身后最多%shackle_distance%距离的敌方单位或树木。",
+    "束缚击可以被躲避。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "32d4817a2625d686815d",
+  "subject": "winter_wyvern_winters_curse",
+  "subject_zh": "寒冬飞龙·寒冬诅咒",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"35184372088872\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+  },
+  "context": {
+   "name_en": "Winter's Curse",
+   "name_zh": "寒冬诅咒",
+   "description_en": "Winter Wyvern dispells then freezes an enemy in place while striking those nearby with a maddening curse which causes them to attack their frozen ally with increased attack speed. The frozen ally and those cursed to attack their ally are immune to all damage from their enemies with the exception of damage from Winter Wyvern or her controlled units. Enemy heroes which enter the cursed area after the cast add to the duration of the curse.",
+   "description_zh": "寒冬飞龙驱散一个敌方目标并将其冻在原地，附近的其他敌人将受到癫狂诅咒，对冻住的队友进行攻击，而且攻击速度得到提升。冻住的目标和被诅咒攻击队友的敌人不会受到任何来自敌方的伤害，不过寒冬飞龙或她控制的单位造成的伤害除外。敌方英雄进入施放后的诅咒范围内会增加诅咒的持续时间。",
+   "notes_en": [
+    "If the target dies to its allies, Winter Wyvern will receive credit for the kill.",
+    "Will only pierce the spell immunity of the primary target, not the target's surrounding allies."
+   ],
+   "notes_zh": [
+    "如果目标被其队友击杀，击杀者将仍是寒冰飞龙。",
+    "无视主目标的减益免疫状态，但是对目标周围的减益免疫队友无效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "4b915bc3697a079ae769",
+  "subject": "witch_doctor_paralyzing_cask",
+  "subject_zh": "巫医·麻痹药剂",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"8\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Paralyzing Cask",
+   "name_zh": "麻痹药剂",
+   "description_en": "Launches a cask of paralyzing powder that ricochets between enemy units, stunning and damaging those it hits. Damage increases each bounce.",
+   "description_zh": "抛出一个装满麻痹粉末的药剂，在敌方单位之间弹跳，眩晕击中的敌人并造成伤害。每次弹跳都会提升伤害。",
+   "notes_en": [
+    "Targets can be hit multiple times, as long as another unit is struck in between the bounces."
+   ],
+   "notes_zh": [
+    "目标可以受到多次作用，只要附近有其他单位可以进行弹跳。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "3744b5be1aaf1d23c059",
+  "subject": "zuus_arc_lightning",
+  "subject_zh": "宙斯·弧形闪电",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "2",
+   "\"8\""
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Arc Lightning",
+   "name_zh": "弧形闪电",
+   "description_en": "Hurls a bolt of lightning that leaps through nearby enemy units that deal damage.",
+   "description_zh": "释放一道会跳跃穿越附近敌人的闪电，并造成伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ }
+]

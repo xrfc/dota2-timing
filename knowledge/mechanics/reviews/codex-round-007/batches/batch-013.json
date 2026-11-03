@@ -1,0 +1,1150 @@
+[
+ {
+  "review_id": "f6314dcae344c1e2d415",
+  "subject": "ancient_apparition_ice_vortex",
+  "subject_zh": "远古冰魄·冰霜漩涡",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Provides vision in a small area where it is placed.",
+   "提供放置地点的小片视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range.",
+   "description_zh": "创造一个寒冰能量的漩涡，对范围内敌人造成伤害和减速，并增加他们受到的魔法伤害。",
+   "notes_en": [
+    "Provides vision in a small area where it is placed."
+   ],
+   "notes_zh": [
+    "提供放置地点的小片视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "6f69668e79f2304f998a",
+  "subject": "spirit_breaker_charge_of_darkness",
+  "subject_zh": "裂魂人·暗影冲刺",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Spirit Breaker gains shared vision of the target.",
+   "裂魂人将获得并共享目标的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_ALERT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Spirit Breaker fixes his sight on an enemy unit and starts charging through all objects, starting at %min_movespeed_bonus_pct%%% of the bonus speed and reaching his max speed after %windup_time%s.All enemy units passed through and the targeted unit will be hit by a Greater Bash.  If the targeted unit dies, Spirit Breaker will change his target to the nearest enemy unit to that location.",
+   "description_zh": "裂魂人盯紧一个敌方单位，开始无视一切物体的冲刺，起始为%min_movespeed_bonus_pct%%%额外移速，%windup_time%秒后达到最大速度。途中经过的所有敌方单位和目标单位都将受到巨力重击。如果目标单位在到达前阵亡，裂魂人将他的目标改为原路径上最近的一个敌方单位。",
+   "notes_en": [
+    "Spirit Breaker passes through trees, cliffs, and units.",
+    "The charge indicator is visible only to allies.",
+    "Spirit Breaker gains shared vision of the target."
+   ],
+   "notes_zh": [
+    "裂魂人在冲刺过程中能穿过树木，悬崖和任何单位。",
+    "冲刺指示特效仅对队友可见。",
+    "裂魂人将获得并共享目标的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "9812505f11ea56b99195",
+  "subject": "invoker_sun_strike",
+  "subject_zh": "祈求者·阳炎冲击",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Gives vision of the target area before the strike.",
+   "施放后立即获得目标区域的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "description_en": "Sends a catastrophic ray of fierce energy from the sun at any targeted location, incinerating all enemies standing beneath it once it reaches the earth. Deals damage based on the level of Exort, however this damage is spread evenly over all enemies hit.",
+   "description_zh": "向目标区域释放毁灭性的阳炎之光能量，一旦能量着陆，将对区域内的敌人进行灼烧。伤害取决于火元素等级，区域内敌人将平摊所有伤害。",
+   "notes_en": [
+    "Gives vision of the target area before the strike.",
+    "Invoker gains experience with kills made from Sun Strike, even if made from outside of experience range."
+   ],
+   "notes_zh": [
+    "施放后立即获得目标区域的视野。",
+    "祈求者使用阳炎冲击击杀英雄后，即使不在经验范围内也能获得经验。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Creates a Cataclysm when Sun Strike is double tapped. Puts it on a %cataclysm_cooldown% second cooldown. Creates %cataclysm_count% visible %cataclysm_damage_pct%%% damage Sun Strikes within %cataclysm_min_range%-%cataclysm_max_range% range of each enemy hero.",
+     "zh": "双击阳炎冲击会发动毁天灭地。施放后阳炎冲击的冷却时间为%cataclysm_cooldown%秒。每个敌方英雄附近%cataclysm_min_range%-%cataclysm_max_range%范围内产生%cataclysm_count%个可见的阳炎冲击，每个都具有%cataclysm_damage_pct%%%伤害。"
+    },
+    "shard_loc": {
+     "en": "If Sun Strike damages an enemy Hero, a Forge Spirit of current level is created at the location.",
+     "zh": "阳炎冲击对敌方英雄造成伤害时，该地点会产生当前等级的熔炉精灵。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d2eb5621bdf203ad02e1",
+  "subject": "silencer_last_word",
+  "subject_zh": "沉默术士·遗言",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Enchants a target, providing vision of them and causing them to be damaged and silenced if they cast a spell or if the enchantment timer expires.",
+   "向目标施加魔咒，提供目标的视野，并且只要目标施放技能或魔咒消失，目标就会受到伤害并被沉默。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Enchants a target, providing vision of them and causing them to be damaged and silenced if they cast a spell or if the enchantment timer expires. Deals extra damage based on the difference in intelligence between Silencer and the target.",
+   "description_zh": "向目标施加魔咒，提供目标的视野，并且只要目标施放技能或魔咒消失，目标就会受到伤害并被沉默。根据沉默术士和目标的智力差还将造成额外伤害。",
+   "notes_en": [
+    "Channeling abilities will trigger this effect once the caster finishes its channel."
+   ],
+   "notes_zh": [
+    "持续施法类技能在英雄结束施法后触发此技能的效果。"
+   ]
+  }
+ },
+ {
+  "review_id": "66c98233374070c1a75f",
+  "subject": "treant_eyes_in_the_forest",
+  "subject_zh": "树精卫士·丛林之眼",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Treant Protector enchants a tree, which grants him unobstructed vision in that location."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityCharges": "2"
+  },
+  "context": {
+   "description_en": "Treant Protector enchants a tree, which grants him unobstructed vision in that location. The eyes last for %duration% seconds and are invisible, but are destroyed if their host tree is destroyed or if they are attacked directly.",
+   "description_zh": "树精卫士对目标树木灌注魔力。注魔后树木将拥有周围的顺畅视野。树眼持续%duration%秒，为隐形状态，但是寄生的树木被摧毁或者树眼直接被攻击后都会被摧毁。",
+   "notes_en": [
+    "Being entangled by Overgrowth through enchanted trees from Eyes in the Forest does damage.",
+    "If the enemy has True Sight, they will be able to see which trees are enchanted."
+   ],
+   "notes_zh": [
+    "丛林之眼的树木产生的疯狂生长效果也可以造成伤害。",
+    "如果敌人拥有真实视域，他们将会发现被灌注魔力的树木。"
+   ]
+  }
+ },
+ {
+  "review_id": "b1a351e1575e040d7a84",
+  "subject": "disruptor_thunder_strike",
+  "subject_zh": "干扰者·风雷之击",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Provides vision of its target.",
+   "提供目标的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Repeatedly strikes the targeted unit with lightning.  Each strike damages nearby enemy units in a small radius and slows enemy movement and attack speed by %slow_amount%%% for %slow_duration% seconds.  Provides vision of its target.",
+   "description_zh": "用闪电反复打击目标单位。每次打击会伤害附近小范围内的敌方单位，并施加%slow_duration%秒的%slow_amount%%%攻击速度和移动速度降低效果。提供目标的视野。"
+  }
+ },
+ {
+  "review_id": "cf692909ba900489e775",
+  "subject": "keeper_of_the_light_illuminate",
+  "subject_zh": "光之守卫·冲击波",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Once released, a wave is sent forth that deals damage and gives vision in its path.",
+   "Gives increasing vision over the channeling time.",
+   "释放后，光波沿直线向前发出，造成伤害并获得沿途的视野。",
+   "在持续施法期间获得的视野不断增大。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+  },
+  "context": {
+   "description_en": "CHANNELED - Channels light energy, building power the longer it's channeled.  Once released, a wave is sent forth that deals damage and gives vision in its path.  The longer it is channeled, the more damage is dealt.",
+   "description_zh": "持续施法 - 引导光的能量，持续施法的时间越长，威力越大。释放后，光波沿直线向前发出，造成伤害并获得沿途的视野。",
+   "notes_en": [
+    "Gives increasing vision over the channeling time."
+   ],
+   "notes_zh": [
+    "在持续施法期间获得的视野不断增大。"
+   ]
+  }
+ },
+ {
+  "review_id": "062386e9d9312364613b",
+  "subject": "troll_warlord_battle_trance",
+  "subject_zh": "巨魔战将·战斗专注",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Troll is granted vision over the target.",
+   "巨魔战将会获得目标的视野。"
+  ],
+  "game_file_fields": {},
+  "context": {
+   "description_en": "Troll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes. Damage does not kill you during this mode. Grants you bonus lifesteal, attack speed, slow resistance and movement speed. Applies a Basic Dispel.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "巨魔战将释放出强大的战斗专注，强迫自身持续攻击%range%距离内最近的敌方单位，以英雄优先。专注期间不会因伤害而阵亡。提供额外吸血，攻击速度，减速抗性和移动速度。施放时施加弱驱散。 \n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Troll can still use his items and abilities while affected by Battle Trance, but not other commands.",
+    "Troll can still be killed with Axe's Culling Blade.",
+    "Troll is granted vision over the target."
+   ],
+   "notes_zh": [
+    "巨魔战将在战斗专注作用下仍然可以使用他的物品技能，但是无法执行其他指令。",
+    "斧王的淘汰之刃还是能斩杀巨魔战将。",
+    "巨魔战将会获得目标的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "f0867b76fc2992bf9e61",
+  "subject": "skywrath_mage_arcane_bolt",
+  "subject_zh": "天怒法师·奥法鹰隼",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "The projectile moves very slowly (500 ms), providing 325 vision around it.",
+   "鹰群移动得非常缓慢（500移速），提供325范围的视野。",
+   "击中目标后，将给予目标区域的视野，持续3."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.",
+   "description_zh": "天怒法师施放出缓慢移动的奥术鹰群，对敌方单位造成基于天怒法师智力值的伤害。",
+   "notes_en": [
+    "The projectile moves very slowly (500 ms), providing 325 vision around it.  Upon impact, it will reveal the target area for 3.34 seconds.",
+    "Arcane Bolt cannot be disjointed."
+   ],
+   "notes_zh": [
+    "鹰群移动得非常缓慢（500移速），提供325范围的视野。击中目标后，将给予目标区域的视野，持续3.34秒。",
+    "奥法鹰隼无法被躲避。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "When Skywrath Mage casts Arcane Bolt, %total_bolt_count% bolts are created, one aimed at the original target, and two others aimed at random enemies within %extra_bolt_search_radius% range of the original target. Heroes will take priority.",
+     "zh": "天怒法师施放奥法鹰隼时，会产生%total_bolt_count%个鹰隼，其中一个飞往原目标，而另外的两个飞往原目标附近%extra_bolt_search_radius%范围内随机敌人。以英雄为首要目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d1c70e0d1c626d30c3f2",
+  "subject": "skywrath_mage_concussive_shot",
+  "subject_zh": "天怒法师·震荡光弹",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Provides 400 vision around the projectile, and reveals the target area for 3.",
+   "光弹将给予400范围的附近视野，击中后将获得目标区域的视野，持续3."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Skywrath Mage sets off a long range shot that hits the closest hero within a long range.  Upon impact, it deals damage and slows in an area of effect.",
+   "description_zh": "天怒法师释放一个远距离的光弹，将击中超大范围内最近的英雄。击中后会对英雄附近范围内所有单位造成伤害和减速。",
+   "notes_en": [
+    "If no enemy heroes are in range or they are in fog, Concussive Shot targets the nearest enemy creep.",
+    "Damages creeps around the impact area.",
+    "Provides 400 vision around the projectile, and reveals the target area for 3.34 seconds upon impact."
+   ],
+   "notes_zh": [
+    "如果作用范围内没有英雄或英雄处于迷雾中，震荡光弹将以最近的敌方小兵或中立生物为目标。",
+    "击中英雄后附近的非英雄单位也会受到伤害。",
+    "光弹将给予400范围的附近视野，击中后将获得目标区域的视野，持续3.34秒。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When Skywrath Mage casts Concussive Shot, a different random target within %scepter_radius% range of the original target will be hit with the same ability. Heroes will take priority.",
+     "zh": "天怒法师施放震荡光弹时，会随机对原目标附近%scepter_radius%范围内另一个敌人施放相同的技能。以英雄为首要目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "bc0244bb79a591be2bb9",
+  "subject": "phoenix_fire_spirits",
+  "subject_zh": "凤凰·烈火精灵",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "烈火精灵现在到达目标区域后将获得1秒的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Summons 4 fire spirits that circle around Phoenix. Each spirit can be launched independently at a targeted area of effect. Affected enemy units take damage over time and have their attack speed greatly reduced.",
+   "description_zh": "召唤4只围绕凤凰飞行的烈火精灵。每一只烈火精灵都能被单独发射到指定区域。对敌人持续造成伤害并大幅降低他们的攻击速度。",
+   "notes_en": [
+    "Fire Spirits reveal the area they strike for 1 second."
+   ],
+   "notes_zh": [
+    "烈火精灵现在到达目标区域后将获得1秒的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "7636e9e845ccf710423e",
+  "subject": "dark_willow_terrorize",
+  "subject_zh": "邪影芳灵·恐吓",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Terrorize provides vision on affected units.",
+   "恐吓提供受作用单位的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Dark Willow releases her pet wisp to terrorize her enemies. After a short delay, all enemies in the target area become fearful and run toward their home fountain. Terrorize cannot be used while Bedlam is active.",
+   "description_zh": "邪影芳灵放出她的精灵宠物恐吓她的敌人。经过一定延迟后，目标区域内所有敌人变得害怕，朝自己的泉水狂奔。作祟开启期间不能使用恐吓。",
+   "notes_en": [
+    "Terrorize provides vision on affected units."
+   ],
+   "notes_zh": [
+    "恐吓提供受作用单位的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "11f8deeb7ed20df6128f",
+  "subject": "grimstroke_soul_chain",
+  "subject_zh": "天涯墨客·缚魂",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Provides vision of both leashed units.",
+   "被束缚的单位都将提供视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Binds a targeted enemy hero to its nearest allied hero within the bind radius, preventing both from moving away from each other. Any unit-targeted ability that either bound hero receives also gets cast on the other hero. If the bind is broken before the duration expires, the initial target will be bound to its nearest allied hero in the radius.",
+   "description_zh": "将一名敌方英雄与束缚作用范围内最接近的队友相连，阻止他们远离彼此。任何指向性技能击中任一英雄时，这两名敌方英雄都会受到作用。若连接在效果截止前断裂，初始目标将再次与其距离内最接近的队友相连。",
+   "notes_en": [
+    "If bound to another unit, affected units are leashed and prevented from blinking.",
+    "Provides vision of both leashed units."
+   ],
+   "notes_zh": [
+    "如果与另一个单位一起被束缚，作用下单位均被束缚，而且无法使用闪烁类技能。",
+    "被束缚的单位都将提供视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "48ff4ca59a6c0cdec6a0",
+  "subject": "grimstroke_ink_trail",
+  "subject_zh": "天涯墨客·墨痕",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Provides vision over affected heroes.",
+   "获得作用下英雄的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Grimstroke's attacks and spells cause affected enemy heroes to leave a trail of Ink behind them and deal less damage to Grimstroke for %debuff_duration%s.",
+   "description_zh": "天涯墨客的攻击和技能会使受作用的敌方英雄在身后留下一道墨痕，对天涯墨客造成的伤害减少，持续%debuff_duration%秒。",
+   "notes_en": [
+    "Provides vision over affected heroes.",
+    "Grimstroke's illusions (including Dark Portrait) also have Ink Trail."
+   ],
+   "notes_zh": [
+    "获得作用下英雄的视野。",
+    "天涯墨客的幻象（包括暗绘）也拥有墨痕。"
+   ]
+  }
+ },
+ {
+  "review_id": "eb7af85cec4a4ef533a0",
+  "subject": "dawnbreaker_break_of_dawn",
+  "subject_zh": "破晓辰星·辰星破晓",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "只要太阳出来，破晓辰星就会获得基础攻击力加成和额外视野，加成效果会在整个白天内逐渐降低。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+  },
+  "context": {
+   "description_en": "Whenever the sun comes out, Dawnbreaker gains bonus base damage and vision that decreases throughout the course of the day. If Dawnbreaker causes the day these bonuses are at full power for the entirety of that daytime.",
+   "description_zh": "只要太阳出来，破晓辰星就会获得基础攻击力加成和额外视野，加成效果会在整个白天内逐渐降低。如果是破晓辰星制造的白天，在整个白天时间内加成效果始终是最大值。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Break of Dawn provides healing amplification equal to the current damage increase.",
+     "zh": "辰星破晓提供治疗增强，数值等于当前攻击力提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "39394784377e94844011",
+  "subject": "essence_distiller",
+  "subject_zh": "精之灵器",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "When on enemies, deals 25 damage per second and provides True Sight over them and shares their vision with the wearer's team.",
+   "While dormant, provides vision in 450 radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Essence Distiller",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "Provides 40 health regeneration when cast on allies.\n\nCan be ground targeted to lie dormant for up to 15s and attach to the first enemy that comes within 450 radius. When on enemies, deals 25 damage per second and provides True Sight over them and shares their vision with the wearer's team.\n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units."
+    }
+   ],
+   "notes": "Empty distillers gain 2 charges.\nOnly the closest Essence Distiller to the dying hero will gain a charge.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.\nWhile dormant, provides vision in 450 radius. Vision lingers for 0.5s after latching.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.5"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "3"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "6"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "150"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "40"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    },
+    {
+     "key": "ground_duration",
+     "value": "15.0"
+    },
+    {
+     "key": "latch_range",
+     "value": "450"
+    },
+    {
+     "key": "latch_vision",
+     "value": "450"
+    },
+    {
+     "key": "linger_after_latch_duration",
+     "value": "0.5"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "c995cdd5088b6aa3dfd3",
+  "subject": "moon_shard",
+  "subject_zh": "银月之晶",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Shade Sight: Grants bonus night vision."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Moon Shard",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Consume",
+     "description": "Consume the Moon Shard to permanently gain 60 attack speed and 200 bonus night vision. Max 1 use."
+    },
+    {
+     "type": "passive",
+     "title": "Shade Sight",
+     "description": "Grants bonus night vision."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "140"
+    },
+    {
+     "key": "bonus_night_vision",
+     "display": "+ {value} Bonus Night Vision",
+     "value": "400"
+    },
+    {
+     "key": "consumed_bonus",
+     "value": "60"
+    },
+    {
+     "key": "consumed_bonus_night_vision",
+     "value": "200"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "73a1fc0c63c12b741dfe",
+  "subject": "ward_observer",
+  "subject_zh": "侦察守卫",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Plant: Plants an Observer Ward, an invisible watcher that gives ground vision in a 1600 radius to your team."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Observer Ward",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Plant",
+     "description": "Plants an Observer Ward, an invisible watcher that gives ground vision in a 1600 radius to your team. Lasts 6 minutes.\n\nHold Control to give one Observer Ward to an allied hero."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "lifetime",
+     "value": "360"
+    },
+    {
+     "key": "vision_range_tooltip",
+     "value": "1600"
+    },
+    {
+     "key": "health",
+     "value": "200"
+    },
+    {
+     "key": "duration_minutes_tooltip",
+     "value": "6"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "7791e5e4c574ad47cf33",
+  "subject": "ward_sentry",
+  "subject_zh": "岗哨守卫",
+  "mechanism": "grant_vision",
+  "mechanism_zh": "提供视野",
+  "definition": "提供目标或区域的视野",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Does not grant ground vision."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "dname": "Sentry Ward",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Plant",
+     "description": "Plants a Sentry Ward, an invisible watcher that grants True Sight, the ability to see invisible enemy units and wards, to any existing allied vision within a 1050 radius.\nLasts 7 minutes.\n\nDoes not grant ground vision.\nHold Control to give one Sentry Ward to an allied hero."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "lifetime",
+     "value": "420"
+    },
+    {
+     "key": "true_sight_range",
+     "value": "1050"
+    },
+    {
+     "key": "health",
+     "value": "200"
+    },
+    {
+     "key": "duration_minutes_tooltip",
+     "value": "7"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "ea6685531031a2fdfbb8",
+  "subject": "kez_ravens_veil",
+  "subject_zh": "凯·渡鸦之纱",
+  "mechanism": "reduce_vision",
+  "mechanism_zh": "减视野",
+  "definition": "降低目标的视野",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Kez releases a wave of smoke that applies his Mark to nearby enemy heroes, briefly reducing their vision.",
+   "凯释放出一阵迷烟，对附近敌方英雄施加标记，暂时削弱他们的视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Kez releases a wave of smoke that applies his Mark to nearby enemy heroes, briefly reducing their vision. Kez receives a basic dispel and gains bonus movement speed and invisibility until he attacks or casts a spell.",
+   "description_zh": "凯释放出一阵迷烟，对附近敌方英雄施加标记，暂时削弱他们的视野。凯获得弱驱散效果、移动速度加成和隐身状态，直到他攻击或施法。"
+  }
+ },
+ {
+  "review_id": "4604004f0f36fe8900d5",
+  "subject": "puck_phase_shift",
+  "subject_zh": "帕克·相位转移",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "帕克在相位转移状态下依然具有碰撞体积。",
+   "进行任何动作都会中止相位转移。",
+   "帕克在相位转移状态下无敌。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "description_en": "CHANNELED - Puck briefly shifts into another dimension where it is immune from harm.",
+   "description_zh": "持续施法 - 帕克暂时将自己转移到另一个位面，从而免疫伤害。",
+   "notes_en": [
+    "Puck retains collision size while under the effects of Phase Shift.",
+    "Issuing any action will cancel Phase Shift.",
+    "Puck is invulnerable during Phase Shift."
+   ],
+   "notes_zh": [
+    "帕克在相位转移状态下依然具有碰撞体积。",
+    "进行任何动作都会中止相位转移。",
+    "帕克在相位转移状态下无敌。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Puck's attacks deal bonus magic damage. Puck attacks all enemies within its attack range every time it phase shifts.",
+     "zh": "帕克的攻击造成额外魔法伤害。帕克每次施放相位转移时对攻击距离内所有敌人发动一次攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "64761cf344a65735ae63",
+  "subject": "puck_phase_shift",
+  "subject_zh": "帕克·相位转移",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "帕克每次施放相位转移时对攻击距离内所有敌人发动一次攻击。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "description_en": "CHANNELED - Puck briefly shifts into another dimension where it is immune from harm.",
+   "description_zh": "持续施法 - 帕克暂时将自己转移到另一个位面，从而免疫伤害。",
+   "notes_en": [
+    "Puck retains collision size while under the effects of Phase Shift.",
+    "Issuing any action will cancel Phase Shift.",
+    "Puck is invulnerable during Phase Shift."
+   ],
+   "notes_zh": [
+    "帕克在相位转移状态下依然具有碰撞体积。",
+    "进行任何动作都会中止相位转移。",
+    "帕克在相位转移状态下无敌。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Puck's attacks deal bonus magic damage. Puck attacks all enemies within its attack range every time it phase shifts.",
+     "zh": "帕克的攻击造成额外魔法伤害。帕克每次施放相位转移时对攻击距离内所有敌人发动一次攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5bbbef378361187e4124",
+  "subject": "riki_tricks_of_the_trade",
+  "subject_zh": "力丸·绝杀秘技",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "He has fixed attack damage while phased out."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "CHANNELED - Riki phases out of the world and periodically strikes %interval_targets% random enemy units from behind in an area around him. He has fixed attack damage while phased out.",
+   "description_zh": "持续施法 - 力丸转移出现实位面，每隔一段时间从背后随机攻击附近的%interval_targets%个随机敌方单位。期间他的攻击伤害为固定值。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Cast Range to %AbilityCastRange%. Allows you to target an allied unit, hiding inside them for the duration. While hiding in an allied unit, they have %scepter_movespeed%%% bonus movement speed, and Tricks of the Trade lasts %scepter_bonus_duration%s longer and does an additional %scepter_bonus_attacks% attacks.",
+     "zh": "提升施法距离至%AbilityCastRange%。可以对友方单位施放，持续时间内藏在他们体内。藏在友方单位体内时，他会拥有%scepter_movespeed%%%移动速度加成，同时绝杀秘技的持续时间提升%scepter_bonus_duration%秒，并且额外发动%scepter_bonus_attacks%次攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "626fe5eabae8974e9ccd",
+  "subject": "dark_seer_surge",
+  "subject_zh": "黑暗贤者·奔腾",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Charges a target friendly unit with power, giving it a brief burst of phased movement speed.",
+   "为一个友方目标注入能量，使其在短时间内移动速度爆发，并且获得相位移动状态。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Charges a target friendly unit with power, giving it a brief burst of phased movement speed. Allows the unit to reach maximum movement speed and cannot be slowed.",
+   "description_zh": "为一个友方目标注入能量，使其在短时间内移动速度爆发，并且获得相位移动状态。允许单位达到移动速度上限，并且无法被减速。",
+   "notes_en": [
+    "Units with Surge cannot be slowed unless the Surge effect is removed."
+   ],
+   "notes_zh": [
+    "奔腾的单位不受减速影响，除非奔腾效果消失。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Surged units leave behind a %trail_radius% radius trail that lasts %trail_duration%s, slows enemies around it by %trail_move_slow%%% and deals %trail_damage% damage per second in %trail_damage_interval%s intervals. Can be put on alt-cast to disable the trail.",
+     "zh": "奔腾单位的身后留下一道路径，作用范围为%trail_radius%，持续%trail_duration%秒，对附近的敌人造成%trail_move_slow%%%减速，并且每秒造成%trail_damage%点伤害，伤害间隔为%trail_damage_interval%秒。可以设为多样施法（右键点击技能栏图标），禁止留下路径。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "72d30194c36af6c151fb",
+  "subject": "lycan_summon_wolves",
+  "subject_zh": "狼人·召狼",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Grants all summoned wolves the ability Hightail, an active ability that gives them phased movement, evasion, movespeed, and attack speed.",
+   "所有召唤的精灵狼获得健步如飞技能，这个主动技能使精灵狼获得相位移动，闪避，移动速度和攻击速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Summons %wolf_count% wolves to aid Lycan in battle. At level 3, wolves gain Permanent Invisibility, and at level 4 wolves gain Cripple that gives 20% chance to cripple the target, causing 8 damage per second and lose 60 attack speed for 4 seconds.",
+   "description_zh": "召唤%wolf_count%头精灵狼为狼人战斗。3级精灵狼获得永久隐身，4级精灵狼获得致残技能，20%几率使目标残废，造成每秒8点伤害，并失去60攻击速度，持续4秒。",
+   "notes_en": [
+    "Using this spell will replace currently active summoned Wolves."
+   ],
+   "notes_zh": [
+    "使用此技能后原来的狼群将会死亡。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases the number of wolves summoned. Grants all summoned wolves the ability Hightail, an active ability that gives them phased movement, evasion, movespeed, and attack speed.",
+     "zh": "召唤的精灵狼的数量提升。所有召唤的精灵狼获得健步如飞技能，这个主动技能使精灵狼获得相位移动，闪避，移动速度和攻击速度。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4077ff5e24a5b7dce1c6",
+  "subject": "brewmaster_primal_split",
+  "subject_zh": "酒仙·元素分离",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "The Fire Element has phased movement.",
+   "烈火战士拥有相位移动的能力。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Splits Brewmaster into elements, forming 3 specialized warriors, adept at survival, each with their own abilities. If any of them survive until the end of their summoned timer, the Brewmaster is reborn.  Each Warrior gains its respective Drunken Brawler stance.",
+   "description_zh": "酒仙分裂成元素，产生3个各有所长的战士，生存能力极强，每个都拥有独特技能。只要其中任何一个在召唤时间结束后存活下来，酒仙就能重生。每个战士都会获得对应的醉拳拳法。",
+   "notes_en": [
+    "The Earth Element will carry all auras that the Brewmaster has, as well as True Sight.",
+    "The Fire Element has phased movement.",
+    "When the spell ends, Brewmaster will take the place of an element in this order, assuming they are alive: Earth, Storm, Fire."
+   ],
+   "notes_zh": [
+    "大地战士将继承酒仙的所有光环，以及真视宝石的真视效果。",
+    "烈火战士拥有相位移动的能力。",
+    "技能结束后，酒仙会根据大地→狂风→烈火的顺序选择未阵亡的元素重生。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Primal Split gains %scepter_bonus_levels% max and current level, improving the Brewlings and their abilities.Allows Primal Split to be cancelled early, and causes the Brewlings to be Brewed Up when Primal Split begins.",
+     "zh": "元素分离获得%scepter_bonus_levels%级最高和当前等级，强化元素战士和他们的技能。元素分离可以提前结束，而且元素分离开始时元素战士是浸酒状态。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "05ba06973f564f13ed07",
+  "subject": "treant_overgrowth",
+  "subject_zh": "树精卫士·疯狂生长",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "While enlarged, he gains phased movement with a fixed speed of %movement_speed%, %strength_bonus%%% bonus Strength, and a splashing attack that deals %splash_pct%%% of his attack damage in a %splash_radius% unit radius.",
+   "变大后他会获得相位移动状态，移动速度为固定%movement_speed%，%strength_bonus%%%力量加成，并且拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Summons an overgrowth of vines and branches around Treant that deal damage to afflicted enemies and prevent them from moving, blinking, going invisible, or attacking.",
+   "description_zh": "在树精卫士周围召唤出疯狂生长的伤害性藤条和枝干，造成伤害并且阻止被缠绕的敌人移动、闪烁、进入隐身或攻击。",
+   "notes_en": [
+    "Works on Debuff Immune units, but if units gain debuff immunity after the effect starts, they'll break free."
+   ],
+   "notes_zh": [
+    "效果无视减益免疫，但是在期间获得减益免疫状态将挣脱控制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases Cooldown to %AbilityCooldown% seconds. When casting Overgrowth, Treant Protector draws power from the soil, greatly increasing his size for %bloom_duration% seconds. While enlarged, he gains phased movement with a fixed speed of %movement_speed%, %strength_bonus%%% bonus Strength, and a splashing attack that deals %splash_pct%%% of his attack damage in a %splash_radius% unit radius.",
+     "zh": "冷却时间降低至%AbilityCooldown%秒。施放疯狂生长时，树精卫士从土壤中汲取力量，他的身体急剧增大，持续%bloom_duration%秒。变大后他会获得相位移动状态，移动速度为固定%movement_speed%，%strength_bonus%%%力量加成，并且拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "65768245ac4c158d32c0",
+  "subject": "dark_willow_shadow_realm",
+  "subject_zh": "邪影芳灵·暗影之境",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Grants phased movement.",
+   "获得相位移动状态。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "description_en": "Dark Willow recedes into the shadows, becoming untargetable.  Her next attack has %attack_range_bonus% bonus attack range and deals bonus magic damage, and will end Shadow Realm. Damage scales based on how long she remains under the effects of Shadow Realm, the maximum being reached after %max_damage_duration% seconds.",
+   "description_zh": "邪影芳灵遁入暗影之境，无法成为攻击或技能的目标。她的下次攻击具有%attack_range_bonus%额外攻击距离，并且造成额外魔法伤害，暗影之境技能也会随之结束。在暗影中时间越长，伤害越高。在暗影之境内的时间超过%max_damage_duration%秒将达到最高伤害。",
+   "notes_en": [
+    "Disjoints projectiles upon cast.",
+    "Grants phased movement.",
+    "Spells which require vision cannot affect Dark Willow in the Shadow Realm."
+   ],
+   "notes_zh": [
+    "施法时能躲避弹道。",
+    "获得相位移动状态。",
+    "需要视野的技能无法作用于暗影之境中的邪影芳灵。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Attacking no longer takes Dark Willow out of Shadow Realm. Each attack still has bonus damage based on the duration of the buff.",
+     "zh": "发动普通攻击不再使邪影芳灵脱离暗影之境。持续时间内每次攻击都带有额外伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f68bf174d610017af258",
+  "subject": "mars_bulwark",
+  "subject_zh": "玛尔斯·护身甲盾",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Can be toggled, granting phased movement, removing Mars's ability to attack, and locking the direction he is facing.",
+   "可以开启，开启后获得相位移动状态，但无法攻击，自身锁定为面朝的方向，并且移动速度降低，但飞向队友的攻击弹道中%redirect_chance%%%将改变方向朝他飞去。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Mars wields his massive shield to block a portion of each physical attack when hit from the front or sides. Can be toggled, granting phased movement, removing Mars's ability to attack, and locking the direction he is facing. When active, reduces movement speed and re-directs %redirect_chance%%% of the attack projectiles aimed at allies towards himself.",
+   "description_zh": "每当玛尔斯受到来自正面或侧面的攻击时，他就挥舞他那面巨大的战盾来格挡一定百分比的伤害。可以开启，开启后获得相位移动状态，但无法攻击，自身锁定为面朝的方向，并且移动速度降低，但飞向队友的攻击弹道中%redirect_chance%%%将改变方向朝他飞去。",
+   "notes_en": [
+    "Redirect only works if the projectile targets are in a cone behind Mars or within 100 range of him.",
+    "Break disables the front and side damage reduction."
+   ],
+   "notes_zh": [
+    "改向只会在弹道目标位于玛尔斯身后锥形区域内或他身边100范围内才会生效。",
+    "破坏会使正面和侧面减伤效果失效。"
+   ]
+  }
+ },
+ {
+  "review_id": "d229825910a63e3c7242",
+  "subject": "hoodwink_scurry",
+  "subject_zh": "森海飞霞·密林奔走",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Hoodwink gains bonus movement speed, phased movement, and tree-walking for a brief time.",
+   "森海飞霞在短时间内获得移动速度加成，相位移动状态和穿行树木效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Hoodwink gains bonus movement speed, phased movement, and tree-walking for a brief time. While active, the redirect chance of Mistwoods Wayfarer is multiplied by %evasion_multiplier%.",
+   "description_zh": "森海飞霞在短时间内获得移动速度加成，相位移动状态和穿行树木效果。开启时林渊旅人的转向几率为%evasion_multiplier%倍。"
+  }
+ }
+]

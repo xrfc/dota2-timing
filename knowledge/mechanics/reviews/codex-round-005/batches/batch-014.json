@@ -1,0 +1,1337 @@
+[
+ {
+  "review_id": "bb730f9ad543fe90f52f",
+  "subject": "queenofpain_blink",
+  "subject_zh": "痛苦女王·闪烁",
+  "mechanism": "silence",
+  "mechanism_zh": "沉默",
+  "definition": "目标无法施放技能（仍可攻击、使用物品）",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "在%shard_aoe%范围内造成%shard_damage%点伤害，并沉默%shard_duration%秒。",
+   "Deals %shard_damage% damage in a %shard_aoe% AoE and silences the target for %shard_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "name_en": "Blink",
+   "name_zh": "闪烁",
+   "description_en": "Short distance teleportation that allows Queen of Pain to move in and out of combat.",
+   "description_zh": "短距离传送，能让痛苦女王自由出入战场。",
+   "notes_en": [
+    "You can use Blink to dodge incoming projectiles."
+   ],
+   "notes_zh": [
+    "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Releases a sonic boom when Queen of Pain blinks, at both her starting and ending locations. Deals %shard_damage% damage in a %shard_aoe% AoE and silences the target for %shard_duration% seconds.",
+     "zh": "在痛苦女王的闪烁起点和落地点各释放一次音爆。在%shard_aoe%范围内造成%shard_damage%点伤害，并沉默%shard_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f1a68e0d102215fe0a40",
+  "subject": "skywrath_mage_ancient_seal",
+  "subject_zh": "天怒法师·上古封印",
+  "mechanism": "silence",
+  "mechanism_zh": "沉默",
+  "definition": "目标无法施放技能（仍可攻击、使用物品）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.",
+   "天怒法师利用上古符文将目标单位封印，目标单位将被沉默，受到魔法伤害时将承受额外伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Ancient Seal",
+   "name_zh": "上古封印",
+   "description_en": "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.",
+   "description_zh": "天怒法师利用上古符文将目标单位封印，目标单位将被沉默，受到魔法伤害时将承受额外伤害。",
+   "notes_en": [
+    "The magic damage resistance reduction doesn't affect creeps."
+   ],
+   "notes_zh": [
+    "减少魔法抗性的效果对非英雄单位无效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Anytime Skywrath Mage casts Ancient Seal, a different random target within %scepter_radius% range of the original target will be affected by the same ability. Heroes will take priority.",
+     "zh": "天怒法师施放上古封印时，会随机对原目标附近%scepter_radius%范围内另一个敌人施放相同的技能。以英雄为首要目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "89d29295a011fa35c18a",
+  "subject": "templar_assassin_psionic_trap",
+  "subject_zh": "圣堂刺客·灵能陷阱",
+  "mechanism": "silence",
+  "mechanism_zh": "沉默",
+  "definition": "目标无法施放技能（仍可攻击、使用物品）",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When activated, traps now silence affected enemies.",
+   "现在陷阱引爆后还会沉默受到作用的敌人。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Psionic Trap",
+   "name_zh": "灵能陷阱",
+   "description_en": "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of %movement_speed_min%%% in a %trap_radius% radius. Trap movement slow charges up to %movement_speed_max%%% after %trap_max_charge_duration% seconds. Deals damage after %trap_max_charge_duration%s.",
+   "description_zh": "圣堂刺客放下一个隐形的神秘陷阱监视敌人的动向。引爆后将减缓%trap_radius%范围内敌人的移动速度，陷阱放置时间越久，引爆后减速效果越强，最低为%movement_speed_min%%%，放置%trap_max_charge_duration%秒后引爆将达到最大减速效果，为%movement_speed_max%%%，并且还能造成额外伤害。",
+   "notes_en": [
+    "Traps last indefinitely.",
+    "They have invisibility that fades in over %trap_fade_time% seconds and spell immunity. They take 2 hits to kill by ranged heroes, 1 by melee heroes, and 4 by creeps.",
+    "Traps have 250/250 vision range and don't prevent neutral camps from spawning."
+   ],
+   "notes_zh": [
+    "陷阱没有时间限制。",
+    "他们拥有隐形效果，渐隐时间为%trap_fade_time%秒，还拥有技能免疫状态。他们可以承受2次远程英雄的攻击，1次近战英雄的攻击，或4次非英雄单位的攻击。",
+    "陷阱的视野是250/250，不能阻止中立生物刷新。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When activated, traps now silence affected enemies.",
+     "zh": "现在陷阱引爆后还会沉默受到作用的敌人。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ae23c8c5ece072f16476",
+  "subject": "void_spirit_resonant_pulse",
+  "subject_zh": "虚无之灵·共鸣脉冲",
+  "mechanism": "silence",
+  "mechanism_zh": "沉默",
+  "definition": "目标无法施放技能（仍可攻击、使用物品）",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Causes Resonant Pulse to silence and gain %max_charges% charges.",
+   "共鸣脉冲可以沉默敌人，并获得%max_charges%点能量点数。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "name_en": "Resonant Pulse",
+   "name_zh": "共鸣脉冲",
+   "description_en": "Void Spirit wraps himself in a protective shield that absorbs physical damage and emits a single damaging pulse around him. The shield gains increased damage absorption for each enemy hero the pulse hits.",
+   "description_zh": "虚无之灵将自己包裹在保护性护盾之中，可以吸收物理伤害，并围绕自身发出一次伤害性脉冲。脉冲每击中一名敌方英雄，护盾的伤害吸收量都会提升。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Resonant Pulse to silence and gain %max_charges% charges.",
+     "zh": "共鸣脉冲可以沉默敌人，并获得%max_charges%点能量点数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "bba8181fa3bbcdf47709",
+  "subject": "bane_nightmare",
+  "subject_zh": "祸乱之源·噩梦",
+  "mechanism": "sleep",
+  "mechanism_zh": "睡眠",
+  "definition": "无法行动，受伤害后醒来",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Puts the target enemy or friendly Hero to sleep.",
+   "让目标敌方或友方英雄进入沉睡。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+  },
+  "context": {
+   "name_en": "Nightmare",
+   "name_zh": "噩梦",
+   "description_en": "Puts the target enemy or friendly Hero to sleep. Sleeping units walk in Bane's chosen direction and are awakened when damaged. If the target was directly attacked, the Nightmare passes to the attacking unit. Bane can attack and damage Nightmared targets freely. Can be put on alt-cast to have the target stand still.",
+   "description_zh": "让目标敌方或友方英雄进入沉睡。睡着的单位会向祸乱之源选定的方向走去，受到攻击便会醒来。目标被直接攻击时，噩梦将转移到攻击者身上。祸乱之源可以随意攻击噩梦中的目标或造成伤害，而且获得额外攻击速度。可以设为多样施法（右键点击技能栏图标），让目标站立不动。",
+   "notes_en": [
+    "In the first second of Nightmare, the unit is invulnerable.",
+    "Bane can wake himself from Nightmare.",
+    "On cast, replaced with Nightmare End: Ends all ongoing Nightmares on any affected units."
+   ],
+   "notes_zh": [
+    "在噩梦的第一秒，作用单位是无敌状态。",
+    "祸乱之源可以把自己从噩梦中唤醒。",
+    "施放后将替换为结束噩梦：结束所有受作用单位身上的噩梦。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "fe7c96c9ecf49c2a7148",
+  "subject": "alchemist_corrosive_weaponry",
+  "subject_zh": "炼金术士·腐蚀兵械",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Alchemist coats his weapons and empowers his spells with an acid that applies a stacking slow and base attack damage reduction to enemies hit.",
+   "炼金术士使他的武器浸满强酸，对击中的敌人施加可叠加的减速和基础攻击力降低效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Corrosive Weaponry",
+   "name_zh": "腐蚀兵械",
+   "description_en": "Alchemist coats his weapons and empowers his spells with an acid that applies a stacking slow and base attack damage reduction to enemies hit.\n\nAttacks apply %stacks_per_attack% stacks. Unstable Concoction applies %one_tooltip% stack per second of brew time.",
+   "description_zh": "炼金术士使他的武器浸满强酸，对击中的敌人施加可叠加的减速和基础攻击力降低效果。\n\n每次攻击施加%stacks_per_attack%层叠加效果。不稳定化合物每调制1秒施加%one_tooltip%层叠加效果。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f718ffee4caf02179a56",
+  "subject": "ancient_apparition_bone_chill",
+  "subject_zh": "远古冰魄·刺骨严寒",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When Ancient Apparition deals Magic damage to an enemy with his abilities, it is slowed for a short duration.",
+   "每当远古冰魄通过他的技能对敌人造成魔法伤害，敌人就会减速一段时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI"
+  },
+  "context": {
+   "name_en": "Bone Chill",
+   "name_zh": "刺骨严寒",
+   "description_en": "When Ancient Apparition deals Magic damage to an enemy with his abilities, it is slowed for a short duration. If the target is a Hero, its Strength is also reduced. Multiple instances of this effect stack and have independent durations.",
+   "description_zh": "每当远古冰魄通过他的技能对敌人造成魔法伤害，敌人就会减速一段时间。如果目标是英雄，力量还会降低。多个本效果会叠加，并且持续时间相互独立。",
+   "innate": true,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Base Strength Reduction by %tooltip_scepter_bonus%.",
+     "zh": "基础力量降低提升%tooltip_scepter_bonus%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8c0f3404b538630621fa",
+  "subject": "ancient_apparition_chilling_touch",
+  "subject_zh": "远古冰魄·极寒之触",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.",
+   "使自己的普通攻击附带距离提升，高额魔法伤害和减速效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Chilling Touch",
+   "name_zh": "极寒之触",
+   "description_en": "Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.",
+   "description_zh": "使自己的普通攻击附带距离提升，高额魔法伤害和减速效果。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Removes cooldown.",
+     "zh": "移除了冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "1ea67b39407b5d933a49",
+  "subject": "angels_demise",
+  "subject_zh": "绝刃",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The next Unit Target spell you cast on an enemy deals a separate 250 additional damage, disables their passives, and slows their movement speed by 30% for 4s."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Khanda",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Empower Spell",
+     "description": "The next Unit Target spell you cast on an enemy deals a separate 250 additional damage, disables their passives, and slows their movement speed by 30% for 4s."
+    }
+   ],
+   "notes": "The slow debuff is dispellable.\nThe break debuff is not dispellable.",
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "450"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "450"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "8"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "7"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "3"
+    },
+    {
+     "key": "slow",
+     "value": "30"
+    },
+    {
+     "key": "slow_duration",
+     "value": "4"
+    },
+    {
+     "key": "bonus_spell_damage",
+     "value": "250"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "6ed681394ba9db5726ca",
+  "subject": "angels_demise",
+  "subject_zh": "绝刃",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The slow debuff is dispellable."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Khanda",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Empower Spell",
+     "description": "The next Unit Target spell you cast on an enemy deals a separate 250 additional damage, disables their passives, and slows their movement speed by 30% for 4s."
+    }
+   ],
+   "notes": "The slow debuff is dispellable.\nThe break debuff is not dispellable.",
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "450"
+    },
+    {
+     "key": "bonus_mana",
+     "display": "+ {value} Mana",
+     "value": "450"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "8"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "7"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "3"
+    },
+    {
+     "key": "slow",
+     "value": "30"
+    },
+    {
+     "key": "slow_duration",
+     "value": "4"
+    },
+    {
+     "key": "bonus_spell_damage",
+     "value": "250"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "747e6a19ad22ab7ce84f",
+  "subject": "arc_warden_flux",
+  "subject_zh": "天穹守望者·乱流",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Infuses a lone enemy unit with swirling, volatile energy, dealing damage over time and slowing the target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Flux",
+   "name_zh": "乱流",
+   "description_en": "Infuses a lone enemy unit with swirling, volatile energy, dealing damage over time and slowing the target. The damage is not applied if another enemy unit is near the target.",
+   "description_zh": "将不稳定的涡流能量灌注到落单敌人体内，造成持续伤害并减缓其移动速度。如目标周围有其他敌方单位 ，则不会造成伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Flux silences when the target is alone, deals more damage, and lasts longer.",
+     "zh": "目标落单时乱流具有沉默效果，造成更高伤害，而且持续时间更长。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4217e62d61239b8329df",
+  "subject": "batrider_flamebreak",
+  "subject_zh": "蝙蝠骑士·烈焰破击",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Hurls an explosive cocktail that explodes when it reaches the target location, knocking back, slowing and dealing damage over time to enemies in the area.",
+   "投掷一瓶爆炸性的混合物，到达目标地点时爆炸，击退区域内的敌人并造成减速和持续伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Flamebreak",
+   "name_zh": "烈焰破击",
+   "description_en": "Hurls an explosive cocktail that explodes when it reaches the target location, knocking back, slowing and dealing damage over time to enemies in the area.",
+   "description_zh": "投掷一瓶爆炸性的混合物，到达目标地点时爆炸，击退区域内的敌人并造成减速和持续伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "d0392d3b6a8acfffb04f",
+  "subject": "batrider_sticky_napalm",
+  "subject_zh": "蝙蝠骑士·粘性燃油",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "用粘性油浸透一块区域，蝙蝠骑士的攻击和技能对敌人造成额外伤害，并降低他们的移动速度和转身速率。",
+   "Drenches an area in sticky oil, amplifying damage from Batrider's attacks and abilities and slowing the movement speed and turn rate of enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Sticky Napalm",
+   "name_zh": "粘性燃油",
+   "description_en": "Drenches an area in sticky oil, amplifying damage from Batrider's attacks and abilities and slowing the movement speed and turn rate of enemies. Additional casts of Sticky Napalm continue to increase damage, up to %max_stacks% stacks. Applies a small amount of damage with each cast.",
+   "description_zh": "用粘性油浸透一块区域，蝙蝠骑士的攻击和技能对敌人造成额外伤害，并降低他们的移动速度和转身速率。再次施法可以继续提高伤害，最多叠加%max_stacks%次。每次施放还会造成少量伤害。",
+   "notes_en": [
+    "All damage from Batrider gets amplified, except for Radiance, Orb of Venom, Urn of Shadows, and Spirit Vessel.",
+    "Sticky Napalm does not require turning to cast.",
+    "Sticky Napalm deals %creep_damage_pct%%% damage to creeps."
+   ],
+   "notes_zh": [
+    "所有来自蝙蝠骑士的伤害均会加深，辉耀，淬毒之珠，影之灵龛和魂之灵瓮除外。",
+    "粘性燃油无需转身即可施放。",
+    "粘性燃油对非英雄单位造成%creep_damage_pct%%%伤害。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Sticky Napalm no longer has a stack limit.Sticky Napalm deals damage to structures.",
+     "zh": "粘性燃油不再具有叠加上限。粘性燃油会对建筑造成伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5f06fa0115fbb9bbbe64",
+  "subject": "bounty_hunter_shuriken_toss",
+  "subject_zh": "赏金猎人·投掷飞镖",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Hurls a deadly shuriken at an enemy unit, dealing damage and slowing the target's movement speed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Shuriken Toss",
+   "name_zh": "投掷飞镖",
+   "description_en": "Hurls a deadly shuriken at an enemy unit, dealing damage and slowing the target's movement speed.  The shuriken will bounce to any Tracked units who are within a %bounce_aoe% radius of each other.",
+   "description_zh": "向一个敌方单位掷出一枚致命的飞镖，对目标造成伤害，并且减缓目标的移动速度。只要目标周围%bounce_aoe%范围内存在被追踪术标记的单位，飞镖就能向其弹射。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range and applies Jinada on hit.",
+     "zh": "提升施法距离并且击中时施加忍术。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "04ec4ee5430bcb87908c",
+  "subject": "broodmother_incapacitating_bite",
+  "subject_zh": "育母蜘蛛·麻痹之咬",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Broodmother's venom cripples enemy units, causing her attacks to slow and giving the affected unit a chance to miss its attacks and extra damage from attacks.",
+   "育母蜘蛛用毒液削弱敌方单位，使她的攻击带有减速效果，中毒单位的攻击有一定概率落空，并且被攻击时承受额外伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Incapacitating Bite",
+   "name_zh": "麻痹之咬",
+   "description_en": "Broodmother's venom cripples enemy units, causing her attacks to slow and giving the affected unit a chance to miss its attacks and extra damage from attacks.",
+   "description_zh": "育母蜘蛛用毒液削弱敌方单位，使她的攻击带有减速效果，中毒单位的攻击有一定概率落空，并且被攻击时承受额外伤害。",
+   "notes_en": [
+    "The miss chance stacks with evasion and terrain dodge chance."
+   ],
+   "notes_zh": [
+    "攻击落空几率与闪避和上下坡丢失叠加。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "aff92ef822270c470a09",
+  "subject": "broodmother_spawn_spiderlings",
+  "subject_zh": "育母蜘蛛·孵化蜘蛛",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Broodmother injects her young into an enemy unit, dealing damage and slowing them for %slow_duration% seconds.",
+   "育母蜘蛛将她的卵注入敌人体内，造成伤害和减速，持续%slow_duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Spawn Spiderlings",
+   "name_zh": "孵化蜘蛛",
+   "description_en": "Broodmother injects her young into an enemy unit, dealing damage and slowing them for %slow_duration% seconds. The spiderlings will hatch if the target is killed while under this influence.",
+   "description_zh": "育母蜘蛛将她的卵注入敌人体内，造成伤害和减速，持续%slow_duration%秒。如果目标在感染期间被击杀，卵会孵化成小蜘蛛。",
+   "notes_en": [
+    "If the target is killed within %buff_duration% seconds of being hit with this skill, the Spiderlings will spawn.",
+    "Units killed by Spiderlings will then give birth to additional Spiderlings."
+   ],
+   "notes_zh": [
+    "如果目标在受到此技能后%buff_duration%秒内被杀死，小蜘蛛就会孵化。",
+    "被小蜘蛛杀死的单位会生出额外的小蜘蛛。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "25b09b7a39d726f71ab5",
+  "subject": "centaur_stampede",
+  "subject_zh": "半人马战行者·奔袭冲撞",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Centaur leads all allies into a vicious charge causing them to move through units at max speed and slow any enemy units they trample.",
+   "半人马战行者带领所有队友向胜利冲锋，所有友方英雄达到极限移动速度，并使踩到的敌人减速。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "name_en": "Stampede",
+   "name_zh": "奔袭冲撞",
+   "description_en": "Centaur leads all allies into a vicious charge causing them to move through units at max speed and slow any enemy units they trample. Trampled enemies take damage based on Centaur Warrunner's strength. Each enemy can be trampled once.",
+   "description_zh": "半人马战行者带领所有队友向胜利冲锋，所有友方英雄达到极限移动速度，并使踩到的敌人减速。每个敌人只会受到一次踩踏作用，并受到基于半人马战行者力量值的伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f32a6718437222987d0d",
+  "subject": "crystal_maiden_crystal_nova",
+  "subject_zh": "水晶室女·冰霜新星",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "召唤具有破坏性的冰爆，降低目标区域内的敌人的移动速度。",
+   "A burst of damaging frost slows enemy movement in the targeted area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Crystal Nova",
+   "name_zh": "冰霜新星",
+   "description_en": "A burst of damaging frost slows enemy movement in the targeted area.",
+   "description_zh": "召唤具有破坏性的冰爆，降低目标区域内的敌人的移动速度。",
+   "notes_en": [
+    "Crystal Nova provides vision in the targeted area for the duration."
+   ],
+   "notes_zh": [
+    "冰霜新星在持续时间内提供目标区域的视野。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "7f05470ecf2b5db51fd0",
+  "subject": "crystal_maiden_freezing_field",
+  "subject_zh": "水晶室女·极寒领域",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害（效果持续%slow_duration%秒）。",
+   "The slow is applied on all enemies in the radius, even if they aren't hit by an explosion (lasts %slow_duration% second).",
+   "CHANNELED - Surrounds Crystal Maiden with %num_explosions% random icy explosions that slow enemies and deal massive damage.",
+   "持续施法 - 以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+  },
+  "context": {
+   "name_en": "Freezing Field",
+   "name_zh": "极寒领域",
+   "description_en": "CHANNELED - Surrounds Crystal Maiden with %num_explosions% random icy explosions that slow enemies and deal massive damage. Lasts %abilitychanneltime% seconds.",
+   "description_zh": "持续施法 - 以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害。持续%abilitychanneltime%秒。",
+   "notes_en": [
+    "The slow is applied on all enemies in the radius, even if they aren't hit by an explosion (lasts %slow_duration% second).",
+    "Explosions occur every %explosion_interval_tooltip% seconds."
+   ],
+   "notes_zh": [
+    "减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害（效果持续%slow_duration%秒）。",
+    "每%explosion_interval_tooltip%秒产生一次爆炸。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Allows you to move, cast and attack during Freezing Field. Can still be interrupted by enemies. You move %shard_self_movement_speed_slow_pct%%% slower during this. Increases total number of explosions by %shard_bonus_explosion%%%. Applies Frostbite to any unit that has been standing in the Freezing Field for over %frostbite_delay%s.",
+     "zh": "使自身在极寒领域期间可以移动、施法和攻击。仍然可以被敌人打断。在此期间移动速度降低%shard_self_movement_speed_slow_pct%%%。冰爆总数提升%shard_bonus_explosion%%%。对极寒领域内停留超过%frostbite_delay%秒的所有单位都会施加冰封禁制。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0753c3fa04b95b4528a0",
+  "subject": "dark_seer_surge",
+  "subject_zh": "黑暗贤者·奔腾",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Surged units leave behind a %trail_radius% radius trail that lasts %trail_duration%s, slows enemies around it by %trail_move_slow%%% and deals %trail_damage% damage per second in %trail_damage_interval%s intervals.",
+   "奔腾单位的身后留下一道路径，作用范围为%trail_radius%，持续%trail_duration%秒，对附近的敌人造成%trail_move_slow%%%减速，并且每秒造成%trail_damage%点伤害，伤害间隔为%trail_damage_interval%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Surge",
+   "name_zh": "奔腾",
+   "description_en": "Charges a target friendly unit with power, giving it a brief burst of phased movement speed. Allows the unit to reach maximum movement speed and cannot be slowed.",
+   "description_zh": "为一个友方目标注入能量，使其在短时间内移动速度爆发，并且获得相位移动状态。允许单位达到移动速度上限，并且无法被减速。",
+   "notes_en": [
+    "Units with Surge cannot be slowed unless the Surge effect is removed."
+   ],
+   "notes_zh": [
+    "奔腾的单位不受减速影响，除非奔腾效果消失。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Surged units leave behind a %trail_radius% radius trail that lasts %trail_duration%s, slows enemies around it by %trail_move_slow%%% and deals %trail_damage% damage per second in %trail_damage_interval%s intervals. Can be put on alt-cast to disable the trail.",
+     "zh": "奔腾单位的身后留下一道路径，作用范围为%trail_radius%，持续%trail_duration%秒，对附近的敌人造成%trail_move_slow%%%减速，并且每秒造成%trail_damage%点伤害，伤害间隔为%trail_damage_interval%秒。可以设为多样施法（右键点击技能栏图标），禁止留下路径。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "09b75ed569add591fd4c",
+  "subject": "dark_seer_wall_of_replica",
+  "subject_zh": "黑暗贤者·复制之墙",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "制造一堵扭曲的光墙，对穿过的敌方英雄造成伤害和减速，并复制一个其自身的幻象，幻象由黑暗贤者控制，持续到光墙消失，或者被敌人消灭。",
+   "Raises a wall of warping light that slows, damages, and creates replicas of any enemy hero who crosses it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING"
+  },
+  "context": {
+   "name_en": "Wall of Replica",
+   "name_zh": "复制之墙",
+   "description_en": "Raises a wall of warping light that slows, damages, and creates replicas of any enemy hero who crosses it. Enemy replicas serve at the Dark Seer's will. Replicas last until they are destroyed, or until the wall's duration ends.",
+   "description_zh": "制造一堵扭曲的光墙，对穿过的敌方英雄造成伤害和减速，并复制一个其自身的幻象，幻象由黑暗贤者控制，持续到光墙消失，或者被敌人消灭。",
+   "notes_en": [
+    "Doesn't create illusions from other illusions.",
+    "There cannot be more than one illusion per player per wall."
+   ],
+   "notes_zh": [
+    "幻象不会产生幻象。",
+    "每堵光墙同一时间产生的为一名英雄产生的幻象只有一个。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "936354fa6c16df17fc67",
+  "subject": "dawnbreaker_celestial_hammer",
+  "subject_zh": "破晓辰星·上界重锤",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The hammer pauses for %pause_duration% seconds at the destination before flying back to her, leaving a trail of fire that slows enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Celestial Hammer",
+   "name_zh": "上界重锤",
+   "description_en": "Dawnbreaker hurls her weapon at a target, damaging enemies struck along the way. The hammer pauses for %pause_duration% seconds at the destination before flying back to her, leaving a trail of fire that slows enemies. Dawnbreaker can recall the hammer at any time, pulling her towards it so they meet in the middle.",
+   "description_zh": "破晓辰星向一个目标扔出她的武器，对沿途的敌人造成伤害。战锤会在目的地停留%pause_duration%秒，再飞回她的手中，期间留下一道炽烈之径，减缓敌人的移动速度。破晓辰星可以随时召回战锤，将自身朝战锤牵引，使二者在中点相遇。",
+   "notes_en": [
+    "The hammer damages enemies both when thrown and when returning to Dawnbreaker.",
+    "Dawnbreaker's Converge movement distance is capped at the ability's cast range.",
+    "Starbreaker cannot be cast while the Hammer is out."
+   ],
+   "notes_zh": [
+    "战锤在飞出和飞回时都会对敌人造成伤害。",
+    "破晓辰星的会合移动距离不会超过技能的施法距离。",
+    "星破天惊无法在战锤脱手时施放。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "a4d7fcc004e9e323d849",
+  "subject": "dawnbreaker_fire_wreath",
+  "subject_zh": "破晓辰星·星破天惊",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The first two strikes will slow enemy movement speed by %swipe_slow%%% for %sweep_stun_duration%s."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CAN_SELF_CAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Starbreaker",
+   "name_zh": "星破天惊",
+   "description_en": "Dawnbreaker whirls her hammer around 3 times, damaging enemies with her attack plus bonus damage. On the final strike, she smashes her hammer down, stunning and damaging enemies in front of her.",
+   "description_zh": "破晓辰星将她的战锤旋转3次，对敌人造成攻击伤害以及额外伤害。最后一次打击时，她将战锤击向地面，对她前方的敌人造成眩晕和伤害。",
+   "notes_en": [
+    "Dawnbreaker travels at a rate of %movement_speed% for the duration of the ability and takes a brief %self_stun_duration%s to recover after the final strike.",
+    "Celestial Hammer or Solar Guardian cannot be cast during the combo.",
+    "Cleave does not work with this ability.",
+    "Can be self-cast to move forward.",
+    "The first two strikes will slow enemy movement speed by %swipe_slow%%% for %sweep_stun_duration%s."
+   ],
+   "notes_zh": [
+    "破晓辰星在技能持续时间内以%movement_speed%的移动速度行进，并且最后一击后需要%self_stun_duration%秒才能复原。",
+    "连击期间无法施放上界重锤或天光现世。",
+    "此技能不继承分裂效果。",
+    "可以对自身施放来向前移动。",
+    "前两次挥击会减少敌人%swipe_slow%%%移动速度，持续%sweep_stun_duration%秒。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Dawnbreaker gains debuff immunity with %immunity_resist%%% magic resistance and free movement during Starbreaker. Dawnbreaker is slowed by %shard_movement_penalty%%% down to a minimum of %movement_speed%.",
+     "zh": "破晓辰星在星破天惊期间获得减益免疫，%immunity_resist%%%魔法抗性加成和自由移动状态。破晓辰星会被减速%shard_movement_penalty%%%，移速最低为%movement_speed%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "219f1ffa6db0e8a83dfa",
+  "subject": "devastator",
+  "subject_zh": "圣斧",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "passive",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Causes your next attack to have true strike, apply a poison for 4 seconds, slowing by 25% and dealing 0."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "dname": "Parasma",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Witch Blade",
+     "description": "Causes your next attack to have true strike, apply a poison for 4 seconds, slowing by 25% and dealing 0.75x your intelligence as damage every second."
+    },
+    {
+     "type": "passive",
+     "title": "Magic Corruption",
+     "description": "Your attacks reduce the enemy's Magic resistance by 20% for 4 seconds."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "40"
+    },
+    {
+     "key": "bonus_attack_speed",
+     "display": "+ {value} Attack Speed",
+     "value": "40"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "7"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.5"
+    },
+    {
+     "key": "projectile_speed",
+     "display": "+ {value} Projectile Speed",
+     "value": "300"
+    },
+    {
+     "key": "int_damage_multiplier",
+     "value": "0.75"
+    },
+    {
+     "key": "slow",
+     "value": "25"
+    },
+    {
+     "key": "slow_duration",
+     "value": "4"
+    },
+    {
+     "key": "active_mres_reduction",
+     "value": "20"
+    },
+    {
+     "key": "passive_cooldown",
+     "value": "4"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "b9b093caabda8faf6ab3",
+  "subject": "diffusal_blade",
+  "subject_zh": "净魂之刃",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Targets an enemy, slowing it for 4 seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "dname": "Diffusal Blade",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Inhibit",
+     "description": "Targets an enemy, slowing it for 4 seconds."
+    },
+    {
+     "type": "passive",
+     "title": "Manabreak",
+     "description": "Each attack burns 40 mana from the target, and deals 1 physical damage per burned mana. \n\nIllusions do not burn mana."
+    }
+   ],
+   "notes": "Does not stack with other diffusal blades.",
+   "attrib": [
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "15"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "feedback_mana_burn",
+     "value": "40"
+    },
+    {
+     "key": "purge_rate",
+     "value": "5"
+    },
+    {
+     "key": "purge_root_duration",
+     "value": "3.0"
+    },
+    {
+     "key": "purge_slow_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "damage_per_burn",
+     "value": "1"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "7c2813df280d504efde1",
+  "subject": "disruptor_thunder_strike",
+  "subject_zh": "干扰者·风雷之击",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Each strike damages nearby enemy units in a small radius and slows enemy movement and attack speed by %slow_amount%%% for %slow_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Thunder Strike",
+   "name_zh": "风雷之击",
+   "description_en": "Repeatedly strikes the targeted unit with lightning.  Each strike damages nearby enemy units in a small radius and slows enemy movement and attack speed by %slow_amount%%% for %slow_duration% seconds.  Provides vision of its target.",
+   "description_zh": "用闪电反复打击目标单位。每次打击会伤害附近小范围内的敌方单位，并施加%slow_duration%秒的%slow_amount%%%攻击速度和移动速度降低效果。提供目标的视野。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "e6c313e5e1fb7a71811b",
+  "subject": "dragon_knight_elder_dragon_form",
+  "subject_zh": "龙骑士·古龙形态",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Level 3 Blue: Grants a debuff immunity piercing movement and attack frost slow on attack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Elder Dragon Form",
+   "name_zh": "古龙形态",
+   "description_en": "Dragon Knight assumes the form of the Elder Dragon, increasing the range of his abilities, gaining bonus movement speed, and a ranged attack with various properties.  The Dragon evolves per level. The bonuses are cumulative. Level 1 Green: Grants a corrosive damage over time that can also damage buildings.Level 2 Red: Grants splash damage to the dragon's attacks.Level 3 Blue: Grants a debuff immunity piercing movement and attack frost slow on attack.",
+   "description_zh": "龙骑士化身为古龙，提升了技能的施法距离，获得移动速度加成，和拥有各种特性的远程攻击。古龙每级都会进化。加成效果会累加。1级碧龙：攻击获得持续的腐蚀伤害，也能作用于建筑。2级赤龙：攻击获得溅射伤害。3级苍龙：攻击获得无视减益免疫的移动速度和攻击速度降低效果。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases the current level of Dragon Form by one. Adds a Level 4 Black Dragon that has free pathing, bonus magic resistance, and increased other bonuses.",
+     "zh": "使古龙形态的当前等级提升1级。增加的4级黑龙拥有自由移动，魔法抗性加成和其他更高的加成效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "364196fb532d1d8ea50f",
+  "subject": "drow_ranger_frost_arrows",
+  "subject_zh": "卓尔游侠·霜冻之箭",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.",
+   "减速的持续时间在下一支冰箭射中后刷新。",
+   "Slow lasts %abilityduration% seconds.",
+   "The slow duration is refreshed on successive casts."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Frost Arrows",
+   "name_zh": "霜冻之箭",
+   "description_en": "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.  Slow lasts %abilityduration% seconds.",
+   "description_zh": "卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害。持续%abilityduration%秒。",
+   "notes_en": [
+    "The slow duration is refreshed on successive casts."
+   ],
+   "notes_zh": [
+    "减速的持续时间在下一支冰箭射中后刷新。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Frost Arrows now apply a Hypothermia stack to enemies, increasing damage from Frost Arrows and reducing their Health Restoration per stack. If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it.",
+     "zh": "霜冻之箭现在对敌人施加低温的叠加效果，提升霜冻之箭的伤害，并且每层叠加效果都会降低生命回复。若敌人在低温效果下阵亡，他们将会爆炸，对范围内的敌人造成伤害和减速。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "99f1f8721d7cb7a33a43",
+  "subject": "drow_ranger_frost_arrows",
+  "subject_zh": "卓尔游侠·霜冻之箭",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it.",
+   "若敌人在低温效果下阵亡，他们将会爆炸，对范围内的敌人造成伤害和减速。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Frost Arrows",
+   "name_zh": "霜冻之箭",
+   "description_en": "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.  Slow lasts %abilityduration% seconds.",
+   "description_zh": "卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害。持续%abilityduration%秒。",
+   "notes_en": [
+    "The slow duration is refreshed on successive casts."
+   ],
+   "notes_zh": [
+    "减速的持续时间在下一支冰箭射中后刷新。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Frost Arrows now apply a Hypothermia stack to enemies, increasing damage from Frost Arrows and reducing their Health Restoration per stack. If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it.",
+     "zh": "霜冻之箭现在对敌人施加低温的叠加效果，提升霜冻之箭的伤害，并且每层叠加效果都会降低生命回复。若敌人在低温效果下阵亡，他们将会爆炸，对范围内的敌人造成伤害和减速。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "fa6477657af2dd49c849",
+  "subject": "dust",
+  "subject_zh": "显影之尘",
+  "mechanism": "slow",
+  "mechanism_zh": "减速",
+  "definition": "降低移动速度或攻击速度",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "For 12 seconds, creates an area that reveals and slows invisible heroes by -20% in a 1050 radius where the caster was standing."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Dust of Appearance",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Reveal",
+     "description": "For 12 seconds, creates an area that reveals and slows invisible heroes by -20% in a 1050 radius where the caster was standing. Invisible units revealed by dust take 25 damage.\n\n The debuff effect on enemies lingers for 8s after leaving the area of effect."
+    }
+   ],
+   "notes": "Places a debuff on enemy units in the area that reveals them when they are invisible.",
+   "attrib": [
+    {
+     "key": "duration",
+     "value": "12"
+    },
+    {
+     "key": "radius",
+     "value": "1050"
+    },
+    {
+     "key": "movespeed",
+     "value": "-20"
+    },
+    {
+     "key": "damage",
+     "value": "25"
+    },
+    {
+     "key": "linger_duration",
+     "value": "8"
+    }
+   ]
+  }
+ }
+]

@@ -1,0 +1,1096 @@
+[
+ {
+  "review_id": "cee0b8c79df7aa13a09f",
+  "subject": "muerta_dead_shot",
+  "subject_zh": "琼英碧灵·弹无虚发",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Feared enemies are phased and unslowable.",
+   "被恐惧的敌人为相位状态，无法被减速。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Muerta fires a ghostly trickshot at an enemy unit or tree. When the bullet strikes, it damages and briefly slows, then ricochets in the targeted direction.The ricochet damages all units that it passes through, stopping when it hits a hero. Heroes hit by the ricochet are feared away from the impact.",
+   "description_zh": "琼英碧灵向一个敌方单位或一棵树发射一颗幽灵子弹。子弹击中时会对敌人造成伤害和短暂减速，然后沿矢量目标的方向弹去。跳弹将会对穿过的所有单位造成伤害，击中英雄后停下。被跳弹击中的英雄会被恐惧。",
+   "notes_en": [
+    "Feared enemies are phased and unslowable.",
+    "The ricochet will travel %ricochet_distance_multiplier%x Dead Shot's cast range.",
+    "Can ricochet off of magic immune targets."
+   ],
+   "notes_zh": [
+    "被恐惧的敌人为相位状态，无法被减速。",
+    "跳弹的行进距离为弹无虚发施法距离的%ricochet_distance_multiplier%倍。",
+    "可以弹离减益免疫目标。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Dead Shot damage is increased. Dead Shot expands after it ricochets and pierces through enemy heroes as it fears them.",
+     "zh": "弹无虚发的伤害提升。弹无虚发的作用范围在弹跳后会扩大，并且跳弹恐惧敌人时会穿过敌方英雄。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "be09059e6f20a155a9f0",
+  "subject": "muerta_pierce_the_veil",
+  "subject_zh": "琼英碧灵·越界",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Muerta transforms, becoming ethereal, gaining bonus base damage and phased movement.",
+   "琼英碧灵变身，成为虚无状态，获得基础攻击力加成和相位移动状态。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Muerta transforms, becoming ethereal, gaining bonus base damage and phased movement.Passively allows Muerta to always attack ethereal targets and attack when she is ethereal. When either she or her target is ethereal, all of her attack damage is dealt as magical damage and her physical lifesteal is treated as spell lifesteal.DISPEL TYPE: Basic Dispel",
+   "description_zh": "琼英碧灵变身，成为虚无状态，获得基础攻击力加成和相位移动状态。被动使总是可以攻击虚无状态下的目标，并且她在虚无状态下也能攻击。在她或目标处于虚无时，她的所有攻击伤害均为魔法伤害，她的物理吸血被视为技能吸血。驱散类型：弱驱散",
+   "notes_en": [
+    "Muerta will dodge projectiles upon transformation.",
+    "Muerta cannot attack buildings while transformed."
+   ],
+   "notes_zh": [
+    "琼英碧灵在变身期间可以躲避弹道。",
+    "琼英碧灵在变身后无法攻击建筑。"
+   ]
+  }
+ },
+ {
+  "review_id": "3a72ad1665562568859d",
+  "subject": "ringmaster_the_box",
+  "subject_zh": "百戏大王·逃生技",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Boxed units gain phased movement, slow resistance, bonus magic resistance, and bonus movement speed.",
+   "友军被装入后拥有相位移动状态，获得额外魔法抗性、减速抗性和移动速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Ringmaster packs himself or an allied hero into a mobile, extradimensional box. Boxed units gain phased movement, slow resistance, bonus magic resistance, and bonus movement speed. They are also untargetable, muted, silenced, and disarmed. The box will pop open after the effect expires or it moves out of the initial area.",
+   "description_zh": "把一名友方英雄装进可动的异维度箱子。友军被装入后拥有相位移动状态，获得额外魔法抗性、减速抗性和移动速度。并且无法成为目标，被锁闭、沉默和缴械。效果结束后或者移动到初始区域之外箱子都会打开。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Escape Act has %max_charges% charges. When the box pops open, Impalement Art daggers are thrown in all directions, and all enemies around it take damage.",
+     "zh": "逃生技拥有%max_charges%点能量点数。逃生箱打开时会朝所有方向放出尖刀戏匕首，并且范围内所有敌人受到伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "311957e27ab488741475",
+  "subject": "kez_falcon_rush",
+  "subject_zh": "凯·天隼冲击",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "While in this state, Kez has phased collision and slow resistance.",
+   "在这个状态下，凯拥有相位移动状态和减速抗性。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Kez gains the ability to rush towards enemy targets to deliver echoing secondary attacks.  While in this state, Kez has phased collision and slow resistance.",
+   "description_zh": "开启后凯可以向敌方目标冲去，发动的攻击会重复一次。在这个状态下，凯拥有相位移动状态和减速抗性。",
+   "notes_en": [
+    "Does not work on buildings."
+   ],
+   "notes_zh": [
+    "不会对建筑生效。"
+   ]
+  }
+ },
+ {
+  "review_id": "c479f645256a243a276b",
+  "subject": "disperser",
+  "subject_zh": "散魂剑",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "phase movement speed=100."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "dname": "Disperser",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Suppress",
+     "description": "Dispels both the wearer and the target. Enemy targets are slowed for 4 seconds. Allied targets gain bonus movespeed and 40% slow resistance for 4 seconds. Caster is always granted the ally benefit on cast.\n\nBoth movement speed reduction and increase start at 100% and gradually decrease to 0% over the course of the buff duration.\nDispel Type: Basic Dispel"
+    },
+    {
+     "type": "passive",
+     "title": "Manabreak",
+     "description": "Each attack burns 40 mana from the target, and deals 1 physical damage per burned mana. \n\nIllusions do not burn mana."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "40"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "feedback_mana_burn",
+     "value": "40"
+    },
+    {
+     "key": "purge_rate",
+     "value": "5"
+    },
+    {
+     "key": "purge_root_duration",
+     "value": "3.0"
+    },
+    {
+     "key": "damage_per_burn",
+     "value": "1.0"
+    },
+    {
+     "key": "enemy_effect_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "ally_effect_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "movement_speed_buff_rate",
+     "value": "4"
+    },
+    {
+     "key": "phase_movement_speed",
+     "value": "100"
+    },
+    {
+     "key": "slow_resist",
+     "value": "40"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "f4b91c9fc6490ca8d833",
+  "subject": "phase_boots",
+  "subject_zh": "相位鞋",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "phase movement speed=20.",
+   "phase movement speed range=10."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "dname": "Phase Boots",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Phase",
+     "description": "Gives 20% increased movement speed on melee heroes, and 10% on ranged heroes, and lets you move through units and turn more quickly for 3 seconds."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "50"
+    },
+    {
+     "key": "bonus_damage_melee",
+     "display": "+ {value} Damage (MELEE)",
+     "value": "18"
+    },
+    {
+     "key": "bonus_damage_range",
+     "display": "+ {value} Damage (RANGED)",
+     "value": "12"
+    },
+    {
+     "key": "phase_movement_speed",
+     "value": "20"
+    },
+    {
+     "key": "phase_movement_speed_range",
+     "value": "10"
+    },
+    {
+     "key": "phase_duration",
+     "value": "3.0"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "4"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "6754e8b4168138565f4f",
+  "subject": "swift_blink",
+  "subject_zh": "迅疾闪光",
+  "mechanism": "phased",
+  "mechanism_zh": "相位移动",
+  "definition": "移动不受单位碰撞阻挡",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "After teleportation, you gain 40% phased movement speed and +35 Agility for 6 seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "dname": "Swift Blink",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Swift Blink",
+     "description": "Teleport to a target point up to 1200 units away.\n\nAfter teleportation, you gain 40% phased movement speed and +35 Agility for 6 seconds. \n\nSwift Blink cannot be used for 3 seconds after taking damage from an enemy hero or Roshan."
+    }
+   ],
+   "notes": "Self-casting will cause you to teleport in the direction of your team's fountain.",
+   "attrib": [
+    {
+     "key": "blink_range",
+     "value": "1200"
+    },
+    {
+     "key": "blink_damage_cooldown",
+     "value": "3.0"
+    },
+    {
+     "key": "blink_range_clamp",
+     "value": "960"
+    },
+    {
+     "key": "bonus_agility",
+     "display": "+ {value} Agility",
+     "value": "25"
+    },
+    {
+     "key": "bonus_movement",
+     "value": "40"
+    },
+    {
+     "key": "bonus_agi_active",
+     "value": "35"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "e1cf284a5356f85c23b5",
+  "subject": "antimage_blink",
+  "subject_zh": "敌法师·闪烁",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "description_en": "Short distance teleportation that allows Anti-Mage to move in and out of combat.",
+   "description_zh": "短距离传送，能让敌法师自由出入战场。",
+   "notes_en": [
+    "You can use Blink to dodge incoming projectiles."
+   ],
+   "notes_zh": [
+    "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "After casting Blink, your next Mana Break within %empowered_mana_break_duration%s burns an additional %empowered_max_burn_pct_tooltip%%% max mana and prevents the target from regenerating or gaining mana for a short duration. This debuff is undispellable.",
+     "zh": "施放闪烁后，%empowered_mana_break_duration%秒内的法力损毁将额外燃烧%empowered_max_burn_pct_tooltip%%%最大魔法值，并且阻止目标在短时间内恢复或获得魔法。这个负面状态无法驱散。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0255b1584bccc647b594",
+  "subject": "crystal_maiden_crystal_clone",
+  "subject_zh": "水晶室女·冰晶克隆",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "向一个方向滑行，在原地制造一个自身的冰晶克隆，并且躲避多种飞行过程中的攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Slides in a direction, creating a crystal clone of herself in her place and disjointing incoming projectiles. If the clone takes enough damage or times out, it shatters, Frostbiting enemies in a %frostbite_radius% AoE around its place. The Clone can also be destroyed by Crystal Maiden's own spells.",
+   "description_zh": "向一个方向滑行，在原地制造一个自身的冰晶克隆，并且躲避多种飞行过程中的攻击和技能弹道。如果克隆受到了足量伤害，或者超过一定时间都会碎裂，对附近%frostbite_radius%范围内敌人施加冰封禁制。克隆体也可以被水晶室女自身的技能摧毁。"
+  }
+ },
+ {
+  "review_id": "dd46e28520caa9d494b5",
+  "subject": "drow_ranger_glacier",
+  "subject_zh": "卓尔游侠·冰川",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Units on the hill gain flying vision and Drow and her ranged allies gain bonus attack range.",
+   "站在山上的单位会获得飞行视野，而卓尔游侠和她的远程友军会获得攻击距离加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Drow creates a hill of ice beneath her, knocking away nearby enemies. Units on the hill gain flying vision and Drow and her ranged allies gain bonus attack range. Drow gains additional damage while on the Glacier and attacking targets below her.The front of the hill obscures vision and cannot be moved through except by Drow. Does not interrupt Multishot when cast.",
+   "description_zh": "卓尔游侠在她脚下创造一片冰山，击退附近的敌人。站在山上的单位会获得飞行视野，而卓尔游侠和她的远程友军会获得攻击距离加成。卓尔游侠站在山上时攻击下方目标时获得额外伤害。山的前面会阻挡视野，并且除了卓尔游侠外无法穿行。施放时不会打断数箭齐发。"
+  }
+ },
+ {
+  "review_id": "98841005b80c5d566ec0",
+  "subject": "earthshaker_slugger",
+  "subject_zh": "撼地者·强击图腾",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Enemies killed with Enchant Totem or Earthshaker's other abilities are sent flying, dealing damage to enemies they hit."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_INNATE_UI"
+  },
+  "context": {
+   "description_en": "Enemies killed with Enchant Totem or Earthshaker's other abilities are sent flying, dealing damage to enemies they hit.",
+   "description_zh": "利用强化图腾的攻击或撼地者的其他技能击杀敌人后都会把尸体击飞，对击中的敌人造成伤害。"
+  }
+ },
+ {
+  "review_id": "58e23323ee058ef1396b",
+  "subject": "mirana_arrow",
+  "subject_zh": "米拉娜·月神之箭",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "根据箭矢飞行的距离还将对目标额外造成最多%arrow_bonus_damage%点伤害。",
+   "神箭每飞行150码，中箭后眩晕的持续时间将提高0."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+  },
+  "context": {
+   "description_en": "Fires a long-range arrow with deadly precision, which stuns and damages the first enemy unit it strikes. The stun duration ranges from %arrow_min_stun% to %arrow_max_stun% seconds, with bonus damage up to %arrow_bonus_damage% added, based on the distance the arrow travels to its target. Instantly kills the first non-ancient creep it hits.",
+   "description_zh": "射出一支绝对精准的箭矢，对第一个击中的敌人造成伤害并眩晕目标。目标距离越远，眩晕时间越长，最短%arrow_min_stun%秒，最长可达%arrow_max_stun%秒。根据箭矢飞行的距离还将对目标额外造成最多%arrow_bonus_damage%点伤害。若击中的是非远古的普通单位，将直接秒杀。",
+   "notes_en": [
+    "For every 150 distance the arrow travels, the stun duration upon impact increases by 0.5 seconds, and the bonus damage added increases by 14.",
+    "Sacred Arrow can hit invisible units.",
+    "Starstruck does not apply to the second Starstorm from Aghanim's Scepter."
+   ],
+   "notes_zh": [
+    "神箭每飞行150码，中箭后眩晕的持续时间将提高0.5秒，额外伤害增加14点。",
+    "月神之箭可以射中隐身单位。",
+    "流星赶月不会对阿哈利姆神杖升级群星风暴的第二次流星生效。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Sacred Arrow to release a Starstorm on enemies along the travel path of the primary arrow, releasing a second Starstorm that deals less damage to the impacted unit.",
+     "zh": "月神之箭在主神箭行进途中对敌人释放群星风暴。对击中的单位施放第二个群星风暴，造成的伤害有所降低。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "de5cdf14545d0f2ea338",
+  "subject": "puck_illusory_orb",
+  "subject_zh": "帕克·幻象法球",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "在幻象法球飞行过程中，帕克可以使用灵动之翼来传送到法球所在的位置。",
+   "幻象法球在飞行途中提供顺畅视野。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE"
+  },
+  "context": {
+   "description_en": "Vector Targeted. Puck launches a magic orb that travels along the path, damaging enemy units along the way. The orb deals an additional %damage_over_time_pct%%% of its impact damage every %damage_interval%s in its area of effect, but if it exceeds the max cast range it will be destroyed.\n\n At any point, Puck may teleport to the orb's location using Ethereal Jaunt. Can be put on alt-cast to launch the Orb straight ahead.",
+   "description_zh": "以矢量为目标。帕克向路线方向发出一个魔法球，对经过路径上的敌人造成伤害。法球每%damage_interval%秒会在作用范围内额外造成%damage_over_time_pct%%%击中伤害，但超过最大施法距离后法球会被摧毁。\n\n在幻象法球飞行过程中，帕克可以使用灵动之翼来传送到法球所在的位置。可以设为多样施法（右键点击技能栏图标），让法球的路线为向前的直线。",
+   "notes_en": [
+    "The Illusory Orb grants unobstructed vision around its location while it travels.",
+    "Jaunting to the Orb will disjoint projectiles."
+   ],
+   "notes_zh": [
+    "幻象法球在飞行途中提供顺畅视野。",
+    "将自己传送到幻象法球可以躲避攻击和技能弹道。"
+   ]
+  }
+ },
+ {
+  "review_id": "3ea4c929a10fd5d314b5",
+  "subject": "storm_spirit_ball_lightning",
+  "subject_zh": "风暴之灵·球状闪电",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "施法消耗为%ball_lightning_initial_mana_base%+总魔法量的%ball_lightning_initial_mana_percentage%%%，每移动100距离消耗%ball_lightning_travel_cost_base%+总魔法量的%ball_lightning_travel_cost_percent%%%，本技能造成的伤害每飞行100距离就会递增。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_CAN_SELF_CAST | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET"
+  },
+  "context": {
+   "description_en": "Storm Spirit becomes volatile electricity, charging across the battlefield until he depletes his mana or reaches his target. The activation mana cost is %ball_lightning_initial_mana_base%+%ball_lightning_initial_mana_percentage%%% of his total mana pool, and the cost per 100 units traveled is %ball_lightning_travel_cost_base%+%ball_lightning_travel_cost_percent%%% of his total mana pool.  Damage is expressed in damage per 100 units traveled.",
+   "description_zh": "风暴之灵变成不稳定的电流在战场上横冲直撞，直到他的魔法耗尽或到达目标才停下。施法消耗为%ball_lightning_initial_mana_base%+总魔法量的%ball_lightning_initial_mana_percentage%%%，每移动100距离消耗%ball_lightning_travel_cost_base%+总魔法量的%ball_lightning_travel_cost_percent%%%，本技能造成的伤害每飞行100距离就会递增。",
+   "notes_en": [
+    "Abilities and items can be used while traveling.",
+    "This ability will destroy trees.",
+    "Storm Spirit is invulnerable during Ball Lightning."
+   ],
+   "notes_zh": [
+    "行进过程中可以使用技能和物品。",
+    "该技能可以摧毁树木。",
+    "风暴之灵在球状闪电期间是无敌状态。"
+   ]
+  }
+ },
+ {
+  "review_id": "c06763140d216bec6a39",
+  "subject": "tiny_toss",
+  "subject_zh": "小小·投掷",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "飞行时间是%duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_RUNE_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "Grabs the nearest unit in a %grab_radius% radius around Tiny, ally or enemy, and launches it at the target unit or rune to deal damage where they land.",
+   "description_zh": "抓起小小身旁%grab_radius%范围内最近的单位，不论敌友，扔向目标单位或神符，落地时将造成伤害。",
+   "notes_en": [
+    "You can toss allies, but they don't take damage.",
+    "Toss deals 33% of its damage to buildings.",
+    "Debuff Immune units can be targeted but cannot be tossed.",
+    "Flight time is %duration%s."
+   ],
+   "notes_zh": [
+    "你可以投掷队友，但他们不会受到伤害。",
+    "投掷对建筑物造成33%的伤害。",
+    "可以对减益免疫单位施放，但是不能将他们扔起，或对他们造成伤害。",
+    "飞行时间是%duration%秒。"
+   ]
+  }
+ },
+ {
+  "review_id": "987600b22fa4bd167761",
+  "subject": "beastmaster_wild_axes",
+  "subject_zh": "兽王·野性之斧",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Beastmaster sends his axes flying and calls them home again, slicing through enemy units and trees along their path."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Beastmaster sends his axes flying and calls them home again, slicing through enemy units and trees along their path.  Each axe can hit an enemy once, and amplifies subsequent damage from Beastmaster and his units.",
+   "description_zh": "兽王投出他的斧头然后召回它们，切开飞过的敌人和树木。每把飞斧对同一个敌人只能击中一次，并且加深来自兽王和其单位的伤害。",
+   "notes_en": [
+    "This ability destroys trees."
+   ],
+   "notes_zh": [
+    "此技能将摧毁树木。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Beastmaster's attacks on enemy heroes also apply the Wild Axes debuff of its corresponding level.",
+     "zh": "兽王对敌方英雄的攻击还会施加相应等级的野性之斧负面状态。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "9bf3add36f89380c6e1a",
+  "subject": "queenofpain_blink",
+  "subject_zh": "痛苦女王·闪烁",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "description_en": "Short distance teleportation that allows Queen of Pain to move in and out of combat.",
+   "description_zh": "短距离传送，能让痛苦女王自由出入战场。",
+   "notes_en": [
+    "You can use Blink to dodge incoming projectiles."
+   ],
+   "notes_zh": [
+    "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Releases a sonic boom when Queen of Pain blinks, at both her starting and ending locations. Deals %shard_damage% damage in a %shard_aoe% AoE and silences the target for %shard_duration% seconds.",
+     "zh": "在痛苦女王的闪烁起点和落地点各释放一次音爆。在%shard_aoe%范围内造成%shard_damage%点伤害，并沉默%shard_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a5c782cc7ace7025044e",
+  "subject": "phantom_assassin_blur",
+  "subject_zh": "幻影刺客·魅影无形",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "幻影刺客模糊自己的身形，躲避多种飞行过程中的攻击和技能弹道，提升她的移动速度，使她无法被看到，直到她靠近敌方英雄或防御塔。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Phantom Assassin blurs her body, disjointing incoming projectiles, increasing her movement speed, causing her to be impossible to see until she comes near enemy heroes or towers.",
+   "description_zh": "幻影刺客模糊自己的身形，躲避多种飞行过程中的攻击和技能弹道，提升她的移动速度，使她无法被看到，直到她靠近敌方英雄或防御塔。",
+   "notes_en": [
+    "Attacking Roshan with a regular attack will dispel Blur."
+   ],
+   "notes_zh": [
+    "通过普通攻击攻击肉山会驱散魅影无形。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Decreases Cooldown by %bonus_AbilityCooldown%s. Any time Phantom Assassin gets a hero kill, her ability cooldowns advance %cooldown_refund_pct%%% of their max cooldown values.",
+     "zh": "冷却时间减少%bonus_AbilityCooldown%秒。只要幻影刺客击杀英雄，她的技能冷却时间都会加快%cooldown_refund_pct%%%最高冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "33028ae881dc3c795838",
+  "subject": "rattletrap_jetpack",
+  "subject_zh": "发条技师·喷气背包",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "Clockwerk activates a jetpack, gaining flying movement, flying vision, and bonus movement speed.",
+   "发条技师开动喷气背包，获得飞行移动状态，飞行视野和移动速度加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "description_en": "Clockwerk activates a jetpack, gaining flying movement, flying vision, and bonus movement speed. Clockwerk has a severely-limited turn rate during this time and cannot attack. Jetpack can be toggled on and off for the duration of the buff.",
+   "description_zh": "发条技师开动喷气背包，获得飞行移动状态，飞行视野和移动速度加成。发条技师的转身速率大幅降低，并且无法攻击。在加成状态的持续时间内可以开启和关闭喷气背包。"
+  }
+ },
+ {
+  "review_id": "5dc0e96d80fcce13b4f2",
+  "subject": "enchantress_bunny_hop",
+  "subject_zh": "魅惑魔女·跃动",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "lead": "text",
+  "evidence": [
+   "向后跳跃，躲避多种飞行过程中的攻击和技能弹道，并向魅惑魔女的攻击距离+%bonus_attack_range%范围内最远的%attack_targets%个敌方单位发动一次附有推进的攻击。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "description_en": "Leaps backward, dodges incoming projectiles, and launches an Impetus attack on the %attack_targets% furthest enemy units within Enchantress' attack range + %bonus_attack_range%.",
+   "description_zh": "向后跳跃，躲避多种飞行过程中的攻击和技能弹道，并向魅惑魔女的攻击距离+%bonus_attack_range%范围内最远的%attack_targets%个敌方单位发动一次附有推进的攻击。"
+  }
+ },
+ {
+  "review_id": "5246ee6154feeb7f9906",
+  "subject": "night_stalker_darkness",
+  "subject_zh": "暗夜魔王·黑暗飞升",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "在此期间暗夜魔王获得飞行能力和攻击力加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Night Stalker smothers the sun and summons instant darkness, so that he might use his powers at their fullest. Night Stalker gains flight and bonus damage during this time. Has unobstructed vision.",
+   "description_zh": "暗夜魔王遮住太阳，让夜晚立刻降临，使他的力量可以得到最大程度的发挥。在此期间暗夜魔王获得飞行能力和攻击力加成。拥有顺畅视野。"
+  }
+ },
+ {
+  "review_id": "34b6bff7ec58fe46023d",
+  "subject": "batrider_firefly",
+  "subject_zh": "蝙蝠骑士·火焰飞行",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "飞行时，燃烧尾迹会破坏树木，对经过的敌人造成伤害。",
+   "在火焰飞行持续时间的最后会达到最高移动速度加成。",
+   "火焰飞行期间蝙蝠骑士可以飞越任何单位，树木和不可通行的地形。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Batrider takes to the skies, moving increasingly fast and laying down a trail of flames from the air. The fire damages any enemies it touches and destroys trees below Batrider. Maximum movement speed bonus is reached at the end of Firefly's duration.",
+   "description_zh": "蝙蝠骑士飞向天空，从空中留下一道燃烧的尾迹。飞行时，燃烧尾迹会破坏树木，对经过的敌人造成伤害。在火焰飞行持续时间的最后会达到最高移动速度加成。",
+   "notes_en": [
+    "During this the Batrider can fly above units, trees and impassable terrain.",
+    "If duration ends when above impassable terrain, the Batrider can get stuck.",
+    "The trail persists through Batrider's death."
+   ],
+   "notes_zh": [
+    "火焰飞行期间蝙蝠骑士可以飞越任何单位，树木和不可通行的地形。",
+    "如果蝙蝠骑士在持续时间结束时正好在不可通行的地形上方，那么他将会卡住。",
+    "蝙蝠骑士死亡后火焰效果将继续存在。"
+   ]
+  }
+ },
+ {
+  "review_id": "81f73da933b8eb94072a",
+  "subject": "ancient_apparition_ice_blast",
+  "subject_zh": "远古冰魄·冰晶爆轰",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "向地图的任意位置发出爆炸冰球，在冰球飞行时再次施放此技能将使其停下，使所在区域产生毁灭性的冰爆。",
+   "冰球飞行的距离越长，冰爆影响的范围也将越大。",
+   "冰爆范围内的所有敌方单位将马上受到大量伤害，而处于冰球飞行路径上的敌方英雄将与冰爆范围内的敌方英雄一同受到寒霜诅咒的作用，持续受到小幅伤害，同时无法恢复生命值。",
+   "作用范围的大小是%radius_min% + %radius_grow%*指向球的飞行时间，上限为%radius_max%。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "description_en": "Launches a tracer toward any location on the battlefield, which must be triggered again to mark the area to be blasted by a damaging explosion of hail. The further the tracer travels, the larger the explosion will be. Enemies caught in the explosion, or who touch the icy ball of hail as it travels, are Frostbitten, taking damage over time and prevented from regenerating or healing. If a Frostbitten unit's health drops below a certain percentage, they will instantly shatter.",
+   "description_zh": "向地图的任意位置发出爆炸冰球，在冰球飞行时再次施放此技能将使其停下，使所在区域产生毁灭性的冰爆。冰球飞行的距离越长，冰爆影响的范围也将越大。冰爆范围内的所有敌方单位将马上受到大量伤害，而处于冰球飞行路径上的敌方英雄将与冰爆范围内的敌方英雄一同受到寒霜诅咒的作用，持续受到小幅伤害，同时无法恢复生命值。在此期间如果生命值低于一定百分比，该英雄将立刻死亡。",
+   "notes_en": [
+    "Upon cast, this ability is replaced by Release, used to stop the tracer on the target area.",
+    "The area of effect is %radius_min% + %radius_grow%*TimeTraveled, capped at %radius_max%.",
+    "Kill will be granted to the source of the damage that triggers the shatter.",
+    "The shatter effect doesn't work on illusions.",
+    "The HP Freeze prevents most kinds of healing, including the fountain, except Sunder, Time Lapse and Supernova."
+   ],
+   "notes_zh": [
+    "施放后本技能替换为释放，将使指向球停在目标区域。",
+    "作用范围的大小是%radius_min% + %radius_grow%*指向球的飞行时间，上限为%radius_max%。",
+    "击杀目标的英雄由触发即死的伤害来源决定。",
+    "斩杀效果对幻象无效。",
+    "寒霜诅咒的负面状态无法被驱散，包括身处泉水附近，但魂断、时光倒流和超新星除外。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Freezes enemies hit with the current level of Cold Feet for %cold_feet_stun_duration_pct%%% of the duration.",
+     "zh": "冻结击中的敌人，持续时间为当前等级寒霜之足眩晕时间的%cold_feet_stun_duration_pct%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "9245f7bf94266639de2e",
+  "subject": "gyrocopter_homing_missile",
+  "subject_zh": "矮人直升机·追踪导弹",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "导弹发射后持续增加飞行速度，击中目标时造成伤害及眩晕。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Fires a homing missile to seek the targeted enemy unit. The missile gains speed over time, dealing damage and stunning when it impacts the target. Enemy units can destroy the missile before it reaches its target.",
+   "description_zh": "发射一枚会自动定位目标单位的追踪导弹。导弹发射后持续增加飞行速度，击中目标时造成伤害及眩晕。敌方单位可在导弹接近前将其击落。",
+   "notes_en": [
+    "Towers do half damage to the missile.",
+    "The crosshair effect is visible to allies only.",
+    "The missile will follow and hit invisible units."
+   ],
+   "notes_zh": [
+    "防御塔对导弹造成半额伤害。",
+    "准星效果仅对队友可见。",
+    "导弹会跟随并击中隐身单位。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Homing Missiles now constantly fires the current level of Rocket Barrage in a %shard_radius% area of effect after %shard_delay% second of being cast. This Rocket Barrage prioritizes the Homing Missile target.",
+     "zh": "追踪导弹现在从施放%shard_delay%秒后开始不断发射%shard_radius%作用范围的火箭弹幕。火箭弹幕优先以追踪导弹的目标为目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "b4c2b2ece621c86edbe7",
+  "subject": "disruptor_glimpse",
+  "subject_zh": "干扰者·恶念瞥视",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "飞行时间由目标的飞行距离决定。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Teleports the target hero back to where it was %backtrack_time% seconds ago.  Instantly kills illusions. Deals damage equal to a percentage of the distance glimpsed, that cannot go over a damage maximum.",
+   "description_zh": "将目标英雄传送回他%backtrack_time%秒前所在位置。瞬间消灭幻象单位。根据瞥视距离的一定百分比造成伤害，不能超过最大伤害。",
+   "notes_en": [
+    "The travel time is a function of the distance the target will travel."
+   ],
+   "notes_zh": [
+    "飞行时间由目标的飞行距离决定。"
+   ]
+  }
+ },
+ {
+  "review_id": "01446e96e90f96d8d089",
+  "subject": "visage_silent_as_the_grave",
+  "subject_zh": "维萨吉·静如古墓",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Visage gains flying movement and bonus movement speed.",
+   "Upon attacking or casting, the speed and flying movement are lost and Visage and his familiars deal additional attack damage for %bonus_duration%s.",
+   "维萨吉获得飞行移动状态和移动速度加成。",
+   "攻击或施法后，将失去移速加成和飞行移动状态，同时维萨吉和他的佣兽在%bonus_duration%秒内拥有额外攻击力。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "description_en": "Visage gains flying movement and bonus movement speed.  Upon attacking or casting, the speed and flying movement are lost and Visage and his familiars deal additional attack damage for %bonus_duration%s.",
+   "description_zh": "维萨吉获得飞行移动状态和移动速度加成。攻击或施法后，将失去移速加成和飞行移动状态，同时维萨吉和他的佣兽在%bonus_duration%秒内拥有额外攻击力。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases movement speed, damage, and duration. Turns Visage and familiars invisible for the duration until the flying movement is lost.",
+     "zh": "移动速度、额外攻击力和持续时间提升。维萨吉和佣兽在持续时间内为隐身状态，直到失去飞行移动状态。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "95f72f270915c6c4da82",
+  "subject": "visage_silent_as_the_grave",
+  "subject_zh": "维萨吉·静如古墓",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "Turns Visage and familiars invisible for the duration until the flying movement is lost.",
+   "维萨吉和佣兽在持续时间内为隐身状态，直到失去飞行移动状态。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+  },
+  "context": {
+   "description_en": "Visage gains flying movement and bonus movement speed.  Upon attacking or casting, the speed and flying movement are lost and Visage and his familiars deal additional attack damage for %bonus_duration%s.",
+   "description_zh": "维萨吉获得飞行移动状态和移动速度加成。攻击或施法后，将失去移速加成和飞行移动状态，同时维萨吉和他的佣兽在%bonus_duration%秒内拥有额外攻击力。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases movement speed, damage, and duration. Turns Visage and familiars invisible for the duration until the flying movement is lost.",
+     "zh": "移动速度、额外攻击力和持续时间提升。维萨吉和佣兽在持续时间内为隐身状态，直到失去飞行移动状态。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8adf2078d08a95edfc0d",
+  "subject": "earth_spirit_boulder_smash",
+  "subject_zh": "大地之灵·巨石冲击",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "大地之灵将敌方单位或友方单位作为目标，将其击飞，目标将沿他面朝的方向飞行一段距离。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Earth Spirit smashes the target enemy or ally, sending them in the direction he is facing. If Earth Spirit targets an area, he will smash the nearest unit in a %remnant_smash_radius_tooltip% radius, prioritizing Stone Remnants. The travelling unit or Remnant damages all enemy units it hits.  If an enemy is hit by a Stone Remnant, they are also slowed. Stone Remnants travel further than other units.",
+   "description_zh": "大地之灵将敌方单位或友方单位作为目标，将其击飞，目标将沿他面朝的方向飞行一段距离。如果大地之灵点地为目标，他将击飞%remnant_smash_radius_tooltip%范围内距离最近的单位，优先以残岩为目标。击飞的单位或残岩会对碰到的所有单位造成伤害。如果敌人是被残岩击中还将额外被减速。残岩被击飞的距离比其他单位更远。"
+  }
+ },
+ {
+  "review_id": "9dc6a7c7bdbc8b85a055",
+  "subject": "phoenix_icarus_dive",
+  "subject_zh": "凤凰·凤凰冲击",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "凤凰向目标方向进行圆弧状飞行，飞行距离固定，对沿途的敌人造成持续伤害并减缓其移动速度，然后返回初始位置。",
+   "飞行过程中如果施放超新星将停止飞行。",
+   "凤凰冲击的飞行时间为%dive_duration%秒，可以在飞行途中再次施放来终止飞行。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+  },
+  "context": {
+   "description_en": "Phoenix dives forward in an arc with a fixed distance in the targeted direction, dealing damage over time and slowing the movement speed of any units it comes into contact with, and then orbiting back to its original position. If Phoenix casts Supernova, the dive ends.",
+   "description_zh": "凤凰向目标方向进行圆弧状飞行，飞行距离固定，对沿途的敌人造成持续伤害并减缓其移动速度，然后返回初始位置。飞行过程中如果施放超新星将停止飞行。",
+   "notes_en": [
+    "Icarus Dive has a %dive_duration% second travel duration, and can be cancelled by casting the ability again while in flight."
+   ],
+   "notes_zh": [
+    "凤凰冲击的飞行时间为%dive_duration%秒，可以在飞行途中再次施放来终止飞行。"
+   ]
+  }
+ },
+ {
+  "review_id": "a4d82b28f6401493b2fa",
+  "subject": "phoenix_fire_spirits",
+  "subject_zh": "凤凰·烈火精灵",
+  "mechanism": "flying",
+  "mechanism_zh": "飞行",
+  "definition": "飞行移动，能越过地形",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "lead": "text",
+  "evidence": [
+   "召唤4只围绕凤凰飞行的烈火精灵。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Summons 4 fire spirits that circle around Phoenix. Each spirit can be launched independently at a targeted area of effect. Affected enemy units take damage over time and have their attack speed greatly reduced.",
+   "description_zh": "召唤4只围绕凤凰飞行的烈火精灵。每一只烈火精灵都能被单独发射到指定区域。对敌人持续造成伤害并大幅降低他们的攻击速度。",
+   "notes_en": [
+    "Fire Spirits reveal the area they strike for 1 second."
+   ],
+   "notes_zh": [
+    "烈火精灵现在到达目标区域后将获得1秒的视野。"
+   ]
+  }
+ }
+]

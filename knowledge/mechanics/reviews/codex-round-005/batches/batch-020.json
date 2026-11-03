@@ -1,0 +1,1187 @@
+[
+ {
+  "review_id": "bc43dd80808010fd2ead",
+  "subject": "vengefulspirit_magic_missile",
+  "subject_zh": "复仇之魂·魔法箭",
+  "mechanism": "stun",
+  "mechanism_zh": "眩晕",
+  "definition": "使目标无法行动和施法的硬控（含小眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "向一个敌方单位射出魔法箭，眩晕并造成伤害。",
+   "Fires a magic missile at an enemy unit, stunning and dealing damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Magic Missile",
+   "name_zh": "魔法箭",
+   "description_en": "Fires a magic missile at an enemy unit, stunning and dealing damage.",
+   "description_zh": "向一个敌方单位射出魔法箭，眩晕并造成伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Bounces once on an enemy, prioritizing heroes, within %bounce_range_pct%%% of Magic Missile's current cast range from the first target.",
+     "zh": "可以对敌人弹射一次，以英雄优先，弹射距离为主目标的%bounce_range_pct%%%魔法箭施法距离内。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3aad7e260bbcd819d402",
+  "subject": "visage_gravekeepers_cloak",
+  "subject_zh": "维萨吉·陵卫斗篷",
+  "mechanism": "stun",
+  "mechanism_zh": "眩晕",
+  "definition": "使目标无法行动和施法的硬控（含小眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "2秒眩晕，同时造成60/100/140点伤害，获得6秒无敌状态。",
+   "Gains an active component, allowing Visage to use Stone Form, stunning enemies for 0."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Gravekeeper's Cloak",
+   "name_zh": "陵卫斗篷",
+   "description_en": "Visage generates a layered barrier that protects him from damage.  If he receives damage from a player, one layer is removed, and takes time to recover.Visage's Familiars are protected by his cloak when within %radius% range of him, based on the number of layers Visage has.",
+   "description_zh": "维萨吉产生数层屏障来保护他，降低受到的伤害。每当他受到来自玩家的伤害，就会失去一层屏障，失去的屏障需要一定时间才能恢复。维萨吉的佣兽在%radius%范围内也会受到斗篷的保护，承伤降低的数值取决于维萨吉拥有的层数。",
+   "notes_en": [
+    "Each time Visage receives damage greater than the Minimum Damage that was not self-inflicted and was from a player owned source, a layer is removed.",
+    "Familiars within %radius% range of Visage will receive the current damage reduction from Gravekeeper's Cloak.",
+    "Break disables the gaining of new stacks.",
+    "Break does not disable the bonuses from existing stacks."
+   ],
+   "notes_zh": [
+    "每次维萨吉受到来自其他玩家的伤害超过最小伤害时，保护层就会移除一层。",
+    "佣兽在维萨吉周围%radius%范围内将获得当前陵卫斗篷的承伤降低效果。",
+    "破坏会使技能无法获得新的叠加效果。",
+    "破坏不会使现有叠加效果提供的加成失效。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Gains an active component, allowing Visage to use Stone Form, stunning enemies for 0.8 / 1.0 / 1.2 seconds in an 375 area around it, dealing 60 / 100 / 140 damage and becoming invulnerable for 6 seconds.  Restores up to %shard_hp_restoration_pct%%% of your health.",
+     "zh": "获得主动效果，维萨吉可以化作石像形态，对身边375范围内的敌人造成0.8/1.0/1.2秒眩晕，同时造成60/100/140点伤害，获得6秒无敌状态。最多恢复%shard_hp_restoration_pct%%%生命值。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "fae6648d2f44bec3fce5",
+  "subject": "warlock_rain_of_chaos",
+  "subject_zh": "术士·混乱之祭",
+  "mechanism": "stun",
+  "mechanism_zh": "眩晕",
+  "definition": "使目标无法行动和施法的硬控（含小眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Summons a Golem from the depths, stunning enemies for %stun_duration% seconds.",
+   "从深渊召唤一个地狱火，眩晕敌人%stun_duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Chaotic Offering",
+   "name_zh": "混乱之祭",
+   "description_en": "Summons a Golem from the depths, stunning enemies for %stun_duration% seconds. The Golem lives %golem_duration% seconds, takes reduced damage from spells, has increased Slow Resistance, has Permanent Immolation and Flaming Fists on attack.",
+   "description_zh": "从深渊召唤一个地狱火，眩晕敌人%stun_duration%秒。地狱火持续%golem_duration%秒，能够减免部分技能的伤害，具有较高的减速抗性，拥有永久献祭和烈焰之拳技能。",
+   "notes_en": [
+    "This ability destroys trees in its area of effect."
+   ],
+   "notes_zh": [
+    "该技能将摧毁作用范围内的树木。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Calls %number_of_golems_scepter% Golems.",
+     "zh": "召唤%number_of_golems_scepter%个地狱火。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "9c5f7bfec7a22fc353cc",
+  "subject": "windrunner_shackleshot",
+  "subject_zh": "风行者·束缚击",
+  "mechanism": "stun",
+  "mechanism_zh": "眩晕",
+  "definition": "使目标无法行动和施法的硬控（含小眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If no unit or tree is present, the stun duration is reduced to %fail_stun_duration%.",
+   "若目标后面没有其它敌方单位或树木，则眩晕时间减少至%fail_stun_duration%秒。",
+   "This spell can shackle two enemies together, stunning them both.",
+   "该技能可以将两个敌人一起束缚，使他们同时眩晕。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Shackleshot",
+   "name_zh": "束缚击",
+   "description_en": "Shackles the target to an enemy unit or tree in a line directly behind it.  If no unit or tree is present, the stun duration is reduced to %fail_stun_duration%.",
+   "description_zh": "将目标束缚在正对其后的一个敌方单位或树上。若目标后面没有其它敌方单位或树木，则眩晕时间减少至%fail_stun_duration%秒。",
+   "notes_en": [
+    "This spell can shackle two enemies together, stunning them both.",
+    "Can shackle the target to an enemy unit or tree at most %shackle_distance% behind the target.",
+    "Shackleshot can be disjointed."
+   ],
+   "notes_zh": [
+    "该技能可以将两个敌人一起束缚，使他们同时眩晕。",
+    "束缚击能将目标束缚在身后最多%shackle_distance%距离的敌方单位或树木。",
+    "束缚击可以被躲避。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "2f9de45d013763e576a0",
+  "subject": "witch_doctor_paralyzing_cask",
+  "subject_zh": "巫医·麻痹药剂",
+  "mechanism": "stun",
+  "mechanism_zh": "眩晕",
+  "definition": "使目标无法行动和施法的硬控（含小眩晕）",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "抛出一个装满麻痹粉末的药剂，在敌方单位之间弹跳，眩晕击中的敌人并造成伤害。",
+   "Launches a cask of paralyzing powder that ricochets between enemy units, stunning and damaging those it hits."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Paralyzing Cask",
+   "name_zh": "麻痹药剂",
+   "description_en": "Launches a cask of paralyzing powder that ricochets between enemy units, stunning and damaging those it hits. Damage increases each bounce.",
+   "description_zh": "抛出一个装满麻痹粉末的药剂，在敌方单位之间弹跳，眩晕击中的敌人并造成伤害。每次弹跳都会提升伤害。",
+   "notes_en": [
+    "Targets can be hit multiple times, as long as another unit is struck in between the bounces."
+   ],
+   "notes_zh": [
+    "目标可以受到多次作用，只要附近有其他单位可以进行弹跳。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "61e19753ed69ee1e25d2",
+  "subject": "beastmaster_summon_raptor",
+  "subject_zh": "兽王·召唤猛禽",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Beastmaster summons %hawk_count% hawks that circle around Beastmaster and dive-bombs at enemies with a base attack rate of every %hawk_base_attack_interval%s, damaging and rooting them."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Summon Raptors",
+   "name_zh": "召唤猛禽",
+   "description_en": "Beastmaster summons %hawk_count% hawks that circle around Beastmaster and dive-bombs at enemies with a base attack rate of every %hawk_base_attack_interval%s, damaging and rooting them. Attack rate increases with the Hawk's attack speed. Prioritizes heroes.",
+   "description_zh": "兽王召唤%hawk_count%只战鹰环绕在他周围，战鹰以%hawk_base_attack_interval%秒的基础攻击间隔俯冲攻击敌人，造成伤害并缠绕。战鹰提升攻击速度后会提升攻击频率。以英雄优先。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "846f1e690d9ec0a71a65",
+  "subject": "brewmaster_primal_split",
+  "subject_zh": "酒仙·元素分离",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "酒仙分裂成元素，产生3个各有所长的战士，生存能力极强，每个都拥有独特技能。",
+   "Splits Brewmaster into elements, forming 3 specialized warriors, adept at survival, each with their own abilities."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Primal Split",
+   "name_zh": "元素分离",
+   "description_en": "Splits Brewmaster into elements, forming 3 specialized warriors, adept at survival, each with their own abilities. If any of them survive until the end of their summoned timer, the Brewmaster is reborn.  Each Warrior gains its respective Drunken Brawler stance.",
+   "description_zh": "酒仙分裂成元素，产生3个各有所长的战士，生存能力极强，每个都拥有独特技能。只要其中任何一个在召唤时间结束后存活下来，酒仙就能重生。每个战士都会获得对应的醉拳拳法。",
+   "notes_en": [
+    "The Earth Element will carry all auras that the Brewmaster has, as well as True Sight.",
+    "The Fire Element has phased movement.",
+    "When the spell ends, Brewmaster will take the place of an element in this order, assuming they are alive: Earth, Storm, Fire."
+   ],
+   "notes_zh": [
+    "大地战士将继承酒仙的所有光环，以及真视宝石的真视效果。",
+    "烈火战士拥有相位移动的能力。",
+    "技能结束后，酒仙会根据大地→狂风→烈火的顺序选择未阵亡的元素重生。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Primal Split gains %scepter_bonus_levels% max and current level, improving the Brewlings and their abilities.Allows Primal Split to be cancelled early, and causes the Brewlings to be Brewed Up when Primal Split begins.",
+     "zh": "元素分离获得%scepter_bonus_levels%级最高和当前等级，强化元素战士和他们的技能。元素分离可以提前结束，而且元素分离开始时元素战士是浸酒状态。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "87effc6084cec0d18eb7",
+  "subject": "invoker_forge_spirit",
+  "subject_zh": "祈求者·熔炉精灵",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Casting this ability will replace currently summoned Forged Spirits."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DIRECT_KEYBIND"
+  },
+  "context": {
+   "name_en": "Forge Spirit",
+   "name_zh": "熔炉精灵",
+   "description_en": "Invoker forges a spirit embodying the strength of fire and fortitude of ice. Damage and armor are based on the level of Exort while attack range, health, and duration are based on the level of Quas. The elemental's scorching attack is capable of melting the armor of enemy heroes. The number of spirits spawned is determined by the lower level of Quas and Exort.",
+   "description_zh": "祈求者融合火之灼热和冰之坚毅，创造出熔炉精灵。熔炉精灵的攻击力和护甲取决于火元素的等级，攻击距离、持续时间和生命值取决于冰元素的等级。元素的灼热攻击能够熔化敌方英雄的护甲。熔炉精灵的产生数量取决于冰元素和火元素中等级较低的元素。",
+   "notes_en": [
+    "Casting this ability will replace currently summoned Forged Spirits."
+   ],
+   "notes_zh": [
+    "施放此技能后原有的熔炉精灵将会死亡。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "49fd3157811306c89414",
+  "subject": "juggernaut_healing_ward",
+  "subject_zh": "主宰·治疗守卫",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Summons a Healing Ward which heals all nearby allied units, based on their max health.",
+   "召唤一个治疗守卫，按周围友军单位最大生命值的一定比例治疗他们。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Healing Ward",
+   "name_zh": "治疗守卫",
+   "description_en": "Summons a Healing Ward which heals all nearby allied units, based on their max health.  The Healing Ward moves at %healing_ward_movespeed_tooltip% movement speed after being summoned.  Lasts %abilityduration% seconds.",
+   "description_zh": "召唤一个治疗守卫，按周围友军单位最大生命值的一定比例治疗他们。治疗守卫可以移动，移动速度为%healing_ward_movespeed_tooltip%。持续%abilityduration%秒。",
+   "notes_en": [
+    "The Healing Ward can be controlled.",
+    "Multiple Healing Wards do not stack."
+   ],
+   "notes_zh": [
+    "可以控制治疗守卫。",
+    "多个治疗守卫的效果不会叠加。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases ward healing and health.",
+     "zh": "提升守卫的治疗量和生命值。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "786030a29ed2afa11f0a",
+  "subject": "lycan_summon_wolves",
+  "subject_zh": "狼人·召狼",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "召唤的精灵狼的数量提升。",
+   "Grants all summoned wolves the ability Hightail, an active ability that gives them phased movement, evasion, movespeed, and attack speed.",
+   "所有召唤的精灵狼获得健步如飞技能，这个主动技能使精灵狼获得相位移动，闪避，移动速度和攻击速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Summon Wolves",
+   "name_zh": "召狼",
+   "description_en": "Summons %wolf_count% wolves to aid Lycan in battle. At level 3, wolves gain Permanent Invisibility, and at level 4 wolves gain Cripple that gives 20% chance to cripple the target, causing 8 damage per second and lose 60 attack speed for 4 seconds.",
+   "description_zh": "召唤%wolf_count%头精灵狼为狼人战斗。3级精灵狼获得永久隐身，4级精灵狼获得致残技能，20%几率使目标残废，造成每秒8点伤害，并失去60攻击速度，持续4秒。",
+   "notes_en": [
+    "Using this spell will replace currently active summoned Wolves."
+   ],
+   "notes_zh": [
+    "使用此技能后原来的狼群将会死亡。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases the number of wolves summoned. Grants all summoned wolves the ability Hightail, an active ability that gives them phased movement, evasion, movespeed, and attack speed.",
+     "zh": "召唤的精灵狼的数量提升。所有召唤的精灵狼获得健步如飞技能，这个主动技能使精灵狼获得相位移动，闪避，移动速度和攻击速度。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8f238d372d0db5e81a33",
+  "subject": "meepo_divided_we_stand",
+  "subject_zh": "米波·分则能成",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Meepo summons another Meepo, which levels up and shares items and experience with the main Meepo."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Divided We Stand",
+   "name_zh": "分则能成",
+   "description_en": "Meepo summons another Meepo, which levels up and shares items and experience with the main Meepo. Ability cooldowns are independent, but items share cooldowns between Meepos, except Teleport Scrolls. Damage, attack speed, health, mana, regeneration, mana burn, and proc chance bonuses from items are distributed equally among the amount of Meepos, making them %dps_penalty_pct%%% less effective.If any Meepo dies, they all die.",
+   "description_zh": "米波再召唤出一个米波，可以跟随米波本体升级并共用物品。技能的冷却时间相互独立，但是物品的冷却时间在米波之间共用，回城卷轴除外。来自物品的攻击力、攻击速度、生命值、魔法值、恢复效果、法力损毁和触发几率会根据米波数量均分，在每只身上的效果减少%dps_penalty_pct%%%。任意米波阵亡都会导致所有米波全体死亡。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "15f348bdf92ded494a2b",
+  "subject": "shadow_shaman_mass_serpent_ward",
+  "subject_zh": "暗影萨满·群蛇守卫",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Summons %ward_count% Serpent Wards to attack enemy units and structures.",
+   "召唤%ward_count%个群蛇守卫攻击敌方单位和建筑。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Mass Serpent Ward",
+   "name_zh": "群蛇守卫",
+   "description_en": "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. Creeps deal half damage to the Serpent Ward.",
+   "description_zh": "召唤%ward_count%个群蛇守卫攻击敌方单位和建筑。守卫免疫魔法。非英雄单位对毒蛇守卫造成半额伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "c34d840b58ad1a51df66",
+  "subject": "undying_tombstone",
+  "subject_zh": "不朽尸王·墓碑",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Summons a tombstone at the target point.",
+   "在目标位置召唤一座墓碑。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "name_en": "Tombstone",
+   "name_zh": "墓碑",
+   "description_en": "Summons a tombstone at the target point.  Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them.  Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie.",
+   "description_zh": "在目标位置召唤一座墓碑。墓碑会不断在其附近的每个敌方单位身边产生僵尸攻击他们。僵尸拥有死亡渴望技能，使他们的攻击带有减速效果，并且若目标的生命值低于一定百分比，僵尸的攻击和移动速度会提升。",
+   "notes_en": [
+    "Tombstone is Spell Immune, but can be healed by Soul Rip.",
+    "Zombies and Tombstone are Spell Immune.",
+    "If their initial target dies or goes out of vision, the Zombie will die."
+   ],
+   "notes_zh": [
+    "墓碑免疫技能，但是可以被噬魂治疗。",
+    "僵尸和墓碑均免疫技能。",
+    "如果初始目标死亡或丢失视野，僵尸将会死亡。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Tombstone can be cast on an allied hero to bunker inside of the tombstone. Heroes that enter the Tombstone cannot leave for %tombstone_bunker_cd% seconds nor can they re-enter after leaving. If the tombstone is destroyed with a hero inside, that hero gets stunned for %tombstone_stun_penalty% seconds.",
+     "zh": "墓碑可以对友方英雄施放，让他们躲进墓碑。进入墓碑的英雄%tombstone_bunker_cd%秒内无法离开，离开后同样的时间内无法再次进入。如果英雄在内时墓碑被摧毁，该英雄会被眩晕%tombstone_stun_penalty%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d1fa089c27d08ad4bb85",
+  "subject": "venomancer_plague_ward",
+  "subject_zh": "剧毒术士·瘟疫守卫",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Summons a plague ward to attack enemy units and structures.",
+   "召唤一个瘟疫守卫来攻击敌方单位和建筑。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Plague Ward",
+   "name_zh": "瘟疫守卫",
+   "description_en": "Summons a plague ward to attack enemy units and structures. The ward is immune to magic. Wards gain the Poison Sting level from Venomancer, dealing 50% of the full damage.",
+   "description_zh": "召唤一个瘟疫守卫来攻击敌方单位和建筑。守卫对魔法免疫。守卫拥有毒刺攻击，效果与毒刺技能的当前等级相同，造成50%的原技能伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "e1b590ff2b12cbda9f91",
+  "subject": "visage_summon_familiars",
+  "subject_zh": "维萨吉·召唤佣兽",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "召唤%familiar_count%只盲眼的佣兽为维萨吉作战。",
+   "Conjures %familiar_count% blind Familiars to fight for Visage.",
+   "Casting Summon Familiars will replace any existing Familiars.",
+   "施放召唤佣兽后已有的佣兽将会死亡。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "name_en": "Summon Familiars",
+   "name_zh": "召唤佣兽",
+   "description_en": "Conjures %familiar_count% blind Familiars to fight for Visage.  Familiars possess the Stone Form ability, that allows them to turn into stone, stunning enemies upon landing.  While in Stone Form, Familiars are invulnerable, and rapidly regenerate their health.  Familiars grant high bounty when killed.\n\nThe ability can be cast in the alt-cast state to recall Visages familiars after %recall_duration%s, during which they cannot attack or act.",
+   "description_zh": "召唤%familiar_count%只盲眼的佣兽为维萨吉作战。佣兽拥有石像形态技能，可以化为石像，在落地时使敌人眩晕。在石像形态中的佣兽无敌，并且迅速回复生命值。佣兽被击杀时给予高额奖励。\n\n技能可以设为多样施法（右键点击技能栏图标），在%recall_duration%秒后召回维萨吉的佣兽，在此期间佣兽无法攻击或行动。",
+   "notes_en": [
+    "Casting Summon Familiars will replace any existing Familiars.",
+    "Familiars within range of Visage will receive bonuses from Gravekeeper's Cloak and Grave Chill."
+   ],
+   "notes_zh": [
+    "施放召唤佣兽后已有的佣兽将会死亡。",
+    "佣兽在维萨吉周围时将获得当前陵卫斗篷的承伤降低效果和黄泉颤抖的加成效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "911a6d33ddc8b4c30dc5",
+  "subject": "warlock_rain_of_chaos",
+  "subject_zh": "术士·混乱之祭",
+  "mechanism": "summons",
+  "mechanism_zh": "召唤物",
+  "definition": "召唤单位或守卫（可控或不可控都算），以及夺取已有单位的控制权（如支配头盔、陈·神圣劝化）",
+  "definition_note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Summons a Golem from the depths, stunning enemies for %stun_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Chaotic Offering",
+   "name_zh": "混乱之祭",
+   "description_en": "Summons a Golem from the depths, stunning enemies for %stun_duration% seconds. The Golem lives %golem_duration% seconds, takes reduced damage from spells, has increased Slow Resistance, has Permanent Immolation and Flaming Fists on attack.",
+   "description_zh": "从深渊召唤一个地狱火，眩晕敌人%stun_duration%秒。地狱火持续%golem_duration%秒，能够减免部分技能的伤害，具有较高的减速抗性，拥有永久献祭和烈焰之拳技能。",
+   "notes_en": [
+    "This ability destroys trees in its area of effect."
+   ],
+   "notes_zh": [
+    "该技能将摧毁作用范围内的树木。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Calls %number_of_golems_scepter% Golems.",
+     "zh": "召唤%number_of_golems_scepter%个地狱火。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e8685a92b0014583d3e4",
+  "subject": "bloodseeker_thirst",
+  "subject_zh": "血魔·焦渴",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero.",
+   "如果生命值低于%invis_threshold_pct%%%，他还将获得该英雄的视野和真实视域。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "name_en": "Thirst",
+   "name_zh": "焦渴",
+   "description_en": "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed when an enemy hero's health falls below %min_bonus_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero. Unlocks max movement speed for Bloodseeker.",
+   "description_zh": "血魔能够感知到敌人的伤口中涌出的鲜血，敌方英雄的生命值低于%min_bonus_pct%%%，他的移动速度就会提升，而且生命值越低，提升效果越大。如果生命值低于%invis_threshold_pct%%%，他还将获得该英雄的视野和真实视域。焦渴的效果可以叠加。血魔可以突破最大速度限制。",
+   "notes_en": [
+    "Not triggered by Illusions.",
+    "Max movement speed bonus occurs when an enemy's health is at or below %max_bonus_pct%%%.",
+    "Effects linger for %linger_duration% seconds if a target dies."
+   ],
+   "notes_zh": [
+    "幻象不能触发该技能。",
+    "移动速度加成在敌人生命值低于%max_bonus_pct%%%时达到上限。",
+    "目标死亡后效果延续%linger_duration%秒。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "74d194627da4b9ab6609",
+  "subject": "drow_ranger_wave_of_silence",
+  "subject_zh": "卓尔游侠·狂风",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Releases a wave that silences and knocks back and reveals invisible enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT"
+  },
+  "context": {
+   "name_en": "Gust",
+   "name_zh": "狂风",
+   "description_en": "Releases a wave that silences and knocks back and reveals invisible enemy units. Knockback distance is relative to how close they are to Drow.",
+   "description_zh": "释放一阵狂风，沉默敌方单位并将其击退，同时使隐身敌人显形。击退距离与敌人和卓尔游侠的距离成反比。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "47ed36d7129514881240",
+  "subject": "dust",
+  "subject_zh": "显影之尘",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "For 12 seconds, creates an area that reveals and slows invisible heroes by -20% in a 1050 radius where the caster was standing."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "dname": "Dust of Appearance",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Reveal",
+     "description": "For 12 seconds, creates an area that reveals and slows invisible heroes by -20% in a 1050 radius where the caster was standing. Invisible units revealed by dust take 25 damage.\n\n The debuff effect on enemies lingers for 8s after leaving the area of effect."
+    }
+   ],
+   "notes": "Places a debuff on enemy units in the area that reveals them when they are invisible.",
+   "attrib": [
+    {
+     "key": "duration",
+     "value": "12"
+    },
+    {
+     "key": "radius",
+     "value": "1050"
+    },
+    {
+     "key": "movespeed",
+     "value": "-20"
+    },
+    {
+     "key": "damage",
+     "value": "25"
+    },
+    {
+     "key": "linger_duration",
+     "value": "8"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "001413a7a6c8514451d5",
+  "subject": "gem",
+  "subject_zh": "真视宝石",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "active",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Gives True Sight over a 300 radius revealing wards and units even in Fog of War."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "dname": "Gem of True Sight",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Reveal",
+     "description": "Gives True Sight over a 300 radius revealing wards and units even in Fog of War."
+    },
+    {
+     "type": "passive",
+     "title": "True Sight",
+     "description": "Grants the ability to see invisible units and wards to any allied vision within 900 range of its carrier."
+    },
+    {
+     "type": "passive",
+     "title": "Everlasting",
+     "description": "Dropped on death, and cannot be destroyed."
+    }
+   ],
+   "notes": "Disabled while on a courier.",
+   "attrib": [
+    {
+     "key": "radius",
+     "value": "900"
+    },
+    {
+     "key": "active_radius",
+     "value": "300"
+    },
+    {
+     "key": "duration",
+     "value": "4"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "d0745c9f52aeb96aa35c",
+  "subject": "ringmaster_spotlight",
+  "subject_zh": "百戏大王·聚光灯",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Enemies in the light have a chance to miss their attacks and are revealed if invisible."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+  },
+  "context": {
+   "name_en": "Spotlight",
+   "name_zh": "聚光灯",
+   "description_en": "Ringmaster shines %spotlight_count% spotlights that sweep over an area. Enemies in the light have a chance to miss their attacks and are revealed if invisible. Illusions hit by the beam fade away, losing a percentage of their maximum health each second. These effects linger for %linger_duration% seconds after leaving the light.",
+   "description_zh": "百戏大王用%spotlight_count%束聚光灯照亮一片区域。灯光下的敌人有几率丢失攻击，隐身状态下也会显形。被光束击中的幻象会逐渐消散，每秒失去一定百分比的最大生命值。这些效果在灯束离开后会粘滞%linger_duration%秒。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": true
+  }
+ },
+ {
+  "review_id": "3cffd917cf8d3afeeda1",
+  "subject": "slardar_amplify_damage",
+  "subject_zh": "斯拉达·侵蚀雾霭",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility.",
+   "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Corrosive Haze",
+   "name_zh": "侵蚀雾霭",
+   "description_en": "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility. The enemy unit leaves a trail of water behind it.",
+   "description_zh": "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。敌方单位将在身后留下水迹。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "f8999e9209b10ae083a1",
+  "subject": "void_spirit_aether_remnant",
+  "subject_zh": "虚无之灵·残阴",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "The remnant now provides True Sight, and no longer triggers on creeps, instead dealing %creep_damage_pct%%% damage to them every second in both paths."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Aether Remnant",
+   "name_zh": "残阴",
+   "description_en": "Void Spirit dispatches a remnant to the target location. The remnant stands watch over the region, facing the direction of his vector. When a unit crosses its gaze, the remnant pulls it in and damages it.",
+   "description_zh": "虚无之灵向目标地点派出一个残像。残像观察着一片区域，面朝矢量的方向。当有目标进入其视线，残像会拉扯，并造成伤害。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Creates an additional watcher path that rotates around the remnant.  The remnant now provides True Sight, and no longer triggers on creeps, instead dealing %creep_damage_pct%%% damage to them every second in both paths. Does not reveal wards.",
+     "zh": "额外产生一道观察路径，会围绕残阴旋转。残阴现在会提供真实视域，不再对非英雄单位触发，而是每秒在两道路径上造成%creep_damage_pct%%%伤害。不会使守卫显形。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "7f596b357a3937c8b5cf",
+  "subject": "ward_sentry",
+  "subject_zh": "岗哨守卫",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "item",
+   "item_ability_type": "use",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Plants a Sentry Ward, an invisible watcher that grants True Sight, the ability to see invisible enemy units and wards, to any existing allied vision within a 1050 radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_SUPPRESS_ASSOCIATED_CONSUMABLE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO"
+  },
+  "context": {
+   "dname": "Sentry Ward",
+   "abilities": [
+    {
+     "type": "use",
+     "title": "Plant",
+     "description": "Plants a Sentry Ward, an invisible watcher that grants True Sight, the ability to see invisible enemy units and wards, to any existing allied vision within a 1050 radius.\nLasts 7 minutes.\n\nDoes not grant ground vision.\nHold Control to give one Sentry Ward to an allied hero."
+    }
+   ],
+   "attrib": [
+    {
+     "key": "lifetime",
+     "value": "420"
+    },
+    {
+     "key": "true_sight_range",
+     "value": "1050"
+    },
+    {
+     "key": "health",
+     "value": "200"
+    },
+    {
+     "key": "duration_minutes_tooltip",
+     "value": "7"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "78409ef485a7e3793102",
+  "subject": "zuus_lightning_bolt",
+  "subject_zh": "宙斯·雷击",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "施放后，雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。",
+   "When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a %sight_radius_night% radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Lightning Bolt",
+   "name_zh": "雷击",
+   "description_en": "Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a %sight_radius_night% radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.",
+   "description_zh": "召唤一道闪电打击一个敌方单位，造成伤害及短暂眩晕。施放后，雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。本技能可以对地施放，将会自动作用于%spread_aoe%范围内最近的敌方英雄上。",
+   "notes_en": [
+    "You can interrupt channeling spells and items with this ability."
+   ],
+   "notes_zh": [
+    "该技能可以打断持续施法类技能和物品。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "8a7a4dceb4127c0e1be1",
+  "subject": "zuus_thundergods_wrath",
+  "subject_zh": "宙斯·雷神之怒",
+  "mechanism": "true_sight",
+  "mechanism_zh": "真视",
+  "definition": "可看见隐身单位",
+  "definition_note": "",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Provides True Sight around each hero before they are struck.",
+   "在打击前提供每个英雄的真实视域。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "name_en": "Thundergod's Wrath",
+   "name_zh": "雷神之怒",
+   "description_en": "Strikes all enemy heroes with a bolt of lightning, dealing damage no matter where they may be. Provides True Sight around each hero before they are struck.",
+   "description_zh": "用闪电打击所有敌方英雄，对他们造成伤害，无论他们身在何处。在打击前提供每个英雄的真实视域。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "e2824561e903d4b1b36a",
+  "subject": "axe_battle_hunger",
+  "subject_zh": "斧王·战斗饥渴",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"8\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Battle Hunger",
+   "name_zh": "战斗饥渴",
+   "description_en": "Enrages an enemy unit, causing it to take damage over time until it kills another unit or the duration ends. The enemy is slowed as long as they are facing away from Axe.",
+   "description_zh": "激怒一个敌方单位，使他受到持续伤害，直到他杀死一个单位或者持续时间结束。敌人只要背朝斧王还将被减速。",
+   "notes_en": [
+    "Destroying buildings will also remove the debuff."
+   ],
+   "notes_zh": [
+    "摧毁建筑也能移除该状态效果。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Multiple instances of Battle Hunger can stack on a single target.",
+     "zh": "多个战斗饥渴效果可以叠加在单个目标身上。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d88a435418d4898d340d",
+  "subject": "bane_brain_sap",
+  "subject_zh": "祸乱之源·蚀脑",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"8\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Brain Sap",
+   "name_zh": "蚀脑",
+   "description_en": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.",
+   "description_zh": "暴食一个敌方单位的生命能量，造成伤害并回复自身生命值。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Reduces cooldown by %bonus_AbilityCooldown%. Causes Brain Sap to become a %shard_radius% AoE spell. Secondary targets only heal for %shard_secondary_target_heal_pct%%%.",
+     "zh": "减少%bonus_AbilityCooldown%秒冷却时间。蚀脑变成%shard_radius%作用范围的技能。次级目标只有%shard_secondary_target_heal_pct%%%治疗效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0878b3f9bb592b16b0b4",
+  "subject": "bane_enfeeble",
+  "subject_zh": "祸乱之源·虚弱",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "\"8\"",
+   "2"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Enfeeble",
+   "name_zh": "虚弱",
+   "description_en": "Deals damage every second and lowers the enemy's total attack damage and cast range.",
+   "description_zh": "每秒造成伤害，并且降低敌人的总攻击力和施法距离。",
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false
+  }
+ },
+ {
+  "review_id": "a3449635d60c7787076e",
+  "subject": "batrider_flaming_lasso",
+  "subject_zh": "蝙蝠骑士·燃烧枷锁",
+  "mechanism": "unit_target_spell",
+  "mechanism_zh": "单体指向技能",
+  "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+  "definition_note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "2",
+   "\"8\""
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY",
+   "AbilityUnitTargetType": "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+  },
+  "context": {
+   "name_en": "Flaming Lasso",
+   "name_zh": "燃烧枷锁",
+   "description_en": "Lassoes an enemy and drags them in Batrider's wake. Dragged units cannot move, attack, or use abilities.  Teleporting or blinking will break the lasso.",
+   "description_zh": "用枷锁捆住一个敌人，在蝙蝠骑士的后面拖行。被拖行的单位不能移动、攻击或使用技能。传送或闪烁会打破枷锁。",
+   "notes_en": [
+    "Killing the target or the Batrider will break the lasso before its expiration.",
+    "If Batrider moves more than 425 units in 0.05 seconds the lasso breaks.",
+    "Batrider cannot attack while using Flaming Lasso."
+   ],
+   "notes_zh": [
+    "杀死目标或蝙蝠骑士都能在技能结束前打破枷锁。",
+    "如果蝙蝠骑士在0.05秒内移动距离超过425码枷锁将会断裂。",
+    "蝙蝠骑士在使用燃烧枷锁时不能攻击。"
+   ],
+   "innate": false,
+   "granted_by_scepter": false,
+   "granted_by_shard": false,
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Flaming Lasso grabs both its target, as well as the target's nearest allied hero within %grab_radius_scepter% units. The secondary target is tethered to the first.",
+     "zh": "燃烧枷锁除了抓取目标外，还能抓取目标附近%grab_radius_scepter%范围内最近的友方英雄。第二目标将与第一目标相连。"
+    }
+   }
+  }
+ }
+]

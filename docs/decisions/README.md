@@ -59,3 +59,15 @@
 | U53 | [除demo和对局解析文件外都可以进远端](2026-11-03-remote-scope.md) |
 | U54 | [开始词表v4和复核后事实v4](2026-11-03-v4.md) |
 | U55 | [中立物品暂不纳入；补快照校验；外部审查待办写入计划](2026-11-03-audit-followups.md) |
+| U56 | [Codex复核v4中只有Claude审过的组](2026-11-03-round5.md) |
+| U57 | [Codex第5轮裁定（13组）](2026-11-04-round5-rulings.md) |
+| U58 | [不靠概率也算重击；词表增加虚无](2026-11-04-bash-ethereal.md) |
+| U59 | [Codex第5轮收尾：12组](2026-11-04-round5-final.md) |
+| U60 | [词表v5和复核后事实v5](2026-11-04-v5.md) |
+| U61 | [陈A杖不记治疗；查词表缺口](2026-11-04-chen-scepter-gap.md) |
+| U62 | [词表增加A、B组机制](2026-11-04-vocabulary-ab.md) |
+| U63 | [C组不进词表；v6证据交Codex审核](2026-11-04-vocabulary-v6-go.md) |
+| U64、U65 | [降低自身冷却算减冷却；提升治疗量算治疗，治疗增强不算](2026-11-04-upgrade-counts.md) |
+| U65 | [升级只改数值不记机制；第7轮裁定](2026-11-04-round7-rulings.md) |
+| U66 | [18组升级移到数值；版本认证放到MK-T6](2026-11-05-upgrade-numeric-final.md) |
+| U67 | [结束MK-T3，进入MK-T4](2026-11-05-t3-done.md) |
