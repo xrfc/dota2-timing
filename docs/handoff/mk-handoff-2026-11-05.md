@@ -4,14 +4,14 @@
 
 ## 现状
 
-- MK-T3已结束（U67）。入口：`knowledge/mechanics/extractions/v7/`、`vocabulary-v7.json`（75项）。
-- MK-T4规则第1版：`knowledge/mechanics/rules-v1.json`（20条），计算结果`extractions/v7/rules-evaluation.json`，讨论过程[规则草稿](mk-t4-rules-draft.md)。
+- MK-T3已结束（U67）。入口：`knowledge/mechanics/extractions/v8/`、`vocabulary-v8.json`（76项）。
+- MK-T4已结束（U73）：`knowledge/mechanics/rules-v2.json`（20条），计算结果`extractions/v8/rules-evaluation.json`，讨论过程[规则草稿](mk-t4-rules-draft.md)。
 - 全部裁定在`knowledge/mechanics/reviews/user-rulings-001.jsonl`，汇总见[待用户裁定汇总](user-rulings-2026-11-02.md)。
 
 ## 下一步
 
-1. **问用户第20条哪些光环算克制幻象和召唤物。** 现在28个光环都没算进去，因为字段分不出加友军还是打敌方。助手建议只算对敌方造成伤害的，如辉耀、竭心光环。
-2. 用户确认后结束MK-T4，进入MK-T5。
+1. 第20条已改为范围伤害（U71、U72），入口更新为`extractions/v8/`、`vocabulary-v8.json`、`rules-v2.json`。
+2. MK-T4已结束（U73），当前任务MK-T5。
 3. MK-T5要解决：第12条“脆弱”的判断、第13条例外清单、第15条依赖普攻（读M1出装，一号位默认算）、第8条“常规会出”的门槛；并按U5抽查。
 4. 新事实缺口出新版本，不改旧版本。
 

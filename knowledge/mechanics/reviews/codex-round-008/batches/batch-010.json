@@ -1,0 +1,1027 @@
+[
+ {
+  "review_id": "16af4d72c3e1b4a82ddd",
+  "subject": "wisp_tether",
+  "subject_zh": "艾欧·羁绊",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "羁绊会对触碰到的敌人造成伤害。",
+   "Tether damages enemies touching it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, the tethered unit gains a portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. Tether slows enemies touching it.",
+   "description_zh": "将艾欧和一个友方单位连接在一起，提高双方的移动速度。当艾欧回复生命或魔法时，连在一起的友军将获得一部分回复效果。距离过远时连接将会断开，也可以主动断开连接。羁绊会减速触碰到的敌人。",
+   "notes_en": [
+    "If you try to tether a unit that is 700 distance or further away from Io, Io will latch on and pull itself closer to the tethered unit (to a distance of 300).",
+    "The tethered unit will heal faster and will heal even if Io is at full health.",
+    "Io's movement speed matches the tethered unit's."
+   ],
+   "notes_zh": [
+    "如果羁绊的目标距离艾欧700码以外，艾欧将链接目标并将自己向目标牵引（牵引后相距300码）。",
+    "被羁绊连接的单位回复速度相比更快，艾欧满血时也能回复。",
+    "艾欧的移动速度与羁绊目标一致。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Tether damages enemies touching it. Io is healed for %damage_to_heal%%% of the damage done.",
+     "zh": "羁绊会对触碰到的敌人造成伤害。艾欧会回复%damage_to_heal%%%造成伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "31b04f0ce5c2c7fc269f",
+  "subject": "wisp_spirits",
+  "subject_zh": "艾欧·幽魂",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "如果碰到的是敌方英雄，幽魂会爆炸，对其附近的所有敌人造成伤害。",
+   "If a particle collides with an enemy hero, it explodes, damaging all enemy units in an area around it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Summon five particle spirits that dance in a circle around Io. If a particle collides with an enemy hero, it explodes, damaging all enemy units in an area around it.  Creeps take minor damage from touching a particle spirit, but do not cause them to explode.  When its duration ends, any remaining Spirits explode.",
+   "description_zh": "召唤五个围绕艾欧起舞的幽魂，对所有碰触到的单位造成伤害。如果碰到的是敌方英雄，幽魂会爆炸，对其附近的所有敌人造成伤害。普通单位碰到幽魂会受到轻微伤害，但是不会使其爆炸。持续时间结束后，幽魂将自动爆炸。",
+   "notes_en": [
+    "After summoning, Io can call the spirits in and out."
+   ],
+   "notes_zh": [
+    "召唤后艾欧可以拉近或拉远幽魂。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Spirits now passively spawn around Io constantly every second up to the max. Spirits colliding with enemy Heroes slows them briefly. Can be activated to explode spirits.",
+     "zh": "每秒被动产生幽魂围绕艾欧，直至数量上限。幽魂撞到英雄会将其短暂减速。可以主动施放来引爆幽魂。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0806c3e283e85bb1907c",
+  "subject": "visage_soul_assumption",
+  "subject_zh": "维萨吉·灵魂超度",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每次附近英雄（不论敌我）受到的伤害超过%damage_limit%点，维萨吉就能集聚灵魂精华的能量。",
+   "Visage gathers charges of soul essence each time nearby heroes take more than %damage_limit% damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Visage gathers charges of soul essence each time nearby heroes take more than %damage_limit% damage. When the essence is released, it deals base damage as well as damage for each gathered soul charge.",
+   "description_zh": "每次附近英雄（不论敌我）受到的伤害超过%damage_limit%点，维萨吉就能集聚灵魂精华的能量。将精华释放后，会对目标单位造成基础伤害，每一点集聚的能量还将造成额外伤害。",
+   "notes_en": [
+    "Charges are only gained for damage greater than %damage_min% and less than %damage_max% that is dealt by a player or Roshan.  Self-damage or Soul Assumption damage isn't counted."
+   ],
+   "notes_zh": [
+    "能量点数只计算来自玩家或肉山的伤害，必须大于%damage_min%点小于%damage_max%点。自残型伤害和灵魂超度造成的伤害不计算在内。"
+   ]
+  }
+ },
+ {
+  "review_id": "7b42d011728f19e830bb",
+  "subject": "visage_gravekeepers_cloak",
+  "subject_zh": "维萨吉·陵卫斗篷",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Familiars within %radius% range of Visage will receive the current damage reduction from Gravekeeper's Cloak."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Visage generates a layered barrier that protects him from damage.  If he receives damage from a player, one layer is removed, and takes time to recover.Visage's Familiars are protected by his cloak when within %radius% range of him, based on the number of layers Visage has.",
+   "description_zh": "维萨吉产生数层屏障来保护他，降低受到的伤害。每当他受到来自玩家的伤害，就会失去一层屏障，失去的屏障需要一定时间才能恢复。维萨吉的佣兽在%radius%范围内也会受到斗篷的保护，承伤降低的数值取决于维萨吉拥有的层数。",
+   "notes_en": [
+    "Each time Visage receives damage greater than the Minimum Damage that was not self-inflicted and was from a player owned source, a layer is removed.",
+    "Familiars within %radius% range of Visage will receive the current damage reduction from Gravekeeper's Cloak.",
+    "Break disables the gaining of new stacks.",
+    "Break does not disable the bonuses from existing stacks."
+   ],
+   "notes_zh": [
+    "每次维萨吉受到来自其他玩家的伤害超过最小伤害时，保护层就会移除一层。",
+    "佣兽在维萨吉周围%radius%范围内将获得当前陵卫斗篷的承伤降低效果。",
+    "破坏会使技能无法获得新的叠加效果。",
+    "破坏不会使现有叠加效果提供的加成失效。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Gains an active component, allowing Visage to use Stone Form, stunning enemies for 0.8 / 1.0 / 1.2 seconds in an 375 area around it, dealing 60 / 100 / 140 damage and becoming invulnerable for 6 seconds.  Restores up to %shard_hp_restoration_pct%%% of your health.",
+     "zh": "获得主动效果，维萨吉可以化作石像形态，对身边375范围内的敌人造成0.8/1.0/1.2秒眩晕，同时造成60/100/140点伤害，获得6秒无敌状态。最多恢复%shard_hp_restoration_pct%%%生命值。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "de2d7534a58e1187c3da",
+  "subject": "visage_gravekeepers_cloak",
+  "subject_zh": "维萨吉·陵卫斗篷",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "2 seconds in an 375 area around it, dealing 60 / 100 / 140 damage and becoming invulnerable for 6 seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Visage generates a layered barrier that protects him from damage.  If he receives damage from a player, one layer is removed, and takes time to recover.Visage's Familiars are protected by his cloak when within %radius% range of him, based on the number of layers Visage has.",
+   "description_zh": "维萨吉产生数层屏障来保护他，降低受到的伤害。每当他受到来自玩家的伤害，就会失去一层屏障，失去的屏障需要一定时间才能恢复。维萨吉的佣兽在%radius%范围内也会受到斗篷的保护，承伤降低的数值取决于维萨吉拥有的层数。",
+   "notes_en": [
+    "Each time Visage receives damage greater than the Minimum Damage that was not self-inflicted and was from a player owned source, a layer is removed.",
+    "Familiars within %radius% range of Visage will receive the current damage reduction from Gravekeeper's Cloak.",
+    "Break disables the gaining of new stacks.",
+    "Break does not disable the bonuses from existing stacks."
+   ],
+   "notes_zh": [
+    "每次维萨吉受到来自其他玩家的伤害超过最小伤害时，保护层就会移除一层。",
+    "佣兽在维萨吉周围%radius%范围内将获得当前陵卫斗篷的承伤降低效果。",
+    "破坏会使技能无法获得新的叠加效果。",
+    "破坏不会使现有叠加效果提供的加成失效。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Gains an active component, allowing Visage to use Stone Form, stunning enemies for 0.8 / 1.0 / 1.2 seconds in an 375 area around it, dealing 60 / 100 / 140 damage and becoming invulnerable for 6 seconds.  Restores up to %shard_hp_restoration_pct%%% of your health.",
+     "zh": "获得主动效果，维萨吉可以化作石像形态，对身边375范围内的敌人造成0.8/1.0/1.2秒眩晕，同时造成60/100/140点伤害，获得6秒无敌状态。最多恢复%shard_hp_restoration_pct%%%生命值。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ff8b3d3ca682caafc770",
+  "subject": "slark_dark_pact",
+  "subject_zh": "斯拉克·黑暗契约",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "短暂延迟后，斯拉克牺牲部分生命力，清除大部分负面状态并对自己和周围敌方单位造成伤害。",
+   "After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "After a short delay, Slark sacrifices some of his life blood, purging most negative debuffs and dealing damage to enemy units around him and to himself.  Slark only takes %self_damage_pct%%% of the damage.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "短暂延迟后，斯拉克牺牲部分生命力，清除大部分负面状态并对自己和周围敌方单位造成伤害。斯拉克自身只受到造成伤害的%self_damage_pct%%%。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "%delay% seconds after cast, a series of %total_pulses% pulses separated by %pulse_interval% seconds deal the damage.",
+    "Each pulse also removes debuffs from Slark.",
+    "You can't kill yourself with this skill.",
+    "The pulses stop if Slark dies."
+   ],
+   "notes_zh": [
+    "经过%delay%秒施法延迟后，每隔%pulse_interval%秒释放1道伤害波造成伤害，总共%total_pulses%道。",
+    "每道伤害波还会移除斯拉克身上的负面效果。",
+    "不能使用此技能自杀。",
+    "如果斯拉克死亡，伤害波将停止释放。"
+   ]
+  }
+ },
+ {
+  "review_id": "35800c896ab7d60a8bce",
+  "subject": "medusa_split_shot",
+  "subject_zh": "美杜莎·分裂箭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "分裂箭造成的伤害为正常攻击力的一定百分比。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE | DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE"
+  },
+  "context": {
+   "description_en": "Medusa magically splits her shot into several arrows. These arrows deal a lower percent of her normal damage.The extra targets will not receive other attack effects (such as critical strike).",
+   "description_zh": "美杜莎施展魔法将她的箭分裂成若干支箭矢。分裂箭造成的伤害为正常攻击力的一定百分比。额外目标不会受到其他攻击特效（比如致命一击）的作用。",
+   "notes_en": [
+    "Secondary targets will be the closest enemy units excluding the primary target.",
+    "If illusions of Medusa are created while Split Shot is active, they will also have this ability."
+   ],
+   "notes_zh": [
+    "次级目标将是除了主要目标外距离最近的敌方单位。",
+    "如果在分裂箭激活的状态下创造幻象，幻象也将继承此技能。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Allows on-hit effects to apply to the secondary attacks from Split Shot. Increases arrow count.",
+     "zh": "使分裂箭的次级攻击也能继承攻击特效，并且目标数量提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c85e0a8dd4ab2b8e3c9e",
+  "subject": "medusa_split_shot",
+  "subject_zh": "美杜莎·分裂箭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "使分裂箭的次级攻击也能继承攻击特效，并且目标数量提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_SILENCE | DOTA_ABILITY_BEHAVIOR_IGNORE_INVISIBLE"
+  },
+  "context": {
+   "description_en": "Medusa magically splits her shot into several arrows. These arrows deal a lower percent of her normal damage.The extra targets will not receive other attack effects (such as critical strike).",
+   "description_zh": "美杜莎施展魔法将她的箭分裂成若干支箭矢。分裂箭造成的伤害为正常攻击力的一定百分比。额外目标不会受到其他攻击特效（比如致命一击）的作用。",
+   "notes_en": [
+    "Secondary targets will be the closest enemy units excluding the primary target.",
+    "If illusions of Medusa are created while Split Shot is active, they will also have this ability."
+   ],
+   "notes_zh": [
+    "次级目标将是除了主要目标外距离最近的敌方单位。",
+    "如果在分裂箭激活的状态下创造幻象，幻象也将继承此技能。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Allows on-hit effects to apply to the secondary attacks from Split Shot. Increases arrow count.",
+     "zh": "使分裂箭的次级攻击也能继承攻击特效，并且目标数量提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e863fe8042328560ff9c",
+  "subject": "medusa_mystic_snake",
+  "subject_zh": "美杜莎·秘术异蛇",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "放出一条秘术异蛇在敌人之间跳跃，造成伤害。",
+   "每次跳跃后伤害和速度都会增加。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "A mystic snake made of energy jumps from target to target dealing damage. Damage and speed increases with each jump. After it reaches its last target, it returns to Medusa to replenish her with mana. The snake returns a percentage of the targets' total mana.",
+   "description_zh": "放出一条秘术异蛇在敌人之间跳跃，造成伤害。每次跳跃后伤害和速度都会增加。抵达最后一个目标后，它会返回到美杜莎身上为其恢复魔法值。异蛇会返还所有目标最大魔法值一定百分比的魔法。",
+   "notes_en": [
+    "Mystic Snake cannot be disjointed."
+   ],
+   "notes_zh": [
+    "秘术异蛇无法躲避。"
+   ]
+  }
+ },
+ {
+  "review_id": "b42c8235bd1275dd57d9",
+  "subject": "medusa_gorgon_grasp",
+  "subject_zh": "美杜莎·罗网箭阵",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "齐射的箭矢击中的敌人会受到初始爆发伤害，然后被缠绕且无法转身，并对敌人可见，同时受到每秒伤害。",
+   "Enemies struck by a volley of arrows take an initial burst of damage and then are rooted, cannot turn, are revealed to the enemy, and take damage per second."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Medusa fires arrows in a line that land in %volley_count% groups, with each grouping larger than the previous. Enemies struck by a volley of arrows take an initial burst of damage and then are rooted, cannot turn, are revealed to the enemy, and take damage per second.",
+   "description_zh": "美杜莎沿着一条直线射出%volley_count%组箭矢，每组的作用范围递增。齐射的箭矢击中的敌人会受到初始爆发伤害，然后被缠绕且无法转身，并对敌人可见，同时受到每秒伤害。"
+  }
+ },
+ {
+  "review_id": "1767c42740e4675b3659",
+  "subject": "troll_warlord_whirling_axes_ranged",
+  "subject_zh": "巨魔战将·旋风飞斧（远程）",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "巨魔战将掷出手中的五把飞斧，减速并伤害前方%axe_range%范围锥形区域内的敌方单位。",
+   "Troll hurls a fistful of five axes in a cone shape over %axe_range% range, slowing and damaging enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Troll hurls a fistful of five axes in a cone shape over %axe_range% range, slowing and damaging enemy units.",
+   "description_zh": "巨魔战将掷出手中的五把飞斧，减速并伤害前方%axe_range%范围锥形区域内的敌方单位。",
+   "notes_en": [
+    "Does not affect Roshan.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "无法作用于肉山。",
+    "不会触发法术抵抗或法术反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Whirling Axes (Ranged) to dispel enemies. Reduces cooldown and mana cost.DISPEL TYPE: Basic Dispel",
+     "zh": "旋风飞斧（远程）可以驱散敌人。降低冷却时间和魔法消耗。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "59ee9a3ed94fda2bc85e",
+  "subject": "troll_warlord_whirling_axes_melee",
+  "subject_zh": "巨魔战将·旋风飞斧（近战）",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "巨魔战将掷出两把飞斧环绕在他周围，使敌方单位受到伤害，并且部分普通攻击将不能命中。",
+   "Troll hurls two axes around him in a close range area of effect, damaging enemy units and causing them to miss some attacks."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Troll hurls two axes around him in a close range area of effect, damaging enemy units and causing them to miss some attacks.",
+   "description_zh": "巨魔战将掷出两把飞斧环绕在他周围，使敌方单位受到伤害，并且部分普通攻击将不能命中。",
+   "notes_en": [
+    "Does not affect Roshan."
+   ],
+   "notes_zh": [
+    "无法作用于肉山。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Whirling Axes (Melee) to dispel Troll Warlord. Reduces cooldown and mana cost.DISPEL TYPE: Basic Dispel",
+     "zh": "旋风飞斧（近战）可以驱散自己。降低冷却时间和魔法消耗。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "167de9c2165f39dbfd65",
+  "subject": "troll_warlord_fervor",
+  "subject_zh": "巨魔战将·热血战魂",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "巨魔战将在攻击敌方单位时拥有%base_chance%%% + 热血战魂叠加次数*%extra_attack_chance_per_stack%%%的几率对远程攻击距离 + %range_buffer%范围内任意单位发动一次额外的远程攻击。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "With each continuous blow on the same target, Troll gains increased attack speed.  If Troll changes targets, the stacks drop to zero.",
+   "description_zh": "当巨魔战将持续攻击同一个目标时，他会攻击得越来越快。如果改变目标，则额外的攻速加成清零。",
+   "notes_en": [
+    "Break disables the gaining of new stacks.",
+    "Break disables the proc chance granted by Aghanim's Shard."
+   ],
+   "notes_zh": [
+    "破坏会使技能无法获得新的叠加效果。",
+    "破坏会使阿哈利姆魔晶的几率触发失效。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Grants Troll %base_chance%%% + %extra_attack_chance_per_stack%%% chance per Fervor stack of firing an additional ranged attack to any unit within its ranged attack range plus %range_buffer% when attacking an enemy unit.",
+     "zh": "巨魔战将在攻击敌方单位时拥有%base_chance%%% + 热血战魂叠加次数*%extra_attack_chance_per_stack%%%的几率对远程攻击距离 + %range_buffer%范围内任意单位发动一次额外的远程攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "86c5f33f9ce3b59ec235",
+  "subject": "centaur_hoof_stomp",
+  "subject_zh": "半人马战行者·马蹄践踏",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "经过短暂的蓄力后，半人马战行者猛踏地面，眩晕并伤害身边的敌方单位。",
+   "After a brief windup, Centaur Warrunner slams the ground, stunning and damaging nearby enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "After a brief windup, Centaur Warrunner slams the ground, stunning and damaging nearby enemy units. During the delay, he is disarmed but can move.",
+   "description_zh": "经过短暂的蓄力后，半人马战行者猛踏地面，眩晕并伤害身边的敌方单位。在延迟期间，他被缴械，但可以移动。"
+  }
+ },
+ {
+  "review_id": "292a5803f00afca8da7a",
+  "subject": "centaur_double_edge",
+  "subject_zh": "半人马战行者·双刃剑",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "半人马战行者以猛烈的力量进行近战攻击，对目标周围单位和自身造成伤害。",
+   "Centaur strikes a mighty blow at melee range, damaging both himself and a small area around the target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Centaur strikes a mighty blow at melee range, damaging both himself and a small area around the target. Deals extra damage based on your strength. Centaur cannot die from Double Edge.",
+   "description_zh": "半人马战行者以猛烈的力量进行近战攻击，对目标周围单位和自身造成伤害。将基于力量值造成额外伤害。此技能无法用于自杀。",
+   "notes_en": [
+    "Double Edge deals magic type damage to both the targets and himself."
+   ],
+   "notes_zh": [
+    "双刃剑对目标和自身都造成魔法伤害。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Causes Double Edge to slow enemy heroes and increase Centaur's strength per hero hit for a short time. Duration refreshes per stack, up to a max of %shard_max_stacks% stacks.",
+     "zh": "双刃剑可以对敌人造成减速，并且每击中一名英雄都会暂时提升半人马战行者的力量值。每次叠加都会刷新持续时间，最多叠加%shard_max_stacks%次。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "26df5198974ad12a68b9",
+  "subject": "centaur_stampede",
+  "subject_zh": "半人马战行者·奔袭冲撞",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每个敌人只会受到一次踩踏作用，并受到基于半人马战行者力量值的伤害。",
+   "Trampled enemies take damage based on Centaur Warrunner's strength."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Centaur leads all allies into a vicious charge causing them to move through units at max speed and slow any enemy units they trample. Trampled enemies take damage based on Centaur Warrunner's strength. Each enemy can be trampled once.",
+   "description_zh": "半人马战行者带领所有队友向胜利冲锋，所有友方英雄达到极限移动速度，并使踩到的敌人减速。每个敌人只会受到一次踩踏作用，并受到基于半人马战行者力量值的伤害。"
+  }
+ },
+ {
+  "review_id": "7d8f72c2aaa8b87a5e1c",
+  "subject": "magnataur_shockwave",
+  "subject_zh": "马格纳斯·震荡波",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "马格纳斯放出一道能量波，对一条直线上的敌方单位造成伤害，并将他们朝自身牵引，同时受到短暂减速效果。",
+   "Magnus sends out a wave of force, damaging enemy units in a line, pulling them towards him, and slowing them for a brief period."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Magnus sends out a wave of force, damaging enemy units in a line, pulling them towards him, and slowing them for a brief period.",
+   "description_zh": "马格纳斯放出一道能量波，对一条直线上的敌方单位造成伤害，并将他们朝自身牵引，同时受到短暂减速效果。"
+  }
+ },
+ {
+  "review_id": "15e676f84760ed7b3087",
+  "subject": "magnataur_empower",
+  "subject_zh": "马格纳斯·授予力量",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对友军施放时，给予攻击力加成并使其获得分裂效果。",
+   "分裂伤害无视减益免疫。",
+   "远程单位的攻击没有分裂效果。",
+   "When cast on an ally, grants them bonus damage and cleave on attack.",
+   "Cleave damage goes through spell immunity."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "When cast on an ally, grants them bonus damage and cleave on attack. \n\n Empower is always on Magnus with %self_multiplier%%% larger bonus.",
+   "description_zh": "对友军施放时，给予攻击力加成并使其获得分裂效果。\n\n授予力量总是在马格纳斯身上生效，拥有%self_multiplier%%%额外效果。",
+   "notes_en": [
+    "The bonus damage is based only on base damage and damage from primary attributes.",
+    "Cleave damage goes through spell immunity.",
+    "Ranged units cannot Cleave."
+   ],
+   "notes_zh": [
+    "攻击力加成根据基础攻击力和主属性加成计算。",
+    "分裂伤害无视减益免疫。",
+    "远程单位的攻击没有分裂效果。"
+   ]
+  }
+ },
+ {
+  "review_id": "2360f3bf7d9f301e1b9d",
+  "subject": "magnataur_skewer",
+  "subject_zh": "马格纳斯·巨角冲撞",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "提升距离，并且使敌人穿过树木和高台时造成额外伤害。",
+   "Increases range and deals additional damage when skewering enemies into trees or cliffs."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Magnus rushes forward, goring enemy units on his massive tusk. Heroes hit on the way will be dragged to the destination, then damaged and affected by slowed movement speed. The damage is increased based on distance traveled.",
+   "description_zh": "马格纳斯向前冲刺，用他巨大的犀角将敌人挑起。被击中的英雄将被拽至终点，然后受到伤害并且移动速度被减缓。根据行进的距离伤害也会提升。",
+   "notes_en": [
+    "Skewer is interrupted if Magnus is stunned, hexed or banished."
+   ],
+   "notes_zh": [
+    "马格纳斯受到眩晕、妖术或放逐作用时，巨角冲撞都会被打断。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases range and deals additional damage when skewering enemies into trees or cliffs.",
+     "zh": "提升距离，并且使敌人穿过树木和高台时造成额外伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3c773a0ebcf0cd8072c6",
+  "subject": "magnataur_horn_toss",
+  "subject_zh": "马格纳斯·长角抛物",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "敌人受到伤害，滞空%air_duration%秒并处于眩晕状态，而且落地后还会眩晕一段时间。",
+   "Enemies take damage, spend %air_duration% seconds in the air, and are stunned while in the air and an additional amount of time after landing."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Magnus tosses any enemies in front of him, launching them to his rear. Enemies take damage, spend %air_duration% seconds in the air, and are stunned while in the air and an additional amount of time after landing.",
+   "description_zh": "马格纳斯顶起前方的敌人，将其甩在身后。敌人受到伤害，滞空%air_duration%秒并处于眩晕状态，而且落地后还会眩晕一段时间。"
+  }
+ },
+ {
+  "review_id": "db1791fb5b9e0d39d8eb",
+  "subject": "magnataur_reverse_polarity",
+  "subject_zh": "马格纳斯·两极反转",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "马格纳斯改变物质的属性，将附近的敌人拖拽至他的前方，并且以震击对他们造成伤害和眩晕。",
+   "Magnus changes properties of matter, pulling all nearby enemies in front of him and stunning them with a damaging slam."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Magnus changes properties of matter, pulling all nearby enemies in front of him and stunning them with a damaging slam.",
+   "description_zh": "马格纳斯改变物质的属性，将附近的敌人拖拽至他的前方，并且以震击对他们造成伤害和眩晕。"
+  }
+ },
+ {
+  "review_id": "b451395e3385a60c88fb",
+  "subject": "shredder_whirling_death",
+  "subject_zh": "伐木机·死亡旋风",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "伐木机使极其锋利的刀刃飞旋，对敌人造成伤害并摧毁他周围的树木。",
+   "Timbersaw whirls extremely sharp edges, damaging enemies and destroying trees around him in an area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "Timbersaw whirls extremely sharp edges, damaging enemies and destroying trees around him in an area. If an enemy hero is affected, it loses some of its primary attribute for a short duration. Whirling Death will deal bonus damage per tree destroyed.",
+   "description_zh": "伐木机使极其锋利的刀刃飞旋，对敌人造成伤害并摧毁他周围的树木。如果敌方英雄受到了作用，他的主属性将在短时间内降低少许。如果该技能施放过程中砍倒了树木则会根据砍倒的数量造成额外伤害。"
+  }
+ },
+ {
+  "review_id": "20258400b88249d79608",
+  "subject": "shredder_timber_chain",
+  "subject_zh": "伐木机·伐木锯链",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "行进过程中任何碰到的敌方单位都会受到伤害。",
+   "Timbersaw fires a chain that embeds itself in the first tree it hits, pulling him towards it.",
+   "Any enemy in the path takes damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "Timbersaw fires a chain that embeds itself in the first tree it hits, pulling him towards it.  Any enemy in the path takes damage.",
+   "description_zh": "伐木机发射一条锯链，锯链会嵌入第一棵碰到的树里，然后将他拉向那棵树。行进过程中任何碰到的敌方单位都会受到伤害。"
+  }
+ },
+ {
+  "review_id": "275e3ecde7d1c2f374f2",
+  "subject": "shredder_reactive_armor",
+  "subject_zh": "伐木机·活性护甲",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "%duration%秒后伐木机会对%explosion_radius%范围内每个英雄造成伤害，数值为%base_explosion% + 护盾剩余生命，而且失去全部护盾。",
+   "After %duration% seconds, Timbersaw deals damage to every hero within %explosion_radius% radius equal to %base_explosion% + his remaining barrier amount and loses all of his barrier."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Each time Timbersaw is attacked, he gains increased health regen and armor. Hero attacks are counted as %stacks_per_hero_attack%x the amount.",
+   "description_zh": "伐木机每受到一次物理攻击，他的生命恢复和护甲值都会提升。英雄攻击提供%stacks_per_hero_attack%倍提升。",
+   "notes_en": [
+    "Break disables the gaining of new stacks.",
+    "Break does not disable the bonuses from existing stacks."
+   ],
+   "notes_zh": [
+    "破坏会使技能无法获得新的叠加效果。",
+    "破坏不会使现有叠加效果提供的加成失效。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reactive Armor can now be activated to get max stacks and %initial_shield% damage barrier. Grants Timbersaw %shield_per_sec% + %shield_per_sec_per_enemy% barrier amount per second for each enemy hero within %radius% radius of Timbersaw up to a maximum of %max_shield%. After %duration% seconds, Timbersaw deals damage to every hero within %explosion_radius% radius equal to %base_explosion% + his remaining barrier amount and loses all of his barrier.",
+     "zh": "活性护甲可以主动施放，获得最大叠加次数和%initial_shield%点生命的护盾。护盾的恢复速度为每秒%shield_per_sec% + 伐木机%radius%范围内每名敌方英雄都会增加%shield_per_sec_per_enemy%，最高为%max_shield%。%duration%秒后伐木机会对%explosion_radius%范围内每个英雄造成伤害，数值为%base_explosion% + 护盾剩余生命，而且失去全部护盾。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5a6611e3ea728e15ddef",
+  "subject": "shredder_flamethrower",
+  "subject_zh": "伐木机·喷火装置",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "施加一个负面效果，造成每秒伤害，并减缓敌人的移动速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Releases a flame in the direction Timbersaw is facing. Applies a debuff that deals damage per second and slows enemy movement speed. Affects buildings for reduced damage.",
+   "description_zh": "伐木机向面朝的方向放出一道火焰。施加一个负面效果，造成每秒伤害，并减缓敌人的移动速度。对建筑造成的伤害有所减少。"
+  }
+ },
+ {
+  "review_id": "c8b92d47570408bbaf1f",
+  "subject": "shredder_chakram",
+  "subject_zh": "伐木机·锯齿飞轮",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "伐木机将主锯刃射向目标区域，锯刃会高速旋转，对周围的敌方单位造成伤害。",
+   "Fires Timbersaw's main saw blade at the target location where it will spin in place, dealing damage in an area around it.",
+   "The blade deals damage and cuts down trees in its path when fired and retracted."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "Fires Timbersaw's main saw blade at the target location where it will spin in place, dealing damage in an area around it.  Enemies caught in the saw blade will move more slowly for every %slow_health_percentage%%% of health missing. The blade deals damage and cuts down trees in its path when fired and retracted.  While active the ability costs mana, and Timbersaw loses the ability to attack.",
+   "description_zh": "伐木机将主锯刃射向目标区域，锯刃会高速旋转，对周围的敌方单位造成伤害。在锯刃作用范围内的敌方单位每损失最大生命值的%slow_health_percentage%%%，他们的移动速度都会进一步被降低。锯刃在发射和收回的过程中都将造成伤害并砍倒碰到的树木。在发射锯刃后伐木机将无法攻击，同时会持续消耗魔法。",
+   "notes_en": [
+    "The Chakram will return if Timbersaw runs out of mana or moves over %break_distance% distance away."
+   ],
+   "notes_zh": [
+    "如果伐木机魔法不足或移动超过%break_distance%距离，锯齿飞轮将会飞回。"
+   ]
+  }
+ },
+ {
+  "review_id": "bf2e747e73b0bbe6390b",
+  "subject": "bristleback_quill_spray",
+  "subject_zh": "钢背兽·刺针扫射",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "将尖刺喷射向敌人，对钢背兽附近的敌人造成伤害。",
+   "Sprays enemy units with quills dealing damage in an area of effect around Bristleback."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_AUTOCAST",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Sprays enemy units with quills dealing damage in an area of effect around Bristleback.  Deals bonus damage for every time a unit was hit by Quill Spray in the last %quill_stack_duration% seconds.",
+   "description_zh": "将尖刺喷射向敌人，对钢背兽附近的敌人造成伤害。任何单位最近%quill_stack_duration%秒内每次受到刺针扫射的打击都会受到额外伤害。",
+   "notes_en": [
+    "Quill Spray damage is not reduced by damage block abilities."
+   ],
+   "notes_zh": [
+    "刺针扫射的伤害不能被伤害格挡类技能减免。"
+   ]
+  }
+ },
+ {
+  "review_id": "0cd34d2362bdc5c270e4",
+  "subject": "tusk_ice_shards",
+  "subject_zh": "巨牙海民·寒冰碎片",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "巨牙海民将数块寒冰碎片压缩成蕴含冰冻能量的冰球，对所有接触到冰球的敌人造成伤害。",
+   "Tusk compresses shards of ice into a ball of frozen energy that damages all enemies it comes in contact with."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Tusk compresses shards of ice into a ball of frozen energy that damages all enemies it comes in contact with. When the ball reaches its target destination the shards are released, creating a barrier that lasts for %shard_duration% seconds.",
+   "description_zh": "巨牙海民将数块寒冰碎片压缩成蕴含冰冻能量的冰球，对所有接触到冰球的敌人造成伤害。冰球到达目标地点时会产生一个障碍物，持续%shard_duration%秒。",
+   "notes_en": [
+    "Creates an impassable barrier."
+   ],
+   "notes_zh": [
+    "将创造不可通行的障碍。"
+   ]
+  }
+ },
+ {
+  "review_id": "7deaa9eb24a7463db596",
+  "subject": "tusk_snowball",
+  "subject_zh": "巨牙海民·雪球",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Once launched, any enemies caught in the snowball's path will be stunned and take damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Tusk begins rolling into a snowball. Allies within a %snowball_grab_radius% radius can also be added to the snowball by right-clicking on them, even while the snowball is moving. Once launched, any enemies caught in the snowball's path will be stunned and take damage. Each allied Hero in the snowball will add to its damage and stun duration.",
+   "description_zh": "巨牙海民开始卷成雪球。右键点击%snowball_grab_radius%范围内的友方英雄能使其加入雪球。发动雪球后，雪球经过的单位将会被眩晕并受到伤害。雪球每卷入一个英雄，它的伤害和眩晕时间都会得到提升。",
+   "notes_en": [
+    "The snowball will break apart a maximum of 3 seconds after launch.",
+    "The snowball can be launched early by pressing using the Launch Snowball ability.",
+    "Doesn't carry illusions, but will carry Meepo clones and other units that Tusk controls.",
+    "Each Meepo clone added to the snowball will add its own bonus damage.",
+    "Allies can click on a snowball to add themselves to it."
+   ],
+   "notes_zh": [
+    "雪球在发动后经过最大3秒将会解体。",
+    "使用发动雪球技能就能提前发动雪球。",
+    "幻象不会进入雪球，但是米波的克隆体以及巨牙海民控制的其他单位将一同进入雪球。",
+    "米波的分身也能卷入雪球，并提升雪球的伤害。",
+    "队友可以点击雪球，使自己进入雪球。"
+   ]
+  }
+ },
+ {
+  "review_id": "ae37f16cd4d632faa975",
+  "subject": "tusk_tag_team",
+  "subject_zh": "巨牙海民·摔角行家",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "主动使用后暂时施加一个具有负面效果的光环，使作用范围内的敌人被攻击时承受额外物理伤害，并且移动速度被减缓。",
+   "Activate to temporarily apply a negative debuff aura around you, causing enemies that are attacked under it to take bonus physical damage and reduced movement speed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Activate to temporarily apply a negative debuff aura around you, causing enemies that are attacked under it to take bonus physical damage and reduced movement speed. Lasts %debuff_duration% seconds.",
+   "description_zh": "主动使用后暂时施加一个具有负面效果的光环，使作用范围内的敌人被攻击时承受额外物理伤害，并且移动速度被减缓。持续%debuff_duration%秒。",
+   "notes_en": [
+    "Affects attacks from allied heroes, Tusk or any of his units."
+   ],
+   "notes_zh": [
+    "影响来自友方英雄、巨牙海民和他控制的所有单位的普通攻击。"
+   ]
+  }
+ }
+]

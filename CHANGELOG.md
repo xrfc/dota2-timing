@@ -1,5 +1,21 @@
 # 变更记录
 
+## 2026-11-07 U73：结束MK-T4
+
+- 竭心光环算范围伤害，v8已重建。当前任务改为MK-T5。
+
+## 2026-11-06 U72：范围伤害裁定与v8
+
+- 新增`rules-v2.json`、`extractions/v8/`、`data.mechanics_facts_v8`、`scripts/build_mechanics_facts_v8.py`及测试；补回身踢。v7测试改为校验冻结哈希。
+
+## 2026-11-06 Codex第8轮
+
+- `knowledge/mechanics/reviews/codex-round-008/`：430组，同标签368组，分歧和都不确定62组，写入裁定汇总N块。结果未写入事实层。
+
+## 2026-11-06 关闭PR #14
+
+- 用户要求关闭。内容已被U39、U40、U43等取代；回身踢多样施法算位移他人这一条记入交接，待下一版写入。分支未删除。
+
 ## 2026-11-05 收尾
 
 - 同步入口文档、知识框架§8、架构、机制README和计划§7；新增`docs/handoff/mk-handoff-2026-11-05.md`。

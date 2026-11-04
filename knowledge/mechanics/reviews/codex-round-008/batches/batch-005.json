@@ -1,0 +1,1007 @@
+[
+ {
+  "review_id": "7b9e05a9f8ab4c787bec",
+  "subject": "queenofpain_blink",
+  "subject_zh": "痛苦女王·闪烁",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "在%shard_aoe%范围内造成%shard_damage%点伤害，并沉默%shard_duration%秒。",
+   "Deals %shard_damage% damage in a %shard_aoe% AoE and silences the target for %shard_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT"
+  },
+  "context": {
+   "description_en": "Short distance teleportation that allows Queen of Pain to move in and out of combat.",
+   "description_zh": "短距离传送，能让痛苦女王自由出入战场。",
+   "notes_en": [
+    "You can use Blink to dodge incoming projectiles."
+   ],
+   "notes_zh": [
+    "闪烁可以躲避多种飞行过程中的攻击和技能弹道。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Releases a sonic boom when Queen of Pain blinks, at both her starting and ending locations. Deals %shard_damage% damage in a %shard_aoe% AoE and silences the target for %shard_duration% seconds.",
+     "zh": "在痛苦女王的闪烁起点和落地点各释放一次音爆。在%shard_aoe%范围内造成%shard_damage%点伤害，并沉默%shard_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "38b002d4cf8d6cf900fe",
+  "subject": "queenofpain_scream_of_pain",
+  "subject_zh": "痛苦女王·痛苦尖叫",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "痛苦女王发出刺耳的尖叫，对周围敌人造成伤害。",
+   "The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies.%damage_reflected_to_self%%% of the damage dealt to heroes is reflected back to her.",
+   "description_zh": "痛苦女王发出刺耳的尖叫，对周围敌人造成伤害。造成伤害的%damage_reflected_to_self%%%会反弹回她身上。",
+   "notes_en": [
+    "Scream Of Pain will hit invisible units.",
+    "Scream Of Pain cannot be disjointed.",
+    "Damage to illusions is not reflected. Damage reflected is before reduction and non-lethal.",
+    "Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "痛苦尖叫能作用隐身单位。",
+    "痛苦尖叫无法被躲避。",
+    "对幻象造成的伤害不会反弹。反弹的伤害为减免前的，而且不致死。",
+    "反弹伤害不提供任何吸血，而且无法反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "ef10f9654cc5c2bdc188",
+  "subject": "queenofpain_sonic_wave",
+  "subject_zh": "痛苦女王·超声冲击波",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "痛苦女王在她面前制造出强大的声波，对其轨迹上的所有敌人造成大量伤害，并将他们击退。",
+   "Creates a gigantic wave of sound in front of Queen of Pain, dealing heavy damage to all enemy units in its wake and pushing them back."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "Creates a gigantic wave of sound in front of Queen of Pain, dealing heavy damage to all enemy units in its wake and pushing them back.",
+   "description_zh": "痛苦女王在她面前制造出强大的声波，对其轨迹上的所有敌人造成大量伤害，并将他们击退。",
+   "notes_en": [
+    "Sonic Wave can hit units up to 1150 units away."
+   ],
+   "notes_zh": [
+    "超声冲击波最远能伤害1150距离外的单位。"
+   ]
+  }
+ },
+ {
+  "review_id": "c533d0ab3a7092d2795a",
+  "subject": "venomancer_venomous_gale",
+  "subject_zh": "剧毒术士·瘴气",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "沿直线射出一个毒液球，碰到的敌人受到初始伤害和持续伤害，并受到减速效果影响。",
+   "Launches a ball of venom in a line, poisoning enemy units so that they take both initial damage and damage over time, as well as suffering slowed movement."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Launches a ball of venom in a line, poisoning enemy units so that they take both initial damage and damage over time, as well as suffering slowed movement.  Venomous Gale deals damage every 3 seconds over its duration.",
+   "description_zh": "沿直线射出一个毒液球，碰到的敌人受到初始伤害和持续伤害，并受到减速效果影响。瘴气在持续时间内每3秒造成一次持续伤害。",
+   "notes_en": [
+    "Venomous Gale can be lethal.",
+    "Duration damage is dealt every %tick_interval% seconds.",
+    "Slow starts at %movement_slow%%%, and decreases as time passes."
+   ],
+   "notes_zh": [
+    "瘴气可以致死。",
+    "技能持续时间内每%tick_interval%秒造成一次伤害。",
+    "初始减速效果为%movement_slow%%%，减速效果将逐渐降低。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases cast range and projectile speed by %shard_travel_tooltip%%%. When Venomous Gale impacts enemy heroes, %num_created_wards_tooltip% Plague Wards are created around them.",
+     "zh": "施法距离和弹道速度提升%shard_travel_tooltip%%%。瘴气只要击中每个敌方英雄就会在他们周围制造%num_created_wards_tooltip%个瘟疫守卫。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "744d26f68ebec4f1e4a0",
+  "subject": "venomancer_snakebite",
+  "subject_zh": "剧毒术士·毒蛇撕咬",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "剧毒术士召唤阿克特克的幼体，把它的毒牙刺入一个敌人，造成魔法伤害，并施加造成每秒伤害的剧毒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Venomancer summons a Spawn of Aktok to sink its fangs into a target, dealing magic damage and applying a toxin that does damage every second. When the target attacks while infected, they take the initial damage again.",
+   "description_zh": "剧毒术士召唤阿克特克的幼体，把它的毒牙刺入一个敌人，造成魔法伤害，并施加造成每秒伤害的剧毒。目标在感染时发动攻击，他就会再次受到初始伤害。"
+  }
+ },
+ {
+  "review_id": "82175dfb9dbdf2c127f7",
+  "subject": "venomancer_plague_ward",
+  "subject_zh": "剧毒术士·瘟疫守卫",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "召唤一个瘟疫守卫来攻击敌方单位和建筑。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Summons a plague ward to attack enemy units and structures. The ward is immune to magic. Wards gain the Poison Sting level from Venomancer, dealing 50% of the full damage.",
+   "description_zh": "召唤一个瘟疫守卫来攻击敌方单位和建筑。守卫对魔法免疫。守卫拥有毒刺攻击，效果与毒刺技能的当前等级相同，造成50%的原技能伤害。"
+  }
+ },
+ {
+  "review_id": "940b49820b267fae537e",
+  "subject": "venomancer_poison_sting",
+  "subject_zh": "剧毒术士·毒刺",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "剧毒的攻击会持续减速敌人并造成伤害。",
+   "Venomancer's attacks slow enemies and deal damage over time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Venomancer's attacks slow enemies and deal damage over time.",
+   "description_zh": "剧毒的攻击会持续减速敌人并造成伤害。",
+   "notes_en": [
+    "Poison Sting damage can be lethal.",
+    "Damage from Poison Sting does not interrupt healing from items, nor does it activate the cooldown on Blink Dagger."
+   ],
+   "notes_zh": [
+    "毒刺的伤害可以致死。",
+    "毒刺造成的持续性伤害不会打断物品的回复效果，也不能使闪烁匕首进行冷却状态。"
+   ]
+  }
+ },
+ {
+  "review_id": "4b0e2c95e0bf55452bb3",
+  "subject": "venomancer_noxious_plague",
+  "subject_zh": "剧毒术士·恶性瘟疫",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "使一名敌人感染致命的瘟疫，施加时造成伤害，然后减速目标，并且基于目标的最大生命值造成持续伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Infects an enemy with a plague that does damage on application then slows the target and deals damage over time based on their maximum health. When the debuff ends for any reason, all debuffs from Venomancer on the initial target and the plague are spread to nearby targets. Additional spreads beyond the first do not deal impact damage.",
+   "description_zh": "使一名敌人感染致命的瘟疫，施加时造成伤害，然后减速目标，并且基于目标的最大生命值造成持续伤害。不论负面状态以何种方式消失，瘟疫都会带着剧毒术士施加给初始目标的所有负面状态一起扩散到附近目标。第一次以外的额外扩散不会造成初始伤害。",
+   "notes_en": [
+    "Spread debuffs have fixed duration and are not modified by status resistance or debuff amplification."
+   ],
+   "notes_zh": [
+    "扩散的负面状态拥有固定的持续时间，不会受到状态抗性和负面状态增强的影响。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases cooldown by %bonus_AbilityCooldown% seconds. Infected units have decreased magic resistance. Additional spreads from hero targets deal full impact damage.",
+     "zh": "冷却时间减少%bonus_AbilityCooldown%秒。感染的单位拥有的魔法抗性会降低。来自英雄目标的额外扩散会造成全额的击中伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "bc20515a5035e8a733f7",
+  "subject": "skeleton_king_hellfire_blast",
+  "subject_zh": "冥魂大帝·冥火爆击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "冥魂大帝向一个敌方单位发射冥魂火球，造成即时伤害和眩晕，并持续对目标造成伤害和减速。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Wraith King sears an enemy unit with spectral fire, dealing damage and stunning, then dealing damage over time and slowing the target.",
+   "description_zh": "冥魂大帝向一个敌方单位发射冥魂火球，造成即时伤害和眩晕，并持续对目标造成伤害和减速。"
+  }
+ },
+ {
+  "review_id": "5246ea65479887e0078a",
+  "subject": "skeleton_king_bone_guard",
+  "subject_zh": "冥魂大帝·白骨护卫",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对敌人施放冥火爆击会导致骷髅兵攻击该敌人。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Gains a Charge for every 2 creeps killed and 2 charges per hero killed. Activate to spend all charges, summoning skeletons that respawn once when killed. Skeletons benefit from Vampiric Spirit's lifesteal.",
+   "description_zh": "击杀2个非英雄单位可获得1点能量，击杀1名英雄可获得2点能量。可以主动使用，消耗所有能量点数召唤可以复活一次的骷髅兵。骷髅兵享受吸血灵魂的吸血效果。",
+   "notes_en": [
+    "Break disables the gaining of new stacks.",
+    "Casting Wraithfire Blast on an enemy causes the skeletons to attack that enemy."
+   ],
+   "notes_zh": [
+    "破坏会使技能无法获得新的叠加效果。",
+    "对敌人施放冥火爆击会导致骷髅兵攻击该敌人。"
+   ]
+  }
+ },
+ {
+  "review_id": "cecb621d101a1b036bdc",
+  "subject": "death_prophet_exorcism",
+  "subject_zh": "死亡先知·驱使恶灵",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "敌人受到死亡先知的技能作用，或被死亡先知攻击时，会有一只恶灵飞出攻击敌人，造成高于平常的伤害，再返回使自身回复生命。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Unleashes evil spirits to drain the life of nearby enemy units and structures. Spirits need to return back to Death Prophet in order to attack again. At the end of the spell's duration, Death Prophet is healed in proportion to the damage dealt. Deals 50% damage to buildings. Lasts %abilityduration% seconds.",
+   "description_zh": "释放恶灵偷走敌方单位和建筑的生命。恶灵需要回到她身上才能再次攻击。持续时间结束后，死亡先知根据造成的伤害量，获得一定比例的治疗。对建筑造成50%%伤害。持续%abilityduration%秒。",
+   "notes_en": [
+    "Radius represents the area in which the spirits will acquire targets around Death Prophet.",
+    "Spirit damage isn't reduced by damage block abilities."
+   ],
+   "notes_zh": [
+    "作用范围代表死亡先知周围的恶灵寻找目标的范围。",
+    "伤害格挡类技能不能减少恶灵伤害。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Whenever an enemy is affected by Death Prophet's spells or when she attacks an enemy, a ghost will fly out and hit the enemy for an increased bonus of its usual damage then return to her with life.",
+     "zh": "敌人受到死亡先知的技能作用，或被死亡先知攻击时，会有一只恶灵飞出攻击敌人，造成高于平常的伤害，再返回使自身回复生命。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f2f4770312252748eaf4",
+  "subject": "phantom_assassin_stifling_dagger",
+  "subject_zh": "幻影刺客·窒碍短匕",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对敌方单位掷出一把匕首，减缓其移动速度，并造成物理伤害，数值为%base_damage%+幻影刺客攻击伤害的%attack_factor_tooltip%%%，同时继承物品和技能的攻击效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Throws a dagger slowing the enemy unit's movement speed, dealing %base_damage%+%attack_factor_tooltip%%% of Phantom Assassin's attack damage as physical damage and applying attack effects from items and abilities.",
+   "description_zh": "对敌方单位掷出一把匕首，减缓其移动速度，并造成物理伤害，数值为%base_damage%+幻影刺客攻击伤害的%attack_factor_tooltip%%%，同时继承物品和技能的攻击效果。",
+   "notes_en": [
+    "If an attack effect is chance-based, the chance of its application will be the same as its chance to occur.",
+    "Spell-immune enemies are not affected by Stifling Dagger's slow.",
+    "Stifling Dagger grants vision around its location while it travels and upon impact."
+   ],
+   "notes_zh": [
+    "如果攻击效果为几率触发，匕首的触发几率与原几率相同。",
+    "减益免疫下的敌人不会受到窒碍短匕的减速影响。",
+    "窒碍短匕在行进途中和击中目标时都会提供附近的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "e87d7b28d619b9deb3f6",
+  "subject": "phantom_assassin_fan_of_knives",
+  "subject_zh": "幻影刺客·刀阵旋风",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "幻影刺客对附近范围内敌人放出尖利的刀刃，击中时造成每名受害者最大生命值一定百分比的伤害并施加破坏效果。",
+   "Phantom Assassin releases sharp blades around her, dealing a percentage of each victim's max health on impact and applying Break."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Phantom Assassin releases sharp blades around her, dealing a percentage of each victim's max health on impact and applying Break.",
+   "description_zh": "幻影刺客对附近范围内敌人放出尖利的刀刃，击中时造成每名受害者最大生命值一定百分比的伤害并施加破坏效果。"
+  }
+ },
+ {
+  "review_id": "4d8e2cd2b4f50bf0907a",
+  "subject": "pugna_nether_blast",
+  "subject_zh": "帕格纳·幽冥爆轰",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "一个爆炸性脉冲，对敌方单位造成伤害。",
+   "An exploding pulse deals damage to enemies and structures in the area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "An exploding pulse deals damage to enemies and structures in the area.  Deals %structure_damage_mod%%% damage to structures.",
+   "description_zh": "一个爆炸性脉冲，对敌方单位造成伤害。对建筑物造成%structure_damage_mod%%%伤害。",
+   "notes_en": [
+    "Damage is delayed by %delay% seconds."
+   ],
+   "notes_zh": [
+    "伤害生效延迟为%delay%秒。"
+   ]
+  }
+ },
+ {
+  "review_id": "020385b9b09915b67b7f",
+  "subject": "pugna_decrepify",
+  "subject_zh": "帕格纳·衰老",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Healing on affected allies is increased, while afflicted enemies take extra magic damage instead."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked. Healing on affected allies is increased, while afflicted enemies take extra magic damage instead.",
+   "description_zh": "一个强大的驱逐咒语，能使一个单位进入虚无状态，无法攻击或受到攻击。受作用的友军提升了治疗效果，而受作用的敌军会被减速，并且承受额外魔法伤害。",
+   "notes_en": [
+    "Only magical and pure damage can affect a unit under the effects of Decrepify.",
+    "Doesn't slow allied units.",
+    "Can be used on your Nether Ward."
+   ],
+   "notes_zh": [
+    "只有魔法伤害和纯粹伤害可以作用于处于衰老状态的单位。",
+    "不会对友方单位造成减速。",
+    "可以对幽冥守卫施放。"
+   ]
+  }
+ },
+ {
+  "review_id": "137f88a2ce8c64a604cc",
+  "subject": "pugna_life_drain",
+  "subject_zh": "帕格纳·生命汲取",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target.\n\nWhen cast on an ally, Pugna will drain his own health into his ally.",
+   "description_zh": "持续施法 - 使用生命汲取时，帕格纳吸取目标敌方单位的生命值，并获得其视野。\n\n向队友施放可以将自己的生命值转移给队友。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces cooldown by %abilitycooldown%s. When targeting an enemy hero, Pugna reduces their outgoing spell damage by %spell_amp_drain_rate%%% per second up to a maximum of %spell_amp_drain_max%%% and increases his own, up to a maximum of %max_spell_amp_drain_pct%%%. When draining through a Nether Ward using Shard, the rate of increase/decrease is %spell_amp_drain_rate_ward%%% instead. Debuff lasts %spell_amp_drain_duration% seconds.",
+     "zh": "冷却时间减少%abilitycooldown%秒。以敌方英雄为目标时，帕格纳每秒降低他们%spell_amp_drain_rate%%%技能伤害输出，最高可达到%spell_amp_drain_max%%%，并且自身的技能伤害输出提升，最高可达到%max_spell_amp_drain_pct%%%。魔晶升级下对幽冥守卫施放时降低和提升的速率为%spell_amp_drain_rate_ward%%%。负面效果持续%spell_amp_drain_duration%秒。"
+    },
+    "shard_loc": {
+     "en": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed.",
+     "zh": "生命汲取可以对幽冥守卫施放，使生命汲取可以折射至守卫附近%abilitycastrange%范围内所有敌方英雄，造成%shard_damage_pct_from_ward%%%效果。守卫被摧毁后效果将会中断。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a671427b6a47f0efc0aa",
+  "subject": "templar_assassin_meld",
+  "subject_zh": "圣堂刺客·隐匿",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "只要在隐匿状态下攻击敌人打破隐身，拉娜娅的攻击将对敌人造成额外伤害，并降低其护甲，持续%debuff_duration%秒。",
+   "额外伤害和隐匿的负面效果会施加给灵能之刃飞溅距离内所有敌人。",
+   "Bonus damage and debuffs from Meld are applied to all enemies in the Psi Blades split range."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Templar Assassin conceals herself, becoming invisible as long as she remains still. If Meld's invisibility is broken by attacking an enemy, Lanaya's attack will deal bonus damage to the enemy and reduce their armor for %debuff_duration% seconds. Bonus damage and debuffs from Meld are applied to all enemies in the Psi Blades split range.",
+   "description_zh": "圣堂刺客将自己隐藏起来，只要静止不动将一直处于隐身状态。只要在隐匿状态下攻击敌人打破隐身，拉娜娅的攻击将对敌人造成额外伤害，并降低其护甲，持续%debuff_duration%秒。额外伤害和隐匿的负面效果会施加给灵能之刃飞溅距离内所有敌人。",
+   "notes_en": [
+    "Meld is broken by any action other than staying in position or channeling Psionic Projection.",
+    "Meld's armor reduction does not work against towers."
+   ],
+   "notes_zh": [
+    "除了停留在原地或持续施放灵能投射，其他任何动作都会打破隐匿效果。",
+    "隐匿的护甲降低作用对防御塔无效。"
+   ]
+  }
+ },
+ {
+  "review_id": "3970be6a02f3fa44062b",
+  "subject": "templar_assassin_psi_blades",
+  "subject_zh": "圣堂刺客·灵能之刃",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "圣堂刺客锋利的灵能之刃可以穿透敌人，对其正后方的敌方单位造成伤害，并且攻击距离得到提升。",
+   "Templar Assassin's psi blades slice through the attacked unit, splitting and damaging enemy units directly behind it, while gaining bonus attack range."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "Templar Assassin's psi blades slice through the attacked unit, splitting and damaging enemy units directly behind it, while gaining bonus attack range. For each unit it damages, the split damage is reduced by a percentage.",
+   "description_zh": "圣堂刺客锋利的灵能之刃可以穿透敌人，对其正后方的敌方单位造成伤害，并且攻击距离得到提升。每对一个单位造成伤害后，飞溅伤害都会减少一定百分比。",
+   "notes_en": [
+    "Split damage hits invisible units.",
+    "Attack effects like Bash will only be applied to the main target."
+   ],
+   "notes_zh": [
+    "飞溅伤害可以伤害隐身单位。",
+    "重击等攻击特效只对主目标有效。"
+   ]
+  }
+ },
+ {
+  "review_id": "990732b2712bfe40eafe",
+  "subject": "templar_assassin_psionic_trap",
+  "subject_zh": "圣堂刺客·灵能陷阱",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "引爆后将减缓%trap_radius%范围内敌人的移动速度，陷阱放置时间越久，引爆后减速效果越强，最低为%movement_speed_min%%%，放置%trap_max_charge_duration%秒后引爆将达到最大减速效果，为%movement_speed_max%%%，并且还能造成额外伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of %movement_speed_min%%% in a %trap_radius% radius. Trap movement slow charges up to %movement_speed_max%%% after %trap_max_charge_duration% seconds. Deals damage after %trap_max_charge_duration%s.",
+   "description_zh": "圣堂刺客放下一个隐形的神秘陷阱监视敌人的动向。引爆后将减缓%trap_radius%范围内敌人的移动速度，陷阱放置时间越久，引爆后减速效果越强，最低为%movement_speed_min%%%，放置%trap_max_charge_duration%秒后引爆将达到最大减速效果，为%movement_speed_max%%%，并且还能造成额外伤害。",
+   "notes_en": [
+    "Traps last indefinitely.",
+    "They have invisibility that fades in over %trap_fade_time% seconds and spell immunity. They take 2 hits to kill by ranged heroes, 1 by melee heroes, and 4 by creeps.",
+    "Traps have 250/250 vision range and don't prevent neutral camps from spawning."
+   ],
+   "notes_zh": [
+    "陷阱没有时间限制。",
+    "他们拥有隐形效果，渐隐时间为%trap_fade_time%秒，还拥有技能免疫状态。他们可以承受2次远程英雄的攻击，1次近战英雄的攻击，或4次非英雄单位的攻击。",
+    "陷阱的视野是250/250，不能阻止中立生物刷新。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When activated, traps now silence affected enemies.",
+     "zh": "现在陷阱引爆后还会沉默受到作用的敌人。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "924e072eb07c686cd442",
+  "subject": "viper_nethertoxin",
+  "subject_zh": "冥界亚龙·幽冥剧毒",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "范围内的单位持续受到伤害，在区域内停留的时间越长，受到的伤害也越高。",
+   "Units in that area take an increasing damage over time based on how long they remain in it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Viper releases a Nethertoxin at the targeted area. Units in that area take an increasing damage over time based on how long they remain in it. Units in it have their attack speed slowed.",
+   "description_zh": "蝮蛇向目标区域释放幽冥剧毒。范围内的单位持续受到伤害，在区域内停留的时间越长，受到的伤害也越高。同时他们的攻击速度会被降低。",
+   "notes_en": [
+    "Multiple Nethertoxins do not stack."
+   ],
+   "notes_zh": [
+    "多个幽冥剧毒不会叠加。"
+   ]
+  }
+ },
+ {
+  "review_id": "0f0fa8bf309432f0e529",
+  "subject": "viper_corrosive_skin",
+  "subject_zh": "冥界亚龙·腐蚀皮肤",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "蝮蛇分泌出感染性的毒素，%max_range%范围内任何伤害它的敌人都将受到伤害，同时攻击速度也被降低。",
+   "Viper exudes an infectious toxin that damages and slows the attack speed of any enemy that damages it in a %max_range% radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Viper exudes an infectious toxin that damages and slows the attack speed of any enemy that damages it in a %max_range% radius. The acid exudate also increases Viper's resistance to magic.",
+   "description_zh": "蝮蛇分泌出感染性的毒素，%max_range%范围内任何伤害它的敌人都将受到伤害，同时攻击速度也被降低。这种酸性分泌物还能提高蝮蛇的魔法抗性。",
+   "notes_en": [
+    "Stacks multiplicatively with other magic damage resistance sources.",
+    "Break prevents the application of Corrosive Skin. Does not disable Corrosive Skin application from Nosedive.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "与其他提升魔法抗性的物品和技能叠加。",
+    "破坏会使腐蚀皮肤不再施加效果。极恶俯冲还是会施加腐蚀皮肤。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Corrosive Skin applies %effect_multiplier%x the attack speed slow to enemies that are within %effect_multiplier_distance% distance of Viper.  Viper's Corrosive Skin Magic Resistance and Damage per Second are gradually increased while he is in Nethertoxin, up to %nethertoxin_bonus_pct%%% increased effect after %nethertoxin_bonus_pct_max_duration_tooltip%s.",
+     "zh": "腐蚀皮肤会对距离冥界亚龙%effect_multiplier_distance%范围内的敌人施加%effect_multiplier%倍攻击速度降低效果。当冥界亚龙处于幽冥剧毒中，腐蚀皮肤的魔法抗性和每秒伤害会逐渐提升，在%nethertoxin_bonus_pct_max_duration_tooltip%秒后，达到最高的%nethertoxin_bonus_pct%%%提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c5a5f7922024c5a10315",
+  "subject": "viper_corrosive_skin",
+  "subject_zh": "冥界亚龙·腐蚀皮肤",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "腐蚀皮肤会对距离冥界亚龙%effect_multiplier_distance%范围内的敌人施加%effect_multiplier%倍攻击速度降低效果。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Viper exudes an infectious toxin that damages and slows the attack speed of any enemy that damages it in a %max_range% radius. The acid exudate also increases Viper's resistance to magic.",
+   "description_zh": "蝮蛇分泌出感染性的毒素，%max_range%范围内任何伤害它的敌人都将受到伤害，同时攻击速度也被降低。这种酸性分泌物还能提高蝮蛇的魔法抗性。",
+   "notes_en": [
+    "Stacks multiplicatively with other magic damage resistance sources.",
+    "Break prevents the application of Corrosive Skin. Does not disable Corrosive Skin application from Nosedive.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "与其他提升魔法抗性的物品和技能叠加。",
+    "破坏会使腐蚀皮肤不再施加效果。极恶俯冲还是会施加腐蚀皮肤。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Corrosive Skin applies %effect_multiplier%x the attack speed slow to enemies that are within %effect_multiplier_distance% distance of Viper.  Viper's Corrosive Skin Magic Resistance and Damage per Second are gradually increased while he is in Nethertoxin, up to %nethertoxin_bonus_pct%%% increased effect after %nethertoxin_bonus_pct_max_duration_tooltip%s.",
+     "zh": "腐蚀皮肤会对距离冥界亚龙%effect_multiplier_distance%范围内的敌人施加%effect_multiplier%倍攻击速度降低效果。当冥界亚龙处于幽冥剧毒中，腐蚀皮肤的魔法抗性和每秒伤害会逐渐提升，在%nethertoxin_bonus_pct_max_duration_tooltip%秒后，达到最高的%nethertoxin_bonus_pct%%%提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4670320d9206e698c01f",
+  "subject": "luna_lucent_beam",
+  "subject_zh": "露娜·月光",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "召唤一道月能的光束打击敌人，造成伤害并短暂眩晕目标。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Calls a beam of lunar energy down upon an enemy, damaging and briefly stunning them.",
+   "description_zh": "召唤一道月能的光束打击敌人，造成伤害并短暂眩晕目标。"
+  }
+ },
+ {
+  "review_id": "27c7cfe1b366bededc12",
+  "subject": "luna_lunar_orbit",
+  "subject_zh": "露娜·环月",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "任何碰到月刃的敌方单位都会受到露娜攻击伤害的一定百分比。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Creates %rotating_glaives% glaives that rotate %rotating_glaives_movement_radius% radius around Luna. Any enemy unit that collides with a glaive will take a percentage of Luna's Attack Damage.",
+   "description_zh": "产生%rotating_glaives%个月刃在露娜身旁%rotating_glaives_movement_radius%范围内旋转。任何碰到月刃的敌方单位都会受到露娜攻击伤害的一定百分比。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases damage reduction. While active, Luna gains %bonus_movement_speed%%% bonus movement speed.",
+     "zh": "提升伤害降低效果。开启时，露娜获得%bonus_movement_speed%%%移动速度加成。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "10b2860c06fc8333cba9",
+  "subject": "luna_moon_glaive",
+  "subject_zh": "露娜·月刃",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "强化露娜的月刃，使攻击可以在敌方单位之间弹跳。",
+   "Deals less damage with each bounce."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Empowers Luna's glaives, causing her attacks to bounce between enemy units. Deals less damage with each bounce.",
+   "description_zh": "强化露娜的月刃，使攻击可以在敌方单位之间弹跳。每次弹跳造成的伤害都会减少。",
+   "notes_en": [
+    "Moon Glaives do not proc any attack modifier except Critical Strikes."
+   ],
+   "notes_zh": [
+    "月刃不会触发致命一击以外的任何攻击特效。"
+   ]
+  }
+ },
+ {
+  "review_id": "811ac6abf888815ca1f2",
+  "subject": "luna_lunar_blessing",
+  "subject_zh": "露娜·月之祝福",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "提升露娜和附近%radius%范围内友方英雄的攻击力，露娜获得双倍的攻击力加成。",
+   "Grants attack damage to Luna and nearby allied heroes within %radius% range, with Luna receiving double the attack damage bonuses."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Grants attack damage to Luna and nearby allied heroes within %radius% range, with Luna receiving double the attack damage bonuses. At night, Lunar Blessing is global, and Luna is blessed with bonus night vision.",
+   "description_zh": "提升露娜和附近%radius%范围内友方英雄的攻击力，露娜获得双倍的攻击力加成。夜晚期间月之祝福为全地图生效，并且露娜受到福佑后夜间视野提升。"
+  }
+ },
+ {
+  "review_id": "acdbcbc76e19564cda31",
+  "subject": "luna_eclipse",
+  "subject_zh": "露娜·月蚀",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "召唤一次月蚀，以她当前技能等级的月光随机打击附近敌人。",
+   "Showers random nearby enemies with strikes from Luna's current level of Lucent Beam."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Showers random nearby enemies with strikes from Luna's current level of Lucent Beam. These beams do not stun their targets, and there is a maximum number of times that a single target can be struck. Also turns day into night for a short time.",
+   "description_zh": "召唤一次月蚀，以她当前技能等级的月光随机打击附近敌人。月光只有伤害效果，不会造成眩晕，而且单一目标只能受到有限次数的打击。月蚀会暂时将白天变为黑夜。",
+   "notes_en": [
+    "Eclipse doesn't work if Luna doesn't have any points in Lucent Beam.",
+    "Beams will stop if Luna is killed.",
+    "Will not hit invisible units.",
+    "There is a %beam_interval% seconds gap between beams, %beam_interval_scepter% seconds with scepter."
+   ],
+   "notes_zh": [
+    "如果露娜没有升级月光，月蚀将无法造成伤害，但是变为黑夜效果有效。",
+    "露娜阵亡后月光马上中止。",
+    "不能伤害隐身单位。",
+    "每道月光之间都有%beam_interval%秒的间隔。神杖升级后间隔为%beam_interval_scepter%秒。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Allows Luna to cast Eclipse on an allied unit or herself and have its effects follow them, or cast it on an area. Increases total beams, reduces duration, removes the limit on beams per unit, and makes the beams appear twice as fast.",
+     "zh": "露娜可以对友方单位或自身施放月蚀，使月蚀的效果跟随目标，或者对一片区域施放。增加月光数量，减少月蚀持续时间，并且移除单体打击次数上限，月光的产生间隔缩短一半。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c02c8170dcb729d3d584",
+  "subject": "dragon_knight_breathe_fire",
+  "subject_zh": "龙骑士·火焰气息",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "向龙骑士的前方喷射出一团火焰，烧灼碰到的敌人，并使其攻击力降低。",
+   "Unleashes a breath of fire in front of Dragon Knight that burns enemies and reduces the damage their attacks deal."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Unleashes a breath of fire in front of Dragon Knight that burns enemies and reduces the damage their attacks deal.",
+   "description_zh": "向龙骑士的前方喷射出一团火焰，烧灼碰到的敌人，并使其攻击力降低。",
+   "notes_en": [
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "60c9c5647b492ce8f805",
+  "subject": "dragon_knight_dragon_tail",
+  "subject_zh": "龙骑士·神龙摆尾",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "龙骑士用盾对身边的一个敌方单位进行打击，对它和它身边的目标造成眩晕和伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Dragon Knight smites an enemy unit with his shield, stunning and damaging it and units close to it.",
+   "description_zh": "龙骑士用盾对身边的一个敌方单位进行打击，对它和它身边的目标造成眩晕和伤害。"
+  }
+ },
+ {
+  "review_id": "3a142489218dfc0c5358",
+  "subject": "dragon_knight_wyrms_wrath",
+  "subject_zh": "龙骑士·飞龙之怒",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "神龙的生命之血提升了龙骑士的技能和物品，使其拥有作用范围加成，并且攻击会对敌方单位造成额外魔法伤害。",
+   "The life blood of the Dragon improves Dragon Knight's abilities and items to have increased AoE and causes his attacks to deal additional magic damage to enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "The life blood of the Dragon improves Dragon Knight's abilities and items to have increased AoE and causes his attacks to deal additional magic damage to enemy units.",
+   "description_zh": "神龙的生命之血提升了龙骑士的技能和物品，使其拥有作用范围加成，并且攻击会对敌方单位造成额外魔法伤害。"
+  }
+ }
+]

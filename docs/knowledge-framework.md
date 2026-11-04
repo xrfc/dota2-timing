@@ -87,9 +87,9 @@
 
 ## 8. 复核后事实v4–v7与规则v1（2026-11-03至05）
 
-- **当前入口**：`knowledge/mechanics/extractions/v7/`、`vocabulary-v7.json`、`rules-v1.json`。v4起不重新抽取，只在冻结的v3上叠加判断，每组用`basis`标明依据。
+- **当前入口**：`knowledge/mechanics/extractions/v8/`、`vocabulary-v8.json`、`rules-v2.json`。v4起不重新抽取，只在冻结的v3上叠加判断，每组用`basis`标明依据。
 - **游戏文件**：`knowledge/game-files/`是公开镜像固定提交的快照。“能否被破坏”直接用`IsBreakable`（U48）；字段名不能单独当证据（U51）。
 - **词表缺口**：用户发现缺虚无后排查，增加A、B组29项，C组纯属性不进词表（U58、U62、U63）。
 - **升级只改数值不记机制**（U65、U66）：放在`numeric_upgrades`。
-- **规则层**（U68–U70）：20条，只说机制关系，不说“该出”。`mechanics_interactions`校验规则并算出来源和目标。
+- **规则层**（U68–U73，已结束）：20条，只说机制关系，不说“该出”。`mechanics_interactions`校验规则并算出来源和目标。
 - **局限**：`patch_verified=false`，版本认证放到MK-T6（U66）；`two_ai`不算用户确认；未审候选和可能的漏记留到MK-T5抽查。

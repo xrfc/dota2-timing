@@ -1,0 +1,1005 @@
+[
+ {
+  "review_id": "28fe8b4beab9664fb8b7",
+  "subject": "shadow_demon_disseminate",
+  "subject_zh": "暗影恶魔·散播",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "只要目标受到伤害，目标附近%radius%范围内所有敌人，若目标为敌人那也包括目标自身，他们都将受到该伤害的一定百分比。",
+   "Whenever the target takes damage, all enemies, including the target itself if it is an enemy, within %radius% range of the target also receive a portion of that damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Whenever the target takes damage, all enemies, including the target itself if it is an enemy, within %radius% range of the target also receive a portion of that damage. Can target enemy and allied units. Effect is paused if the target is hidden by Disruption.",
+   "description_zh": "只要目标受到伤害，目标附近%radius%范围内所有敌人，若目标为敌人那也包括目标自身，他们都将受到该伤害的一定百分比。可以对敌方或友方目标施放。敌人被崩裂禁锢隐藏时效果暂停。",
+   "notes_en": [
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "b19011d50c8e2c83db93",
+  "subject": "shadow_demon_shadow_poison",
+  "subject_zh": "暗影恶魔·暗影剧毒",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在一条直线上造成伤害，并以毒咒折磨敌方单位。",
+   "Deals damage in a line, and afflicts enemy units with a poison effect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Deals damage in a line, and afflicts enemy units with a poison effect. The poison deals 1/2/4/8/16 times the stack damage based on the number of stacks on the target, up to %max_multiply_stacks% stacks. Additional stacks cause %bonus_stack_damage% damage each.  This deferred damage is dealt when Shadow Poison's duration is expired, or the Release sub-ability is used.",
+   "description_zh": "在一条直线上造成伤害，并以毒咒折磨敌方单位。根据目标身上的叠加层数，毒咒造成1/2/4/8/16倍的叠加伤害，至多%max_multiply_stacks%层。更多层的叠加每层造成%bonus_stack_damage%点伤害。这部分延缓的伤害在暗影毒的持续时间结束后生效，或者使用附属技能立刻造成伤害。",
+   "notes_en": [
+    "Shadow Poison can affect units under Disruption."
+   ],
+   "notes_zh": [
+    "暗影剧毒可以作用处于崩裂禁锢的单位。"
+   ]
+  }
+ },
+ {
+  "review_id": "21f34e6fa40abb173342",
+  "subject": "shadow_demon_menace",
+  "subject_zh": "暗影恶魔·威胁",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "暗影恶魔的攻击会对敌人施加一个可叠加的负面状态，使他们受到的伤害增加，持续%duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI"
+  },
+  "context": {
+   "description_en": "Shadow Demon's Attacks apply a stacking debuff to the enemy for %duration% seconds that increases their damage taken.",
+   "description_zh": "暗影恶魔的攻击会对敌人施加一个可叠加的负面状态，使他们受到的伤害增加，持续%duration%秒。",
+   "notes_en": [
+    "Break disables the application of new stacks.",
+    "Break does not disable the effects of existing stacks."
+   ],
+   "notes_zh": [
+    "破坏会使技能无法施加新的叠加效果。",
+    "破坏不会使现有叠加效果提供的状态失效。"
+   ]
+  }
+ },
+ {
+  "review_id": "475274378777b6d4fcf7",
+  "subject": "lone_druid_entangle",
+  "subject_zh": "独行德鲁伊·缠绕之根",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Allows Lone Druid to Entangle enemies once they gain %hits_required% stacks.",
+   "Entangled enemies are rooted and take damage over time.",
+   "When cast, applies %hits_incremented_on_active% stacks to each enemy hero in the area and %hits_required% stacks to enemy creeps."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Allows Lone Druid to Entangle enemies once they gain %hits_required% stacks. Entangled enemies are rooted and take damage over time.When cast, applies %hits_incremented_on_active% stacks to each enemy hero in the area and %hits_required% stacks to enemy creeps. Also empowers Lone Druid for %lone_druid_buff_duration%s, making him apply %lone_druid_counters_applied_tooltip% stack with each attack on enemy heroes. Enemies cannot gain stacks while Entangled.Leveling this ability also levels Spirit Bear's Entangling Claws ability.",
+   "description_zh": "敌方英雄获得%hits_required%层叠加效果后独行德鲁伊可以缠绕敌方英雄。被缠绕的英雄无法移动，并受到持续伤害。施放时，对区域内每个敌方英雄施加%hits_incremented_on_active%层叠加效果，对敌方非英雄单位施加%hits_required%层。独行德鲁伊的攻击还会被强化%lone_druid_buff_duration%秒，每次攻击敌方英雄都会施加%lone_druid_counters_applied_tooltip%层叠加效果。被缠绕的英雄无法获得叠加层数。升级这个技能也会升级熊灵的缠绕之爪技能。",
+   "notes_en": [
+    "Rooted units can't use Blink abilities and are revealed if they are invisible.",
+    "Lone Druid's Empowered Buff and enemy stack counter debuff cannot be dispelled.",
+    "Entangled debuff is dispellable.",
+    "Creeps can't gain stacks from either Lone Druid's or Spirit Bear's attacks, and are Entangled only on cast.",
+    "Roshan is affected as if he were a hero."
+   ],
+   "notes_zh": [
+    "被缠绕的单位将无法使用闪烁类技能，如果进入隐身状态也会显形。",
+    "独行德鲁伊的强化增益和敌人叠加计数减益无法被驱散。",
+    "缠绕的减益效果可以被驱散。",
+    "独行德鲁伊或者熊灵的攻击不会使非英雄单位获得叠加效果，只会在施放缠绕之根时使他们被缠绕。",
+    "对肉山的作用机制和英雄相同。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Entangle applies %hits_required% stacks to enemy heroes in the area and has increased radius. Enemies no longer have protection from gaining stacks while Entangled.",
+     "zh": "缠绕之根会对区域内敌方英雄施加%hits_required%层叠加效果，并且作用范围提升。触发缠绕的敌人不再受到保护，可以继续获得新的叠加层数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d2566f065534b4ed51bc",
+  "subject": "lone_druid_entangle",
+  "subject_zh": "独行德鲁伊·缠绕之根",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Entangle applies %hits_required% stacks to enemy heroes in the area and has increased radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Allows Lone Druid to Entangle enemies once they gain %hits_required% stacks. Entangled enemies are rooted and take damage over time.When cast, applies %hits_incremented_on_active% stacks to each enemy hero in the area and %hits_required% stacks to enemy creeps. Also empowers Lone Druid for %lone_druid_buff_duration%s, making him apply %lone_druid_counters_applied_tooltip% stack with each attack on enemy heroes. Enemies cannot gain stacks while Entangled.Leveling this ability also levels Spirit Bear's Entangling Claws ability.",
+   "description_zh": "敌方英雄获得%hits_required%层叠加效果后独行德鲁伊可以缠绕敌方英雄。被缠绕的英雄无法移动，并受到持续伤害。施放时，对区域内每个敌方英雄施加%hits_incremented_on_active%层叠加效果，对敌方非英雄单位施加%hits_required%层。独行德鲁伊的攻击还会被强化%lone_druid_buff_duration%秒，每次攻击敌方英雄都会施加%lone_druid_counters_applied_tooltip%层叠加效果。被缠绕的英雄无法获得叠加层数。升级这个技能也会升级熊灵的缠绕之爪技能。",
+   "notes_en": [
+    "Rooted units can't use Blink abilities and are revealed if they are invisible.",
+    "Lone Druid's Empowered Buff and enemy stack counter debuff cannot be dispelled.",
+    "Entangled debuff is dispellable.",
+    "Creeps can't gain stacks from either Lone Druid's or Spirit Bear's attacks, and are Entangled only on cast.",
+    "Roshan is affected as if he were a hero."
+   ],
+   "notes_zh": [
+    "被缠绕的单位将无法使用闪烁类技能，如果进入隐身状态也会显形。",
+    "独行德鲁伊的强化增益和敌人叠加计数减益无法被驱散。",
+    "缠绕的减益效果可以被驱散。",
+    "独行德鲁伊或者熊灵的攻击不会使非英雄单位获得叠加效果，只会在施放缠绕之根时使他们被缠绕。",
+    "对肉山的作用机制和英雄相同。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Entangle applies %hits_required% stacks to enemy heroes in the area and has increased radius. Enemies no longer have protection from gaining stacks while Entangled.",
+     "zh": "缠绕之根会对区域内敌方英雄施加%hits_required%层叠加效果，并且作用范围提升。触发缠绕的敌人不再受到保护，可以继续获得新的叠加层数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e117c9bcd6e37f8a0ed6",
+  "subject": "lone_druid_savage_roar",
+  "subject_zh": "独行德鲁伊·野蛮咆哮",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "施加弱驱散效果，并对施法者附近范围内友军提供移动速度和攻击速度加成。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Lone Druid and the Spirit Bear roar fiercely causing nearby enemies to flee towards their base in terror. Their movement speed is increased by %bonus_speed%%%.",
+   "description_zh": "独行德鲁伊和熊灵发出野性的咆哮，使周围敌人恐惧，朝自己的基地狂奔。敌人的移动速度将增加%bonus_speed%%%。",
+   "notes_en": [
+    "An entangled hero will not be able to move.",
+    "Cooldown is shared with Spirit Bear."
+   ],
+   "notes_zh": [
+    "被缠绕的英雄将无法移动。",
+    "与熊灵共享冷却时间。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Applies a basic dispel and grants allies in an area around the caster bonus movement and attack speed. Replicates between Lone Druid and Spirit Bear regardless of castability on the other.DISPEL TYPE: Basic Dispel",
+     "zh": "施加弱驱散效果，并对施法者附近范围内友军提供移动速度和攻击速度加成。施法效果会在独行德鲁伊和熊灵之间复制，不论双方是否可以施法。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2fa6587ff4230cfa24c1",
+  "subject": "meepo_poof",
+  "subject_zh": "米波·忽悠",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "通过从大地中汲取神秘的能量，一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处，在离开和到达的区域都对敌人造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for %cast_duration% seconds, damaging the enemy in both the departure and arrival locations. If the ability is in alt-cast state, all Meepos will also cast Poof to the target. When cast on the ground, all Meepos except the selected one will Poof to the closest location.",
+   "description_zh": "通过从大地中汲取神秘的能量，一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处，在离开和到达的区域都对敌人造成伤害。如果技能设为多样施法（右键点击技能栏图标）状态，所有米波也会对目标施放忽悠。对地施放后，除了选中的米波外所有米波会忽悠至最近的地点。",
+   "notes_en": [
+    "Can be cast through the minimap.",
+    "Can teleport to Meepo illusions."
+   ],
+   "notes_zh": [
+    "可以点击小地图施放。",
+    "可以传送至米波的幻象。"
+   ]
+  }
+ },
+ {
+  "review_id": "5cc48829263ab721c74b",
+  "subject": "meepo_ransack",
+  "subject_zh": "米波·洗劫",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每次攻击都会窃取敌人的生命值，并治疗所有其他米波相同数值生命。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "Steals health from the enemy with each strike and heals all other Meepos for that amount.Reduced to 60% against creeps.",
+   "description_zh": "每次攻击都会窃取敌人的生命值，并治疗所有其他米波相同数值生命。对非英雄单位的效果减少至60%。",
+   "notes_en": [
+    "Amount healed is amplified by Health Restoration Amplification"
+   ],
+   "notes_zh": [
+    "治疗数值会被生命回复增强效果提升。"
+   ]
+  }
+ },
+ {
+  "review_id": "67fbcd7a1c04008af86f",
+  "subject": "meepo_megameepo",
+  "subject_zh": "米波·超大米波",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在这个形态下，他会获得其他米波%stats_pct%%%的属性，并且可以把他们扔向敌人，造成伤害和减速。",
+   "While in this form, he gains %stats_pct%%% of the other Meepo stats and can Fling them at enemies, dealing damage and slowing them."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES"
+  },
+  "context": {
+   "description_en": "Primary Meepo mounts all other Meepos in a %radius% radius around him on top of his shoulders. While in this form, he gains %stats_pct%%% of the other Meepo stats and can Fling them at enemies, dealing damage and slowing them.\n\n When cast, Earthbind generates additional nets and Poof deals %poof_damage_factor%%% more damage for each Meepo on top.",
+   "description_zh": "主米波将%radius%范围内其他米波放到自己的肩膀上。在这个形态下，他会获得其他米波%stats_pct%%%的属性，并且可以把他们扔向敌人，造成伤害和减速。\n\n生效时地之束缚会产生额外的网，身上每只米波都会使忽悠造成额外%poof_damage_factor%%%伤害。"
+  }
+ },
+ {
+  "review_id": "89a6159db4925eb42ce9",
+  "subject": "meepo_megameepo_fling",
+  "subject_zh": "米波·超大米波摔扔",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在超大米波形态下，米波将最上端的米波向%AbilityCastRange%范围内目标扔出，造成伤害和减速。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "In MegaMeepo form, Meepo flings the topmost meepo towards a target within a %AbilityCastRange% range, dealing damage and slowing their movement speed.",
+   "description_zh": "在超大米波形态下，米波将最上端的米波向%AbilityCastRange%范围内目标扔出，造成伤害和减速。",
+   "notes_en": [
+    "Does not trigger spell reflect."
+   ],
+   "notes_zh": [
+    "不会触发法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "b4901aaa947763c7e7f2",
+  "subject": "treant_natures_grasp",
+  "subject_zh": "树精卫士·自然卷握",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "藤蔓对穿过的敌人造成减速和伤害。",
+   "Vines slow down and deal damage to enemies that walk through."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Creates vines towards the target location. Vines slow down and deal damage to enemies that walk through. Does %creep_penalty%%% less damage to creeps.",
+   "description_zh": "朝目标地点制造藤蔓。藤蔓对穿过的敌人造成减速和伤害。对非英雄单位造成的伤害减少%creep_penalty%%%。"
+  }
+ },
+ {
+  "review_id": "2f3a6481b32bee988149",
+  "subject": "treant_leech_seed",
+  "subject_zh": "树精卫士·寄生种子",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "树精卫士的攻击会对敌方单位种下一颗吸取生命的种子。",
+   "该单位会受到额外魔法伤害，被缠绕和缴械一小段时间，并放出%healing_pulse_count%次治疗脉冲，最多对附近%max_heal_units%名友军根据当次攻击造成的伤害进行治疗。",
+   "That unit takes additional magic damage, is rooted and disarmed for a short duration, and emits %healing_pulse_count% healing pulses to up to %max_heal_units% nearby allies of Treant Protector based on the damage dealt by the attack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Treant's attack plants a life-sapping seed in an enemy unit. That unit takes additional magic damage, is rooted and disarmed for a short duration, and emits %healing_pulse_count% healing pulses to up to %max_heal_units% nearby allies of Treant Protector based on the damage dealt by the attack.",
+   "description_zh": "树精卫士的攻击会对敌方单位种下一颗吸取生命的种子。该单位会受到额外魔法伤害，被缠绕和缴械一小段时间，并放出%healing_pulse_count%次治疗脉冲，最多对附近%max_heal_units%名友军根据当次攻击造成的伤害进行治疗。"
+  }
+ },
+ {
+  "review_id": "8b647c0b4aaef525ac80",
+  "subject": "treant_overgrowth",
+  "subject_zh": "树精卫士·疯狂生长",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在树精卫士周围召唤出疯狂生长的伤害性藤条和枝干，造成伤害并且阻止被缠绕的敌人移动、闪烁、进入隐身或攻击。",
+   "Summons an overgrowth of vines and branches around Treant that deal damage to afflicted enemies and prevent them from moving, blinking, going invisible, or attacking."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Summons an overgrowth of vines and branches around Treant that deal damage to afflicted enemies and prevent them from moving, blinking, going invisible, or attacking.",
+   "description_zh": "在树精卫士周围召唤出疯狂生长的伤害性藤条和枝干，造成伤害并且阻止被缠绕的敌人移动、闪烁、进入隐身或攻击。",
+   "notes_en": [
+    "Works on Debuff Immune units, but if units gain debuff immunity after the effect starts, they'll break free."
+   ],
+   "notes_zh": [
+    "效果无视减益免疫，但是在期间获得减益免疫状态将挣脱控制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases Cooldown to %AbilityCooldown% seconds. When casting Overgrowth, Treant Protector draws power from the soil, greatly increasing his size for %bloom_duration% seconds. While enlarged, he gains phased movement with a fixed speed of %movement_speed%, %strength_bonus%%% bonus Strength, and a splashing attack that deals %splash_pct%%% of his attack damage in a %splash_radius% unit radius.",
+     "zh": "冷却时间降低至%AbilityCooldown%秒。施放疯狂生长时，树精卫士从土壤中汲取力量，他的身体急剧增大，持续%bloom_duration%秒。变大后他会获得相位移动状态，移动速度为固定%movement_speed%，%strength_bonus%%%力量加成，并且拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "475adbf7b2e5de5aa8d5",
+  "subject": "treant_overgrowth",
+  "subject_zh": "树精卫士·疯狂生长",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "变大后他会获得相位移动状态，移动速度为固定%movement_speed%，%strength_bonus%%%力量加成，并且拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击。",
+   "While enlarged, he gains phased movement with a fixed speed of %movement_speed%, %strength_bonus%%% bonus Strength, and a splashing attack that deals %splash_pct%%% of his attack damage in a %splash_radius% unit radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Summons an overgrowth of vines and branches around Treant that deal damage to afflicted enemies and prevent them from moving, blinking, going invisible, or attacking.",
+   "description_zh": "在树精卫士周围召唤出疯狂生长的伤害性藤条和枝干，造成伤害并且阻止被缠绕的敌人移动、闪烁、进入隐身或攻击。",
+   "notes_en": [
+    "Works on Debuff Immune units, but if units gain debuff immunity after the effect starts, they'll break free."
+   ],
+   "notes_zh": [
+    "效果无视减益免疫，但是在期间获得减益免疫状态将挣脱控制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Decreases Cooldown to %AbilityCooldown% seconds. When casting Overgrowth, Treant Protector draws power from the soil, greatly increasing his size for %bloom_duration% seconds. While enlarged, he gains phased movement with a fixed speed of %movement_speed%, %strength_bonus%%% bonus Strength, and a splashing attack that deals %splash_pct%%% of his attack damage in a %splash_radius% unit radius.",
+     "zh": "冷却时间降低至%AbilityCooldown%秒。施放疯狂生长时，树精卫士从土壤中汲取力量，他的身体急剧增大，持续%bloom_duration%秒。变大后他会获得相位移动状态，移动速度为固定%movement_speed%，%strength_bonus%%%力量加成，并且拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3577b90479fb3abfc406",
+  "subject": "ogre_magi_fireblast",
+  "subject_zh": "食人魔魔法师·火焰爆轰",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "以一波火焰轰击一个敌方单位，造成伤害并使目标眩晕。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Blasts an enemy unit with a wave of fire, dealing damage and stunning the target.",
+   "description_zh": "以一波火焰轰击一个敌方单位，造成伤害并使目标眩晕。",
+   "notes_en": [
+    "When Multicast, Fireblast hits the same target each time with a %multicast_delay% seconds interval."
+   ],
+   "notes_zh": [
+    "触发多重施法时，两次火焰爆轰之间有%multicast_delay%秒的间隔。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Fireblast is refined, reducing cooldown by %bonus_AbilityCooldown%s and increasing cast speed by %bonus_cast_speed%%%.",
+     "zh": "很精通的火焰爆轰，冷却时间减少%bonus_AbilityCooldown%秒，施法速度提升%bonus_cast_speed%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "19bb9217b73b972e6cbb",
+  "subject": "ogre_magi_unrefined_fireblast",
+  "subject_zh": "食人魔魔法师·未精通的火焰爆轰",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "操控一波火焰轰击一个敌方单位，造成%base_damage% + %str_multiplier%倍食人魔力量的伤害并使目标眩晕。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Blasts an enemy unit with a wave of fire, dealing %base_damage% + %str_multiplier%x Ogre's Strength in damage and stunning the target. Its mana cost is %scepter_mana%%% of Ogre Magi's current mana.",
+   "description_zh": "操控一波火焰轰击一个敌方单位，造成%base_damage% + %str_multiplier%倍食人魔力量的伤害并使目标眩晕。魔法消耗为食人魔魔法师当前魔法的%scepter_mana%%%。",
+   "notes_en": [
+    "When Multicast, Unrefined Fireblast hits the same target each time with a %multicast_delay% seconds interval."
+   ],
+   "notes_zh": [
+    "触发多重施法时，两次火焰爆轰之间有%multicast_delay%秒的间隔。"
+   ]
+  }
+ },
+ {
+  "review_id": "3fdbe4dc4fcb9fc87090",
+  "subject": "ogre_magi_smash",
+  "subject_zh": "食人魔魔法师·烈火护盾",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Creates a shield around the target ally, absorbing a percentage of the damage of next %attacks% attacks from enemy heroes."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Creates a shield around the target ally, absorbing a percentage of the damage of next %attacks% attacks from enemy heroes. When damage is absorbed, a fireball is launched at the attacker. Can be cast on towers.",
+   "description_zh": "创造一个围绕友军目标的护盾，吸收接下来%attacks%次来自敌方英雄攻击的一定百分比伤害。吸收伤害后向攻击者发射火球。可以对防御塔施放。",
+   "notes_en": [
+    "When multicast, nearby allies will be selected randomly in an %multicast_fireshield_aoe% area of effect to receive Fire Shield."
+   ],
+   "notes_zh": [
+    "触发多重施法时，%multicast_fireshield_aoe%范围内的友方单位将随机获得烈火护盾效果。"
+   ]
+  }
+ },
+ {
+  "review_id": "c8c92005adc77fdd7939",
+  "subject": "undying_decay",
+  "subject_zh": "不朽尸王·腐朽",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "不朽尸王偷取区域内所有敌方英雄的力量，造成基础伤害并将敌人的力量据为己有。",
+   "Undying steals strength from all enemy heroes in an area, dealing base damage as he claims the enemy's strength for himself."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Undying steals strength from all enemy heroes in an area, dealing base damage as he claims the enemy's strength for himself. Deals %creep_damage_multiplier%x damage to creeps.",
+   "description_zh": "不朽尸王偷取区域内所有敌方英雄的力量，造成基础伤害并将敌人的力量据为己有。对非英雄单位造成%creep_damage_multiplier%倍伤害。",
+   "notes_en": [
+    "The strength stolen stacks, but can't cause a hero to have strength below 1.",
+    "The strength steal takes effect before the damage is dealt.",
+    "Affects invisible units."
+   ],
+   "notes_zh": [
+    "窃据的力量可以叠加，但是敌方英雄的力量至少为1点。",
+    "力量的窃取先于技能造成的伤害。",
+    "可以作用隐形单位。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases strength steal.",
+     "zh": "提升力量窃取。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "649c2580025cd6ee081b",
+  "subject": "undying_soul_rip",
+  "subject_zh": "不朽尸王·噬魂",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "不朽尸王从附近的所有单位身上扯出生命力，并使用它治疗队友或伤害敌人。",
+   "Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy. Soul Rip can also be used to heal Tombstone.",
+   "description_zh": "不朽尸王从附近的所有单位身上扯出生命力，并使用它治疗队友或伤害敌人。可以使用噬魂治疗墓碑。",
+   "notes_en": [
+    "Can heal Tombstone, but can't heal or damage other buildings.",
+    "Does not rip from invisible units, invulnerable units, units in the fog of war, or spell immune enemies.",
+    "Does rip from spell immune allies, including zombies."
+   ],
+   "notes_zh": [
+    "可以治疗墓碑，但是不能治疗或伤害其他建筑。",
+    "不会扯出隐身单位、无敌单位、战争迷雾内单位或减益免疫敌人的生命力。",
+    "可以扯出减益免疫友军，包括僵尸的生命力。"
+   ]
+  }
+ },
+ {
+  "review_id": "4d11a1e0737317667dc6",
+  "subject": "undying_tombstone",
+  "subject_zh": "不朽尸王·墓碑",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "墓碑会不断在其附近的每个敌方单位身边产生僵尸攻击他们。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Summons a tombstone at the target point.  Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them.  Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie.",
+   "description_zh": "在目标位置召唤一座墓碑。墓碑会不断在其附近的每个敌方单位身边产生僵尸攻击他们。僵尸拥有死亡渴望技能，使他们的攻击带有减速效果，并且若目标的生命值低于一定百分比，僵尸的攻击和移动速度会提升。",
+   "notes_en": [
+    "Tombstone is Spell Immune, but can be healed by Soul Rip.",
+    "Zombies and Tombstone are Spell Immune.",
+    "If their initial target dies or goes out of vision, the Zombie will die."
+   ],
+   "notes_zh": [
+    "墓碑免疫技能，但是可以被噬魂治疗。",
+    "僵尸和墓碑均免疫技能。",
+    "如果初始目标死亡或丢失视野，僵尸将会死亡。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Tombstone can be cast on an allied hero to bunker inside of the tombstone. Heroes that enter the Tombstone cannot leave for %tombstone_bunker_cd% seconds nor can they re-enter after leaving. If the tombstone is destroyed with a hero inside, that hero gets stunned for %tombstone_stun_penalty% seconds.",
+     "zh": "墓碑可以对友方英雄施放，让他们躲进墓碑。进入墓碑的英雄%tombstone_bunker_cd%秒内无法离开，离开后同样的时间内无法再次进入。如果英雄在内时墓碑被摧毁，该英雄会被眩晕%tombstone_stun_penalty%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "bedc1d3911a076209e38",
+  "subject": "rubick_fade_bolt",
+  "subject_zh": "拉比克·弱化能流",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "拉比克制造一道强大的奥术能量流，在多个敌方单位之间流动，造成伤害并降低他们的攻击力和技能伤害。",
+   "每次跳跃造成的伤害递减。",
+   "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack and spell damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack and spell damage. Each jump deals less damage.",
+   "description_zh": "拉比克制造一道强大的奥术能量流，在多个敌方单位之间流动，造成伤害并降低他们的攻击力和技能伤害。每次跳跃造成的伤害递减。"
+  }
+ },
+ {
+  "review_id": "9f5e7acc3f6e70dd1e38",
+  "subject": "rubick_curiosity",
+  "subject_zh": "拉比克·奇心",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "拉比克现在每级获得%curiosity_per_level%层奇心的叠加效果，每层奇心提供%curiosity_attack_damage%点基础攻击力，%curiosity_modifier_amp%%%增益/减益持续时间，和%curiosity_aoe_bonus%作用范围加成。",
+   "如果当前提供临时奇心的敌人在受到来自拉比克的伤害后%grace_period%秒内阵亡，他就会永久获得%curiosity_per_kill%层奇心。",
+   "Rubick gains %curiosity_per_level% stack of Curiosity per level that grants him %curiosity_attack_damage% base damage, %curiosity_modifier_amp%%% Buff/Debuff Duration, and %curiosity_aoe_bonus% AOE Bonus."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Rubick gains %curiosity_per_level% stack of Curiosity per level that grants him %curiosity_attack_damage% base damage, %curiosity_modifier_amp%%% Buff/Debuff Duration, and %curiosity_aoe_bonus% AOE Bonus. If Rubick sees an enemy Hero cast an ability within %charge_radius% distance of him, he gains %curiosity_per_spell_cast% Curiosity for %curiosity_duration% seconds.  If an enemy Hero dies while Rubick has Curiosity from them and he damaged them in the last %grace_period% seconds, he gains %curiosity_per_kill% Curiosity permanently.",
+   "description_zh": "拉比克现在每级获得%curiosity_per_level%层奇心的叠加效果，每层奇心提供%curiosity_attack_damage%点基础攻击力，%curiosity_modifier_amp%%%增益/减益持续时间，和%curiosity_aoe_bonus%作用范围加成。如果拉比克看到%charge_radius%范围内有敌方英雄施放技能，他就会获得%curiosity_per_spell_cast%层奇心，持续%curiosity_duration%秒。如果当前提供临时奇心的敌人在受到来自拉比克的伤害后%grace_period%秒内阵亡，他就会永久获得%curiosity_per_kill%层奇心。"
+  }
+ },
+ {
+  "review_id": "b167c3f3171ddbe32f8a",
+  "subject": "disruptor_thunder_strike",
+  "subject_zh": "干扰者·风雷之击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每次打击会伤害附近小范围内的敌方单位，并施加%slow_duration%秒的%slow_amount%%%攻击速度和移动速度降低效果。",
+   "Each strike damages nearby enemy units in a small radius and slows enemy movement and attack speed by %slow_amount%%% for %slow_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Repeatedly strikes the targeted unit with lightning.  Each strike damages nearby enemy units in a small radius and slows enemy movement and attack speed by %slow_amount%%% for %slow_duration% seconds.  Provides vision of its target.",
+   "description_zh": "用闪电反复打击目标单位。每次打击会伤害附近小范围内的敌方单位，并施加%slow_duration%秒的%slow_amount%%%攻击速度和移动速度降低效果。提供目标的视野。"
+  }
+ },
+ {
+  "review_id": "eeea276f2899fda81c7a",
+  "subject": "disruptor_electromagnetic_repulsion",
+  "subject_zh": "干扰者·电磁排斥",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每当干扰者受到%effect_radius%范围内来自任意来源的%damage_threshold%点伤害，附近所有敌人都会受到%damage_per_int%倍干扰者智力值的伤害，并且被推开最多%effect_radius%距离。",
+   "Whenever Disruptor takes more than %damage_threshold% damage from any source within %effect_radius% radius, all nearby enemies within take damage equal to %damage_per_int%x of Disruptor's Intelligence, and are pushed back up to a %effect_radius% distance away."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+  },
+  "context": {
+   "description_en": "Whenever Disruptor takes more than %damage_threshold% damage from any source within %effect_radius% radius, all nearby enemies within take damage equal to %damage_per_int%x of Disruptor's Intelligence, and are pushed back up to a %effect_radius% distance away.",
+   "description_zh": "每当干扰者受到%effect_radius%范围内来自任意来源的%damage_threshold%点伤害，附近所有敌人都会受到%damage_per_int%倍干扰者智力值的伤害，并且被推开最多%effect_radius%距离。",
+   "notes_en": [
+    "After %damage_reset_interval%s, the damage counter is reset."
+   ],
+   "notes_zh": [
+    "%damage_reset_interval%秒后伤害计数会重置。"
+   ]
+  }
+ },
+ {
+  "review_id": "2e3d1fb49c97e55818cd",
+  "subject": "disruptor_static_storm",
+  "subject_zh": "干扰者·静态风暴",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "创造一场静态风暴，在持续时间内伤害并沉默区域内的所有敌方单位。",
+   "Creates a damaging static storm that also silences all enemy units in the area for the duration."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Creates a damaging static storm that also silences all enemy units in the area for the duration.  The damage starts off weak, but increases in power over the duration.",
+   "description_zh": "创造一场静态风暴，在持续时间内伤害并沉默区域内的所有敌方单位。伤害刚开始时很低，但会在持续时间内逐渐增加。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Mutes items.",
+     "zh": "锁闭物品。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8109496bf1c95f947c25",
+  "subject": "nyx_assassin_impale",
+  "subject_zh": "司夜刺客·穿刺",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "敌方单位受到伤害，然后被抛向空中，落地时被眩晕。",
+   "Enemy units take damage, then are hurled into the air and stunned."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Rock spikes burst from the earth along a straight path. Enemy units take damage, then are hurled into the air and stunned.",
+   "description_zh": "岩石尖刺在地上沿一条直线穿刺而出。敌方单位受到伤害，然后被抛向空中，落地时被眩晕。",
+   "notes_en": [
+    "The spikes move at %speed% units per second, over %length% range.",
+    "Impale cannot be blocked by Linken's Sphere."
+   ],
+   "notes_zh": [
+    "尖刺的移动速度是每秒%speed%，最远作用距离为%length%。",
+    "穿刺不会被林肯法球格挡。"
+   ]
+  }
+ },
+ {
+  "review_id": "bb2306fad4d76175a317",
+  "subject": "nyx_assassin_neuro_sting",
+  "subject_zh": "司夜刺客·法力燃烧",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "司夜刺客对敌人造成伤害还会燃烧造成伤害一定百分比的魔法。",
+   "Nyx Assassin's damage on enemies also burns mana as a percentage of the damage dealt."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Nyx Assassin's damage on enemies also burns mana as a percentage of the damage dealt.",
+   "description_zh": "司夜刺客对敌人造成伤害还会燃烧造成伤害一定百分比的魔法。"
+  }
+ },
+ {
+  "review_id": "c24ea72508a7696ab2bc",
+  "subject": "naga_siren_rip_tide",
+  "subject_zh": "娜迦海妖·激流",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "娜迦海妖和她的幻象每经过%hits%次攻击后就会对敌人造成额外伤害，并降低他们的护甲，持续%duration%秒。",
+   "Naga Siren and her illusions deal bonus damage to enemies and reduce their armor for %duration% seconds every %hits% attacks."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Naga Siren and her illusions deal bonus damage to enemies and reduce their armor for %duration% seconds every %hits% attacks.",
+   "description_zh": "娜迦海妖和她的幻象每经过%hits%次攻击后就会对敌人造成额外伤害，并降低他们的护甲，持续%duration%秒。",
+   "notes_en": [
+    "Using Rip Tide doesn't interrupt channeling."
+   ],
+   "notes_zh": [
+    "使用激流不会打断持续施法。"
+   ]
+  }
+ },
+ {
+  "review_id": "401291ef4e383d8f2675",
+  "subject": "keeper_of_the_light_illuminate",
+  "subject_zh": "光之守卫·冲击波",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "释放后，光波沿直线向前发出，造成伤害并获得沿途的视野。",
+   "Once released, a wave is sent forth that deals damage and gives vision in its path."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "CHANNELED - Channels light energy, building power the longer it's channeled.  Once released, a wave is sent forth that deals damage and gives vision in its path.  The longer it is channeled, the more damage is dealt.",
+   "description_zh": "持续施法 - 引导光的能量，持续施法的时间越长，威力越大。释放后，光波沿直线向前发出，造成伤害并获得沿途的视野。",
+   "notes_en": [
+    "Gives increasing vision over the channeling time."
+   ],
+   "notes_zh": [
+    "在持续施法期间获得的视野不断增大。"
+   ]
+  }
+ },
+ {
+  "review_id": "9e814107e073469a9c2f",
+  "subject": "keeper_of_the_light_will_o_wisp",
+  "subject_zh": "光之守卫·灵光",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "闪亮时蛊惑敌人靠近，并造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Summons Ignis Fatuus at the targeted area. Alternates on and off, drawing enemies closer with its mesmerising flicker.",
+   "description_zh": "在目标区域召唤幻火。幻火交替闪亮和闪灭。闪亮时蛊惑敌人靠近，并造成伤害。",
+   "notes_en": [
+    "Ignus Fatuus applies a non-interrupting pull towards it on all enemies within the radius."
+   ],
+   "notes_zh": [
+    "幻火会对作用范围内所有敌人施加朝其牵引的效果，该牵引效果不会打断。"
+   ]
+  }
+ }
+]

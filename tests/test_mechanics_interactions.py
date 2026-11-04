@@ -1,8 +1,7 @@
-"""MK-T4 rules are validated and connect the expected subjects."""
+"""MK-T4 rules v1 on frozen v7 are validated and connect the expected subjects."""
 
 import hashlib
 import json
-import sys
 from pathlib import Path
 
 import pytest
@@ -12,9 +11,6 @@ from dota_items.data.mechanics_interactions import evaluate_rule, load_rules
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "knowledge/mechanics/extractions/v7"
-sys.path.insert(0, str(ROOT / "scripts"))
-
-import build_mechanics_facts_v7 as builder  # noqa: E402
 
 
 def _json(path):
@@ -38,13 +34,6 @@ def test_package_matches_manifest():
     manifest = json.loads((PACKAGE / "manifest.json").read_text())
     for name, expected in manifest["output_sha256"].items():
         assert hashlib.sha256((PACKAGE / name).read_bytes()).hexdigest() == expected
-
-
-def test_package_replays_from_current_inputs(tmp_path):
-    doc, evaluation = builder.run(tmp_path / "v7")
-    stored = json.loads((PACKAGE / "facts-v7.json").read_text(encoding="utf-8"))
-    assert json.dumps(doc, sort_keys=True) == json.dumps(stored, sort_keys=True)
-    assert evaluation["rules"]
 
 
 def test_rules_load_and_reject_bad_input(terms):

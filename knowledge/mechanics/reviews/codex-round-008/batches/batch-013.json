@@ -1,0 +1,1000 @@
+[
+ {
+  "review_id": "5559e4adca027a5b936a",
+  "subject": "grimstroke_dark_artistry",
+  "subject_zh": "天涯墨客·绝笔",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "天涯墨客画出一道弯曲的墨迹，对敌人造成伤害和减速。",
+   "墨迹每碰到一个敌人，造成的伤害都会增加。",
+   "Grimstroke paints a curved path of ink with his brush, damaging and slowing enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Grimstroke paints a curved path of ink with his brush, damaging and slowing enemies. The damage is increased with each enemy the ink hits. Can be put on alt-cast to have the path be straight.",
+   "description_zh": "天涯墨客画出一道弯曲的墨迹，对敌人造成伤害和减速。墨迹每碰到一个敌人，造成的伤害都会增加。可以设为多样施法（右键点击技能栏图标），使墨迹为直线。"
+  }
+ },
+ {
+  "review_id": "3cdb058d3f404014d35e",
+  "subject": "grimstroke_spirit_walk",
+  "subject_zh": "天涯墨客·墨涌",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "友方单位附近的敌人会持续被墨须伤害。",
+   "Enemies in range of the allied unit are damaged with inky tendrils over time.",
+   "After %buff_duration% seconds it applies damage and stun in an area around the unit in proportion to how long ink tendril was near any hero."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Grimstroke shrouds an allied unit in ink, increasing its movement speed. Enemies in range of the allied unit are damaged with inky tendrils over time. After %buff_duration% seconds it applies damage and stun in an area around the unit in proportion to how long ink tendril was near any hero.",
+   "description_zh": "天涯墨客将一个友方单位笼罩在一片墨汁中，目标的移动速度得到提升。友方单位附近的敌人会持续被墨须伤害。%buff_duration%秒后将根据墨须对英雄造成伤害的时间对区域内单位造成伤害和眩晕。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Ink Swell dispels the allied unit when cast. Causes Ink Swell to deal %shard_bonus_damage_pct%%% more damage and heal the target for %shard_heal_pct%%% of the damage Ink Swell deals.DISPEL TYPE: Basic Dispel",
+     "zh": "墨涌在施放时会驱散友方单位。墨涌造成的伤害增加%shard_bonus_damage_pct%%%，并且治疗目标，治疗量为墨涌造成伤害的%shard_heal_pct%%%。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ed45c4a2245c3a487b33",
+  "subject": "mars_spear",
+  "subject_zh": "玛尔斯·战神迅矛",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "玛尔斯以致命的精准掷出他强大的战矛，对击中的每个敌方单位造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Mars throws his legendary Spear with deadly precision, damaging each enemy unit it strikes. The first enemy hero it hits is skewered on the spear, pushing it back. If a skewered hero hits a tree, building, or cliff, they will be impaled to it and stunned.",
+   "description_zh": "玛尔斯以致命的精准掷出他强大的战矛，对击中的每个敌方单位造成伤害。击中的第一个敌方英雄将被战矛刺穿，并被击退。若战矛击中树木、建筑或悬崖，目标将会被钉在上面，并受到眩晕。",
+   "notes_en": [
+    "Spear of Mars can hit invisible units and reveals them if they are stunned.",
+    "Spear of Mars will only pin a unit to cliffs onto elevated areas, otherwise it will push them off onto lower ground."
+   ],
+   "notes_zh": [
+    "战神迅矛可以击中隐身单位，造成眩晕还使其显形。",
+    "战神迅矛只会将单位从低地钉在地势变高的地方，否则会将他们推下高地。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Spear of Mars impales up to %max_impale_targets% heroes and leaves a fire trail behind that deals damage over time and slows movement speed.",
+     "zh": "战神迅矛可以刺中最多%max_impale_targets%名英雄，并留下一道火焰路径，持续造成伤害并减缓移动速度。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "66fe367bac0ac6930b2a",
+  "subject": "mars_spear",
+  "subject_zh": "玛尔斯·战神迅矛",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "战神迅矛可以刺中最多%max_impale_targets%名英雄，并留下一道火焰路径，持续造成伤害并减缓移动速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Mars throws his legendary Spear with deadly precision, damaging each enemy unit it strikes. The first enemy hero it hits is skewered on the spear, pushing it back. If a skewered hero hits a tree, building, or cliff, they will be impaled to it and stunned.",
+   "description_zh": "玛尔斯以致命的精准掷出他强大的战矛，对击中的每个敌方单位造成伤害。击中的第一个敌方英雄将被战矛刺穿，并被击退。若战矛击中树木、建筑或悬崖，目标将会被钉在上面，并受到眩晕。",
+   "notes_en": [
+    "Spear of Mars can hit invisible units and reveals them if they are stunned.",
+    "Spear of Mars will only pin a unit to cliffs onto elevated areas, otherwise it will push them off onto lower ground."
+   ],
+   "notes_zh": [
+    "战神迅矛可以击中隐身单位，造成眩晕还使其显形。",
+    "战神迅矛只会将单位从低地钉在地势变高的地方，否则会将他们推下高地。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Spear of Mars impales up to %max_impale_targets% heroes and leaves a fire trail behind that deals damage over time and slows movement speed.",
+     "zh": "战神迅矛可以刺中最多%max_impale_targets%名英雄，并留下一道火焰路径，持续造成伤害并减缓移动速度。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "b28779d01f009be9da28",
+  "subject": "mars_gods_rebuke",
+  "subject_zh": "玛尔斯·神之谴戒",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "玛尔斯举起他的战盾粉碎前方的敌人，将他们击退并且基于自身攻击力造成致命一击伤害。",
+   "Mars smashes enemies in front of him with his shield, knocking them back and damaging them with a critical hit based on his attack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Mars smashes enemies in front of him with his shield, knocking them back and damaging them with a critical hit based on his attack. Bonus damage is added when hitting heroes. Has True Strike.",
+   "description_zh": "玛尔斯举起他的战盾粉碎前方的敌人，将他们击退并且基于自身攻击力造成致命一击伤害。攻击英雄时攻击伤害提升。具有克敌机先效果。",
+   "notes_en": [
+    "Attack modifiers have a chance to proc on God's Rebuke attacks."
+   ],
+   "notes_zh": [
+    "神之谴戒的攻击也有几率触发攻击特效。"
+   ]
+  }
+ },
+ {
+  "review_id": "d8ffe6f10fa967a098c7",
+  "subject": "mars_arena_of_blood",
+  "subject_zh": "玛尔斯·热血竞技场",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "经过短暂的列队时间，玛尔斯召唤出环绕着战士的竞技场，战士们将阻挡敌人的攻击和动向。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "After a short formation time, Mars summons an arena lined with the undead warriors of the Ash Legion, who block enemy attacks and movement. Enemy heroes near the inside edge of the arena will be attacked by spears, dealing damage and knocking them back.",
+   "description_zh": "经过短暂的列队时间，玛尔斯召唤出环绕着战士的竞技场，战士们将阻挡敌人的攻击和动向。竞技场内的敌方英雄靠近边缘时将被战矛攻击，受到伤害并被击退。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Lowers cooldown by %bonus_AbilityCooldown%s and increases duration. If an enemy is killed in the Arena, Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%%  of their max health and mana and get a %arena_kill_buff_damage_pct%%  attack damage buff for %arena_kill_buff_duration%s. This effect stacks.",
+     "zh": "冷却时间降低%bonus_AbilityCooldown%秒，持续时间提升。如果敌人在竞技场内阵亡，玛尔斯和竞技场内所有友军都会回复%arena_kill_buff_heal_pct%%%最大生命和魔法，并且获得%arena_kill_buff_damage_pct%%%攻击力加成，持续%arena_kill_buff_duration%秒。这个效果可以叠加。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "76c05715f876d194791c",
+  "subject": "mars_arena_of_blood",
+  "subject_zh": "玛尔斯·热血竞技场",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "如果敌人在竞技场内阵亡，玛尔斯和竞技场内所有友军都会回复%arena_kill_buff_heal_pct%%%最大生命和魔法，并且获得%arena_kill_buff_damage_pct%%%攻击力加成，持续%arena_kill_buff_duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "After a short formation time, Mars summons an arena lined with the undead warriors of the Ash Legion, who block enemy attacks and movement. Enemy heroes near the inside edge of the arena will be attacked by spears, dealing damage and knocking them back.",
+   "description_zh": "经过短暂的列队时间，玛尔斯召唤出环绕着战士的竞技场，战士们将阻挡敌人的攻击和动向。竞技场内的敌方英雄靠近边缘时将被战矛攻击，受到伤害并被击退。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Lowers cooldown by %bonus_AbilityCooldown%s and increases duration. If an enemy is killed in the Arena, Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%%  of their max health and mana and get a %arena_kill_buff_damage_pct%%  attack damage buff for %arena_kill_buff_duration%s. This effect stacks.",
+     "zh": "冷却时间降低%bonus_AbilityCooldown%秒，持续时间提升。如果敌人在竞技场内阵亡，玛尔斯和竞技场内所有友军都会回复%arena_kill_buff_heal_pct%%%最大生命和魔法，并且获得%arena_kill_buff_damage_pct%%%攻击力加成，持续%arena_kill_buff_duration%秒。这个效果可以叠加。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d6f989c4eeb6c3a4dab2",
+  "subject": "void_spirit_aether_remnant",
+  "subject_zh": "虚无之灵·残阴",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "残阴现在会提供真实视域，不再对非英雄单位触发，而是每秒在两道路径上造成%creep_damage_pct%%%伤害。",
+   "The remnant now provides True Sight, and no longer triggers on creeps, instead dealing %creep_damage_pct%%% damage to them every second in both paths."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Void Spirit dispatches a remnant to the target location. The remnant stands watch over the region, facing the direction of his vector. When a unit crosses its gaze, the remnant pulls it in and damages it.",
+   "description_zh": "虚无之灵向目标地点派出一个残像。残像观察着一片区域，面朝矢量的方向。当有目标进入其视线，残像会拉扯，并造成伤害。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Creates an additional watcher path that rotates around the remnant.  The remnant now provides True Sight, and no longer triggers on creeps, instead dealing %creep_damage_pct%%% damage to them every second in both paths. Does not reveal wards.",
+     "zh": "额外产生一道观察路径，会围绕残阴旋转。残阴现在会提供真实视域，不再对非英雄单位触发，而是每秒在两道路径上造成%creep_damage_pct%%%伤害。不会使守卫显形。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "25b02b6e43c620086fa6",
+  "subject": "void_spirit_dissimilate",
+  "subject_zh": "虚无之灵·异化",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "穿出灵扉后，他对区域内所有敌人造成伤害。",
+   "Upon exiting a portal, he damages all enemies in the area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Void Spirit temporarily fades into the aether, creating a number of portals through which he can reassemble himself. Upon exiting a portal, he damages all enemies in the area.",
+   "description_zh": "虚无之灵暂时遁入太虚，创造数个灵扉。穿过灵扉他能重组自身。穿出灵扉后，他对区域内所有敌人造成伤害。"
+  }
+ },
+ {
+  "review_id": "20ecad62a5d058b5dbad",
+  "subject": "void_spirit_resonant_pulse",
+  "subject_zh": "虚无之灵·共鸣脉冲",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Void Spirit wraps himself in a protective shield that absorbs physical damage and emits a single damaging pulse around him."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Void Spirit wraps himself in a protective shield that absorbs physical damage and emits a single damaging pulse around him. The shield gains increased damage absorption for each enemy hero the pulse hits.",
+   "description_zh": "虚无之灵将自己包裹在保护性护盾之中，可以吸收物理伤害，并围绕自身发出一次伤害性脉冲。脉冲每击中一名敌方英雄，护盾的伤害吸收量都会提升。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Resonant Pulse to silence and gain %max_charges% charges.",
+     "zh": "共鸣脉冲可以沉默敌人，并获得%max_charges%点能量点数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "014fd73c74259f66ed0b",
+  "subject": "void_spirit_astral_step",
+  "subject_zh": "虚无之灵·太虚之径",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "虚无之灵撕裂现实进入精神位面，再出现在目标地点，对沿途的所有敌人造成伤害。",
+   "太虚之径的攻击不会分裂。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Void Spirit tears a rift through the astral plane to appear at the target location, attacking all enemies along the path. This attack inflicts a void mark that slows for %pop_damage_delay% seconds and then detonates.",
+   "description_zh": "虚无之灵撕裂现实进入精神位面，再出现在目标地点，对沿途的所有敌人造成伤害。此次攻击将施加一个太虚印记，造成%pop_damage_delay%秒减速，然后引爆。",
+   "notes_en": [
+    "Astral Step attacks do not cleave."
+   ],
+   "notes_zh": [
+    "太虚之径的攻击不会分裂。"
+   ]
+  }
+ },
+ {
+  "review_id": "7238edbd635ac22dc13f",
+  "subject": "snapfire_scatterblast",
+  "subject_zh": "电炎绝手·电光石火",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "电炎绝手开枪产生大范围的爆炸，对锥形区域内的敌人造成伤害和减速。",
+   "Snapfire unloads with a wide blast that damages and slows enemies in a cone.",
+   "Damage is increased by %point_blank_dmg_bonus_pct%%% and Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Snapfire unloads with a wide blast that damages and slows enemies in a cone. Damage is increased by %point_blank_dmg_bonus_pct%%% and Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.",
+   "description_zh": "电炎绝手开枪产生大范围的爆炸，对锥形区域内的敌人造成伤害和减速。平射距离内的伤害提升%point_blank_dmg_bonus_pct%%%，移动速度减缓、攻击速度降低和减速持续时间额外提升%point_blank_debuff_duration_pct%%%。"
+  }
+ },
+ {
+  "review_id": "1b47d6771ce1c732be02",
+  "subject": "snapfire_firesnap_cookie",
+  "subject_zh": "电炎绝手·龙炎饼干",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "跳跃的单位将在落地时对敌人造成眩晕和伤害。",
+   "The hopping unit stuns and damages enemies in the landing zone."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Snapfire feeds a potent cookie to Mortimer or an ally, causing them to hop a short distance. The hopping unit stuns and damages enemies in the landing zone.",
+   "description_zh": "电炎绝手将一块烈性饼干喂给小莫迪或一名队友，使他们短距离跳跃。跳跃的单位将在落地时对敌人造成眩晕和伤害。",
+   "notes_en": [
+    "The cookie projectile has a speed of %projectile_speed%."
+   ],
+   "notes_zh": [
+    "饼干的弹道速度为%projectile_speed%。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Firesnap cookies become even more potent, healing the target and launching a Mortimer Kiss that does %shard_damage_multiplier_tooltip%%% impact damage to the landing destination.",
+     "zh": "龙炎饼干变得更具威力，治疗目标，并且朝着陆地点发射一个%shard_damage_multiplier_tooltip%%%冲击伤害的蜥蜴绝吻。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2466462601432691a305",
+  "subject": "snapfire_lil_shredder",
+  "subject_zh": "电炎绝手·霹雳铁手",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每次攻击都将削弱敌人的护甲。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Snapfire heats up her mounted turret to rapidly fire %buffed_attacks% attacks dealing fixed damage plus a percentage of her attack damage. Each attack reduces the enemy's armor. Provides bonus attack range for the duration.",
+   "description_zh": "电炎绝手开动蜥蜴坐骑上的加农炮，快速发动%buffed_attacks%次固定伤害加上自身攻击伤害一定百分比的攻击。每次攻击都将削弱敌人的护甲。在持续时间内提供攻击距离加成。",
+   "notes_en": [
+    "Sets base attack time to %base_attack_time%s for the duration.",
+    "Attack modifiers have a chance to proc on Lil' Shredder attacks."
+   ],
+   "notes_zh": [
+    "持续时间内基础攻击间隔变为%base_attack_time%。",
+    "霹雳铁手的攻击也有几率触发攻击特效。"
+   ]
+  }
+ },
+ {
+  "review_id": "5b511c43821fefa0e943",
+  "subject": "snapfire_spit_creep",
+  "subject_zh": "电炎绝手·喷吐",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Mortimer spits out the unit that's in his mouth, causing impact damage and stun in a large area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Mortimer spits out the unit that's in his mouth, causing impact damage and stun in a large area. The glob leaves a pool of firespit based on the current level of Mortimer Kisses, that slows and applies damage over time. Spit Out has a no minimum launch range.",
+   "description_zh": "小莫迪吐出他肚子里的单位，对大片区域造成冲击伤害和眩晕。留下的火痰根据蜥蜴绝吻的当前等级还将持续造成减速和伤害。喷吐没有最小发射距离。"
+  }
+ },
+ {
+  "review_id": "e957727cd0806e9dce5d",
+  "subject": "snapfire_mortimer_kisses",
+  "subject_zh": "电炎绝手·蜥蜴绝吻",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "火团造成冲击伤害，在地面上产生炽烈的炎洼，可以使敌人减速并造成持续伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Snapfire's friend launches a barrage of firespit globs over %duration_tooltip% seconds. Globs cause impact damage and create pools of firespit, which slow and apply damage over time. Snapfire has a reduced turn rate for the duration and a minimum launch range of %min_range%. Each glob can be targeted with a right click.",
+   "description_zh": "电炎绝手的伙伴在%duration_tooltip%秒内喷吐出密集的火团。火团造成冲击伤害，在地面上产生炽烈的炎洼，可以使敌人减速并造成持续伤害。电炎绝手在持续时间内转身速率降低，并且具有最小喷吐距离，为%min_range%。点击右键可以选择火团的目标区域。",
+   "notes_en": [
+    "Can be cancelled by pressing Stop, Hold Position, or using another ability.",
+    "Has a minimum travel time of %min_lob_travel_time% and maximum travel time of %max_lob_travel_time%."
+   ],
+   "notes_zh": [
+    "可以通过停止、停在原位或使用其他技能来终止。",
+    "最短飞行时间为%min_lob_travel_time%秒，最长飞行时间为%max_lob_travel_time%秒。"
+   ]
+  }
+ },
+ {
+  "review_id": "c2d8f4e79c8ed22fb9e3",
+  "subject": "snapfire_boomstick",
+  "subject_zh": "电炎绝手·猎枪",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "电炎绝手对附近的敌人造成更多伤害。",
+   "Snapfire deals more damage to nearby enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+  },
+  "context": {
+   "description_en": "Snapfire deals more damage to nearby enemies.",
+   "description_zh": "电炎绝手对附近的敌人造成更多伤害。"
+  }
+ },
+ {
+  "review_id": "134a0befedd1424e713e",
+  "subject": "hoodwink_acorn_shot",
+  "subject_zh": "森海飞霞·爆栗出击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "森海飞霞向目标单位发射一颗橡栗，可以弹射至附近敌人，减缓他们的移动速度，并造成攻击伤害的一定百分比和额外伤害。",
+   "The acorn bounces to nearby targets, slowing them and dealing a percentage of Hoodwink's attack with bonus damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ALT_CASTABLE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Fires Hoodwink's attack with an acorn at the target unit.  The acorn bounces to nearby targets, slowing them and dealing a percentage of Hoodwink's attack with bonus damage.\nIf point targeted, a tree is created at the target position and the acorn will bounce to nearby targets.  The ability may be placed on alt-cast to force this behavior.",
+   "description_zh": "森海飞霞向目标单位发射一颗橡栗，可以弹射至附近敌人，减缓他们的移动速度，并造成攻击伤害的一定百分比和额外伤害。\n可以对地面施放，在目标地点种出一棵树，而橡栗会弹射至附近目标。设为多样施法（右键点击技能栏图标）后会强制沿用该行为。",
+   "notes_en": [
+    "The same target can be hit more than once.",
+    "Bounces will seek units in the fog of war in a 525 radius, but not invisible units.",
+    "The planted tree lasts for 20 seconds."
+   ],
+   "notes_zh": [
+    "同一个目标可以被击中超过一次。",
+    "弹射会搜寻525范围内战争迷雾中的单位，但无视隐身单位。",
+    "种下的树持续20秒。"
+   ]
+  }
+ },
+ {
+  "review_id": "b731fa1d6ae6d7ddac5f",
+  "subject": "hoodwink_bushwhack",
+  "subject_zh": "森海飞霞·野地奇袭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "敌人会持续受到伤害并被拖拽到目标区域内最近的树上，并且眩晕期间视野降低至0。",
+   "Affected enemies take damage over time and are pulled towards the tree nearest to them within the target area, and have their vision reduced to 0 for the duration of the stun."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Tosses a net trap that stuns enemies if they are near a tree in the area.  Affected enemies take damage over time and are pulled towards the tree nearest to them within the target area, and have their vision reduced to 0 for the duration of the stun.",
+   "description_zh": "扔出一张网，对区域内靠近树木的敌人造成眩晕。敌人会持续受到伤害并被拖拽到目标区域内最近的树上，并且眩晕期间视野降低至0。",
+   "notes_en": [
+    "Units can be freed from the stun by destroying the tree.",
+    "Bushwhack does not hit invisible units."
+   ],
+   "notes_zh": [
+    "若树木被摧毁，被影响的单位将解除眩晕。",
+    "野地奇袭不会击中隐身单位。"
+   ]
+  }
+ },
+ {
+  "review_id": "ccf0b0f0cf9823024886",
+  "subject": "hoodwink_decoy",
+  "subject_zh": "森海飞霞·诱敌奇术",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "森海飞霞变为隐身，提升移动速度，并且产生一个引诱敌人的幻象，幻象会瞄准最近的敌方英雄开始蓄力准备发射伤害较低的一箭穿心。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+  },
+  "context": {
+   "description_en": "Hoodwink turns invisible, increasing her movement speed, and creates a decoy illusion that starts aiming a decreased damage Sharpshooter at the nearest enemy hero. If the illusion is attacked or hit by a targeted ability, it is destroyed and it throws a lesser bushwhack towards the enemy.",
+   "description_zh": "森海飞霞变为隐身，提升移动速度，并且产生一个引诱敌人的幻象，幻象会瞄准最近的敌方英雄开始蓄力准备发射伤害较低的一箭穿心。如果幻象被攻击或被指向性技能击中，幻象将被摧毁并且攻击者将受到较弱的野地奇袭效果。"
+  }
+ },
+ {
+  "review_id": "647dd73305fe230c9c3c",
+  "subject": "hoodwink_hunters_boomerang",
+  "subject_zh": "森海飞霞·猎手旋镖",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "回旋镖对沿途击中的敌人都会造成伤害，并且施加一个负面效果，使受到作用的敌人被减速，承受的技能伤害增加。",
+   "The boomerang will deal damage as it passes through or hits enemies, and apply a debuff that causes affected enemies to be slowed and be more vulnerable to spell damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Tosses a boomerang in an arc. Upon contact, it returns to Hoodwink.  The boomerang will deal damage as it passes through or hits enemies, and apply a debuff that causes affected enemies to be slowed and be more vulnerable to spell damage.",
+   "description_zh": "掷出一把沿弧线飞行的回旋镖。击中后会飞回至森海飞霞。回旋镖对沿途击中的敌人都会造成伤害，并且施加一个负面效果，使受到作用的敌人被减速，承受的技能伤害增加。"
+  }
+ },
+ {
+  "review_id": "f3ddd4eb90f94e121520",
+  "subject": "dawnbreaker_fire_wreath",
+  "subject_zh": "破晓辰星·星破天惊",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "破晓辰星将她的战锤旋转3次，对敌人造成攻击伤害以及额外伤害。",
+   "最后一次打击时，她将战锤击向地面，对她前方的敌人造成眩晕和伤害。",
+   "Dawnbreaker whirls her hammer around 3 times, damaging enemies with her attack plus bonus damage.",
+   "On the final strike, she smashes her hammer down, stunning and damaging enemies in front of her."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CAN_SELF_CAST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Dawnbreaker whirls her hammer around 3 times, damaging enemies with her attack plus bonus damage. On the final strike, she smashes her hammer down, stunning and damaging enemies in front of her.",
+   "description_zh": "破晓辰星将她的战锤旋转3次，对敌人造成攻击伤害以及额外伤害。最后一次打击时，她将战锤击向地面，对她前方的敌人造成眩晕和伤害。",
+   "notes_en": [
+    "Dawnbreaker travels at a rate of %movement_speed% for the duration of the ability and takes a brief %self_stun_duration%s to recover after the final strike.",
+    "Celestial Hammer or Solar Guardian cannot be cast during the combo.",
+    "Cleave does not work with this ability.",
+    "Can be self-cast to move forward.",
+    "The first two strikes will slow enemy movement speed by %swipe_slow%%% for %sweep_stun_duration%s."
+   ],
+   "notes_zh": [
+    "破晓辰星在技能持续时间内以%movement_speed%的移动速度行进，并且最后一击后需要%self_stun_duration%秒才能复原。",
+    "连击期间无法施放上界重锤或天光现世。",
+    "此技能不继承分裂效果。",
+    "可以对自身施放来向前移动。",
+    "前两次挥击会减少敌人%swipe_slow%%%移动速度，持续%sweep_stun_duration%秒。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Dawnbreaker gains debuff immunity with %immunity_resist%%% magic resistance and free movement during Starbreaker. Dawnbreaker is slowed by %shard_movement_penalty%%% down to a minimum of %movement_speed%.",
+     "zh": "破晓辰星在星破天惊期间获得减益免疫，%immunity_resist%%%魔法抗性加成和自由移动状态。破晓辰星会被减速%shard_movement_penalty%%%，移速最低为%movement_speed%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ea72525243a6388a99cb",
+  "subject": "dawnbreaker_celestial_hammer",
+  "subject_zh": "破晓辰星·上界重锤",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "破晓辰星向一个目标扔出她的武器，对沿途的敌人造成伤害。",
+   "战锤在飞出和飞回时都会对敌人造成伤害。",
+   "Dawnbreaker hurls her weapon at a target, damaging enemies struck along the way.",
+   "The hammer damages enemies both when thrown and when returning to Dawnbreaker."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Dawnbreaker hurls her weapon at a target, damaging enemies struck along the way. The hammer pauses for %pause_duration% seconds at the destination before flying back to her, leaving a trail of fire that slows enemies. Dawnbreaker can recall the hammer at any time, pulling her towards it so they meet in the middle.",
+   "description_zh": "破晓辰星向一个目标扔出她的武器，对沿途的敌人造成伤害。战锤会在目的地停留%pause_duration%秒，再飞回她的手中，期间留下一道炽烈之径，减缓敌人的移动速度。破晓辰星可以随时召回战锤，将自身朝战锤牵引，使二者在中点相遇。",
+   "notes_en": [
+    "The hammer damages enemies both when thrown and when returning to Dawnbreaker.",
+    "Dawnbreaker's Converge movement distance is capped at the ability's cast range.",
+    "Starbreaker cannot be cast while the Hammer is out."
+   ],
+   "notes_zh": [
+    "战锤在飞出和飞回时都会对敌人造成伤害。",
+    "破晓辰星的会合移动距离不会超过技能的施法距离。",
+    "星破天惊无法在战锤脱手时施放。"
+   ]
+  }
+ },
+ {
+  "review_id": "8246c7bf594153e8e277",
+  "subject": "dawnbreaker_luminosity",
+  "subject_zh": "破晓辰星·熠熠生辉",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "破晓辰星在数次攻击后提升了力量，她的下一次攻击会造成致命一击，并治疗她附近%heal_radius%范围内所有友方英雄，治疗量为攻击伤害的一定百分比。",
+   "After a number of attacks, Dawnbreaker powers up, charging her next attack with a critical hit that heals all allied heroes within %heal_radius% units around her for a portion of attack damage dealt."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "After a number of attacks, Dawnbreaker powers up, charging her next attack with a critical hit that heals all allied heroes within %heal_radius% units around her for a portion of attack damage dealt. Creeps and neutral enemies provide less healing. Allies are healed for %allied_healing_pct%%% of the amount.",
+   "description_zh": "破晓辰星在数次攻击后提升了力量，她的下一次攻击会造成致命一击，并治疗她附近%heal_radius%范围内所有友方英雄，治疗量为攻击伤害的一定百分比。攻击小兵和野怪产生的治疗量有所减少。对友军的治疗量为%allied_healing_pct%%%。",
+   "notes_en": [
+    "Luminosity Heal is increased by sources of Health Restoration Amplification.",
+    "Break disables the gaining of new stacks."
+   ],
+   "notes_zh": [
+    "熠熠生辉的治疗效果可以通过生命回复增强效果获得提升。",
+    "破坏会使技能无法获得新的叠加效果。"
+   ]
+  }
+ },
+ {
+  "review_id": "4f07f36e47005c6f97e8",
+  "subject": "dawnbreaker_solar_guardian",
+  "subject_zh": "破晓辰星·天光现世",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每次脉冲都会对敌人造成伤害，并治疗友军。",
+   "经过一段短暂时间后，她飞向目标地点，落地时造成额外伤害并眩晕敌人。",
+   "Each pulse damages enemies and heals allies.",
+   "After a short duration, she flies to the target location and deals additional damage and stuns enemies upon landing."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "CHANNELED - Dawnbreaker creates a pulsing effect at a location within %max_offset_distance% units of an allied hero anywhere on the map and creates daylight for %daytime_duration%s. Each pulse damages enemies and heals allies.After a short duration, she flies to the target location and deals additional damage and stuns enemies upon landing.Once channeled, Dawnbreaker cannot stop the ability.",
+   "description_zh": "持续施法 - 破晓辰星在地图上任意友方英雄%max_offset_distance%距离内的一个地点创造一个脉冲效果，并制造持续%daytime_duration%秒的白天。每次脉冲都会对敌人造成伤害，并治疗友军。经过一段短暂时间后，她飞向目标地点，落地时造成额外伤害并眩晕敌人。开始持续施法后，破晓辰星无法中止此技能。",
+   "notes_en": [
+    "Pulse interval is %pulse_interval%s.",
+    "Total flight duration is %abilitychanneltime% seconds of channel time + %airtime_duration% of flight time.",
+    "Instantly recalls the Hammer on cast."
+   ],
+   "notes_zh": [
+    "脉冲间隔为%pulse_interval%秒。",
+    "总飞行时间为%abilitychanneltime%秒持续施法时间 + %airtime_duration%秒飞行时间。",
+    "施放时立刻召回战锤。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Solar Guardian's aura follows Dawnbreaker for %scepter_aura_duration%s after landing.",
+     "zh": "天光现世的光环在破晓辰星落地后会跟随%scepter_aura_duration%秒。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "87d069ce9decf8db68dc",
+  "subject": "marci_grapple",
+  "subject_zh": "玛西·过肩摔",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "落地区域内所有敌方单位也会受到伤害并被减速。",
+   "Any enemy units in the landing area will also be damaged and slowed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Marci grabs an allied or enemy target and throws it effortlessly behind her, damaging and slowing the unit if it's an enemy. Any enemy units in the landing area will also be damaged and slowed.",
+   "description_zh": "玛西抓起一个友方或敌方目标，将其轻松地向她身后摔去，敌方目标将受到伤害并被减速。落地区域内所有敌方单位也会受到伤害并被减速。"
+  }
+ },
+ {
+  "review_id": "da1ebf1817e23c5760a4",
+  "subject": "marci_companion_run",
+  "subject_zh": "玛西·回身踢",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "到达目标后玛西冲向最终的目的地，对落地点的敌人造成伤害和眩晕。",
+   "Upon reaching the unit, Marci lunges to her final destination, damaging and stunning enemies where she lands."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Marci bounds to the targeted allied unit, choosing a direction and distance she will spring away from it. Upon reaching the unit, Marci lunges to her final destination, damaging and stunning enemies where she lands.\n\nWhen Rebound is set to alt-cast, Marci brings the target ally with her to her final destination.\n\n The ally receives %ally_movespeed_pct%%% bonus movement speed for %ally_buff_duration%s.",
+   "description_zh": "玛西跃向友方目标单位，选好她要弹离的方向和距离。到达目标后玛西冲向最终的目的地，对落地点的敌人造成伤害和眩晕。\n\n回身踢设为多样施法（右键点击技能栏图标）后，玛西会把她的友军目标带向最终目的地。\n\n友军将获得%ally_movespeed_pct%%%移动速度加成，持续%ally_buff_duration%秒。",
+   "notes_en": [
+    "Marci's initial run to her target unit can be disjointed.",
+    "Does not trigger spell reflect.",
+    "Does not bring allies who are Rooted or Leashed when alt-cast."
+   ],
+   "notes_zh": [
+    "玛西冲刺时目标单位可以躲避该效果。",
+    "不会触发法术反弹。",
+    "多样施法时不会带走被缠绕或束缚的友军。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases damage. Rebound can be cast on enemies, and causes Marci to also get the speed boost when she casts it.",
+     "zh": "提升伤害。回身踢可以对敌人施放，并且玛西施放后自身也会获得加速效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "83053f9adaf3b16efb98",
+  "subject": "marci_unleash",
+  "subject_zh": "玛西·怒拳破",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每次狂怒连技的最后一击都会创造一个脉冲效果，对目标周围的敌人造成伤害。",
+   "The last strike in every Fury combo creates a damaging pulse around the target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Marci taps a hidden power, gaining Fury charges that allow her to deliver a rapid sequence of strikes that slow movement and attack speed of the target for %pulse_debuff_duration%s. The last strike in every Fury combo creates a damaging pulse around the target. In between Fury combos, Marci is unable to attack for %time_between_flurries%s.\n\nMarci gains %bonus_movespeed%%% movement speed when Unleash is cast.",
+   "description_zh": "玛西释放潜藏的力量，获得狂怒的猛攻效果，使自身可以发动快速的打击，并且降低打击目标的移动和攻击速度，持续%pulse_debuff_duration%秒。每次狂怒连技的最后一击都会创造一个脉冲效果，对目标周围的敌人造成伤害。在狂怒连技的间隔，玛西无法攻击，持续%time_between_flurries%秒。\n\n玛西施放怒拳破时移动速度提升%bonus_movespeed%%%。",
+   "notes_en": [
+    "Once a Fury combo is started, each attack must be delivered within 1s or the Fury combo expires.",
+    "Removes attack speed limit."
+   ],
+   "notes_zh": [
+    "每次狂怒连技开始后，每次攻击都必须在1秒内完成，否则连技将会终止。",
+    "移除攻击速度限制。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Unleash cooldown by %scepter_cooldown_reduction% seconds and causes Unleash to apply a basic dispel on Marci. While Unleash is Active, all of Marci's abilities unleash pulses when cast. All of Marci's unleash pulses will silence units for %pulse_silence_duration% seconds.DISPEL TYPE: Basic Dispel",
+     "zh": "怒拳破的冷却时间减少%scepter_cooldown_reduction%秒，并且施放时对玛西施加弱驱散。怒拳破生效期间，玛西的所有技能在施放时都会施放脉冲。玛西的所有怒拳破脉冲都会沉默敌人，持续%pulse_silence_duration%秒。驱散类型：弱驱散"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f320c3f9f70b6cd0b438",
+  "subject": "primal_beast_onslaught",
+  "subject_zh": "獸·突",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "敌方单位被撞时受到伤害，并且被眩晕。",
+   "Enemy units are damaged and stunned on impact."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Primal Beast charges up and then runs in the chosen direction, knocking back enemies and allies alike. Enemy units are damaged and stunned on impact. The longer the charge duration, the farther Primal Beast's momentum will carry him. \n\n Can be cancelled at any time with the Stop command.",
+   "description_zh": "獸积蓄力量再向选定方向冲去，将敌人和队友同时击退。敌方单位被撞时受到伤害，并且被眩晕。蓄力时间越长，獸冲的距离越远。\n\n可以随时使用停止指令来中止。"
+  }
+ },
+ {
+  "review_id": "a02894034aef5df44201",
+  "subject": "primal_beast_trample",
+  "subject_zh": "獸·踏",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每行进%step_distance%距离就会对獸附近范围内所有敌人造成伤害。",
+   "For every %step_distance% units traveled, all enemies around the Beast receive damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Primal Beast stomps over everything. For every %step_distance% units traveled, all enemies around the Beast receive damage. Deals base damage plus a multiplier of Primal Beast's attack damage. Primal Beast is disarmed for the duration of the ability.",
+   "description_zh": "獸践踏一切。每行进%step_distance%距离就会对獸附近范围内所有敌人造成伤害。伤害量为基础伤害加上獸攻击力的一定系数。獸在技能期间被缴械。"
+  }
+ }
+]
