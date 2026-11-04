@@ -1,0 +1,1045 @@
+[
+ {
+  "review_id": "258a2a43e0b316a65b6b",
+  "subject": "tusk_walrus_kick",
+  "subject_zh": "巨牙海民·海象飞踢",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "将最近的敌方单位向目标方向踢上一脚，对其造成眩晕，伤害和减速。",
+   "另外对落地区域%search_radius%范围内所有英雄造成伤害。",
+   "Also deals damage to all heroes within %search_radius% radius of its landing area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_VECTOR_TARGETING | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Kicks the closest enemy unit in the drawn direction, stunning, damaging, and slowing them. Also deals damage to all heroes within %search_radius% radius of its landing area. Cooldown is reduced by %creep_cooldown_reduction_pct%%% if kicking a creep.",
+   "description_zh": "将最近的敌方单位向目标方向踢上一脚，对其造成眩晕，伤害和减速。另外对落地区域%search_radius%范围内所有英雄造成伤害。飞踢非英雄单位会使冷却时间减少%creep_cooldown_reduction_pct%%%。"
+  }
+ },
+ {
+  "review_id": "41e5ed3a7e82aa7acf42",
+  "subject": "skywrath_mage_arcane_bolt",
+  "subject_zh": "天怒法师·奥法鹰隼",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "天怒法师施放出缓慢移动的奥术鹰群，对敌方单位造成基于天怒法师智力值的伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.",
+   "description_zh": "天怒法师施放出缓慢移动的奥术鹰群，对敌方单位造成基于天怒法师智力值的伤害。",
+   "notes_en": [
+    "The projectile moves very slowly (500 ms), providing 325 vision around it.  Upon impact, it will reveal the target area for 3.34 seconds.",
+    "Arcane Bolt cannot be disjointed."
+   ],
+   "notes_zh": [
+    "鹰群移动得非常缓慢（500移速），提供325范围的视野。击中目标后，将给予目标区域的视野，持续3.34秒。",
+    "奥法鹰隼无法被躲避。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "When Skywrath Mage casts Arcane Bolt, %total_bolt_count% bolts are created, one aimed at the original target, and two others aimed at random enemies within %extra_bolt_search_radius% range of the original target. Heroes will take priority.",
+     "zh": "天怒法师施放奥法鹰隼时，会产生%total_bolt_count%个鹰隼，其中一个飞往原目标，而另外的两个飞往原目标附近%extra_bolt_search_radius%范围内随机敌人。以英雄为首要目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "64b319e5512b1756f74e",
+  "subject": "skywrath_mage_concussive_shot",
+  "subject_zh": "天怒法师·震荡光弹",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "击中后会对英雄附近范围内所有单位造成伤害和减速。",
+   "击中英雄后附近的非英雄单位也会受到伤害。",
+   "Upon impact, it deals damage and slows in an area of effect.",
+   "Damages creeps around the impact area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Skywrath Mage sets off a long range shot that hits the closest hero within a long range.  Upon impact, it deals damage and slows in an area of effect.",
+   "description_zh": "天怒法师释放一个远距离的光弹，将击中超大范围内最近的英雄。击中后会对英雄附近范围内所有单位造成伤害和减速。",
+   "notes_en": [
+    "If no enemy heroes are in range or they are in fog, Concussive Shot targets the nearest enemy creep.",
+    "Damages creeps around the impact area.",
+    "Provides 400 vision around the projectile, and reveals the target area for 3.34 seconds upon impact."
+   ],
+   "notes_zh": [
+    "如果作用范围内没有英雄或英雄处于迷雾中，震荡光弹将以最近的敌方小兵或中立生物为目标。",
+    "击中英雄后附近的非英雄单位也会受到伤害。",
+    "光弹将给予400范围的附近视野，击中后将获得目标区域的视野，持续3.34秒。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When Skywrath Mage casts Concussive Shot, a different random target within %scepter_radius% range of the original target will be hit with the same ability. Heroes will take priority.",
+     "zh": "天怒法师施放震荡光弹时，会随机对原目标附近%scepter_radius%范围内另一个敌人施放相同的技能。以英雄为首要目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "7cf2871165b030981e22",
+  "subject": "skywrath_mage_concussive_shot",
+  "subject_zh": "天怒法师·震荡光弹",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "When Skywrath Mage casts Concussive Shot, a different random target within %scepter_radius% range of the original target will be hit with the same ability."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Skywrath Mage sets off a long range shot that hits the closest hero within a long range.  Upon impact, it deals damage and slows in an area of effect.",
+   "description_zh": "天怒法师释放一个远距离的光弹，将击中超大范围内最近的英雄。击中后会对英雄附近范围内所有单位造成伤害和减速。",
+   "notes_en": [
+    "If no enemy heroes are in range or they are in fog, Concussive Shot targets the nearest enemy creep.",
+    "Damages creeps around the impact area.",
+    "Provides 400 vision around the projectile, and reveals the target area for 3.34 seconds upon impact."
+   ],
+   "notes_zh": [
+    "如果作用范围内没有英雄或英雄处于迷雾中，震荡光弹将以最近的敌方小兵或中立生物为目标。",
+    "击中英雄后附近的非英雄单位也会受到伤害。",
+    "光弹将给予400范围的附近视野，击中后将获得目标区域的视野，持续3.34秒。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When Skywrath Mage casts Concussive Shot, a different random target within %scepter_radius% range of the original target will be hit with the same ability. Heroes will take priority.",
+     "zh": "天怒法师施放震荡光弹时，会随机对原目标附近%scepter_radius%范围内另一个敌人施放相同的技能。以英雄为首要目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "77e555a8e817461b05e5",
+  "subject": "skywrath_mage_mystic_flare",
+  "subject_zh": "天怒法师·神秘之耀",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "%duration%秒期间对范围内所有敌方英雄造成大量伤害，伤害由所有英雄平摊。",
+   "Deals massive damage distributed evenly among any Heroes in the area over %duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over %duration% seconds.",
+   "description_zh": "天怒法师操控终极魔力，召唤精准致命的奥术力场毁灭对手。%duration%秒期间对范围内所有敌方英雄造成大量伤害，伤害由所有英雄平摊。",
+   "notes_en": [
+    "Mystic Flare only affects Heroes. Mystic Flare does not damage creep heroes.",
+    "Mystic Flare will damage enemy creeps if no enemy heroes are present.",
+    "Mystic Flare will immediately destroy illusions."
+   ],
+   "notes_zh": [
+    "神秘之耀只会作用于英雄。神秘之耀不会对类英雄单位造成伤害。",
+    "神秘之耀在没有敌方英雄时将对敌方非英雄单位造成伤害。",
+    "神秘之耀会立刻摧毁幻象。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within %scepter_radius% range of the original target. Heroes will take priority.",
+     "zh": "天怒法师施放神秘之耀时，原目标附近%scepter_radius%范围内另一个敌人的位置上也会产生一个神秘之耀。以英雄为首要目标。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "f5f47bc0d9db93f9412b",
+  "subject": "abaddon_death_coil",
+  "subject_zh": "亚巴顿·迷雾缠绕",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "亚巴顿以自身的部分生命为代价，释放出一团致命迷雾，可以对敌方单位造成伤害，或者治疗友方单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health.",
+   "description_zh": "亚巴顿以自身的部分生命为代价，释放出一团致命迷雾，可以对敌方单位造成伤害，或者治疗友方单位。",
+   "notes_en": [
+    "Abaddon can not kill himself with this skill."
+   ],
+   "notes_zh": [
+    "亚巴顿不能使用此技能自杀。"
+   ]
+  }
+ },
+ {
+  "review_id": "8dad476900d8610048cd",
+  "subject": "abaddon_aphotic_shield",
+  "subject_zh": "亚巴顿·无光之盾",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "护盾消失或被摧毁后将会爆炸，对附近区域的单位造成伤害，伤害值为护盾的最大吸收量。",
+   "Summons dark energies around an ally unit, dispelling them and creating an all damage barrier that absorbs a set amount of damage before expiring.",
+   "When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Summons dark energies around an ally unit, dispelling them and creating an all damage barrier that absorbs a set amount of damage before expiring. When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "召唤黑暗能量环绕友方单位，驱散他们并创造一个全伤害护盾，护盾在消失前能吸收一定量的伤害。护盾消失或被摧毁后将会爆炸，对附近区域的单位造成伤害，伤害值为护盾的最大吸收量。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "The max damage is always dealt whether the barrier is destroyed by expiring or absorbing damage.",
+    "The explosion does not damage units hidden by the fog of war."
+   ],
+   "notes_zh": [
+    "不论护盾因持续时间结束或吸收足够伤害后被摧毁都将造成最大伤害。",
+    "爆炸将不会对战争迷雾内单位造成伤害。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.",
+     "zh": "会对附近敌人造成吸收伤害的%absorb_to_damage%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "12a06e3d6478cf1fa673",
+  "subject": "abaddon_aphotic_shield",
+  "subject_zh": "亚巴顿·无光之盾",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "会对附近敌人造成吸收伤害的%absorb_to_damage%%%。",
+   "%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Summons dark energies around an ally unit, dispelling them and creating an all damage barrier that absorbs a set amount of damage before expiring. When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "召唤黑暗能量环绕友方单位，驱散他们并创造一个全伤害护盾，护盾在消失前能吸收一定量的伤害。护盾消失或被摧毁后将会爆炸，对附近区域的单位造成伤害，伤害值为护盾的最大吸收量。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "The max damage is always dealt whether the barrier is destroyed by expiring or absorbing damage.",
+    "The explosion does not damage units hidden by the fog of war."
+   ],
+   "notes_zh": [
+    "不论护盾因持续时间结束或吸收足够伤害后被摧毁都将造成最大伤害。",
+    "爆炸将不会对战争迷雾内单位造成伤害。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.",
+     "zh": "会对附近敌人造成吸收伤害的%absorb_to_damage%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5388d26e118abfa3417e",
+  "subject": "abaddon_frostmourne",
+  "subject_zh": "亚巴顿·魔霭诅咒",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "亚巴顿打击一个敌人，使其受到寒心诅咒的作用，被减速，并且持续受到伤害，同时所有攻击目标的单位将提升攻击速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Abaddon strikes an enemy, affecting them by a chilling curse, slowing them, causing them to take damage over time, and all attacks against them gain an attack speed boost. Damage over time component to buildings is reduced by %tower_dps_pct%%%.",
+   "description_zh": "亚巴顿打击一个敌人，使其受到寒心诅咒的作用，被减速，并且持续受到伤害，同时所有攻击目标的单位将提升攻击速度。对建筑的持续伤害减少%tower_dps_pct%%%。"
+  }
+ },
+ {
+  "review_id": "8580b6af0a2d9111ad8e",
+  "subject": "abaddon_withering_mist",
+  "subject_zh": "亚巴顿·凋零迷雾",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对敌人造成伤害时会施加凋零迷雾的负面效果，持续%duration%秒。",
+   "Damaging enemies applies the Withering Mist debuff for %duration%s."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI"
+  },
+  "context": {
+   "description_en": "Damaging enemies applies the Withering Mist debuff for %duration%s. Affected enemies have their Health Restoration reduced by %heal_reduction_pct%%% if they are below %hp_threshold_pct%%% HP.",
+   "description_zh": "对敌人造成伤害时会施加凋零迷雾的负面效果，持续%duration%秒。受作用敌人如果血量低于%hp_threshold_pct%%%，那么生命回复会降低%heal_reduction_pct%%%。"
+  }
+ },
+ {
+  "review_id": "6cf640f6253139a1968b",
+  "subject": "abaddon_borrowed_time",
+  "subject_zh": "亚巴顿·回光返照",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "启动回光返照后，亚巴顿附近迷雾缠绕的施法距离内友方英雄受到的伤害超过%ally_threshold_scepter%点时亚巴顿就会自动对其施放迷雾缠绕。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+  },
+  "context": {
+   "description_en": "When activated, dispels you and all damage dealt to you will heal instead of harm. If the ability is not on cooldown, it will automatically activate if your health falls below %hp_threshold%.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "启动后驱散自身，所有受到的伤害转而产生治疗效果。只要技能不在冷却中，在生命值低于%hp_threshold%点时技能会自动启动。\n\n驱散类型：强驱散",
+   "notes_en": [
+    "Borrowed Time can be manually activated while Abaddon is disabled, but not while silenced.  The passive activation can still occur while silenced.",
+    "Aphotic Shield does not block any damage to Abaddon when Borrowed Time is active, allowing him to heal.",
+    "Break prevents Borrowed Time from automatically activating."
+   ],
+   "notes_zh": [
+    "在亚巴顿受到眩晕作用时依然可以手动开启回光返照，但是受到沉默作用时不可以。不过被沉默时被动效果依然能生效。",
+    "无光之盾在回光返照生效期间不会吸收伤害，因此也不会影响治疗效果。",
+    "破坏会使回光返照无法自动触发。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases duration. While Borrowed Time is active, anytime an ally takes more than %ally_threshold_scepter% damage while within Mist Coil's cast range of Abaddon, an individual Mist Coil will automatically fire towards that ally.",
+     "zh": "提升持续时间。启动回光返照后，亚巴顿附近迷雾缠绕的施法距离内友方英雄受到的伤害超过%ally_threshold_scepter%点时亚巴顿就会自动对其施放迷雾缠绕。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ad328570f0f382a9fd44",
+  "subject": "elder_titan_echo_stomp",
+  "subject_zh": "上古巨神·回音重踏",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 上古巨神与他的灵体游魂一起践踏地面，对敌方单位造成伤害并使他们在原地昏迷。",
+   "若同时处于灵体游魂和上古巨神的回音重踏作用范围内将受到两次伤害。",
+   "CHANNELED - Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "CHANNELED - Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.",
+   "description_zh": "持续施法 - 上古巨神与他的灵体游魂一起践踏地面，对敌方单位造成伤害并使他们在原地昏迷。上古巨神造成物理伤害，灵体游魂造成魔法伤害。",
+   "notes_en": [
+    "If a unit is hit by Astral Spirit and Elder Titan, they will take both instances of damage."
+   ],
+   "notes_zh": [
+    "若同时处于灵体游魂和上古巨神的回音重踏作用范围内将受到两次伤害。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Lowers Cooldown. Echo Stomp may be placed on alt-cast to allow Elder Titan to take the place of the Astral Spirit as it completes its stomp.",
+     "zh": "减少冷却时间。回音重踏可以设为多样施法（右键点击技能栏图标）状态，使上古巨神完成重踏后会取代灵体游魂。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a58c17e675d4d56f3062",
+  "subject": "elder_titan_natural_order",
+  "subject_zh": "上古巨神·自然秩序",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Reduces all elements to their basic levels, removing base armor and magic damage resistance from nearby enemy units. The armor reduction is centered around the hero, while the magic armor reduction is centered around Astral Spirit.",
+   "description_zh": "使所有元素降低至基础水平，移除附近敌方单位的基础物理护甲和魔法抗性。护甲降低效果以英雄为中心，魔法抗性降低效果以灵体游魂为中心。",
+   "notes_en": [
+    "When the Astral Spirit isn't present, both the armor and magic armor reduction is centered around Elder Titan."
+   ],
+   "notes_zh": [
+    "没有施放灵体游魂时，护甲和魔法抗性降低效果均以上古巨神为中心。"
+   ]
+  }
+ },
+ {
+  "review_id": "cecdff1cf50c5c0a0b03",
+  "subject": "elder_titan_earth_splitter",
+  "subject_zh": "上古巨神·裂地沟壑",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "3秒后裂纹塌陷，范围内的单位将被减速，并受到基于他们自身生命最大值的伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Sends forth a jagged crack in front of Elder Titan. After 3 seconds, the crack implodes, slowing movement while dealing damage to each enemy based on their maximum life. Half of the damage dealt is Magical damage, while the other half is Physical damage.",
+   "description_zh": "上古巨神向前方放出一道不平坦的裂纹。3秒后裂纹塌陷，范围内的单位将被减速，并受到基于他们自身生命最大值的伤害。其中一半伤害为魔法伤害，另一半为物理伤害。"
+  }
+ },
+ {
+  "review_id": "31bc5cdda64a9f815900",
+  "subject": "legion_commander_overwhelming_odds",
+  "subject_zh": "军团指挥官·压倒性优势",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "用敌人的数量反制他们，对附近的所有敌人造成伤害，击中时施加%movement_slow%%%减速，持续%slow_duration%秒。",
+   "范围内每个敌方单位和英雄都会使伤害提升。",
+   "Turns the foes' numbers against them, dealing a %movement_slow%%% impact slow for %slow_duration%s and damage to all enemies in the area.",
+   "Damage increases with each enemy unit or hero in the area, and grants Legion Commander bonus attack speed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Turns the foes' numbers against them, dealing a %movement_slow%%% impact slow for %slow_duration%s and damage to all enemies in the area. Damage increases with each enemy unit or hero in the area, and grants Legion Commander bonus attack speed.",
+   "description_zh": "用敌人的数量反制他们，对附近的所有敌人造成伤害，击中时施加%movement_slow%%%减速，持续%slow_duration%秒。范围内每个敌方单位和英雄都会使伤害提升。另外还会向军团指挥官提供攻击速度加成。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Overwhelming Odds has larger radius and grants an all damage barrier based on the damage it deals to enemy heroes.",
+     "zh": "压倒性优势的范围更大，会根据对敌方英雄造成的伤害提供全伤害护盾。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "001c59fbfc2ef276a200",
+  "subject": "legion_commander_overwhelming_odds",
+  "subject_zh": "军团指挥官·压倒性优势",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "压倒性优势的范围更大，会根据对敌方英雄造成的伤害提供全伤害护盾。",
+   "Overwhelming Odds has larger radius and grants an all damage barrier based on the damage it deals to enemy heroes."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Turns the foes' numbers against them, dealing a %movement_slow%%% impact slow for %slow_duration%s and damage to all enemies in the area. Damage increases with each enemy unit or hero in the area, and grants Legion Commander bonus attack speed.",
+   "description_zh": "用敌人的数量反制他们，对附近的所有敌人造成伤害，击中时施加%movement_slow%%%减速，持续%slow_duration%秒。范围内每个敌方单位和英雄都会使伤害提升。另外还会向军团指挥官提供攻击速度加成。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Overwhelming Odds has larger radius and grants an all damage barrier based on the damage it deals to enemy heroes.",
+     "zh": "压倒性优势的范围更大，会根据对敌方英雄造成的伤害提供全伤害护盾。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "66af97a76893ada6da32",
+  "subject": "ember_spirit_searing_chains",
+  "subject_zh": "灰烬之灵·炎阳索",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "灰烬之灵释放出火焰绳索来缠绕附近的敌人，将他们困于原地并每秒造成一定伤害。",
+   "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, anchoring them in place and dealing damage each second."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Ember Spirit unleashes fiery bolas that wrap around nearby enemies, anchoring them in place and dealing damage each second.",
+   "description_zh": "灰烬之灵释放出火焰绳索来缠绕附近的敌人，将他们困于原地并每秒造成一定伤害。",
+   "notes_en": [
+    "Targets are chosen randomly around Xin.",
+    "Does not affect Debuff Immune or invisible units."
+   ],
+   "notes_zh": [
+    "将随机选取炘周围的单位作为目标。",
+    "不能作用于减益免疫或隐身单位。"
+   ]
+  }
+ },
+ {
+  "review_id": "08b04ef5fe40952b5225",
+  "subject": "ember_spirit_sleight_of_fist",
+  "subject_zh": "灰烬之灵·无影拳",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "灰烬之灵以燎原之火的速度横冲直撞，攻击目标区域内所有敌人，随后返回所在位置。",
+   "炘拥有的攻击特效（如致命一击、重击、分裂、连锁闪电等效果）在技能攻击期间都能生效。",
+   "Any attack modifier that Xin has (such as Critical Strike, Bash, Cleave, or Orb effects) will be applied normally on these attacks."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location.  Deals bonus damage to heroes.",
+   "description_zh": "灰烬之灵以燎原之火的速度横冲直撞，攻击目标区域内所有敌人，随后返回所在位置。对英雄造成额外伤害。",
+   "notes_en": [
+    "Targets are determined when the spell is cast.",
+    "A regular attack is done to each target every %attack_interval% seconds.",
+    "Any attack modifier that Xin has (such as Critical Strike, Bash, Cleave, or Orb effects) will be applied normally on these attacks.",
+    "Abilities and items can be used while Sleight of Fist is active."
+   ],
+   "notes_zh": [
+    "在施放技能时作用的目标就已决定。",
+    "对目标的攻击每次间隔为%attack_interval%秒。",
+    "炘拥有的攻击特效（如致命一击、重击、分裂、连锁闪电等效果）在技能攻击期间都能生效。",
+    "施放无影拳时间可以使用其他技能和物品。"
+   ]
+  }
+ },
+ {
+  "review_id": "6cba620d3950e36e4c88",
+  "subject": "ember_spirit_flame_guard",
+  "subject_zh": "灰烬之灵·烈火罩",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "烈火罩开启后会对灰烬之灵周围的敌人造成每秒伤害。",
+   "Flame Guard deals damage per second in an area around Ember Spirit while Flame Guard is active."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Ember Spirit surrounds himself with a ring of fire that consumes incoming magic damage, absorbing a percentage of the damage taken. Flame Guard deals damage per second in an area around Ember Spirit while Flame Guard is active. If the shield is broken, the damage is also lost.",
+   "description_zh": "灰烬之灵用火焰之环将自己包裹起来，会消耗受到的魔法伤害，使受到的魔法伤害被吸收一定百分比。烈火罩开启后会对灰烬之灵周围的敌人造成每秒伤害。护盾消失后将失去伤害效果。",
+   "notes_en": [
+    "Magic damage reduction is calculated before any reductions.",
+    "The damage lingers for an additional %linger_duration% seconds after application."
+   ],
+   "notes_zh": [
+    "魔法伤害的吸收伤害值计算先于任何伤害减免效果。",
+    "伤害在施加后会额外粘滞%linger_duration%秒。"
+   ]
+  }
+ },
+ {
+  "review_id": "e927529b717cc1595e1c",
+  "subject": "ember_spirit_immolation",
+  "subject_zh": "灰烬之灵·献祭心",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "灰烬之灵持续燃烧，时刻对周围所有敌人造成每秒伤害。",
+   "Ember Spirit is continuously burning, dealing damage per second to all nearby enemies at all times."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_INNATE_UI | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Ember Spirit is continuously burning, dealing damage per second to all nearby enemies at all times.",
+   "description_zh": "灰烬之灵持续燃烧，时刻对周围所有敌人造成每秒伤害。",
+   "notes_en": [
+    "Break does not disable Immolation for Fire Remnants when upgraded with Aghanim's Shard."
+   ],
+   "notes_zh": [
+    "破坏不会使阿哈利姆魔晶升级的残焰继承的献祭心失效。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Grants Fire Remnants the current level of Immolation, and increases the damage per second and radius.",
+     "zh": "使残焰获得献祭心，并且每秒伤害和作用范围提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a7c4deddd1ea6a8b1f63",
+  "subject": "ember_spirit_immolation",
+  "subject_zh": "灰烬之灵·献祭心",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "使残焰获得献祭心，并且每秒伤害和作用范围提升。",
+   "Grants Fire Remnants the current level of Immolation, and increases the damage per second and radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_INNATE_UI | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Ember Spirit is continuously burning, dealing damage per second to all nearby enemies at all times.",
+   "description_zh": "灰烬之灵持续燃烧，时刻对周围所有敌人造成每秒伤害。",
+   "notes_en": [
+    "Break does not disable Immolation for Fire Remnants when upgraded with Aghanim's Shard."
+   ],
+   "notes_zh": [
+    "破坏不会使阿哈利姆魔晶升级的残焰继承的献祭心失效。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Grants Fire Remnants the current level of Immolation, and increases the damage per second and radius.",
+     "zh": "使残焰获得献祭心，并且每秒伤害和作用范围提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "dc44ef5cc0de01c1e2e6",
+  "subject": "ember_spirit_fire_remnant",
+  "subject_zh": "灰烬之灵·残焰",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "使用“激活残焰”技能后，灰烬之灵向所有残焰像冲去，将其摧毁并造成范围伤害，并移动至最近的残焰像。",
+   "Using Activate Fire Remnant, Ember Spirit will dash out to all active Fire Remnants, destroying them and dealing damage in an area and then moving to the nearest Remnant."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Sends a Fire Remnant that runs to the target location at %speed_multiplier%%% Ember Spirit's speed. Using Activate Fire Remnant, Ember Spirit will dash out to all active Fire Remnants, destroying them and dealing damage in an area and then moving to the nearest Remnant.  Ember Spirit will end at the Remnant closest to the targeted location.",
+   "description_zh": "可以放出一个残焰，向目标地点冲去，速度为灰烬之灵移动速度的%speed_multiplier%%%。使用“激活残焰”技能后，灰烬之灵向所有残焰像冲去，将其摧毁并造成范围伤害，并移动至最近的残焰像。灰烬之灵最后会到达离目标地点最近的残焰像。",
+   "notes_en": [
+    "Starts with 3 charges (maximum)."
+   ],
+   "notes_zh": [
+    "学习后马上拥有3个残焰（上限数量）。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range, initial remnant speed, and maximum charges.",
+     "zh": "提升施法距离、初始残焰速度和最大能量点数。"
+    },
+    "shard_loc": {
+     "en": "If an enemy hero dies near Ember Spirit, a Fire Remnant charge will be replenished. Additionally, when Ember Spirit dies a Fire Remnant is spawned at his location.",
+     "zh": "灰烬之灵附近范围内有敌方英雄阵亡时，恢复一点残焰能量点数。另外，灰烬之灵阵亡时会在原地留下一个残焰。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "4247f048ada1fb46640f",
+  "subject": "earth_spirit_boulder_smash",
+  "subject_zh": "大地之灵·巨石冲击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "The travelling unit or Remnant damages all enemy units it hits."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Earth Spirit smashes the target enemy or ally, sending them in the direction he is facing. If Earth Spirit targets an area, he will smash the nearest unit in a %remnant_smash_radius_tooltip% radius, prioritizing Stone Remnants. The travelling unit or Remnant damages all enemy units it hits.  If an enemy is hit by a Stone Remnant, they are also slowed. Stone Remnants travel further than other units.",
+   "description_zh": "大地之灵将敌方单位或友方单位作为目标，将其击飞，目标将沿他面朝的方向飞行一段距离。如果大地之灵点地为目标，他将击飞%remnant_smash_radius_tooltip%范围内距离最近的单位，优先以残岩为目标。击飞的单位或残岩会对碰到的所有单位造成伤害。如果敌人是被残岩击中还将额外被减速。残岩被击飞的距离比其他单位更远。"
+  }
+ },
+ {
+  "review_id": "8936f216ef34d2956070",
+  "subject": "earth_spirit_rolling_boulder",
+  "subject_zh": "大地之灵·巨石翻滚",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "大地之灵化身为巨石，经过%delay%秒延迟后向目标位置翻滚，对经过的敌人造成伤害和眩晕，伤害值为%damage% + %damage_str%%%力量。",
+   "Earth Spirit gathers himself into a boulder and, after a %delay%s delay, rolls toward the target location, dealing %damage% + %damage_str%%% STR damage and stunning enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Earth Spirit gathers himself into a boulder and, after a %delay%s delay, rolls toward the target location, dealing %damage% + %damage_str%%% STR damage and stunning enemy units. He will stop if he collides with an enemy hero or is stunned. If he rolls over a Stone Remnant, he will travel further and faster, and stun enemies for longer.",
+   "description_zh": "大地之灵化身为巨石，经过%delay%秒延迟后向目标位置翻滚，对经过的敌人造成伤害和眩晕，伤害值为%damage% + %damage_str%%%力量。如果撞到敌方英雄或自身被眩晕，翻滚都会中止。如果翻滚过程中经过残岩将会大幅提高翻滚距离和速度，造成的眩晕时间更长。",
+   "notes_en": [
+    "Rolling over a Stone Remnant will destroy the Remnant.",
+    "The boulder has a radius of %radius%.",
+    "Earth Spirit is untargetable and invulnerable while rolling."
+   ],
+   "notes_zh": [
+    "翻滚时经过残岩会将其摧毁。",
+    "巨石的作用范围为%radius%。",
+    "大地之灵在滚动时无法作为目标，而且无敌。"
+   ]
+  }
+ },
+ {
+  "review_id": "0b7c301eed42f6a6e4a2",
+  "subject": "earth_spirit_geomagnetic_grip",
+  "subject_zh": "大地之灵·地磁之握",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "大地之灵将目标残岩或友方单位拉扯到自己所在的位置，行进路径上被击中的敌人都会被沉默并受到伤害。",
+   "拉扯的残岩也会对击中的敌人造成伤害。",
+   "Pulled Remnants also deal damage to struck enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Earth Spirit pulls the target Stone Remnant or Allied Unit. Enemies struck by the gripped target will be silenced.Pulled Remnants also deal damage to struck enemies.Cast range is reduced when targeting an ally.",
+   "description_zh": "大地之灵将目标残岩或友方单位拉扯到自己所在的位置，行进路径上被击中的敌人都会被沉默并受到伤害。拉扯的残岩也会对击中的敌人造成伤害。以友军为目标时施法距离减少。",
+   "notes_en": [
+    "Will not work on a unit inside Chronosphere, Duel, or Black Hole.",
+    "Geomagnetic Grip can also target allied creeps."
+   ],
+   "notes_zh": [
+    "如果目标处于时间结界，决斗或黑洞之中则不起作用。",
+    "地磁之握还可以对友方小兵施放。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Decreases cooldown to %AbilityCooldown%s and increases allied unit cast range and pull speed.",
+     "zh": "冷却时间减少至%AbilityCooldown%秒，对友方单位的施法距离和牵引速度提升。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "266c567ffed42ca1b9ec",
+  "subject": "earth_spirit_petrify",
+  "subject_zh": "大地之灵·残岩魔咒",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "经过短时间后残岩就会碎裂，释放出英雄，并对周围单位造成伤害。",
+   "After a short duration the remnant shatters, releasing the hero and damaging nearby enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET |  DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "Earth Spirit temporarily enchants a hero, granting them the properties of a Stone Remnant. After a short duration the remnant shatters, releasing the hero and damaging nearby enemies. Can be cast on Stone Remnants. Has a 5 second cooldown when used that way.Has a larger cast range when cast on an ally hero.",
+   "description_zh": "大地之灵对一名英雄施法，使其暂时获得残岩的属性。经过短时间后残岩就会碎裂，释放出英雄，并对周围单位造成伤害。可以对残岩施放。对残岩施放时冷却时间为5秒。对友方英雄施放时施法距离更远。",
+   "notes_en": [
+    "Earth Spirit himself can be targeted by Boulder Smash if he is enchanted."
+   ],
+   "notes_zh": [
+    "如果大地之灵自身受到残岩魔咒的效果，也可以成为巨石冲击的目标。"
+   ]
+  }
+ },
+ {
+  "review_id": "10ec9c5154106e14895f",
+  "subject": "earth_spirit_magnetize",
+  "subject_zh": "大地之灵·磁化",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "将附近小范围内的敌方单位磁化，使其短时间内受到伤害。",
+   "Magnetizes units in a small nearby area, causing them to take damage for a short duration."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Magnetizes units in a small nearby area, causing them to take damage for a short duration. Magnetized heroes cause nearby Stone Remnants to explode, destroying the remnant and refreshing Magnetize's duration on all nearby enemies. This process can repeat multiple times. If an enemy hero is affected by Geomagnetic Grip or Boulder Smash, all magnetized heroes share the effects.",
+   "description_zh": "将附近小范围内的敌方单位磁化，使其短时间内受到伤害。被磁化的英雄单位将会引起附近残岩的爆炸，每次爆炸都将摧毁残岩并刷新残岩附近单位身上的磁化时间（若附近单位未被磁化则为其施加一个磁化效果）。该过程可重复数次。如果一个被磁化的英雄受到了地磁之握或巨石冲击的作用，那么所有被磁化的英雄都会受到同样效果。"
+  }
+ },
+ {
+  "review_id": "de0ee5419f121e07b831",
+  "subject": "terrorblade_conjure_image",
+  "subject_zh": "恐怖利刃·惑幻",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "创造一个恐怖利刃的幻象，可以攻击敌人造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+  },
+  "context": {
+   "description_en": "Creates an illusion of Terrorblade that deals damage.",
+   "description_zh": "创造一个恐怖利刃的幻象，可以攻击敌人造成伤害。",
+   "notes_en": [
+    "Illusions created by Conjure Image are visually different for enemies."
+   ],
+   "notes_zh": [
+    "惑幻产生的幻象在外观上与普通幻象不同。"
+   ]
+  }
+ },
+ {
+  "review_id": "ef11a540c9eba77bc958",
+  "subject": "terrorblade_dark_unity",
+  "subject_zh": "恐怖利刃·暗黑团结",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "恐怖之刃控制的附近幻象拥有额外攻击伤害。",
+   "Nearby Illusions created by Terrorblade have bonus attack damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "description_en": "Nearby Illusions created by Terrorblade have bonus attack damage.",
+   "description_zh": "恐怖之刃控制的附近幻象拥有额外攻击伤害。",
+   "notes_en": [
+    "Reflection Illusions are also affected."
+   ],
+   "notes_zh": [
+    "倒影的幻象也会受到作用。"
+   ]
+  }
+ },
+ {
+  "review_id": "4a7ee4373688a4c17680",
+  "subject": "phoenix_icarus_dive",
+  "subject_zh": "凤凰·凤凰冲击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "凤凰向目标方向进行圆弧状飞行，飞行距离固定，对沿途的敌人造成持续伤害并减缓其移动速度，然后返回初始位置。",
+   "Phoenix dives forward in an arc with a fixed distance in the targeted direction, dealing damage over time and slowing the movement speed of any units it comes into contact with, and then orbiting back to its original position."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Phoenix dives forward in an arc with a fixed distance in the targeted direction, dealing damage over time and slowing the movement speed of any units it comes into contact with, and then orbiting back to its original position. If Phoenix casts Supernova, the dive ends.",
+   "description_zh": "凤凰向目标方向进行圆弧状飞行，飞行距离固定，对沿途的敌人造成持续伤害并减缓其移动速度，然后返回初始位置。飞行过程中如果施放超新星将停止飞行。",
+   "notes_en": [
+    "Icarus Dive has a %dive_duration% second travel duration, and can be cancelled by casting the ability again while in flight."
+   ],
+   "notes_zh": [
+    "凤凰冲击的飞行时间为%dive_duration%秒，可以在飞行途中再次施放来终止飞行。"
+   ]
+  }
+ }
+]

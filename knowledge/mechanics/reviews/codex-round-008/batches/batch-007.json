@@ -1,0 +1,1030 @@
+[
+ {
+  "review_id": "1c0f89afbbf533e01442",
+  "subject": "huskar_life_break",
+  "subject_zh": "哈斯卡·牺牲",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "哈斯卡牺牲自己的生命来摧毁敌人的生命，他跃向一个目标，造成目标当前生命值一定百分比的伤害，并且降低目标的移动和攻击速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Huskar draws upon his health to break an enemy's life, leaping at a target to shatter a percentage of that hero's current health and slow both their movement and attack speed.  While leaping, Huskar is Debuff Immune with %immunity_resist%%% magic resistance.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "哈斯卡牺牲自己的生命来摧毁敌人的生命，他跃向一个目标，造成目标当前生命值一定百分比的伤害，并且降低目标的移动和攻击速度。哈斯卡在跳跃过程中为减益免疫，并且魔法抗性提升%immunity_resist%%%。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "If Huskar is disabled during the charge or the target moves more than 1400 units in 0.015 seconds, the charge stops.",
+    "Slow works on Spell Immune units.",
+    "Life Break cannot be disjointed."
+   ],
+   "notes_zh": [
+    "如果哈斯卡在跳跃时受到控制技能，或目标在0.015秒内移动1400码以上，跳跃就会停止。",
+    "减速效果无视减益免疫。",
+    "牺牲无法被躲避。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Forces the enemy target to attack Huskar and increases cast range.",
+     "zh": "强迫敌方目标攻击哈斯卡，并提升施法距离。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ccafccdc16ee596afee6",
+  "subject": "night_stalker_void",
+  "subject_zh": "暗夜魔王·虚空",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "制造一个伤害性的虚空，对一个敌方单位造成减速及伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Creates a damaging void that slows an enemy unit and deals damage. At night, Void also mini-stuns, interrupting channeling abilities, and its effects lasts longer.",
+   "description_zh": "制造一个伤害性的虚空，对一个敌方单位造成减速及伤害。夜晚时虚空可以造成短暂眩晕，打断持续施法，并且效果的持续时间更长。",
+   "notes_en": [
+    "Void does not ministun enemies during the day."
+   ],
+   "notes_zh": [
+    "虚空在白天不会对敌人造成眩晕。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Void now affects all units in a radius around the target.",
+     "zh": "虚空现在影响目标范围内所有单位。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d1896d96b7f271b48827",
+  "subject": "night_stalker_crippling_fear",
+  "subject_zh": "暗夜魔王·伤残恐惧",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "暗夜魔王恐吓附近所有敌人，使他们在他身边时被沉默，并受到伤害。",
+   "Night Stalker horrifies all nearby enemies, causing them to become silenced and take damage over time while near him."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Night Stalker horrifies all nearby enemies, causing them to become silenced and take damage over time while near him.  The effect lasts longer at night.",
+   "description_zh": "暗夜魔王恐吓附近所有敌人，使他们在他身边时被沉默，并受到伤害。效果在夜晚持续更久。"
+  }
+ },
+ {
+  "review_id": "0734a0739ce2be3ac62e",
+  "subject": "broodmother_incapacitating_bite",
+  "subject_zh": "育母蜘蛛·麻痹之咬",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "育母蜘蛛用毒液削弱敌方单位，使她的攻击带有减速效果，中毒单位的攻击有一定概率落空，并且被攻击时承受额外伤害。",
+   "Broodmother's venom cripples enemy units, causing her attacks to slow and giving the affected unit a chance to miss its attacks and extra damage from attacks."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Broodmother's venom cripples enemy units, causing her attacks to slow and giving the affected unit a chance to miss its attacks and extra damage from attacks.",
+   "description_zh": "育母蜘蛛用毒液削弱敌方单位，使她的攻击带有减速效果，中毒单位的攻击有一定概率落空，并且被攻击时承受额外伤害。",
+   "notes_en": [
+    "The miss chance stacks with evasion and terrain dodge chance."
+   ],
+   "notes_zh": [
+    "攻击落空几率与闪避和上下坡丢失叠加。"
+   ]
+  }
+ },
+ {
+  "review_id": "b1dc968af260c4db6a17",
+  "subject": "broodmother_spawn_spiderlings",
+  "subject_zh": "育母蜘蛛·孵化蜘蛛",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "育母蜘蛛将她的卵注入敌人体内，造成伤害和减速，持续%slow_duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Broodmother injects her young into an enemy unit, dealing damage and slowing them for %slow_duration% seconds. The spiderlings will hatch if the target is killed while under this influence.",
+   "description_zh": "育母蜘蛛将她的卵注入敌人体内，造成伤害和减速，持续%slow_duration%秒。如果目标在感染期间被击杀，卵会孵化成小蜘蛛。",
+   "notes_en": [
+    "If the target is killed within %buff_duration% seconds of being hit with this skill, the Spiderlings will spawn.",
+    "Units killed by Spiderlings will then give birth to additional Spiderlings."
+   ],
+   "notes_zh": [
+    "如果目标在受到此技能后%buff_duration%秒内被杀死，小蜘蛛就会孵化。",
+    "被小蜘蛛杀死的单位会生出额外的小蜘蛛。"
+   ]
+  }
+ },
+ {
+  "review_id": "7469215ada7c28a99e33",
+  "subject": "bounty_hunter_shuriken_toss",
+  "subject_zh": "赏金猎人·投掷飞镖",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "向一个敌方单位掷出一枚致命的飞镖，对目标造成伤害，并且减缓目标的移动速度。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Hurls a deadly shuriken at an enemy unit, dealing damage and slowing the target's movement speed.  The shuriken will bounce to any Tracked units who are within a %bounce_aoe% radius of each other.",
+   "description_zh": "向一个敌方单位掷出一枚致命的飞镖，对目标造成伤害，并且减缓目标的移动速度。只要目标周围%bounce_aoe%范围内存在被追踪术标记的单位，飞镖就能向其弹射。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases cast range and applies Jinada on hit.",
+     "zh": "提升施法距离并且击中时施加忍术。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e9fdefbc73648a3fbf1a",
+  "subject": "weaver_the_swarm",
+  "subject_zh": "编织者·虫群",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "编织者放出%count%只编织者幼虫，每只幼虫都会紧紧缠住它遇到的敌人，攻击敌人并削弱他们的护甲，直到幼虫被杀死。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Weaver launches a swarm of %count% young Weavers that latch on any enemy unit in their path, attacking and reducing armor until it is killed.",
+   "description_zh": "编织者放出%count%只编织者幼虫，每只幼虫都会紧紧缠住它遇到的敌人，攻击敌人并削弱他们的护甲，直到幼虫被杀死。",
+   "notes_en": [
+    "When a beetle latches on a target, it will remain there until it is killed or the duration expires.",
+    "Beetles are Spell Immune, but can be killed in %destroy_attacks% attacks from a unit. Heroes deal double damage to beetles.",
+    "Beetles provide vision."
+   ],
+   "notes_zh": [
+    "甲虫抓住目标后将一直留在目标身上，除非甲虫被击杀或持续时间结束。",
+    "甲虫免疫技能，需要一个单位的%destroy_attacks%次攻击才能被击杀。英雄造成双倍伤害。",
+    "幼虫提供视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "93549e47a9317b8d96da",
+  "subject": "weaver_shukuchi",
+  "subject_zh": "编织者·缩地",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "编织者进入隐身身，达到移动速度上限，在穿过敌方单位时还将造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Weaver shifts out of visibility, gaining max movement speed and doing harm to any enemies it passes through.",
+   "description_zh": "编织者进入隐身身，达到移动速度上限，在穿过敌方单位时还将造成伤害。",
+   "notes_en": [
+    "Can only damage the same unit once per cast."
+   ],
+   "notes_zh": [
+    "每次施放的技能只能对相同单位造成一次伤害。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Shukuchi puts a mark on enemies it damages that last %geminate_attack_mark_duration% seconds. %shukuchi_attack_delay%s after Weaver exits Shukuchi, enemies with a mark within %shukuchi_attack_mark_radius% range will also be attacked with a secondary Geminate attack",
+     "zh": "缩地在造成伤害的敌人身上留下一个标记，持续%geminate_attack_mark_duration%秒。编织者脱离缩地状态%shukuchi_attack_delay%秒后，附近%shukuchi_attack_mark_radius%范围内拥有印记的敌人都会被连击的第二次攻击击中。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "076ff8f3de054994cdbe",
+  "subject": "weaver_shukuchi",
+  "subject_zh": "编织者·缩地",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "缩地在造成伤害的敌人身上留下一个标记，持续%geminate_attack_mark_duration%秒。",
+   "编织者脱离缩地状态%shukuchi_attack_delay%秒后，附近%shukuchi_attack_mark_radius%范围内拥有印记的敌人都会被连击的第二次攻击击中。",
+   "Shukuchi puts a mark on enemies it damages that last %geminate_attack_mark_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Weaver shifts out of visibility, gaining max movement speed and doing harm to any enemies it passes through.",
+   "description_zh": "编织者进入隐身身，达到移动速度上限，在穿过敌方单位时还将造成伤害。",
+   "notes_en": [
+    "Can only damage the same unit once per cast."
+   ],
+   "notes_zh": [
+    "每次施放的技能只能对相同单位造成一次伤害。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Shukuchi puts a mark on enemies it damages that last %geminate_attack_mark_duration% seconds. %shukuchi_attack_delay%s after Weaver exits Shukuchi, enemies with a mark within %shukuchi_attack_mark_radius% range will also be attacked with a secondary Geminate attack",
+     "zh": "缩地在造成伤害的敌人身上留下一个标记，持续%geminate_attack_mark_duration%秒。编织者脱离缩地状态%shukuchi_attack_delay%秒后，附近%shukuchi_attack_mark_radius%范围内拥有印记的敌人都会被连击的第二次攻击击中。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "eba83aa3165a36123b26",
+  "subject": "weaver_threads_of_fate",
+  "subject_zh": "编织者·命运之线",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每当编织者的攻击或技能对敌方英雄造成伤害后，如果编织者在他们%thread_setup_distance%范围内停留达到%thread_setup_time%秒，他就会织出命运之线，短暂减速敌人并把他们与编织者相连。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS"
+  },
+  "context": {
+   "description_en": "Whenever Weaver deals damage to an enemy hero with an attack or ability, if he remains within %thread_setup_distance% range of them for %thread_setup_time%s, he establishes a Thread of Fate that briefly slows the enemy and ties Weaver and the enemy together. Each established thread of fate grants bonus damage to Weaver.",
+   "description_zh": "每当编织者的攻击或技能对敌方英雄造成伤害后，如果编织者在他们%thread_setup_distance%范围内停留达到%thread_setup_time%秒，他就会织出命运之线，短暂减速敌人并把他们与编织者相连。每织出一条命运之线就会使编织者获得攻击力加成。"
+  }
+ },
+ {
+  "review_id": "5b73aa44666c0b89aab6",
+  "subject": "jakiro_dual_breath",
+  "subject_zh": "杰奇洛·冰火交加",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "寒冰吐息减速敌人，火焰吐息对敌人造成持续伤害。",
+   "The ice slows enemies, while the fire delivers damage over time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "An icy blast followed by a wave of fire launches out in a path in front of Jakiro. The ice slows enemies, while the fire delivers damage over time.",
+   "description_zh": "杰奇洛对面前的敌人先后喷出寒冰和火焰。寒冰吐息减速敌人，火焰吐息对敌人造成持续伤害。",
+   "notes_en": [
+    "Can hit units up to 1025 range away.",
+    "Has a %fire_delay% second interval between each breath.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "最远能伤害1025距离外的单位。",
+    "两次吐息有%fire_delay%秒的间隔。",
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "fe3c9f6840eb439f80d3",
+  "subject": "jakiro_ice_path",
+  "subject_zh": "杰奇洛·冰封路径",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在杰奇洛前方制造一条冰封路径，对触及到的敌人造成伤害并眩晕。",
+   "Creates a path of ice that stuns and damages enemies that touch it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Creates a path of ice that stuns and damages enemies that touch it.",
+   "description_zh": "在杰奇洛前方制造一条冰封路径，对触及到的敌人造成伤害并眩晕。",
+   "notes_en": [
+    "It takes %path_delay% seconds for the path to reach its full extent.",
+    "The stun is removed once Ice Path is destroyed."
+   ],
+   "notes_zh": [
+    "路径完全成形需要%path_delay%秒。",
+    "冰封路径消失后眩晕效果也会消失。"
+   ]
+  }
+ },
+ {
+  "review_id": "3e562ad7b0d956710e3f",
+  "subject": "jakiro_liquid_fire",
+  "subject_zh": "杰奇洛·液态火",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "杰奇洛的火焰燃烧效果范围内的敌人，并降低他们的攻击速度。",
+   "Jakiro burns his enemies in an area of effect with fire added to his attack, while slowing their attacks."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Jakiro burns his enemies in an area of effect with fire added to his attack, while slowing their attacks. Shares a cooldown with Liquid Frost.",
+   "description_zh": "杰奇洛的火焰燃烧效果范围内的敌人，并降低他们的攻击速度。和液态冰共用冷却时间。",
+   "notes_en": [
+    "Works on both units and buildings."
+   ],
+   "notes_zh": [
+    "对单位和建筑都有效。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Jakiro's Liquid Fire has no mana cost and no longer shares a cooldown with Liquid Frost.",
+     "zh": "杰奇洛的液态火没有魔法消耗，并且不再和液态冰共用冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8aafa82e269346891613",
+  "subject": "jakiro_liquid_ice",
+  "subject_zh": "杰奇洛·液态冰",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "杰奇洛的攻击使他的敌人受寒，减缓其移动速度，持续%duration%秒，并且被杰奇洛的攻击和其他技能击中后承受额外伤害。",
+   "Jakiro chill his enemies with ice added to his attack, slowing movement for %duration% seconds and increasing damage taken from Jakiro's attacks and abilities."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Jakiro chill his enemies with ice added to his attack, slowing movement for %duration% seconds and increasing damage taken from Jakiro's attacks and abilities. This effect does not apply to buildings. Shares a cooldown with Liquid Fire.",
+   "description_zh": "杰奇洛的攻击使他的敌人受寒，减缓其移动速度，持续%duration%秒，并且被杰奇洛的攻击和其他技能击中后承受额外伤害。这个效果对建筑无效。与液态火共用冷却时间。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Jakiro's Liquid Frost has no mana cost and no longer shares a cooldown with Liquid Fire.",
+     "zh": "杰奇洛的液态冰没有魔法消耗，并且不再和液态火共用冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a88d82585f1d2c31a1d5",
+  "subject": "jakiro_macropyre",
+  "subject_zh": "杰奇洛·烈焰焚身",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "烈焰风暴每秒都会对作用范围内的敌人造成伤害。",
+   "Jakiro exhales a wide line of lasting flames, which deals damage per second to any enemy units caught in the fire.",
+   "Units hit by Macropyre will continue to be affected after they leave the area for %linger_duration% additional seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Jakiro exhales a wide line of lasting flames, which deals damage per second to any enemy units caught in the fire.",
+   "description_zh": "杰奇洛释放出烈焰风暴，烈焰风暴作用范围很宽，并持续数秒。烈焰风暴每秒都会对作用范围内的敌人造成伤害。",
+   "notes_en": [
+    "Units hit by Macropyre will continue to be affected after they leave the area for %linger_duration% additional seconds."
+   ],
+   "notes_zh": [
+    "被烈焰焚身击中后离开区域还将额外受到%linger_duration%秒伤害效果。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Macropyre duration and causes it to deal Pure damage. Jakiro emits two walls of ice along the edges of the Macropyre that slow any enemies trying to cross them by %ice_edge_movement_slow%%%.",
+     "zh": "提升烈焰焚身的持续时间，并且变为纯粹伤害。杰奇洛会在烈焰焚身边缘放出两道冰墙，对试图穿过的所有敌人减速%ice_edge_movement_slow%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "81157b4fb558c79b51c1",
+  "subject": "batrider_sticky_napalm",
+  "subject_zh": "蝙蝠骑士·粘性燃油",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "用粘性油浸透一块区域，蝙蝠骑士的攻击和技能对敌人造成额外伤害，并降低他们的移动速度和转身速率。",
+   "Drenches an area in sticky oil, amplifying damage from Batrider's attacks and abilities and slowing the movement speed and turn rate of enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Drenches an area in sticky oil, amplifying damage from Batrider's attacks and abilities and slowing the movement speed and turn rate of enemies. Additional casts of Sticky Napalm continue to increase damage, up to %max_stacks% stacks. Applies a small amount of damage with each cast.",
+   "description_zh": "用粘性油浸透一块区域，蝙蝠骑士的攻击和技能对敌人造成额外伤害，并降低他们的移动速度和转身速率。再次施法可以继续提高伤害，最多叠加%max_stacks%次。每次施放还会造成少量伤害。",
+   "notes_en": [
+    "All damage from Batrider gets amplified, except for Radiance, Orb of Venom, Urn of Shadows, and Spirit Vessel.",
+    "Sticky Napalm does not require turning to cast.",
+    "Sticky Napalm deals %creep_damage_pct%%% damage to creeps."
+   ],
+   "notes_zh": [
+    "所有来自蝙蝠骑士的伤害均会加深，辉耀，淬毒之珠，影之灵龛和魂之灵瓮除外。",
+    "粘性燃油无需转身即可施放。",
+    "粘性燃油对非英雄单位造成%creep_damage_pct%%%伤害。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Sticky Napalm no longer has a stack limit.Sticky Napalm deals damage to structures.",
+     "zh": "粘性燃油不再具有叠加上限。粘性燃油会对建筑造成伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0baff3438ea203536d81",
+  "subject": "batrider_flamebreak",
+  "subject_zh": "蝙蝠骑士·烈焰破击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "投掷一瓶爆炸性的混合物，到达目标地点时爆炸，击退区域内的敌人并造成减速和持续伤害。",
+   "Hurls an explosive cocktail that explodes when it reaches the target location, knocking back, slowing and dealing damage over time to enemies in the area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Hurls an explosive cocktail that explodes when it reaches the target location, knocking back, slowing and dealing damage over time to enemies in the area.",
+   "description_zh": "投掷一瓶爆炸性的混合物，到达目标地点时爆炸，击退区域内的敌人并造成减速和持续伤害。"
+  }
+ },
+ {
+  "review_id": "5f3e84d7b04946bde3c9",
+  "subject": "batrider_firefly",
+  "subject_zh": "蝙蝠骑士·火焰飞行",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "飞行时，燃烧尾迹会破坏树木，对经过的敌人造成伤害。",
+   "The fire damages any enemies it touches and destroys trees below Batrider."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Batrider takes to the skies, moving increasingly fast and laying down a trail of flames from the air. The fire damages any enemies it touches and destroys trees below Batrider. Maximum movement speed bonus is reached at the end of Firefly's duration.",
+   "description_zh": "蝙蝠骑士飞向天空，从空中留下一道燃烧的尾迹。飞行时，燃烧尾迹会破坏树木，对经过的敌人造成伤害。在火焰飞行持续时间的最后会达到最高移动速度加成。",
+   "notes_en": [
+    "During this the Batrider can fly above units, trees and impassable terrain.",
+    "If duration ends when above impassable terrain, the Batrider can get stuck.",
+    "The trail persists through Batrider's death."
+   ],
+   "notes_zh": [
+    "火焰飞行期间蝙蝠骑士可以飞越任何单位，树木和不可通行的地形。",
+    "如果蝙蝠骑士在持续时间结束时正好在不可通行的地形上方，那么他将会卡住。",
+    "蝙蝠骑士死亡后火焰效果将继续存在。"
+   ]
+  }
+ },
+ {
+  "review_id": "90ae578301c48dca1224",
+  "subject": "chen_penitence",
+  "subject_zh": "陈·赎罪",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对敌方单位造成伤害，并使其移动变慢，友军攻击他时攻速提升。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Damages enemy unit, forces it to move slower and lets allies attack it more quickly.",
+   "description_zh": "对敌方单位造成伤害，并使其移动变慢，友军攻击他时攻速提升。"
+  }
+ },
+ {
+  "review_id": "38dc97f791c2affc7fb8",
+  "subject": "chen_holy_persuasion",
+  "subject_zh": "陈·神圣劝化",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "陈自己的单位如果在%unsummon_time%秒内未受到伤害可以在全地图范围内成为技能的目标，施放后取消劝化。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Chen takes control of an enemy or neutral creep and receives a percentage of its bounty. Its maximum health is set to %health_min%. Converted creeps will have increased movement speed and bonus damage. Chen may globally target his own creep if it has not taken damage in the last %unsummon_time% seconds to unsummon it.",
+   "description_zh": "陈控制住敌方小兵或者中立生物，并获得击杀金钱一定百分比的金钱。被劝化目标的最大生命值会被设为%health_min%。被劝化的单位将提升移动速度和伤害输出。陈自己的单位如果在%unsummon_time%秒内未受到伤害可以在全地图范围内成为技能的目标，施放后取消劝化。",
+   "notes_en": [
+    "Persuading a new creep above max unit count causes the oldest persuaded creep to die.",
+    "Can target Ancient creeps when Chen has Aghanim's Shard.",
+    "The health of creeps already under Chen's control does not update to the new level upon leveling Holy Persuasion further.",
+    "Fully restores the creep's mana upon converting."
+   ],
+   "notes_zh": [
+    "如果达到劝化生物的数量上限后再劝化生物，最早劝化的单位将立即死亡。",
+    "拥有阿哈利姆魔晶后可以对远古中立生物施放本技能。",
+    "升级此技能后在升级前劝化的单位并不会增加生命值。",
+    "劝化时单位的魔法恢复至满魔。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Allows Holy Persuasion to target Ancient creeps. Can control up to 1/2/3 Ancient creeps based on Hand of God's level. Additionally levels up some abilities of creeps by 1 level.",
+     "zh": "神圣劝化可以对远古中立生物施放。根据上帝之手等级可以控制最多1/2/3个远古生物。使中立生物的部分技能额外升1级。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "bc42a514832f30f18839",
+  "subject": "chen_zealot",
+  "subject_zh": "陈·狂热者",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "陈复活时都会带着一个狂热者加入战斗，这是近战小兵战士，可以牺牲自己治疗友军，或者对敌人造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Whenever Chen respawns, he is joined by a Zealot, a melee warrior creep with the ability to sacrifice itself to heal or deal damage to an enemy.  The Zealot receives Holy Persuasion's benefits and scales up with other lane melee creeps as game time increases and gains extra base damage.  The Zealot respawns next to Chen.Zealot may be activated to teleport a unit under your control to Chen after a %teleport_delay% second delay.  If Chen is targeted, it will teleport all units you control. Taking damage from enemy heroes or their units will cancel the teleport.",
+   "description_zh": "陈复活时都会带着一个狂热者加入战斗，这是近战小兵战士，可以牺牲自己治疗友军，或者对敌人造成伤害。狂热者会获得神圣劝化的加成效果，并且和其他线上近战小兵一样随着游戏时间的增加提升属性，获得额外基础攻击力。狂热者会在陈身边复活。狂热者技能可以主动使用，在%teleport_delay%秒延迟后把控制下的目标单位传送到陈的身边。如果陈是技能的目标，将传送控制的所有单位。受到来自敌方英雄及其单位的伤害会中止传送过程。"
+  }
+ },
+ {
+  "review_id": "511279260664c2d783db",
+  "subject": "spectre_spectral_dagger",
+  "subject_zh": "幽鬼·幽鬼之刃",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "幽鬼掷出一把匕首，留下一条暗影之径，对路径上的敌人造成伤害并减缓其移动速度。",
+   "Spectre flings a dagger to draw a Shadow Path, dealing damage and slowing the movement speed of any enemies along the trail.",
+   "Units hit by the dagger also trail a Shadow Path."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Spectre flings a dagger to draw a Shadow Path, dealing damage and slowing the movement speed of any enemies along the trail. Units hit by the dagger also trail a Shadow Path. While treading the path, Spectre moves faster and phases through otherwise impassable terrain.",
+   "description_zh": "幽鬼掷出一把匕首，留下一条暗影之径，对路径上的敌人造成伤害并减缓其移动速度。被匕首击中的单位移动时也会留下暗影之径。幽鬼在暗影之径上移速提升，并且可以无视地形移动。",
+   "notes_en": [
+    "There is a %dagger_grace_period% second grace period after leaving the path where no collision is preserved.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "notes_zh": [
+    "在离开暗影之径后%dagger_grace_period%秒内碰撞体积依然为0，作为缓冲时间。",
+    "不会触发法术抵抗或法术反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "8e90a037b2dba61d2682",
+  "subject": "spectre_dispersion",
+  "subject_zh": "幽鬼·折射",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "幽灵会分散对她造成的部分伤害，将其反弹给附近的所有敌人。",
+   "敌人离她越远，受到的伤害越低。",
+   "Spectre disperses part of the damage dealt to her, reflecting it to all nearby enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+  },
+  "context": {
+   "description_en": "Spectre disperses part of the damage dealt to her, reflecting it to all nearby enemies. The effect lessens with distance.",
+   "description_zh": "幽灵会分散对她造成的部分伤害，将其反弹给附近的所有敌人。敌人离她越远，受到的伤害越低。",
+   "notes_en": [
+    "The reflected damage is not dealt to Spectre.",
+    "Illusions don't get this ability.",
+    "Damage is reflected before reductions, and is returned as the same damage type.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "幽鬼本身不承受被折射的伤害。",
+    "幻象并不继承此技能。",
+    "伤害在减免前折射，并且折射的伤害与原伤害类型相同。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Dispersion can be activated to increase the amount absorbed and reflected by Dispersion by %activation_bonus_pct%%% of its base values for %activation_duration%s. Cooldown %activation_cooldown%. Manacost %activation_manacost%.",
+     "zh": "折射可以主动施放，吸收和反弹的伤害比例提升%activation_bonus_pct%%%，持续%activation_duration%秒。冷却时间为%activation_cooldown%秒。魔法消耗为%activation_manacost%点。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c9bc6d026367d5e3e462",
+  "subject": "spectre_desolate",
+  "subject_zh": "幽鬼·荒芜",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "当敌人附近%radius%范围内没有他们的友军时，幽鬼和她的幻象的攻击对他们造成额外纯粹伤害。",
+   "Spectre and her illusions deal bonus Pure damage if attacking an enemy that does not have any allied units within a %radius% radius around them."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "Spectre and her illusions deal bonus Pure damage if attacking an enemy that does not have any allied units within a %radius% radius around them.",
+   "description_zh": "当敌人附近%radius%范围内没有他们的友军时，幽鬼和她的幻象的攻击对他们造成额外纯粹伤害。",
+   "notes_en": [
+    "Damage is dealt before Spectre's attack.",
+    "Spectre's illusions also have Desolate."
+   ],
+   "notes_zh": [
+    "伤害在幽鬼攻击前产生。",
+    "幽鬼的幻象继承荒芜。"
+   ]
+  }
+ },
+ {
+  "review_id": "36e5cb0de0822b37c2b2",
+  "subject": "doom_bringer_scorched_earth",
+  "subject_zh": "末日使者·焦土",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "用火焰覆盖周围的土地，对敌人造成伤害，同时末日使者的移动速度和生命恢复得到提升。",
+   "Carpets the nearby earth in flames which damage enemies, while also granting Doom increased movement speed and health regeneration."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Carpets the nearby earth in flames which damage enemies, while also granting Doom increased movement speed and health regeneration.",
+   "description_zh": "用火焰覆盖周围的土地，对敌人造成伤害，同时末日使者的移动速度和生命恢复得到提升。",
+   "notes_en": [
+    "Scorched Earth follows Doom, centered on his location."
+   ],
+   "notes_zh": [
+    "焦土会跟随末日使者，以他所在位置为中心。"
+   ]
+  }
+ },
+ {
+  "review_id": "38e8aded4c195a3153c2",
+  "subject": "doom_bringer_doom",
+  "subject_zh": "末日使者·末日",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对敌人施加末日诅咒，对其进行驱散，并且使其无法施放技能或获得任何治疗效果，同时造成持续伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Inflicts a curse that dispels an enemy and prevents them from casting spells or healing in any way, while taking damage over time.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "对敌人施加末日诅咒，对其进行驱散，并且使其无法施放技能或获得任何治疗效果，同时造成持续伤害。\n\n驱散类型：弱驱散",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Doom applies Break to enemies. Allies in a %scepter_aura_radius% radius around the doomed target also suffer the effects of Doom. Allows Doom to be self-cast to affect enemies around himself with Doom.",
+     "zh": "末日对敌人施加破坏效果。末日作用下目标%scepter_aura_radius%范围内友军也会受到末日的作用。可以对自身施放末日，使末日作用于末日使者周围的敌人。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "e41e66d6d5d3ec8bbd0b",
+  "subject": "doom_bringer_lvl_pain",
+  "subject_zh": "末日使者·等级？痛苦",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "%damage_debuff_duration%秒后，被诅咒的英雄会爆发出一根火柱，对自身和%spread_radius%范围内所有敌方单位造成伤害，伤害量为诅咒期间内承受来自末日使者的%bonus_damage_pct_base%%%伤害。",
+   "如果被诅咒的英雄等级为%level_multiplier%的倍数，诅咒的伤害和作用范围会提升%bonus_at_level_pct%%%。",
+   "After %damage_debuff_duration%s, the cursed hero bursts with a pillar of fire, damaging itself and all units in a %spread_radius% AoE for %bonus_damage_pct_base%%% of the damage taken from Doom during the curse.",
+   "The damage and radius of the curse is %bonus_at_level_pct%%% stronger if the enemy's level is a multiple of %level_multiplier%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_SKIP_FOR_KEYBINDS",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_NONE"
+  },
+  "context": {
+   "description_en": "Doom's attacks curse enemy heroes. After %damage_debuff_duration%s, the cursed hero bursts with a pillar of fire, damaging itself and all units in a %spread_radius% AoE for %bonus_damage_pct_base%%% of the damage taken from Doom during the curse. The damage and radius of the curse is %bonus_at_level_pct%%% stronger if the enemy's level is a multiple of %level_multiplier%.",
+   "description_zh": "末日使者的攻击会诅咒敌方英雄。%damage_debuff_duration%秒后，被诅咒的英雄会爆发出一根火柱，对自身和%spread_radius%范围内所有敌方单位造成伤害，伤害量为诅咒期间内承受来自末日使者的%bonus_damage_pct_base%%%伤害。如果被诅咒的英雄等级为%level_multiplier%的倍数，诅咒的伤害和作用范围会提升%bonus_at_level_pct%%%。",
+   "notes_en": [
+    "Also applies to all attacks when Doom is at max level."
+   ],
+   "notes_zh": [
+    "末日使者达到满级后也会生效。"
+   ]
+  }
+ },
+ {
+  "review_id": "260f6b7f332b274e64b9",
+  "subject": "ancient_apparition_cold_feet",
+  "subject_zh": "远古冰魄·寒霜之足",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对一个敌人施加诅咒，造成持续伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Places a curse on an enemy, dealing damage over time.  If the enemy unit doesn't move outside of the given range from the initial location, it will be stunned and frozen in place after %AbilityDuration% seconds.",
+   "description_zh": "对一个敌人施加诅咒，造成持续伤害。如果目标没有在%AbilityDuration%秒内远离初始地点走出足够距离，那么将被眩晕并冻在原地。",
+   "notes_en": [
+    "Deals damage every half second."
+   ],
+   "notes_zh": [
+    "每0.5秒造成一次伤害。"
+   ]
+  }
+ },
+ {
+  "review_id": "aef71eb038e9abfe7709",
+  "subject": "ancient_apparition_ice_vortex",
+  "subject_zh": "远古冰魄·冰霜漩涡",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "创造一个寒冰能量的漩涡，对范围内敌人造成伤害和减速，并增加他们受到的魔法伤害。",
+   "Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range.",
+   "description_zh": "创造一个寒冰能量的漩涡，对范围内敌人造成伤害和减速，并增加他们受到的魔法伤害。",
+   "notes_en": [
+    "Provides vision in a small area where it is placed."
+   ],
+   "notes_zh": [
+    "提供放置地点的小片视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "8a62e8f48646ffba341c",
+  "subject": "ancient_apparition_bone_chill",
+  "subject_zh": "远古冰魄·刺骨严寒",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每当远古冰魄通过他的技能对敌人造成魔法伤害，敌人就会减速一段时间。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "When Ancient Apparition deals Magic damage to an enemy with his abilities, it is slowed for a short duration. If the target is a Hero, its Strength is also reduced. Multiple instances of this effect stack and have independent durations.",
+   "description_zh": "每当远古冰魄通过他的技能对敌人造成魔法伤害，敌人就会减速一段时间。如果目标是英雄，力量还会降低。多个本效果会叠加，并且持续时间相互独立。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Base Strength Reduction by %tooltip_scepter_bonus%.",
+     "zh": "基础力量降低提升%tooltip_scepter_bonus%。"
+    }
+   }
+  }
+ }
+]

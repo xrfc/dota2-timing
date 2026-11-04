@@ -1,0 +1,976 @@
+[
+ {
+  "review_id": "9c0b6437d69ad8cc5dde",
+  "subject": "slardar_slithereen_crush",
+  "subject_zh": "斯拉达·鱼人碎击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "猛击地面，留下一片水洼，对附近敌方单位造成伤害并眩晕。",
+   "Slams the ground, leaving a puddle of water, and stunning and damaging nearby enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Slams the ground, leaving a puddle of water, and stunning and damaging nearby enemy units.  After the stun, the affected units are slowed.",
+   "description_zh": "猛击地面，留下一片水洼，对附近敌方单位造成伤害并眩晕。眩晕结束后还会受到减速。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Slithereen Crush now applies Corrosive Haze for a short time to units affected.",
+     "zh": "鱼人碎击会对受到作用的单位施加短时间的侵蚀雾霭。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c610a9c3fc841af2b43d",
+  "subject": "slardar_amplify_damage",
+  "subject_zh": "斯拉达·侵蚀雾霭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility. The enemy unit leaves a trail of water behind it.",
+   "description_zh": "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。敌方单位将在身后留下水迹。"
+  }
+ },
+ {
+  "review_id": "c7085bee2837295b5a23",
+  "subject": "tidehunter_gush",
+  "subject_zh": "潮汐猎人·巨浪",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "召唤一股巨浪攻击一个敌方单位，减速并削弱护甲。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Summons a gush of water to damage an enemy unit, reducing their movement speed and armor.",
+   "description_zh": "召唤一股巨浪攻击一个敌方单位，减速并削弱护甲。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Gush becomes a ground targeted wave ability that affects enemy units in a line.  Decreases cooldown.",
+     "zh": "巨浪变成点地施放的波形技能，可以作用于直线上的单位。降低冷却时间。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3446d7716f3f8b935d2e",
+  "subject": "tidehunter_anchor_smash",
+  "subject_zh": "潮汐猎人·锚击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "潮汐猎人挥动他巨大的锚攻击附近的敌人，攻击时获得攻击力加成，同时降低敌人的攻击力。",
+   "锚击的作用范围为潮汐猎人的攻击距离 + %additional_range%。",
+   "Tidehunter swings his mighty anchor to attack and deal bonus damage to nearby enemies and reduce their attack damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Tidehunter swings his mighty anchor to attack and deal bonus damage to nearby enemies and reduce their attack damage. The radius of Anchor Smash is Tidehunter's attack range plus %additional_range% units.",
+   "description_zh": "潮汐猎人挥动他巨大的锚攻击附近的敌人，攻击时获得攻击力加成，同时降低敌人的攻击力。锚击的作用范围为潮汐猎人的攻击距离 + %additional_range%。",
+   "notes_en": [
+    "Anchor Smash works on all Ancient creeps except for Roshan.",
+    "Damage done by Anchor Smashes triggered by Kraken Shell Cleanse is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "锚击对远古生物同样有效，不过对肉山无效。",
+    "海妖外壳净化触发的锚击造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "238ed25423a2be3991fa",
+  "subject": "tidehunter_ravage",
+  "subject_zh": "潮汐猎人·毁灭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "猛击地面，触手向各个方向穿出，伤害并眩晕附近所有敌方单位。",
+   "Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units.",
+   "description_zh": "猛击地面，触手向各个方向穿出，伤害并眩晕附近所有敌方单位。",
+   "notes_en": [
+    "Ravage will hit invisible units.",
+    "Ravage waves move outwards at a speed of %speed%."
+   ],
+   "notes_zh": [
+    "毁灭能伤害隐身单位。",
+    "毁灭以%speed%的速度向外扩散。"
+   ]
+  }
+ },
+ {
+  "review_id": "f1e6caddf8f339c52667",
+  "subject": "witch_doctor_paralyzing_cask",
+  "subject_zh": "巫医·麻痹药剂",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "抛出一个装满麻痹粉末的药剂，在敌方单位之间弹跳，眩晕击中的敌人并造成伤害。",
+   "Launches a cask of paralyzing powder that ricochets between enemy units, stunning and damaging those it hits.",
+   "Damage increases each bounce.",
+   "Targets can be hit multiple times, as long as another unit is struck in between the bounces."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Launches a cask of paralyzing powder that ricochets between enemy units, stunning and damaging those it hits. Damage increases each bounce.",
+   "description_zh": "抛出一个装满麻痹粉末的药剂，在敌方单位之间弹跳，眩晕击中的敌人并造成伤害。每次弹跳都会提升伤害。",
+   "notes_en": [
+    "Targets can be hit multiple times, as long as another unit is struck in between the bounces."
+   ],
+   "notes_zh": [
+    "目标可以受到多次作用，只要附近有其他单位可以进行弹跳。"
+   ]
+  }
+ },
+ {
+  "review_id": "7eaa5ad8da03b0643238",
+  "subject": "witch_doctor_maledict",
+  "subject_zh": "巫医·巫蛊咒术",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对一个较小区域内所有敌方英雄和玩家控制的目标施放诅咒，他们将每秒受到固定伤害，并且从诅咒开始每4秒根据失去的血量再受到爆发伤害。",
+   "Curses all enemy Heroes and player-controlled targets in a small area, causing them to take a set amount of damage each second, as well as bursts of damage every 4 seconds based on how much health they have lost since the curse began."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Curses all enemy Heroes and player-controlled targets in a small area, causing them to take a set amount of damage each second, as well as bursts of damage every 4 seconds based on how much health they have lost since the curse began.",
+   "description_zh": "对一个较小区域内所有敌方英雄和玩家控制的目标施放诅咒，他们将每秒受到固定伤害，并且从诅咒开始每4秒根据失去的血量再受到爆发伤害。",
+   "notes_en": [
+    "If an affected hero's health has increased above the amount they had when Maledict was cast, the burst damage will be 0."
+   ],
+   "notes_zh": [
+    "受到作用的英雄如果在结算时当前血量高于原血量，则额外伤害为0。"
+   ]
+  }
+ },
+ {
+  "review_id": "aa085b39ddfcba9b57ae",
+  "subject": "witch_doctor_death_ward",
+  "subject_zh": "巫医·死亡守卫",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "死亡守卫的攻击会向附近英雄弹射。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "CHANNELED - Summons a deadly ward to attack enemy heroes within its attack range. Lasts a maximum of %abilitychanneltime% seconds. Death Ward has %bonus_accuracy%%% bonus accuracy.",
+   "description_zh": "持续施法 - 召唤一个死亡守卫，会优先攻击其攻击距离内的敌方英雄。最多持续%abilitychanneltime%秒。死亡守卫拥有%bonus_accuracy%%%额外必中率。",
+   "notes_en": [
+    "The Death Ward is invulnerable, and is only destroyed if Witch Doctor is interrupted or its duration expires.",
+    "The Death Ward can be controlled, and made to attack a specific target.",
+    "Death Ward attacks once every 0.22 seconds."
+   ],
+   "notes_zh": [
+    "死亡守卫是无敌的，只有在巫医被打断或持续时间结束后才会被摧毁。",
+    "死亡守卫可以受到控制，选择攻击特定目标。",
+    "死亡守卫每0.22秒攻击一次。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Death Ward attacks bounce between nearby enemies.",
+     "zh": "死亡守卫的攻击会向附近英雄弹射。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "247d4608a4b48b465d2e",
+  "subject": "riki_blink_strike",
+  "subject_zh": "力丸·闪烁突袭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "传送到目标背后，如果是敌人对其造成%slow_pct_tooltip%%%短暂减速，并发动一次拥有额外伤害的攻击。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_CUSTOM"
+  },
+  "context": {
+   "description_en": "Teleports behind the target unit, momentarily slowing them by %slow_pct_tooltip%%% and attacking them with bonus damage if it is an enemy.",
+   "description_zh": "传送到目标背后，如果是敌人对其造成%slow_pct_tooltip%%%短暂减速，并发动一次拥有额外伤害的攻击。"
+  }
+ },
+ {
+  "review_id": "c869bc1eb918af888815",
+  "subject": "riki_tricks_of_the_trade",
+  "subject_zh": "力丸·绝杀秘技",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 力丸转移出现实位面，每隔一段时间从背后随机攻击附近的%interval_targets%个随机敌方单位。",
+   "CHANNELED - Riki phases out of the world and periodically strikes %interval_targets% random enemy units from behind in an area around him."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "CHANNELED - Riki phases out of the world and periodically strikes %interval_targets% random enemy units from behind in an area around him. He has fixed attack damage while phased out.",
+   "description_zh": "持续施法 - 力丸转移出现实位面，每隔一段时间从背后随机攻击附近的%interval_targets%个随机敌方单位。期间他的攻击伤害为固定值。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases Cast Range to %AbilityCastRange%. Allows you to target an allied unit, hiding inside them for the duration. While hiding in an allied unit, they have %scepter_movespeed%%% bonus movement speed, and Tricks of the Trade lasts %scepter_bonus_duration%s longer and does an additional %scepter_bonus_attacks% attacks.",
+     "zh": "提升施法距离至%AbilityCastRange%。可以对友方单位施放，持续时间内藏在他们体内。藏在友方单位体内时，他会拥有%scepter_movespeed%%%移动速度加成，同时绝杀秘技的持续时间提升%scepter_bonus_duration%秒，并且额外发动%scepter_bonus_attacks%次攻击。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8d242fe0365e9542324f",
+  "subject": "riki_innate_backstab",
+  "subject_zh": "力丸·背刺",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "力丸每次从背后攻击敌人时都会造成额外伤害，伤害量为自身敏捷的一定倍数。",
+   "Every time Riki strikes his enemy from behind, he deals additional bonus damage equal to a multiple of his Agility."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Every time Riki strikes his enemy from behind, he deals additional bonus damage equal to a multiple of his Agility.",
+   "description_zh": "力丸每次从背后攻击敌人时都会造成额外伤害，伤害量为自身敏捷的一定倍数。",
+   "notes_en": [
+    "Works when denying friendly units at %ally_multiplier%%% effectiveness.",
+    "Illusions of Riki will play Backstab animations, but not deal any bonus damage."
+   ],
+   "notes_zh": [
+    "反补友方单位时具有%ally_multiplier%%%效果。",
+    "力丸的幻象也会有背刺的动作，但是不会造成额外伤害。"
+   ]
+  }
+ },
+ {
+  "review_id": "12a696b34c480e56e190",
+  "subject": "enigma_malefice",
+  "subject_zh": "谜团·憎恶",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Focuses Enigma's power on a target, causing it to take damage and become repeatedly stunned for multiple instances."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Focuses Enigma's power on a target, causing it to take damage and become repeatedly stunned for multiple instances.  An instance strikes every %tick_rate% seconds.",
+   "description_zh": "将谜团的力量集中于一个目标，使它受到多次伤害并反复被眩晕。每%tick_rate%秒眩晕一次。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Increases Malefice stun duration by %shard_bonus_stun_duration_tooltip%s and creates an Eidolon next to the target every instance of Malefice stun. These Eidolons will not multiply further.",
+     "zh": "憎恶的眩晕时间增加%shard_bonus_stun_duration_tooltip%秒，并且每次眩晕都会在目标身旁产生一个虚灵体。这些虚灵体不会再次分裂。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8e7e4fdd00dbc02732c5",
+  "subject": "enigma_demonic_conversion",
+  "subject_zh": "谜团·恶魔召唤",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "这些虚灵都由谜团控制，在反复经过几次成功的攻击后，虚灵会再次分裂，并完全回复生命值。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Summons three fragments of Enigma himself at the cost of health.  The eidolons health is increased by %current_health_pct%%% of Enigma's current health. These eidolons are all under Enigma's control, and repeated successful attacks cause them to multiply.  When this happens, the eidolons have their health restored.",
+   "description_zh": "以生命为代价召唤三个谜团自身的碎片。虚灵的生命值会有所增加，数值为谜团当前生命值的%current_health_pct%%%。这些虚灵都由谜团控制，在反复经过几次成功的攻击后，虚灵会再次分裂，并完全回复生命值。"
+  }
+ },
+ {
+  "review_id": "d0ca528cdbffb8d3b315",
+  "subject": "enigma_midnight_pulse",
+  "subject_zh": "谜团·午夜凋零",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "使一块区域浸入暗共振中，对敌方单位造成%base_damage% + 基于敌人当前生命值的伤害。",
+   "Steeps an area in dark resonance, dealing %base_damage% + a percentage of the enemies current HP as damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Steeps an area in dark resonance, dealing %base_damage% + a percentage of the enemies current HP as damage.",
+   "description_zh": "使一块区域浸入暗共振中，对敌方单位造成%base_damage% + 基于敌人当前生命值的伤害。",
+   "notes_en": [
+    "This ability destroys trees in its area.",
+    "Multiple instances of Midnight Pulse do not stack."
+   ],
+   "notes_zh": [
+    "此技能将摧毁范围内的树木。",
+    "多个午夜凋零的效果不会叠加。"
+   ]
+  }
+ },
+ {
+  "review_id": "4545bae6fd1d3909746c",
+  "subject": "enigma_black_hole",
+  "subject_zh": "谜团·黑洞",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "黑洞额外造成等同于单位%scepter_pct_damage%%%最大生命值的每秒伤害，并且产生一个%scepter_radius%范围，没有打断效果的牵引效果。",
+   "Black Hole deals additional damage equivalent to %scepter_pct_damage%%% of the unit's Max Health per second and does a non-interrupting pull towards it in a %scepter_radius% AoE."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "CHANNELED - Summons a vortex that sucks in nearby enemy units.  Enemies affected by Black Hole cannot move, attack, or cast spells.",
+   "description_zh": "持续施法 - 召唤一个强引力漩涡吸住敌方单位。被黑洞影响的单位不能移动、攻击或施法。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Black Hole deals additional damage equivalent to %scepter_pct_damage%%% of the unit's Max Health per second and does a non-interrupting pull towards it in a %scepter_radius% AoE. Pulls at a rate of %scepter_drag_speed%.",
+     "zh": "黑洞额外造成等同于单位%scepter_pct_damage%%%最大生命值的每秒伤害，并且产生一个%scepter_radius%范围，没有打断效果的牵引效果。牵引速度为%scepter_drag_speed%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "2af97ab28f3d35fcac08",
+  "subject": "tinker_deploy_turrets",
+  "subject_zh": "修补匠·部署炮塔",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "被炮塔撞击的敌人受到伤害，并向远离落地点的方向推去。",
+   "Enemies hit by the impact take damage and are pushed away from the landing point."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Deploys 3 uncontrollable turrets at the target location. Enemies hit by the impact take damage and are pushed away from the landing point. If Tinker is hit, he also gets pushed by the impact. Once deployed, the turret fires missiles in the direction of the nearest enemy hero.",
+   "description_zh": "在目标地点部署3个不可控的炮塔。被炮塔撞击的敌人受到伤害，并向远离落地点的方向推去。如果修补匠被撞击，他也会被推走。部署完毕后，炮塔开始向最近敌方英雄的方向发射导弹。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Turrets fire missiles %missile_attack_rate_tooltip%%% faster.",
+     "zh": "炮塔发射导弹的速度加快%missile_attack_rate_tooltip%%%。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "fbb41f8726b503e5af47",
+  "subject": "tinker_warp_grenade",
+  "subject_zh": "修补匠·折跃耀光",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "向一个敌人扔出一枚光弹，造成伤害，将其向远离修补匠的方向传送并且缠绕，同时降低施法和攻击距离，持续%debuff_duration%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_ALERT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Throws a flare towards an enemy, dealing damage, teleporting them away, rooting them and reducing their Cast and Attack Range for %debuff_duration% seconds.The target is teleported further the closer they are to Tinker.",
+   "description_zh": "向一个敌人扔出一枚光弹，造成伤害，将其向远离修补匠的方向传送并且缠绕，同时降低施法和攻击距离，持续%debuff_duration%秒。目标距离修补匠越近，传送距离越大。",
+   "notes_en": [
+    "Max teleportation distance is %warp_distance_pct_tooltip%%% of Warp Flare's cast range, which decreases down to 0 at max cast range."
+   ],
+   "notes_zh": [
+    "最大传送距离为%warp_distance_pct_tooltip%%%折跃耀光施法距离，在最大施法距离时降至0。"
+   ]
+  }
+ },
+ {
+  "review_id": "cd00531b467ea6ac5807",
+  "subject": "sniper_shrapnel",
+  "subject_zh": "狙击手·榴霰弹",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Enemies are subject to damage and slowed movement."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every %abilitychargerestoretime% seconds.",
+   "description_zh": "消耗一点能量射出一发带有爆炸弹片的榴霰弹，在目标区域降下弹雨。区域内的敌军受到伤害并被减速。榴霰弹将给予目标区域的视野。榴霰弹的能量每过%abilitychargerestoretime%秒恢复1点。",
+   "notes_en": [
+    "Damage is dealt 11 times, immediately at spell effect then every second.",
+    "Does not damage buildings.",
+    "Provides vision in the targeted area."
+   ],
+   "notes_zh": [
+    "总共造成11次伤害，第一次在技能生效时，接下来每秒造成一次伤害。",
+    "不会对建筑造成伤害。",
+    "将拥有目标区域的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "1298bea46c30998b4dda",
+  "subject": "sniper_headshot",
+  "subject_zh": "狙击手·爆头",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "狙击手提高他的精确度，有一定概率造成%damage%点额外伤害并击退敌人。",
+   "爆头会短暂地降低敌人%slow%%%移动和攻击速度。",
+   "Sniper increases his accuracy, giving him a chance to deal %damage% extra damage and knock back his enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Sniper increases his accuracy, giving him a chance to deal %damage% extra damage and knock back his enemies. Knockback distance increases based on how close the enemy is to Sniper. Headshots briefly slow enemy movement and attack speed by %slow%%%.",
+   "description_zh": "狙击手提高他的精确度，有一定概率造成%damage%点额外伤害并击退敌人。敌人距离狙击手越近，击退距离越远。爆头会短暂地降低敌人%slow%%%移动和攻击速度。"
+  }
+ },
+ {
+  "review_id": "5b5faa9ae61721a6daa2",
+  "subject": "sniper_concussive_grenade",
+  "subject_zh": "狙击手·震荡手雷",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "向目标区域扔出一枚手雷，对敌人造成伤害并将他们和狙击手一同击退。",
+   "Launches a grenade at the target area, dealing damage to enemies and knocking them and Sniper back."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Launches a grenade at the target area, dealing damage to enemies and knocking them and Sniper back. Enemies affected are disarmed and have their movement slowed after the knockback.",
+   "description_zh": "向目标区域扔出一枚手雷，对敌人造成伤害并将他们和狙击手一同击退。受到作用的敌人被击退后还会被缴械和减速。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Reduces cooldown, increases damage, and allows the knockback to affect Sniper as well.",
+     "zh": "降低冷却时间，提升伤害并允许技能也能击退狙击手。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "56743c388d4622c2fc87",
+  "subject": "sniper_assassinate",
+  "subject_zh": "狙击手·暗杀",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "狙击手锁定一个目标敌方单位，经过短时间瞄准后射出一发毁灭性的子弹，从远距离对目标造成狙击手的攻击伤害 + 额外伤害，并且短暂眩晕目标。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Sniper locks onto a target enemy unit and, after a short aiming duration, fires a devastating shot that deals Sniper's attack damage plus bonus damage at long range and mini-stuns the target. Whenever Sniper kills an enemy hero, Assassinate is refreshed.",
+   "description_zh": "狙击手锁定一个目标敌方单位，经过短时间瞄准后射出一发毁灭性的子弹，从远距离对目标造成狙击手的攻击伤害 + 额外伤害，并且短暂眩晕目标。每当狙击手击杀敌方英雄，暗杀的冷却时间就会重置。",
+   "notes_en": [
+    "Crosshair effect is only visible to allies.",
+    "Invisibility doesn't disjoint the projectile."
+   ],
+   "notes_zh": [
+    "准星效果只对队友可见。",
+    "隐身不能躲避该技能弹道。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Assassinate to fire quicker and stun the enemy target.",
+     "zh": "暗杀释放得更快，并且敌方目标的眩晕时间更久。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "a37017e291011bfaab83",
+  "subject": "necrolyte_death_pulse",
+  "subject_zh": "瘟疫法师·死亡脉冲",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "瘟疫法师向他的周围释放死亡波纹，伤害敌方单位并治疗友军单位。",
+   "Necrophos releases a wave of death around him, dealing damage to enemy units and healing allied units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Necrophos releases a wave of death around him, dealing damage to enemy units and healing allied units.",
+   "description_zh": "瘟疫法师向他的周围释放死亡波纹，伤害敌方单位并治疗友军单位。",
+   "notes_en": [
+    "Death Pulse can't be disjointed."
+   ],
+   "notes_zh": [
+    "死亡脉冲不能被躲避。"
+   ]
+  }
+ },
+ {
+  "review_id": "b757ae6e22138f918783",
+  "subject": "warlock_fatal_bonds",
+  "subject_zh": "术士·致命连接",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "将数个可见的敌方单位连接在一起，其中一人所受伤害的一定百分比会被其他所有人感受到。",
+   "Binds several visible enemy units together, causing a percentage of the damage dealt to one of them to be felt by the others."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Binds several visible enemy units together, causing a percentage of the damage dealt to one of them to be felt by the others.",
+   "description_zh": "将数个可见的敌方单位连接在一起，其中一人所受伤害的一定百分比会被其他所有人感受到。",
+   "notes_en": [
+    "The shared damage type is the same as the type of damage inflicted.",
+    "Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."
+   ],
+   "notes_zh": [
+    "共享伤害的类型与原伤害相同。",
+    "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"
+   ]
+  }
+ },
+ {
+  "review_id": "9151f3acb10a263c1972",
+  "subject": "warlock_shadow_word",
+  "subject_zh": "术士·暗言术",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "术士低声说出一个咒语，对一个单位施展法术，使周围的敌方单位受到伤害，周围的友方单位被治疗。",
+   "目标单位也会被治疗或受到伤害，取决于他是友军还是敌人。",
+   "Warlock whispers an incantation, casting a spell on a unit that makes it deal damage to nearby enemy units and heal nearby ally units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Warlock whispers an incantation, casting a spell on a unit that makes it deal damage to nearby enemy units and heal nearby ally units. Target Unit will also heal or be damaged depending on whether they are ally or enemy.",
+   "description_zh": "术士低声说出一个咒语，对一个单位施展法术，使周围的敌方单位受到伤害，周围的友方单位被治疗。目标单位也会被治疗或受到伤害，取决于他是友军还是敌人。"
+  }
+ },
+ {
+  "review_id": "891ee3bf901d6edb8f21",
+  "subject": "warlock_upheaval",
+  "subject_zh": "术士·剧变",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "持续施法时每%imps_interval%秒术士会召唤一个魔童，持续%minor_imp_duration%秒，魔童死亡时会爆炸，对周围所有敌人造成伤害。",
+   "While channeling, Warlock spawns a minor imp every %imps_interval% seconds that lasts for %minor_imp_duration% seconds and explodes dealing damage to all enemies around them upon death."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled. Lasts up to %abilitychanneltime% seconds. Enemies are slowed for %duration% second after leaving the area or the spell ends.",
+   "description_zh": "持续施法 - 随施法时间增强的减速气流，还会造成伤害。持续最多%abilitychanneltime%秒。在魔法结束或目标离开生效区域后，敌人仍会被减速%duration%秒。",
+   "notes_en": [
+    "The slow increase is based on length of the channel, not the duration an enemy was standing in the area."
+   ],
+   "notes_zh": [
+    "减速效果的增加是根据持续施法的时长，而不是敌人在区内停留的持续时间。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "While channeling, Warlock spawns a minor imp every %imps_interval% seconds that lasts for %minor_imp_duration% seconds and explodes dealing damage to all enemies around them upon death.",
+     "zh": "持续施法时每%imps_interval%秒术士会召唤一个魔童，持续%minor_imp_duration%秒，魔童死亡时会爆炸，对周围所有敌人造成伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "c2445b88a0f776abcfad",
+  "subject": "beastmaster_wild_axes",
+  "subject_zh": "兽王·野性之斧",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每把飞斧对同一个敌人只能击中一次，并且加深来自兽王和其单位的伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Beastmaster sends his axes flying and calls them home again, slicing through enemy units and trees along their path.  Each axe can hit an enemy once, and amplifies subsequent damage from Beastmaster and his units.",
+   "description_zh": "兽王投出他的斧头然后召回它们，切开飞过的敌人和树木。每把飞斧对同一个敌人只能击中一次，并且加深来自兽王和其单位的伤害。",
+   "notes_en": [
+    "This ability destroys trees."
+   ],
+   "notes_zh": [
+    "此技能将摧毁树木。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Beastmaster's attacks on enemy heroes also apply the Wild Axes debuff of its corresponding level.",
+     "zh": "兽王对敌方英雄的攻击还会施加相应等级的野性之斧负面状态。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "3f7c58d6be7d8debd459",
+  "subject": "beastmaster_summon_raptor",
+  "subject_zh": "兽王·召唤猛禽",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "兽王召唤%hawk_count%只战鹰环绕在他周围，战鹰以%hawk_base_attack_interval%秒的基础攻击间隔俯冲攻击敌人，造成伤害并缠绕。",
+   "Beastmaster summons %hawk_count% hawks that circle around Beastmaster and dive-bombs at enemies with a base attack rate of every %hawk_base_attack_interval%s, damaging and rooting them."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Beastmaster summons %hawk_count% hawks that circle around Beastmaster and dive-bombs at enemies with a base attack rate of every %hawk_base_attack_interval%s, damaging and rooting them. Attack rate increases with the Hawk's attack speed. Prioritizes heroes.",
+   "description_zh": "兽王召唤%hawk_count%只战鹰环绕在他周围，战鹰以%hawk_base_attack_interval%秒的基础攻击间隔俯冲攻击敌人，造成伤害并缠绕。战鹰提升攻击速度后会提升攻击频率。以英雄优先。"
+  }
+ },
+ {
+  "review_id": "428ff65afa784c715232",
+  "subject": "beastmaster_drums_of_slom",
+  "subject_zh": "兽王·斯洛姆战鼓",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "兽王或周围他控制的单位攻击敌人都会使他敲下战鼓，对附近单位造成伤害，并且治疗自身和他控制的单位，数值为造成伤害的一定百分比。",
+   "Attacks from Beastmaster or a nearby unit he controls will cause him bang his drum, dealing damage to nearby units and healing Beastmaster and units under his control for a portion of the damage dealt."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Attacks from Beastmaster or a nearby unit he controls will cause him bang his drum, dealing damage to nearby units and healing Beastmaster and units under his control for a portion of the damage dealt. Every attack decreases the interval between drum hits down to a minimum of %min_drum_hit_interval%s between hits after %max_stacks% attacks. If no attacks are made, the intervals gradually increase.Using Primal Roar counts as %primal_roar_stacks% attacks.",
+   "description_zh": "兽王或周围他控制的单位攻击敌人都会使他敲下战鼓，对附近单位造成伤害，并且治疗自身和他控制的单位，数值为造成伤害的一定百分比。每次攻击都会降低敲鼓的间隔，%max_stacks%次攻击后降低至最短%min_drum_hit_interval%秒敲击一次。如果没有发动攻击，敲鼓间隔会逐渐变长。使用原始咆哮时自动增加%primal_roar_stacks%层敲鼓叠加效果。"
+  }
+ },
+ {
+  "review_id": "6683f7704fe6944cfefd",
+  "subject": "beastmaster_primal_roar",
+  "subject_zh": "兽王·原始咆哮",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "兽王发出震耳欲聋的咆哮，使目标敌方单位受到伤害并眩晕，同时在兽王和他的猎物之间清出一条通道。",
+   "All units in the path of the roar are damaged, while units shoved aside by the roar have their movement and attack speed slowed."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Beastmaster lets loose a deafening roar that stuns, and shoves open a path to its target. All units in the path of the roar are damaged, while units shoved aside by the roar have their movement and attack speed slowed. Additionally, Beastmaster and his units gain %movement_speed%%% movement speed for %movement_speed_duration% seconds.",
+   "description_zh": "兽王发出震耳欲聋的咆哮，使目标敌方单位受到伤害并眩晕，同时在兽王和他的猎物之间清出一条通道。通道上的所有单位都被震开，也受到伤害并被降低移动和攻击速度。另外，兽王和他的单位获得%movement_speed%%%移动速度提升，持续%movement_speed_duration%秒。"
+  }
+ },
+ {
+  "review_id": "b54c85dafb96f3e88d38",
+  "subject": "queenofpain_shadow_strike",
+  "subject_zh": "痛苦女王·暗影突袭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "暗影突袭效果结束后或重新施加给敌方英雄时，目标将放出痛苦尖叫，伤害附近所有敌人。",
+   "Causes Shadow Strike to become a %aoe_radius% AoE Spell.",
+   "When Shadow Strike ends or is re-applied to an enemy Hero, the target emits a Scream of Pain, hitting any nearby enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement speed slowed for %duration% seconds.  An instance of damage is dealt every %damage_interval% seconds.",
+   "description_zh": "投出一把淬毒匕首，造成大量初始伤害，并持续造成后续伤害。中毒的单位移动速度被减缓，持续%duration%秒。每%damage_interval%秒会再造成一次伤害。",
+   "notes_en": [
+    "The affected unit slowly regains its original movement speed every second during the duration.",
+    "Units afflicted by Shadow Strike can be denied by their allies when their HP drops below 25% of their maximum health."
+   ],
+   "notes_zh": [
+    "受到作用的单位在持续时间内将逐秒缓慢地恢复至初始移动速度。",
+    "受到暗影突袭作用的单位在生命值低于最大值25%时可以被队友反补。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Shadow Strike to become a %aoe_radius% AoE Spell. When Shadow Strike ends or is re-applied to an enemy Hero, the target emits a Scream of Pain, hitting any nearby enemies.",
+     "zh": "暗影突袭变为%aoe_radius%范围型技能。暗影突袭效果结束后或重新施加给敌方英雄时，目标将放出痛苦尖叫，伤害附近所有敌人。"
+    }
+   }
+  }
+ }
+]

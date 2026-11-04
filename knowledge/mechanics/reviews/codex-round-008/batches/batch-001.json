@@ -1,0 +1,1034 @@
+[
+ {
+  "review_id": "bbfa473fd9d67c215734",
+  "subject": "antimage_mana_void",
+  "subject_zh": "敌法师·法力虚空",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "根据目标损失的魔法值，对目标和其周围的敌人造成伤害。",
+   "伤害的计算根据主目标失去的魔法，但是对作用范围内所有敌人均有效。",
+   "For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies.",
+   "Damage is calculated based on the primary target's mana, but applied to all enemies within the area of effect."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies.  The main target is also mini-stunned.",
+   "description_zh": "根据目标损失的魔法值，对目标和其周围的敌人造成伤害。所有受到伤害的单位都会被短暂眩晕。",
+   "notes_en": [
+    "Damage is calculated based on the primary target's mana, but applied to all enemies within the area of effect."
+   ],
+   "notes_zh": [
+    "伤害的计算根据主目标失去的魔法，但是对作用范围内所有敌人均有效。"
+   ]
+  }
+ },
+ {
+  "review_id": "b4ba7669b6a17639ec30",
+  "subject": "axe_battle_hunger",
+  "subject_zh": "斧王·战斗饥渴",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "激怒一个敌方单位，使他受到持续伤害，直到他杀死一个单位或者持续时间结束。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Enrages an enemy unit, causing it to take damage over time until it kills another unit or the duration ends. The enemy is slowed as long as they are facing away from Axe.",
+   "description_zh": "激怒一个敌方单位，使他受到持续伤害，直到他杀死一个单位或者持续时间结束。敌人只要背朝斧王还将被减速。",
+   "notes_en": [
+    "Destroying buildings will also remove the debuff."
+   ],
+   "notes_zh": [
+    "摧毁建筑也能移除该状态效果。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Multiple instances of Battle Hunger can stack on a single target.",
+     "zh": "多个战斗饥渴效果可以叠加在单个目标身上。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "0ca85166d6eb6646b8ad",
+  "subject": "axe_counter_helix",
+  "subject_zh": "斧王·反击螺旋",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "受到一定次数攻击后，斧王就会做出螺旋反击，对附近所有敌方单位造成纯粹伤害。",
+   "After a set number of attacks, Axe will perform a helix counter attack, dealing pure damage to all nearby enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "After a set number of attacks, Axe will perform a helix counter attack, dealing pure damage to all nearby enemies.",
+   "description_zh": "受到一定次数攻击后，斧王就会做出螺旋反击，对附近所有敌方单位造成纯粹伤害。",
+   "notes_en": [
+    "Counter Helix triggers when the attack hits.",
+    "Illusions' counters don't increase when they attack when you have a Scepter."
+   ],
+   "notes_zh": [
+    "反击螺旋会在斧王受到攻击时触发。",
+    "拥有神杖后自身幻象的攻击不会计入触发计数。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Counter Helix now applies a stacking debuff to enemies hit by it that causes them to deal less total attack damage to Axe. Counter Helix no longer has a cooldown and its counter advances when Axe attacks.",
+     "zh": "反击螺旋现在对击中的敌人施加一个可叠加的负面效果，使其对斧王造成的攻击伤害减少。反击螺旋不再具有冷却时间，并且斧王的攻击也会计入触发记数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6615e36ecc014ffa208e",
+  "subject": "axe_counter_helix",
+  "subject_zh": "斧王·反击螺旋",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "反击螺旋现在对击中的敌人施加一个可叠加的负面效果，使其对斧王造成的攻击伤害减少。",
+   "Counter Helix now applies a stacking debuff to enemies hit by it that causes them to deal less total attack damage to Axe."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "After a set number of attacks, Axe will perform a helix counter attack, dealing pure damage to all nearby enemies.",
+   "description_zh": "受到一定次数攻击后，斧王就会做出螺旋反击，对附近所有敌方单位造成纯粹伤害。",
+   "notes_en": [
+    "Counter Helix triggers when the attack hits.",
+    "Illusions' counters don't increase when they attack when you have a Scepter."
+   ],
+   "notes_zh": [
+    "反击螺旋会在斧王受到攻击时触发。",
+    "拥有神杖后自身幻象的攻击不会计入触发计数。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Counter Helix now applies a stacking debuff to enemies hit by it that causes them to deal less total attack damage to Axe. Counter Helix no longer has a cooldown and its counter advances when Axe attacks.",
+     "zh": "反击螺旋现在对击中的敌人施加一个可叠加的负面效果，使其对斧王造成的攻击伤害减少。反击螺旋不再具有冷却时间，并且斧王的攻击也会计入触发记数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "9ca4c65c3b12d5b33efa",
+  "subject": "bane_enfeeble",
+  "subject_zh": "祸乱之源·虚弱",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每秒造成伤害，并且降低敌人的总攻击力和施法距离。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Deals damage every second and lowers the enemy's total attack damage and cast range.",
+   "description_zh": "每秒造成伤害，并且降低敌人的总攻击力和施法距离。"
+  }
+ },
+ {
+  "review_id": "57bc0f003b1a45f41cf4",
+  "subject": "bane_brain_sap",
+  "subject_zh": "祸乱之源·蚀脑",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "暴食一个敌方单位的生命能量，造成伤害并回复自身生命值。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.",
+   "description_zh": "暴食一个敌方单位的生命能量，造成伤害并回复自身生命值。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Reduces cooldown by %bonus_AbilityCooldown%. Causes Brain Sap to become a %shard_radius% AoE spell. Secondary targets only heal for %shard_secondary_target_heal_pct%%%.",
+     "zh": "减少%bonus_AbilityCooldown%秒冷却时间。蚀脑变成%shard_radius%作用范围的技能。次级目标只有%shard_secondary_target_heal_pct%%%治疗效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5ceccc6e1381cc05d491",
+  "subject": "bane_fiends_grip",
+  "subject_zh": "祸乱之源·魔爪",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+   "description_zh": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack.",
+     "zh": "魔爪的冷却时间减少%bonus_AbilityCooldown%秒。魔爪将产生两个不可控制的幻象，幻象也将对目标持续施放魔爪。幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。伤害不会叠加。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "de84f3643ea1cdfd6e52",
+  "subject": "bloodseeker_blood_bath",
+  "subject_zh": "血魔·血祭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "%delay_plus_castpoint_tooltip%秒后祭祀完成，区域范围内所有敌人都会受到伤害，并被沉默。",
+   "After %delay_plus_castpoint_tooltip% seconds the ritual completes, causing any enemies caught in the area to take damage and become silenced."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE"
+  },
+  "context": {
+   "description_en": "Bloodseeker baptizes an area in sacred blood. After %delay_plus_castpoint_tooltip% seconds the ritual completes, causing any enemies caught in the area to take damage and become silenced.",
+   "description_zh": "血魔用圣血为一片区域洗礼。%delay_plus_castpoint_tooltip%秒后祭祀完成，区域范围内所有敌人都会受到伤害，并被沉默。",
+   "notes_en": [
+    "Total time is a %delay% second delay plus a %abilitycastpoint% second cast time."
+   ],
+   "notes_zh": [
+    "总时间为%delay%秒的施法时间加上%castpoint_tooltip%秒的生效延迟。"
+   ]
+  }
+ },
+ {
+  "review_id": "04666b9d4d1b7bda9a3a",
+  "subject": "bloodseeker_rupture",
+  "subject_zh": "血魔·割裂",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "让一个敌方单位皮开肉绽，根据其当前生命值造成初始伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PURE",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health. If the unit moves, it takes damage based on the distance moved.",
+   "description_zh": "让一个敌方单位皮开肉绽，根据其当前生命值造成初始伤害。单位移动后会根据移动的距离受到伤害。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases initial damage and grants %AbilityCharges% Rupture Charges.",
+     "zh": "提升初始伤害，并且提供%AbilityCharges%点割裂能量点数。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d470db21f4ff8ec71db8",
+  "subject": "crystal_maiden_crystal_nova",
+  "subject_zh": "水晶室女·冰霜新星",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "A burst of damaging frost slows enemy movement in the targeted area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "A burst of damaging frost slows enemy movement in the targeted area.",
+   "description_zh": "召唤具有破坏性的冰爆，降低目标区域内的敌人的移动速度。",
+   "notes_en": [
+    "Crystal Nova provides vision in the targeted area for the duration."
+   ],
+   "notes_zh": [
+    "冰霜新星在持续时间内提供目标区域的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "dac46532296c813c372c",
+  "subject": "crystal_maiden_frostbite",
+  "subject_zh": "水晶室女·冰封禁制",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "操控冰霜包围一个敌方单位，禁止移动和攻击，并持续造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Encases an enemy unit in ice, prohibiting movement and attack, while dealing damage over time. Deals %creep_multiplier%x damage to non-ancient creeps.",
+   "description_zh": "操控冰霜包围一个敌方单位，禁止移动和攻击，并持续造成伤害。对非远古的普通单位施放将造成%creep_multiplier%倍伤害。",
+   "notes_en": [
+    "Frostbite is considered a root."
+   ],
+   "notes_zh": [
+    "冰封禁制为捆缚效果。"
+   ]
+  }
+ },
+ {
+  "review_id": "78707994fe71760e42b8",
+  "subject": "crystal_maiden_crystal_clone",
+  "subject_zh": "水晶室女·冰晶克隆",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "如果克隆受到了足量伤害，或者超过一定时间都会碎裂，对附近%frostbite_radius%范围内敌人施加冰封禁制。",
+   "If the clone takes enough damage or times out, it shatters, Frostbiting enemies in a %frostbite_radius% AoE around its place."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+  },
+  "context": {
+   "description_en": "Slides in a direction, creating a crystal clone of herself in her place and disjointing incoming projectiles. If the clone takes enough damage or times out, it shatters, Frostbiting enemies in a %frostbite_radius% AoE around its place. The Clone can also be destroyed by Crystal Maiden's own spells.",
+   "description_zh": "向一个方向滑行，在原地制造一个自身的冰晶克隆，并且躲避多种飞行过程中的攻击和技能弹道。如果克隆受到了足量伤害，或者超过一定时间都会碎裂，对附近%frostbite_radius%范围内敌人施加冰封禁制。克隆体也可以被水晶室女自身的技能摧毁。"
+  }
+ },
+ {
+  "review_id": "2a3f0447732d6b51a0e9",
+  "subject": "crystal_maiden_freezing_field",
+  "subject_zh": "水晶室女·极寒领域",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害。",
+   "减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害（效果持续%slow_duration%秒）。",
+   "CHANNELED - Surrounds Crystal Maiden with %num_explosions% random icy explosions that slow enemies and deal massive damage.",
+   "The slow is applied on all enemies in the radius, even if they aren't hit by an explosion (lasts %slow_duration% second)."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "CHANNELED - Surrounds Crystal Maiden with %num_explosions% random icy explosions that slow enemies and deal massive damage. Lasts %abilitychanneltime% seconds.",
+   "description_zh": "持续施法 - 以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害。持续%abilitychanneltime%秒。",
+   "notes_en": [
+    "The slow is applied on all enemies in the radius, even if they aren't hit by an explosion (lasts %slow_duration% second).",
+    "Explosions occur every %explosion_interval_tooltip% seconds."
+   ],
+   "notes_zh": [
+    "减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害（效果持续%slow_duration%秒）。",
+    "每%explosion_interval_tooltip%秒产生一次爆炸。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Allows you to move, cast and attack during Freezing Field. Can still be interrupted by enemies. You move %shard_self_movement_speed_slow_pct%%% slower during this. Increases total number of explosions by %shard_bonus_explosion%%%. Applies Frostbite to any unit that has been standing in the Freezing Field for over %frostbite_delay%s.",
+     "zh": "使自身在极寒领域期间可以移动、施法和攻击。仍然可以被敌人打断。在此期间移动速度降低%shard_self_movement_speed_slow_pct%%%。冰爆总数提升%shard_bonus_explosion%%%。对极寒领域内停留超过%frostbite_delay%秒的所有单位都会施加冰封禁制。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6a8edc92616f80fb6bf5",
+  "subject": "drow_ranger_frost_arrows",
+  "subject_zh": "卓尔游侠·霜冻之箭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.  Slow lasts %abilityduration% seconds.",
+   "description_zh": "卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害。持续%abilityduration%秒。",
+   "notes_en": [
+    "The slow duration is refreshed on successive casts."
+   ],
+   "notes_zh": [
+    "减速的持续时间在下一支冰箭射中后刷新。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Frost Arrows now apply a Hypothermia stack to enemies, increasing damage from Frost Arrows and reducing their Health Restoration per stack. If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it.",
+     "zh": "霜冻之箭现在对敌人施加低温的叠加效果，提升霜冻之箭的伤害，并且每层叠加效果都会降低生命回复。若敌人在低温效果下阵亡，他们将会爆炸，对范围内的敌人造成伤害和减速。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "d727d9ad797136859ada",
+  "subject": "drow_ranger_frost_arrows",
+  "subject_zh": "卓尔游侠·霜冻之箭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "霜冻之箭现在对敌人施加低温的叠加效果，提升霜冻之箭的伤害，并且每层叠加效果都会降低生命回复。",
+   "若敌人在低温效果下阵亡，他们将会爆炸，对范围内的敌人造成伤害和减速。",
+   "Frost Arrows now apply a Hypothermia stack to enemies, increasing damage from Frost Arrows and reducing their Health Restoration per stack.",
+   "If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.  Slow lasts %abilityduration% seconds.",
+   "description_zh": "卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害。持续%abilityduration%秒。",
+   "notes_en": [
+    "The slow duration is refreshed on successive casts."
+   ],
+   "notes_zh": [
+    "减速的持续时间在下一支冰箭射中后刷新。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Frost Arrows now apply a Hypothermia stack to enemies, increasing damage from Frost Arrows and reducing their Health Restoration per stack. If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it.",
+     "zh": "霜冻之箭现在对敌人施加低温的叠加效果，提升霜冻之箭的伤害，并且每层叠加效果都会降低生命回复。若敌人在低温效果下阵亡，他们将会爆炸，对范围内的敌人造成伤害和减速。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "585265460cb3de6e2bca",
+  "subject": "drow_ranger_multishot",
+  "subject_zh": "卓尔游侠·数箭齐发",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 卓尔游侠在最多%abilitychanneltime%秒内不断地射出阵阵箭矢，对卓尔游侠攻击距离 + %arrow_range_base%的距离内击中的敌人造成额外伤害，并施加霜冻之箭效果。",
+   "CHANNELED - Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying Frost Arrows with a range of Drow's Attack Range + %arrow_range_base%."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_CHANNELLED",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "CHANNELED - Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying Frost Arrows with a range of Drow's Attack Range + %arrow_range_base%. Lasts up to %abilitychanneltime% seconds.Drow can move slowly and use items while casting Multishot.",
+   "description_zh": "持续施法 - 卓尔游侠在最多%abilitychanneltime%秒内不断地射出阵阵箭矢，对卓尔游侠攻击距离 + %arrow_range_base%的距离内击中的敌人造成额外伤害，并施加霜冻之箭效果。卓尔游侠在施放数箭齐发时可以缓慢移动和使用物品。",
+   "notes_en": [
+    "Arrow base damage pierces magic immunity.",
+    "Frost Arrows' damage and slow do not pierce magic immunity."
+   ],
+   "notes_zh": [
+    "箭矢的基础伤害无视减益免疫。",
+    "霜冻之箭的额外伤害和减速效果不无视减益免疫。"
+   ]
+  }
+ },
+ {
+  "review_id": "157a41d8a4b93d6ec41f",
+  "subject": "earthshaker_fissure",
+  "subject_zh": "撼地者·沟壑",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "用威武的图腾猛击地面，沿直线裂开地面，制造一条无法通过的岩脊，对沿途的敌方单位造成眩晕和伤害。",
+   "Slams the ground with a mighty totem, creating an impassable ridge of stone while stunning and damaging enemy units along its line."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Slams the ground with a mighty totem, creating an impassable ridge of stone while stunning and damaging enemy units along its line.",
+   "description_zh": "用威武的图腾猛击地面，沿直线裂开地面，制造一条无法通过的岩脊，对沿途的敌方单位造成眩晕和伤害。",
+   "notes_en": [
+    "Creeps will wait for Fissure to disappear. They will not attempt to walk around it.",
+    "Fissure is not blocked by Linken's Sphere."
+   ],
+   "notes_zh": [
+    "小兵将会等待沟壑消失，不会去尝试绕开它。",
+    "沟壑不会被林肯法球抵挡。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Reduces Fissure cooldown and releases an Aftershock along its path that stuns for a shortened duration when Earthshaker casts another ability.",
+     "zh": "降低沟壑的冷却时间，并且撼地者每次施放其他技能时都会沿着沟壑释放余震，造成眩晕的时间有所降低。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "bc4cd2dfb5f8931fef34",
+  "subject": "earthshaker_aftershock",
+  "subject_zh": "撼地者·余震",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "撼地者施放技能时会引起脚下的大地震动，眩晕附近的敌方单位并造成额外伤害。",
+   "Causes the earth to shake underfoot, adding additional damage and stuns to nearby enemy units when Earthshaker casts his abilities."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Causes the earth to shake underfoot, adding additional damage and stuns to nearby enemy units when Earthshaker casts his abilities.",
+   "description_zh": "撼地者施放技能时会引起脚下的大地震动，眩晕附近的敌方单位并造成额外伤害。",
+   "notes_en": [
+    "Using items does not trigger Aftershock."
+   ],
+   "notes_zh": [
+    "使用物品不会触发余震。"
+   ]
+  }
+ },
+ {
+  "review_id": "ef9051ea93f657552597",
+  "subject": "earthshaker_echo_slam",
+  "subject_zh": "撼地者·回音击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "穿过地面的冲击波，伤害敌方单位。",
+   "每个受到攻击的敌人都会引起伤害附近单位的反射波。",
+   "Shockwaves travel through the ground, damaging enemy units.",
+   "Each enemy hit causes an echo to damage nearby units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Shockwaves travel through the ground, damaging enemy units.  Each enemy hit causes an echo to damage nearby units. Real heroes cause two echoes.",
+   "description_zh": "穿过地面的冲击波，伤害敌方单位。每个受到攻击的敌人都会引起伤害附近单位的反射波。英雄本体将引起两次反射。"
+  }
+ },
+ {
+  "review_id": "15ff78c3e0ebd372ef99",
+  "subject": "earthshaker_slugger",
+  "subject_zh": "撼地者·强击图腾",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "利用强化图腾的攻击或撼地者的其他技能击杀敌人后都会把尸体击飞，对击中的敌人造成伤害。",
+   "Enemies killed with Enchant Totem or Earthshaker's other abilities are sent flying, dealing damage to enemies they hit."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_INNATE_UI"
+  },
+  "context": {
+   "description_en": "Enemies killed with Enchant Totem or Earthshaker's other abilities are sent flying, dealing damage to enemies they hit.",
+   "description_zh": "利用强化图腾的攻击或撼地者的其他技能击杀敌人后都会把尸体击飞，对击中的敌人造成伤害。"
+  }
+ },
+ {
+  "review_id": "7408fd0f3da3a40cff1f",
+  "subject": "juggernaut_blade_fury",
+  "subject_zh": "主宰·剑刃风暴",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "舞起具有破坏性力量的剑刃风暴，使主宰获得减益免疫状态，魔法抗性提升%immunity_resist%%%，并且每%blade_fury_damage_tick%秒对主宰周围的敌方单位造成伤害。",
+   "Causes a bladestorm of destructive force around Juggernaut, rendering him debuff immune with %immunity_resist%%% magic resistance and dealing damage every %blade_fury_damage_tick%s to nearby enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Causes a bladestorm of destructive force around Juggernaut, rendering him debuff immune with %immunity_resist%%% magic resistance and dealing damage every %blade_fury_damage_tick%s to nearby enemy units. Applies a strong dispel at the end of the spin.",
+   "description_zh": "舞起具有破坏性力量的剑刃风暴，使主宰获得减益免疫状态，魔法抗性提升%immunity_resist%%%，并且每%blade_fury_damage_tick%秒对主宰周围的敌方单位造成伤害。旋转结束时施加强驱散效果。",
+   "notes_en": [
+    "You can use items during Blade Fury.",
+    "Juggernaut can still perform attacks while in Blade Fury. However, only units that are not affected by Blade Fury, such as wards or structures, will take damage from these attacks."
+   ],
+   "notes_zh": [
+    "剑刃风暴期间可以使用物品。",
+    "主宰在施放剑刃风暴的过程中依然可以进行物理攻击。但是只有不受剑刃风暴伤害的单位，如守卫和建筑才会受到这些物理伤害。"
+   ]
+  }
+ },
+ {
+  "review_id": "a31aebe8d8c97f75d245",
+  "subject": "juggernaut_omni_slash",
+  "subject_zh": "主宰·无敌斩",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "主宰挥剑跃向敌方目标单位，随后再以更短的攻击频率斩击该单位和附近的其它敌方单位。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Juggernaut leaps towards the target enemy units, and then slashes the target and other nearby enemy units at an increased attack rate. Juggernaut is invulnerable for the duration.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "主宰挥剑跃向敌方目标单位，随后再以更短的攻击频率斩击该单位和附近的其它敌方单位。主宰在无敌斩期间无敌。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "You can use items during Omnislash."
+   ],
+   "notes_zh": [
+    "无敌斩期间可以使用物品。"
+   ]
+  }
+ },
+ {
+  "review_id": "4c0934fc12c58f5cfe0c",
+  "subject": "mirana_starfall",
+  "subject_zh": "米拉娜·群星风暴",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Calls down a wave of meteors to damage nearby enemy units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Calls down a wave of meteors to damage nearby enemy units. The closest enemy unit to Mirana in a %starfall_secondary_radius% radius will be struck a second time.",
+   "description_zh": "召唤一波流星砸向附近的敌方单位。%starfall_secondary_radius%范围内最近的敌方单位将会再受到一次冲击。",
+   "notes_en": [
+    "Starstorm is not blocked by Linken's Sphere.",
+    "Starstorm cannot hit invisible units.",
+    "Starstorm will choose a new target for the second meteor if the first died before impact."
+   ],
+   "notes_zh": [
+    "群星风暴不会被林肯法球抵挡。",
+    "群星风暴不能伤害隐身单位。",
+    "如果原本要打击的目标死亡，群星风暴的第二次星落会重新选择一个目标。"
+   ]
+  }
+ },
+ {
+  "review_id": "acc2a9beff63d6370f8a",
+  "subject": "mirana_arrow",
+  "subject_zh": "米拉娜·月神之箭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "射出一支绝对精准的箭矢，对第一个击中的敌人造成伤害并眩晕目标。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Fires a long-range arrow with deadly precision, which stuns and damages the first enemy unit it strikes. The stun duration ranges from %arrow_min_stun% to %arrow_max_stun% seconds, with bonus damage up to %arrow_bonus_damage% added, based on the distance the arrow travels to its target. Instantly kills the first non-ancient creep it hits.",
+   "description_zh": "射出一支绝对精准的箭矢，对第一个击中的敌人造成伤害并眩晕目标。目标距离越远，眩晕时间越长，最短%arrow_min_stun%秒，最长可达%arrow_max_stun%秒。根据箭矢飞行的距离还将对目标额外造成最多%arrow_bonus_damage%点伤害。若击中的是非远古的普通单位，将直接秒杀。",
+   "notes_en": [
+    "For every 150 distance the arrow travels, the stun duration upon impact increases by 0.5 seconds, and the bonus damage added increases by 14.",
+    "Sacred Arrow can hit invisible units.",
+    "Starstruck does not apply to the second Starstorm from Aghanim's Scepter."
+   ],
+   "notes_zh": [
+    "神箭每飞行150码，中箭后眩晕的持续时间将提高0.5秒，额外伤害增加14点。",
+    "月神之箭可以射中隐身单位。",
+    "流星赶月不会对阿哈利姆神杖升级群星风暴的第二次流星生效。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Sacred Arrow to release a Starstorm on enemies along the travel path of the primary arrow, releasing a second Starstorm that deals less damage to the impacted unit.",
+     "zh": "月神之箭在主神箭行进途中对敌人释放群星风暴。对击中的单位施放第二个群星风暴，造成的伤害有所降低。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "bd94f3d6985e73e6a06d",
+  "subject": "mirana_arrow",
+  "subject_zh": "米拉娜·月神之箭",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Causes Sacred Arrow to release a Starstorm on enemies along the travel path of the primary arrow, releasing a second Starstorm that deals less damage to the impacted unit."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Fires a long-range arrow with deadly precision, which stuns and damages the first enemy unit it strikes. The stun duration ranges from %arrow_min_stun% to %arrow_max_stun% seconds, with bonus damage up to %arrow_bonus_damage% added, based on the distance the arrow travels to its target. Instantly kills the first non-ancient creep it hits.",
+   "description_zh": "射出一支绝对精准的箭矢，对第一个击中的敌人造成伤害并眩晕目标。目标距离越远，眩晕时间越长，最短%arrow_min_stun%秒，最长可达%arrow_max_stun%秒。根据箭矢飞行的距离还将对目标额外造成最多%arrow_bonus_damage%点伤害。若击中的是非远古的普通单位，将直接秒杀。",
+   "notes_en": [
+    "For every 150 distance the arrow travels, the stun duration upon impact increases by 0.5 seconds, and the bonus damage added increases by 14.",
+    "Sacred Arrow can hit invisible units.",
+    "Starstruck does not apply to the second Starstorm from Aghanim's Scepter."
+   ],
+   "notes_zh": [
+    "神箭每飞行150码，中箭后眩晕的持续时间将提高0.5秒，额外伤害增加14点。",
+    "月神之箭可以射中隐身单位。",
+    "流星赶月不会对阿哈利姆神杖升级群星风暴的第二次流星生效。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Sacred Arrow to release a Starstorm on enemies along the travel path of the primary arrow, releasing a second Starstorm that deals less damage to the impacted unit.",
+     "zh": "月神之箭在主神箭行进途中对敌人释放群星风暴。对击中的单位施放第二个群星风暴，造成的伤害有所降低。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "976b38effdef4cd91b8a",
+  "subject": "nevermore_shadowraze1",
+  "subject_zh": "影魔·毁灭阴影",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "影魔对其正前方区域释放毁灭能量，对该区域中的敌人造成伤害，并且根据当前支配死灵的灵魂数量造成额外伤害。",
+   "Shadow Fiend razes the ground directly in front of him, dealing damage to enemy units in the area, dealing bonus damage based on his current Necromastery Soul amount."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Shadow Fiend razes the ground directly in front of him, dealing damage to enemy units in the area, dealing bonus damage based on his current Necromastery Soul amount. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadowraze damage per stack.",
+   "description_zh": "影魔对其正前方区域释放毁灭能量，对该区域中的敌人造成伤害，并且根据当前支配死灵的灵魂数量造成额外伤害。在目标身上施加一个连中效果，持续时间内再被毁灭阴影击中将受到额外伤害。",
+   "notes_en": [
+    "Stack duration refreshes on stack gain."
+   ],
+   "notes_zh": [
+    "连中效果的持续时间在每次连中时刷新。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Cooldown reduced by %cooldown_reduction_on_hero_hit%s per enemy hero hit. Applies a stacking %movement_speed_debuff%%% movement speed debuff on enemies hit.",
+     "zh": "每击中一名敌方英雄后冷却时间减少%cooldown_reduction_on_hero_hit%秒。对击中的敌人施加可叠加的%movement_speed_debuff%%%移动速度减缓的负面效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ea1882f6f239efeb18d9",
+  "subject": "nevermore_shadowraze1",
+  "subject_zh": "影魔·毁灭阴影",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Applies a stacking %movement_speed_debuff%%% movement speed debuff on enemies hit."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Shadow Fiend razes the ground directly in front of him, dealing damage to enemy units in the area, dealing bonus damage based on his current Necromastery Soul amount. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadowraze damage per stack.",
+   "description_zh": "影魔对其正前方区域释放毁灭能量，对该区域中的敌人造成伤害，并且根据当前支配死灵的灵魂数量造成额外伤害。在目标身上施加一个连中效果，持续时间内再被毁灭阴影击中将受到额外伤害。",
+   "notes_en": [
+    "Stack duration refreshes on stack gain."
+   ],
+   "notes_zh": [
+    "连中效果的持续时间在每次连中时刷新。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Cooldown reduced by %cooldown_reduction_on_hero_hit%s per enemy hero hit. Applies a stacking %movement_speed_debuff%%% movement speed debuff on enemies hit.",
+     "zh": "每击中一名敌方英雄后冷却时间减少%cooldown_reduction_on_hero_hit%秒。对击中的敌人施加可叠加的%movement_speed_debuff%%%移动速度减缓的负面效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "5de61f8ed15378d87231",
+  "subject": "nevermore_requiem",
+  "subject_zh": "影魔·魂之挽歌",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "每道魔能对敌方单位造成伤害的同时，还将造成恐惧和减速效果，并且降低魔法抗性，持续%requiem_slow_duration%秒，最高可达%requiem_slow_duration_max%秒。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Shadow Fiend gathers up to %max_soul_release% of his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed and magic resistance reduced for %requiem_slow_duration% seconds for each line hit up to a maximum of %requiem_slow_duration_max%. Lines of energy are created for every soul captured through Necromastery.  Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.",
+   "description_zh": "影魔将捕获的灵魂中最多%max_soul_release%个进行聚集，以多道魔能的形式释放。若距离影魔过近将受到数道魔能的伤害。每道魔能对敌方单位造成伤害的同时，还将造成恐惧和减速效果，并且降低魔法抗性，持续%requiem_slow_duration%秒，最高可达%requiem_slow_duration_max%秒。通过支配死灵收集的每个灵魂会为魂之挽歌创造一道魔能。死亡时会自动释放魂之挽歌，不占用主动大招的冷却时间。",
+   "notes_en": [
+    "One line is generated from Shadow Fiend for every %requiem_soul_conversion% soul in his possession.",
+    "Fear and movement slow do not apply if the Requiem was released on death."
+   ],
+   "notes_zh": [
+    "影魔收集的灵魂中，每%requiem_soul_conversion%个会产生一道伤害波。",
+    "死亡时释放的魂之挽歌不会施加恐惧和减速效果。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Reduces cooldown and causes Requiem of Souls to return back to Shadow Fiend. The wave back to Shadow Fiend heals him for all the damage it dealt.",
+     "zh": "降低冷却时间，并且魂之挽歌可以回归影魔。影魔会回复与回归伤害值相等的生命。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "ce2e7250da55f2d62d41",
+  "subject": "morphling_waveform",
+  "subject_zh": "变体精灵·波浪形态",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "变体精灵化为波浪向前涌进，对路径上的敌人造成伤害。",
+   "Morphling dissolves into liquid and surges forward, damaging enemy units in his path."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_OVERSHOOT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Morphling dissolves into liquid and surges forward, damaging enemy units in his path. Morphling is invulnerable during Waveform.",
+   "description_zh": "变体精灵化为波浪向前涌进，对路径上的敌人造成伤害。变体精灵在波浪形态中是无敌的。"
+  }
+ },
+ {
+  "review_id": "681705994a5ad4cf7421",
+  "subject": "morphling_adaptive_strike_agi",
+  "subject_zh": "变体精灵·变体打击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "用猛烈的水波打击一个敌方单位，将其击退并眩晕，同时造成伤害，伤害量为基础伤害加上变体精灵自身敏捷值乘以伤害系数的额外伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Launches a surge of water toward an enemy unit, stunning them, knocking them back, and dealing base damage plus additional damage based on Morphling's agility times a multiplier.  If Morphling's agility is 50% higher than strength, the maximum agility multiplier is used.\n\nKnockback distance and stun duration are based on Morphling's strength. If his strength is 50% higher than his agility, the maximum knockback distance and stun duration is used.",
+   "description_zh": "用猛烈的水波打击一个敌方单位，将其击退并眩晕，同时造成伤害，伤害量为基础伤害加上变体精灵自身敏捷值乘以伤害系数的额外伤害。如果变体精灵的敏捷比力量高50%%，将采用最高伤害系数。\n\n击退距离和眩晕时间是根据变体精灵的力量值。如果变体精灵的力量比敏捷高50%%，将造成最大击退和眩晕。",
+   "notes_en": [
+    "Projectile moves at %projectile_speed% speed."
+   ],
+   "notes_zh": [
+    "弹道移动速度为%projectile_speed%。"
+   ]
+  }
+ }
+]

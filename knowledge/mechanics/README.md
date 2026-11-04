@@ -5,15 +5,15 @@
 | 层 | 文件 | 状态 |
 |---|---|---|
 | 1 事实层：官方原始枚举的含义 | `enums-v1.json` | 已经用户确认（U30，MK-T2完成） |
-| 1 事实层：机制词表 | `vocabulary-v2.json`（旧抽取仍绑定v1） | 45项；U31将指向方式与格挡/反弹分开，其他定义沿用 |
-| 1 事实层：字段观测与说明候选 | `extractions/v1/`（MK-T3） | 已抽取，待语义复核 |
-| 2 机制规则层：机制交互与装备↔机制克制 | 待建（MK-T4） | — |
+| 1 事实层：机制词表 | `vocabulary-v8.json`（v1–v7保留） | 76项，定义来自用户决定，措辞由助手整理 |
+| 1 事实层：复核后事实 | `extractions/v8/`（v1–v7保留） | MK-T3已结束（U67），`basis`标明依据 |
+| 2 机制规则层：机制交互与克制 | `rules-v2.json`，结果在`extractions/v8/rules-evaluation.json` | 20条（U73结束T4），第8、12、13、15条的细节到T5 |
 | 3 推导层：英雄/装备机制档案、克制图、hero-traits v2 | 待建（MK-T5） | — |
 
 - 读取一律用`dota_items.data.mechanics.load_enums(doc, registry_heroes)`与`load_vocabulary(doc, enums)`：每个例子技能必须存在且取值一致；登记表中出现的取值必须全部有解释，补丁更新出现新取值时直接报错。
 - 修改须记决策并升版本（v2…），旧版本不覆盖。
 
-**当前入口：`extractions/v6/`和`vocabulary-v6.json`（U65）。**
+**当前入口：`extractions/v8/`、`vocabulary-v8.json`和`rules-v2.json`（U72）。**
 
 “可被破坏”与游戏文件的对照见[破坏对照](reviews/break-check-001/README.md)（U46，U47已裁定）；其他机制见[排查报告](reviews/game-files-audit-001/README.md)（U48）；退出装备标记见`retired-items-v1.json`（U51）。
 

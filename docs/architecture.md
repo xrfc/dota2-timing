@@ -122,7 +122,7 @@ B线的硬约束（继承U2、U6和`long-term-coach-goals.md`§5）：评价某�
 
 | 物理整理候选（未执行） | 原因 | 前提 |
 |---|---|---|
-| `mechanics_facts` v1/v2/v3合并为一个版本化模块 | 三个文件大量重复 | v1/v2冻结包的生产者迁移登记 |
+| `mechanics_facts` v1–v7合并为一个版本化模块 | 版本多，逻辑分散（v4起是叠加层） | v1/v2冻结包的生产者迁移登记 |
 | `scripts/decision_review.py`拆出build与HTTP | 用例与入口同文件（10-28已登记的脚本债务） | 兼容导出与实现指纹清单 |
 | 统一外壳从`coach_app.py`抽到共享模块 | B线页面并入 | B线有第一张页面时 |
 | `modeling.foundation`兼容门面退役 | 只剩旧导入路径 | 确认本地无旧调用方 |

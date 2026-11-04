@@ -1,0 +1,988 @@
+[
+ {
+  "review_id": "54d9ae79497e24327bc3",
+  "subject": "phoenix_fire_spirits",
+  "subject_zh": "凤凰·烈火精灵",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "对敌人持续造成伤害并大幅降低他们的攻击速度。",
+   "Affected enemy units take damage over time and have their attack speed greatly reduced.",
+   "Fire Spirits reveal the area they strike for 1 second."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Summons 4 fire spirits that circle around Phoenix. Each spirit can be launched independently at a targeted area of effect. Affected enemy units take damage over time and have their attack speed greatly reduced.",
+   "description_zh": "召唤4只围绕凤凰飞行的烈火精灵。每一只烈火精灵都能被单独发射到指定区域。对敌人持续造成伤害并大幅降低他们的攻击速度。",
+   "notes_en": [
+    "Fire Spirits reveal the area they strike for 1 second."
+   ],
+   "notes_zh": [
+    "烈火精灵现在到达目标区域后将获得1秒的视野。"
+   ]
+  }
+ },
+ {
+  "review_id": "6e361d7bbbde4b97ffbc",
+  "subject": "phoenix_sun_ray",
+  "subject_zh": "凤凰·烈日炙烤",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "光线对敌人造成伤害，并且能治疗友军，伤害和治疗的数值均为基础数值加上目标最大生命值的一定百分比。",
+   "The beam damages enemies and heals allies for a base amount plus a percentage of their max health."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Phoenix expels a beam of light at the cost of its own health. The beam damages enemies and heals allies for a base amount plus a percentage of their max health. The percentage increases as the beam continues to fire.",
+   "description_zh": "凤凰以损失生命能量为代价，向前射出一束炽热的光线炙烤敌人。光线对敌人造成伤害，并且能治疗友军，伤害和治疗的数值均为基础数值加上目标最大生命值的一定百分比。随着光线不断炙烤，百分比也会不断增加。",
+   "notes_en": [
+    "Sun Ray has a width of %radius% units, and a length of %abilitycastrange% units.",
+    "Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.",
+    "Phoenix can use items and abilities without canceling Sun Ray."
+   ],
+   "notes_zh": [
+    "烈日炙烤的宽度为%radius%，长度为%abilitycastrange%。",
+    "凤凰受到眩晕、沉默、飓风、妖术或睡眠等效果时烈日炙烤将会中断。",
+    "凤凰可以使用物品和其他技能，不会打断烈日炙烤。"
+   ],
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Allows Sun Ray to be cast during Supernova.",
+     "zh": "超新星期间可以施放烈日炙烤。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "00ed641084f65462bc4a",
+  "subject": "phoenix_dying_light",
+  "subject_zh": "凤凰·消逝之光",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "凤凰每秒对%radius%范围内所有敌人造成%damage_pct%%%自身缺失生命值的魔法伤害。",
+   "Phoenix deals %damage_pct%%% of its missing health as magic damage to all enemies in a %radius% radius every second."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+  },
+  "context": {
+   "description_en": "Phoenix deals %damage_pct%%% of its missing health as magic damage to all enemies in a %radius% radius every second.",
+   "description_zh": "凤凰每秒对%radius%范围内所有敌人造成%damage_pct%%%自身缺失生命值的魔法伤害。",
+   "notes_en": [
+    "Dying Light deals damage while Phoenix is transformed during Supernova."
+   ],
+   "notes_zh": [
+    "消逝之光在凤凰变身为超新星期间也会造成伤害。"
+   ]
+  }
+ },
+ {
+  "review_id": "5142545a2ec4a634ef28",
+  "subject": "phoenix_supernova",
+  "subject_zh": "凤凰·超新星",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。",
+   "Transforms into a burning sun that scorches enemies in a huge area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n\nDISPEL TYPE: Strong Dispel",
+   "description_zh": "凤凰十分乐意终结自己现在的生命来换取重生。将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。恒星受到敌方英雄一定次数的攻击后将会被摧毁。经过%abilityduration%秒后恒星将会爆炸，眩晕周围所有敌人。而凤凰的生命和魔法值都会回到满状态，并且所有技能的冷却时间都会刷新。\n\n驱散类型：强驱散",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Increases number of attacks to destroy Supernova and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together.",
+     "zh": "摧毁超新星所需的攻击次数增加，凤凰可以对友方英雄施放超新星，使双方共同变为恒星进行重生。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "19ab9759da7ca995b951",
+  "subject": "oracle_fortunes_end",
+  "subject_zh": "神谕者·气运之末",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "持续施法 - 将神谕者的力量汇聚为一股蕴含荡涤之力的能量，对敌方目标释放这股能量可以对其造成伤害，使其被缠绕，并且驱散其附近区域的魔法效果。",
+   "CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and dispels enemies of buffs in an area around the target."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and dispels enemies of buffs in an area around the target. If target is an ally it will only dispel debuffs. The root duration increases with channeling time.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "持续施法 - 将神谕者的力量汇聚为一股蕴含荡涤之力的能量，对敌方目标释放这股能量可以对其造成伤害，使其被缠绕，并且驱散其附近区域的魔法效果。如果目标是友军，将只造成驱散效果。缠绕时间随着持续施法时间逐渐提升。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Affects invulnerable units."
+   ],
+   "notes_zh": [
+    "可以作用无敌单位。"
+   ]
+  }
+ },
+ {
+  "review_id": "85fe9fcf5f15ed9dff0e",
+  "subject": "oracle_rain_of_destiny",
+  "subject_zh": "神谕者·天命之雨",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "站在该区域的敌人受到每秒伤害，并且治疗增强被削弱。",
+   "Enemies standing in the area receive damage and have reduced Heal Amplification."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Brings forth rain to the target area. Enemies standing in the area receive damage and have reduced Heal Amplification. Allies in the area heal and have increased incoming Heal Amplification.",
+   "description_zh": "在目标范围内降下大雨。站在该区域的敌人受到每秒伤害，并且治疗增强被削弱。区域内友军被治疗，并且具有治疗增强效果。"
+  }
+ },
+ {
+  "review_id": "82109c0e227f6cf4f064",
+  "subject": "techies_sticky_bomb",
+  "subject_zh": "工程师·粘性炸弹",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "After a few seconds the bomb will explode, dealing damage in an area around the detonation and applying a secondary slow for %secondary_slow_duration% seconds."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Lobs a Sticky Bomb towards the target area. If it lands next to an enemy hero, the bomb will stick to it, slowing its movement speed. After a few seconds the bomb will explode, dealing damage in an area around the detonation and applying a secondary slow for %secondary_slow_duration% seconds.",
+   "description_zh": "向目标区域抛出一个粘性炸弹。如果炸弹落在一个敌方英雄身旁，炸弹会粘上去，减缓其移动速度。数秒后炸弹会爆炸，对爆炸区域内造成伤害，并再次施加减速，持续%secondary_slow_duration%秒。"
+  }
+ },
+ {
+  "review_id": "0a0c7c83751c9be8e81e",
+  "subject": "techies_reactive_tazer",
+  "subject_zh": "工程师·活性电击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "攻击目标的敌人会受到伤害被暂时缴械，并且受到弱驱散效果。",
+   "效果结束时，或者用子技能提前引爆后电荷将会爆炸，使范围内所有敌人缴械并受到伤害。",
+   "Enemies attacking the target take damage and are temporarily disarmed and get a Basic Dispel.",
+   "At the end of the effect or if detonated early with the sub-ability, the charge explodes, disarming all enemies within the radius and dealing damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Techies trigger an electric charge on the target ally, giving them bonus movement speed for a short period of time. Enemies attacking the target take damage and are temporarily disarmed and get a Basic Dispel.At the end of the effect or if detonated early with the sub-ability, the charge explodes, disarming all enemies within the radius and dealing damage.",
+   "description_zh": "工程师对友军目标放出电荷，使他们短时间内获得移动速度加成。攻击目标的敌人会受到伤害被暂时缴械，并且受到弱驱散效果。效果结束时，或者用子技能提前引爆后电荷将会爆炸，使范围内所有敌人缴械并受到伤害。"
+  }
+ },
+ {
+  "review_id": "db57a4b8855aaf73a29d",
+  "subject": "techies_suicide",
+  "subject_zh": "工程师·爆破起飞！",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "工程师冲到敌人中间，在相遇时引爆炸药，造成大量范围伤害，并眩晕敌人。",
+   "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and stun enemies."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and stun enemies. Upon landing, the assault deals Techies non-lethal damage equal to a percentage of their current health.",
+   "description_zh": "工程师冲到敌人中间，在相遇时引爆炸药，造成大量范围伤害，并眩晕敌人。引爆时会对工程师造成当前生命值一定百分比的非致死伤害。",
+   "notes_en": [
+    "The self-damage Techies receive from this blast is pure and non-lethal.",
+    "This ability destroys trees."
+   ],
+   "notes_zh": [
+    "工程师在此次爆炸中受到的自身伤害为纯粹伤害，而且不会致死。",
+    "此技能将摧毁树木。"
+   ]
+  }
+ },
+ {
+  "review_id": "557ede12f295eab63b68",
+  "subject": "techies_mutually_assured_destruction",
+  "subject_zh": "工程师·同归于尽",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "工程师阵亡时，他们会留下一个木桶，在%explosion_delay%秒后爆炸，对范围内敌人造成伤害。",
+   "When Techies die, they leave behind a barrel that explodes after %explosion_delay%s, damaging enemies in an area around it."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_FORCE_NO_INNATE_UI | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_FORCE_KEYBIND",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Techies gain a percentage of their mana pool as bonus mana regeneration.When Techies die, they leave behind a barrel that explodes after %explosion_delay%s, damaging enemies in an area around it. Damage is based on Techies' max mana.",
+   "description_zh": "工程师获得相当于最大魔法值一定百分比的魔法恢复。工程师阵亡时，他们会留下一个木桶，在%explosion_delay%秒后爆炸，对范围内敌人造成伤害。伤害数值是根据工程师的最大魔法值。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "M.A.D. becomes an active ability. Increases max mana as damage amount. Techies plant an M.A.D. which can be detonated manually with a sub-ability. Only one M.A.D. from the active ability can be placed at a time.",
+     "zh": "同归于尽变为主动技能。提升最大魔法值的伤害系数。工程师放置同归于尽木桶后，可以使用子技能手动引爆。同一时间主动技能只能放下一个同归于尽木桶。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "cee3a07b1c420bd578d6",
+  "subject": "techies_minefield_sign",
+  "subject_zh": "工程师·雷区标识",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在指定地点放置警示牌，使作用范围内的感应地雷为无敌状态，并且造成的伤害增加%bonus_mine_damage_pct%%%。",
+   "敌方单位在区域内移动都会受到伤害。",
+   "Plant a warning sign, causing Proximity Mines within its radius to be invulnerable and deal %bonus_mine_damage_pct%%% more damage.",
+   "When an enemy Hero walks within %trigger_radius% units of a minefield sign, the %aura_radius% units area around the sign will become a minefield for %minefield_duration% seconds, dealing damage to enemy Heroes any time they move within its area."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_NONE"
+  },
+  "context": {
+   "description_en": "Plant a warning sign, causing Proximity Mines within its radius to be invulnerable and deal %bonus_mine_damage_pct%%% more damage. Only one sign can exist at a time. Lasts %lifetime% seconds.When an enemy Hero walks within %trigger_radius% units of a minefield sign, the %aura_radius% units area around the sign will become a minefield for %minefield_duration% seconds, dealing damage to enemy Heroes any time they move within its area. Minefield Sign is destroyed after this effect ends.",
+   "description_zh": "在指定地点放置警示牌，使作用范围内的感应地雷为无敌状态，并且造成的伤害增加%bonus_mine_damage_pct%%%。同一时间只能存在一个标识。持续%lifetime%秒。敌方英雄进入标识的%trigger_radius%范围内时标识附近整个%aura_radius%范围变成一片雷区，持续%minefield_duration%秒。敌方单位在区域内移动都会受到伤害。雷区持续时间结束后标识会被摧毁。"
+  }
+ },
+ {
+  "review_id": "a5e7656ab5a917f115c8",
+  "subject": "techies_land_mines",
+  "subject_zh": "工程师·感应地雷",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "爆炸对%min_distance%范围内目标造成全额伤害，对边缘造成的伤害减少至%outer_damage%%%。",
+   "Mines detonate if an enemy is standing within the active AoE for %proximity_threshold% seconds dealing damage and temporarily reducing the enemy's Magic Resistance.",
+   "The explosion deals full damage if the target is within %min_distance% radius and decreases down to %outer_damage%%% on the edge."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Plant an invisible mine that cannot be detected by True Sight, but is visible if an enemy is within the active %radius% AoE of the mine. Mines detonate if an enemy is standing within the active AoE for %proximity_threshold% seconds dealing damage and temporarily reducing the enemy's Magic Resistance. The explosion deals full damage if the target is within %min_distance% radius and decreases down to %outer_damage%%% on the edge. Deals %building_damage_pct%%% damage to buildings.",
+   "description_zh": "埋布隐形的地雷，不会被真实视域检测到，但是有敌方单位在地雷的%radius%生效范围内会显形。敌人在生效范围内停留超过%proximity_threshold%秒会使地雷爆炸，并且魔法抗性会被暂时降低。爆炸对%min_distance%范围内目标造成全额伤害，对边缘造成的伤害减少至%outer_damage%%%。对建筑物造成%building_damage_pct%%%伤害。",
+   "notes_en": [
+    "Cannot be placed within %placement_radius% AoE of another Proximity Mine.",
+    "Proximity Mines do not block neutral creep camps from spawning.",
+    "Mines last until they explode or are destroyed.",
+    "Mines are triggered by invisible units.",
+    "Grants 30 gold if destroyed by an enemy hero."
+   ],
+   "notes_zh": [
+    "感应地雷的%placement_radius%范围内不能再放置地雷。",
+    "感应地雷不会阻止中立生物产生。",
+    "地雷持续时间没有上限，除非爆炸或被摧毁。",
+    "隐形单位也能触发地雷。",
+    "敌方英雄将地雷摧毁可以获得30金钱。"
+   ]
+  }
+ },
+ {
+  "review_id": "45ae8b486ca195d97773",
+  "subject": "winter_wyvern_arctic_burn",
+  "subject_zh": "寒冬飞龙·严寒烧灼",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "高飞时，她的攻击距离更远，攻击弹道速度也更快，被攻击的敌人在寒意作用下，移动速度会被减缓，同时每秒损失%percent_damage%%%当前生命值。",
+   "While soaring, her attacks travel further and faster, and slow enemies with a magical freeze that strips them of %percent_damage%%% of their current health each second."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Winter Wyvern soars upon an arctic wind, granting her unobstructed movement and allowing her to exhale a blistering chill into each attack. While soaring, her attacks travel further and faster, and slow enemies with a magical freeze that strips them of %percent_damage%%% of their current health each second.",
+   "description_zh": "寒冬飞龙乘着一股极地寒风扶摇而上，移动将无视地形，每次攻击都将呼出逼人的寒气。高飞时，她的攻击距离更远，攻击弹道速度也更快，被攻击的敌人在寒意作用下，移动速度会被减缓，同时每秒损失%percent_damage%%%当前生命值。",
+   "notes_en": [
+    "This ability does not affect Roshan.",
+    "Reduces Winter Wyvern's attack point to %attack_point%.",
+    "The damage and slow from Arctic Burn can be dispelled."
+   ],
+   "notes_zh": [
+    "本技能无法作用于肉山。",
+    "寒冬飞龙的攻击前摇降低至%attack_point%秒。",
+    "严寒烧灼的持续伤害和减速可以被驱散。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Arctic Burn to be a toggle ability, draining mana every second when active. Increases Winter Wyvern's movement speed.",
+     "zh": "严寒烧灼变成开关型技能，开启后每秒消耗一定量魔法。提升寒冬飞龙的移动速度。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "b9acd7b3abe1898db676",
+  "subject": "winter_wyvern_splinter_blast",
+  "subject_zh": "寒冬飞龙·碎裂冲击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "冰球一击中目标就会碎裂，而目标单位将不会受到任何效果，但是附近%split_radius%基础范围内敌人都将因碎片的冲击受到伤害，并且移动速度减缓%movespeed_slow_tooltip%%%。",
+   "The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a %split_radius% base radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_BOTH"
+  },
+  "context": {
+   "description_en": "Launches a ball of brittle ice toward a unit. The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a %split_radius% base radius. Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%.",
+   "description_zh": "向一个单位发射一团易碎的冰球。冰球一击中目标就会碎裂，而目标单位将不会受到任何效果，但是附近%split_radius%基础范围内敌人都将因碎片的冲击受到伤害，并且移动速度减缓%movespeed_slow_tooltip%%%。",
+   "notes_en": [
+    "The primary projectile moves at %projectile_speed% movement speed.",
+    "The primary projectile cannot be disjointed and cannot be targeted towards Winter Wyvern herself."
+   ],
+   "notes_zh": [
+    "主弹道的移动速度为%projectile_speed%。",
+    "主弹道无法被躲避，而且不能以寒冬飞龙自身为目标。"
+   ]
+  }
+ },
+ {
+  "review_id": "b809711657e655978be6",
+  "subject": "winter_wyvern_winters_curse",
+  "subject_zh": "寒冬飞龙·寒冬诅咒",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "寒冬飞龙驱散一个敌方目标并将其冻在原地，附近的其他敌人将受到癫狂诅咒，对冻住的队友进行攻击，而且攻击速度得到提升。",
+   "冻住的目标和被诅咒攻击队友的敌人不会受到任何来自敌方的伤害，不过寒冬飞龙或她控制的单位造成的伤害除外。",
+   "Winter Wyvern dispells then freezes an enemy in place while striking those nearby with a maddening curse which causes them to attack their frozen ally with increased attack speed.",
+   "The frozen ally and those cursed to attack their ally are immune to all damage from their enemies with the exception of damage from Winter Wyvern or her controlled units."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_DONT_PROC_OTHER_ABILITIES",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Winter Wyvern dispells then freezes an enemy in place while striking those nearby with a maddening curse which causes them to attack their frozen ally with increased attack speed. The frozen ally and those cursed to attack their ally are immune to all damage from their enemies with the exception of damage from Winter Wyvern or her controlled units. Enemy heroes which enter the cursed area after the cast add to the duration of the curse.",
+   "description_zh": "寒冬飞龙驱散一个敌方目标并将其冻在原地，附近的其他敌人将受到癫狂诅咒，对冻住的队友进行攻击，而且攻击速度得到提升。冻住的目标和被诅咒攻击队友的敌人不会受到任何来自敌方的伤害，不过寒冬飞龙或她控制的单位造成的伤害除外。敌方英雄进入施放后的诅咒范围内会增加诅咒的持续时间。",
+   "notes_en": [
+    "If the target dies to its allies, Winter Wyvern will receive credit for the kill.",
+    "Will only pierce the spell immunity of the primary target, not the target's surrounding allies."
+   ],
+   "notes_zh": [
+    "如果目标被其队友击杀，击杀者将仍是寒冰飞龙。",
+    "无视主目标的减益免疫状态，但是对目标周围的减益免疫队友无效。"
+   ]
+  }
+ },
+ {
+  "review_id": "abaefe2593ba7ef85b82",
+  "subject": "arc_warden_flux",
+  "subject_zh": "天穹守望者·乱流",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "将不稳定的涡流能量灌注到落单敌人体内，造成持续伤害并减缓其移动速度。",
+   "如目标周围有其他敌方单位 ，则不会造成伤害。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Infuses a lone enemy unit with swirling, volatile energy, dealing damage over time and slowing the target. The damage is not applied if another enemy unit is near the target.",
+   "description_zh": "将不稳定的涡流能量灌注到落单敌人体内，造成持续伤害并减缓其移动速度。如目标周围有其他敌方单位 ，则不会造成伤害。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Flux silences when the target is alone, deals more damage, and lasts longer.",
+     "zh": "目标落单时乱流具有沉默效果，造成更高伤害，而且持续时间更长。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "326cc5c66d60ad93e93f",
+  "subject": "arc_warden_spark_wraith",
+  "subject_zh": "天穹守望者·闪光幽魂",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "一旦有敌方单位进入范围，怨灵将贴近敌人自我熔化，造成魔法伤害并使目标减速。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Summons a Spark Wraith that slowly materializes and patrols a targeted area until an enemy comes within its range. Once a target has been found the wraith fuses with them, dealing magical damage and slowing the unit.",
+   "description_zh": "召唤一个缓慢实体化的闪光怨灵萦绕在目标区域，直到有敌人进入范围。一旦有敌方单位进入范围，怨灵将贴近敌人自我熔化，造成魔法伤害并使目标减速。",
+   "notes_en": [
+    "Spark Wraiths can not be disjointed."
+   ],
+   "notes_zh": [
+    "闪光幽魂无法被躲避。"
+   ]
+  }
+ },
+ {
+  "review_id": "90301413c857ec9066cd",
+  "subject": "abyssal_underlord_firestorm",
+  "subject_zh": "孽主·火焰风暴",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Calls down waves of fire that damage enemy units in the target area, burning for additional damage over time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Calls down waves of fire that damage enemy units in the target area, burning for additional damage over time.",
+   "description_zh": "召唤数波火焰风暴攻击目标区域内的所有单位，并额外持续造成烧灼伤害。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Firestorm can be allied targeted. When used that way, the Firestorm follows the hero around.  The wave count is increased, and tick rate / duration time occur more quickly.",
+     "zh": "火焰风暴可以对友军施放。施放后火焰风暴会跟随该英雄。火焰风暴的波数增加，伤害触发间隔/持续时间更短。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "253b4e4d537c813e13fc",
+  "subject": "abyssal_underlord_pit_of_malice",
+  "subject_zh": "孽主·怨念深渊",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "在目标区域制造致命的深渊；踏入深渊的敌方单位将受到伤害并且被缠绕。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "A deadly pit is conjured at the target location; any unit that enters will be damaged and rooted. Each enemy unit within the pit are affected by the root only every %pit_interval% seconds.",
+   "description_zh": "在目标区域制造致命的深渊；踏入深渊的敌方单位将受到伤害并且被缠绕。每个敌方单位每隔%pit_interval%秒才会再次受到作用。"
+  }
+ },
+ {
+  "review_id": "46be8effd41e0edfdffd",
+  "subject": "abyssal_underlord_atrophy_aura",
+  "subject_zh": "孽主·衰退光环",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "周围所有敌方单位遭到了削弱，损失部分基础攻击力。",
+   "如果敌方英雄在光环范围内死亡，孽主将获得临时的额外攻击力加成。",
+   "Nearby enemy units are weakened, losing a portion of their base damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Nearby enemy units are weakened, losing a portion of their base damage. If an enemy dies while under this effect, Underlord gains temporary bonus damage.",
+   "description_zh": "周围所有敌方单位遭到了削弱，损失部分基础攻击力。如果敌方英雄在光环范围内死亡，孽主将获得临时的额外攻击力加成。",
+   "notes_en": [
+    "Break disables the Attack Damage Reduction aura and prevents Underlord from gaining new bonus damage."
+   ],
+   "notes_zh": [
+    "破坏会使攻击力降低光环失效，并且孽主无法获得新的额外攻击力。"
+   ]
+  }
+ },
+ {
+  "review_id": "196e13aad5570abc144c",
+  "subject": "monkey_king_boundless_strike",
+  "subject_zh": "齐天大圣·棒击大地",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "齐天大圣让金箍棒变大，并将其挥起猛击地面，眩晕一条直线上的敌人并造成额外伤害和基于他普通攻击的致命一击伤害。",
+   "Monkey King enlarges his staff and slams it against the ground, stunning enemies in a line and damaging them with bonus damage and a critical hit based on his attack."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Monkey King enlarges his staff and slams it against the ground, stunning enemies in a line and damaging them with bonus damage and a critical hit based on his attack. Has True Strike.",
+   "description_zh": "齐天大圣让金箍棒变大，并将其挥起猛击地面，眩晕一条直线上的敌人并造成额外伤害和基于他普通攻击的致命一击伤害。具有克敌机先效果。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Boundless Strike applies Primal Spring with %spring_channel_pct%%% of the max channeling duration power to enemies along the staff and at the end of the staff. When Boundless Strike is set to alt-cast, Monkey King leaps to the end of his staff.",
+     "zh": "棒击大地对沿途和末端的敌人施加乾坤之跃，威力为最长持续施法时间的%spring_channel_pct%%%。棒击大地设为多样施法（右键点击技能栏图标）后，齐天大圣还会跳跃至金箍棒的另一端。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "558a3c83e88bb4e3d268",
+  "subject": "monkey_king_boundless_strike",
+  "subject_zh": "齐天大圣·棒击大地",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "shard_upgrade",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "Boundless Strike applies Primal Spring with %spring_channel_pct%%% of the max channeling duration power to enemies along the staff and at the end of the staff."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Monkey King enlarges his staff and slams it against the ground, stunning enemies in a line and damaging them with bonus damage and a critical hit based on his attack. Has True Strike.",
+   "description_zh": "齐天大圣让金箍棒变大，并将其挥起猛击地面，眩晕一条直线上的敌人并造成额外伤害和基于他普通攻击的致命一击伤害。具有克敌机先效果。",
+   "upgrade_text": {
+    "shard_loc": {
+     "en": "Boundless Strike applies Primal Spring with %spring_channel_pct%%% of the max channeling duration power to enemies along the staff and at the end of the staff. When Boundless Strike is set to alt-cast, Monkey King leaps to the end of his staff.",
+     "zh": "棒击大地对沿途和末端的敌人施加乾坤之跃，威力为最长持续施法时间的%spring_channel_pct%%%。棒击大地设为多样施法（右键点击技能栏图标）后，齐天大圣还会跳跃至金箍棒的另一端。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "951ab733220c08018ece",
+  "subject": "monkey_king_jingu_mastery",
+  "subject_zh": "齐天大圣·如意棒法",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "棒击大地击中敌人时也会计入攻击次数。",
+   "再次攻击敌人将刷新如意棒法的计数持续时间。",
+   "Hit charges on enemies cannot be dispelled."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_PASSIVE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Monkey King's attacks awaken the Jingu Bang's power. Upon the fourth hit on the same enemy hero, Monkey King earns %charges% charged attacks that have bonus damage and lifesteal.",
+   "description_zh": "齐天大圣的攻击唤醒了金箍棒的力量。连续攻击四次同个敌方英雄后，齐天大圣的下%charges%次攻击得到加强，拥有攻击力加成和吸血效果。",
+   "notes_en": [
+    "Hitting an enemy with Boundless Strike adds to the hit counter.",
+    "Repeatedly hitting an enemy refreshes the Jingu Mastery debuff duration.",
+    "Hit charges on enemies cannot be dispelled.",
+    "Jingu Mastery buff on self can be dispelled.",
+    "Break disables the gaining of new stacks.",
+    "Break does not disable the bonuses from existing stacks."
+   ],
+   "notes_zh": [
+    "棒击大地击中敌人时也会计入攻击次数。",
+    "再次攻击敌人将刷新如意棒法的计数持续时间。",
+    "敌人身上的计数效果无法被驱散。",
+    "自身的如意棒法效果可以被驱散。",
+    "破坏会使技能无法获得新的叠加效果。",
+    "破坏不会使现有叠加效果提供的加成失效。"
+   ]
+  }
+ },
+ {
+  "review_id": "faaa57d3ace7430c2587",
+  "subject": "monkey_king_wukongs_command",
+  "subject_zh": "齐天大圣·猴子猴孙",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "只有齐天大圣在附近时猴子猴孙才会攻击建筑。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Monkey King creates a circular formation of soldiers that spread out from his position. If Monkey King leaves the area his soldiers disperse. The soldiers have Monkey King's attack that attacks at a fixed rate of %attack_speed%s, and only targets enemy Heroes. Monkey King is granted bonus armor for the spell's duration.Monkey King can transform into any one of his soldiers during Wukong's command, taking its place for a short duration, becoming indistinguishable from other soldiers, and leaving another soldier in his stead.",
+   "description_zh": "齐天大圣变出圆形的猴子猴孙阵列，猴子猴孙从他的位置散开。若齐天大圣离开范围，猴子猴孙将会消失。猴子猴孙继承齐天大圣的攻击力，攻击频率为固定的%attack_speed%秒，并且只会以敌方英雄为目标。在技能持续时间内齐天大圣获得护甲加成。齐天大圣可以在猴子猴孙期间变成其中一个猴子猴孙，短时间内取代其位置，无法和其他猴子猴孙相区分，并且在原地留下一个猴子猴孙。",
+   "notes_en": [
+    "Soldiers do not receive Jingu Mastery bonuses.",
+    "Soldiers do not copy Basher or Abyssal."
+   ],
+   "notes_zh": [
+    "猴子猴孙不会获得如意棒法的加成效果。",
+    "猴子猴孙不会继承碎颅锤和深渊之刃的效果。"
+   ],
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Spawns a monkey soldier near Monkey King at regular intervals. Soldiers do not spawn while invisible or on trees. Soldiers only attack buildings when Monkey King himself is nearby. Soldiers can now gain Jingu Mastery charges independently.",
+     "zh": "每隔一段时间在齐天大圣附近产生一个猴子猴孙。隐身或上树时不会产生。只有齐天大圣在附近时猴子猴孙才会攻击建筑。猴子猴孙现在独立获得如意棒法的效果。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "023c0483493e1d4c44df",
+  "subject": "pangolier_shield_crash",
+  "subject_zh": "石鳞剑士·甲盾冲击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "石鳞剑士跃入空中，再落向当前位置的前方地面造成冲击，对范围内所有敌人造成伤害。",
+   "Pangolier jumps in the air and slams back to the ground in front of his current position damaging all enemies in a radius."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Pangolier jumps in the air and slams back to the ground in front of his current position damaging all enemies in a radius. Pangolier gains an all damage barrier for a short time if Shield Crash hits an enemy hero.\n\nForward movement is maintained if Shield Crash is used while Rolling Thunder is active, and allows Rolling Thunder to clear walls or cliffs.",
+   "description_zh": "石鳞剑士跃入空中，再落向当前位置的前方地面造成冲击，对范围内所有敌人造成伤害。甲盾冲击只要击中任意敌方英雄，他就能在短时间内获得一定数值的全伤害护盾。\n\n地雷滚滚过程中使用甲盾冲击将会保持前进，并且可以使地雷滚滚跨过地形障碍。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Shield Crash to cast a 2-attack Swashbuckle every 90 degrees around your hero that deals %scepter_damage_outgoing_tooltip%%% damage.",
+     "zh": "甲盾冲击将围绕英雄每90度施放一个刺击2次的虚张声势，造成%scepter_damage_outgoing_tooltip%%%伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "6ab89d65f8ef05189fda",
+  "subject": "pangolier_shield_crash",
+  "subject_zh": "石鳞剑士·甲盾冲击",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "scepter_upgrade",
+   "requires_scepter": true,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Causes Shield Crash to cast a 2-attack Swashbuckle every 90 degrees around your hero that deals %scepter_damage_outgoing_tooltip%%% damage."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Pangolier jumps in the air and slams back to the ground in front of his current position damaging all enemies in a radius. Pangolier gains an all damage barrier for a short time if Shield Crash hits an enemy hero.\n\nForward movement is maintained if Shield Crash is used while Rolling Thunder is active, and allows Rolling Thunder to clear walls or cliffs.",
+   "description_zh": "石鳞剑士跃入空中，再落向当前位置的前方地面造成冲击，对范围内所有敌人造成伤害。甲盾冲击只要击中任意敌方英雄，他就能在短时间内获得一定数值的全伤害护盾。\n\n地雷滚滚过程中使用甲盾冲击将会保持前进，并且可以使地雷滚滚跨过地形障碍。",
+   "upgrade_text": {
+    "scepter_loc": {
+     "en": "Causes Shield Crash to cast a 2-attack Swashbuckle every 90 degrees around your hero that deals %scepter_damage_outgoing_tooltip%%% damage.",
+     "zh": "甲盾冲击将围绕英雄每90度施放一个刺击2次的虚张声势，造成%scepter_damage_outgoing_tooltip%%%伤害。"
+    }
+   }
+  }
+ },
+ {
+  "review_id": "8e62119327174c5ac6e1",
+  "subject": "pangolier_rollup",
+  "subject_zh": "石鳞剑士·卷土重来",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": true
+  },
+  "evidence": [
+   "若敌人在此期间发动攻击，将滚离攻击者，对途中的敌人施加地雷滚滚的伤害/眩晕。",
+   "If enemies attack Pangolier during this, he will roll away from the attacker, applying Rolling Thunder damage/stun if there are enemies in the way."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET |  DOTA_ABILITY_BEHAVIOR_HIDDEN  | DOTA_ABILITY_BEHAVIOR_SHOW_IN_GUIDES",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL"
+  },
+  "context": {
+   "description_en": "Pangolier curls into an immobile protective ball, gaining debuff immunity, %magic_resistance%%% magic resistance, and allowing him to turn. Can be cast during Rolling Thunder to temporarily hit the brakes. Can cast Rolling Thunder and Shield Crash during Roll Up. If enemies attack Pangolier during this, he will roll away from the attacker, applying Rolling Thunder damage/stun if there are enemies in the way.",
+   "description_zh": "石鳞剑士将自身卷成保护性的圆球，获得减益免疫状态，拥有%magic_resistance%%%魔法抗性加成，并且可以转身。可以在地雷滚滚期间施放，暂停滚动。可以在卷土重来期间施放地雷滚滚和甲盾冲击。若敌人在此期间发动攻击，将滚离攻击者，对途中的敌人施加地雷滚滚的伤害/眩晕。"
+  }
+ },
+ {
+  "review_id": "79441239ada534f1c7ee",
+  "subject": "pangolier_gyroshell",
+  "subject_zh": "石鳞剑士·地雷滚滚",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "敌人被击中后会被击退，然后受到与他的攻击力成正比的伤害，并且被眩晕。",
+   "Striking enemies knocks them back, inflicting damage proportional to his attack damage and stunning them when they land."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_PHYSICAL"
+  },
+  "context": {
+   "description_en": "Pangolier curls into a debuff immune ball with %magic_resistance%%% magic resistance and rolls out. When rolling, he moves at an increased speed and can move through trees, but has a decreased ability to turn. Striking enemies knocks them back, inflicting damage proportional to his attack damage and stunning them when they land. \n\nColliding with walls or cliffs will cause a temporary pause while Pangolier reverses in direction.\n\nDISPEL TYPE: Basic Dispel",
+   "description_zh": "石鳞剑士卷成一个减益免疫状态的圆球，拥有%magic_resistance%%%魔法抗性，隆隆地向前滚去。滚动时移动速度提升，可以碾过树木，但是转身速率降低。敌人被击中后会被击退，然后受到与他的攻击力成正比的伤害，并且被眩晕。\n\n与地形障碍相撞后会暂时停止滚动，并且滚动方向变反。\n\n驱散类型：弱驱散",
+   "notes_en": [
+    "Enemies can be stunned multiple times per use, but cannot be affected a subsequent time until the previous stun duration ends.",
+    "If Pangolier is disabled while rolling, he will continue to stun and knock enemies that come within range.",
+    "It takes Pangolier %move_speed_ramp_up_time%s to reach full roll speed."
+   ],
+   "notes_zh": [
+    "敌人在技能期间可以多次被眩晕，但是只有上一次眩晕结束后才会再次被眩晕。",
+    "即使石鳞剑士在滚动时被控制，他依然会对范围内敌人造成眩晕和击退。",
+    "石鳞剑士需要%move_speed_ramp_up_time%秒才能达到全额的滚动速度。"
+   ]
+  }
+ },
+ {
+  "review_id": "af0b30a23c56bb215c5a",
+  "subject": "dark_willow_bramble_maze",
+  "subject_zh": "邪影芳灵·荆棘迷宫",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "进入荆棘的敌人将被缠绕，并且持续受到伤害。",
+   "Enemies that walk into a bramble are rooted and take damage over time."
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_ENEMY"
+  },
+  "context": {
+   "description_en": "Dark Willow creates a %placement_range% AoE maze of %placement_count% brambles that grow in the target area after %initial_creation_delay% seconds. Enemies that walk into a bramble are rooted and take damage over time. Lasts %placement_duration% seconds.",
+   "description_zh": "%initial_creation_delay%秒后邪影芳灵在目标区域创造出%placement_range%范围的迷宫，迷宫拥有%placement_count%棵荆棘。进入荆棘的敌人将被缠绕，并且持续受到伤害。迷宫持续%placement_duration%秒。",
+   "notes_en": [
+    "Does not interrupt channeling spells upon rooting."
+   ],
+   "notes_zh": [
+    "缠绕无法打断持续施法。"
+   ]
+  }
+ },
+ {
+  "review_id": "573dbc3a61dc0d060715",
+  "subject": "dark_willow_bedlam",
+  "subject_zh": "邪影芳灵·作祟",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "base",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "邪影芳灵放出她的精灵宠物在持续时间内围绕自身飞行，快速攻击周围敌人。"
+  ],
+  "game_file_fields": {
+   "AbilityBehavior": "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE",
+   "AbilityUnitDamageType": "DAMAGE_TYPE_MAGICAL",
+   "AbilityUnitTargetTeam": "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+  },
+  "context": {
+   "description_en": "Dark Willow sends her pet wisp to roam around herself for the duration, rapidly attacking nearby enemies.  Bedlam cannot be used while Terrorize is active.",
+   "description_zh": "邪影芳灵放出她的精灵宠物在持续时间内围绕自身飞行，快速攻击周围敌人。恐吓生效期间不能使用作祟。"
+  }
+ }
+]

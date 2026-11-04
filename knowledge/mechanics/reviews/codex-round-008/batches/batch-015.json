@@ -1,0 +1,626 @@
+[
+ {
+  "review_id": "195129478b3f1ac81342",
+  "subject": "overwhelming_blink",
+  "subject_zh": "盛势闪光",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "After teleportation, all enemies in a 800 AoE take damage equal to 100 + 50% of your strength and an additional 100% over time, and have 50% movement speed slow and 50 attack speed slow for 6 seconds."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Overwhelming Blink",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Overwhelming Blink",
+     "description": "Teleport to a target point up to 1200 units away.\n\nAfter teleportation, all enemies in a 800 AoE take damage equal to 100 + 50% of your strength and an additional 100% over time, and have 50% movement speed slow and 50 attack speed slow for 6 seconds. \n\nOverwhelming Blink cannot be used for 3 seconds after taking damage from an enemy hero or Roshan."
+    }
+   ],
+   "notes": "Self-casting will cause you to teleport in the direction of your team's fountain.",
+   "attrib": [
+    {
+     "key": "blink_range",
+     "value": "1200"
+    },
+    {
+     "key": "blink_damage_cooldown",
+     "value": "3.0"
+    },
+    {
+     "key": "blink_range_clamp",
+     "value": "960"
+    },
+    {
+     "key": "bonus_strength",
+     "display": "+ {value} Strength",
+     "value": "25"
+    },
+    {
+     "key": "radius",
+     "value": "800"
+    },
+    {
+     "key": "movement_slow",
+     "value": "50"
+    },
+    {
+     "key": "attack_slow",
+     "value": "50"
+    },
+    {
+     "key": "duration",
+     "value": "6"
+    },
+    {
+     "key": "damage_base",
+     "value": "100"
+    },
+    {
+     "key": "damage_pct_instant",
+     "value": "50"
+    },
+    {
+     "key": "damage_pct_over_time",
+     "value": "100"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "91966fcae9096ad74d38",
+  "subject": "pipe",
+  "subject_zh": "洞察烟斗",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Barrier: Gives a magic damage barrier that absorbs 425 damage to all nearby allies."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Pipe of Insight",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Barrier",
+     "description": "Gives a magic damage barrier that absorbs 425 damage to all nearby allies. Lasts 8 seconds.\n\nRadius: 1200"
+    },
+    {
+     "type": "passive",
+     "title": "Insight Aura",
+     "description": "Gives allied units 8% magic resistance.\n\nRadius: 1200"
+    }
+   ],
+   "notes": "Barrier does not affect units that have been affected by Barrier within Pipe of Insight's cooldown.\nStacks multiplicatively with other sources of magic resistance.",
+   "attrib": [
+    {
+     "key": "health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "14"
+    },
+    {
+     "key": "magic_resistance",
+     "display": "+ {value}% Magic Resistance",
+     "value": "20"
+    },
+    {
+     "key": "add_nostack_debuff",
+     "value": "1"
+    },
+    {
+     "key": "magic_resistance_aura",
+     "value": "8"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "barrier_block",
+     "value": "425"
+    },
+    {
+     "key": "barrier_duration",
+     "value": "8.0"
+    },
+    {
+     "key": "barrier_radius",
+     "value": "1200"
+    },
+    {
+     "key": "barrier_block_creep",
+     "value": "425"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "f44112a7540ea5e7bc68",
+  "subject": "radiance",
+  "subject_zh": "辉耀",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Burn: When active, scorches enemies for 60 magical damage per second."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Radiance",
+   "abilities": [
+    {
+     "type": "toggle",
+     "title": "Burn",
+     "description": "When active, scorches enemies for 60 magical damage per second. Illusions deal 35 magical damage per second.\n\nRadius: 650"
+    }
+   ],
+   "attrib": [
+    {
+     "key": "bonus_damage",
+     "display": "+ {value} Damage",
+     "value": "55"
+    },
+    {
+     "key": "aura_damage",
+     "value": "60"
+    },
+    {
+     "key": "aura_damage_illusions",
+     "value": "35"
+    },
+    {
+     "key": "upgrade_day_vision",
+     "value": "250"
+    },
+    {
+     "key": "evasion",
+     "display": "+ {value}% Evasion",
+     "value": "25"
+    },
+    {
+     "key": "aura_radius",
+     "value": "650"
+    },
+    {
+     "key": "illusion_multiplier_pct",
+     "value": "100"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "d2f1225e5720447d6c13",
+  "subject": "shivas_guard",
+  "subject_zh": "希瓦的守护",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Arctic Blast: Emits a freezing wave that deals 225 magical damage to enemies and slows their movement by -40% for 4 seconds."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Shiva's Guard",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Arctic Blast",
+     "description": "Emits a freezing wave that deals 225 magical damage to enemies and slows their movement by -40% for 4 seconds.\n\nRadius: 825"
+    },
+    {
+     "type": "passive",
+     "title": "Freezing Aura",
+     "description": "Reduces the attack speed of all enemies by -40. \n\nRadius: 1200"
+    }
+   ],
+   "notes": "The wave extends at a speed of 400 to a max size of 825.\nThe Arctic Blast follows its caster.\nMultiple instances of Freezing Aura do not stack.\nAoE bonuses from multiple Chasm Stones or its upgrades do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "17"
+    },
+    {
+     "key": "bonus_aoe",
+     "display": "+ {value} Area of Effect",
+     "value": "75"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "aura_attack_speed",
+     "value": "-40"
+    },
+    {
+     "key": "blast_damage",
+     "value": "225"
+    },
+    {
+     "key": "blast_movement_speed",
+     "value": "-40"
+    },
+    {
+     "key": "blast_debuff_duration",
+     "value": "4.0"
+    },
+    {
+     "key": "blast_radius",
+     "value": "825"
+    },
+    {
+     "key": "blast_speed",
+     "value": "400"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "6e0585c0ff34cf1e7305",
+  "subject": "urn_of_shadows",
+  "subject_zh": "影之灵龛",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Soul Release: Provides 30 health regeneration when cast on allies, and deals 25 damage per second when cast on enemies."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Urn of Shadows",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Soul Release",
+     "description": "Provides 30 health regeneration when cast on allies, and deals 25 damage per second when cast on enemies.\n\nLasts 8 seconds.\n\nGains charges every time an enemy hero dies within 1500 units."
+    }
+   ],
+   "notes": "Empty urns gain 2 charges.\nIf the allied unit is attacked by an enemy hero or Roshan, the effect is lost.\nDoes not trigger spell block or spell reflect.",
+   "attrib": [
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "1.0"
+    },
+    {
+     "key": "bonus_all_stats",
+     "display": "+ {value} All Attributes",
+     "value": "2"
+    },
+    {
+     "key": "bonus_armor",
+     "display": "+ {value} Armor",
+     "value": "2"
+    },
+    {
+     "key": "soul_radius",
+     "value": "1500"
+    },
+    {
+     "key": "soul_initial_charge",
+     "value": "2"
+    },
+    {
+     "key": "soul_additional_charges",
+     "value": "1"
+    },
+    {
+     "key": "soul_heal_amount",
+     "value": "30"
+    },
+    {
+     "key": "soul_damage_amount",
+     "value": "25"
+    },
+    {
+     "key": "duration",
+     "value": "8.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "7150ac6a4719ffbfd3a7",
+  "subject": "vanguard",
+  "subject_zh": "先锋盾",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Multiple sources of damage block do not stack."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Vanguard",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Damage Block",
+     "description": "Grants a 60% chance to block 50 damage from incoming attacks on melee heroes, and 25 damage on ranged."
+    }
+   ],
+   "notes": "Multiple sources of damage block do not stack.",
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "250"
+    },
+    {
+     "key": "bonus_health_regen",
+     "display": "+ {value} Health Regeneration",
+     "value": "4.5"
+    },
+    {
+     "key": "block_damage_melee",
+     "value": "50"
+    },
+    {
+     "key": "block_damage_ranged",
+     "value": "25"
+    },
+    {
+     "key": "block_chance",
+     "value": "60"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "df8e7a6a21a181fa2773",
+  "subject": "veil_of_discord",
+  "subject_zh": "纷争面纱",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Spell Weakness: Cast a 900 radius blast that causes enemy heroes to take 10% increased damage from spells."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Veil of Discord",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Spell Weakness",
+     "description": "Cast a 900 radius blast that causes enemy heroes to take 10% increased damage from spells.\n\nCan be cast while channeling.\n\nDuration: 16 seconds."
+    }
+   ],
+   "notes": "Spell Weakness does not stack with Bloodstone's Spell Weakness Aura.",
+   "attrib": [
+    {
+     "key": "bonus_health",
+     "display": "+ {value} Health",
+     "value": "175"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "10"
+    },
+    {
+     "key": "spell_lifesteal",
+     "display": "+ {value}% Spell Lifesteal",
+     "value": "18"
+    },
+    {
+     "key": "spell_amp",
+     "value": "10"
+    },
+    {
+     "key": "debuff_radius",
+     "value": "900"
+    },
+    {
+     "key": "resist_debuff_duration",
+     "value": "16.0"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "5ec739842b514e21e714",
+  "subject": "vladmir",
+  "subject_zh": "弗拉迪米尔的祭品",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Vladmir's Aura: Grants 20% lifesteal, 18% bonus damage, 1 mana regeneration, and 2 armor to nearby allies."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Vladmir's Offering",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Vladmir's Aura",
+     "description": "Grants 20% lifesteal, 18% bonus damage, 1 mana regeneration, and 2 armor to nearby allies.\n\nRadius: 1200"
+    }
+   ],
+   "notes": "Lifesteal on attacks against creeps is reduced to 12%.",
+   "attrib": [
+    {
+     "key": "armor",
+     "display": "+ {value} Armor",
+     "value": "1"
+    },
+    {
+     "key": "mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "0.75"
+    },
+    {
+     "key": "armor_aura",
+     "value": "2.0"
+    },
+    {
+     "key": "mana_regen_aura",
+     "value": "1"
+    },
+    {
+     "key": "lifesteal_aura",
+     "value": "20"
+    },
+    {
+     "key": "damage_aura",
+     "value": "18"
+    },
+    {
+     "key": "aura_radius",
+     "value": "1200"
+    },
+    {
+     "key": "lifesteal_creeps_tooltip",
+     "value": "12"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "313965c4fe5eb0620855",
+  "subject": "voodoo_mask",
+  "subject_zh": "巫毒面具",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Spell Lifesteal: Heals the wearer for a percentage of spell damage dealt to enemies."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Voodoo Mask",
+   "abilities": [
+    {
+     "type": "passive",
+     "title": "Spell Lifesteal",
+     "description": "Heals the wearer for a percentage of spell damage dealt to enemies."
+    }
+   ],
+   "notes": "Does not heal from Pure or Reflected damage.",
+   "attrib": [
+    {
+     "key": "spell_lifesteal",
+     "display": "+ {value}% Spell Lifesteal",
+     "value": "15"
+    }
+   ]
+  }
+ },
+ {
+  "review_id": "7192bf86dec42f32baf8",
+  "subject": "wind_waker",
+  "subject_zh": "风之杖",
+  "mechanism": "aoe_damage",
+  "mechanism_zh": "范围伤害",
+  "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+  "definition_note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射",
+  "condition": {
+   "context": "item",
+   "requires_scepter": false,
+   "requires_shard": false
+  },
+  "evidence": [
+   "Enemy units take 50 magical damage upon landing."
+  ],
+  "game_file_fields": {},
+  "context": {
+   "dname": "Wind Waker",
+   "abilities": [
+    {
+     "type": "active",
+     "title": "Cyclone",
+     "description": "Sweeps a target unit up into a cyclone, making them invulnerable for 2.5 seconds. Cyclone can be cast on yourself, enemy units or allied units. When cast on yourself, you can move the tornado at a speed of 300.\n\nEnemy units take 50 magical damage upon landing.\nDispel Type: Basic Dispel"
+    }
+   ],
+   "notes": "Cyclone can dispel some buffs and debuffs.\nWhen cast on yourself, the cyclone can be moved anywhere at a speed of 360.\nCyclone duration is unaffected by status resistance.",
+   "attrib": [
+    {
+     "key": "bonus_movement_speed",
+     "display": "+ {value} Movement Speed",
+     "value": "30"
+    },
+    {
+     "key": "bonus_mana_regen",
+     "display": "+ {value} Mana Regeneration",
+     "value": "3.0"
+    },
+    {
+     "key": "bonus_intellect",
+     "display": "+ {value} Intelligence",
+     "value": "35"
+    },
+    {
+     "key": "cyclone_duration",
+     "value": "2.5"
+    },
+    {
+     "key": "tooltip_drop_damage",
+     "value": "50"
+    },
+    {
+     "key": "tornado_speed",
+     "value": "300"
+    }
+   ]
+  }
+ }
+]
