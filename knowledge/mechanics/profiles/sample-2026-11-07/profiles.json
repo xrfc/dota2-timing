@@ -1,0 +1,898 @@
+{
+ "schema": "mechanics-hero-profiles/1",
+ "facts": "extractions/v8",
+ "profiles": [
+  {
+   "hero_id": 8,
+   "name_zh": "主宰",
+   "abilities": [
+    {
+     "subject": "juggernaut_blade_fury",
+     "name_zh": "剑刃风暴",
+     "dispellable": "不可驱散",
+     "mechanisms": [
+      {
+       "id": "aoe_damage",
+       "zh": "范围伤害",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "原文“每%blade_fury_damage_tick%秒对主宰周围的敌方单位造成伤害”明确支持多目标伤害。"
+      },
+      {
+       "id": "applies_strong_dispel",
+       "zh": "施加强驱散",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "Applies a strong dispel at the end of the spin."
+      },
+      {
+       "id": "debuff_immunity",
+       "zh": "减益免疫/技能免疫",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "Causes a bladestorm of destructive force around Juggernaut, rendering him debuff immune with %immunity_resist%%% magic resistance and dealing damage every %blade_fury_damage_tick%s to nearby enemy units."
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "juggernaut_healing_ward",
+     "name_zh": "治疗守卫",
+     "dispellable": null,
+     "mechanisms": [
+      {
+       "id": "healing",
+       "zh": "治疗/回复",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "The Healing Ward moves at %healing_ward_movespeed_tooltip% movement speed after being summoned."
+      },
+      {
+       "id": "summons",
+       "zh": "召唤物",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "Summons a Healing Ward which heals all nearby allied units, based on their max health."
+      }
+     ],
+     "numeric_upgrades": [
+      {
+       "kind": "治疗/回复",
+       "condition": "魔晶",
+       "field_values": null
+      }
+     ]
+    },
+    {
+     "subject": "juggernaut_blade_dance",
+     "name_zh": "剑舞",
+     "dispellable": null,
+     "mechanisms": [
+      {
+       "id": "break_sensitive",
+       "zh": "可被破坏",
+       "condition": "",
+       "basis": "field:IsBreakable",
+       "confirmed": true,
+       "notes": [],
+       "partial_break": [],
+       "quote": "\"2\""
+      },
+      {
+       "id": "critical",
+       "zh": "暴击",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "主宰有一定概率在攻击时触发致命一击。"
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "juggernaut_swift_slash",
+     "name_zh": "迅风斩",
+     "dispellable": "不可驱散",
+     "mechanisms": [
+      {
+       "id": "invulnerable_untargetable",
+       "zh": "无敌/不可选取",
+       "condition": "A杖",
+       "basis": "user:U42",
+       "confirmed": true,
+       "notes": [
+        "迅风斩期间主宰无敌（user_reported，文字只写“无敌斩”）；需要阿哈利姆神杖"
+       ],
+       "partial_break": [],
+       "quote": "发动一次短时间的无敌斩，持续%duration%秒。"
+      },
+      {
+       "id": "unit_target_spell",
+       "zh": "单体指向技能",
+       "condition": "A杖",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "2"
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "juggernaut_bladeform",
+     "name_zh": "剑心犹在",
+     "dispellable": null,
+     "mechanisms": [
+      {
+       "id": "break_sensitive",
+       "zh": "可被破坏",
+       "condition": "",
+       "basis": "field:IsBreakable",
+       "confirmed": true,
+       "notes": [],
+       "partial_break": [
+        "Break disables the gaining of new stacks.",
+        "Break does not disable the bonuses from existing stacks."
+       ],
+       "quote": "Break disables the gaining of new stacks."
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "juggernaut_omni_slash",
+     "name_zh": "无敌斩",
+     "dispellable": "不可驱散",
+     "mechanisms": [
+      {
+       "id": "aoe_damage",
+       "zh": "范围伤害",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "原文“斩击该单位和附近的其它敌方单位”符合一次施放能伤害多个敌人的定义。"
+      },
+      {
+       "id": "applies_basic_dispel",
+       "zh": "施加弱驱散",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "驱散类型：弱驱散"
+      },
+      {
+       "id": "invulnerable_untargetable",
+       "zh": "无敌/不可选取",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "主宰在无敌斩期间无敌。"
+      },
+      {
+       "id": "self_mobility",
+       "zh": "自身位移",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "Juggernaut leaps towards the target enemy units, and then slashes the target and other nearby enemy units at an increased attack rate."
+      },
+      {
+       "id": "unit_target_spell",
+       "zh": "单体指向技能",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "\"33554440\""
+      }
+     ],
+     "numeric_upgrades": []
+    }
+   ],
+   "countered_by": [
+    {
+     "rule": "R04",
+     "zh": "破坏使IsBreakable=1的效果失效，部分破坏按附注",
+     "own_abilities": [
+      "剑舞",
+      "剑心犹在"
+     ],
+     "items": [
+      "白银之锋"
+     ],
+     "hero_sources": 7
+    },
+    {
+     "rule": "R10",
+     "zh": "碎颅锤重击可穿透减益免疫；对能强驱散自解控的英雄，可解控后再控",
+     "own_abilities": [
+      "剑刃风暴"
+     ],
+     "items": [
+      "深渊之刃",
+      "碎颅锤"
+     ],
+     "hero_sources": 0
+    },
+    {
+     "rule": "R13",
+     "zh": "格挡和反弹分开看，不能互推；只对单体指向技能",
+     "own_abilities": [
+      "无敌斩",
+      "迅风斩"
+     ],
+     "items": [
+      "林肯法球",
+      "清莲宝珠"
+     ],
+     "hero_sources": 1
+    },
+    {
+     "rule": "R14",
+     "zh": "治疗削减克制任何形式的生命恢复；提升生命上限不受影响",
+     "own_abilities": [
+      "治疗守卫"
+     ],
+     "items": [
+      "克莱拉牧杖",
+      "冰霜之珠",
+      "斯嘉蒂之眼",
+      "腐蚀之珠",
+      "魂之灵瓮"
+     ],
+     "hero_sources": 6
+    },
+    {
+     "rule": "R20",
+     "zh": "范围伤害和回音击类技能克制幻象和召唤物",
+     "own_abilities": [
+      "治疗守卫"
+     ],
+     "items": [
+      "希瓦的守护",
+      "怪蛇之息",
+      "漩涡",
+      "狂战斧",
+      "盛势闪光",
+      "血腥榴弹",
+      "辉耀",
+      "陨星锤",
+      "雷神之锤"
+     ],
+     "hero_sources": 267
+    }
+   ],
+   "can_counter": [
+    {
+     "rule": "R01",
+     "zh": "弱驱散去掉dispellable=2的效果，对1、3无效",
+     "own_abilities": [
+      "无敌斩"
+     ]
+    },
+    {
+     "rule": "R02",
+     "zh": "强驱散去掉dispellable=1、2的效果，对3无效",
+     "own_abilities": [
+      "剑刃风暴"
+     ]
+    },
+    {
+     "rule": "R09",
+     "zh": "减益免疫挡住不能穿透的效果，能穿透的仍生效",
+     "own_abilities": [
+      "剑刃风暴"
+     ]
+    },
+    {
+     "rule": "R20",
+     "zh": "范围伤害和回音击类技能克制幻象和召唤物",
+     "own_abilities": [
+      "剑刃风暴",
+      "无敌斩"
+     ]
+    }
+   ]
+  },
+  {
+   "hero_id": 30,
+   "name_zh": "巫医",
+   "abilities": [
+    {
+     "subject": "witch_doctor_paralyzing_cask",
+     "name_zh": "麻痹药剂",
+     "dispellable": "仅强驱散",
+     "mechanisms": [
+      {
+       "id": "aoe_damage",
+       "zh": "范围伤害",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "“在敌方单位之间弹跳，眩晕击中的敌人并造成伤害”支持一次施放伤害多个敌人。"
+      },
+      {
+       "id": "stun",
+       "zh": "眩晕",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "抛出一个装满麻痹粉末的药剂，在敌方单位之间弹跳，眩晕击中的敌人并造成伤害。"
+      },
+      {
+       "id": "unit_target_spell",
+       "zh": "单体指向技能",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "\"8\""
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "witch_doctor_voodoo_restoration",
+     "name_zh": "巫毒疗法",
+     "dispellable": "不可驱散",
+     "mechanisms": [
+      {
+       "id": "healing",
+       "zh": "治疗/回复",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "巫医集中魔力治疗附近的友军单位，开启巫毒疗法后会持续消耗巫医的魔法。"
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "witch_doctor_maledict",
+     "name_zh": "巫蛊咒术",
+     "dispellable": "不可驱散",
+     "mechanisms": [
+      {
+       "id": "aoe_damage",
+       "zh": "范围伤害",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "“对一个较小区域内所有敌方英雄和玩家控制的目标施放诅咒，他们将每秒受到固定伤害”明确支持多目标伤害。"
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "witch_doctor_gris_gris",
+     "name_zh": "驱邪护符",
+     "dispellable": null,
+     "mechanisms": [
+      {
+       "id": "economy",
+       "zh": "经济经验",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "原文“价值每%gold_tick_interval_tooltip%秒会增加1金”明确提供额外金钱。"
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "witch_doctor_death_ward",
+     "name_zh": "死亡守卫",
+     "dispellable": null,
+     "mechanisms": [
+      {
+       "id": "channeled",
+       "zh": "持续施法",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "持续施法 - 召唤一个死亡守卫，会优先攻击其攻击距离内的敌方英雄。"
+      },
+      {
+       "id": "invulnerable_untargetable",
+       "zh": "无敌/不可选取",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "死亡守卫是无敌的，只有在巫医被打断或持续时间结束后才会被摧毁。"
+      },
+      {
+       "id": "pierce_evasion",
+       "zh": "克敌机先",
+       "condition": "",
+       "basis": "user:U42",
+       "confirmed": true,
+       "notes": [
+        "死亡守卫攻击有50%必中效果，算克敌机先，但没有额外伤害（user_reported，快照数值是占位符）"
+       ],
+       "partial_break": [],
+       "quote": "死亡守卫拥有%bonus_accuracy%%%额外必中率。"
+      },
+      {
+       "id": "summons",
+       "zh": "召唤物",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "持续施法 - 召唤一个死亡守卫，会优先攻击其攻击距离内的敌方英雄。"
+      },
+      {
+       "id": "aoe_damage",
+       "zh": "范围伤害",
+       "condition": "A杖",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "神杖说明“Death Ward attacks bounce between nearby enemies”支持一次攻击伤害多个敌人。"
+      }
+     ],
+     "numeric_upgrades": []
+    }
+   ],
+   "countered_by": [
+    {
+     "rule": "R02",
+     "zh": "强驱散去掉dispellable=1、2的效果，对3无效",
+     "own_abilities": [
+      "麻痹药剂"
+     ],
+     "items": [
+      "永恒之盘"
+     ],
+     "hero_sources": 12
+    },
+    {
+     "rule": "R11",
+     "zh": "状态抗性缩短控制和减益时长，减速抗性降低减速",
+     "own_abilities": [
+      "麻痹药剂"
+     ],
+     "items": [
+      "散魂剑",
+      "永恒之盘",
+      "疯狂面具"
+     ],
+     "hero_sources": 16
+    },
+    {
+     "rule": "R13",
+     "zh": "格挡和反弹分开看，不能互推；只对单体指向技能",
+     "own_abilities": [
+      "麻痹药剂"
+     ],
+     "items": [
+      "林肯法球",
+      "清莲宝珠"
+     ],
+     "hero_sources": 1
+    },
+    {
+     "rule": "R14",
+     "zh": "治疗削减克制任何形式的生命恢复；提升生命上限不受影响",
+     "own_abilities": [
+      "巫毒疗法"
+     ],
+     "items": [
+      "克莱拉牧杖",
+      "冰霜之珠",
+      "斯嘉蒂之眼",
+      "腐蚀之珠",
+      "魂之灵瓮"
+     ],
+     "hero_sources": 6
+    },
+    {
+     "rule": "R17",
+     "zh": "打断和控制克制持续施法",
+     "own_abilities": [
+      "死亡守卫"
+     ],
+     "items": [
+      "Eul的神圣法杖",
+      "深渊之刃",
+      "碎颅锤",
+      "紫怨",
+      "血棘",
+      "邪恶镰刀",
+      "陨星锤",
+      "风之杖"
+     ],
+     "hero_sources": 116
+    },
+    {
+     "rule": "R20",
+     "zh": "范围伤害和回音击类技能克制幻象和召唤物",
+     "own_abilities": [
+      "死亡守卫"
+     ],
+     "items": [
+      "希瓦的守护",
+      "怪蛇之息",
+      "漩涡",
+      "狂战斧",
+      "盛势闪光",
+      "血腥榴弹",
+      "辉耀",
+      "陨星锤",
+      "雷神之锤"
+     ],
+     "hero_sources": 267
+    }
+   ],
+   "can_counter": [
+    {
+     "rule": "R07",
+     "zh": "克敌机先克制闪避，不克制致盲",
+     "own_abilities": [
+      "死亡守卫"
+     ]
+    },
+    {
+     "rule": "R17",
+     "zh": "打断和控制克制持续施法",
+     "own_abilities": [
+      "麻痹药剂"
+     ]
+    },
+    {
+     "rule": "R20",
+     "zh": "范围伤害和回音击类技能克制幻象和召唤物",
+     "own_abilities": [
+      "死亡守卫",
+      "巫蛊咒术",
+      "麻痹药剂"
+     ]
+    }
+   ]
+  },
+  {
+   "hero_id": 1,
+   "name_zh": "敌法师",
+   "abilities": [
+    {
+     "subject": "antimage_mana_break",
+     "name_zh": "法力损毁",
+     "dispellable": null,
+     "mechanisms": [
+      {
+       "id": "break_sensitive",
+       "zh": "可被破坏",
+       "condition": "",
+       "basis": "field:IsBreakable",
+       "confirmed": true,
+       "notes": [],
+       "partial_break": [],
+       "quote": "\"2\""
+      },
+      {
+       "id": "mana_burn",
+       "zh": "烧蓝/法力削减",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "幻象继承法力损毁的燃烧魔法为%illusion_percentage%%%。"
+      }
+     ],
+     "numeric_upgrades": [
+      {
+       "kind": "烧蓝/法力削减",
+       "condition": "A杖",
+       "field_values": null
+      }
+     ]
+    },
+    {
+     "subject": "antimage_blink",
+     "name_zh": "闪烁",
+     "dispellable": null,
+     "mechanisms": [
+      {
+       "id": "projectile_dodge",
+       "zh": "躲避弹道",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "“闪烁可以躲避多种飞行过程中的攻击和技能弹道”明确支持主动躲避已飞来的弹道。"
+      },
+      {
+       "id": "self_mobility",
+       "zh": "自身位移",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "You can use Blink to dodge incoming projectiles."
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "antimage_counterspell",
+     "name_zh": "法术反制",
+     "dispellable": "弱驱散可驱散",
+     "mechanisms": [
+      {
+       "id": "break_sensitive",
+       "zh": "可被破坏",
+       "condition": "",
+       "basis": "field:IsBreakable",
+       "confirmed": true,
+       "notes": [],
+       "partial_break": [
+        "Break disables the passive magic resistance."
+       ],
+       "quote": "Break disables the passive magic resistance."
+      },
+      {
+       "id": "spell_block",
+       "zh": "格挡指向技能",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "“抵挡和反弹所有指向性技能”明确使指向敌法师的技能失效。"
+      },
+      {
+       "id": "spell_reflect",
+       "zh": "反弹指向技能",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "“抵挡和反弹所有指向性技能”明确支持基础技能具有指向技能反弹。"
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "antimage_persectur",
+     "name_zh": "绝人之路",
+     "dispellable": null,
+     "mechanisms": [
+      {
+       "id": "break_sensitive",
+       "zh": "可被破坏",
+       "condition": "",
+       "basis": "field:IsBreakable",
+       "confirmed": true,
+       "notes": [],
+       "partial_break": [],
+       "quote": "\"8796093022274\""
+      },
+      {
+       "id": "slow",
+       "zh": "减速",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "Attacks slow enemies based on how much mana they are missing."
+      }
+     ],
+     "numeric_upgrades": []
+    },
+    {
+     "subject": "antimage_mana_void",
+     "name_zh": "法力虚空",
+     "dispellable": null,
+     "mechanisms": [
+      {
+       "id": "aoe_damage",
+       "zh": "范围伤害",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "原文明确“对目标和其周围的敌人造成伤害”，一次施放可伤害多个敌人。"
+      },
+      {
+       "id": "break_sensitive",
+       "zh": "可被破坏",
+       "condition": "",
+       "basis": "user:U47",
+       "confirmed": true,
+       "notes": [
+        "可被破坏（user_reported，游戏文件IsBreakable=1）；证据表没有这一组，待补入下一版证据"
+       ],
+       "partial_break": [],
+       "quote": "上面那37组确实都无法破坏，炼金先天可破坏，漏记这些确实可破坏"
+      },
+      {
+       "id": "stun",
+       "zh": "眩晕",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "所有受到伤害的单位都会被短暂眩晕。"
+      },
+      {
+       "id": "unit_target_spell",
+       "zh": "单体指向技能",
+       "condition": "",
+       "basis": "two_ai",
+       "confirmed": false,
+       "notes": [],
+       "partial_break": [],
+       "quote": "2"
+      }
+     ],
+     "numeric_upgrades": []
+    }
+   ],
+   "countered_by": [
+    {
+     "rule": "R01",
+     "zh": "弱驱散去掉dispellable=2的效果，对1、3无效",
+     "own_abilities": [
+      "法术反制"
+     ],
+     "items": [
+      "Eul的神圣法杖",
+      "卫士胫甲",
+      "否决坠饰",
+      "幻影斧",
+      "撒旦之邪力",
+      "散魂剑",
+      "清莲宝珠",
+      "风之杖",
+      "黑皇杖"
+     ],
+     "hero_sources": 30
+    },
+    {
+     "rule": "R02",
+     "zh": "强驱散去掉dispellable=1、2的效果，对3无效",
+     "own_abilities": [
+      "法术反制"
+     ],
+     "items": [
+      "永恒之盘"
+     ],
+     "hero_sources": 12
+    },
+    {
+     "rule": "R04",
+     "zh": "破坏使IsBreakable=1的效果失效，部分破坏按附注",
+     "own_abilities": [
+      "法术反制",
+      "法力损毁",
+      "法力虚空",
+      "绝人之路"
+     ],
+     "items": [
+      "白银之锋"
+     ],
+     "hero_sources": 7
+    },
+    {
+     "rule": "R11",
+     "zh": "状态抗性缩短控制和减益时长，减速抗性降低减速",
+     "own_abilities": [
+      "法力虚空",
+      "绝人之路"
+     ],
+     "items": [
+      "散魂剑",
+      "永恒之盘",
+      "疯狂面具"
+     ],
+     "hero_sources": 16
+    },
+    {
+     "rule": "R13",
+     "zh": "格挡和反弹分开看，不能互推；只对单体指向技能",
+     "own_abilities": [
+      "法力虚空"
+     ],
+     "items": [
+      "林肯法球",
+      "清莲宝珠"
+     ],
+     "hero_sources": 1
+    },
+    {
+     "rule": "R18",
+     "zh": "定身阻止带ROOT_DISABLES字段的位移，限制位移另算",
+     "own_abilities": [
+      "闪烁"
+     ],
+     "items": [
+      "缚灵索",
+      "阿托斯之棍"
+     ],
+     "hero_sources": 22
+    }
+   ],
+   "can_counter": [
+    {
+     "rule": "R12",
+     "zh": "烧蓝克制没蓝放不了技能就很脆弱的英雄，不按蓝耗高低",
+     "own_abilities": [
+      "法力损毁"
+     ]
+    },
+    {
+     "rule": "R13",
+     "zh": "格挡和反弹分开看，不能互推；只对单体指向技能",
+     "own_abilities": [
+      "法术反制"
+     ]
+    },
+    {
+     "rule": "R17",
+     "zh": "打断和控制克制持续施法",
+     "own_abilities": [
+      "法力虚空"
+     ]
+    },
+    {
+     "rule": "R20",
+     "zh": "范围伤害和回音击类技能克制幻象和召唤物",
+     "own_abilities": [
+      "法力虚空"
+     ]
+    }
+   ]
+  }
+ ]
+}

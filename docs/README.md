@@ -103,6 +103,7 @@
 - [词表v6新增机制草稿](handoff/vocabulary-v6-draft.md)
 - [MK-T4规则草稿](handoff/mk-t4-rules-draft.md)
 - [MK交接（2026-11-05）](handoff/mk-handoff-2026-11-05.md)
+- [MK-T5英雄机制档案](../knowledge/mechanics/profiles/README.md)
 - 历史交接：[双分支上下文（10-16）](handoff/2026-10-16-context.md) · [单目录整合（10-16）](handoff/single-workspace-2026-10-16.md) · [数据接口交接](handoff/purchase-data-interface.md) · [数据agent提示词](handoff/data-agent-prompt.md) · [模型agent提示词](handoff/model-agent-prompt.md)
 
 ## 6. 历史归档

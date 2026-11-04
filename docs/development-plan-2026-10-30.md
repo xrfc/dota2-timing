@@ -54,6 +54,14 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | 编号 | 决定 | 日期 |
 |---|---|---|
 | U65 | 提升治疗量才算治疗，治疗增强不算 | 2026-11-04 |
+| U81 | 全量补漏（Claude和Codex逐个读全部技能和现役装备）；倒影不算第20条目标；提交开PR | 2026-11-04 |
+| U80 | 补幻象7条；继续MK-T5 | 2026-11-04 |
+| U79 | 巫医档案纠正；主动技能无被动文字时单独确认；事实v9、规则v3 | 2026-11-07 |
+| U78 | 法力虚空等4个`IsBreakable`是残留；召唤物名单确认；不写克制召唤物规则 | 2026-11-07 |
+| U77 | 莲花反弹迅风斩同样生效；死亡守卫不算召唤物；`IsBreakable`可能有旧版残留 | 2026-11-07 |
+| U76 | 召唤物只算有血量的单位，按攻击次数计算的不算 | 2026-11-07 |
+| U75 | 主宰样例纠正；范围伤害只克制幻象，不克制召唤物 | 2026-11-07 |
+| U74 | 合并PR #16，开始MK-T5 | 2026-11-07 |
 | U73 | 竭心光环算范围伤害；结束MK-T4，进入MK-T5 | 2026-11-07 |
 | U72 | 召唤多单位不算范围伤害；黑洞算；幻影冲锋A杖不算；规则v2、事实v8 | 2026-11-06 |
 | U71 | 新增范围伤害，第20条改以范围伤害为核心 | 2026-11-06 |
@@ -382,7 +390,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### 下一步（接手从这里开始）
 
-**当前：MK-T5。** MK-T4已结束（U73），规则v2和事实v8是输入。交接见[MK交接（2026-11-05）](handoff/mk-handoff-2026-11-05.md)。
+**当前：MK-T5。** MK-T4已结束（U73），规则v2和事实v8是输入。事实v10和规则v4已生成（U80、U81），英雄档案、装备档案、克制关系图、英雄特性v2在`knowledge/mechanics/profiles/derived-v1/`（草稿）。发现事实层大量漏记（`knowledge/mechanics/reviews/recall-check-001/`）；下一步全量补漏（U81），再做U5抽查。交接见[MK交接（2026-11-05）](handoff/mk-handoff-2026-11-05.md)。
 
 **2026-11-02 待用户裁定**：Codex第2轮19处分歧、U5抽查进度（93/497）及待决项已汇总到[待用户裁定汇总](handoff/user-rulings-2026-11-02.md)；19处分歧已由U39、U40全部裁定（`knowledge/mechanics/reviews/user-rulings-001.jsonl`）；U41定U5剩余组先交Codex只读复核，已完成（`knowledge/mechanics/reviews/codex-round-003/`：379组，同标签355、分歧24），分歧中H2的7组已由U42、U43裁定，召唤物规则已定（U43），H1及H3由U44、U45裁定，24组分歧全部裁定完毕（汇总H块）；U46对照游戏文件`IsBreakable`（`knowledge/mechanics/reviews/break-check-001/`）：180组中38组差异及16个漏记技能已由U47裁定，裁定后全部与标记一致；部分破坏附注已记条件（U48）；其他机制排查已完成（`knowledge/mechanics/reviews/game-files-audit-001/`），疑点已由第4轮复核（`codex-round-004/`：175组，同标签136、分歧39、都不确定9），已由U50–U52全部裁定；词表v4和复核后事实v4已生成（`knowledge/mechanics/extractions/v4/`，U54），第5轮复核702组只有Claude审过的组（`codex-round-005/`，同标签674、分歧28），28组已由U57–U59全部裁定；词表v5和复核后事实v5已生成（`knowledge/mechanics/extractions/v5/`，U60），词表缺口A、B组决定加入（U62、U63），第7轮Codex已审（`codex-round-007/`，分歧见汇总L块），已由U65裁定；词表v6和复核后事实v6已生成（`knowledge/mechanics/extractions/v6/`），MK-T3已结束（U67），MK-T4规则v1已生成（`knowledge/mechanics/rules-v1.json`，事实入口`extractions/v7/`，U70），第20条光环待用户定；词表待下一版更新。
 

@@ -1,0 +1,19 @@
+{
+ "schema": "hero-trait-mapping/2",
+ "status": "assistant_draft_pending_user_review",
+ "decision": "U26,U23",
+ "note": "助手起草：v1的9个维度怎样从机制词表算出来。没有用户定义的维度标pending，不算。",
+ "traits": {
+  "evasion": {"zh": "自身闪避", "v1": "evasion", "v1_subtype": "self_evasion", "mechanisms": ["evasion"], "note": "闪避和致盲分开（U30、R07）；v1合在一起"},
+  "blind": {"zh": "致盲敌人", "v1": "evasion", "v1_subtype": "blind", "mechanisms": ["blind"], "note": "闪避和致盲分开（U30、R07）；v1合在一起"},
+  "sustain": {"zh": "治疗/吸血", "v1": "sustain", "mechanisms": ["healing", "lifesteal"]},
+  "mobility": {"zh": "自身位移", "v1": "mobility", "mechanisms": ["self_mobility"]},
+  "disables": {"zh": "硬控技能", "v1": "disables", "mechanisms": ["stun", "hex", "silence", "root", "forced_action", "sleep", "cyclone_banish"], "threshold": "只记数量；“控制多”的门槛待用户定（R11备注）"},
+  "dispellable_save": {"zh": "可被弱驱散的保命效果", "v1": "dispellable_save", "mechanisms": ["damage_block", "invulnerable_untargetable", "death_prevention", "debuff_immunity"], "dispellable": [2], "note": "保命机制且dispellable=2，也就是R01能去掉的"},
+  "illusions": {"zh": "幻象", "v1": "illusions_summons", "v1_subtype": "illusions", "mechanisms": ["illusions"]},
+  "summons": {"zh": "召唤物", "v1": "illusions_summons", "v1_subtype": "summons", "mechanisms": ["summons"], "note": "只算有血量的单位（U76）"},
+  "targeted_spells": {"zh": "单体指向技能", "mechanisms": ["unit_target_spell"], "threshold": "只记数量；v1的“至少2个或大招”不是用户定的"},
+  "mana_dependent": {"zh": "法力依赖", "pending": "等R12“脆弱”的定义"},
+  "magic_burst": {"zh": "魔法爆发", "pending": "v1是助手按伤害数值标的，用户没定义过"}
+ }
+}
