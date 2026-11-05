@@ -13,7 +13,7 @@
 - `retired_term_rows`放退役词条“强制行为”“限制位移”下没有搬走的25行（排除22，接受3）。这3条接受行是诱捕、狂战士之怒、疯狂生长，已由缠绕或捆缚覆盖。
 - Codex提出但未写入的（用户交给助手判断）见[U89](../../../../docs/decisions/2026-11-04-recheck-rulings.md)；冰川（魔晶）的创造地形写入，只算AI一致。
 
-未做：U5抽查；`patch_verified=false`；只读文字，未运行游戏。
+已被[v13](../v13/README.md)取代。未做：U5抽查；`patch_verified=false`；只读文字，未运行游戏。
 
 ```bash
 PYTHONPATH=src .venv/bin/python scripts/build_mechanics_facts_v12.py --output <新目录>

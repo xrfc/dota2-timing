@@ -1,0 +1,96 @@
+{
+  "summary_zh": "只读复核完成，确认8项问题。主要修复已落地，但条件归属、旧查询入口、反馈状态和依赖校验仍有遗漏。边界内执行的11个现有测试均通过；内存退化检查也证实了档案测试的盲点。未修改文件、未联网。旧版共享源码未见工作区修改；因读取边界限制，未运行完整构建或核验v12、derived-v2的完整复现。",
+  "items": [
+    {
+      "item": 1,
+      "verdict": "partly",
+      "how_verified_zh": "实际统计3110行，其中2467行有条件说明，接受行中为1784/2413；condition_review与说明有无全部一致。虚空眩晕的夜晚说明正确挂在事实行，hero-60也显示了它。但图证据按技能和机制合并说明，混淆了基础版与升级版。受这种合并影响的有36组技能/机制、78处证据。未读取清单外的原始审查文件，因此没有宣称已证明全部原文完整保留。"
+    },
+    {
+      "item": 2,
+      "verdict": "done",
+      "how_verified_zh": "rules-evaluation将R12、R13、R15标为pending。逐条比对3421条item_to_hero边，其status、relation、pending均与对应evaluation一致；204条待定边全部来自R13。hero-1显示R12、R13待定，hero-60显示R13待定。原始rules-v5不在读取清单内，未独立核对其内容。"
+    },
+    {
+      "item": 3,
+      "verdict": "partly",
+      "how_verified_zh": "图及evaluation的semantics明确写候选；全部3421条装备边都有relation和status。usable_edges默认返回3217条，显式包含待定时返回3421条，confirmed_only返回9条。但旧的edges_between可直接接收新图，默认返回待定关系并丢掉状态。"
+    },
+    {
+      "item": 4,
+      "verdict": "partly",
+      "how_verified_zh": "basis实数为two_ai=2509、user=398、user_spot_check=81、user_corrected=2、field=120，与文档一致。95条附着反馈的review_id均对应所在行；33条unattached_feedback确实没有现存对应行。旧批93条、新批35条；圣洁吊坠主动/被动和吃鱼的3项corrections均正确应用，原话仍保留。当前包没有未解决的disputed行。但已有user或field依据的行收到新wrong时仍保持确认，未满足无例外的wrong处理要求。"
+    },
+    {
+      "item": 5,
+      "verdict": "partly",
+      "how_verified_zh": "事实manifest确有158个数据输入、23个实现记录；派生manifest有10个数据输入、4个实现记录。派生脚本的直接数据读取均在这10项中；允许读取的输入、实现及抽查输出哈希均匹配。发现mechanics.py未登记、实现文件没有构建前后比对，以及动态英雄文件删除可逃过比对。清单外历史脚本和输入未读取，不能断言158项已覆盖全部实际数据读取。"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "medium",
+      "confirmed": true,
+      "location": "src/dota_items/data/mechanics_graph_v2.py:41、64；counter-graph.json → rules[R20].sources[dazzle_shadow_wave].evidence",
+      "problem_zh": "条件说明合并时没有区分事实行或升级条件，导致说明挂到错误的证据上。",
+      "evidence_zh": "事实中暗影波aoe_damage的基础行只写“基础技能；敌人在受治疗友军附近”，A杖行另写“需要A杖……”。实际图中R20的基础证据和A杖证据却都带这两段说明。复现：筛选R20.sources中subject=dazzle_shadow_wave，比较两条evidence的condition和condition_notes。",
+      "impact_zh": "阅读基础证据时会看到需要A杖的说明，阅读升级证据时也混入基础说明，无法准确还原每条证据的生效条件。"
+    },
+    {
+      "severity": "medium",
+      "confirmed": true,
+      "location": "src/dota_items/data/mechanics_graph.py:168",
+      "problem_zh": "已有英雄间查询入口绕过了待定过滤，并在返回时丢掉relation和status。",
+      "evidence_zh": "对实际derived-v3/counter-graph.json执行edges_between(graph, 1, 1)，返回R13、来源antimage_counterspell、目标antimage_mana_void。对应图规则为pending，但返回对象没有pending、status或relation，也没有要求显式开启待定。",
+      "impact_zh": "使用旧查询函数读取新图的程序，仍会默认拿到无法辨别待定状态的关系；usable_edges的保护仅覆盖装备边入口。"
+    },
+    {
+      "severity": "medium",
+      "confirmed": true,
+      "location": "src/dota_items/data/mechanics_facts_v13.py:48；tests/test_mechanics_facts_v13.py:132",
+      "problem_zh": "wrong只会撤销two_ai和user_spot_check状态，其他已确认依据收到wrong仍保持确认。",
+      "evidence_zh": "复制实际batrider_sticky_napalm/aoe_damage行，其basis为user:U72；在内存中加入wrong反馈且不提供correction，再调用apply_feedback，basis仍为user:U72，confirmed仍返回True。现有测试第138行还明确要求user:U1保持不变。当前产物没有这类未解决wrong，问题由该合法输入路径复现。",
+      "impact_zh": "后续用户标错已有user、user_corrected或field依据的行时，反馈虽然保存，程序仍将该行视为确认，文档所述wrong处理规则不成立。"
+    },
+    {
+      "severity": "medium",
+      "confirmed": true,
+      "location": "scripts/build_mechanics_facts_v13.py:24、53；knowledge/mechanics/extractions/v13/manifest.json:165；tests/test_mechanics_facts_v13.py:66",
+      "problem_zh": "事实构建漏记直接调用的mechanics.py实现依赖。",
+      "evidence_zh": "脚本直接导入并调用mechanics.load_enums和load_vocabulary，但实际manifest的input_sha256与implementation_sha256均没有src/dota_items/data/mechanics.py。读取追踪测试还明确排除了所有.py文件，因此不能发现该遗漏。",
+      "impact_zh": "改变枚举或词表校验实现后，manifest无法完整标识构建所用源码；文档“实际读到的全部文件”说法过强。"
+    },
+    {
+      "severity": "medium",
+      "confirmed": true,
+      "location": "scripts/build_mechanics_facts_v13.py:97、141、162；scripts/build_mechanics_derived_v3.py:78、141、152",
+      "problem_zh": "构建前后哈希比较只覆盖数据输入，实现文件只在结束时取一次哈希。",
+      "evidence_zh": "两处run的before和changed均不包含IMPLEMENTATION；implementation_sha256在最终manifest阶段才计算。源码中不存在实现文件的前后快照或比较。这与是否补齐mechanics.py是两个独立遗漏。",
+      "impact_zh": "构建期间源码变化不会触发这项检查，manifest还可能记录磁盘上的新源码哈希，而构建执行的是先前已经导入的实现。"
+    },
+    {
+      "severity": "medium",
+      "confirmed": true,
+      "location": "scripts/build_mechanics_facts_v13.py:61、141；tests/test_mechanics_facts_v13.py:96",
+      "problem_zh": "动态枚举的英雄输入在读取后被删除，会逃过构建末尾的变化检查。",
+      "evidence_zh": "declared_inputs每次重新glob英雄文件；changed只遍历第二次digest的键。在内存中执行原比较语句，before含hero.txt和fixed.json，第二次只剩未变的fixed.json，结果changed=[]。现有漂移测试只模拟固定registry的哈希变化，未覆盖键集合缩减。",
+      "impact_zh": "英雄文件在已被读取后、末次检查前删除时，构建仍可通过，与“输入中途变化就报错”的要求不一致。"
+    },
+    {
+      "severity": "medium",
+      "confirmed": true,
+      "location": "tests/test_mechanics_facts_v13.py:75、121、213",
+      "problem_zh": "档案条件和待定标记测试验证的是现成文件，无法防止生成代码退回错误行为。",
+      "evidence_zh": "在内存中将display_doc、display_evaluation替换为原样返回，两项档案测试仍通过。用实际事实和evaluation重建敌法师档案时，R13标题已失去【待定】。test_derived_replays仅比较新生成的counter-graph，不比较新生成的档案。相对地，把wrong恢复成确认、丢掉条件说明、默认放行待定边这3种内存退化，现有相应单测都能失败。",
+      "impact_zh": "测试能保护部分核心函数，但不能保证重新生成的档案仍保留条件说明和待定提示。"
+    },
+    {
+      "severity": "low",
+      "confirmed": true,
+      "location": "knowledge/mechanics/extractions/v13/README.md:14；knowledge/mechanics/profiles/README.md:3",
+      "problem_zh": "两处说明没有准确限定批次或版本。",
+      "evidence_zh": "v13 README写抽查“只含”2026-11-05的35条；按实际反馈file统计，包内还保留旧批93条，总计128条。profiles README开头仍统一描述为旧脚本从v9和rules-v3生成，与第5行当前derived-v3的来源说明矛盾。其余核对的行数、basis、条件覆盖数、3421/9/204及manifest中的127英雄、143装备记录数均一致。",
+      "impact_zh": "读者容易误解反馈覆盖范围或使用过时的档案生成入口。"
+    }
+  ]
+}

@@ -13,7 +13,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FACTS = "knowledge/mechanics/extractions/v12/facts-v12.json"
+FACTS = "knowledge/mechanics/extractions/v13/facts-v13.json"
 REGISTRY = "knowledge/hero-capabilities/hero-registry.json"
 TRAITS_V1 = "knowledge/hero-traits/hero-traits-v1.json"
 LABEL_MECHANISMS = {

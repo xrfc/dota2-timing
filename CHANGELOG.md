@@ -1,5 +1,22 @@
 # 变更记录
 
+## 2026-11-05 U90、U92–U98：事实v13、派生层v3、知识库工程修复、减速拆分、无视地形
+
+- 生效条件：把Codex审查里的条件说明保留到事实行（`condition_notes`，3110行中2467行有）；没有说明的标`condition_review=none`。只供阅读，不用于推理。
+- 用户反馈：`ok`才算抽查确认；`wrong`记`disputed_by_user`，等裁定；原话留在`user_feedback`，找不到行的放`unattached_feedback`（33条）。旧的2行“错”按原话改为`user_corrected`，圣洁吊坠被动改回`two_ai`。
+- 克制关系：`mechanics_graph_v2`给每条边加`relation`、`status`，档案标【待定】；`usable_edges`默认不含待定规则。
+- 依赖记录：v13记录158个数据输入和导入到的全部源码，数据和源码都在构建前后比对；测试追踪真实读取和导入关系。
+- Codex只读复核（`reviews/engineering-review-001/`，`gpt-6.1-sol`/`high`，约9.5万tokens）确认8个问题，已全部修复：条件说明挂错证据；英雄间查询绕过待定；标错不撤销已有确认；漏记`mechanics.py`；源码没有前后比对；删除输入逃过检查；档案测试只读现成文件；两处说明不准。
+- 熊灵技能列在独行德鲁伊下（`extra-abilities-v1.json`）；跳跃魔晶+1充能记为附注。写入第二轮抽查标记111条（导出时的快照）。
+- 减速拆分（U93、U94）：Codex重读934个对象（`reviews/full-audit-005/`，约71万tokens）；词表v12（82项）新增减攻速；规则v6把R11拆成状态抗性和减速抗性（R21）；8条改记减攻速，20条加减攻速。
+- 无视地形（U95–U98）：飞行改名；跳跃和冲刺都算（Codex分类81个自身位移，`reviews/full-audit-007/`）；词表v13（83项）新增高空视野；规则v7加R22；力场、栅栏、竞技场改算场地魔法；减冷却只算能减别的技能（`reviews/full-audit-008/`）；Codex重读见`reviews/full-audit-006/`（约60万tokens）。
+- 旧版本未改，`derived-v2`保留。`check_mechanics_recall`改读v13。
+
+## 2026-11-05 U5抽查第二轮开始
+
+- 用户觉得太多，页面默认先看第一批220行（U91）；其余609行保留。
+- 从2335行AI记录分层抽829行，做成[抽查页面](https://claude.ai/artifact/8tYBnX1J7t8SqGq7UNAX1g)；抽样和页面源码在`reviews/u5-spot-check-002/`。结果尚未写入事实。
+
 ## 2026-11-05 U85–U89：第1–8轮复查、控制分类、事实v12
 
 - Codex（`gpt-6.1-sol`/`high`）盲审第1–8轮1879行：1817行结论和条件一致，62行不同，用户裁定其中需要改的（`reviews/full-audit-003/`）。

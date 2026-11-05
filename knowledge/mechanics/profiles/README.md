@@ -1,8 +1,10 @@
 # MK-T5 英雄机制档案
 
-由`scripts/build_mechanics_profiles.py`从`extractions/v9/`和`rules-v3`自动生成，不手填。`?`表示只有AI一致，用户尚未确认。
+全部由脚本生成，不手填，当前版本见下。`?`表示只有AI一致，用户尚未确认。
 
-- `derived-v2/`（当前，草稿）：由`scripts/build_mechanics_derived_v2.py`从事实v12、词表v11和规则v5生成。127个英雄，143件现役装备，文件结构同`derived-v1/`。
+- `derived-v3/`（当前，草稿）：由`scripts/build_mechanics_derived_v3.py`从事实v13、词表v13和规则v7生成。127个英雄，143件现役装备。比v2多了：每条边的`relation`和`status`；证据里的`condition_notes`；档案里的“【待定】”和部分“AI说明条件”；熊灵的技能。
+  - 局限：3,376条边只有17条两端都确认，其中204条来自待定规则R13；只是候选。档案只显示含夜晚、层数、概率等关键词的条件说明，完整文字在`facts-v13.json`。U5抽查还没做完。
+- `derived-v2/`：基于v12，已被取代，保留不改。由`scripts/build_mechanics_derived_v2.py`从事实v12、词表v11和规则v5生成。127个英雄，143件现役装备，文件结构同`derived-v1/`。
   - 局限：3,421条装备到英雄的边只有9条两端都确认，不能当结论用；U5抽查还没做。
 - `derived-v1/`：基于v10，已被取代，保留不改。
   - `heroes/`、`hero-profiles.json`：127个英雄。

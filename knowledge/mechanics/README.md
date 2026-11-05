@@ -5,17 +5,38 @@
 | 层 | 文件 | 状态 |
 |---|---|---|
 | 1 事实层：官方原始枚举的含义 | `enums-v1.json` | 已经用户确认（U30，MK-T2完成） |
-| 1 事实层：机制词表 | `vocabulary-v9.json`（v1–v8保留） | 76项，定义来自用户决定，措辞由助手整理 |
-| 1 事实层：复核后事实 | `extractions/v10/`（v1–v9保留） | MK-T3已结束（U67），`basis`标明依据 |
-| 2 机制规则层：机制交互与克制 | `rules-v5.json`，结果在`extractions/v12/rules-evaluation.json` | 20条（U73结束T4），第8、12、13、15条的细节到T5 |
-| 3 推导层：英雄/装备机制档案、克制图、hero-traits v2 | `profiles/derived-v2/` | MK-T5进行中，草稿已生成，待U5抽查 |
+| 1 事实层：机制词表 | `vocabulary-v13.json`（v1–v12保留） | 83项，定义来自用户决定，措辞由助手整理 |
+| 1 事实层：复核后事实 | `extractions/v13/`（v1–v12保留） | MK-T3已结束（U67），`basis`标明依据 |
+| 2 机制规则层：机制交互与克制 | `rules-v7.json`，结果在`extractions/v13/rules-evaluation.json` | 22条（U73结束T4，U94拆出R21，U97加R22），第8、12、13、15条的细节到T5 |
+| 3 推导层：英雄/装备机制档案、克制图、hero-traits v2 | `profiles/derived-v3/` | MK-T5进行中，草稿已生成，待U5抽查 |
 
 - 读取一律用`dota_items.data.mechanics.load_enums(doc, registry_heroes)`与`load_vocabulary(doc, enums)`：每个例子技能必须存在且取值一致；登记表中出现的取值必须全部有解释，补丁更新出现新取值时直接报错。
 - 修改须记决策并升版本（v2…），旧版本不覆盖。
 
-**当前入口：`extractions/v12/`、`vocabulary-v11.json`和`rules-v5.json`（U83、U85–U89）；派生层`profiles/derived-v2/`（草稿）。补漏见`reviews/full-audit-001/`、`full-audit-002/`，第1–8轮复查见`full-audit-003/`，控制分类重读见`full-audit-004/`，对照见`reviews/recall-check-002/`。**
+## 当前数据流（2026-11-05，U92）
+
+```
+来源快照（Valve说明、游戏文件） → 候选 → AI审查＋用户裁定 → 事实v13
+事实v13 ＋ 词表v13 ＋ 规则v7 → rules-evaluation（来源集合、目标集合）
+                                → 派生层derived-v3（档案、克制关系候选）
+```
+
+读这些数据时要知道：
+
+- **`basis`**：`user*`、`field`算确认；`two_ai`只是AI一致；`disputed_by_user`是用户标了错、还没裁定，不算确认，原来是用户裁定或字段也一样。
+- **`user_feedback`**：抽查的标记和原话。行已不存在的反馈放在`unattached_feedback`，不丢。
+- **`condition_notes`**：AI写的条件说明，只供阅读，不能用于自动推理。`condition_review=none`只表示没有说明，不代表无条件。结构化的只有`condition`（基础、A杖、魔晶、装备）。
+- **克制关系是候选**：`rules-evaluation`和`counter-graph`只算集合，没有逐对核对条件和例外，`semantics`字段写明了这一点。每条边带`relation`和`status`（`candidate`或`pending`）。程序读边要用`data.mechanics_graph_v2.usable_edges`，查英雄之间的关系用`hero_relations`，两者默认不含待定规则。旧函数`mechanics_graph.edges_between`不带状态，目前只有旧测试在用，新代码不要用。
+- **没算的规则字段**：`pairs`、`target_exempt_mechanisms`、`parameters`现在不参与计算，`not_evaluated`会列出来。
+- **校验**：`manifest.json`记录数据输入（v13共158个，测试追踪真实读取）和导入到的全部仓库源码（测试沿导入关系检查）；数据和源码都在构建前后比对，中途变化或文件被删就报错。
+
+MK-T6再做：统一入口文件`current.json`、补丁状态、数值升级的裁定来源、未生效规则字段改为明确报错。
+
+**当前入口：`extractions/v13/`、`vocabulary-v13.json`和`rules-v7.json`（U83、U85–U98）；派生层`profiles/derived-v3/`（草稿）。补漏见`reviews/full-audit-001/`、`full-audit-002/`，第1–8轮复查见`full-audit-003/`，控制分类重读见`full-audit-004/`，对照见`reviews/recall-check-002/`。**
 
 “可被破坏”与游戏文件的对照见[破坏对照](reviews/break-check-001/README.md)（U46，U47已裁定）；其他机制见[排查报告](reviews/game-files-audit-001/README.md)（U48）；退出装备标记见`retired-items-v1.json`（U51）。
+
+熊灵不算单独英雄，技能列在独行德鲁伊下（`extra-abilities-v1.json`，U90）。
 
 MK-T3接口、来源限制、复现命令与抽查入口见[机制事实说明](../../docs/mechanics-facts.md)。v1包含全部734个技能和209个装备清单候选；原文匹配均待复核，不能直接当作机制规则。
 
