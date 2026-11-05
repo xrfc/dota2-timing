@@ -1,0 +1,380 @@
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: none
+reasoning summaries: none
+session id: 01a1a5af-86b7-7431-b883-8bc94e12f499
+--------
+user
+你在独立阅读Dota 2技能和装备的说明，判断每个对象具备词表里的哪些机制。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+要求：
+- 每个对象都要输出一条，`subject`原样返回。没有任何机制时`mechanisms`为空数组。
+- 逐个对象读完整说明，对照词表全部条目判断，不要只找明显的。说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 词表定义已经用户确认，必须遵守。另外：
+  - 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。
+  - 提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+  - 召唤物只算有血量的单位；按受攻击次数计算的不算。
+  - 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+  - 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `condition`：基础效果写`base`，只在有A杖时生效写`scepter`，只在有魔晶时写`shard`，装备写`item`。`granted_by`不为空的对象，整个技能按该升级记。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字（如“+ 35% Evasion”），可以当证据。`%xxx%`是数值占位符。
+- `quote`摘决定判断的原文片段；`uncertain`为true表示材料不足或需要游戏知识，不要猜。
+
+词表：
+[
+{
+"id": "stun",
+"zh": "眩晕",
+"definition": "使目标无法行动和施法的硬控（含小眩晕）"
+},
+{
+"id": "hex",
+"zh": "妖术",
+"definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品"
+},
+{
+"id": "silence",
+"zh": "沉默",
+"definition": "目标无法施放技能（仍可攻击、使用物品）"
+},
+{
+"id": "mute",
+"zh": "禁用物品",
+"definition": "目标无法使用物品"
+},
+{
+"id": "disarm",
+"zh": "缴械",
+"definition": "目标无法普通攻击"
+},
+{
+"id": "root",
+"zh": "定身",
+"definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"
+},
+{
+"id": "forced_action",
+"zh": "强制行为",
+"definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"
+},
+{
+"id": "sleep",
+"zh": "睡眠",
+"definition": "无法行动，受伤害后醒来"
+},
+{
+"id": "cyclone_banish",
+"zh": "吹风/放逐",
+"definition": "使目标短暂离开战场，期间无敌或不可被选取"
+},
+{
+"id": "slow",
+"zh": "减速",
+"definition": "降低移动速度或攻击速度"
+},
+{
+"id": "evasion",
+"zh": "闪避",
+"definition": "自身有概率使敌方攻击落空"
+},
+{
+"id": "blind",
+"zh": "致盲",
+"definition": "使敌方单位的攻击有概率落空"
+},
+{
+"id": "debuff_immunity",
+"zh": "减益免疫/技能免疫",
+"definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"
+},
+{
+"id": "pierces_debuff_immunity",
+"zh": "穿透减益免疫",
+"definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）"
+},
+{
+"id": "invulnerable_untargetable",
+"zh": "无敌/不可选取",
+"definition": "暂时无法被伤害或无法被指向"
+},
+{
+"id": "damage_block",
+"zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"
+},
+{
+"id": "death_prevention",
+"zh": "免死",
+"definition": "在一段时间内不会被打死（如薄葬、回光返照）"
+},
+{
+"id": "status_resistance",
+"zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"
+},
+{
+"id": "slow_resistance",
+"zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）"
+},
+{
+"id": "applies_basic_dispel",
+"zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果"
+},
+{
+"id": "applies_strong_dispel",
+"zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）"
+},
+{
+"id": "applies_break",
+"zh": "施加破坏",
+"definition": "使目标的被动技能暂时失效"
+},
+{
+"id": "invisibility",
+"zh": "隐身",
+"definition": "使自身、队友、召唤物或复制体隐身"
+},
+{
+"id": "true_sight",
+"zh": "真视",
+"definition": "可看见隐身单位"
+},
+{
+"id": "healing",
+"zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）"
+},
+{
+"id": "lifesteal",
+"zh": "吸血",
+"definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"
+},
+{
+"id": "heal_reduction",
+"zh": "治疗削减",
+"definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"
+},
+{
+"id": "mana_burn",
+"zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值"
+},
+{
+"id": "mana_gain",
+"zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"
+},
+{
+"id": "illusions",
+"zh": "幻象",
+"definition": "制造自身或他人的幻象"
+},
+{
+"id": "summons",
+"zh": "召唤物",
+"definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"
+},
+{
+"id": "self_mobility",
+"zh": "自身位移",
+"definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"
+},
+{
+"id": "displace_other",
+"zh": "位移他人",
+"definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"
+},
+{
+"id": "damage_return",
+"zh": "反伤",
+"definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件"
+},
+{
+"id": "bash",
+"zh": "重击",
+"definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算"
+},
+{
+"id": "pierce_evasion",
+"zh": "克敌机先",
+"definition": "攻击无视闪避（必中）"
+},
+{
+"id": "critical",
+"zh": "暴击",
+"definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"
+},
+{
+"id": "ethereal",
+"zh": "虚无",
+"definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"
+},
+{
+"id": "armor_reduction",
+"zh": "减护甲",
+"definition": "降低目标护甲"
+},
+{
+"id": "magic_resist_reduction",
+"zh": "减魔抗/魔法易伤",
+"definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"
+},
+{
+"id": "incoming_damage_amp",
+"zh": "伤害加深",
+"definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）"
+},
+{
+"id": "attack_damage_reduction",
+"zh": "减攻击力",
+"definition": "降低目标的攻击力"
+},
+{
+"id": "spell_block",
+"zh": "格挡指向技能",
+"definition": "使指向自身或队友的技能失效"
+},
+{
+"id": "spell_reflect",
+"zh": "反弹指向技能",
+"definition": "把指向技能反弹给施法者"
+},
+{
+"id": "projectile_dodge",
+"zh": "躲避弹道",
+"definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"
+},
+{
+"id": "channel_interrupt",
+"zh": "打断持续施法",
+"definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"
+},
+{
+"id": "mobility_lock",
+"zh": "限制位移",
+"definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"
+},
+{
+"id": "cleave",
+"zh": "分裂溅射",
+"definition": "攻击伤害波及周围单位"
+},
+{
+"id": "attack_modifier",
+"zh": "攻击特效",
+"definition": "给攻击附加效果的法球类技能"
+},
+{
+"id": "spell_amp",
+"zh": "法术放大",
+"definition": "提高技能造成的伤害"
+},
+{
+"id": "aura",
+"zh": "光环",
+"definition": "持续影响周围单位；对友军或敌方都算，并记作用对象"
+},
+{
+"id": "reveal",
+"zh": "显形",
+"definition": "使隐身单位显形，不等于持续真视"
+},
+{
+"id": "grant_vision",
+"zh": "提供视野",
+"definition": "提供目标或区域的视野"
+},
+{
+"id": "reduce_vision",
+"zh": "减视野",
+"definition": "降低目标的视野"
+},
+{
+"id": "phased",
+"zh": "相位移动",
+"definition": "移动不受单位碰撞阻挡"
+},
+{
+"id": "flying",
+"zh": "飞行",
+"definition": "飞行移动，能越过地形"
+},
+{
+"id": "tree_walk",
+"zh": "穿树",
+"definition": "能穿过树木移动"
+},
+{
+"id": "tree_destroy",
+"zh": "砍树",
+"definition": "能摧毁树木"
+},
+{
+"id": "respawn",
+"zh": "重生",
+"definition": "死亡后复活，或影响复活"
+},
+{
+"id": "execute",
+"zh": "斩杀",
+"definition": "目标低于生命阈值时直接杀死"
+},
+{
+"id": "hp_removal",
+"zh": "生命移除",
+"definition": "直接移除生命，不算伤害"
+},
+{
+"id": "spell_steal",
+"zh": "偷技能",
+"definition": "获得其他单位的技能"
+},
+{
+"id": "stat_steal",
+"zh": "偷属性",
+"definition": "夺取目标的属性"
+},
+{
+"id": "cooldown_reduction",
+"zh": "减冷却",
+"definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"
+},
+{
+"id": "cooldown_reset",
+"zh": "刷新冷却",
+"definition": "立刻重置冷却"
+},
+{
+"id": "economy",
+"zh": "经济经验",
+"definition": "提供额外金钱或经验；只是正常赏金不算"
+},
+{
+"id": "charges",
+"zh": "充能",
+"definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"
+},
+{
+"id": "aoe_damage",
+"zh": "范围伤害",
+"definition": "一次施放或一次攻击能对多个敌方单位造成伤害"
+}
+]
+
+待判断对象：
+[{"subject": "nevermore_dark_lord", "name_zh": "影魔·魔王降临", "name_en": "Presence of the Dark Lord", "description_zh": "影魔的出现使得周围的敌人护甲降低。", "description_en": "Shadow Fiend's presence reduces the armor of nearby enemies.", "notes_zh": ["与其他降低护甲的技能和光环完全叠加。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["presence_armor_reduction", "presence_radius", "AbilityCastRange"]}, {"subject": "nevermore_requiem", "name_zh": "影魔·魂之挽歌", "name_en": "Requiem of Souls", "description_zh": "影魔将捕获的灵魂中最多%max_soul_release%个进行聚集，以多道魔能的形式释放。若距离影魔过近将受到数道魔能的伤害。每道魔能对敌方单位造成伤害的同时，还将造成恐惧和减速效果，并且降低魔法抗性，持续%requiem_slow_duration%秒，最高可达%requiem_slow_duration_max%秒。通过支配死灵收集的每个灵魂会为魂之挽歌创造一道魔能。死亡时会自动释放魂之挽歌，不占用主动大招的冷却时间。", "description_en": "Shadow Fiend gathers up to %max_soul_release% of his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed and magic resistance reduced for %requiem_slow_duration% seconds for each line hit up to a maximum of %requiem_slow_duration_max%. Lines of energy are created for every soul captured through Necromastery.  Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.", "notes_zh": ["影魔收集的灵魂中，每%requiem_soul_conversion%个会产生一道伤害波。", "死亡时释放的魂之挽歌不会施加恐惧和减速效果。"], "granted_by": "", "upgrades": {"scepter": {"zh": "降低冷却时间，并且魂之挽歌可以回归影魔。影魔会回复与回归伤害值相等的生命。", "en": "Reduces cooldown and causes Requiem of Souls to return back to Shadow Fiend. The wave back to Shadow Fiend heals him for all the damage it dealt."}}, "is_passive": false, "value_names": ["requiem_radius", "requiem_reduction_ms", "requiem_reduction_mres", "requiem_slow_duration", "requiem_slow_duration_max", "requiem_soul_conversion", "requiem_line_width_start", "requiem_line_width_end", "requiem_line_speed", "soul_death_release", "requiem_heal_pct_scepter", "requiem_damage_pct_scepter", "max_soul_release", "AbilityDamage", "AbilityCastPoint"]}, {"subject": "nevermore_necromastery", "name_zh": "影魔·支配死灵", "name_en": "Necromastery", "description_zh": "影魔每杀死一个单位都会窃取其灵魂，每个灵魂获得%necromastery_damage_per_soul%点额外攻击力。击杀英雄会获得%souls_per_hero_kill%个灵魂。影魔死亡时%soul_release_tooltip%%%的灵魂将逃离他的束缚。", "description_en": "Shadow Fiend steals the soul from units he kills, gaining %necromastery_damage_per_soul% bonus damage per soul. Hero kills grant %souls_per_hero_kill% souls. On death, he releases %soul_release_tooltip%%% of them from bondage.", "notes_zh": ["反补、杀死中立生物也能收集到灵魂。", "破坏会使技能无法获得新的叠加效果。", "破坏不会使现有叠加效果提供的加成失效。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["necromastery_damage_per_soul", "necromastery_max_souls", "souls_per_kill", "souls_per_hero_kill", "necromastery_soul_release", "shard_souls_per_kill", "shard_crit_pct", "shard_fear_duration", "soul_release_tooltip", "current_max_souls_tooltip"]}, {"subject": "morphling_waveform", "name_zh": "变体精灵·波浪形态", "name_en": "Waveform", "description_zh": "变体精灵化为波浪向前涌进，对路径上的敌人造成伤害。变体精灵在波浪形态中是无敌的。", "description_en": "Morphling dissolves into liquid and surges forward, damaging enemy units in his path. Morphling is invulnerable during Waveform.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["speed", "width", "process_procs", "AbilityDamage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "morphling_adaptive_strike_agi", "name_zh": "变体精灵·变体打击", "name_en": "Adaptive Strike", "description_zh": "用猛烈的水波打击一个敌方单位，将其击退并眩晕，同时造成伤害，伤害量为基础伤害加上变体精灵自身敏捷值乘以伤害系数的额外伤害。如果变体精灵的敏捷比力量高50%%，将采用最高伤害系数。\n\n击退距离和眩晕时间是根据变体精灵的力量值。如果变体精灵的力量比敏捷高50%%，将造成最大击退和眩晕。", "description_en": "Launches a surge of water toward an enemy unit, stunning them, knocking them back, and dealing base damage plus additional damage based on Morphling's agility times a multiplier.  If Morphling's agility is 50% higher than strength, the maximum agility multiplier is used.\n\nKnockback distance and stun duration are based on Morphling's strength. If his strength is 50% higher than his agility, the maximum knockback distance and stun duration is used.", "notes_zh": ["弹道移动速度为%projectile_speed%。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_base", "damage_min", "damage_max", "stun_min", "stun_max", "knockback_min", "knockback_max", "knockback_duration", "projectile_speed", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "morphling_morph_agi", "name_zh": "变体精灵·属性变换（敏捷获取）", "name_en": "Attribute Shift (Agility Gain)", "description_zh": "变体精灵改变它的形态，将一些力量以%morph_rate%点/秒的速率转化成敏捷。该过程可逆。", "description_en": "Morphling shifts its form, pulling points from Strength and pouring them into Agility at a rate of %morph_rate%. The process is reversible.", "notes_zh": ["属性变换不能转化物品提供的属性加成。", "升级敏捷获取时也会升级力量获取。"], "granted_by": "", "upgrades": {"shard": {"zh": "变体精灵在眩晕状态下可以变换属性。降低魔法消耗。", "en": "Morphling can shift attributes while stunned. Reduces mana cost."}}, "is_passive": false, "value_names": ["points_per_tick", "morph_rate", "mana_cost", "castable_while_stunned"]}, {"subject": "morphling_morph_str", "name_zh": "变体精灵·属性变换（力量获取）", "name_en": "Attribute Shift (Strength Gain)", "description_zh": "变体精灵改变它的形态，将一些敏捷以%morph_rate%点/秒的速率转化成力量。该过程可逆。", "description_en": "Morphling shifts its form, pulling points from Agility and pouring them into Strength at a rate of %morph_rate%. The process is reversible.", "notes_zh": ["属性变换不能转换物品提供的属性加成。", "升级力量获取时也会升级敏捷获取。"], "granted_by": "", "upgrades": {"shard": {"zh": "变体精灵在眩晕状态下可以变换属性。降低魔法消耗。", "en": "Morphling can shift attributes while stunned. Reduces mana cost."}}, "is_passive": false, "value_names": ["points_per_tick", "morph_rate", "mana_cost", "castable_while_stunned"]}, {"subject": "morphling_replicate", "name_zh": "变体精灵·变形", "name_en": "Morph", "description_zh": "使自身向敌方目标改变，获得其基础技能，并且基于目标改变自己的主属性。技能持续时间内可以来回切换。", "description_en": "Morphling changes his form to match the targeted enemy, gaining their basic abilities and changing his primary attribute based on his target. Can be toggled for the duration of the ability.", "notes_zh": ["变体精灵自身及其控制的单位不能作为变形的目标。", "变形不会复制魔晶/神杖类技能，除非变体精灵自身也拥有相应物品。", "不会触发法术反弹。"], "granted_by": "", "upgrades": {"scepter": {"zh": "变形增加多样施法（右键点击技能栏图标）。开启后会产生目标英雄的强幻象，可以施放英雄的所有基础技能。如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。", "en": "Adds an alt-cast to Morph. When enabled, a strong illusion is created of the target hero that can cast all of the hero's basic abilities. If the illusion is alive when Morphling toggles the ability, he will take the place of the illusion, destroying it."}}, "is_passive": false, "value_names": ["duration", "scepter_stat_steal", "scepter_spell_amplify", "scepter_attack_speed", "scepter_status_resist", "scepter_additional_stats", "scepter_illusion_outgoing", "scepter_illusion_incoming", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "morphling_ebb_and_flow", "name_zh": "变体精灵·潮涨潮落", "name_en": "Ebb and Flow", "description_zh": "变体精灵根据当前力量值获得额外施法距离和减速抗性，根据当前敏捷值获得攻击距离和移动速度。这些效果在他变形为其他英雄时仍然有效。", "description_en": "Morphling receives bonus cast range and slow resistance based on his current Strength, and attack range and movement speed based on his current Agility. These bonuses persist if he is morphed into another hero.", "notes_zh": ["变形期间的攻击距离加成只有在变形为远程英雄时有效。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["swell_up_duration", "swell_down_duration", "swell_duration", "max_swell_duration", "model_scale", "stats_pct", "attack_range_per_agi", "move_speed_per_agi", "cast_range_per_str", "slow_resist_per_str", "model_scale_max"]}, {"subject": "phantom_lancer_spirit_lance", "name_zh": "幻影长矛手·灵魂之矛", "name_en": "Spirit Lance", "description_zh": "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。", "description_en": "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit.", "notes_zh": ["幻影长矛手附近%fake_lance_distance%范围内的幻象也会模仿施法动作。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["lance_damage", "lance_speed", "duration", "movement_speed_pct", "illusion_duration", "illusion_damage_out_pct", "tooltip_illusion_damage", "illusion_damage_in_pct", "tooltip_illusion_total_damage_in_pct", "fake_lance_distance", "scepter_bounce_radius", "scepter_bonus_illusion_damage", "scepter_total_hits", "illusion_lance_damage_pct", "AbilityCastRange"]}, {"subject": "phantom_lancer_doppelwalk", "name_zh": "幻影长矛手·神行百变", "name_en": "Doppelganger", "description_zh": "幻影长矛手暂时从战场上消失。经过%delay%秒，幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置，并产生两个新的幻象。施放技能后延长所有幻象的持续时间。新加的两个幻象拥有不同的特性：一个承受正常百分比的伤害，不具有攻击力，另一个额外承受%illusion_2_damage_in_pct%%%伤害，继承的攻击力相比本体减少%illusion_2_damage_out_pct%%%。\n\n驱散类型：弱驱散", "description_en": "Phantom Lancer briefly vanishes from the battlefield. After %delay% second, Phantom Lancer and any of his nearby illusions reappear at a random position within the targeted location, along with two additional doppelgangers. Extends duration of all illusions. The two added doppelgangers have different properties: one takes normal damage and deals none, while the other takes %illusion_2_damage_in_pct%%% bonus damage and deals %illusion_2_damage_out_pct%%% less damage.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["这个技能可以躲避攻击和技能弹道，并且驱散负面效果。", "重新现身的单位附近的树木将会被摧毁。", "幻影长矛手和他的队友可以分辨出哪个幻象承受100%伤害。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["illusion_1_damage_out_pct", "illusion_2_damage_out_pct", "illusion_2_damage_in_pct", "target_aoe", "search_radius", "delay", "illusion_duration", "illusion_extended_duration", "illusion_2_amount", "hp_missing_per_extra_illusion_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "phantom_lancer_phantom_edge", "name_zh": "幻影长矛手·幻影冲锋", "name_en": "Phantom Rush", "description_zh": "对目标发动攻击后，幻影长矛手将快速向其冲去，获得移动速度和闪避提升。", "description_en": "When targeting an enemy for an attack, Phantom Lancer quickly charges into range, gaining increased movement speed and evasion.", "notes_zh": ["如果冲锋中途取消攻击指令，那么移动速度加成就会消失。", "冲锋过程中移动速度为%bonus_speed%。"], "granted_by": "", "upgrades": {"scepter": {"zh": "提升距离。每当幻影长矛手冲锋时穿过敌人，他就会制造并列幻象攻击他们。另外，每冲锋%illusion_spawn_travel_distance%距离还会在幻影长矛手身旁制造一个并列幻象，向目标冲去。", "en": "Increases Range. Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them. Additionally, every %illusion_spawn_travel_distance% units rushed creates a Juxtapose illusion that rushes to the target alongside Phantom Lancer."}}, "is_passive": false, "value_names": ["min_distance", "max_distance", "bonus_speed", "illusion_spawn_radius", "illusion_spawn_travel_distance", "evasion", "AbilityCooldown"]}, {"subject": "phantom_lancer_illusory_armaments", "name_zh": "幻影长矛手·灵幻兵械", "name_en": "Illusory Armaments", "description_zh": "幻影长矛手只要制造出幻象，该幻象的继承攻击力不会低于一定值，持续%duration%秒。", "description_en": "Whenever an illusion of Phantom Lancer is created, its outgoing damage cannot go below a fixed value for %duration% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["outgoing_floor", "duration"]}, {"subject": "phantom_lancer_juxtapose", "name_zh": "幻影长矛手·并列", "name_en": "Juxtapose", "description_zh": "幻影长矛手的攻击有一定几率使自己的存在破碎，产生自身的幻象。幻象也有几率进一步破碎，再产生幻象。幻影长矛手产生的幻象持续%illusion_duration%秒，幻象产生的幻象则持续%illusion_from_illusion_duration%秒。", "description_en": "Phantom Lancer has a chance to fracture his presence on an attack, creating an illusion of himself. Illusions also have a chance to fracture further. Illusions created from Phantom Lancer last for %illusion_duration% seconds, while illusions created from other illusions last %illusion_from_illusion_duration% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "并列增加主动技能。使幻影长矛手进入隐身，最多持续%invis_duration%秒，同时产生一个复制幻象来迷惑敌人。隐身期间自身移动速度提升%invis_movespeed%%%。", "en": "Adds an active ability to Juxtapose. Renders Phantom Lancer invisible for up to %invis_duration% seconds while generating a duplicate image to confuse enemies. His movement speed is increased by %invis_movespeed%%% during this invisibility."}}, "is_passive": true, "value_names": ["max_illusions", "proc_chance_pct", "illusion_proc_chance_pct", "illusion_duration", "illusion_from_illusion_duration", "illusion_damage_out_pct", "tooltip_illusion_damage", "illusion_damage_in_pct", "tooltip_total_illusion_damage_in_pct", "shard_bonus_illusions", "invis_duration", "invis_movespeed", "uncontrollable_illusions", "new_target_radius", "AbilityManaCost"]}, {"subject": "puck_illusory_orb", "name_zh": "帕克·幻象法球", "name_en": "Illusory Orb", "description_zh": "以矢量为目标。帕克向路线方向发出一个魔法球，对经过路径上的敌人造成伤害。法球每%damage_interval%秒会在作用范围内额外造成%damage_over_time_pct%%%击中伤害，但超过最大施法距离后法球会被摧毁。\n\n在幻象法球飞行过程中，帕克可以使用灵动之翼来传送到法球所在的位置。可以设为多样施法（右键点击技能栏图标），让法球的路线为向前的直线。", "description_en": "Vector Targeted. Puck launches a magic orb that travels along the path, damaging enemy units along the way. The orb deals an additional %damage_over_time_pct%%% of its impact damage every %damage_interval%s in its area of effect, but if it exceeds the max cast range it will be destroyed.\n\n At any point, Puck may teleport to the orb's location using Ethereal Jaunt. Can be put on alt-cast to launch the Orb straight ahead.", "notes_zh": ["幻象法球在飞行途中提供顺畅视野。", "将自己传送到幻象法球可以躲避攻击和技能弹道。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "max_distance", "orb_speed", "orb_vision", "vision_duration", "damage", "warning_sound_time", "curve_orb", "curve_orb_duration_multiplier", "curve_orb_max_acceleration", "curve_orb_pullback_bonus_launch_speed", "curve_strength", "vector_reticle_distance", "damage_over_time_pct", "damage_interval"]}, {"subject": "puck_waning_rift", "name_zh": "帕克·新月之痕", "name_en": "Waning Rift", "description_zh": "帕克传送至目标地点洒出它神秘的仙女粉尘，对周围的敌人造成伤害和沉默。", "description_en": "Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "silence_duration", "damage", "max_distance", "push_pull_enabled", "knock_distance", "knock_duration", "pull_distance", "pull_duration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "puck_phase_shift", "name_zh": "帕克·相位转移", "name_en": "Phase Shift", "description_zh": "持续施法 - 帕克暂时将自己转移到另一个位面，从而免疫伤害。", "description_en": "CHANNELED - Puck briefly shifts into another dimension where it is immune from harm.", "notes_zh": ["帕克在相位转移状态下依然具有碰撞体积。", "进行任何动作都会中止相位转移。", "帕克在相位转移状态下无敌。"], "granted_by": "", "upgrades": {"shard": {"zh": "帕克的攻击造成额外魔法伤害。帕克每次施放相位转移时对攻击距离内所有敌人发动一次攻击。", "en": "Puck's attacks deal bonus magic damage. Puck attacks all enemies within its attack range every time it phase shifts."}}, "is_passive": false, "value_names": ["duration", "shard_attack_range_bonus", "shard_bonus_damage", "AbilityChannelTime", "AbilityCastPoint", "AbilityCooldown"]}, {"subject": "puck_puckish", "name_zh": "帕克·顽皮克敌", "name_en": "Puckish", "description_zh": "每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。躲避指向性技能的弹道将回复%dodged_spell_multiplier%倍数值。防御塔的攻击不会对此生效。", "description_en": "Whenever Puck disjoints an attack, it restores %mana_and_health_restore_pct%%% of its max health and mana. Dodging a targeted spell projectile restores %dodged_spell_multiplier%x that amount. Does not apply to attacks by Towers.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["mana_and_health_restore_pct", "dodged_spell_multiplier"]}, {"subject": "puck_dream_coil", "name_zh": "帕克·梦境缠绕", "name_en": "Dream Coil", "description_zh": "创造一个变化无常的的魔法梦境来困住敌方英雄，对他们造成伤害和束缚。如果被困住的敌方英雄试图挣脱缠绕走出梦境，将因为梦境破碎而受到眩晕和额外伤害。", "description_en": "Creates a coil of volatile magic that latches onto enemy Heroes, damaging and leashing them.  If the enemy hero stretches the coil by moving too far away, it snaps, stunning and dealing additional damage.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "梦境缠绕作用下的所有敌人都会被帕克攻击，攻击频率基于帕克攻击频率的%attack_rate_pct%%%。即使目标挣脱梦境，被眩晕时攻击也会继续。", "en": "All enemies affected by Dream Coil are attacked at a rate equal to %attack_rate_pct%%% of Puck's attack rate. The attacks continue while the target is stunned if they break the Dream Coil."}}, "is_passive": false, "value_names": ["coil_duration", "coil_break_radius", "stun_duration", "coil_initial_damage", "coil_stun_duration", "coil_break_damage", "coil_radius", "coil_rapid_fire_rate", "coil_rapid_fire_z_offset", "attack_rate_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "pudge_meat_hook", "name_zh": "帕吉·肉钩", "name_en": "Meat Hook", "description_zh": "向一个单位或方向射出血腥的肉钩。勾住第一个遭遇的单位，并将它拖到帕吉身边，如果是非远古单位会被秒杀，其他敌方单位则是受到伤害。", "description_en": "Launches a bloody hook toward a unit or location. The hook will snag the first unit it encounters, dragging the unit back to Pudge, killing it if it's a non-ancient creep and dealing damage if it is an enemy otherwise.", "notes_zh": ["钩中敌人后将打断持续施法类技能。", "肉钩能击中隐身单位。", "肉钩可以穿过树木、地形、建筑、远古生物和肉山。", "肉钩可以拖拽友方单位，不过他们不会受到伤害。", "肉钩可以将神符拖拽至帕吉身旁，并返还肉钩的魔法消耗。"], "granted_by": "", "upgrades": {"shard": {"zh": "肉钩击中敌人时会根据牵引距离造成额外伤害。肉钩击中友军时，肉钩的冷却时间会减少%cooldown_reduction_pct_allied_hook%%%。", "en": "When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled.When Meat Hook hits an ally, Meat Hook's cooldown is reduced by %cooldown_reduction_pct_allied_hook%%%."}}, "is_passive": false, "value_names": ["damage", "hook_speed", "hook_width", "vision_radius", "vision_duration", "distance_to_damage", "min_distance_damage", "cooldown_reduction_pct_allied_hook", "self_stun_duration_percent", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "pudge_rot", "name_zh": "帕吉·腐烂", "name_en": "Rot", "description_zh": "能够造成持续伤害并减缓敌人移动速度的毒性云雾——同时对敌军和自身造成伤害。", "description_en": "A toxic cloud that deals intense damage and slows movement--harming not only enemy units but Pudge himself.", "notes_zh": ["使用腐烂不会打断持续施法。", "腐烂能伤害隐身单位。", "即使帕吉在开启腐烂后被沉默，腐烂也不会关闭。", "腐烂的对己伤害不致死。"], "granted_by": "", "upgrades": {"scepter": {"zh": "腐烂的作用范围提升%bonus_rot_radius%，伤害提升%bonus_rot_damage%点，并且可以降低敌人的%scepter_rot_regen_reduction_pct%%%生命回复。", "en": "Increases Rot radius by %bonus_rot_radius%, damage by %bonus_rot_damage%, and causes it to reduce enemy Health Restoration by %scepter_rot_regen_reduction_pct%%%."}}, "is_passive": false, "value_names": ["rot_radius", "rot_tick", "rot_slow", "rot_damage", "scepter_rot_regen_reduction_pct"]}, {"subject": "pudge_flesh_heap", "name_zh": "帕吉·肉盾", "name_en": "Meat Shield", "description_zh": "帕吉用一层血肉包裹自己，可以格挡所有来源的所有类型伤害。", "description_en": "Pudge covers himself with a layer of flesh that blocks damage of any type taken from any source.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_block", "duration", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "pudge_innate_graft_flesh", "name_zh": "帕吉·腐肉堆积", "name_en": "Flesh Heap", "description_zh": "每次帕吉击杀敌方英雄时，他的皮肤就会永久变厚，获得的每层叠加效果为%flesh_heap_strength_buff_amount%点额外力量。", "description_en": "Pudge's skin thickens permanently every time he kills an enemy Hero, gaining %flesh_heap_strength_buff_amount% bonus Strength for each stack.", "notes_zh": ["帕吉附近%flesh_heap_range%范围内敌方英雄阵亡时他都会获得一层叠加效果，不论击杀者是谁。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["flesh_heap_strength_buff_amount", "flesh_heap_range"]}, {"subject": "pudge_dismember", "name_zh": "帕吉·肢解", "name_en": "Dismember", "description_zh": "持续施法 - 帕吉撕咬一个敌方单位，使其失去行动能力并受到持续伤害。伤害量为基础伤害加上帕吉力量值的一定百分比，帕吉将回复与伤害量相等的生命。帕吉会将该单位以每秒%pull_units_per_second%的速度向自身牵引，最多牵引%pull_distance_limit%距离。", "description_en": "CHANNELED - Pudge chows down on an enemy unit, disabling it and dealing damage over time. Damage is increased by Pudge's Strength and heals him for the total amount. Pudge pulls the unit at a rate of %pull_units_per_second% units, up to a minimum of %pull_distance_limit% range.", "notes_zh": ["即使肢解的目标在受到作用的过程中隐身，还是不会脱离肢解的作用。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["dismember_damage", "strength_damage", "ticks", "pull_units_per_second", "pull_distance_limit", "animation_rate", "shard_regen_pct", "order_lock_duration", "shard_cast_range", "AbilityCastRange", "AbilityChannelTime", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "razor_plasma_field", "name_zh": "雷泽·等离子场", "name_en": "Plasma Field", "description_zh": "释放一波威力随扩张程度提升的等离子能量场，收缩时也会对经过的敌人造成伤害和减速。距离雷泽越远，伤害和减速越高。等离子场对每个单位造成两次伤害。", "description_en": "Releases a wave of energetic plasma that grows in power as it expands, but also zaps on contraction, slowing and dealing damage to enemy units caught in its path. Damage and slow increases with distance from Razor. The Plasma Field hits each unit twice, once each direction.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_min", "damage_max", "radius", "total_ability_time", "slow_min", "slow_max", "slow_duration", "second_ring_delay", "second_ring_reduction", "AbilityManaCost", "AbilityCooldown"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{"objects":[{"subject":"nevermore_dark_lord","mechanisms":[{"mechanism":"armor_reduction","condition":"base","quote":"周围的敌人护甲降低","uncertain":false},{"mechanism":"aura","condition":"base","quote":"影魔的出现使得周围的敌人护甲降低。","uncertain":false}]},{"subject":"nevermore_requiem","mechanisms":[{"mechanism":"forced_action","condition":"base","quote":"每道魔能对敌方单位造成伤害的同时，还将造成恐惧和减速效果","uncertain":false},{"mechanism":"slow","condition":"base","quote":"还将造成恐惧和减速效果","uncertain":false},{"mechanism":"magic_resist_reduction","condition":"base","quote":"并且降低魔法抗性","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"以多道魔能的形式释放。若距离影魔过近将受到数道魔能的伤害。每道魔能对敌方单位造成伤害","uncertain":false},{"mechanism":"healing","condition":"scepter","quote":"影魔会回复与回归伤害值相等的生命。","uncertain":false},{"mechanism":"lifesteal","condition":"scepter","quote":"影魔会回复与回归伤害值相等的生命。","uncertain":false}]},{"subject":"nevermore_necromastery","mechanisms":[]},{"subject":"morphling_waveform","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"变体精灵化为波浪向前涌进","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"变体精灵在波浪形态中是无敌的。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对路径上的敌人造成伤害","uncertain":false}]},{"subject":"morphling_adaptive_strike_agi","mechanisms":[{"mechanism":"stun","condition":"base","quote":"将其击退并眩晕","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"将其击退并眩晕","uncertain":false}]},{"subject":"morphling_morph_agi","mechanisms":[]},{"subject":"morphling_morph_str","mechanisms":[]},{"subject":"morphling_replicate","mechanisms":[{"mechanism":"spell_steal","condition":"base","quote":"获得其基础技能","uncertain":false},{"mechanism":"illusions","condition":"scepter","quote":"开启后会产生目标英雄的强幻象","uncertain":false},{"mechanism":"self_mobility","condition":"scepter","quote":"如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。","uncertain":false}]},{"subject":"morphling_ebb_and_flow","mechanisms":[{"mechanism":"slow_resistance","condition":"base","quote":"根据当前力量值获得额外施法距离和减速抗性","uncertain":false}]},{"subject":"phantom_lancer_spirit_lance","mechanisms":[{"mechanism":"slow","condition":"base","quote":"造成伤害并减速","uncertain":false},{"mechanism":"illusions","condition":"base","quote":"同时召唤一个幻象攻击该单位","uncertain":false}]},{"subject":"phantom_lancer_doppelwalk","mechanisms":[{"mechanism":"cyclone_banish","condition":"base","quote":"幻影长矛手暂时从战场上消失。","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"幻影长矛手暂时从战场上消失。","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置","uncertain":false},{"mechanism":"illusions","condition":"base","quote":"并产生两个新的幻象","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"base","quote":"驱散类型：弱驱散","uncertain":false},{"mechanism":"projectile_dodge","condition":"base","quote":"这个技能可以躲避攻击和技能弹道","uncertain":false},{"mechanism":"tree_destroy","condition":"base","quote":"重新现身的单位附近的树木将会被摧毁。","uncertain":false}]},{"subject":"phantom_lancer_phantom_edge","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"幻影长矛手将快速向其冲去","uncertain":false},{"mechanism":"evasion","condition":"base","quote":"获得移动速度和闪避提升","uncertain":false},{"mechanism":"illusions","condition":"scepter","quote":"每当幻影长矛手冲锋时穿过敌人，他就会制造并列幻象攻击他们。","uncertain":false}]},{"subject":"phantom_lancer_illusory_armaments","mechanisms":[]},{"subject":"phantom_lancer_juxtapose","mechanisms":[{"mechanism":"illusions","condition":"base","quote":"产生自身的幻象。幻象也有几率进一步破碎，再产生幻象。","uncertain":false},{"mechanism":"invisibility","condition":"shard","quote":"使幻影长矛手进入隐身","uncertain":false},{"mechanism":"illusions","condition":"shard","quote":"同时产生一个复制幻象来迷惑敌人","uncertain":false}]},{"subject":"puck_illusory_orb","mechanisms":[{"mechanism":"aoe_damage","condition":"base","quote":"对经过路径上的敌人造成伤害","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"帕克可以使用灵动之翼来传送到法球所在的位置","uncertain":false},{"mechanism":"grant_vision","condition":"base","quote":"幻象法球在飞行途中提供顺畅视野。","uncertain":false},{"mechanism":"projectile_dodge","condition":"base","quote":"将自己传送到幻象法球可以躲避攻击和技能弹道。","uncertain":false}]},{"subject":"puck_waning_rift","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"帕克传送至目标地点","uncertain":false},{"mechanism":"silence","condition":"base","quote":"对周围的敌人造成伤害和沉默","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对周围的敌人造成伤害和沉默","uncertain":false}]},{"subject":"puck_phase_shift","mechanisms":[{"mechanism":"invulnerable_untargetable","condition":"base","quote":"帕克在相位转移状态下无敌。","uncertain":false},{"mechanism":"attack_modifier","condition":"shard","quote":"帕克的攻击造成额外魔法伤害。","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"帕克每次施放相位转移时对攻击距离内所有敌人发动一次攻击。","uncertain":false}]},{"subject":"puck_puckish","mechanisms":[{"mechanism":"healing","condition":"base","quote":"每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。","uncertain":false},{"mechanism":"mana_gain","condition":"base","quote":"每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。","uncertain":false}]},{"subject":"puck_dream_coil","mechanisms":[{"mechanism":"stun","condition":"base","quote":"将因为梦境破碎而受到眩晕和额外伤害","uncertain":false},{"mechanism":"mobility_lock","condition":"base","quote":"damaging and leashing them","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"创造一个变化无常的的魔法梦境来困住敌方英雄，对他们造成伤害和束缚。","uncertain":false}]},{"subject":"pudge_meat_hook","mechanisms":[{"mechanism":"displace_other","condition":"base","quote":"勾住第一个遭遇的单位，并将它拖到帕吉身边","uncertain":false},{"mechanism":"channel_interrupt","condition":"base","quote":"钩中敌人后将打断持续施法类技能。","uncertain":false},{"mechanism":"mana_gain","condition":"base","quote":"肉钩可以将神符拖拽至帕吉身旁，并返还肉钩的魔法消耗。","uncertain":false},{"mechanism":"cooldown_reduction","condition":"shard","quote":"肉钩击中友军时，肉钩的冷却时间会减少%cooldown_reduction_pct_allied_hook%%%。","uncertain":false}]},{"subject":"pudge_rot","mechanisms":[{"mechanism":"slow","condition":"base","quote":"减缓敌人移动速度","uncertain":false},{"mechanism":"aura","condition":"base","quote":"能够造成持续伤害并减缓敌人移动速度的毒性云雾——同时对敌军和自身造成伤害。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"能够造成持续伤害并减缓敌人移动速度的毒性云雾——同时对敌军和自身造成伤害。","uncertain":false},{"mechanism":"heal_reduction","condition":"scepter","quote":"可以降低敌人的%scepter_rot_regen_reduction_pct%%%生命回复","uncertain":false}]},{"subject":"pudge_flesh_heap","mechanisms":[{"mechanism":"damage_block","condition":"base","quote":"可以格挡所有来源的所有类型伤害","uncertain":false}]},{"subject":"pudge_innate_graft_flesh","mechanisms":[]},{"subject":"pudge_dismember","mechanisms":[{"mechanism":"stun","condition":"base","quote":"使其失去行动能力并受到持续伤害","uncertain":false},{"mechanism":"healing","condition":"base","quote":"帕吉将回复与伤害量相等的生命","uncertain":false},{"mechanism":"lifesteal","condition":"base","quote":"帕吉将回复与伤害量相等的生命","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"帕吉会将该单位以每秒%pull_units_per_second%的速度向自身牵引","uncertain":false}]},{"subject":"razor_plasma_field","mechanisms":[{"mechanism":"slow","condition":"base","quote":"对经过的敌人造成伤害和减速","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"释放一波威力随扩张程度提升的等离子能量场，收缩时也会对经过的敌人造成伤害和减速。","uncertain":false}]}]}
+tokens used
+27,502
+{"objects":[{"subject":"nevermore_dark_lord","mechanisms":[{"mechanism":"armor_reduction","condition":"base","quote":"周围的敌人护甲降低","uncertain":false},{"mechanism":"aura","condition":"base","quote":"影魔的出现使得周围的敌人护甲降低。","uncertain":false}]},{"subject":"nevermore_requiem","mechanisms":[{"mechanism":"forced_action","condition":"base","quote":"每道魔能对敌方单位造成伤害的同时，还将造成恐惧和减速效果","uncertain":false},{"mechanism":"slow","condition":"base","quote":"还将造成恐惧和减速效果","uncertain":false},{"mechanism":"magic_resist_reduction","condition":"base","quote":"并且降低魔法抗性","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"以多道魔能的形式释放。若距离影魔过近将受到数道魔能的伤害。每道魔能对敌方单位造成伤害","uncertain":false},{"mechanism":"healing","condition":"scepter","quote":"影魔会回复与回归伤害值相等的生命。","uncertain":false},{"mechanism":"lifesteal","condition":"scepter","quote":"影魔会回复与回归伤害值相等的生命。","uncertain":false}]},{"subject":"nevermore_necromastery","mechanisms":[]},{"subject":"morphling_waveform","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"变体精灵化为波浪向前涌进","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"变体精灵在波浪形态中是无敌的。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对路径上的敌人造成伤害","uncertain":false}]},{"subject":"morphling_adaptive_strike_agi","mechanisms":[{"mechanism":"stun","condition":"base","quote":"将其击退并眩晕","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"将其击退并眩晕","uncertain":false}]},{"subject":"morphling_morph_agi","mechanisms":[]},{"subject":"morphling_morph_str","mechanisms":[]},{"subject":"morphling_replicate","mechanisms":[{"mechanism":"spell_steal","condition":"base","quote":"获得其基础技能","uncertain":false},{"mechanism":"illusions","condition":"scepter","quote":"开启后会产生目标英雄的强幻象","uncertain":false},{"mechanism":"self_mobility","condition":"scepter","quote":"如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。","uncertain":false}]},{"subject":"morphling_ebb_and_flow","mechanisms":[{"mechanism":"slow_resistance","condition":"base","quote":"根据当前力量值获得额外施法距离和减速抗性","uncertain":false}]},{"subject":"phantom_lancer_spirit_lance","mechanisms":[{"mechanism":"slow","condition":"base","quote":"造成伤害并减速","uncertain":false},{"mechanism":"illusions","condition":"base","quote":"同时召唤一个幻象攻击该单位","uncertain":false}]},{"subject":"phantom_lancer_doppelwalk","mechanisms":[{"mechanism":"cyclone_banish","condition":"base","quote":"幻影长矛手暂时从战场上消失。","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"幻影长矛手暂时从战场上消失。","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置","uncertain":false},{"mechanism":"illusions","condition":"base","quote":"并产生两个新的幻象","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"base","quote":"驱散类型：弱驱散","uncertain":false},{"mechanism":"projectile_dodge","condition":"base","quote":"这个技能可以躲避攻击和技能弹道","uncertain":false},{"mechanism":"tree_destroy","condition":"base","quote":"重新现身的单位附近的树木将会被摧毁。","uncertain":false}]},{"subject":"phantom_lancer_phantom_edge","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"幻影长矛手将快速向其冲去","uncertain":false},{"mechanism":"evasion","condition":"base","quote":"获得移动速度和闪避提升","uncertain":false},{"mechanism":"illusions","condition":"scepter","quote":"每当幻影长矛手冲锋时穿过敌人，他就会制造并列幻象攻击他们。","uncertain":false}]},{"subject":"phantom_lancer_illusory_armaments","mechanisms":[]},{"subject":"phantom_lancer_juxtapose","mechanisms":[{"mechanism":"illusions","condition":"base","quote":"产生自身的幻象。幻象也有几率进一步破碎，再产生幻象。","uncertain":false},{"mechanism":"invisibility","condition":"shard","quote":"使幻影长矛手进入隐身","uncertain":false},{"mechanism":"illusions","condition":"shard","quote":"同时产生一个复制幻象来迷惑敌人","uncertain":false}]},{"subject":"puck_illusory_orb","mechanisms":[{"mechanism":"aoe_damage","condition":"base","quote":"对经过路径上的敌人造成伤害","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"帕克可以使用灵动之翼来传送到法球所在的位置","uncertain":false},{"mechanism":"grant_vision","condition":"base","quote":"幻象法球在飞行途中提供顺畅视野。","uncertain":false},{"mechanism":"projectile_dodge","condition":"base","quote":"将自己传送到幻象法球可以躲避攻击和技能弹道。","uncertain":false}]},{"subject":"puck_waning_rift","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"帕克传送至目标地点","uncertain":false},{"mechanism":"silence","condition":"base","quote":"对周围的敌人造成伤害和沉默","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对周围的敌人造成伤害和沉默","uncertain":false}]},{"subject":"puck_phase_shift","mechanisms":[{"mechanism":"invulnerable_untargetable","condition":"base","quote":"帕克在相位转移状态下无敌。","uncertain":false},{"mechanism":"attack_modifier","condition":"shard","quote":"帕克的攻击造成额外魔法伤害。","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"帕克每次施放相位转移时对攻击距离内所有敌人发动一次攻击。","uncertain":false}]},{"subject":"puck_puckish","mechanisms":[{"mechanism":"healing","condition":"base","quote":"每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。","uncertain":false},{"mechanism":"mana_gain","condition":"base","quote":"每当帕克躲避攻击时，它就会分别回复最大生命值和最大魔法值的%mana_and_health_restore_pct%%%。","uncertain":false}]},{"subject":"puck_dream_coil","mechanisms":[{"mechanism":"stun","condition":"base","quote":"将因为梦境破碎而受到眩晕和额外伤害","uncertain":false},{"mechanism":"mobility_lock","condition":"base","quote":"damaging and leashing them","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"创造一个变化无常的的魔法梦境来困住敌方英雄，对他们造成伤害和束缚。","uncertain":false}]},{"subject":"pudge_meat_hook","mechanisms":[{"mechanism":"displace_other","condition":"base","quote":"勾住第一个遭遇的单位，并将它拖到帕吉身边","uncertain":false},{"mechanism":"channel_interrupt","condition":"base","quote":"钩中敌人后将打断持续施法类技能。","uncertain":false},{"mechanism":"mana_gain","condition":"base","quote":"肉钩可以将神符拖拽至帕吉身旁，并返还肉钩的魔法消耗。","uncertain":false},{"mechanism":"cooldown_reduction","condition":"shard","quote":"肉钩击中友军时，肉钩的冷却时间会减少%cooldown_reduction_pct_allied_hook%%%。","uncertain":false}]},{"subject":"pudge_rot","mechanisms":[{"mechanism":"slow","condition":"base","quote":"减缓敌人移动速度","uncertain":false},{"mechanism":"aura","condition":"base","quote":"能够造成持续伤害并减缓敌人移动速度的毒性云雾——同时对敌军和自身造成伤害。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"能够造成持续伤害并减缓敌人移动速度的毒性云雾——同时对敌军和自身造成伤害。","uncertain":false},{"mechanism":"heal_reduction","condition":"scepter","quote":"可以降低敌人的%scepter_rot_regen_reduction_pct%%%生命回复","uncertain":false}]},{"subject":"pudge_flesh_heap","mechanisms":[{"mechanism":"damage_block","condition":"base","quote":"可以格挡所有来源的所有类型伤害","uncertain":false}]},{"subject":"pudge_innate_graft_flesh","mechanisms":[]},{"subject":"pudge_dismember","mechanisms":[{"mechanism":"stun","condition":"base","quote":"使其失去行动能力并受到持续伤害","uncertain":false},{"mechanism":"healing","condition":"base","quote":"帕吉将回复与伤害量相等的生命","uncertain":false},{"mechanism":"lifesteal","condition":"base","quote":"帕吉将回复与伤害量相等的生命","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"帕吉会将该单位以每秒%pull_units_per_second%的速度向自身牵引","uncertain":false}]},{"subject":"razor_plasma_field","mechanisms":[{"mechanism":"slow","condition":"base","quote":"对经过的敌人造成伤害和减速","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"释放一波威力随扩张程度提升的等离子能量场，收缩时也会对经过的敌人造成伤害和减速。","uncertain":false}]}]}

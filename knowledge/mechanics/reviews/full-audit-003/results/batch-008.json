@@ -1,0 +1,561 @@
+{
+  "objects": [
+    {
+      "subject": "queenofpain_succubus",
+      "judgments": [
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "痛苦女王获得技能吸血，与敌人的距离越近效果越强。",
+          "reason_zh": "基础说明明确提供技能吸血。"
+        }
+      ]
+    },
+    {
+      "subject": "queenofpain_sonic_wave",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对其轨迹上的所有敌人造成大量伤害",
+          "reason_zh": "一次施放能伤害轨迹上的多个敌人。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并将他们击退",
+          "reason_zh": "击退敌人属于位移他人。"
+        }
+      ]
+    },
+    {
+      "subject": "venomancer_venomous_gale",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "沿直线射出一个毒液球，碰到的敌人受到初始伤害和持续伤害",
+          "reason_zh": "一次施放能伤害直线上碰到的多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并受到减速效果影响",
+          "reason_zh": "基础说明明确对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "venomancer_snakebite",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "把它的毒牙刺入一个敌人，造成魔法伤害",
+          "reason_zh": "材料只描述对单个目标造成伤害，未提供多目标伤害效果。"
+        }
+      ]
+    },
+    {
+      "subject": "venomancer_plague_ward",
+      "judgments": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "守卫对魔法免疫。",
+          "reason_zh": "该技能召出的守卫明确具备魔法免疫。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成50%的原技能伤害",
+          "reason_zh": "这里规定守卫继承毒刺的伤害比例，没有提高技能伤害的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "venomancer_poison_sting",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "毒刺造成的持续性伤害不会打断物品的回复效果，也不能使闪烁匕首进行冷却状态。",
+          "reason_zh": "该否定描述涉及物品回复和冷却，未说明能打断持续施法。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "剧毒的攻击会持续减速敌人并造成伤害。",
+          "reason_zh": "攻击明确对敌人施加持续减速。"
+        }
+      ]
+    },
+    {
+      "subject": "venomancer_noxious_plague",
+      "judgments": [
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "感染的单位拥有的魔法抗性会降低。",
+          "reason_zh": "A杖升级明确新增降低感染单位魔抗的效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施加时造成伤害，然后减速目标",
+          "reason_zh": "基础技能明确减速目标。"
+        },
+        {
+          "mechanism": "status_resistance",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "扩散的负面状态拥有固定的持续时间，不会受到状态抗性和负面状态增强的影响。",
+          "reason_zh": "这里只说明与状态抗性的交互，没有提供状态抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "faceless_void_time_walk",
+      "judgments": [
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "虚空假面在时间漫游过程中为无敌状态。",
+          "reason_zh": "说明明确施放过程中处于无敌状态。"
+        }
+      ]
+    },
+    {
+      "subject": "faceless_void_time_dilation",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每层叠加效果造成每秒伤害，并降低移动速度和攻击速度降低。",
+          "reason_zh": "基础叠加效果明确降低敌人的移动和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "faceless_void_distortion_field",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "敌方攻击弹道在进入目标%slow_distance_max%范围后会被减速%attack_projectile_slow%%%。",
+          "reason_zh": "减慢攻击弹道不属于降低单位移动速度或攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "faceless_void_chronosphere",
+      "judgments": [
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在其中的隐形敌人会显形。",
+          "reason_zh": "基础效果明确使范围内的隐身敌人显形。"
+        }
+      ]
+    },
+    {
+      "subject": "skeleton_king_hellfire_blast",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "向一个敌方单位发射冥魂火球",
+          "reason_zh": "材料只描述单个敌方目标，未说明能伤害多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并持续对目标造成伤害和减速",
+          "reason_zh": "基础技能明确对目标施加减速。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成即时伤害和眩晕",
+          "reason_zh": "基础技能明确对目标造成眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "skeleton_king_bone_guard",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "消耗所有能量点数召唤可以复活一次的骷髅兵",
+          "reason_zh": "能量一次全部消耗以决定召唤数量，不符合每次使用消耗一点的充能定义。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "骷髅兵享受吸血灵魂的吸血效果。",
+          "reason_zh": "吸血来自吸血灵魂，该对象只说明骷髅兵能享受另一技能的效果。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤可以复活一次的骷髅兵",
+          "reason_zh": "技能明确召唤会死亡并能复活的骷髅兵单位。"
+        }
+      ]
+    },
+    {
+      "subject": "skeleton_king_mortal_strike",
+      "judgments": [
+        {
+          "mechanism": "lifesteal",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "吸血灵魂的吸血效果对诅咒伤害有效。",
+          "reason_zh": "魔晶只让诅咒伤害适用另一技能的吸血，没有由本技能提供吸血。"
+        }
+      ]
+    },
+    {
+      "subject": "skeleton_king_vampiric_spirit",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "吸血灵魂变为光环，使友方英雄被击杀时也能变为冥魂。",
+          "reason_zh": "A杖升级明确新增作用于友方英雄的光环。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "冥魂大帝获得吸血效果。",
+          "reason_zh": "基础技能明确提供吸血。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "冥魂大帝获得吸血效果。",
+          "reason_zh": "吸血是基础效果，A杖说明未新增吸血机制。"
+        }
+      ]
+    },
+    {
+      "subject": "skeleton_king_reincarnation",
+      "judgments": [
+        {
+          "mechanism": "respawn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "冥魂大帝倒下后，他飞散的冥魂会重组，使他复活。",
+          "reason_zh": "基础技能明确使冥魂大帝死亡后复活。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "死亡时附近%slow_radius%范围内的敌人会被减速",
+          "reason_zh": "基础技能明确减速死亡位置附近的敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "death_prophet_carrion_swarm",
+      "judgments": [
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发法术抵抗的交互不代表自身具备格挡指向技能的效果。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发法术反弹的否定描述不代表自身能反弹技能。"
+        }
+      ]
+    },
+    {
+      "subject": "death_prophet_spirit_siphon",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Increases Spirit Siphon charges by %shard_bonus_charges%",
+          "reason_zh": "升级明确增加既有的技能使用充能，支持基础技能具有充能。"
+        },
+        {
+          "mechanism": "forced_action",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "敌人连续%shard_consecutive_siphon_duration%秒受到吸魂巫术作用后会被恐惧%shard_fear_duration%秒。",
+          "reason_zh": "魔晶升级明确新增恐惧，符合强制行为定义。"
+        }
+      ]
+    },
+    {
+      "subject": "death_prophet_witchcraft",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得移动速度和技能冷却时间减少",
+          "reason_zh": "基础说明明确提供技能冷却时间减少。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "死亡先知的神秘学识随着经验积累而加深",
+          "reason_zh": "经验积累只是成长条件，没有提供额外金钱或经验。"
+        }
+      ]
+    },
+    {
+      "subject": "death_prophet_exorcism",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害格挡类技能不能减少恶灵伤害。",
+          "reason_zh": "这里说明恶灵伤害与伤害格挡的交互，没有提供减伤或伤害吸收。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "持续时间结束后，死亡先知根据造成的伤害量，获得一定比例的治疗。",
+          "reason_zh": "基础技能明确在结束时治疗死亡先知。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料未描述阻止目标闪烁、传送或离开范围的效果。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料未描述使指向自身或队友的技能失效。"
+        }
+      ]
+    },
+    {
+      "subject": "phantom_assassin_stifling_dagger",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对敌方单位掷出一把匕首",
+          "reason_zh": "材料只描述单体匕首伤害，继承攻击效果也不能单独证明具有范围伤害。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "窒碍短匕在行进途中和击中目标时都会提供附近的视野。",
+          "reason_zh": "说明明确提供弹道附近及命中位置附近的视野。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓其移动速度",
+          "reason_zh": "基础技能明确降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "phantom_assassin_phantom_strike",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "uncertain",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "仅有充能相关字段名，正文未说明充能及消耗方式，无法确认符合定义。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "传送到一个单位身旁，敌我皆可",
+          "reason_zh": "传送主动改变自身位置，符合自身位移定义。"
+        }
+      ]
+    },
+    {
+      "subject": "phantom_assassin_blur",
+      "judgments": [
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "躲避多种飞行过程中的攻击和技能弹道",
+          "reason_zh": "飞行描述的是被躲避的弹道，没有赋予自身飞行移动。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "disjointing incoming projectiles",
+          "reason_zh": "基础技能明确使飞来的弹道失去目标。"
+        }
+      ]
+    },
+    {
+      "subject": "phantom_assassin_fan_of_knives",
+      "judgments": [
+        {
+          "mechanism": "applies_break",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "并施加破坏效果",
+          "reason_zh": "说明明确施加破坏，且整个技能由A杖赋予。"
+        }
+      ]
+    },
+    {
+      "subject": "phantom_assassin_immaterial",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "闪避敌人攻击的技艺得到提升",
+          "reason_zh": "基础说明明确赋予对敌人攻击的闪避。"
+        }
+      ]
+    }
+  ]
+}

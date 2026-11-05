@@ -1,0 +1,651 @@
+{
+  "objects": [
+    {
+      "subject": "huskar_berserkers_blood",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "进行驱散……驱散类型：弱驱散",
+          "reason_zh": "魔晶新增的主动效果明确对自身施加弱驱散。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "根据他损失的生命值将获得攻击速度、魔法抗性和生命恢复加成。",
+          "reason_zh": "基础效果提供生命恢复，符合治疗定义。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "在一定延迟后回复消耗的生命，并且每驱散一个负面状态，他就会额外回复生命。",
+          "reason_zh": "魔晶新增主动回复生命的效果，并非仅提高原有生命恢复数值。"
+        }
+      ]
+    },
+    {
+      "subject": "huskar_blood_magic",
+      "judgments": [
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "哈斯卡的生命消耗为魔法伤害，可以被魔法抗性减少。",
+          "reason_zh": "这里只说明自身生命消耗与魔法抗性的交互，没有降低目标魔抗。"
+        }
+      ]
+    },
+    {
+      "subject": "huskar_life_break",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他跃向一个目标，造成目标当前生命值一定百分比的伤害",
+          "reason_zh": "材料只描述对单个目标造成伤害。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "基础技能说明明确列有弱驱散效果。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明施放会消耗充能，字段名不能作为证据。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "哈斯卡在跳跃过程中为减益免疫",
+          "reason_zh": "技能明确使哈斯卡在跳跃期间获得减益免疫。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他跃向一个目标",
+          "reason_zh": "跃向目标会主动改变自身位置。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低目标的移动和攻击速度",
+          "reason_zh": "技能直接降低目标的移动速度和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "night_stalker_void",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "shard",
+          "quote": "虚空现在影响目标范围内所有单位。",
+          "reason_zh": "魔晶才使原本的单体伤害技能影响范围内所有单位。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对一个敌方单位造成减速及伤害",
+          "reason_zh": "基础效果明确对敌方目标施加减速。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "夜晚时虚空可以造成短暂眩晕",
+          "reason_zh": "夜晚的短暂眩晕属于基础技能效果。"
+        }
+      ]
+    },
+    {
+      "subject": "night_stalker_crippling_fear",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "暗夜魔王恐吓附近所有敌人，使他们在他身边时被沉默，并受到伤害。",
+          "reason_zh": "一次施放可以伤害附近多个敌人。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使他们在他身边时被沉默",
+          "reason_zh": "技能明确对附近敌人施加沉默。"
+        }
+      ]
+    },
+    {
+      "subject": "night_stalker_midnight_feast",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在夜晚可以主动施放，秒杀一个非远古非英雄单位，并回复暗夜魔王的最大生命值和最大魔法值的一定百分比。",
+          "reason_zh": "基础主动效果明确回复自身生命值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "回复暗夜魔王的最大生命值和最大魔法值的一定百分比",
+          "reason_zh": "技能明确为暗夜魔王自身回复魔法值。"
+        }
+      ]
+    },
+    {
+      "subject": "night_stalker_hunter_in_the_night",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reset",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "击杀敌方英雄会重置所有基础技能的冷却时间。",
+          "reason_zh": "A杖明确新增击杀敌方英雄后重置基础技能冷却的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "night_stalker_darkness",
+      "judgments": [
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在此期间暗夜魔王获得飞行能力",
+          "reason_zh": "技能明确赋予暗夜魔王飞行能力。"
+        }
+      ]
+    },
+    {
+      "subject": "broodmother_insatiable_hunger",
+      "judgments": [
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使她和她的小蜘蛛的攻击附带吸血效果",
+          "reason_zh": "基础技能明确赋予自身和小蜘蛛攻击吸血。"
+        }
+      ]
+    },
+    {
+      "subject": "broodmother_spin_web",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "uncertain",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "说明只交代蛛网存在数量上限，无法据此确定施放是否消耗充能，字段名也不能单独作为证据。"
+        }
+      ]
+    },
+    {
+      "subject": "broodmother_incapacitating_bite",
+      "judgments": [
+        {
+          "mechanism": "blind",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "中毒单位的攻击有一定概率落空",
+          "reason_zh": "技能使受影响敌人的攻击有概率落空，符合致盲定义。"
+        },
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "中毒单位的攻击有一定概率落空",
+          "reason_zh": "这是施加给敌人的致盲，没有赋予自身闪避。"
+        },
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且被攻击时承受额外伤害",
+          "reason_zh": "技能使受影响目标被攻击时承受更多伤害。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "中毒单位的攻击有一定概率落空",
+          "reason_zh": "攻击落空属于致盲，没有主动躲避已飞来弹道的效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使她的攻击带有减速效果",
+          "reason_zh": "技能明确使攻击对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "broodmother_sticky_snare",
+      "judgments": [
+        {
+          "mechanism": "reveal",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "在战争迷雾中显形",
+          "reason_zh": "战争迷雾中显露位置不等于使隐身单位显形，材料未支持词表定义的显形。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "Enemy Heroes that cross the web line will spring the trap, becoming rooted",
+          "reason_zh": "说明明确陷阱会定身敌方英雄，且整个技能由A杖授予。"
+        }
+      ]
+    },
+    {
+      "subject": "broodmother_spiders_milk",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每%tick_rate%秒治疗一定生命，治疗量为遇害者生命值的一定百分比",
+          "reason_zh": "技能明确持续治疗育母蜘蛛及其控制的单位。"
+        }
+      ]
+    },
+    {
+      "subject": "broodmother_spawn_spiderlings",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "育母蜘蛛将她的卵注入敌人体内，造成伤害和减速",
+          "reason_zh": "说明只描述对单个目标造成伤害，孵化多个小蜘蛛也不能据此算范围伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害和减速，持续%slow_duration%秒",
+          "reason_zh": "技能明确对目标施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "bounty_hunter_shuriken_toss",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓目标的移动速度",
+          "reason_zh": "基础技能明确降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "bounty_hunter_jinada",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他的下次攻击，造成额外伤害并窃取若干不可靠金钱",
+          "reason_zh": "技能让下一次普通攻击附带额外伤害和窃取金钱效果。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "窃取若干不可靠金钱",
+          "reason_zh": "技能通过窃取金钱带来额外经济收益。"
+        }
+      ]
+    },
+    {
+      "subject": "bounty_hunter_wind_walk",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "开启后不会打断大多数持续施法技能。",
+          "reason_zh": "这是不会打断的否定描述，破隐眩晕也不重复记为打断持续施法。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明暗影步提供额外金钱或经验。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "赏金猎人进入隐身",
+          "reason_zh": "技能明确使赏金猎人自身隐身。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "破隐一击会短暂眩晕目标。",
+          "reason_zh": "技能明确赋予破隐攻击短暂眩晕效果。"
+        }
+      ]
+    },
+    {
+      "subject": "bounty_hunter_wind_walk_ally",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对友军目标施加暗影步及其所有加成效果。",
+          "reason_zh": "该技能只施加暗影步效果，材料没有说明提供额外经济收益。"
+        }
+      ]
+    },
+    {
+      "subject": "bounty_hunter_big_game_hunter",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "赏金猎人获得的击杀和助攻金钱提升%kill_assist_gold_bonus_percent%%%",
+          "reason_zh": "技能明确提供额外击杀和助攻金钱。"
+        }
+      ]
+    },
+    {
+      "subject": "bounty_hunter_track",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "赏金猎人和附近友方英雄都将获得若干金钱奖励",
+          "reason_zh": "追踪目标死亡时技能提供额外金钱奖励。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "追踪一个敌方英雄，获得目标的真实视域",
+          "reason_zh": "技能明确提供目标的真实视域。"
+        }
+      ]
+    },
+    {
+      "subject": "weaver_the_swarm",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击敌人并削弱他们的护甲",
+          "reason_zh": "技能产生的幼虫明确降低敌人护甲。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "甲虫免疫技能",
+          "reason_zh": "材料明确说明该技能产生的甲虫具备技能免疫。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "幼虫提供视野。",
+          "reason_zh": "技能产生的幼虫明确提供视野。"
+        }
+      ]
+    },
+    {
+      "subject": "weaver_shukuchi",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在穿过敌方单位时还将造成伤害",
+          "reason_zh": "一次缩地可以穿过并伤害多个敌方单位。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "附近%shukuchi_attack_mark_radius%范围内拥有印记的敌人都会被连击的第二次攻击击中",
+          "reason_zh": "魔晶新增同时攻击附近多个标记敌人的效果，属于新的范围伤害效果。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Weaver shifts out of visibility",
+          "reason_zh": "基础技能明确使编织者隐身。"
+        }
+      ]
+    },
+    {
+      "subject": "weaver_time_lapse",
+      "judgments": [
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：强驱散",
+          "reason_zh": "技能明确施加强驱散。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不影响冷却时间、金钱和经验。",
+          "reason_zh": "说明明确否定对金钱和经验的影响。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "regaining the HP and mana from that time",
+          "reason_zh": "技能能够恢复自身在五秒前拥有的魔法值。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "时光倒流可以躲避攻击和技能弹道。",
+          "reason_zh": "说明明确表示该技能可以躲避弹道。"
+        }
+      ]
+    },
+    {
+      "subject": "weaver_threads_of_fate",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每当编织者的攻击或技能对敌方英雄造成伤害后",
+          "reason_zh": "造成伤害只是触发条件，该技能自身只描述连线、减速和攻击力加成。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "短暂减速敌人",
+          "reason_zh": "命运之线明确对敌人施加短暂减速。"
+        }
+      ]
+    },
+    {
+      "subject": "jakiro_dual_breath",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "杰奇洛对面前的敌人先后喷出寒冰和火焰。寒冰吐息减速敌人，火焰吐息对敌人造成持续伤害。",
+          "reason_zh": "一次施放的吐息可以对面前多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "寒冰吐息减速敌人",
+          "reason_zh": "寒冰吐息明确对敌人施加减速。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发法术抵抗是交互描述，没有赋予技能格挡能力。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发法术反弹是交互描述，没有赋予反弹指向技能的能力。"
+        }
+      ]
+    }
+  ]
+}

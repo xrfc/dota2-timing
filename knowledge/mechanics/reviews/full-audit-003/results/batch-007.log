@@ -1,0 +1,1395 @@
+[codex-prefer] account=temp
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty3
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a71b-5b53-72a3-941b-75437f7a5f0d
+--------
+user
+你在独立核对Dota 2技能和装备的机制记录。每个对象的`judge`列出若干“对象 + 机制 + 生效条件”，其中有的成立，有的不成立，比例不告诉你。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+逐条判断`judge`里的每一项，不要增加也不要漏掉：
+- `decision`：`accept`（材料支持这个对象具备该机制）、`reject`（材料不支持，或不符合定义）、`uncertain`（材料不足或需要游戏知识，不要猜）。
+- `condition_correct`：只看生效条件是否写对。`base`是基础效果，`scepter`是只在有A杖时生效，`shard`是只在有魔晶时生效，`item`是装备。`granted_by`不为空的对象，整个技能按该升级记。如果`decision`不是`accept`，填true。
+- `correct_condition`：`condition_correct`为false时写正确条件，否则与给定条件相同。
+- `quote`摘决定判断的原文片段，没有就写空字符串。`reason_zh`用一句中文说明理由。
+- `mechanism`和`condition`原样返回，`subject`原样返回。
+
+判断规则，已由用户确认，必须遵守：
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+- 召唤物只算有血量的单位；按受攻击次数计算的不算；猴子猴孙、部署炮塔不算。
+- 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+- 固定在地上的区域算场地魔法；区域跟着单位移动的算光环。只起阻挡作用的墙和圈不算场地魔法。
+- 属性生命恢复算治疗。普攻附带的减甲、减速、减疗、烧蓝、额外伤害、中毒等算攻击特效；单纯提高攻击力、攻速、吸血、暴击、分裂或弹射不算攻击特效。
+- 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字，可以当证据。`%xxx%`是数值占位符。
+
+待判断内容：
+{"vocabulary": [{"id": "aoe_damage", "zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害"}, {"id": "aura", "zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法"}, {"id": "charges", "zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"}, {"id": "cooldown_reduction", "zh": "减冷却", "definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"}, {"id": "cooldown_reset", "zh": "刷新冷却", "definition": "立刻重置冷却"}, {"id": "damage_block", "zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"}, {"id": "disarm", "zh": "缴械", "definition": "目标无法普通攻击"}, {"id": "displace_other", "zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"}, {"id": "ethereal", "zh": "虚无", "definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"}, {"id": "flying", "zh": "飞行", "definition": "飞行移动，能越过地形"}, {"id": "grant_vision", "zh": "提供视野", "definition": "提供目标或区域的视野"}, {"id": "healing", "zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）"}, {"id": "invisibility", "zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身"}, {"id": "magic_resist_reduction", "zh": "减魔抗/魔法易伤", "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"}, {"id": "mana_gain", "zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"}, {"id": "mobility_lock", "zh": "限制位移", "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"}, {"id": "projectile_dodge", "zh": "躲避弹道", "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"}, {"id": "reveal", "zh": "显形", "definition": "使隐身单位显形，不等于持续真视"}, {"id": "root", "zh": "定身", "definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"}, {"id": "self_mobility", "zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"}, {"id": "silence", "zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）"}, {"id": "slow", "zh": "减速", "definition": "降低移动速度或攻击速度"}, {"id": "slow_resistance", "zh": "减速抗性", "definition": "降低自身受到的减速效果（如散夜对剑+30%）"}, {"id": "spell_reflect", "zh": "反弹指向技能", "definition": "把指向技能反弹给施法者"}, {"id": "stun", "zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）"}, {"id": "summons", "zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"}, {"id": "tree_destroy", "zh": "砍树", "definition": "能摧毁树木"}], "objects": [{"subject": "tinker_rearm", "name_zh": "修补匠·再装填", "name_en": "Rearm", "description_zh": "持续施法 - 重置修补匠技能的冷却时间。", "description_en": "CHANNELED - Resets the cooldown on Tinker's abilities.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["AbilityChannelTime", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "cooldown_reset", "condition": "base"}]}, {"subject": "tinker_eureka", "name_zh": "修补匠·尤里卡！", "name_en": "Eureka!", "description_zh": "修补匠的每%int_per_one_cdr%点智力提供%one_percent_tooltip%%%物品冷却时间减少，最多为%max_cdr%%%。", "description_en": "Tinker gains %one_percent_tooltip%%% item cooldown reduction per %int_per_one_cdr% Intelligence, up to a maximum of %max_cdr%%%.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["int_per_one_cdr", "one_percent_tooltip", "max_cdr", "item_cooldown_tooltip"], "judge": [{"mechanism": "cooldown_reduction", "condition": "base"}]}, {"subject": "sniper_shrapnel", "name_zh": "狙击手·榴霰弹", "name_en": "Shrapnel", "description_zh": "消耗一点能量射出一发带有爆炸弹片的榴霰弹，在目标区域降下弹雨。区域内的敌军受到伤害并被减速。榴霰弹将给予目标区域的视野。榴霰弹的能量每过%abilitychargerestoretime%秒恢复1点。", "description_en": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every %abilitychargerestoretime% seconds.", "notes_zh": ["总共造成11次伤害，第一次在技能生效时，接下来每秒造成一次伤害。", "不会对建筑造成伤害。", "将拥有目标区域的视野。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["slow_movement_speed", "radius", "shrapnel_damage", "duration", "damage_delay", "slow_duration", "fast_tick", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "charges", "condition": "base"}, {"mechanism": "grant_vision", "condition": "base"}, {"mechanism": "reveal", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "sniper_headshot", "name_zh": "狙击手·爆头", "name_en": "Headshot", "description_zh": "狙击手提高他的精确度，有一定概率造成%damage%点额外伤害并击退敌人。敌人距离狙击手越近，击退距离越远。爆头会短暂地降低敌人%slow%%%移动和攻击速度。", "description_en": "Sniper increases his accuracy, giving him a chance to deal %damage% extra damage and knock back his enemies. Knockback distance increases based on how close the enemy is to Sniper. Headshots briefly slow enemy movement and attack speed by %slow%%%.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["damage", "proc_chance", "knockback_distance", "slow", "slow_duration"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "sniper_take_aim", "name_zh": "狙击手·瞄准", "name_en": "Take Aim", "description_zh": "被动提升狙击手%passive_attack_range_bonus%攻击距离。\n\n主动开启后，狙击手的视野距离、爆头几率和攻击距离提升。自身在持续时间内减速%slow%%%，并且视野限制在前方的锥形区域内。", "description_en": "Passively increases Sniper's attack range by %passive_attack_range_bonus%.\n\nOn cast, Sniper gains increased vision, Headshot chance, and attack range. Slows you by %slow%%% for the duration and restricts your vision to a frontal cone.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "slow", "headshot_chance", "active_attack_range_bonus", "passive_attack_range_bonus", "bonus_vision", "view_restrict", "attack_speed", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "grant_vision", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "sniper_concussive_grenade", "name_zh": "狙击手·震荡手雷", "name_en": "Concussive Grenade", "description_zh": "向目标区域扔出一枚手雷，对敌人造成伤害并将他们和狙击手一同击退。受到作用的敌人被击退后还会被缴械和减速。", "description_en": "Launches a grenade at the target area, dealing damage to enemies and knocking them and Sniper back. Enemies affected are disarmed and have their movement slowed after the knockback.", "notes_zh": [], "granted_by": "shard", "upgrades": {"shard": {"zh": "降低冷却时间，提升伤害并允许技能也能击退狙击手。", "en": "Reduces cooldown, increases damage, and allows the knockback to affect Sniper as well."}}, "is_passive": false, "value_names": ["damage", "radius", "slow", "debuff_duration", "knockback_height", "knockback_distance", "knockback_duration", "self_push", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "damage_block", "condition": "shard"}, {"mechanism": "disarm", "condition": "shard"}, {"mechanism": "displace_other", "condition": "shard"}, {"mechanism": "slow", "condition": "shard"}]}, {"subject": "sniper_assassinate", "name_zh": "狙击手·暗杀", "name_en": "Assassinate", "description_zh": "狙击手锁定一个目标敌方单位，经过短时间瞄准后射出一发毁灭性的子弹，从远距离对目标造成狙击手的攻击伤害 + 额外伤害，并且短暂眩晕目标。每当狙击手击杀敌方英雄，暗杀的冷却时间就会重置。", "description_en": "Sniper locks onto a target enemy unit and, after a short aiming duration, fires a devastating shot that deals Sniper's attack damage plus bonus damage at long range and mini-stuns the target. Whenever Sniper kills an enemy hero, Assassinate is refreshed.", "notes_zh": ["准星效果只对队友可见。", "隐身不能躲避该技能弹道。"], "granted_by": "", "upgrades": {"scepter": {"zh": "暗杀释放得更快，并且敌方目标的眩晕时间更久。", "en": "Causes Assassinate to fire quicker and stun the enemy target."}}, "is_passive": false, "value_names": ["damage", "projectile_speed", "scepter_stun_duration", "scepter_crit", "scepter_cast_point", "scatter_range", "scatter_width", "scatter_damage_pct", "cooldown_reduction_on_kill", "attack_factor_tooltip", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "projectile_dodge", "condition": "base"}, {"mechanism": "stun", "condition": "base"}, {"mechanism": "stun", "condition": "scepter"}]}, {"subject": "necrolyte_death_pulse", "name_zh": "瘟疫法师·死亡脉冲", "name_en": "Death Pulse", "description_zh": "瘟疫法师向他的周围释放死亡波纹，伤害敌方单位并治疗友军单位。", "description_en": "Necrophos releases a wave of death around him, dealing damage to enemy units and healing allied units.", "notes_zh": ["死亡脉冲不能被躲避。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["area_of_effect", "heal", "projectile_speed", "AbilityDamage", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "healing", "condition": "base"}]}, {"subject": "necrolyte_ghost_shroud", "name_zh": "瘟疫法师·幽魂护罩", "name_en": "Ghost Shroud", "description_zh": "瘟疫法师步入将生者与死者相隔的领域。散发出一片灵气，减缓周围敌人的移动速度。在这个形态下，瘟疫法师为虚无状态，无法攻击或被攻击，受到的魔法伤害增加，但是生命/魔法恢复效果加强。", "description_en": "Necrophos slips into the realm that separates the living from the dead. Unable to attack or be attacked, he emits an aura that slows enemies around him. He takes additional magic damage in this form, but his restorative powers are amplified.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "heal_bonus", "movement_speed", "slow_aoe", "bonus_damage", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aura", "condition": "base"}, {"mechanism": "ethereal", "condition": "base"}, {"mechanism": "magic_resist_reduction", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "necrolyte_heartstopper_aura", "name_zh": "瘟疫法师·竭心光环", "name_en": "Heartstopper Aura", "description_zh": "瘟疫法师让敌人的心脏停跳，使附近敌方单位按最大生命值一定百分比持续流失生命。", "description_en": "Necrophos stills the hearts of his opponents, causing nearby enemy units to lose a percentage of their max health over time.", "notes_zh": ["伤害不会禁用像闪烁匕首等物品。", "不能作用于远古生物。"], "granted_by": "", "upgrades": {"scepter": {"zh": "竭心光环的生命流失伤害提升，数值为瘟疫法师当前生命恢复的%heal_regen_to_damage%%%。", "en": "Heartstopper Aura's Health Decay is increased by %heal_regen_to_damage%%% of Necrophos's current health regeneration."}}, "is_passive": true, "value_names": ["aura_radius", "aura_damage", "heal_reduction_pct", "heal_regen_to_damage"], "judge": [{"mechanism": "aura", "condition": "base"}, {"mechanism": "mobility_lock", "condition": "base"}]}, {"subject": "necrolyte_death_seeker", "name_zh": "瘟疫法师·死亡搜寻", "name_en": "Death Seeker", "description_zh": "瘟疫法师变成一个大死亡脉冲，向目标单位的地点移动。到达该地点后，死亡脉冲会扩散至附近敌人和友军。", "description_en": "Necrophos turns into a large Death Pulse towards the target unit's position. Once it arrives to the location, the Death Pulse spreads towards nearby enemies and allies.", "notes_zh": ["不会触发法术反弹。"], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["projectile_multiplier", "ethereal_duration", "magic_resistance_reduction", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "spell_reflect", "condition": "shard"}]}, {"subject": "necrolyte_reapers_scythe", "name_zh": "瘟疫法师·死神镰刀", "name_en": "Reaper's Scythe", "description_zh": "眩晕目标敌方英雄，然后造成基于他当前损失生命值的伤害。瘟疫法师击杀敌人后将永久获得生命和魔法恢复。如果目标在死神镰刀效果下死亡，击杀者为瘟疫法师。", "description_en": "Stuns the target enemy hero, then deals damage based on how much life it is missing. If Necrophos kills an enemy this way, he'll permanently gain Health and Mana Regen. Any kill under this effect is credited to Necrophos.", "notes_zh": ["伤害在眩晕结束后结算。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_per_health", "stun_duration", "hp_per_kill", "mana_per_kill", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "mana_gain", "condition": "base"}, {"mechanism": "stun", "condition": "base"}]}, {"subject": "warlock_fatal_bonds", "name_zh": "术士·致命连接", "name_en": "Fatal Bonds", "description_zh": "将数个可见的敌方单位连接在一起，其中一人所受伤害的一定百分比会被其他所有人感受到。", "description_en": "Binds several visible enemy units together, causing a percentage of the damage dealt to one of them to be felt by the others.", "notes_zh": ["共享伤害的类型与原伤害相同。", "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["count", "damage_share_percentage", "duration", "search_aoe", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "spell_reflect", "condition": "base"}]}, {"subject": "warlock_shadow_word", "name_zh": "术士·暗言术", "name_en": "Shadow Word", "description_zh": "术士低声说出一个咒语，对一个单位施展法术，使周围的敌方单位受到伤害，周围的友方单位被治疗。目标单位也会被治疗或受到伤害，取决于他是友军还是敌人。", "description_en": "Warlock whispers an incantation, casting a spell on a unit that makes it deal damage to nearby enemy units and heal nearby ally units. Target Unit will also heal or be damaged depending on whether they are ally or enemy.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "duration", "tick_interval", "spell_aoe", "shard_movement_speed_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "healing", "condition": "base"}]}, {"subject": "warlock_upheaval", "name_zh": "术士·剧变", "name_en": "Upheaval", "description_zh": "持续施法 - 随施法时间增强的减速气流，还会造成伤害。持续最多%abilitychanneltime%秒。在魔法结束或目标离开生效区域后，敌人仍会被减速%duration%秒。", "description_en": "CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled. Lasts up to %abilitychanneltime% seconds. Enemies are slowed for %duration% second after leaving the area or the spell ends.", "notes_zh": ["减速效果的增加是根据持续施法的时长，而不是敌人在区内停留的持续时间。"], "granted_by": "", "upgrades": {"shard": {"zh": "持续施法时每%imps_interval%秒术士会召唤一个魔童，持续%minor_imp_duration%秒，魔童死亡时会爆炸，对周围所有敌人造成伤害。", "en": "While channeling, Warlock spawns a minor imp every %imps_interval% seconds that lasts for %minor_imp_duration% seconds and explodes dealing damage to all enemies around them upon death."}}, "is_passive": false, "value_names": ["aoe", "slow_per_second", "duration", "max_slow", "aspd_per_second", "base_damage", "damage_per_second", "max_damage", "damage_tick_interval", "imps_interval", "minor_imp_duration", "AbilityCastRange", "AbilityChannelTime", "AbilityCastPoint", "AbilityManaCost"], "judge": [{"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "warlock_eldritch_summoning", "name_zh": "术士·邪术召唤", "name_en": "Eldritch Summoning", "description_zh": "只要敌方单位在受到一个或多个术士的技能作用下阵亡，就会召唤出一个魔童，持续%minor_imp_duration%秒，死亡时会爆炸。魔童会自动搜寻附近单位，优先选择致命连接下的英雄，到达猎物时就会爆炸。", "description_en": "Whenever an enemy unit dies while afflicted by one or more of Warlock's abilities, a minor imp is summoned that lasts for %minor_imp_duration% seconds and explodes on death. Imps will automatically seek out nearby units, favoring fatally bonded heroes, and will explode when reaching their prey.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "提升小魔童的生命值和爆炸伤害。", "en": "Increases the health and explosion damage of minor imps."}}, "is_passive": true, "value_names": ["minor_imp_duration", "imp_health", "imp_explode", "imp_speed", "tooltip_imp_explode_radius"], "judge": [{"mechanism": "summons", "condition": "base"}]}, {"subject": "warlock_rain_of_chaos", "name_zh": "术士·混乱之祭", "name_en": "Chaotic Offering", "description_zh": "从深渊召唤一个地狱火，眩晕敌人%stun_duration%秒。地狱火持续%golem_duration%秒，能够减免部分技能的伤害，具有较高的减速抗性，拥有永久献祭和烈焰之拳技能。", "description_en": "Summons a Golem from the depths, stunning enemies for %stun_duration% seconds. The Golem lives %golem_duration% seconds, takes reduced damage from spells, has increased Slow Resistance, has Permanent Immolation and Flaming Fists on attack.", "notes_zh": ["该技能将摧毁作用范围内的树木。"], "granted_by": "", "upgrades": {"scepter": {"zh": "召唤%number_of_golems_scepter%个地狱火。", "en": "Calls %number_of_golems_scepter% Golems."}}, "is_passive": false, "value_names": ["golem_duration", "stun_duration", "aoe", "golem_hp", "golem_dmg", "golem_armor", "golem_movement_speed", "golem_health_regen", "golem_gold_bounty", "stun_delay", "number_of_golems_scepter", "golem_hp_scepter", "golem_dmg_scepter", "golem_gold_bounty_scepter", "bonus_armor"], "judge": [{"mechanism": "slow_resistance", "condition": "base"}, {"mechanism": "stun", "condition": "base"}, {"mechanism": "summons", "condition": "base"}, {"mechanism": "tree_destroy", "condition": "base"}]}, {"subject": "beastmaster_wild_axes", "name_zh": "兽王·野性之斧", "name_en": "Wild Axes", "description_zh": "兽王投出他的斧头然后召回它们，切开飞过的敌人和树木。每把飞斧对同一个敌人只能击中一次，并且加深来自兽王和其单位的伤害。", "description_en": "Beastmaster sends his axes flying and calls them home again, slicing through enemy units and trees along their path.  Each axe can hit an enemy once, and amplifies subsequent damage from Beastmaster and his units.", "notes_zh": ["此技能将摧毁树木。"], "granted_by": "", "upgrades": {"shard": {"zh": "兽王对敌方英雄的攻击还会施加相应等级的野性之斧负面状态。", "en": "Beastmaster's attacks on enemy heroes also apply the Wild Axes debuff of its corresponding level."}}, "is_passive": false, "value_names": ["radius", "spread", "range", "axe_damage", "duration", "damage_amp", "min_throw_duration", "max_throw_duration", "apply_debuff_on_attack", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "flying", "condition": "base"}, {"mechanism": "tree_destroy", "condition": "base"}]}, {"subject": "beastmaster_summon_razorback", "name_zh": "兽王·召唤刀背兽", "name_en": "Summon Razorback", "description_zh": "兽王召唤一头豪猪前来助阵。豪猪拥有被动的毒素攻击，可以减缓攻击和移动速度。", "description_en": "Beastmaster calls forth a Boar to aid in the battlefield. The Boar has a passive poison attack that slows attack and movement speeds.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "boar_base_max_health", "boar_base_damage", "boar_total_damage_tooltip", "boar_bonus_damage", "boar_base_xp_bounty", "boar_base_movespeed", "boar_moveslow_tooltip", "boar_poison_duration_tooltip", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "slow", "condition": "base"}]}, {"subject": "beastmaster_summon_raptor", "name_zh": "兽王·召唤猛禽", "name_en": "Summon Raptors", "description_zh": "兽王召唤%hawk_count%只战鹰环绕在他周围，战鹰以%hawk_base_attack_interval%秒的基础攻击间隔俯冲攻击敌人，造成伤害并缠绕。战鹰提升攻击速度后会提升攻击频率。以英雄优先。", "description_en": "Beastmaster summons %hawk_count% hawks that circle around Beastmaster and dive-bombs at enemies with a base attack rate of every %hawk_base_attack_interval%s, damaging and rooting them. Attack rate increases with the Hawk's attack speed. Prioritizes heroes.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "hawk_spawn_interval", "hawk_base_max_health", "hawk_base_gold_bounty", "hawk_base_vision_range", "hawk_base_xp_bounty", "hawk_base_magic_resist", "attack_radius", "hawk_count", "dive_damage", "dive_root_duration", "roaming_radius", "roaming_seconds_per_rotation", "hawk_base_attack_interval", "min_move_speed"], "judge": [{"mechanism": "root", "condition": "base"}]}, {"subject": "beastmaster_drums_of_slom", "name_zh": "兽王·斯洛姆战鼓", "name_en": "Drums of Slom", "description_zh": "兽王或周围他控制的单位攻击敌人都会使他敲下战鼓，对附近单位造成伤害，并且治疗自身和他控制的单位，数值为造成伤害的一定百分比。每次攻击都会降低敲鼓的间隔，%max_stacks%次攻击后降低至最短%min_drum_hit_interval%秒敲击一次。如果没有发动攻击，敲鼓间隔会逐渐变长。使用原始咆哮时自动增加%primal_roar_stacks%层敲鼓叠加效果。", "description_en": "Attacks from Beastmaster or a nearby unit he controls will cause him bang his drum, dealing damage to nearby units and healing Beastmaster and units under his control for a portion of the damage dealt. Every attack decreases the interval between drum hits down to a minimum of %min_drum_hit_interval%s between hits after %max_stacks% attacks. If no attacks are made, the intervals gradually increase.Using Primal Roar counts as %primal_roar_stacks% attacks.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": true, "value_names": ["radius", "max_stacks", "stack_decay_time", "min_drum_hit_interval", "max_drum_hit_interval", "base_damage", "heal_pct", "creep_damage_pct", "creep_heal_pct", "aura_radius", "primal_roar_stacks"], "judge": [{"mechanism": "aoe_damage", "condition": "scepter"}, {"mechanism": "healing", "condition": "scepter"}]}, {"subject": "beastmaster_primal_roar", "name_zh": "兽王·原始咆哮", "name_en": "Primal Roar", "description_zh": "兽王发出震耳欲聋的咆哮，使目标敌方单位受到伤害并眩晕，同时在兽王和他的猎物之间清出一条通道。通道上的所有单位都被震开，也受到伤害并被降低移动和攻击速度。另外，兽王和他的单位获得%movement_speed%%%移动速度提升，持续%movement_speed_duration%秒。", "description_en": "Beastmaster lets loose a deafening roar that stuns, and shoves open a path to its target. All units in the path of the roar are damaged, while units shoved aside by the roar have their movement and attack speed slowed. Additionally, Beastmaster and his units gain %movement_speed%%% movement speed for %movement_speed_duration% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "damage", "side_damage", "damage_radius", "slow_movement_speed_pct", "slow_attack_speed_pct", "push_distance", "push_duration", "slow_duration", "movement_speed", "movement_speed_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "slow", "condition": "base"}, {"mechanism": "stun", "condition": "base"}]}, {"subject": "queenofpain_shadow_strike", "name_zh": "痛苦女王·暗影突袭", "name_en": "Shadow Strike", "description_zh": "投出一把淬毒匕首，造成大量初始伤害，并持续造成后续伤害。中毒的单位移动速度被减缓，持续%duration%秒。每%damage_interval%秒会再造成一次伤害。", "description_en": "Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement speed slowed for %duration% seconds.  An instance of damage is dealt every %damage_interval% seconds.", "notes_zh": ["受到作用的单位在持续时间内将逐秒缓慢地恢复至初始移动速度。", "受到暗影突袭作用的单位在生命值低于最大值25%时可以被队友反补。"], "granted_by": "", "upgrades": {"scepter": {"zh": "暗影突袭变为%aoe_radius%范围型技能。暗影突袭效果结束后或重新施加给敌方英雄时，目标将放出痛苦尖叫，伤害附近所有敌人。", "en": "Causes Shadow Strike to become a %aoe_radius% AoE Spell. When Shadow Strike ends or is re-applied to an enemy Hero, the target emits a Scream of Pain, hitting any nearby enemies."}}, "is_passive": false, "value_names": ["strike_damage", "duration_damage", "movement_slow", "projectile_speed", "attack_speed", "damage_interval", "generate_scream", "aoe_radius", "duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "scepter"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "queenofpain_blink", "name_zh": "痛苦女王·闪烁", "name_en": "Blink", "description_zh": "短距离传送，能让痛苦女王自由出入战场。", "description_en": "Short distance teleportation that allows Queen of Pain to move in and out of combat.", "notes_zh": ["闪烁可以躲避多种飞行过程中的攻击和技能弹道。"], "granted_by": "", "upgrades": {"shard": {"zh": "在痛苦女王的闪烁起点和落地点各释放一次音爆。在%shard_aoe%范围内造成%shard_damage%点伤害，并沉默%shard_duration%秒。", "en": "Releases a sonic boom when Queen of Pain blinks, at both her starting and ending locations. Deals %shard_damage% damage in a %shard_aoe% AoE and silences the target for %shard_duration% seconds."}}, "is_passive": false, "value_names": ["min_blink_range", "shard_damage", "shard_duration", "shard_aoe", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "flying", "condition": "base"}, {"mechanism": "projectile_dodge", "condition": "base"}, {"mechanism": "self_mobility", "condition": "base"}, {"mechanism": "self_mobility", "condition": "shard"}, {"mechanism": "silence", "condition": "shard"}]}, {"subject": "queenofpain_scream_of_pain", "name_zh": "痛苦女王·痛苦尖叫", "name_en": "Scream Of Pain", "description_zh": "痛苦女王发出刺耳的尖叫，对周围敌人造成伤害。造成伤害的%damage_reflected_to_self%%%会反弹回她身上。", "description_en": "The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies.%damage_reflected_to_self%%% of the damage dealt to heroes is reflected back to her.", "notes_zh": ["痛苦尖叫能作用隐身单位。", "痛苦尖叫无法被躲避。", "对幻象造成的伤害不会反弹。反弹的伤害为减免前的，而且不致死。", "反弹伤害不提供任何吸血，而且无法反弹。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["area_of_effect", "projectile_speed", "damage", "damage_reflected_to_self", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "invisibility", "condition": "base"}]}]}
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "tinker_rearm",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reset",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "重置修补匠技能的冷却时间。",
+          "reason_zh": "基础效果明确重置技能冷却。"
+        }
+      ]
+    },
+    {
+      "subject": "tinker_eureka",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "修补匠的每%int_per_one_cdr%点智力提供%one_percent_tooltip%%%物品冷却时间减少",
+          "reason_zh": "基础效果明确减少物品冷却时间。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_shrapnel",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "区域内的敌军受到伤害并被减速。",
+          "reason_zh": "一次施放能伤害区域内多个敌人。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "消耗一点能量射出一发带有爆炸弹片的榴霰弹",
+          "reason_zh": "每次施放消耗一点可恢复的能量，符合充能定义。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "榴霰弹将给予目标区域的视野。",
+          "reason_zh": "明确提供目标区域视野。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "榴霰弹将给予目标区域的视野。",
+          "reason_zh": "提供区域视野不等于使隐身单位显形。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "区域内的敌军受到伤害并被减速。",
+          "reason_zh": "明确对区域内敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_headshot",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料未说明一次攻击能伤害多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "爆头会短暂地降低敌人%slow%%%移动和攻击速度。",
+          "reason_zh": "明确降低敌人的移动和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_take_aim",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "主动开启后，狙击手的视野距离、爆头几率和攻击距离提升。",
+          "reason_zh": "主动效果扩大自身可获得视野的范围。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "自身在持续时间内减速%slow%%%",
+          "reason_zh": "减速是对自身的使用代价，按规则不计。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_concussive_grenade",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "向目标区域扔出一枚手雷，对敌人造成伤害",
+          "reason_zh": "手雷造成区域伤害，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "",
+          "reason_zh": "材料未说明吸收、减免或延迟受到的伤害。"
+        },
+        {
+          "mechanism": "disarm",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "受到作用的敌人被击退后还会被缴械和减速。",
+          "reason_zh": "技能明确缴械敌人，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "将他们和狙击手一同击退。",
+          "reason_zh": "技能会击退敌人，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "受到作用的敌人被击退后还会被缴械和减速。",
+          "reason_zh": "技能明确减速敌人，且整个技能由魔晶授予。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_assassinate",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "狙击手锁定一个目标敌方单位",
+          "reason_zh": "材料只说明对单个目标造成伤害，未说明范围伤害。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "隐身不能躲避该技能弹道。",
+          "reason_zh": "这是弹道不能被隐身躲避的说明，不是技能提供躲避弹道。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且短暂眩晕目标。",
+          "reason_zh": "基础效果明确包含短暂眩晕。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "并且短暂眩晕目标。 / 暗杀释放得更快，并且敌方目标的眩晕时间更久。",
+          "reason_zh": "基础效果已有眩晕，A杖只延长眩晕时间，不新增该机制。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_death_pulse",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "向他的周围释放死亡波纹，伤害敌方单位",
+          "reason_zh": "一次施放能伤害周围多个敌方单位。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并治疗友军单位。",
+          "reason_zh": "基础效果明确治疗友军。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_ghost_shroud",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "散发出一片灵气，减缓周围敌人的移动速度。",
+          "reason_zh": "灵气以自身为中心持续影响周围敌人，属于敌方光环。"
+        },
+        {
+          "mechanism": "ethereal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "瘟疫法师为虚无状态，无法攻击或被攻击",
+          "reason_zh": "明确使自身进入虚无状态。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到的魔法伤害增加",
+          "reason_zh": "魔法易伤是自身承受的代价，按规则不计。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓周围敌人的移动速度。",
+          "reason_zh": "明确降低周围敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_heartstopper_aura",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使附近敌方单位按最大生命值一定百分比持续流失生命。",
+          "reason_zh": "持续影响自身附近的敌方单位，属于敌方光环。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害不会禁用像闪烁匕首等物品。",
+          "reason_zh": "材料明确说明伤害不会禁用闪烁匕首，未提供限制位移效果。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_death_seeker",
+      "judgments": [
+        {
+          "mechanism": "spell_reflect",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "不会触发法术反弹。",
+          "reason_zh": "不触发法术反弹是交互说明，不代表自身能反弹技能。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_reapers_scythe",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "瘟疫法师击杀敌人后将永久获得生命和魔法恢复。",
+          "reason_zh": "基础效果可以永久增加自身魔法恢复。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕目标敌方英雄",
+          "reason_zh": "明确眩晕目标敌方英雄。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_fatal_bonds",
+      "judgments": [
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "这个技能造成的伤害被视为反弹伤害。",
+          "reason_zh": "反弹伤害的分类不等于把指向技能反弹给施法者。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_shadow_word",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使周围的敌方单位受到伤害",
+          "reason_zh": "一次施放能伤害目标周围多个敌方单位。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "周围的友方单位被治疗。",
+          "reason_zh": "基础效果明确治疗周围友方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_upheaval",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "魔童死亡时会爆炸，对周围所有敌人造成伤害。",
+          "reason_zh": "魔晶新增魔童死亡爆炸，每次爆炸能伤害周围多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "随施法时间增强的减速气流",
+          "reason_zh": "基础效果明确对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_eldritch_summoning",
+      "judgments": [
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "就会召唤出一个魔童 / 提升小魔童的生命值和爆炸伤害。",
+          "reason_zh": "基础效果召唤魔童，升级说明也明确其具有生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_rain_of_chaos",
+      "judgments": [
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "具有较高的减速抗性",
+          "reason_zh": "基础召唤出的地狱火明确具备减速抗性。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕敌人%stun_duration%秒。",
+          "reason_zh": "基础施放效果明确眩晕敌人。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "从深渊召唤一个地狱火 / 能够减免部分技能的伤害",
+          "reason_zh": "材料描述召唤能够承受伤害并持续存在的地狱火单位。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "该技能将摧毁作用范围内的树木。",
+          "reason_zh": "明确摧毁作用范围内的树木。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_wild_axes",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "切开飞过的敌人和树木。每把飞斧对同一个敌人只能击中一次",
+          "reason_zh": "一次投斧可以伤害沿途多个敌人。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "兽王投出他的斧头然后召回它们",
+          "reason_zh": "飞行的是投出的斧头，未赋予单位飞行移动能力。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "此技能将摧毁树木。",
+          "reason_zh": "明确具有摧毁树木的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_summon_razorback",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "豪猪拥有被动的毒素攻击，可以减缓攻击和移动速度。",
+          "reason_zh": "基础召唤的豪猪能通过攻击减缓敌人的攻击和移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_summon_raptor",
+      "judgments": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "俯冲攻击敌人，造成伤害并缠绕。",
+          "reason_zh": "基础召唤的战鹰会对敌人施加缠绕定身。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_drums_of_slom",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "对附近单位造成伤害",
+          "reason_zh": "每次敲鼓能伤害附近多个单位，且整个技能由A杖授予。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "并且治疗自身和他控制的单位",
+          "reason_zh": "明确治疗自身及受控单位，且整个技能由A杖授予。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_primal_roar",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "通道上的所有单位都被震开，也受到伤害",
+          "reason_zh": "一次施放能伤害通道上的多个单位。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被降低移动和攻击速度。",
+          "reason_zh": "明确降低通道上单位的移动和攻击速度。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使目标敌方单位受到伤害并眩晕",
+          "reason_zh": "基础效果明确眩晕目标。"
+        }
+      ]
+    },
+    {
+      "subject": "queenofpain_shadow_strike",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "暗影突袭变为%aoe_radius%范围型技能。 / 伤害附近所有敌人。",
+          "reason_zh": "A杖明确新增范围施法和伤害附近敌人的效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "中毒的单位移动速度被减缓",
+          "reason_zh": "基础效果明确降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "queenofpain_blink",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "在%shard_aoe%范围内造成%shard_damage%点伤害",
+          "reason_zh": "魔晶新增的音爆会造成范围伤害。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "短距离传送",
+          "reason_zh": "短距离传送属于位移，材料未说明飞行移动。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "闪烁可以躲避多种飞行过程中的攻击和技能弹道。",
+          "reason_zh": "明确能主动躲避飞行中的弹道。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "短距离传送",
+          "reason_zh": "基础效果通过传送主动改变自身位置。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "短距离传送 / 在痛苦女王的闪烁起点和落地点各释放一次音爆。",
+          "reason_zh": "自身位移是基础效果，魔晶新增的是音爆而非位移能力。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "并沉默%shard_duration%秒。",
+          "reason_zh": "魔晶新增的音爆明确施加沉默。"
+        }
+      ]
+    },
+    {
+      "subject": "queenofpain_scream_of_pain",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对周围敌人造成伤害。",
+          "reason_zh": "一次施放能伤害周围多个敌人。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "痛苦尖叫能作用隐身单位。",
+          "reason_zh": "能作用于隐身单位是交互说明，不代表技能能赋予隐身。"
+        }
+      ]
+    }
+  ]
+}
+tokens used
+30,437
+{
+  "objects": [
+    {
+      "subject": "tinker_rearm",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reset",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "重置修补匠技能的冷却时间。",
+          "reason_zh": "基础效果明确重置技能冷却。"
+        }
+      ]
+    },
+    {
+      "subject": "tinker_eureka",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "修补匠的每%int_per_one_cdr%点智力提供%one_percent_tooltip%%%物品冷却时间减少",
+          "reason_zh": "基础效果明确减少物品冷却时间。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_shrapnel",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "区域内的敌军受到伤害并被减速。",
+          "reason_zh": "一次施放能伤害区域内多个敌人。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "消耗一点能量射出一发带有爆炸弹片的榴霰弹",
+          "reason_zh": "每次施放消耗一点可恢复的能量，符合充能定义。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "榴霰弹将给予目标区域的视野。",
+          "reason_zh": "明确提供目标区域视野。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "榴霰弹将给予目标区域的视野。",
+          "reason_zh": "提供区域视野不等于使隐身单位显形。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "区域内的敌军受到伤害并被减速。",
+          "reason_zh": "明确对区域内敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_headshot",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料未说明一次攻击能伤害多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "爆头会短暂地降低敌人%slow%%%移动和攻击速度。",
+          "reason_zh": "明确降低敌人的移动和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_take_aim",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "主动开启后，狙击手的视野距离、爆头几率和攻击距离提升。",
+          "reason_zh": "主动效果扩大自身可获得视野的范围。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "自身在持续时间内减速%slow%%%",
+          "reason_zh": "减速是对自身的使用代价，按规则不计。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_concussive_grenade",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "向目标区域扔出一枚手雷，对敌人造成伤害",
+          "reason_zh": "手雷造成区域伤害，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "",
+          "reason_zh": "材料未说明吸收、减免或延迟受到的伤害。"
+        },
+        {
+          "mechanism": "disarm",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "受到作用的敌人被击退后还会被缴械和减速。",
+          "reason_zh": "技能明确缴械敌人，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "将他们和狙击手一同击退。",
+          "reason_zh": "技能会击退敌人，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "受到作用的敌人被击退后还会被缴械和减速。",
+          "reason_zh": "技能明确减速敌人，且整个技能由魔晶授予。"
+        }
+      ]
+    },
+    {
+      "subject": "sniper_assassinate",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "狙击手锁定一个目标敌方单位",
+          "reason_zh": "材料只说明对单个目标造成伤害，未说明范围伤害。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "隐身不能躲避该技能弹道。",
+          "reason_zh": "这是弹道不能被隐身躲避的说明，不是技能提供躲避弹道。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且短暂眩晕目标。",
+          "reason_zh": "基础效果明确包含短暂眩晕。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "并且短暂眩晕目标。 / 暗杀释放得更快，并且敌方目标的眩晕时间更久。",
+          "reason_zh": "基础效果已有眩晕，A杖只延长眩晕时间，不新增该机制。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_death_pulse",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "向他的周围释放死亡波纹，伤害敌方单位",
+          "reason_zh": "一次施放能伤害周围多个敌方单位。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并治疗友军单位。",
+          "reason_zh": "基础效果明确治疗友军。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_ghost_shroud",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "散发出一片灵气，减缓周围敌人的移动速度。",
+          "reason_zh": "灵气以自身为中心持续影响周围敌人，属于敌方光环。"
+        },
+        {
+          "mechanism": "ethereal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "瘟疫法师为虚无状态，无法攻击或被攻击",
+          "reason_zh": "明确使自身进入虚无状态。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到的魔法伤害增加",
+          "reason_zh": "魔法易伤是自身承受的代价，按规则不计。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓周围敌人的移动速度。",
+          "reason_zh": "明确降低周围敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_heartstopper_aura",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使附近敌方单位按最大生命值一定百分比持续流失生命。",
+          "reason_zh": "持续影响自身附近的敌方单位，属于敌方光环。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害不会禁用像闪烁匕首等物品。",
+          "reason_zh": "材料明确说明伤害不会禁用闪烁匕首，未提供限制位移效果。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_death_seeker",
+      "judgments": [
+        {
+          "mechanism": "spell_reflect",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "不会触发法术反弹。",
+          "reason_zh": "不触发法术反弹是交互说明，不代表自身能反弹技能。"
+        }
+      ]
+    },
+    {
+      "subject": "necrolyte_reapers_scythe",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "瘟疫法师击杀敌人后将永久获得生命和魔法恢复。",
+          "reason_zh": "基础效果可以永久增加自身魔法恢复。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕目标敌方英雄",
+          "reason_zh": "明确眩晕目标敌方英雄。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_fatal_bonds",
+      "judgments": [
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "这个技能造成的伤害被视为反弹伤害。",
+          "reason_zh": "反弹伤害的分类不等于把指向技能反弹给施法者。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_shadow_word",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使周围的敌方单位受到伤害",
+          "reason_zh": "一次施放能伤害目标周围多个敌方单位。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "周围的友方单位被治疗。",
+          "reason_zh": "基础效果明确治疗周围友方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_upheaval",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "魔童死亡时会爆炸，对周围所有敌人造成伤害。",
+          "reason_zh": "魔晶新增魔童死亡爆炸，每次爆炸能伤害周围多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "随施法时间增强的减速气流",
+          "reason_zh": "基础效果明确对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_eldritch_summoning",
+      "judgments": [
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "就会召唤出一个魔童 / 提升小魔童的生命值和爆炸伤害。",
+          "reason_zh": "基础效果召唤魔童，升级说明也明确其具有生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "warlock_rain_of_chaos",
+      "judgments": [
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "具有较高的减速抗性",
+          "reason_zh": "基础召唤出的地狱火明确具备减速抗性。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕敌人%stun_duration%秒。",
+          "reason_zh": "基础施放效果明确眩晕敌人。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "从深渊召唤一个地狱火 / 能够减免部分技能的伤害",
+          "reason_zh": "材料描述召唤能够承受伤害并持续存在的地狱火单位。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "该技能将摧毁作用范围内的树木。",
+          "reason_zh": "明确摧毁作用范围内的树木。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_wild_axes",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "切开飞过的敌人和树木。每把飞斧对同一个敌人只能击中一次",
+          "reason_zh": "一次投斧可以伤害沿途多个敌人。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "兽王投出他的斧头然后召回它们",
+          "reason_zh": "飞行的是投出的斧头，未赋予单位飞行移动能力。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "此技能将摧毁树木。",
+          "reason_zh": "明确具有摧毁树木的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_summon_razorback",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "豪猪拥有被动的毒素攻击，可以减缓攻击和移动速度。",
+          "reason_zh": "基础召唤的豪猪能通过攻击减缓敌人的攻击和移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_summon_raptor",
+      "judgments": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "俯冲攻击敌人，造成伤害并缠绕。",
+          "reason_zh": "基础召唤的战鹰会对敌人施加缠绕定身。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_drums_of_slom",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "对附近单位造成伤害",
+          "reason_zh": "每次敲鼓能伤害附近多个单位，且整个技能由A杖授予。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "并且治疗自身和他控制的单位",
+          "reason_zh": "明确治疗自身及受控单位，且整个技能由A杖授予。"
+        }
+      ]
+    },
+    {
+      "subject": "beastmaster_primal_roar",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "通道上的所有单位都被震开，也受到伤害",
+          "reason_zh": "一次施放能伤害通道上的多个单位。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被降低移动和攻击速度。",
+          "reason_zh": "明确降低通道上单位的移动和攻击速度。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使目标敌方单位受到伤害并眩晕",
+          "reason_zh": "基础效果明确眩晕目标。"
+        }
+      ]
+    },
+    {
+      "subject": "queenofpain_shadow_strike",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "暗影突袭变为%aoe_radius%范围型技能。 / 伤害附近所有敌人。",
+          "reason_zh": "A杖明确新增范围施法和伤害附近敌人的效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "中毒的单位移动速度被减缓",
+          "reason_zh": "基础效果明确降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "queenofpain_blink",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "在%shard_aoe%范围内造成%shard_damage%点伤害",
+          "reason_zh": "魔晶新增的音爆会造成范围伤害。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "短距离传送",
+          "reason_zh": "短距离传送属于位移，材料未说明飞行移动。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "闪烁可以躲避多种飞行过程中的攻击和技能弹道。",
+          "reason_zh": "明确能主动躲避飞行中的弹道。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "短距离传送",
+          "reason_zh": "基础效果通过传送主动改变自身位置。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "短距离传送 / 在痛苦女王的闪烁起点和落地点各释放一次音爆。",
+          "reason_zh": "自身位移是基础效果，魔晶新增的是音爆而非位移能力。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "并沉默%shard_duration%秒。",
+          "reason_zh": "魔晶新增的音爆明确施加沉默。"
+        }
+      ]
+    },
+    {
+      "subject": "queenofpain_scream_of_pain",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对周围敌人造成伤害。",
+          "reason_zh": "一次施放能伤害周围多个敌人。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "痛苦尖叫能作用隐身单位。",
+          "reason_zh": "能作用于隐身单位是交互说明，不代表技能能赋予隐身。"
+        }
+      ]
+    }
+  ]
+}

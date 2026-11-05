@@ -1,0 +1,391 @@
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: none
+reasoning summaries: none
+session id: 01a1a5ac-b2c6-7533-8460-29acf6412a91
+--------
+user
+你在独立阅读Dota 2技能和装备的说明，判断每个对象具备词表里的哪些机制。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+要求：
+- 每个对象都要输出一条，`subject`原样返回。没有任何机制时`mechanisms`为空数组。
+- 逐个对象读完整说明，对照词表全部条目判断，不要只找明显的。说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 词表定义已经用户确认，必须遵守。另外：
+  - 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。
+  - 提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+  - 召唤物只算有血量的单位；按受攻击次数计算的不算。
+  - 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+  - 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `condition`：基础效果写`base`，只在有A杖时生效写`scepter`，只在有魔晶时写`shard`，装备写`item`。`granted_by`不为空的对象，整个技能按该升级记。
+- `value_names`和`attributes`只是字段名，不能单独当证据。`%xxx%`是数值占位符。
+- `quote`摘决定判断的原文片段；`uncertain`为true表示材料不足或需要游戏知识，不要猜。
+
+词表：
+[
+{
+"id": "stun",
+"zh": "眩晕",
+"definition": "使目标无法行动和施法的硬控（含小眩晕）"
+},
+{
+"id": "hex",
+"zh": "妖术",
+"definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品"
+},
+{
+"id": "silence",
+"zh": "沉默",
+"definition": "目标无法施放技能（仍可攻击、使用物品）"
+},
+{
+"id": "mute",
+"zh": "禁用物品",
+"definition": "目标无法使用物品"
+},
+{
+"id": "disarm",
+"zh": "缴械",
+"definition": "目标无法普通攻击"
+},
+{
+"id": "root",
+"zh": "定身",
+"definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"
+},
+{
+"id": "forced_action",
+"zh": "强制行为",
+"definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"
+},
+{
+"id": "sleep",
+"zh": "睡眠",
+"definition": "无法行动，受伤害后醒来"
+},
+{
+"id": "cyclone_banish",
+"zh": "吹风/放逐",
+"definition": "使目标短暂离开战场，期间无敌或不可被选取"
+},
+{
+"id": "slow",
+"zh": "减速",
+"definition": "降低移动速度或攻击速度"
+},
+{
+"id": "evasion",
+"zh": "闪避",
+"definition": "自身有概率使敌方攻击落空"
+},
+{
+"id": "blind",
+"zh": "致盲",
+"definition": "使敌方单位的攻击有概率落空"
+},
+{
+"id": "debuff_immunity",
+"zh": "减益免疫/技能免疫",
+"definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"
+},
+{
+"id": "pierces_debuff_immunity",
+"zh": "穿透减益免疫",
+"definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）"
+},
+{
+"id": "invulnerable_untargetable",
+"zh": "无敌/不可选取",
+"definition": "暂时无法被伤害或无法被指向"
+},
+{
+"id": "damage_block",
+"zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"
+},
+{
+"id": "death_prevention",
+"zh": "免死",
+"definition": "在一段时间内不会被打死（如薄葬、回光返照）"
+},
+{
+"id": "status_resistance",
+"zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"
+},
+{
+"id": "slow_resistance",
+"zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）"
+},
+{
+"id": "applies_basic_dispel",
+"zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果"
+},
+{
+"id": "applies_strong_dispel",
+"zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）"
+},
+{
+"id": "applies_break",
+"zh": "施加破坏",
+"definition": "使目标的被动技能暂时失效"
+},
+{
+"id": "invisibility",
+"zh": "隐身",
+"definition": "使自身、队友、召唤物或复制体隐身"
+},
+{
+"id": "true_sight",
+"zh": "真视",
+"definition": "可看见隐身单位"
+},
+{
+"id": "healing",
+"zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）"
+},
+{
+"id": "lifesteal",
+"zh": "吸血",
+"definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"
+},
+{
+"id": "heal_reduction",
+"zh": "治疗削减",
+"definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"
+},
+{
+"id": "mana_burn",
+"zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值"
+},
+{
+"id": "mana_gain",
+"zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"
+},
+{
+"id": "illusions",
+"zh": "幻象",
+"definition": "制造自身或他人的幻象"
+},
+{
+"id": "summons",
+"zh": "召唤物",
+"definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"
+},
+{
+"id": "self_mobility",
+"zh": "自身位移",
+"definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"
+},
+{
+"id": "displace_other",
+"zh": "位移他人",
+"definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"
+},
+{
+"id": "damage_return",
+"zh": "反伤",
+"definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件"
+},
+{
+"id": "bash",
+"zh": "重击",
+"definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算"
+},
+{
+"id": "pierce_evasion",
+"zh": "克敌机先",
+"definition": "攻击无视闪避（必中）"
+},
+{
+"id": "critical",
+"zh": "暴击",
+"definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"
+},
+{
+"id": "ethereal",
+"zh": "虚无",
+"definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"
+},
+{
+"id": "armor_reduction",
+"zh": "减护甲",
+"definition": "降低目标护甲"
+},
+{
+"id": "magic_resist_reduction",
+"zh": "减魔抗/魔法易伤",
+"definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"
+},
+{
+"id": "incoming_damage_amp",
+"zh": "伤害加深",
+"definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）"
+},
+{
+"id": "attack_damage_reduction",
+"zh": "减攻击力",
+"definition": "降低目标的攻击力"
+},
+{
+"id": "spell_block",
+"zh": "格挡指向技能",
+"definition": "使指向自身或队友的技能失效"
+},
+{
+"id": "spell_reflect",
+"zh": "反弹指向技能",
+"definition": "把指向技能反弹给施法者"
+},
+{
+"id": "projectile_dodge",
+"zh": "躲避弹道",
+"definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"
+},
+{
+"id": "channel_interrupt",
+"zh": "打断持续施法",
+"definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"
+},
+{
+"id": "mobility_lock",
+"zh": "限制位移",
+"definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"
+},
+{
+"id": "cleave",
+"zh": "分裂溅射",
+"definition": "攻击伤害波及周围单位"
+},
+{
+"id": "attack_modifier",
+"zh": "攻击特效",
+"definition": "给攻击附加效果的法球类技能"
+},
+{
+"id": "spell_amp",
+"zh": "法术放大",
+"definition": "提高技能造成的伤害"
+},
+{
+"id": "aura",
+"zh": "光环",
+"definition": "持续影响周围单位；对友军或敌方都算，并记作用对象"
+},
+{
+"id": "reveal",
+"zh": "显形",
+"definition": "使隐身单位显形，不等于持续真视"
+},
+{
+"id": "grant_vision",
+"zh": "提供视野",
+"definition": "提供目标或区域的视野"
+},
+{
+"id": "reduce_vision",
+"zh": "减视野",
+"definition": "降低目标的视野"
+},
+{
+"id": "phased",
+"zh": "相位移动",
+"definition": "移动不受单位碰撞阻挡"
+},
+{
+"id": "flying",
+"zh": "飞行",
+"definition": "飞行移动，能越过地形"
+},
+{
+"id": "tree_walk",
+"zh": "穿树",
+"definition": "能穿过树木移动"
+},
+{
+"id": "tree_destroy",
+"zh": "砍树",
+"definition": "能摧毁树木"
+},
+{
+"id": "respawn",
+"zh": "重生",
+"definition": "死亡后复活，或影响复活"
+},
+{
+"id": "execute",
+"zh": "斩杀",
+"definition": "目标低于生命阈值时直接杀死"
+},
+{
+"id": "hp_removal",
+"zh": "生命移除",
+"definition": "直接移除生命，不算伤害"
+},
+{
+"id": "spell_steal",
+"zh": "偷技能",
+"definition": "获得其他单位的技能"
+},
+{
+"id": "stat_steal",
+"zh": "偷属性",
+"definition": "夺取目标的属性"
+},
+{
+"id": "cooldown_reduction",
+"zh": "减冷却",
+"definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"
+},
+{
+"id": "cooldown_reset",
+"zh": "刷新冷却",
+"definition": "立刻重置冷却"
+},
+{
+"id": "economy",
+"zh": "经济经验",
+"definition": "提供额外金钱或经验；只是正常赏金不算"
+},
+{
+"id": "charges",
+"zh": "充能",
+"definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"
+},
+{
+"id": "aoe_damage",
+"zh": "范围伤害",
+"definition": "一次施放或一次攻击能对多个敌方单位造成伤害"
+}
+]
+
+待判断对象：
+[{"subject": "antimage_mana_break", "name_zh": "敌法师·法力损毁", "name_en": "Mana Break", "description_zh": "每次攻击损毁目标魔法值，并造成相当于损毁魔法值一定百分比的伤害。", "description_en": "Burns an opponent's mana on each attack and deals damage equal to a percentage of the mana burnt.", "notes_zh": ["幻象继承法力损毁的燃烧魔法为%illusion_percentage%%%。"], "granted_by": "", "upgrades": {"scepter": {"zh": "提升每次攻击燃烧的最大魔法值。", "en": "Increases Max Mana Burned per Hit."}}, "is_passive": true, "value_names": ["percent_damage_per_burn", "mana_per_hit", "mana_per_hit_pct", "illusion_percentage", "empowered_max_burn_pct", "empowered_mana_break_debuff_duration"]}, {"subject": "antimage_blink", "name_zh": "敌法师·闪烁", "name_en": "Blink", "description_zh": "短距离传送，能让敌法师自由出入战场。", "description_en": "Short distance teleportation that allows Anti-Mage to move in and out of combat.", "notes_zh": ["闪烁可以躲避多种飞行过程中的攻击和技能弹道。"], "granted_by": "", "upgrades": {"scepter": {"zh": "施放闪烁后，%empowered_mana_break_duration%秒内的法力损毁将额外燃烧%empowered_max_burn_pct_tooltip%%%最大魔法值，并且阻止目标在短时间内恢复或获得魔法。这个负面状态无法驱散。", "en": "After casting Blink, your next Mana Break within %empowered_mana_break_duration%s burns an additional %empowered_max_burn_pct_tooltip%%% max mana and prevents the target from regenerating or gaining mana for a short duration. This debuff is undispellable."}}, "is_passive": false, "value_names": ["min_blink_range", "empowered_mana_break_duration", "empowered_max_burn_pct_tooltip", "empowered_mana_break_debuff_duration_tooltip", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "antimage_counterspell", "name_zh": "敌法师·法术反制", "name_en": "Counterspell", "description_zh": "被动提升魔法抗性。可以主动开启法术反制，创造一个环绕敌法师的反魔法外壳，抵挡和反弹所有指向性技能。", "description_en": "Passively grants magic resistance. Counterspell may be activated to create an anti-magic shell around Anti-Mage that blocks and reflects any targeted spells.", "notes_zh": ["破坏会使被动魔法抗性失效。"], "granted_by": "", "upgrades": {"shard": {"zh": "开启后反弹指向性技能时会在敌方施法者身边制造一个敌法师的闪烁碎片。", "en": "Creates a blinked fragment of Anti-Mage next to the enemy caster upon reflecting their unit-targeted spell while active."}}, "is_passive": false, "value_names": ["magic_resistance", "duration", "duration_illusion", "incoming_damage", "does_reflect", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "antimage_persectur", "name_zh": "敌法师·绝人之路", "name_en": "Persecutor", "description_zh": "攻击会根据敌人缺失的魔法值造成减速。%mana_threshold%%%魔法时造成最低减速，0%%魔法时造成最高减速。敌人高于%mana_threshold%%%魔法时没有效果。", "description_en": "Attacks slow enemies based on how much mana they are missing. Min slow at %mana_threshold%%% mana, up to max slow at 0%% mana. No effect if enemy is above %mana_threshold%%% mana.", "notes_zh": ["幻象造成全额效果。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["move_slow_min", "move_slow_max", "mana_threshold", "slow_duration"]}, {"subject": "antimage_mana_void", "name_zh": "敌法师·法力虚空", "name_en": "Mana Void", "description_zh": "根据目标损失的魔法值，对目标和其周围的敌人造成伤害。所有受到伤害的单位都会被短暂眩晕。", "description_en": "For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies.  The main target is also mini-stunned.", "notes_zh": ["伤害的计算根据主目标失去的魔法，但是对作用范围内所有敌人均有效。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["mana_void_damage_per_mana", "mana_void_ministun", "mana_void_aoe_radius", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "axe_berserkers_call", "name_zh": "斧王·狂战士之吼", "name_en": "Berserker's Call", "description_zh": "斧王嘲讽附近的敌方单位，强迫他们攻击自己，同时获得额外护甲。", "description_en": "Axe taunts nearby enemy units, forcing them to attack him while he gains bonus armor during the duration.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "狂战士之吼会对作用下单位施加战斗饥渴。", "en": "Berserker's Call applies Battle Hunger to affected units."}}, "is_passive": false, "value_names": ["radius", "bonus_armor", "duration", "applies_battle_hunger", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "axe_battle_hunger", "name_zh": "斧王·战斗饥渴", "name_en": "Battle Hunger", "description_zh": "激怒一个敌方单位，使他受到持续伤害，直到他杀死一个单位或者持续时间结束。敌人只要背朝斧王还将被减速。", "description_en": "Enrages an enemy unit, causing it to take damage over time until it kills another unit or the duration ends. The enemy is slowed as long as they are facing away from Axe.", "notes_zh": ["摧毁建筑也能移除该状态效果。"], "granted_by": "", "upgrades": {"shard": {"zh": "多个战斗饥渴效果可以叠加在单个目标身上。", "en": "Multiple instances of Battle Hunger can stack on a single target."}}, "is_passive": false, "value_names": ["duration", "slow", "damage_per_second", "speed_bonus", "should_stack", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "axe_counter_helix", "name_zh": "斧王·反击螺旋", "name_en": "Counter Helix", "description_zh": "受到一定次数攻击后，斧王就会做出螺旋反击，对附近所有敌方单位造成纯粹伤害。", "description_en": "After a set number of attacks, Axe will perform a helix counter attack, dealing pure damage to all nearby enemies.", "notes_zh": ["反击螺旋会在斧王受到攻击时触发。", "拥有神杖后自身幻象的攻击不会计入触发计数。"], "granted_by": "", "upgrades": {"scepter": {"zh": "反击螺旋现在对击中的敌人施加一个可叠加的负面效果，使其对斧王造成的攻击伤害减少。反击螺旋不再具有冷却时间，并且斧王的攻击也会计入触发记数。", "en": "Counter Helix now applies a stacking debuff to enemies hit by it that causes them to deal less total attack damage to Axe. Counter Helix no longer has a cooldown and its counter advances when Axe attacks."}}, "is_passive": true, "value_names": ["damage", "radius", "trigger_attacks", "debuff_duration", "damage_reduction", "max_stacks", "attacks_increase_counter", "helix_lifesteal", "AbilityCooldown"]}, {"subject": "axe_culling_blade", "name_zh": "斧王·淘汰之刃", "name_en": "Culling Blade", "description_zh": "斧王洞察到弱点并出击，造成纯粹伤害。淘汰之刃击杀敌方英雄时将重置冷却时间，而附近所有友军单位获得移动速度和护甲加成。\n\n每当斧王通过淘汰之刃击杀敌方英雄，他的战刃就会浸满鲜血，获得永久叠加效果，每层都会提供护甲加成。", "description_en": "Axe spots a weakness and strikes, dealing pure damage. When an enemy hero is killed with Culling Blade, its cooldown is reset, and all nearby allied units gain bonus movement speed and armor.\n\nAxe permanently drenches his blade every time he kills an enemy Hero with Culling Blade, gaining bonus armor for each stack.", "notes_zh": ["淘汰之刃的斩杀效果无法被薄葬等技能阻止。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "speed_bonus", "armor_bonus", "speed_duration", "speed_aoe", "charge_speed", "armor_per_stack", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "axe_one_man_army", "name_zh": "斧王·一人之军", "name_en": "One Man Army", "description_zh": "只要斧王附近%radius%范围内没有友方英雄，他就会获得%armor_pct_as_strength%%%自身护甲值的力量加成。这个效果在接近一名友军后会在%bonus_linger_duration%秒内消失。", "description_en": "Axe gains Strength based on %armor_pct_as_strength%%% of his Armor as long as there are no allied heroes within %radius% distance from Axe.  The effect fades over %bonus_linger_duration%s after approaching an ally.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["armor_pct_as_strength", "current_max_str_bonus", "radius", "bonus_linger_duration"]}, {"subject": "bane_enfeeble", "name_zh": "祸乱之源·虚弱", "name_en": "Enfeeble", "description_zh": "每秒造成伤害，并且降低敌人的总攻击力和施法距离。", "description_en": "Deals damage every second and lowers the enemy's total attack damage and cast range.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_reduction", "cast_reduction", "duration", "enfeeble_tick_damage", "damage_tick_rate", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bane_brain_sap", "name_zh": "祸乱之源·蚀脑", "name_en": "Brain Sap", "description_zh": "暴食一个敌方单位的生命能量，造成伤害并回复自身生命值。", "description_en": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "减少%bonus_AbilityCooldown%秒冷却时间。蚀脑变成%shard_radius%作用范围的技能。次级目标只有%shard_secondary_target_heal_pct%%%治疗效果。", "en": "Reduces cooldown by %bonus_AbilityCooldown%. Causes Brain Sap to become a %shard_radius% AoE spell. Secondary targets only heal for %shard_secondary_target_heal_pct%%%."}}, "is_passive": false, "value_names": ["brain_sap_damage", "shard_radius", "shard_secondary_target_heal_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bane_nightmare", "name_zh": "祸乱之源·噩梦", "name_en": "Nightmare", "description_zh": "让目标敌方或友方英雄进入沉睡。睡着的单位会向祸乱之源选定的方向走去，受到攻击便会醒来。目标被直接攻击时，噩梦将转移到攻击者身上。祸乱之源可以随意攻击噩梦中的目标或造成伤害，而且获得额外攻击速度。可以设为多样施法（右键点击技能栏图标），让目标站立不动。", "description_en": "Puts the target enemy or friendly Hero to sleep. Sleeping units walk in Bane's chosen direction and are awakened when damaged. If the target was directly attacked, the Nightmare passes to the attacking unit. Bane can attack and damage Nightmared targets freely. Can be put on alt-cast to have the target stand still.", "notes_zh": ["在噩梦的第一秒，作用单位是无敌状态。", "祸乱之源可以把自己从噩梦中唤醒。", "施放后将替换为结束噩梦：结束所有受作用单位身上的噩梦。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["nightmare_invuln_time", "animation_rate", "vector_render_radius", "walk_speed", "turn_rate", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bane_fiends_grip", "name_zh": "祸乱之源·魔爪", "name_en": "Fiend's Grip", "description_zh": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。", "description_en": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "魔爪的冷却时间减少%bonus_AbilityCooldown%秒。魔爪将产生两个不可控制的幻象，幻象也将对目标持续施放魔爪。幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。伤害不会叠加。", "en": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack."}}, "is_passive": false, "value_names": ["fiend_grip_tick_interval", "fiend_grip_mana_drain", "fiend_grip_damage", "illusion_count", "scepter_incoming_illusion_damage", "AbilityCastRange", "AbilityChannelTime", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bane_ichor_of_nyctasha", "name_zh": "祸乱之源·妮塔莎脓血", "name_en": "Ichor of Nyctasha", "description_zh": "每次祸乱之源击杀敌方英雄，或者他们在祸乱之源的负面效果下阵亡，他们都会在游戏的剩余时间内获得一层恐惧的效果，使敌人对祸乱之源施加的负面状态的状态抗性减少。", "description_en": "Every time Bane kills an enemy hero or they die under the effect of Bane's debuff, they receive a Terror for the rest of the game that decreases their status resistance to Bane's subsequent debuffs.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["damage_tick_rate", "max_terrors", "status_resistance"]}, {"subject": "bloodseeker_bloodrage", "name_zh": "血魔·血怒", "name_en": "Bloodrage", "description_zh": "使血魔陷入渴望鲜血的狂怒中，以每秒流失一定百分比生命的代价获得攻击速度和技能增强加成。", "description_en": "Drives Bloodseeker into a bloodthirsty rage which causes him to attack faster and deal more spell damage at the cost of a percentage of his health per second.", "notes_zh": ["对血魔造成的伤害不致死。"], "granted_by": "", "upgrades": {"shard": {"zh": "血怒下血魔的攻击现在造成%max_health_dmg_pct%%%目标最大生命值的纯粹伤害。", "en": "Bloodseeker's Bloodrage attacks now deal %max_health_dmg_pct%%% of the target's max health as Pure damage."}}, "is_passive": false, "value_names": ["duration", "attack_speed", "spell_amp", "damage_pct", "max_health_dmg_pct", "can_silence", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bloodseeker_blood_bath", "name_zh": "血魔·血祭", "name_en": "Blood Rite", "description_zh": "血魔用圣血为一片区域洗礼。%delay_plus_castpoint_tooltip%秒后祭祀完成，区域范围内所有敌人都会受到伤害，并被沉默。", "description_en": "Bloodseeker baptizes an area in sacred blood. After %delay_plus_castpoint_tooltip% seconds the ritual completes, causing any enemies caught in the area to take damage and become silenced.", "notes_zh": ["总时间为%delay%秒的施法时间加上%castpoint_tooltip%秒的生效延迟。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "silence_duration", "damage", "delay", "delay_plus_castpoint_tooltip", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bloodseeker_thirst", "name_zh": "血魔·焦渴", "name_en": "Thirst", "description_zh": "血魔能够感知到敌人的伤口中涌出的鲜血，敌方英雄的生命值低于%min_bonus_pct%%%，他的移动速度就会提升，而且生命值越低，提升效果越大。如果生命值低于%invis_threshold_pct%%%，他还将获得该英雄的视野和真实视域。焦渴的效果可以叠加。血魔可以突破最大速度限制。", "description_en": "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed when an enemy hero's health falls below %min_bonus_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero. Unlocks max movement speed for Bloodseeker.", "notes_zh": ["幻象不能触发该技能。", "移动速度加成在敌人生命值低于%max_bonus_pct%%%时达到上限。", "目标死亡后效果延续%linger_duration%秒。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["min_bonus_pct", "bonus_movement_speed", "active_movement_speed", "active_duration", "inactive_penalty_pct", "sanguivore_multiplier", "max_bonus_pct", "visibility_threshold_pct", "invis_threshold_pct", "linger_duration", "AbilityCastPoint", "AbilityManaCost"]}, {"subject": "bloodseeker_sanguivore", "name_zh": "血魔·食血动物", "name_en": "Sanguivore", "description_zh": "血魔每杀死一个单位都会回复部分生命，回复量为基础%base_heal%点加上该单位最大生命值的一定百分比。友军击杀了附近的敌方英雄时会回复半额数值。", "description_en": "Bloodseeker restores some life when he kills a unit, equal to %base_heal% health plus a percentage of the units max health.Restores for half values if an ally kills a nearby enemy hero.", "notes_zh": ["非英雄单位的吸血效果减少%creep_lifesteal_reduction_pct%%%。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["base_heal", "heal_hp_pct", "creep_lifesteal_reduction_pct", "half_bonus_aoe", "barrier_decay_pct", "max_shield_pct", "pure_damage_lifesteal_pct", "AbilityCastPoint"]}, {"subject": "bloodseeker_rupture", "name_zh": "血魔·割裂", "name_en": "Rupture", "description_zh": "让一个敌方单位皮开肉绽，根据其当前生命值造成初始伤害。单位移动后会根据移动的距离受到伤害。", "description_en": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health. If the unit moves, it takes damage based on the distance moved.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "提升初始伤害，并且提供%AbilityCharges%点割裂能量点数。", "en": "Increases initial damage and grants %AbilityCharges% Rupture Charges."}}, "is_passive": false, "value_names": ["duration", "movement_damage_pct", "hp_pct", "damage_cap_amount", "knockback", "knockback_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "crystal_maiden_crystal_nova", "name_zh": "水晶室女·冰霜新星", "name_en": "Crystal Nova", "description_zh": "召唤具有破坏性的冰爆，降低目标区域内的敌人的移动速度。", "description_en": "A burst of damaging frost slows enemy movement in the targeted area.", "notes_zh": ["冰霜新星在持续时间内提供目标区域的视野。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "movespeed_slow", "attackspeed_slow", "duration", "vision_duration", "nova_damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "crystal_maiden_frostbite", "name_zh": "水晶室女·冰封禁制", "name_en": "Frostbite", "description_zh": "操控冰霜包围一个敌方单位，禁止移动和攻击，并持续造成伤害。对非远古的普通单位施放将造成%creep_multiplier%倍伤害。", "description_en": "Encases an enemy unit in ice, prohibiting movement and attack, while dealing damage over time. Deals %creep_multiplier%x damage to non-ancient creeps.", "notes_zh": ["冰封禁制为捆缚效果。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_per_second", "duration", "creep_multiplier", "tick_interval", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "crystal_maiden_brilliance_aura", "name_zh": "水晶室女·奥术光环", "name_en": "Arcane Aura", "description_zh": "地图上所有友方单位获得额外魔法恢复。水晶室女附近%proximity_bonus_radius%范围内友军获得更高的魔法恢复。水晶室女被动获得魔法恢复增强。", "description_en": "Gives mana regeneration to all friendly units on the map. Allies within a %proximity_bonus_radius% radius of Crystal Maiden receive more mana regeneration.Crystal Maiden passively gains mana regen amplification.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["base_mana_regen", "proximity_mana_regen_tooltip", "mana_regen_amp", "proximity_bonus_factor", "proximity_bonus_radius"]}, {"subject": "crystal_maiden_crystal_clone", "name_zh": "水晶室女·冰晶克隆", "name_en": "Crystal Clone", "description_zh": "向一个方向滑行，在原地制造一个自身的冰晶克隆，并且躲避多种飞行过程中的攻击和技能弹道。如果克隆受到了足量伤害，或者超过一定时间都会碎裂，对附近%frostbite_radius%范围内敌人施加冰封禁制。克隆体也可以被水晶室女自身的技能摧毁。", "description_en": "Slides in a direction, creating a crystal clone of herself in her place and disjointing incoming projectiles. If the clone takes enough damage or times out, it shatters, Frostbiting enemies in a %frostbite_radius% AoE around its place. The Clone can also be destroyed by Crystal Maiden's own spells.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["hop_distance", "hop_duration", "clone_duration", "frostbite_radius", "anim_delay", "clone_health", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "crystal_maiden_glacial_guard", "name_zh": "水晶室女·冰川护体", "name_en": "Glacial Guard", "description_zh": "水晶室女消耗在她技能上的一部分魔法会转化为物理护盾。", "description_en": "A portion of the mana Crystal Maiden spends on her abilities is converted into a physical barrier.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["mana_multiplier", "barrier_duration"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+2026-11-04T08:29:16.849709Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+ERROR: Reconnecting... 2/5
+2026-11-04T08:29:22.570479Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+ERROR: Reconnecting... 3/5
+2026-11-04T08:29:25.382514Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+ERROR: Reconnecting... 4/5
+2026-11-04T08:29:30.303550Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+ERROR: Reconnecting... 5/5
+2026-11-04T08:29:38.647168Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+warning: Falling back from WebSockets to HTTPS transport. stream disconnected before completion: tls handshake eof
+ERROR: Reconnecting... waiting for network
+codex
+{"objects":[{"subject":"antimage_mana_break","mechanisms":[{"mechanism":"mana_burn","condition":"base","quote":"每次攻击损毁目标魔法值","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"每次攻击损毁目标魔法值，并造成相当于损毁魔法值一定百分比的伤害。","uncertain":false}]},{"subject":"antimage_blink","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"短距离传送","uncertain":false},{"mechanism":"projectile_dodge","condition":"base","quote":"闪烁可以躲避多种飞行过程中的攻击和技能弹道。","uncertain":false},{"mechanism":"mana_burn","condition":"scepter","quote":"法力损毁将额外燃烧%empowered_max_burn_pct_tooltip%%%最大魔法值","uncertain":false},{"mechanism":"attack_modifier","condition":"scepter","quote":"After casting Blink, your next Mana Break within %empowered_mana_break_duration%s burns an additional %empowered_max_burn_pct_tooltip%%% max mana and prevents the target from regenerating or gaining mana for a short duration.","uncertain":false}]},{"subject":"antimage_counterspell","mechanisms":[{"mechanism":"spell_block","condition":"base","quote":"抵挡和反弹所有指向性技能","uncertain":false},{"mechanism":"spell_reflect","condition":"base","quote":"抵挡和反弹所有指向性技能","uncertain":false},{"mechanism":"illusions","condition":"shard","quote":"在敌方施法者身边制造一个敌法师的闪烁碎片","uncertain":true}]},{"subject":"antimage_persectur","mechanisms":[{"mechanism":"slow","condition":"base","quote":"攻击会根据敌人缺失的魔法值造成减速。","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"攻击会根据敌人缺失的魔法值造成减速。","uncertain":false}]},{"subject":"antimage_mana_void","mechanisms":[{"mechanism":"stun","condition":"base","quote":"所有受到伤害的单位都会被短暂眩晕。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对目标和其周围的敌人造成伤害。","uncertain":false}]},{"subject":"axe_berserkers_call","mechanisms":[{"mechanism":"forced_action","condition":"base","quote":"斧王嘲讽附近的敌方单位，强迫他们攻击自己","uncertain":false},{"mechanism":"slow","condition":"shard","quote":"狂战士之吼会对作用下单位施加战斗饥渴。；敌人只要背朝斧王还将被减速。","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"狂战士之吼会对作用下单位施加战斗饥渴。；使他受到持续伤害","uncertain":false}]},{"subject":"axe_battle_hunger","mechanisms":[{"mechanism":"slow","condition":"base","quote":"敌人只要背朝斧王还将被减速。","uncertain":false}]},{"subject":"axe_counter_helix","mechanisms":[{"mechanism":"damage_return","condition":"base","quote":"受到一定次数攻击后，斧王就会做出螺旋反击，对附近所有敌方单位造成纯粹伤害。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对附近所有敌方单位造成纯粹伤害。","uncertain":false},{"mechanism":"attack_damage_reduction","condition":"scepter","quote":"对击中的敌人施加一个可叠加的负面效果，使其对斧王造成的攻击伤害减少。","uncertain":false}]},{"subject":"axe_culling_blade","mechanisms":[{"mechanism":"cooldown_reset","condition":"base","quote":"淘汰之刃击杀敌方英雄时将重置冷却时间","uncertain":false},{"mechanism":"execute","condition":"base","quote":"淘汰之刃的斩杀效果无法被薄葬等技能阻止。","uncertain":true}]},{"subject":"axe_one_man_army","mechanisms":[]},{"subject":"bane_enfeeble","mechanisms":[{"mechanism":"attack_damage_reduction","condition":"base","quote":"降低敌人的总攻击力和施法距离。","uncertain":false}]},{"subject":"bane_brain_sap","mechanisms":[{"mechanism":"healing","condition":"base","quote":"造成伤害并回复自身生命值。","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"蚀脑变成%shard_radius%作用范围的技能。次级目标只有%shard_secondary_target_heal_pct%%%治疗效果。","uncertain":false}]},{"subject":"bane_nightmare","mechanisms":[{"mechanism":"sleep","condition":"base","quote":"让目标敌方或友方英雄进入沉睡。睡着的单位会向祸乱之源选定的方向走去，受到攻击便会醒来。","uncertain":false},{"mechanism":"forced_action","condition":"base","quote":"睡着的单位会向祸乱之源选定的方向走去","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"在噩梦的第一秒，作用单位是无敌状态。","uncertain":false}]},{"subject":"bane_fiends_grip","mechanisms":[{"mechanism":"stun","condition":"base","quote":"抓住一个敌方单位，使其失去行动能力","uncertain":false},{"mechanism":"mana_burn","condition":"base","quote":"同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。","uncertain":false},{"mechanism":"mana_gain","condition":"base","quote":"while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.","uncertain":false},{"mechanism":"illusions","condition":"scepter","quote":"魔爪将产生两个不可控制的幻象","uncertain":false}]},{"subject":"bane_ichor_of_nyctasha","mechanisms":[]},{"subject":"bloodseeker_bloodrage","mechanisms":[{"mechanism":"spell_amp","condition":"base","quote":"获得攻击速度和技能增强加成","uncertain":false},{"mechanism":"attack_modifier","condition":"shard","quote":"血怒下血魔的攻击现在造成%max_health_dmg_pct%%%目标最大生命值的纯粹伤害。","uncertain":false}]},{"subject":"bloodseeker_blood_bath","mechanisms":[{"mechanism":"silence","condition":"base","quote":"区域范围内所有敌人都会受到伤害，并被沉默。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"区域范围内所有敌人都会受到伤害","uncertain":false}]},{"subject":"bloodseeker_thirst","mechanisms":[{"mechanism":"true_sight","condition":"base","quote":"他还将获得该英雄的视野和真实视域。","uncertain":false},{"mechanism":"grant_vision","condition":"base","quote":"他还将获得该英雄的视野和真实视域。","uncertain":false}]},{"subject":"bloodseeker_sanguivore","mechanisms":[{"mechanism":"healing","condition":"base","quote":"血魔每杀死一个单位都会回复部分生命","uncertain":false}]},{"subject":"bloodseeker_rupture","mechanisms":[{"mechanism":"charges","condition":"scepter","quote":"提供%AbilityCharges%点割裂能量点数。","uncertain":false}]},{"subject":"crystal_maiden_crystal_nova","mechanisms":[{"mechanism":"slow","condition":"base","quote":"降低目标区域内的敌人的移动速度。","uncertain":false},{"mechanism":"grant_vision","condition":"base","quote":"冰霜新星在持续时间内提供目标区域的视野。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"A burst of damaging frost slows enemy movement in the targeted area.","uncertain":false}]},{"subject":"crystal_maiden_frostbite","mechanisms":[{"mechanism":"disarm","condition":"base","quote":"禁止移动和攻击","uncertain":false},{"mechanism":"root","condition":"base","quote":"冰封禁制为捆缚效果。","uncertain":false}]},{"subject":"crystal_maiden_brilliance_aura","mechanisms":[{"mechanism":"mana_gain","condition":"base","quote":"地图上所有友方单位获得额外魔法恢复。；水晶室女被动获得魔法恢复增强。","uncertain":false},{"mechanism":"aura","condition":"base","quote":"地图上所有友方单位获得额外魔法恢复。水晶室女附近%proximity_bonus_radius%范围内友军获得更高的魔法恢复。","uncertain":false}]},{"subject":"crystal_maiden_crystal_clone","mechanisms":[{"mechanism":"self_mobility","condition":"shard","quote":"向一个方向滑行","uncertain":false},{"mechanism":"projectile_dodge","condition":"shard","quote":"躲避多种飞行过程中的攻击和技能弹道","uncertain":false},{"mechanism":"summons","condition":"shard","quote":"在原地制造一个自身的冰晶克隆；如果克隆受到了足量伤害，或者超过一定时间都会碎裂","uncertain":false},{"mechanism":"root","condition":"shard","quote":"对附近%frostbite_radius%范围内敌人施加冰封禁制。；冰封禁制为捆缚效果。","uncertain":false},{"mechanism":"disarm","condition":"shard","quote":"对附近%frostbite_radius%范围内敌人施加冰封禁制。；禁止移动和攻击","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"对附近%frostbite_radius%范围内敌人施加冰封禁制。；并持续造成伤害。","uncertain":false},{"mechanism":"damage_return","condition":"shard","quote":"如果克隆受到了足量伤害，或者超过一定时间都会碎裂，对附近%frostbite_radius%范围内敌人施加冰封禁制。","uncertain":false}]},{"subject":"crystal_maiden_glacial_guard","mechanisms":[{"mechanism":"damage_block","condition":"base","quote":"水晶室女消耗在她技能上的一部分魔法会转化为物理护盾。","uncertain":false}]}]}
+tokens used
+2,724
+{"objects":[{"subject":"antimage_mana_break","mechanisms":[{"mechanism":"mana_burn","condition":"base","quote":"每次攻击损毁目标魔法值","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"每次攻击损毁目标魔法值，并造成相当于损毁魔法值一定百分比的伤害。","uncertain":false}]},{"subject":"antimage_blink","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"短距离传送","uncertain":false},{"mechanism":"projectile_dodge","condition":"base","quote":"闪烁可以躲避多种飞行过程中的攻击和技能弹道。","uncertain":false},{"mechanism":"mana_burn","condition":"scepter","quote":"法力损毁将额外燃烧%empowered_max_burn_pct_tooltip%%%最大魔法值","uncertain":false},{"mechanism":"attack_modifier","condition":"scepter","quote":"After casting Blink, your next Mana Break within %empowered_mana_break_duration%s burns an additional %empowered_max_burn_pct_tooltip%%% max mana and prevents the target from regenerating or gaining mana for a short duration.","uncertain":false}]},{"subject":"antimage_counterspell","mechanisms":[{"mechanism":"spell_block","condition":"base","quote":"抵挡和反弹所有指向性技能","uncertain":false},{"mechanism":"spell_reflect","condition":"base","quote":"抵挡和反弹所有指向性技能","uncertain":false},{"mechanism":"illusions","condition":"shard","quote":"在敌方施法者身边制造一个敌法师的闪烁碎片","uncertain":true}]},{"subject":"antimage_persectur","mechanisms":[{"mechanism":"slow","condition":"base","quote":"攻击会根据敌人缺失的魔法值造成减速。","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"攻击会根据敌人缺失的魔法值造成减速。","uncertain":false}]},{"subject":"antimage_mana_void","mechanisms":[{"mechanism":"stun","condition":"base","quote":"所有受到伤害的单位都会被短暂眩晕。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对目标和其周围的敌人造成伤害。","uncertain":false}]},{"subject":"axe_berserkers_call","mechanisms":[{"mechanism":"forced_action","condition":"base","quote":"斧王嘲讽附近的敌方单位，强迫他们攻击自己","uncertain":false},{"mechanism":"slow","condition":"shard","quote":"狂战士之吼会对作用下单位施加战斗饥渴。；敌人只要背朝斧王还将被减速。","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"狂战士之吼会对作用下单位施加战斗饥渴。；使他受到持续伤害","uncertain":false}]},{"subject":"axe_battle_hunger","mechanisms":[{"mechanism":"slow","condition":"base","quote":"敌人只要背朝斧王还将被减速。","uncertain":false}]},{"subject":"axe_counter_helix","mechanisms":[{"mechanism":"damage_return","condition":"base","quote":"受到一定次数攻击后，斧王就会做出螺旋反击，对附近所有敌方单位造成纯粹伤害。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对附近所有敌方单位造成纯粹伤害。","uncertain":false},{"mechanism":"attack_damage_reduction","condition":"scepter","quote":"对击中的敌人施加一个可叠加的负面效果，使其对斧王造成的攻击伤害减少。","uncertain":false}]},{"subject":"axe_culling_blade","mechanisms":[{"mechanism":"cooldown_reset","condition":"base","quote":"淘汰之刃击杀敌方英雄时将重置冷却时间","uncertain":false},{"mechanism":"execute","condition":"base","quote":"淘汰之刃的斩杀效果无法被薄葬等技能阻止。","uncertain":true}]},{"subject":"axe_one_man_army","mechanisms":[]},{"subject":"bane_enfeeble","mechanisms":[{"mechanism":"attack_damage_reduction","condition":"base","quote":"降低敌人的总攻击力和施法距离。","uncertain":false}]},{"subject":"bane_brain_sap","mechanisms":[{"mechanism":"healing","condition":"base","quote":"造成伤害并回复自身生命值。","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"蚀脑变成%shard_radius%作用范围的技能。次级目标只有%shard_secondary_target_heal_pct%%%治疗效果。","uncertain":false}]},{"subject":"bane_nightmare","mechanisms":[{"mechanism":"sleep","condition":"base","quote":"让目标敌方或友方英雄进入沉睡。睡着的单位会向祸乱之源选定的方向走去，受到攻击便会醒来。","uncertain":false},{"mechanism":"forced_action","condition":"base","quote":"睡着的单位会向祸乱之源选定的方向走去","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"在噩梦的第一秒，作用单位是无敌状态。","uncertain":false}]},{"subject":"bane_fiends_grip","mechanisms":[{"mechanism":"stun","condition":"base","quote":"抓住一个敌方单位，使其失去行动能力","uncertain":false},{"mechanism":"mana_burn","condition":"base","quote":"同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。","uncertain":false},{"mechanism":"mana_gain","condition":"base","quote":"while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.","uncertain":false},{"mechanism":"illusions","condition":"scepter","quote":"魔爪将产生两个不可控制的幻象","uncertain":false}]},{"subject":"bane_ichor_of_nyctasha","mechanisms":[]},{"subject":"bloodseeker_bloodrage","mechanisms":[{"mechanism":"spell_amp","condition":"base","quote":"获得攻击速度和技能增强加成","uncertain":false},{"mechanism":"attack_modifier","condition":"shard","quote":"血怒下血魔的攻击现在造成%max_health_dmg_pct%%%目标最大生命值的纯粹伤害。","uncertain":false}]},{"subject":"bloodseeker_blood_bath","mechanisms":[{"mechanism":"silence","condition":"base","quote":"区域范围内所有敌人都会受到伤害，并被沉默。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"区域范围内所有敌人都会受到伤害","uncertain":false}]},{"subject":"bloodseeker_thirst","mechanisms":[{"mechanism":"true_sight","condition":"base","quote":"他还将获得该英雄的视野和真实视域。","uncertain":false},{"mechanism":"grant_vision","condition":"base","quote":"他还将获得该英雄的视野和真实视域。","uncertain":false}]},{"subject":"bloodseeker_sanguivore","mechanisms":[{"mechanism":"healing","condition":"base","quote":"血魔每杀死一个单位都会回复部分生命","uncertain":false}]},{"subject":"bloodseeker_rupture","mechanisms":[{"mechanism":"charges","condition":"scepter","quote":"提供%AbilityCharges%点割裂能量点数。","uncertain":false}]},{"subject":"crystal_maiden_crystal_nova","mechanisms":[{"mechanism":"slow","condition":"base","quote":"降低目标区域内的敌人的移动速度。","uncertain":false},{"mechanism":"grant_vision","condition":"base","quote":"冰霜新星在持续时间内提供目标区域的视野。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"A burst of damaging frost slows enemy movement in the targeted area.","uncertain":false}]},{"subject":"crystal_maiden_frostbite","mechanisms":[{"mechanism":"disarm","condition":"base","quote":"禁止移动和攻击","uncertain":false},{"mechanism":"root","condition":"base","quote":"冰封禁制为捆缚效果。","uncertain":false}]},{"subject":"crystal_maiden_brilliance_aura","mechanisms":[{"mechanism":"mana_gain","condition":"base","quote":"地图上所有友方单位获得额外魔法恢复。；水晶室女被动获得魔法恢复增强。","uncertain":false},{"mechanism":"aura","condition":"base","quote":"地图上所有友方单位获得额外魔法恢复。水晶室女附近%proximity_bonus_radius%范围内友军获得更高的魔法恢复。","uncertain":false}]},{"subject":"crystal_maiden_crystal_clone","mechanisms":[{"mechanism":"self_mobility","condition":"shard","quote":"向一个方向滑行","uncertain":false},{"mechanism":"projectile_dodge","condition":"shard","quote":"躲避多种飞行过程中的攻击和技能弹道","uncertain":false},{"mechanism":"summons","condition":"shard","quote":"在原地制造一个自身的冰晶克隆；如果克隆受到了足量伤害，或者超过一定时间都会碎裂","uncertain":false},{"mechanism":"root","condition":"shard","quote":"对附近%frostbite_radius%范围内敌人施加冰封禁制。；冰封禁制为捆缚效果。","uncertain":false},{"mechanism":"disarm","condition":"shard","quote":"对附近%frostbite_radius%范围内敌人施加冰封禁制。；禁止移动和攻击","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"对附近%frostbite_radius%范围内敌人施加冰封禁制。；并持续造成伤害。","uncertain":false},{"mechanism":"damage_return","condition":"shard","quote":"如果克隆受到了足量伤害，或者超过一定时间都会碎裂，对附近%frostbite_radius%范围内敌人施加冰封禁制。","uncertain":false}]},{"subject":"crystal_maiden_glacial_guard","mechanisms":[{"mechanism":"damage_block","condition":"base","quote":"水晶室女消耗在她技能上的一部分魔法会转化为物理护盾。","uncertain":false}]}]}

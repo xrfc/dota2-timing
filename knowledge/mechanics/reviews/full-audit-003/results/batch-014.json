@@ -1,0 +1,696 @@
+{
+  "objects": [
+    {
+      "subject": "ancient_apparition_chilling_touch",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使自己的普通攻击附带距离提升，高额魔法伤害和减速效果。",
+          "reason_zh": "普通攻击附带额外魔法伤害和减速，符合攻击特效定义。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使自己的普通攻击附带距离提升，高额魔法伤害和减速效果。",
+          "reason_zh": "基础效果明确使攻击附带减速。"
+        }
+      ]
+    },
+    {
+      "subject": "ancient_apparition_bone_chill",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每当远古冰魄通过他的技能对敌人造成魔法伤害，敌人就会减速一段时间。",
+          "reason_zh": "魔法伤害是触发条件，本技能自身没有描述范围伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "敌人就会减速一段时间。",
+          "reason_zh": "技能明确对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "ancient_apparition_ice_blast",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "冰爆范围内的所有敌方单位将马上受到大量伤害",
+          "reason_zh": "一次施放能对范围内多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "execute",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在此期间如果生命值低于一定百分比，该英雄将立刻死亡。",
+          "reason_zh": "目标生命值低于百分比阈值时会直接死亡。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在冰球飞行时再次施放此技能将使其停下",
+          "reason_zh": "这里描述的是冰球飞行，没有赋予单位越过地形的飞行移动。"
+        },
+        {
+          "mechanism": "heal_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "持续受到小幅伤害，同时无法恢复生命值。",
+          "reason_zh": "寒霜诅咒明确禁止目标恢复生命值。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时无法恢复生命值。",
+          "reason_zh": "该技能禁止恢复生命，没有提供治疗。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "冻结击中的敌人，持续时间为当前等级寒霜之足眩晕时间的%cold_feet_stun_duration_pct%%%。",
+          "reason_zh": "魔晶升级新增对命中敌人的冻结眩晕效果。"
+        }
+      ]
+    },
+    {
+      "subject": "ursa_earthshock",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对附近范围内的所有敌方单位造成伤害并减速%abilityduration%秒。",
+          "reason_zh": "一次施放会伤害附近范围内所有敌方单位。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "熊战士向前跳跃%hop_distance%距离",
+          "reason_zh": "向前跳跃会主动改变自身位置。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对附近范围内的所有敌方单位造成伤害并减速%abilityduration%秒。",
+          "reason_zh": "技能明确对附近敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "ursa_overpower",
+      "judgments": [
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时还获得了减速抗性。",
+          "reason_zh": "基础技能明确提供减速抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "ursa_fury_swipes",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对同一敌人连续攻击将造成更多伤害。",
+          "reason_zh": "材料只描述对同一目标连续攻击增伤，没有范围伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "ursa_enrage",
+      "judgments": [
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施放时将移除所受的负面效果。\n\n驱散类型：强驱散",
+          "reason_zh": "施放时明确对自身施加强驱散。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "承受的伤害降低",
+          "reason_zh": "降低自身受到的伤害符合减伤定义。"
+        },
+        {
+          "mechanism": "status_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并获得状态抗性。",
+          "reason_zh": "基础技能明确提供状态抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "spirit_breaker_charge_of_darkness",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明技能具有每次使用消耗一点的充能。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "裂魂人将获得并共享目标的视野。",
+          "reason_zh": "技能明确提供并共享目标视野。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "裂魂人盯紧一个敌方单位，开始无视一切物体的冲刺",
+          "reason_zh": "向目标冲刺属于主动改变自身位置。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "途中经过的所有敌方单位和目标单位都将受到巨力重击。",
+          "reason_zh": "冲刺主动施加巨力重击，而给定的巨力重击说明明确包含眩晕。"
+        },
+        {
+          "mechanism": "tree_walk",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "裂魂人在冲刺过程中能穿过树木，悬崖和任何单位。",
+          "reason_zh": "说明明确允许冲刺期间穿过树木。"
+        }
+      ]
+    },
+    {
+      "subject": "spirit_breaker_bulldoze",
+      "judgments": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "裂魂人获得移动速度和状态抗性加成",
+          "reason_zh": "移动速度加成及可在冲刺期间使用都不构成本技能自身的位移。"
+        },
+        {
+          "mechanism": "status_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "裂魂人获得移动速度和状态抗性加成",
+          "reason_zh": "技能明确提供状态抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "spirit_breaker_greater_bash",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "scepter",
+          "quote": "如果击退的敌人又撞到了一个敌人，这个敌人也会被重击",
+          "reason_zh": "A杖新增碰撞连锁重击，使一次攻击能够伤害多个敌人。"
+        },
+        {
+          "mechanism": "bash",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击时有一定概率眩晕并击退敌方单位。重击的伤害值为移动速度的一定百分比。",
+          "reason_zh": "基础攻击有概率触发造成眩晕的重击。"
+        },
+        {
+          "mechanism": "bash",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "如果击退的敌人又撞到了一个敌人，这个敌人也会被重击",
+          "reason_zh": "A杖新增碰撞后对第二个敌人施加重击的效果。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有描述使用时消耗充能的机制。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击时有一定概率眩晕并击退敌方单位。",
+          "reason_zh": "击退敌方单位符合位移他人定义。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击时有一定概率眩晕并击退敌方单位。",
+          "reason_zh": "技能移动的是敌方单位，没有描述自身位移。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击时有一定概率眩晕并击退敌方单位。",
+          "reason_zh": "基础效果明确能眩晕敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "spirit_breaker_bull_rush",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "来自多个眩晕的效果会叠加，并且拥有独立的持续时间。",
+          "reason_zh": "这里是移速增益叠加，没有每次使用消耗一点的充能。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "裂魂人只要眩晕敌人就会获得移动速度加成。",
+          "reason_zh": "技能仅提供移速加成，没有主动位移。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "裂魂人只要眩晕敌人就会获得移动速度加成。",
+          "reason_zh": "眩晕是获得移速的触发条件，并非本技能施加的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "spirit_breaker_nether_strike",
+      "judgments": [
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "击退距离为平常的两倍。",
+          "reason_zh": "基础技能明确击退目标，属于位移他人。"
+        }
+      ]
+    },
+    {
+      "subject": "gyrocopter_homing_missile",
+      "judgments": [
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "导弹会跟随并击中隐身单位。",
+          "reason_zh": "能够命中隐身单位只是交互，没有使任何单位隐身。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "击中目标时造成伤害及眩晕。",
+          "reason_zh": "导弹命中时明确施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "gyrocopter_flak_cannon",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "矮人直升机的攻击会击中目标周围一定范围内的所有敌人",
+          "reason_zh": "一次攻击能够命中范围内多个敌人并造成伤害。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "矮人直升机的攻击会击中目标周围一定范围内的所有敌人",
+          "reason_zh": "这里只使攻击命中多个目标，没有提供定义所列的附加攻击效果。"
+        },
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "只有主要目标会受到致命一击等攻击特效。",
+          "reason_zh": "该句只说明已有暴击的作用范围，没有赋予暴击。"
+        }
+      ]
+    },
+    {
+      "subject": "gyrocopter_afterburner",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "通过攻击或技能对敌人造成伤害后，在短时间内获得移动速度提升。",
+          "reason_zh": "造成伤害只是触发移速提升的条件，本技能没有施加范围伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "gyrocopter_call_down",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标区域内的敌方单位造成减速和伤害。",
+          "reason_zh": "一次施放会对目标区域内多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标区域内的敌方单位造成减速和伤害。",
+          "reason_zh": "技能明确对区域内敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "alchemist_acid_spray",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "向目标区域喷洒高压酸雾。穿过受污染地带的敌人每秒会受到物理伤害",
+          "reason_zh": "一次施放产生的酸雾能伤害区域内多个敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "alchemist_unstable_concoction",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对爆炸点周边范围的单位造成伤害并眩晕。",
+          "reason_zh": "一次投掷产生的爆炸可伤害周边多个单位。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "炼金术士调制一瓶不稳定的化合物，投向敌方英雄",
+          "reason_zh": "投掷的是化合物，没有移动其他单位。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对爆炸点周边范围的单位造成伤害并眩晕。",
+          "reason_zh": "技能明确使爆炸范围内的目标眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "alchemist_corrosive_weaponry",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对击中的敌人施加可叠加的减速和基础攻击力降低效果。",
+          "reason_zh": "本技能施加减速和减攻击力，没有描述自身造成范围伤害。"
+        },
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对击中的敌人施加可叠加的减速和基础攻击力降低效果。",
+          "reason_zh": "技能明确降低敌人的基础攻击力。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对击中的敌人施加可叠加的减速和基础攻击力降低效果。",
+          "reason_zh": "技能明确对命中敌人施加可叠加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "alchemist_berserk_potion",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "炼金术士向友军目标扔出一瓶药剂，施加弱驱散效果",
+          "reason_zh": "技能明确施加弱驱散，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "并提供攻击速度、移动速度和生命恢复。",
+          "reason_zh": "技能提供生命恢复，且整个技能由魔晶授予。"
+        }
+      ]
+    },
+    {
+      "subject": "alchemist_goblins_greed",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "炼金术士每杀死一个单位，就能获得基础额外金钱和附加额外金钱。",
+          "reason_zh": "基础技能明确提供正常赏金以外的额外金钱。"
+        }
+      ]
+    },
+    {
+      "subject": "alchemist_chemical_rage",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "技能明确标注会施加弱驱散。"
+        },
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低攻击间隔",
+          "reason_zh": "降低攻击间隔不等于缩短技能或物品冷却。"
+        },
+        {
+          "mechanism": "heal_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提高移动速度和生命恢复。",
+          "reason_zh": "技能提高生命恢复，没有削减或禁止恢复。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提高移动速度和生命恢复。",
+          "reason_zh": "提供生命恢复符合治疗与回复定义。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "拥有%transformation_time%秒的变身时间，可以用来躲避攻击和技能弹道以及眩晕技能。",
+          "reason_zh": "说明明确表示施放变身可以躲避攻击和技能弹道。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_quas",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每个活跃的冰元素会让祈求者获得生命恢复加成。",
+          "reason_zh": "基础技能提供生命恢复，符合回复定义。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_invoke",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每个元素球的等级都会减少%cooldown_reduction_per_orb%秒元素祈唤的冷却时间。",
+          "reason_zh": "基础说明明确包含缩短技能自身冷却的机制。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_cold_snap",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "敌人将受到伤害并被短暂冻结，后续攻击会使敌人再次冻结并造成额外伤害。",
+          "reason_zh": "材料描述对单个敌人的反复冻结和伤害，没有范围伤害。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "敌人将受到伤害并被短暂冻结",
+          "reason_zh": "短暂冻结属于使目标无法行动的眩晕控制。"
+        }
+      ]
+    }
+  ]
+}

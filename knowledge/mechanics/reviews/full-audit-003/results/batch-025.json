@@ -1,0 +1,858 @@
+{
+  "objects": [
+    {
+      "subject": "dawnbreaker_luminosity",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "她的下一次攻击会造成致命一击，并治疗她附近%heal_radius%范围内所有友方英雄",
+          "reason_zh": "范围效果是治疗，材料未说明攻击能伤害多个敌人。"
+        },
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "她的下一次攻击会造成致命一击",
+          "reason_zh": "下一次攻击具有暴击效果。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗她附近%heal_radius%范围内所有友方英雄",
+          "reason_zh": "技能明确治疗附近友方英雄。"
+        }
+      ]
+    },
+    {
+      "subject": "dawnbreaker_break_of_dawn",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "破晓辰星就会获得基础攻击力加成和额外视野",
+          "reason_zh": "基础效果明确提供额外视野。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "辰星破晓提供治疗增强，数值等于当前攻击力提升。",
+          "reason_zh": "治疗增强不等于技能自身恢复生命。"
+        }
+      ]
+    },
+    {
+      "subject": "dawnbreaker_solar_guardian",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次脉冲都会对敌人造成伤害",
+          "reason_zh": "一次施放产生的脉冲能伤害区域内多个敌人。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "天光现世的光环在破晓辰星落地后会跟随%scepter_aura_duration%秒。",
+          "reason_zh": "A杖使影响周围敌友的光环在落地后跟随破晓辰星。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次脉冲都会对敌人造成伤害，并治疗友军。",
+          "reason_zh": "基础脉冲明确治疗友军。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "落地时造成额外伤害并眩晕敌人",
+          "reason_zh": "基础落地效果明确眩晕敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "marci_grapple",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "落地区域内所有敌方单位也会受到伤害并被减速。",
+          "reason_zh": "一次投掷能伤害落地区域内所有敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "敌方目标将受到伤害并被减速",
+          "reason_zh": "技能明确对敌方目标施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "marci_companion_run",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对落地点的敌人造成伤害和眩晕",
+          "reason_zh": "一次施放能伤害落地点的多个敌人。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "多样施法时不会带走被缠绕或束缚的友军。",
+          "reason_zh": "这里只说明与已有缠绕或束缚的交互，没有施加位移限制。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "玛西冲刺时目标单位可以躲避该效果。",
+          "reason_zh": "目标可以躲避此技能不代表此技能自身提供弹道躲避。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术反弹。",
+          "reason_zh": "否定法术反弹交互不算提供法术反弹。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对落地点的敌人造成伤害和眩晕",
+          "reason_zh": "基础落地效果明确眩晕敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "marci_bodyguard",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "马上还会给她和她的搭档制造共用的全伤害护盾",
+          "reason_zh": "技能明确提供吸收伤害的共用护盾。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被动使玛西获得吸血和攻击力加成。",
+          "reason_zh": "技能明确赋予玛西吸血。"
+        }
+      ]
+    },
+    {
+      "subject": "marci_special_delivery",
+      "judgments": [
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "立刻把她的信使传送到她身边",
+          "reason_zh": "传送信使不属于使目标短暂离场且无敌或不可选取。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "立刻把她的信使传送到她身边",
+          "reason_zh": "发生位移的是信使，技能没有改变玛西自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "marci_unleash",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次狂怒连技的最后一击都会创造一个脉冲效果，对目标周围的敌人造成伤害。",
+          "reason_zh": "连技最后一击的脉冲能伤害目标周围多个敌人。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "施放时对玛西施加弱驱散",
+          "reason_zh": "A杖升级明确使施放时对自身施加弱驱散。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "基础说明没有阻止闪烁、传送或离开范围的效果。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "",
+          "reason_zh": "A杖升级没有说明任何限制位移的效果。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "玛西的所有怒拳破脉冲都会沉默敌人",
+          "reason_zh": "A杖升级明确使脉冲沉默敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低打击目标的移动和攻击速度",
+          "reason_zh": "基础攻击明确降低目标移速和攻速。"
+        }
+      ]
+    },
+    {
+      "subject": "primal_beast_onslaught",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将敌人和队友同时击退。敌方单位被撞时受到伤害",
+          "reason_zh": "一次冲锋能撞击并伤害多个敌方单位。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "蓄力时间越长，獸冲的距离越远。",
+          "reason_zh": "这里是蓄力决定冲锋距离，没有使用一次消耗一点的充能。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将敌人和队友同时击退",
+          "reason_zh": "技能明确击退其他单位。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "敌方单位被撞时受到伤害，并且被眩晕。",
+          "reason_zh": "被冲锋撞到的敌人会被眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "primal_beast_trample",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每行进%step_distance%距离就会对獸附近范围内所有敌人造成伤害。",
+          "reason_zh": "一次施放期间能对附近所有敌人造成伤害。"
+        },
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "獸在技能期间被缴械。",
+          "reason_zh": "此缴械是技能对自身的代价，按规则不计。"
+        }
+      ]
+    },
+    {
+      "subject": "primal_beast_uproar",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "scepter",
+          "quote": "獸开启咤时，以自身为圆心施放出%projectile_waves%波弹道……弹道造成伤害并对击中的敌人施加破坏效果。",
+          "reason_zh": "范围伤害来自A杖新增的多波弹道，基础效果只有减速和属性加成。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "獸开启咤时，以自身为圆心施放出%projectile_waves%波弹道……弹道造成伤害并对击中的敌人施加破坏效果。",
+          "reason_zh": "A杖使一次施放释放多波弹道并能伤害多个敌人。"
+        },
+        {
+          "mechanism": "applies_break",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "弹道造成伤害并对击中的敌人施加破坏效果。",
+          "reason_zh": "A杖弹道明确对敌人施加破坏。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "经过短暂延迟后每个弹道会分裂成两个。",
+          "reason_zh": "技能弹道分裂不属于普通攻击伤害的分裂溅射。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "獸释放出咆哮声，减速附近敌人",
+          "reason_zh": "基础主动效果明确减速附近敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "primal_beast_rock_throw",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "獸向目标地点扔出一块岩石，对敌人造成眩晕和伤害。",
+          "reason_zh": "岩石能伤害目标地点的多个敌人，且整个技能由魔晶赋予。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "岩石落地后会分裂成3块碎石",
+          "reason_zh": "岩石分裂是技能效果，不是攻击伤害的分裂溅射。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对敌人造成眩晕和伤害",
+          "reason_zh": "技能明确眩晕敌人，且整个技能由魔晶赋予。"
+        }
+      ]
+    },
+    {
+      "subject": "primal_beast_pulverize",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对范围内所有敌人造成伤害和短暂眩晕",
+          "reason_zh": "一次施放能伤害范围内所有敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对范围内所有敌人造成伤害和短暂眩晕",
+          "reason_zh": "技能明确施加短暂眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "primal_beast_colossal",
+      "judgments": [
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "獸拥有%base_slow_resist%%%基础减速抗性",
+          "reason_zh": "基础被动明确提供减速抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "muerta_dead_shot",
+      "judgments": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以弹离减益免疫目标。",
+          "reason_zh": "这里只说明与减益免疫目标的交互，没有赋予减益免疫。"
+        },
+        {
+          "mechanism": "forced_action",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被跳弹击中的英雄会被恐惧。",
+          "reason_zh": "基础跳弹明确对英雄施加恐惧。"
+        },
+        {
+          "mechanism": "forced_action",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "被跳弹击中的英雄会被恐惧。",
+          "reason_zh": "恐惧是基础机制，A杖只是使跳弹能够穿过英雄。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "子弹击中时会对敌人造成伤害和短暂减速",
+          "reason_zh": "基础子弹命中明确施加短暂减速。"
+        }
+      ]
+    },
+    {
+      "subject": "muerta_the_calling",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "亡魂会在敌人穿过时造成伤害和沉默。",
+          "reason_zh": "一次施放形成的亡魂区域能伤害多个穿过的敌人。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "亡魂会在敌人穿过时造成伤害和沉默。",
+          "reason_zh": "敌人穿过亡魂时会被沉默。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在区域内的敌人会被减速。",
+          "reason_zh": "技能明确减速区域内敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "muerta_gunslinger",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "第二枪可以触发攻击特效。",
+          "reason_zh": "额外射击能够触发其他攻击特效，不代表本技能自身提供攻击特效。"
+        }
+      ]
+    },
+    {
+      "subject": "muerta_spectral_slug",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "琼英碧灵对一个敌人射出一颗幽灵子弹",
+          "reason_zh": "材料只描述对单个敌人造成伤害。"
+        },
+        {
+          "mechanism": "ethereal",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "将其变为虚无状态",
+          "reason_zh": "技能明确使目标虚无，且整个技能由魔晶赋予。"
+        },
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "承受的魔法伤害增加%bonus_spell_damage_pct%%%",
+          "reason_zh": "只增加魔法伤害应归魔法易伤，不属于此词条。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "承受的魔法伤害增加%bonus_spell_damage_pct%%%",
+          "reason_zh": "技能明确增加目标受到的魔法伤害，且由魔晶赋予。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "目标被减速",
+          "reason_zh": "技能明确减速目标，且整个技能由魔晶赋予。"
+        }
+      ]
+    },
+    {
+      "subject": "muerta_pierce_the_veil",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "材料明确将此技能的驱散类型列为弱驱散。"
+        },
+        {
+          "mechanism": "ethereal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "琼英碧灵变身，成为虚无状态",
+          "reason_zh": "技能明确使自身进入虚无状态。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "她的物理吸血被视为技能吸血",
+          "reason_zh": "这里只转换已有吸血的类型，没有赋予吸血。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得基础攻击力加成和相位移动状态",
+          "reason_zh": "技能明确提供相位移动。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "琼英碧灵在变身期间可以躲避弹道。",
+          "reason_zh": "说明明确支持变身期间躲避弹道。"
+        },
+        {
+          "mechanism": "spell_steal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明获得其他单位技能的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "muerta_supernatural",
+      "judgments": [
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "她就会获得一层%spell_amp_per_stack%%%技能增强的叠加效果",
+          "reason_zh": "被动明确提供可叠加的技能伤害增强。"
+        }
+      ]
+    },
+    {
+      "subject": "ringmaster_tame_the_beasts",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被鞭打的敌人会受到伤害……但是作用范围减少",
+          "reason_zh": "一次鞭打能对作用范围内多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "forced_action",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被恐惧，逃离百戏大王",
+          "reason_zh": "技能通过恐惧强制敌人逃离。"
+        }
+      ]
+    },
+    {
+      "subject": "ringmaster_the_box",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "范围内所有敌人受到伤害",
+          "reason_zh": "A杖升级使开箱时对范围内所有敌人造成伤害。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "逃生技拥有%max_charges%点能量点数。",
+          "reason_zh": "A杖升级明确赋予技能可使用的充能点数。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且无法成为目标",
+          "reason_zh": "装箱友军明确获得不可被选取的效果。"
+        },
+        {
+          "mechanism": "mute",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被锁闭、沉默和缴械",
+          "reason_zh": "技能明确对装箱的友军目标施加锁闭。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "友军被装入后拥有相位移动状态",
+          "reason_zh": "技能明确赋予装箱友军相位移动。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被锁闭、沉默和缴械",
+          "reason_zh": "技能明确对装箱的友军目标施加沉默。"
+        },
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得额外魔法抗性、减速抗性和移动速度",
+          "reason_zh": "技能明确赋予装箱友军减速抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "ringmaster_impalement",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "匕首击中敌人会造成即时伤害，短暂减速击中的单位，并且使他们流血。",
+          "reason_zh": "材料没有说明一把匕首能伤害多个敌人，字段名不能补足证据。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "短暂减速击中的单位",
+          "reason_zh": "匕首明确对命中的单位施加短暂减速。"
+        }
+      ]
+    },
+    {
+      "subject": "ringmaster_spotlight",
+      "judgments": [
+        {
+          "mechanism": "blind",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "灯光下的敌人有几率丢失攻击",
+          "reason_zh": "技能使敌人攻击有概率落空，且整个技能由魔晶赋予。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "隐身状态下也会显形",
+          "reason_zh": "技能明确使隐身敌人显形，且整个技能由魔晶赋予。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "隐身状态下也会显形",
+          "reason_zh": "材料描述的是施加显形，按规则不能据此认定提供持续真视。"
+        }
+      ]
+    },
+    {
+      "subject": "ringmaster_wheel",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "到达目的地后，范围内的敌人会持续受到伤害",
+          "reason_zh": "一次施放能持续伤害范围内多个敌人。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "击退沿途的敌人",
+          "reason_zh": "技能明确击退其他单位。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且被减速%aura_slow%%%",
+          "reason_zh": "技能明确减速范围内敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "会被迷住，朝其走去",
+          "reason_zh": "迷住并强制移动属于强制行为，材料没有说明眩晕且字段名不能单独作证。"
+        }
+      ]
+    }
+  ]
+}

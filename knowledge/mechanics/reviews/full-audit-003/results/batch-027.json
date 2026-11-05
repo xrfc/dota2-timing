@@ -1,0 +1,678 @@
+{
+  "objects": [
+    {
+      "subject": "arcane_blink",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "After teleportation, you restore %heal_amount% health and %mana_amount% mana.",
+          "reason_zh": "传送后会恢复自身生命值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "After teleportation, you restore %heal_amount% health and %mana_amount% mana.",
+          "reason_zh": "传送后会恢复自身法力。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport to a target point up to %blink_range% units away.",
+          "reason_zh": "主动传送到目标地点属于自身位移。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport to a target point up to %blink_range% units away.",
+          "reason_zh": "主动传送到目标地点属于自身位移。"
+        }
+      ]
+    },
+    {
+      "subject": "arcane_boots",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Basilius Aura Grants %aura_mana_regen% mana regeneration to allies.",
+          "reason_zh": "被动光环为周围友军提供法力恢复。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 0.25 Mana Regeneration",
+          "reason_zh": "装备属性明确提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "armlet",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Activating or deactivating Unholy Strength does not interrupt channeling.",
+          "reason_zh": "材料明确说切换不会打断持续施法，否定描述不算该机制。"
+        }
+      ]
+    },
+    {
+      "subject": "assault",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "decreases nearby enemy unit and structure armor by %aura_negative_armor%.",
+          "reason_zh": "光环明确降低周围敌方单位和建筑的护甲。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants %aura_attack_speed% attack speed and %aura_positive_armor% armor to nearby allied units and structures, and decreases nearby enemy unit and structure armor by %aura_negative_armor%.",
+          "reason_zh": "光环持续影响周围友方及敌方单位和建筑。"
+        }
+      ]
+    },
+    {
+      "subject": "basher",
+      "judgments": [
+        {
+          "mechanism": "bash",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Bash  Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %bash_duration% seconds",
+          "reason_zh": "攻击命中有概率触发重击并眩晕目标。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "stun the target for %bash_duration% seconds",
+          "reason_zh": "重击明确会使目标眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "bfury",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Deals %cleave_damage_percent%%% of attack damage as physical damage in a cone up to %cleave_distance% around the target.",
+          "reason_zh": "分裂使一次攻击能对目标周围锥形范围内的多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Cleave  Deals %cleave_damage_percent%%% of attack damage as physical damage in a cone up to %cleave_distance% around the target.",
+          "reason_zh": "被动明确使攻击伤害波及目标周围的锥形范围。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Cleave damage goes through spell immunity.",
+          "reason_zh": "分裂伤害穿透技能免疫只是交互，不代表装备提供技能免疫。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 2.75 Mana Regeneration",
+          "reason_zh": "装备属性明确提供自身法力恢复。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Destroy a target tree.",
+          "reason_zh": "主动技能明确摧毁目标树木。"
+        }
+      ]
+    },
+    {
+      "subject": "black_grimoire",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Right-click to consume and grant %xp_per_charge% experience per charge.",
+          "reason_zh": "消耗物品会按积累层数提供额外经验。"
+        }
+      ]
+    },
+    {
+      "subject": "black_king_bar",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Applies a basic dispel.",
+          "reason_zh": "主动效果明确施加弱驱散。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "For the duration of the effect, any negative effect from enemy spells has no effect.",
+          "reason_zh": "敌方技能负面效果无效不等于格挡指向技能，材料未提供该机制。"
+        }
+      ]
+    },
+    {
+      "subject": "blade_mail",
+      "judgments": [
+        {
+          "mechanism": "damage_return",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "For %duration% seconds, return all incoming damage, increasing the percentage by %active_reflection_pct%%%.",
+          "reason_zh": "主动期间会返还受到的伤害。"
+        },
+        {
+          "mechanism": "damage_return",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Everytime you are attacked, you return %passive_reflection_constant% damage plus %passive_reflection_pct%%% of the attack damage dealt to you.",
+          "reason_zh": "被动在受到攻击时返还固定伤害及一定比例的攻击伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "blight_stone",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Your attacks reduce the target's armor by %corruption_armor% for %corruption_duration% seconds.",
+          "reason_zh": "攻击会降低目标护甲。"
+        }
+      ]
+    },
+    {
+      "subject": "blink",
+      "judgments": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport to a target point up to %blink_range% units away.",
+          "reason_zh": "主动传送到目标地点属于自身位移。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport to a target point up to %blink_range% units away.",
+          "reason_zh": "主动传送到目标地点属于自身位移。"
+        }
+      ]
+    },
+    {
+      "subject": "blood_grenade",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Enemies in the area will take %impact_damage% damage on impact",
+          "reason_zh": "一次投掷会伤害目标区域内的多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "be slowed by %movespeed_slow%%%",
+          "reason_zh": "榴弹明确对区域内敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "bloodstone",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Enemy units take %aura_spell_vulnerability%%% increased damage from spells.",
+          "reason_zh": "光环只提高敌人受到的技能伤害，本身没有造成范围伤害。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Spell Weakness Aura  Enemy units take %aura_spell_vulnerability%%% increased damage from spells.",
+          "reason_zh": "被动光环使周围敌方单位受到更多技能伤害。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 20% Spell Lifesteal",
+          "reason_zh": "装备属性明确提供技能吸血。"
+        }
+      ]
+    },
+    {
+      "subject": "bloodthorn",
+      "judgments": [
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "At the end of the silence, an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage.",
+          "reason_zh": "沉默结束时追加魔法伤害不等于降低魔抗或使目标承受更多魔法或技能伤害。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 4 Mana Regeneration",
+          "reason_zh": "装备属性明确提供自身法力恢复。"
+        },
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Provides True Strike for your attacks and attacks from your controlled units against the silenced target.",
+          "reason_zh": "对被沉默目标的自身及受控单位攻击获得必中。"
+        },
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants each attack a %proc_chance%%% chance to pierce through evasion",
+          "reason_zh": "被动使每次攻击有概率无视闪避。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Silences a target for %silence_duration% seconds.",
+          "reason_zh": "主动技能明确沉默目标。"
+        }
+      ]
+    },
+    {
+      "subject": "boots_of_bearing",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Swiftness Aura Grants %aura_movement_speed% movement speed and %aura_health_regen% health regeneration to allies.",
+          "reason_zh": "被动光环为周围友军提供移速和生命恢复。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 18 Health Regeneration",
+          "reason_zh": "装备属性提供生命恢复，符合治疗定义。"
+        }
+      ]
+    },
+    {
+      "subject": "bottle",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Consumes a charge to restore %health_restore% health and %mana_restore% mana over %restore_time% seconds.",
+          "reason_zh": "每次使用恢复效果会消耗一点充能。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Runes can be stored in the Bottle for later use by right-clicking them.",
+          "reason_zh": "储存和使用神符不代表魔瓶自身提供额外金钱或经验。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Consumes a charge to restore %health_restore% health and %mana_restore% mana over %restore_time% seconds.",
+          "reason_zh": "消耗充能会持续恢复生命值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Consumes a charge to restore %health_restore% health and %mana_restore% mana over %restore_time% seconds.",
+          "reason_zh": "消耗充能会持续恢复自身法力。"
+        }
+      ]
+    },
+    {
+      "subject": "buckler",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Buckler Aura  Grants %bonus_aoe_armor% armor to allied player units.  Radius: %bonus_aoe_radius%",
+          "reason_zh": "被动光环为周围友方玩家单位提供护甲。"
+        }
+      ]
+    },
+    {
+      "subject": "butterfly",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 35% Evasion",
+          "reason_zh": "装备属性明确提供闪避。"
+        }
+      ]
+    },
+    {
+      "subject": "cheese",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Instantly restores %health_restore% health and %mana_restore% mana.",
+          "reason_zh": "使用后立即恢复生命值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Instantly restores %health_restore% health and %mana_restore% mana.",
+          "reason_zh": "使用后立即恢复自身法力。"
+        }
+      ]
+    },
+    {
+      "subject": "consecrated_wraps",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "consume all charges to gain an all damage barrier for %duration%s that absorbs %barrier_per_stack% damage per charge",
+          "reason_zh": "受到指定来源伤害时消耗层数，获得吸收所有类型伤害的护盾。"
+        }
+      ]
+    },
+    {
+      "subject": "crellas_crozier",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Putrefaction Aura Reduces nearby enemy heroes' Health Restoration by %health_steal%%%.",
+          "reason_zh": "被动光环持续削减周围敌方英雄的生命恢复。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Ghost form ends if you become Debuff Immune and will have no effect if you are already Debuff Immune.",
+          "reason_zh": "这里只说明幽魂形态与减益免疫的交互，装备自身不提供减益免疫。"
+        },
+        {
+          "mechanism": "ethereal",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "You enter ghost form for %duration% seconds, becoming immune to physical damage, but are unable to attack and %extra_spell_damage_percent%%% more vulnerable to magic damage.",
+          "reason_zh": "幽魂形态使自身无法攻击并免疫物理伤害，符合虚无定义。"
+        },
+        {
+          "mechanism": "heal_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Reduces nearby enemy heroes' Health Restoration by %health_steal%%%.",
+          "reason_zh": "明确降低周围敌方英雄的生命恢复。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "You enter ghost form for %duration% seconds, becoming immune to physical damage, but are unable to attack and %extra_spell_damage_percent%%% more vulnerable to magic damage.",
+          "reason_zh": "魔法易伤是自身进入幽魂形态的代价，按规则不计为该机制。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "",
+          "reason_zh": "材料没有提高自身技能伤害的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "crimson_guard",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "grant nearby allied heroes and buildings a %block_chance_active%%% chance to block damage",
+          "reason_zh": "范围效果是为友军和建筑格挡伤害，没有造成范围伤害。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants a %block_chance%%% chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.",
+          "reason_zh": "被动明确有概率格挡受到的攻击伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "cyclone",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Sweeps a target unit up into a cyclone",
+          "reason_zh": "技能针对单个单位，落地伤害没有描述为范围伤害。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Dispel Type:  Basic Dispel",
+          "reason_zh": "材料明确标明驱散类型为弱驱散。"
+        },
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Sweeps a target unit up into a cyclone, making them invulnerable for %cyclone_duration% seconds.",
+          "reason_zh": "目标被吹起并暂时无敌，符合吹风定义。"
+        },
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Sweeps a target unit up into a cyclone, making them invulnerable for %cyclone_duration% seconds.",
+          "reason_zh": "目标被吹起并暂时无敌，符合吹风定义。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "making them invulnerable for %cyclone_duration% seconds.",
+          "reason_zh": "吹风期间明确使目标无敌。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 2.5 Mana Regeneration",
+          "reason_zh": "装备属性明确提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "dagon",
+      "judgments": [
+        {
+          "mechanism": "execute",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Instantly kills illusions.",
+          "reason_zh": "直接击杀幻象不以生命阈值为条件，不符合斩杀定义。"
+        }
+      ]
+    },
+    {
+      "subject": "dagon_2",
+      "judgments": [
+        {
+          "mechanism": "execute",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Instantly kills illusions.",
+          "reason_zh": "直接击杀幻象不以生命阈值为条件，不符合斩杀定义。"
+        }
+      ]
+    }
+  ]
+}

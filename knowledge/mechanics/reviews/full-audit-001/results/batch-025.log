@@ -1,0 +1,1402 @@
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a5c4-f5ce-7d32-9f3a-738af7e71e3b
+--------
+user
+你在独立阅读Dota 2技能和装备的说明，判断每个对象具备词表里的哪些机制。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+要求：
+- 每个对象都要输出一条，`subject`原样返回。没有任何机制时`mechanisms`为空数组。
+- 逐个对象读完整说明，对照词表全部条目判断，不要只找明显的。说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 词表定义已经用户确认，必须遵守。另外：
+  - 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。
+  - 提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+  - 召唤物只算有血量的单位；按受攻击次数计算的不算。
+  - 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+  - 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `condition`：基础效果写`base`，只在有A杖时生效写`scepter`，只在有魔晶时写`shard`，装备写`item`。`granted_by`不为空的对象，整个技能按该升级记。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字（如“+ 35% Evasion”），可以当证据。`%xxx%`是数值占位符。
+- `quote`摘决定判断的原文片段；`uncertain`为true表示材料不足或需要游戏知识，不要猜。
+
+词表：
+[
+{
+"id": "stun",
+"zh": "眩晕",
+"definition": "使目标无法行动和施法的硬控（含小眩晕）"
+},
+{
+"id": "hex",
+"zh": "妖术",
+"definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品"
+},
+{
+"id": "silence",
+"zh": "沉默",
+"definition": "目标无法施放技能（仍可攻击、使用物品）"
+},
+{
+"id": "mute",
+"zh": "禁用物品",
+"definition": "目标无法使用物品"
+},
+{
+"id": "disarm",
+"zh": "缴械",
+"definition": "目标无法普通攻击"
+},
+{
+"id": "root",
+"zh": "定身",
+"definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"
+},
+{
+"id": "forced_action",
+"zh": "强制行为",
+"definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"
+},
+{
+"id": "sleep",
+"zh": "睡眠",
+"definition": "无法行动，受伤害后醒来"
+},
+{
+"id": "cyclone_banish",
+"zh": "吹风/放逐",
+"definition": "使目标短暂离开战场，期间无敌或不可被选取"
+},
+{
+"id": "slow",
+"zh": "减速",
+"definition": "降低移动速度或攻击速度"
+},
+{
+"id": "evasion",
+"zh": "闪避",
+"definition": "自身有概率使敌方攻击落空"
+},
+{
+"id": "blind",
+"zh": "致盲",
+"definition": "使敌方单位的攻击有概率落空"
+},
+{
+"id": "debuff_immunity",
+"zh": "减益免疫/技能免疫",
+"definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"
+},
+{
+"id": "pierces_debuff_immunity",
+"zh": "穿透减益免疫",
+"definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）"
+},
+{
+"id": "invulnerable_untargetable",
+"zh": "无敌/不可选取",
+"definition": "暂时无法被伤害或无法被指向"
+},
+{
+"id": "damage_block",
+"zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"
+},
+{
+"id": "death_prevention",
+"zh": "免死",
+"definition": "在一段时间内不会被打死（如薄葬、回光返照）"
+},
+{
+"id": "status_resistance",
+"zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"
+},
+{
+"id": "slow_resistance",
+"zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）"
+},
+{
+"id": "applies_basic_dispel",
+"zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果"
+},
+{
+"id": "applies_strong_dispel",
+"zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）"
+},
+{
+"id": "applies_break",
+"zh": "施加破坏",
+"definition": "使目标的被动技能暂时失效"
+},
+{
+"id": "invisibility",
+"zh": "隐身",
+"definition": "使自身、队友、召唤物或复制体隐身"
+},
+{
+"id": "true_sight",
+"zh": "真视",
+"definition": "可看见隐身单位"
+},
+{
+"id": "healing",
+"zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）"
+},
+{
+"id": "lifesteal",
+"zh": "吸血",
+"definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"
+},
+{
+"id": "heal_reduction",
+"zh": "治疗削减",
+"definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"
+},
+{
+"id": "mana_burn",
+"zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值"
+},
+{
+"id": "mana_gain",
+"zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"
+},
+{
+"id": "illusions",
+"zh": "幻象",
+"definition": "制造自身或他人的幻象"
+},
+{
+"id": "summons",
+"zh": "召唤物",
+"definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"
+},
+{
+"id": "self_mobility",
+"zh": "自身位移",
+"definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"
+},
+{
+"id": "displace_other",
+"zh": "位移他人",
+"definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"
+},
+{
+"id": "damage_return",
+"zh": "反伤",
+"definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件"
+},
+{
+"id": "bash",
+"zh": "重击",
+"definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算"
+},
+{
+"id": "pierce_evasion",
+"zh": "克敌机先",
+"definition": "攻击无视闪避（必中）"
+},
+{
+"id": "critical",
+"zh": "暴击",
+"definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"
+},
+{
+"id": "ethereal",
+"zh": "虚无",
+"definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"
+},
+{
+"id": "armor_reduction",
+"zh": "减护甲",
+"definition": "降低目标护甲"
+},
+{
+"id": "magic_resist_reduction",
+"zh": "减魔抗/魔法易伤",
+"definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"
+},
+{
+"id": "incoming_damage_amp",
+"zh": "伤害加深",
+"definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）"
+},
+{
+"id": "attack_damage_reduction",
+"zh": "减攻击力",
+"definition": "降低目标的攻击力"
+},
+{
+"id": "spell_block",
+"zh": "格挡指向技能",
+"definition": "使指向自身或队友的技能失效"
+},
+{
+"id": "spell_reflect",
+"zh": "反弹指向技能",
+"definition": "把指向技能反弹给施法者"
+},
+{
+"id": "projectile_dodge",
+"zh": "躲避弹道",
+"definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"
+},
+{
+"id": "channel_interrupt",
+"zh": "打断持续施法",
+"definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"
+},
+{
+"id": "mobility_lock",
+"zh": "限制位移",
+"definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"
+},
+{
+"id": "cleave",
+"zh": "分裂溅射",
+"definition": "攻击伤害波及周围单位"
+},
+{
+"id": "attack_modifier",
+"zh": "攻击特效",
+"definition": "给攻击附加效果的法球类技能"
+},
+{
+"id": "spell_amp",
+"zh": "法术放大",
+"definition": "提高技能造成的伤害"
+},
+{
+"id": "aura",
+"zh": "光环",
+"definition": "持续影响周围单位；对友军或敌方都算，并记作用对象"
+},
+{
+"id": "reveal",
+"zh": "显形",
+"definition": "使隐身单位显形，不等于持续真视"
+},
+{
+"id": "grant_vision",
+"zh": "提供视野",
+"definition": "提供目标或区域的视野"
+},
+{
+"id": "reduce_vision",
+"zh": "减视野",
+"definition": "降低目标的视野"
+},
+{
+"id": "phased",
+"zh": "相位移动",
+"definition": "移动不受单位碰撞阻挡"
+},
+{
+"id": "flying",
+"zh": "飞行",
+"definition": "飞行移动，能越过地形"
+},
+{
+"id": "tree_walk",
+"zh": "穿树",
+"definition": "能穿过树木移动"
+},
+{
+"id": "tree_destroy",
+"zh": "砍树",
+"definition": "能摧毁树木"
+},
+{
+"id": "respawn",
+"zh": "重生",
+"definition": "死亡后复活，或影响复活"
+},
+{
+"id": "execute",
+"zh": "斩杀",
+"definition": "目标低于生命阈值时直接杀死"
+},
+{
+"id": "hp_removal",
+"zh": "生命移除",
+"definition": "直接移除生命，不算伤害"
+},
+{
+"id": "spell_steal",
+"zh": "偷技能",
+"definition": "获得其他单位的技能"
+},
+{
+"id": "stat_steal",
+"zh": "偷属性",
+"definition": "夺取目标的属性"
+},
+{
+"id": "cooldown_reduction",
+"zh": "减冷却",
+"definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"
+},
+{
+"id": "cooldown_reset",
+"zh": "刷新冷却",
+"definition": "立刻重置冷却"
+},
+{
+"id": "economy",
+"zh": "经济经验",
+"definition": "提供额外金钱或经验；只是正常赏金不算"
+},
+{
+"id": "charges",
+"zh": "充能",
+"definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"
+},
+{
+"id": "aoe_damage",
+"zh": "范围伤害",
+"definition": "一次施放或一次攻击能对多个敌方单位造成伤害"
+}
+]
+
+待判断对象：
+[{"subject": "terrorblade_metamorphosis", "name_zh": "恐怖利刃·魔化", "name_en": "Metamorphosis", "description_zh": "恐怖利刃变换形态，化身成可怕的恶魔并具备远程攻击能力。任何恐怖利刃的幻象在%metamorph_aura_tooltip%范围内也将魔化。", "description_en": "Terrorblade transforms into a powerful demon with a ranged attack. Any of Terrorblade's illusions that are within %metamorph_aura_tooltip% range will also be transformed by Metamorphosis.", "notes_zh": ["近战或远程物品的冷却时间不同时将根据恐怖利刃在使用物品时处于远程或近战形态而定。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "transformation_time", "base_attack_time", "bonus_range", "tooltip_attack_range", "bonus_damage", "metamorph_aura_tooltip", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "terrorblade_demon_zeal", "name_zh": "恐怖利刃·狂魔", "name_en": "Demon Zeal", "description_zh": "施放需消耗恐怖利刃当前生命值的一部分，为恐怖利刃和他附近的幻象提供生命恢复、移动和攻击速度加成。不会影响倒影的幻象。魔化状态下无法施放，而且施放魔化会移除狂魔效果。", "description_en": "Costs part of Terrorblade's current HP to cast, providing Terrorblade and nearby illusions bonus movement, HP Regen and attack speed. Does not affect Reflection illusions. Can't be cast while in Metamorphosis and Metamorphosis will remove Demon Zeal.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["berserk_bonus_attack_speed", "berserk_bonus_movement_speed", "duration", "hp_regen", "radius", "health_cost_pct", "AbilityCastPoint", "AbilityCooldown"]}, {"subject": "terrorblade_terror_wave", "name_zh": "恐怖利刃·怵潮", "name_en": "Terror Wave", "description_zh": "放出一道能量波，朝所有方向向外行进，击中敌方英雄将使其恐惧并造成伤害，同时恐怖利刃短时间内获得魔化状态。", "description_en": "Causes a wave to travel outwards in all directions forcing enemy heroes to become Feared upon impact and dealing damage, and grants Terrorblade Metamorphosis for a short time.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["fear_duration", "scepter_radius", "damage", "scepter_speed", "scepter_spawn_delay", "scepter_meta_duration", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "terrorblade_sunder", "name_zh": "恐怖利刃·魂断", "name_en": "Sunder", "description_zh": "隔断恐怖利刃以及目标英雄的灵魂并将双方的当前血量百分比进行互换。交换后双方英雄的生命值必定在一定百分比以上。", "description_en": "Severs the life from both Terrorblade and a target hero, exchanging a percentage of both units' current health. Some health points must remain.", "notes_zh": ["减益免疫的敌人不会被影响生命值。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["hit_point_minimum_pct", "ignore_minimum_pct_for_enemies", "ignore_minimum_pct_for_enemies_tooltip", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "terrorblade_dark_unity", "name_zh": "恐怖利刃·暗黑团结", "name_en": "Dark Unity", "description_zh": "恐怖之刃控制的附近幻象拥有额外攻击伤害。", "description_en": "Nearby Illusions created by Terrorblade have bonus attack damage.", "notes_zh": ["倒影的幻象也会受到作用。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["radius", "inside_radius_bonus_damage_pct"]}, {"subject": "phoenix_icarus_dive", "name_zh": "凤凰·凤凰冲击", "name_en": "Icarus Dive", "description_zh": "凤凰向目标方向进行圆弧状飞行，飞行距离固定，对沿途的敌人造成持续伤害并减缓其移动速度，然后返回初始位置。飞行过程中如果施放超新星将停止飞行。", "description_en": "Phoenix dives forward in an arc with a fixed distance in the targeted direction, dealing damage over time and slowing the movement speed of any units it comes into contact with, and then orbiting back to its original position. If Phoenix casts Supernova, the dive ends.", "notes_zh": ["凤凰冲击的飞行时间为%dive_duration%秒，可以在飞行途中再次施放来终止飞行。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["hp_cost_perc", "dash_length", "dash_width", "hit_radius", "burn_duration", "damage_per_second", "burn_tick_interval", "slow_movement_speed_pct", "dive_duration", "AbilityCastPoint", "AbilityCooldown"]}, {"subject": "phoenix_fire_spirits", "name_zh": "凤凰·烈火精灵", "name_en": "Fire Spirits", "description_zh": "召唤4只围绕凤凰飞行的烈火精灵。每一只烈火精灵都能被单独发射到指定区域。对敌人持续造成伤害并大幅降低他们的攻击速度。", "description_en": "Summons 4 fire spirits that circle around Phoenix. Each spirit can be launched independently at a targeted area of effect. Affected enemy units take damage over time and have their attack speed greatly reduced.", "notes_zh": ["烈火精灵现在到达目标区域后将获得1秒的视野。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["hp_cost_perc", "spirit_duration", "spirit_speed", "radius", "duration", "attackspeed_slow", "damage_per_second", "spirit_count", "tick_interval", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "phoenix_sun_ray", "name_zh": "凤凰·烈日炙烤", "name_en": "Sun Ray", "description_zh": "凤凰以损失生命能量为代价，向前射出一束炽热的光线炙烤敌人。光线对敌人造成伤害，并且能治疗友军，伤害和治疗的数值均为基础数值加上目标最大生命值的一定百分比。随着光线不断炙烤，百分比也会不断增加。", "description_en": "Phoenix expels a beam of light at the cost of its own health. The beam damages enemies and heals allies for a base amount plus a percentage of their max health. The percentage increases as the beam continues to fire.", "notes_zh": ["烈日炙烤的宽度为%radius%，长度为%abilitycastrange%。", "凤凰受到眩晕、沉默、飓风、妖术或睡眠等效果时烈日炙烤将会中断。", "凤凰可以使用物品和其他技能，不会打断烈日炙烤。"], "granted_by": "", "upgrades": {"shard": {"zh": "超新星期间可以施放烈日炙烤。", "en": "Allows Sun Ray to be cast during Supernova."}}, "is_passive": false, "value_names": ["hp_cost_perc_per_second", "base_damage", "hp_perc_damage", "base_heal", "hp_perc_heal", "radius", "tick_interval", "forward_move_speed", "turn_rate_initial", "turn_rate", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "phoenix_dying_light", "name_zh": "凤凰·消逝之光", "name_en": "Dying Light", "description_zh": "凤凰每秒对%radius%范围内所有敌人造成%damage_pct%%%自身缺失生命值的魔法伤害。", "description_en": "Phoenix deals %damage_pct%%% of its missing health as magic damage to all enemies in a %radius% radius every second.", "notes_zh": ["消逝之光在凤凰变身为超新星期间也会造成伤害。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["radius", "damage_pct", "tick_interval"]}, {"subject": "phoenix_supernova", "name_zh": "凤凰·超新星", "name_en": "Supernova", "description_zh": "凤凰十分乐意终结自己现在的生命来换取重生。将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。恒星受到敌方英雄一定次数的攻击后将会被摧毁。经过%abilityduration%秒后恒星将会爆炸，眩晕周围所有敌人。而凤凰的生命和魔法值都会回到满状态，并且所有技能的冷却时间都会刷新。\n\n驱散类型：强驱散", "description_en": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities.\n\nDISPEL TYPE: Strong Dispel", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "摧毁超新星所需的攻击次数增加，凤凰可以对友方英雄施放超新星，使双方共同变为恒星进行重生。", "en": "Increases number of attacks to destroy Supernova and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together."}}, "is_passive": false, "value_names": ["aura_radius", "damage_per_sec", "tick_interval", "stun_duration", "max_hero_attacks", "max_hero_attacks_scepter", "cast_range_tooltip_scepter", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "oracle_fortunes_end", "name_zh": "神谕者·气运之末", "name_en": "Fortune's End", "description_zh": "持续施法 - 将神谕者的力量汇聚为一股蕴含荡涤之力的能量，对敌方目标释放这股能量可以对其造成伤害，使其被缠绕，并且驱散其附近区域的魔法效果。如果目标是友军，将只造成驱散效果。缠绕时间随着持续施法时间逐渐提升。\n\n驱散类型：弱驱散", "description_en": "CHANNELED - Gathers Oracle's power into a bolt of scouring energy that, when released, damages, roots, and dispels enemies of buffs in an area around the target. If target is an ally it will only dispel debuffs. The root duration increases with channeling time.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["可以作用无敌单位。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["channel_time", "damage", "bolt_speed", "minimum_purge_duration", "maximum_purge_duration", "radius", "purge_constantly", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "oracle_fates_edict", "name_zh": "神谕者·命运敕令", "name_en": "Fate's Edict", "description_zh": "神谕者让目标沉醉，将其缴械并提升其%magic_damage_resistance_pct_tooltip%%%魔法抗性。", "description_en": "Oracle enraptures a target, disarming them and granting them %magic_damage_resistance_pct_tooltip%%% magic damage resistance.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "magic_damage_resistance_pct_tooltip", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "oracle_purifying_flames", "name_zh": "神谕者·涤罪之焰", "name_en": "Purifying Flames", "description_zh": "将目标身上一切不洁之物净化，对其造成大量魔法伤害，并使其在接下来的一段时间内逐渐恢复生命值。恢复的生命值总量将超过受到的伤害。可对友方和敌方单位施放。", "description_en": "Burns away impurities, dealing heavy magic damage to the target before causing them to regenerate health over time. The amount of health regenerated over its duration exceeds the amount of initial damage. Can be cast on enemies and allies.", "notes_zh": ["涤罪之焰的治疗效果可以相互叠加。", "涤罪之焰的伤害对友军不会致死。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "heal_per_second", "total_heal_tooltip", "duration", "tick_rate", "damage_modifier", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "oracle_rain_of_destiny", "name_zh": "神谕者·天命之雨", "name_en": "Rain of Destiny", "description_zh": "在目标范围内降下大雨。站在该区域的敌人受到每秒伤害，并且治疗增强被削弱。区域内友军被治疗，并且具有治疗增强效果。", "description_en": "Brings forth rain to the target area. Enemies standing in the area receive damage and have reduced Heal Amplification. Allies in the area heal and have increased incoming Heal Amplification.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["radius", "duration", "damage", "tick_rate", "heal_amp", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "oracle_false_promise", "name_zh": "神谕者·虚妄之诺", "name_en": "False Promise", "description_zh": "暂时篡改队友的命运，技能期间受到的任何治疗和伤害效果将在虚妄之诺结束后结算，其中治疗效果结算时效果更强。施放时将移除目标身上大部分的负面状态效果。\n\n驱散类型：强驱散", "description_en": "Temporarily alters an ally's destiny, delaying any healing or damage taken until False Promise ends. Any healing that is delayed by False Promise is amplified. Removes most negative status effects and disables on initial cast.\n\nDISPEL TYPE: Strong Dispel", "notes_zh": ["伤害和治疗效果虽然被延缓结算，但是结算时依然会考虑护甲和魔法抗性的减免。", "经过延缓的伤害和治疗效果在目标失去本技能效果后立刻结算。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "radius", "bonus_armor", "heal_amp_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "oracle_prognosticate", "name_zh": "神谕者·预言", "name_en": "Prognosticate", "description_zh": "神谕者将预测并对友军宣布，下个强化神符出现的地点（上路或下路），以及肉山的准确复活时间。", "description_en": "Oracle will predict and announce to allies, where the next power rune will spawn (top or bottom) as well as Roshan's exact respawn time.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": []}, {"subject": "techies_sticky_bomb", "name_zh": "工程师·粘性炸弹", "name_en": "Sticky Bomb", "description_zh": "向目标区域抛出一个粘性炸弹。如果炸弹落在一个敌方英雄身旁，炸弹会粘上去，减缓其移动速度。数秒后炸弹会爆炸，对爆炸区域内造成伤害，并再次施加减速，持续%secondary_slow_duration%秒。", "description_en": "Lobs a Sticky Bomb towards the target area. If it lands next to an enemy hero, the bomb will stick to it, slowing its movement speed. After a few seconds the bomb will explode, dealing damage in an area around the detonation and applying a secondary slow for %secondary_slow_duration% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "countdown", "radius", "damage", "slow", "secondary_slow", "secondary_slow_duration", "explosion_radius", "speed", "acceleration", "pre_chase_time", "max_chase_time", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost"]}, {"subject": "techies_reactive_tazer", "name_zh": "工程师·活性电击", "name_en": "Reactive Tazer", "description_zh": "工程师对友军目标放出电荷，使他们短时间内获得移动速度加成。攻击目标的敌人会受到伤害被暂时缴械，并且受到弱驱散效果。效果结束时，或者用子技能提前引爆后电荷将会爆炸，使范围内所有敌人缴械并受到伤害。", "description_en": "Techies trigger an electric charge on the target ally, giving them bonus movement speed for a short period of time. Enemies attacking the target take damage and are temporarily disarmed and get a Basic Dispel.At the end of the effect or if detonated early with the sub-ability, the charge explodes, disarming all enemies within the radius and dealing damage.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "disarm_duration", "bonus_ms", "explosion_radius", "damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "techies_suicide", "name_zh": "工程师·爆破起飞！", "name_en": "Blast Off!", "description_zh": "工程师冲到敌人中间，在相遇时引爆炸药，造成大量范围伤害，并眩晕敌人。引爆时会对工程师造成当前生命值一定百分比的非致死伤害。", "description_en": "Techies hurtle themselves into the enemy's midst, detonating charges upon impact which deal massive area of effect damage and stun enemies. Upon landing, the assault deals Techies non-lethal damage equal to a percentage of their current health.", "notes_zh": ["工程师在此次爆炸中受到的自身伤害为纯粹伤害，而且不会致死。", "此技能将摧毁树木。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "damage", "stun_duration", "hp_cost", "duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "techies_mutually_assured_destruction", "name_zh": "工程师·同归于尽", "name_en": "M.A.D.", "description_zh": "工程师获得相当于最大魔法值一定百分比的魔法恢复。工程师阵亡时，他们会留下一个木桶，在%explosion_delay%秒后爆炸，对范围内敌人造成伤害。伤害数值是根据工程师的最大魔法值。", "description_en": "Techies gain a percentage of their mana pool as bonus mana regeneration.When Techies die, they leave behind a barrel that explodes after %explosion_delay%s, damaging enemies in an area around it. Damage is based on Techies' max mana.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "同归于尽变为主动技能。提升最大魔法值的伤害系数。工程师放置同归于尽木桶后，可以使用子技能手动引爆。同一时间主动技能只能放下一个同归于尽木桶。", "en": "M.A.D. becomes an active ability. Increases max mana as damage amount. Techies plant an M.A.D. which can be detonated manually with a sub-ability. Only one M.A.D. from the active ability can be placed at a time."}}, "is_passive": true, "value_names": ["bonus_mana_as_mana_regen", "radius", "base_damage", "max_mana_pct_as_damage", "current_mana_regen", "current_damage", "explosion_delay", "AbilityCastRange", "AbilityCastPoint", "AbilityCooldown"]}, {"subject": "techies_minefield_sign", "name_zh": "工程师·雷区标识", "name_en": "Minefield Sign", "description_zh": "在指定地点放置警示牌，使作用范围内的感应地雷为无敌状态，并且造成的伤害增加%bonus_mine_damage_pct%%%。同一时间只能存在一个标识。持续%lifetime%秒。敌方英雄进入标识的%trigger_radius%范围内时标识附近整个%aura_radius%范围变成一片雷区，持续%minefield_duration%秒。敌方单位在区域内移动都会受到伤害。雷区持续时间结束后标识会被摧毁。", "description_en": "Plant a warning sign, causing Proximity Mines within its radius to be invulnerable and deal %bonus_mine_damage_pct%%% more damage. Only one sign can exist at a time. Lasts %lifetime% seconds.When an enemy Hero walks within %trigger_radius% units of a minefield sign, the %aura_radius% units area around the sign will become a minefield for %minefield_duration% seconds, dealing damage to enemy Heroes any time they move within its area. Minefield Sign is destroyed after this effect ends.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["aura_radius", "lifetime", "minefield_duration", "trigger_radius", "scepter_move_damage", "scepter_move_amt", "bonus_mine_damage_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityCooldown"]}, {"subject": "techies_land_mines", "name_zh": "工程师·感应地雷", "name_en": "Proximity Mines", "description_zh": "埋布隐形的地雷，不会被真实视域检测到，但是有敌方单位在地雷的%radius%生效范围内会显形。敌人在生效范围内停留超过%proximity_threshold%秒会使地雷爆炸，并且魔法抗性会被暂时降低。爆炸对%min_distance%范围内目标造成全额伤害，对边缘造成的伤害减少至%outer_damage%%%。对建筑物造成%building_damage_pct%%%伤害。", "description_en": "Plant an invisible mine that cannot be detected by True Sight, but is visible if an enemy is within the active %radius% AoE of the mine. Mines detonate if an enemy is standing within the active AoE for %proximity_threshold% seconds dealing damage and temporarily reducing the enemy's Magic Resistance. The explosion deals full damage if the target is within %min_distance% radius and decreases down to %outer_damage%%% on the edge. Deals %building_damage_pct%%% damage to buildings.", "notes_zh": ["感应地雷的%placement_radius%范围内不能再放置地雷。", "感应地雷不会阻止中立生物产生。", "地雷持续时间没有上限，除非爆炸或被摧毁。", "隐形单位也能触发地雷。", "敌方英雄将地雷摧毁可以获得30金钱。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "proximity_threshold", "damage", "building_damage_pct", "activation_delay", "cast_range_scepter_bonus", "outer_damage", "min_distance", "placement_radius", "mres_reduction", "burn_duration", "AbilityCastRange", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost"]}, {"subject": "winter_wyvern_arctic_burn", "name_zh": "寒冬飞龙·严寒烧灼", "name_en": "Arctic Burn", "description_zh": "寒冬飞龙乘着一股极地寒风扶摇而上，移动将无视地形，每次攻击都将呼出逼人的寒气。高飞时，她的攻击距离更远，攻击弹道速度也更快，被攻击的敌人在寒意作用下，移动速度会被减缓，同时每秒损失%percent_damage%%%当前生命值。", "description_en": "Winter Wyvern soars upon an arctic wind, granting her unobstructed movement and allowing her to exhale a blistering chill into each attack. While soaring, her attacks travel further and faster, and slow enemies with a magical freeze that strips them of %percent_damage%%% of their current health each second.", "notes_zh": ["本技能无法作用于肉山。", "寒冬飞龙的攻击前摇降低至%attack_point%秒。", "严寒烧灼的持续伤害和减速可以被驱散。"], "granted_by": "", "upgrades": {"scepter": {"zh": "严寒烧灼变成开关型技能，开启后每秒消耗一定量魔法。提升寒冬飞龙的移动速度。", "en": "Causes Arctic Burn to be a toggle ability, draining mana every second when active. Increases Winter Wyvern's movement speed."}}, "is_passive": false, "value_names": ["duration", "attack_range_bonus", "percent_damage", "tick_rate", "damage_duration", "move_slow", "projectile_speed_bonus", "tree_destruction_radius", "attack_point", "max_attacks", "mana_cost_scepter", "movement_scepter", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "winter_wyvern_splinter_blast", "name_zh": "寒冬飞龙·碎裂冲击", "name_en": "Splinter Blast", "description_zh": "向一个单位发射一团易碎的冰球。冰球一击中目标就会碎裂，而目标单位将不会受到任何效果，但是附近%split_radius%基础范围内敌人都将因碎片的冲击受到伤害，并且移动速度减缓%movespeed_slow_tooltip%%%。", "description_en": "Launches a ball of brittle ice toward a unit. The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a %split_radius% base radius. Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%.", "notes_zh": ["主弹道的移动速度为%projectile_speed%。", "主弹道无法被躲避，而且不能以寒冬飞龙自身为目标。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["projectile_speed", "projectile_max_time", "split_radius", "bonus_movespeed", "movespeed_slow_tooltip", "slow_duration", "secondary_projectile_speed", "damage", "stun_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "winter_wyvern_cold_embrace", "name_zh": "寒冬飞龙·极寒之拥", "name_en": "Cold Embrace", "description_zh": "将队友封入一个冰茧中，使其被冻在原地并恢复生命值，恢复数值为基础数值加上最大生命值的一定比例。冰茧将阻隔一切物理伤害。", "description_en": "Encases an ally in an icy cocoon, freezing them solid while healing a base amount as well as a percentage of their maximum health each second. The cocoon blocks all physical damage.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "冷却时间减少%shard_cooldown_reduction%秒。友方单位从冰茧解冻后获得额外攻击力。", "en": "Reduces cooldown by %shard_cooldown_reduction% seconds. Allied units gain bonus attack damage when emerging from the icy cocoon."}}, "is_passive": false, "value_names": ["duration", "heal_additive", "heal_percentage", "shard_cooldown_reduction", "tick_interval", "can_target_buildings", "damage_buff_pct", "damage_buff_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "terrorblade_metamorphosis",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "任何恐怖利刃的幻象在%metamorph_aura_tooltip%范围内也将魔化。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "terrorblade_demon_zeal",
+      "mechanisms": [
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "quote": "为恐怖利刃和他附近的幻象提供生命恢复",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "terrorblade_terror_wave",
+      "mechanisms": [
+        {
+          "mechanism": "forced_action",
+          "condition": "scepter",
+          "quote": "击中敌方英雄将使其恐惧",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "quote": "放出一道能量波，朝所有方向向外行进，击中敌方英雄将使其恐惧并造成伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "terrorblade_sunder",
+      "mechanisms": [
+        {
+          "mechanism": "hp_removal",
+          "condition": "base",
+          "quote": "将双方的当前血量百分比进行互换",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "terrorblade_dark_unity",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "恐怖之刃控制的附近幻象拥有额外攻击伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_icarus_dive",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "减缓其移动速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "凤凰向目标方向进行圆弧状飞行，飞行距离固定",
+          "uncertain": false
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "quote": "凤凰向目标方向进行圆弧状飞行",
+          "uncertain": true
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对沿途的敌人造成持续伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_fire_spirits",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "大幅降低他们的攻击速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "烈火精灵现在到达目标区域后将获得1秒的视野。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "Each spirit can be launched independently at a targeted area of effect. Affected enemy units take damage over time",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_sun_ray",
+      "mechanisms": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "quote": "并且能治疗友军",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "光线对敌人造成伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_dying_light",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "凤凰每秒对%radius%范围内所有敌人造成%damage_pct%%%自身缺失生命值的魔法伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对%radius%范围内所有敌人造成%damage_pct%%%自身缺失生命值的魔法伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_supernova",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "眩晕周围所有敌人",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "quote": "驱散类型：强驱散",
+          "uncertain": false
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "quote": "凤凰的生命和魔法值都会回到满状态",
+          "uncertain": false
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "quote": "凤凰的生命和魔法值都会回到满状态",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "respawn",
+          "condition": "base",
+          "quote": "凤凰十分乐意终结自己现在的生命来换取重生。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "cooldown_reset",
+          "condition": "base",
+          "quote": "所有技能的冷却时间都会刷新",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "灼烧附近一大片区域内的敌人",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_fortunes_end",
+      "mechanisms": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "使其被缠绕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "damages, roots, and dispels enemies of buffs in an area around the target",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_fates_edict",
+      "mechanisms": [
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "quote": "将其缴械",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_purifying_flames",
+      "mechanisms": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "quote": "使其在接下来的一段时间内逐渐恢复生命值",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_rain_of_destiny",
+      "mechanisms": [
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "quote": "区域内友军被治疗",
+          "uncertain": false
+        },
+        {
+          "mechanism": "heal_reduction",
+          "condition": "shard",
+          "quote": "站在该区域的敌人受到每秒伤害，并且治疗增强被削弱。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "shard",
+          "quote": "站在该区域的敌人受到每秒伤害，并且治疗增强被削弱。区域内友军被治疗，并且具有治疗增强效果。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "站在该区域的敌人受到每秒伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_false_promise",
+      "mechanisms": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "技能期间受到的任何治疗和伤害效果将在虚妄之诺结束后结算",
+          "uncertain": false
+        },
+        {
+          "mechanism": "death_prevention",
+          "condition": "base",
+          "quote": "技能期间受到的任何治疗和伤害效果将在虚妄之诺结束后结算",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "quote": "施放时将移除目标身上大部分的负面状态效果。\n\n驱散类型：强驱散",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_prognosticate",
+      "mechanisms": []
+    },
+    {
+      "subject": "techies_sticky_bomb",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "减缓其移动速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对爆炸区域内造成伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_reactive_tazer",
+      "mechanisms": [
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "quote": "使范围内所有敌人缴械",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "quote": "攻击目标的敌人会受到伤害被暂时缴械，并且受到弱驱散效果。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_return",
+          "condition": "base",
+          "quote": "攻击目标的敌人会受到伤害",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "电荷将会爆炸，使范围内所有敌人缴械并受到伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_suicide",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "并眩晕敌人",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "工程师冲到敌人中间",
+          "uncertain": false
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "quote": "此技能将摧毁树木。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "造成大量范围伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_mutually_assured_destruction",
+      "mechanisms": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "quote": "工程师获得相当于最大魔法值一定百分比的魔法恢复。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "他们会留下一个木桶，在%explosion_delay%秒后爆炸，对范围内敌人造成伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_minefield_sign",
+      "mechanisms": [
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "scepter",
+          "quote": "使作用范围内的感应地雷为无敌状态",
+          "uncertain": false
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "scepter",
+          "quote": "使作用范围内的感应地雷为无敌状态，并且造成的伤害增加%bonus_mine_damage_pct%%%",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "scepter",
+          "quote": "使作用范围内的感应地雷为无敌状态，并且造成的伤害增加%bonus_mine_damage_pct%%%",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "quote": "标识附近整个%aura_radius%范围变成一片雷区，持续%minefield_duration%秒。敌方单位在区域内移动都会受到伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_land_mines",
+      "mechanisms": [
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "quote": "埋布隐形的地雷",
+          "uncertain": false
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "quote": "魔法抗性会被暂时降低",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "爆炸对%min_distance%范围内目标造成全额伤害，对边缘造成的伤害减少至%outer_damage%%%。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_arctic_burn",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "被攻击的敌人在寒意作用下，移动速度会被减缓",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "每次攻击都将呼出逼人的寒气",
+          "uncertain": false
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "quote": "寒冬飞龙乘着一股极地寒风扶摇而上，移动将无视地形",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_splinter_blast",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "移动速度减缓%movespeed_slow_tooltip%%%",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "附近%split_radius%基础范围内敌人都将因碎片的冲击受到伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_cold_embrace",
+      "mechanisms": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "使其被冻在原地",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "冰茧将阻隔一切物理伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "quote": "恢复生命值，恢复数值为基础数值加上最大生命值的一定比例",
+          "uncertain": false
+        }
+      ]
+    }
+  ]
+}
+tokens used
+30,915
+{
+  "objects": [
+    {
+      "subject": "terrorblade_metamorphosis",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "任何恐怖利刃的幻象在%metamorph_aura_tooltip%范围内也将魔化。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "terrorblade_demon_zeal",
+      "mechanisms": [
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "quote": "为恐怖利刃和他附近的幻象提供生命恢复",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "terrorblade_terror_wave",
+      "mechanisms": [
+        {
+          "mechanism": "forced_action",
+          "condition": "scepter",
+          "quote": "击中敌方英雄将使其恐惧",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "quote": "放出一道能量波，朝所有方向向外行进，击中敌方英雄将使其恐惧并造成伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "terrorblade_sunder",
+      "mechanisms": [
+        {
+          "mechanism": "hp_removal",
+          "condition": "base",
+          "quote": "将双方的当前血量百分比进行互换",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "terrorblade_dark_unity",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "恐怖之刃控制的附近幻象拥有额外攻击伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_icarus_dive",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "减缓其移动速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "凤凰向目标方向进行圆弧状飞行，飞行距离固定",
+          "uncertain": false
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "quote": "凤凰向目标方向进行圆弧状飞行",
+          "uncertain": true
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对沿途的敌人造成持续伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_fire_spirits",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "大幅降低他们的攻击速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "烈火精灵现在到达目标区域后将获得1秒的视野。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "Each spirit can be launched independently at a targeted area of effect. Affected enemy units take damage over time",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_sun_ray",
+      "mechanisms": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "quote": "并且能治疗友军",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "光线对敌人造成伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_dying_light",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "凤凰每秒对%radius%范围内所有敌人造成%damage_pct%%%自身缺失生命值的魔法伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对%radius%范围内所有敌人造成%damage_pct%%%自身缺失生命值的魔法伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_supernova",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "眩晕周围所有敌人",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "quote": "驱散类型：强驱散",
+          "uncertain": false
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "quote": "凤凰的生命和魔法值都会回到满状态",
+          "uncertain": false
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "quote": "凤凰的生命和魔法值都会回到满状态",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "将自己变为一颗燃烧的恒星，灼烧附近一大片区域内的敌人。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "respawn",
+          "condition": "base",
+          "quote": "凤凰十分乐意终结自己现在的生命来换取重生。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "cooldown_reset",
+          "condition": "base",
+          "quote": "所有技能的冷却时间都会刷新",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "灼烧附近一大片区域内的敌人",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_fortunes_end",
+      "mechanisms": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "使其被缠绕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "damages, roots, and dispels enemies of buffs in an area around the target",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_fates_edict",
+      "mechanisms": [
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "quote": "将其缴械",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_purifying_flames",
+      "mechanisms": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "quote": "使其在接下来的一段时间内逐渐恢复生命值",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_rain_of_destiny",
+      "mechanisms": [
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "quote": "区域内友军被治疗",
+          "uncertain": false
+        },
+        {
+          "mechanism": "heal_reduction",
+          "condition": "shard",
+          "quote": "站在该区域的敌人受到每秒伤害，并且治疗增强被削弱。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "shard",
+          "quote": "站在该区域的敌人受到每秒伤害，并且治疗增强被削弱。区域内友军被治疗，并且具有治疗增强效果。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "站在该区域的敌人受到每秒伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_false_promise",
+      "mechanisms": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "技能期间受到的任何治疗和伤害效果将在虚妄之诺结束后结算",
+          "uncertain": false
+        },
+        {
+          "mechanism": "death_prevention",
+          "condition": "base",
+          "quote": "技能期间受到的任何治疗和伤害效果将在虚妄之诺结束后结算",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "quote": "施放时将移除目标身上大部分的负面状态效果。\n\n驱散类型：强驱散",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "oracle_prognosticate",
+      "mechanisms": []
+    },
+    {
+      "subject": "techies_sticky_bomb",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "减缓其移动速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对爆炸区域内造成伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_reactive_tazer",
+      "mechanisms": [
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "quote": "使范围内所有敌人缴械",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "quote": "攻击目标的敌人会受到伤害被暂时缴械，并且受到弱驱散效果。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_return",
+          "condition": "base",
+          "quote": "攻击目标的敌人会受到伤害",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "电荷将会爆炸，使范围内所有敌人缴械并受到伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_suicide",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "并眩晕敌人",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "工程师冲到敌人中间",
+          "uncertain": false
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "quote": "此技能将摧毁树木。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "造成大量范围伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_mutually_assured_destruction",
+      "mechanisms": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "quote": "工程师获得相当于最大魔法值一定百分比的魔法恢复。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "他们会留下一个木桶，在%explosion_delay%秒后爆炸，对范围内敌人造成伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_minefield_sign",
+      "mechanisms": [
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "scepter",
+          "quote": "使作用范围内的感应地雷为无敌状态",
+          "uncertain": false
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "scepter",
+          "quote": "使作用范围内的感应地雷为无敌状态，并且造成的伤害增加%bonus_mine_damage_pct%%%",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "scepter",
+          "quote": "使作用范围内的感应地雷为无敌状态，并且造成的伤害增加%bonus_mine_damage_pct%%%",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "quote": "标识附近整个%aura_radius%范围变成一片雷区，持续%minefield_duration%秒。敌方单位在区域内移动都会受到伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "techies_land_mines",
+      "mechanisms": [
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "quote": "埋布隐形的地雷",
+          "uncertain": false
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "quote": "魔法抗性会被暂时降低",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "爆炸对%min_distance%范围内目标造成全额伤害，对边缘造成的伤害减少至%outer_damage%%%。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_arctic_burn",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "被攻击的敌人在寒意作用下，移动速度会被减缓",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "每次攻击都将呼出逼人的寒气",
+          "uncertain": false
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "quote": "寒冬飞龙乘着一股极地寒风扶摇而上，移动将无视地形",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_splinter_blast",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "移动速度减缓%movespeed_slow_tooltip%%%",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "附近%split_radius%基础范围内敌人都将因碎片的冲击受到伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_cold_embrace",
+      "mechanisms": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "使其被冻在原地",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "冰茧将阻隔一切物理伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "quote": "恢复生命值，恢复数值为基础数值加上最大生命值的一定比例",
+          "uncertain": false
+        }
+      ]
+    }
+  ]
+}

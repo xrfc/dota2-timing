@@ -1,5 +1,24 @@
 # 变更记录
 
+## 2026-11-05 U85–U89：第1–8轮复查、控制分类、事实v12
+
+- Codex（`gpt-6.1-sol`/`high`）盲审第1–8轮1879行：1817行结论和条件一致，62行不同，用户裁定其中需要改的（`reviews/full-audit-003/`）。
+- 控制细分：强制行为拆成嘲讽、恐惧、蛊惑；定身改名缠绕，新增捆缚；限制位移换成束缚；新增创造地形；禁用物品改名锁闭。Codex按新定义重读934个对象（`reviews/full-audit-004/`）。
+- 词表v11（81项）、规则v5（只换词）、特性映射v3、`data.mechanics_facts_v12`、`build_mechanics_facts_v12`、`extractions/v12/`（3109行，接受2413）；`derived-v2`改由v12生成，未提交过的旧输出被替换；两端都确认的边由8条变成9条。
+- 20条助手提议全部由用户定完，`assistant_no_objection`不再出现。
+
+## 2026-11-04 U84：Codex优先用临时账号
+
+- 新一轮Codex走本机`codex-prefer`，临时账号到期（2026-11-08 20:51:42 北京时间）后回主账号；额度用完不自动切换，日志写明账号。
+
+## 2026-11-04 U81–U83：全量补漏、事实v11、派生层v2
+
+- Claude和Codex（`gpt-6.1-sol`/`high`）逐个读734个技能和200件现役装备；为新词条和新口径，Codex再读一轮。结果在`reviews/full-audit-001/`、`full-audit-002/`。
+- 词表v10：新增场地魔法；光环限定跟着单位走；攻击特效扩大到普攻附带的效果；治疗含属性生命恢复。
+- `data.mechanics_facts_v11`、`build_mechanics_facts_v11`生成`extractions/v11/`（接受由1902增至2433）；`build_mechanics_derived_v2`生成`profiles/derived-v2/`。
+- `check_mechanics_recall`改读v11，结果在`reviews/recall-check-002/`；`recall-check-001/`的结果不再能用当前脚本复现，保留作记录。
+- 改正档案说明里“9条两端都确认”为8条。
+
 ## 2026-11-04 U80：事实v10、派生层、漏记检查
 
 - 补第4轮跳过的7条幻象，第20条目标由14个增至20个；恐怖利刃·倒影无敌，不算目标（`rules-v4.json`，U81）。

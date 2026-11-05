@@ -1,0 +1,768 @@
+{
+  "objects": [
+    {
+      "subject": "drow_ranger_frost_arrows",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "scepter",
+          "quote": "若敌人在低温效果下阵亡，他们将会爆炸，对范围内的敌人造成伤害和减速。",
+          "reason_zh": "范围爆炸伤害由A杖升级提供。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "他们将会爆炸，对范围内的敌人造成伤害和减速。",
+          "reason_zh": "A杖升级使爆炸能伤害范围内的多个敌人。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害。",
+          "reason_zh": "普通攻击附带减速和额外伤害。"
+        },
+        {
+          "mechanism": "heal_reduction",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "每层叠加效果都会降低生命回复。",
+          "reason_zh": "A杖提供降低目标生命回复的叠加效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓敌人的移动速度",
+          "reason_zh": "基础冰箭直接降低敌人的移动速度。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "他们将会爆炸，对范围内的敌人造成伤害和减速。",
+          "reason_zh": "A杖新增爆炸施加范围减速的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "drow_ranger_wave_of_silence",
+      "judgments": [
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "沉默敌方单位并将其击退",
+          "reason_zh": "击退敌方单位属于位移他人。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使隐身敌人显形",
+          "reason_zh": "使隐身敌人显形不属于施加隐身。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时使隐身敌人显形。",
+          "reason_zh": "说明明确写出使隐身敌人显形。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "沉默敌方单位",
+          "reason_zh": "狂风直接对敌人施加沉默。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使隐身敌人显形",
+          "reason_zh": "显形效果不能据此记为真视。"
+        }
+      ]
+    },
+    {
+      "subject": "drow_ranger_multishot",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不断地射出阵阵箭矢，对卓尔游侠攻击距离 + %arrow_range_base%的距离内击中的敌人造成额外伤害",
+          "reason_zh": "一次施放的多阵箭矢能够伤害多个敌人。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "箭矢的基础伤害无视减益免疫。",
+          "reason_zh": "伤害无视减益免疫不代表技能赋予减益免疫。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并施加霜冻之箭效果。；霜冻之箭的额外伤害和减速效果不无视减益免疫。",
+          "reason_zh": "数箭齐发施加的霜冻之箭效果包含减速。"
+        }
+      ]
+    },
+    {
+      "subject": "drow_ranger_glacier",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "施放时不会打断数箭齐发。",
+          "reason_zh": "材料写的是不会打断，不能作为打断持续施法的证据。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "击退附近的敌人。",
+          "reason_zh": "冰川能击退敌人且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "站在山上的单位会获得飞行视野",
+          "reason_zh": "飞行视野不等于能够越过地形的飞行移动。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "站在山上的单位会获得飞行视野",
+          "reason_zh": "魔晶授予的冰川明确提供飞行视野。"
+        }
+      ]
+    },
+    {
+      "subject": "drow_ranger_marksmanship",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "卓尔游侠的战斗经验使她有概率发出极其精准高效的箭矢。",
+          "reason_zh": "战斗经验是叙述文字，没有提供额外金钱或经验的效果。"
+        },
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "射手天赋的触发效果拥有克敌机先。",
+          "reason_zh": "说明明确赋予触发攻击克敌机先。"
+        }
+      ]
+    },
+    {
+      "subject": "earthshaker_fissure",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对沿途的敌方单位造成眩晕和伤害。",
+          "reason_zh": "一次沟壑能伤害沿线的多个敌人。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有让普通攻击附带效果的描述。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对沿途的敌方单位造成眩晕和伤害。",
+          "reason_zh": "基础沟壑直接施加眩晕。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "撼地者每次施放其他技能时都会沿着沟壑释放余震，造成眩晕的时间有所降低。",
+          "reason_zh": "魔晶新增施放其他技能时沿沟壑触发眩晕的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "earthshaker_enchant_totem",
+      "judgments": [
+        {
+          "mechanism": "cleave",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "强化图腾拥有分裂效果。",
+          "reason_zh": "A杖升级明确赋予强化图腾分裂攻击。"
+        }
+      ]
+    },
+    {
+      "subject": "earthshaker_aftershock",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕附近的敌方单位并造成额外伤害。",
+          "reason_zh": "一次余震能够伤害附近的多个敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕附近的敌方单位",
+          "reason_zh": "余震明确对附近敌人施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "earthshaker_echo_slam",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每个受到攻击的敌人都会引起伤害附近单位的反射波。",
+          "reason_zh": "一次施放的反射波能够伤害多个附近单位。"
+        }
+      ]
+    },
+    {
+      "subject": "earthshaker_slugger",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "把尸体击飞，对击中的敌人造成伤害。",
+          "reason_zh": "击飞的尸体能够对沿途击中的多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "把尸体击飞",
+          "reason_zh": "击飞尸体不属于赋予单位越过地形的飞行移动。"
+        }
+      ]
+    },
+    {
+      "subject": "juggernaut_blade_fury",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每%blade_fury_damage_tick%秒对主宰周围的敌方单位造成伤害。",
+          "reason_zh": "一次剑刃风暴能持续伤害周围的多个敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "juggernaut_healing_ward",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "按周围友军单位最大生命值的一定比例治疗他们。",
+          "reason_zh": "基础治疗守卫明确恢复周围友军的生命。"
+        }
+      ]
+    },
+    {
+      "subject": "juggernaut_blade_dance",
+      "judgments": [
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "主宰有一定概率在攻击时触发致命一击。",
+          "reason_zh": "攻击有概率触发致命一击，符合暴击定义。"
+        }
+      ]
+    },
+    {
+      "subject": "juggernaut_omni_slash",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "随后再以更短的攻击频率斩击该单位和附近的其它敌方单位。",
+          "reason_zh": "一次无敌斩可以伤害目标和附近的其他敌人。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "技能说明明确标注其驱散类型为弱驱散。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "主宰在无敌斩期间无敌。",
+          "reason_zh": "说明明确赋予施法期间的无敌状态。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "主宰挥剑跃向敌方目标单位",
+          "reason_zh": "跃向目标主动改变了主宰自身的位置。"
+        }
+      ]
+    },
+    {
+      "subject": "mirana_starfall",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Calls down a wave of meteors to damage nearby enemy units.",
+          "reason_zh": "一次流星波能够伤害附近的多个敌人。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有让普通攻击附带效果的描述。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤一波流星砸向附近的敌方单位。",
+          "reason_zh": "召来流星造成伤害不属于召唤有血量的单位。"
+        }
+      ]
+    },
+    {
+      "subject": "mirana_arrow",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "scepter",
+          "quote": "月神之箭在主神箭行进途中对敌人释放群星风暴。",
+          "reason_zh": "基础箭只击中首个敌人，范围伤害由A杖附加的群星风暴提供。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "月神之箭在主神箭行进途中对敌人释放群星风暴。",
+          "reason_zh": "A杖使箭在行进途中释放可伤害多个敌人的群星风暴。"
+        },
+        {
+          "mechanism": "execute",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "若击中的是非远古的普通单位，将直接秒杀。",
+          "reason_zh": "秒杀条件是单位类型，未按生命阈值触发，不符合斩杀定义。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "根据箭矢飞行的距离",
+          "reason_zh": "箭矢弹道飞行不属于单位的飞行移动。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "月神之箭可以射中隐身单位。",
+          "reason_zh": "能击中隐身单位只是交互，不会施加隐身。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对第一个击中的敌人造成伤害并眩晕目标。",
+          "reason_zh": "基础月神之箭直接眩晕命中的目标。"
+        }
+      ]
+    },
+    {
+      "subject": "mirana_leap",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得+%additional_charges%跳跃能量点数。",
+          "reason_zh": "魔晶仅增加跳跃能量点数，说明充能是原有机制。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "获得+%additional_charges%跳跃能量点数。",
+          "reason_zh": "魔晶只增加充能数量，不算新增充能机制，应记为基础效果。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "米拉娜的坐骑向前跳跃加入战斗",
+          "reason_zh": "向前跳跃属于主动改变自身位置。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "米拉娜的坐骑向前跳跃加入战斗",
+          "reason_zh": "跳跃位移属于基础效果，魔晶只增加能量点数。"
+        }
+      ]
+    },
+    {
+      "subject": "mirana_celestial_quiver",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "米拉娜的下次攻击会造成额外魔法伤害。",
+          "reason_zh": "强化下一次普通攻击并附加魔法伤害属于攻击特效。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "有可用能量时，米拉娜的下次攻击会造成额外魔法伤害。",
+          "reason_zh": "可用能量用于触发下一次攻击的强化，属于可消耗充能。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "跳跃的加成状态生效时获得%quiver_restore%点临时能量。",
+          "reason_zh": "魔晶新增在跳跃加成期间授予临时充能的效果。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成额外魔法伤害",
+          "reason_zh": "附加魔法伤害不等于降低魔抗或施加魔法易伤。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "跳跃的加成状态生效时获得%quiver_restore%点临时能量。",
+          "reason_zh": "跳跃加成只是获得临时能量的条件，箭袋自身不提供位移。"
+        }
+      ]
+    },
+    {
+      "subject": "mirana_invis",
+      "judgments": [
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "让米拉娜和所有己方英雄进入隐身状态。",
+          "reason_zh": "技能直接使米拉娜和己方英雄隐身。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "If a hero is revealed, invisibility will restore after the fade delay",
+          "reason_zh": "被显形只是重新进入隐身的条件，技能自身不施加显形。"
+        }
+      ]
+    },
+    {
+      "subject": "nevermore_shadowraze1",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对该区域中的敌人造成伤害",
+          "reason_zh": "一次毁灭阴影能够伤害目标区域内的多个敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "nevermore_dark_lord",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "影魔的出现使得周围的敌人护甲降低。",
+          "reason_zh": "技能直接降低附近敌人的护甲。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "影魔的出现使得周围的敌人护甲降低。",
+          "reason_zh": "减甲效果随影魔持续影响周围敌人，属于作用于敌方的光环。"
+        }
+      ]
+    },
+    {
+      "subject": "nevermore_requiem",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "以多道魔能的形式释放。；每道魔能对敌方单位造成伤害",
+          "reason_zh": "一次施放释放多道魔能，能够伤害多个敌方单位。"
+        },
+        {
+          "mechanism": "forced_action",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "还将造成恐惧和减速效果",
+          "reason_zh": "主动释放的魂之挽歌会施加属于强制行为的恐惧。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "影魔会回复与回归伤害值相等的生命。",
+          "reason_zh": "A杖新增回归波为影魔恢复生命的效果。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且降低魔法抗性",
+          "reason_zh": "基础技能明确降低受影响敌人的魔法抗性。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "have its movement speed and magic resistance reduced",
+          "reason_zh": "主动释放的魂之挽歌会降低敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "nevermore_necromastery",
+      "judgments": [
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "影魔死亡时%soul_release_tooltip%%%的灵魂将逃离他的束缚。",
+          "reason_zh": "灵魂束缚的叙述不表示阻止目标闪烁、传送或离开范围。"
+        }
+      ]
+    },
+    {
+      "subject": "morphling_waveform",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对路径上的敌人造成伤害。",
+          "reason_zh": "一次波浪形态能够伤害路径上的多个敌人。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "变体精灵在波浪形态中是无敌的。",
+          "reason_zh": "技能明确使变体精灵在波浪形态期间无敌。"
+        }
+      ]
+    },
+    {
+      "subject": "morphling_adaptive_strike_agi",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "用猛烈的水波打击一个敌方单位",
+          "reason_zh": "材料仅描述单个目标受击，没有一次伤害多个敌人的效果。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将其击退并眩晕",
+          "reason_zh": "技能能击退敌方目标，符合位移他人定义。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将其击退并眩晕",
+          "reason_zh": "技能明确对目标施加眩晕。"
+        }
+      ]
+    }
+  ]
+}

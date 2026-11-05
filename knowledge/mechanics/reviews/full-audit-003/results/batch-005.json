@@ -1,0 +1,687 @@
+{
+  "objects": [
+    {
+      "subject": "zuus_lightning_hands",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "uncertain",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "他的攻击会产生弧形闪电，造成一定百分比的伤害。",
+          "reason_zh": "材料未说明弧形闪电能否击中多个敌人，不能仅凭技能名称判断范围伤害。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "他的攻击会产生弧形闪电，造成一定百分比的伤害。",
+          "reason_zh": "攻击附带造成伤害的闪电，且整个技能由魔晶授予。"
+        }
+      ]
+    },
+    {
+      "subject": "zuus_thundergods_wrath",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "用闪电打击所有敌方英雄，对他们造成伤害",
+          "reason_zh": "一次施放能对所有敌方英雄造成伤害。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Provides True Sight around each hero before they are struck.",
+          "reason_zh": "说明明确提供每个敌方英雄周围的真视。"
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_torrent",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Summons a rising torrent that, after a short delay, hurls enemy units into the sky, stunning, dealing damage and slowing movement speed.",
+          "reason_zh": "一次洪流能将多个敌方单位冲起并造成伤害。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "初始泡泡效果仅对队友可见，并且提供战争迷雾中的视野。",
+          "reason_zh": "备注明确说明洪流提供战争迷雾中的视野。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害、眩晕和减速。",
+          "reason_zh": "基础效果明确包含减速。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "飞到半空的单位将会被眩晕并且可以被攻击。",
+          "reason_zh": "备注明确说明被冲起的单位受到眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_tidebringer",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在前方造成大范围的分裂攻击伤害。",
+          "reason_zh": "一次攻击造成大范围分裂伤害，能伤及多个敌方单位。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "下一次攻击附加额外的攻击力并在前方造成大范围的分裂攻击伤害。",
+          "reason_zh": "材料只描述攻击力提升和分裂，两者均被排除在攻击特效定义之外。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在前方造成大范围的分裂攻击伤害。",
+          "reason_zh": "说明明确赋予下一次攻击分裂伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_admirals_rum",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "延后承受即将受到的%ghostship_absorb%%%伤害",
+          "reason_zh": "延迟结算受到的伤害符合减伤机制定义。"
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_tidal_wave",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "Deals damage and drags enemies along it.",
+          "reason_zh": "一道波浪能伤害并拖拽多个敌人，且技能由魔晶授予。"
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_ghostship",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "残骸周围的敌人将会因撞击受到伤害并眩晕。",
+          "reason_zh": "幽灵船撞击对残骸周围多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "每艘船现在还会从左舷和右舷发射%num_cannon_volleys%波炮弹，穿过敌人时造成%cannon_ball_damage_pct%%%幽灵船伤害。",
+          "reason_zh": "A杖新增能穿过敌人造成伤害的炮弹效果，支持新增范围伤害。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "残骸周围的敌人将会因撞击受到伤害并眩晕。",
+          "reason_zh": "基础撞击效果明确使敌人眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "lina_dragon_slave",
+      "judgments": [
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发其他对象的法术抵抗不代表自身能格挡指向技能。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发法术反弹属于交互说明，不代表自身能反弹技能。"
+        }
+      ]
+    },
+    {
+      "subject": "lina_light_strike_array",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Summons a column of flames that damages and stuns enemies.",
+          "reason_zh": "一次召唤的火焰柱能伤害多个敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤柱状火焰伤害并眩晕敌人。",
+          "reason_zh": "技能明确对敌人施加眩晕。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "光击阵将摧毁作用范围内的树木。",
+          "reason_zh": "备注明确说明技能摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "lina_laguna_blade",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对单个敌方单位射出闪电，造成大量伤害。",
+          "reason_zh": "材料明确描述单体伤害，没有范围伤害效果。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "因此有若干技能可以躲避该伤害。",
+          "reason_zh": "这是其他技能躲避神灭斩伤害的交互，不是神灭斩自身躲避弹道。"
+        }
+      ]
+    },
+    {
+      "subject": "lich_frost_nova",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成范围伤害",
+          "reason_zh": "说明明确包含范围伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低范围内敌人的移动和攻击速度",
+          "reason_zh": "技能降低敌人的移动速度和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "lich_frost_shield",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每%interval%秒都会对附近的敌方单位放出冰霜魔法，造成少量伤害和减速。",
+          "reason_zh": "一次施放的魔盾能持续伤害附近多个敌方单位。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成少量伤害和减速。",
+          "reason_zh": "魔盾释放的冰霜魔法明确使敌人减速。"
+        }
+      ]
+    },
+    {
+      "subject": "lich_sinister_gaze",
+      "judgments": [
+        {
+          "mechanism": "forced_action",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使一个敌方单位着魔，缓慢走到巫妖与其之间的一点",
+          "reason_zh": "技能强制敌方单位向指定位置移动。"
+        },
+        {
+          "mechanism": "mana_burn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "吸取其当前魔法值的一定百分比。",
+          "reason_zh": "吸取敌方法力会减少目标的法力值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "吸取其当前魔法值的一定百分比。",
+          "reason_zh": "从目标吸取法力符合自身吸蓝的定义。"
+        }
+      ]
+    },
+    {
+      "subject": "lich_ice_spire",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "被摧毁时会在附近产生一个寒霜爆发的效果。",
+          "reason_zh": "尖柱被摧毁时触发材料中明确具有范围伤害的寒霜爆发，且技能由魔晶授予。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "减缓范围内敌人的移动速度。",
+          "reason_zh": "尖柱明确降低附近敌人的移动速度，且技能由魔晶授予。"
+        }
+      ]
+    },
+    {
+      "subject": "lich_death_charge",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "把它的当前生命值转化为巫妖的魔法",
+          "reason_zh": "技能将友方单位的生命转化为巫妖自身的法力。"
+        }
+      ]
+    },
+    {
+      "subject": "lich_chain_frost",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "释放一个在敌人间弹跳至多%jumps%次的霜冻之球，每次击中敌人后都会造成伤害和减速效果。",
+          "reason_zh": "一次施放的霜冻之球能弹跳并伤害多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次击中敌人后都会造成伤害和减速效果。",
+          "reason_zh": "霜冻之球每次命中都明确施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "lion_impale",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "岩石尖刺在地上沿一条直线穿刺而出。敌方单位被抛向空中，落地时被眩晕并受到伤害。",
+          "reason_zh": "一次施放的直线尖刺能伤害沿途多个敌方单位。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发其他对象的法术抵抗不代表自身能格挡指向技能。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发法术反弹属于交互说明，不代表自身能反弹技能。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "落地时被眩晕并受到伤害。",
+          "reason_zh": "技能明确对敌方单位施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "lion_mana_drain",
+      "judgments": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "持续施法期间莱恩为减益免疫状态",
+          "reason_zh": "魔晶升级明确使莱恩在持续施法期间获得减益免疫。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "阻止英雄进入隐身状态。",
+          "reason_zh": "阻止隐身不属于使单位隐身。"
+        },
+        {
+          "mechanism": "mana_burn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "持续吸取魔法并减缓敌人的移动速度。",
+          "reason_zh": "持续吸取敌方法力会减少目标的法力值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "持续吸取魔法",
+          "reason_zh": "从敌人吸取法力符合自身吸蓝的定义。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓敌人的移动速度。",
+          "reason_zh": "基础效果明确降低敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "lion_to_hell_and_back",
+      "judgments": [
+        {
+          "mechanism": "respawn",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "而莱恩复活时，他就会获得持续%duration%秒的%spell_amp%%%技能增强",
+          "reason_zh": "复活只是获得增强的触发条件，技能没有使单位复活或影响复活。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Lion gains %spell_amp%%% spell amplification for %duration%s after respawning or resurrecting or until he gets a kill or assist.",
+          "reason_zh": "说明明确使莱恩在复活后获得法术放大。"
+        }
+      ]
+    },
+    {
+      "subject": "lion_finger_of_death",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "死亡之指的初始施法获得范围型伤害",
+          "reason_zh": "A杖明确新增初始施法的范围伤害效果。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使他可以发动带有分裂效果的近战攻击",
+          "reason_zh": "基础技能在施放后赋予近战攻击分裂效果。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "因此有若干技能可以躲避该伤害。",
+          "reason_zh": "这是其他技能躲避死亡之指伤害的交互，不是该技能自身躲避弹道。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_shaman_ether_shock",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "利用虚空能量制造出分叉的闪电，打击多个敌方单位。",
+          "reason_zh": "一次施放的分叉闪电能伤害多个敌方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_shaman_shackles",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "scepter",
+          "quote": "被绑住的单位每%scepter_shock_interval%秒会释放一次辐射状的苍穹震击，作用于%scepter_shock_radius%范围内其他所有单位",
+          "reason_zh": "范围伤害来自A杖新增的辐射状苍穹震击，应记为A杖效果。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "被绑住的单位每%scepter_shock_interval%秒会释放一次辐射状的苍穹震击，作用于%scepter_shock_radius%范围内其他所有单位，造成伤害",
+          "reason_zh": "A杖新增辐射状苍穹震击，能伤害范围内多个单位。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_shaman_fowl_play",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有描述该技能对多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "暗影萨满会获得强驱散效果",
+          "reason_zh": "技能触发时明确对暗影萨满施加强驱散。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到的伤害将降为零，持续较短时间",
+          "reason_zh": "将受到的伤害降为零符合减伤定义。"
+        },
+        {
+          "mechanism": "execute",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "无法阻止斧王的淘汰之刃和瘟疫法师的死神镰刀的致死伤害。",
+          "reason_zh": "这只是对其他技能致死伤害的交互说明，禽戏自身没有斩杀效果。"
+        },
+        {
+          "mechanism": "hp_removal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到的伤害减免效果会阻止生命移除类效果杀死暗影萨满。",
+          "reason_zh": "阻止生命移除造成死亡不代表自身施加生命移除。"
+        },
+        {
+          "mechanism": "respawn",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "以1点生命的小鸡继续存活。……冷却时间会在暗影萨满复活时重置。",
+          "reason_zh": "继续存活不是死后复活，复活也只是重置技能冷却的触发条件。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_shaman_urnaconda",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对范围内所有敌人造成伤害",
+          "reason_zh": "蛇罐落点对范围内所有敌人造成伤害，且技能由魔晶授予。"
+        }
+      ]
+    },
+    {
+      "subject": "slardar_sprint",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "开启此技能不会打断持续施法。",
+          "reason_zh": "材料明确说明不会打断持续施法，不能将否定描述记为机制。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "移动速度得到显著提升，并且可以穿越单位。",
+          "reason_zh": "所述效果是提高移速和穿越单位，没有主动改变自身位置的位移效果。"
+        },
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在最初%speed_burst_max_duration%内斯拉达获得%slow_resistance_tooltip%%%减速抗性。",
+          "reason_zh": "基础技能明确赋予斯拉达减速抗性。"
+        }
+      ]
+    }
+  ]
+}

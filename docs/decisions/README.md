@@ -85,3 +85,7 @@
 | U79 | [巫医档案纠正；主动技能单独确认](2026-11-07-wd-profile.md) |
 | U80 | [补幻象7条；继续MK-T5](2026-11-04-illusions-recall.md) |
 | U81 | [全量补漏；倒影不算第20条目标；提交开PR](2026-11-04-audit-all.md) |
+| U82 | [全量补漏用Codex高推理强度](2026-11-04-codex-effort.md) |
+| U83 | [全量补漏的裁定；新增场地魔法](2026-11-04-audit-rulings.md) |
+| U84 | [Codex优先用临时账号](2026-11-04-codex-prefer-temp.md) |
+| U85–U89 | [第1–8轮复查与控制分类的裁定](2026-11-04-recheck-rulings.md) |

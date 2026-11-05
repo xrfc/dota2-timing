@@ -1,0 +1,1539 @@
+[codex-prefer] account=temp
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty3
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a720-a5db-7cf0-aa79-ee840d7b24d3
+--------
+user
+你在独立核对Dota 2技能和装备的机制记录。每个对象的`judge`列出若干“对象 + 机制 + 生效条件”，其中有的成立，有的不成立，比例不告诉你。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+逐条判断`judge`里的每一项，不要增加也不要漏掉：
+- `decision`：`accept`（材料支持这个对象具备该机制）、`reject`（材料不支持，或不符合定义）、`uncertain`（材料不足或需要游戏知识，不要猜）。
+- `condition_correct`：只看生效条件是否写对。`base`是基础效果，`scepter`是只在有A杖时生效，`shard`是只在有魔晶时生效，`item`是装备。`granted_by`不为空的对象，整个技能按该升级记。如果`decision`不是`accept`，填true。
+- `correct_condition`：`condition_correct`为false时写正确条件，否则与给定条件相同。
+- `quote`摘决定判断的原文片段，没有就写空字符串。`reason_zh`用一句中文说明理由。
+- `mechanism`和`condition`原样返回，`subject`原样返回。
+
+判断规则，已由用户确认，必须遵守：
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+- 召唤物只算有血量的单位；按受攻击次数计算的不算；猴子猴孙、部署炮塔不算。
+- 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+- 固定在地上的区域算场地魔法；区域跟着单位移动的算光环。只起阻挡作用的墙和圈不算场地魔法。
+- 属性生命恢复算治疗。普攻附带的减甲、减速、减疗、烧蓝、额外伤害、中毒等算攻击特效；单纯提高攻击力、攻速、吸血、暴击、分裂或弹射不算攻击特效。
+- 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字，可以当证据。`%xxx%`是数值占位符。
+
+待判断内容：
+{"vocabulary": [{"id": "aoe_damage", "zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害"}, {"id": "applies_break", "zh": "施加破坏", "definition": "使目标的被动技能暂时失效"}, {"id": "armor_reduction", "zh": "减护甲", "definition": "降低目标护甲"}, {"id": "attack_modifier", "zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条"}, {"id": "charges", "zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"}, {"id": "cleave", "zh": "分裂溅射", "definition": "攻击伤害波及周围单位"}, {"id": "critical", "zh": "暴击", "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"}, {"id": "damage_block", "zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"}, {"id": "debuff_immunity", "zh": "减益免疫/技能免疫", "definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"}, {"id": "displace_other", "zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"}, {"id": "evasion", "zh": "闪避", "definition": "自身有概率使敌方攻击落空"}, {"id": "flying", "zh": "飞行", "definition": "飞行移动，能越过地形"}, {"id": "grant_vision", "zh": "提供视野", "definition": "提供目标或区域的视野"}, {"id": "healing", "zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）"}, {"id": "illusions", "zh": "幻象", "definition": "制造自身或他人的幻象"}, {"id": "invisibility", "zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身"}, {"id": "mana_gain", "zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"}, {"id": "mobility_lock", "zh": "限制位移", "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"}, {"id": "phased", "zh": "相位移动", "definition": "移动不受单位碰撞阻挡"}, {"id": "pierce_evasion", "zh": "克敌机先", "definition": "攻击无视闪避（必中）"}, {"id": "reveal", "zh": "显形", "definition": "使隐身单位显形，不等于持续真视"}, {"id": "self_mobility", "zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"}, {"id": "silence", "zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）"}, {"id": "slow", "zh": "减速", "definition": "降低移动速度或攻击速度"}, {"id": "stun", "zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）"}, {"id": "summons", "zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"}, {"id": "tree_destroy", "zh": "砍树", "definition": "能摧毁树木"}, {"id": "tree_walk", "zh": "穿树", "definition": "能穿过树木移动"}, {"id": "true_sight", "zh": "真视", "definition": "可看见隐身单位"}], "objects": [{"subject": "grimstroke_soul_chain", "name_zh": "天涯墨客·缚魂", "name_en": "Soulbind", "description_zh": "将一名敌方英雄与束缚作用范围内最接近的队友相连，阻止他们远离彼此。任何指向性技能击中任一英雄时，这两名敌方英雄都会受到作用。若连接在效果截止前断裂，初始目标将再次与其距离内最接近的队友相连。", "description_en": "Binds a targeted enemy hero to its nearest allied hero within the bind radius, preventing both from moving away from each other. Any unit-targeted ability that either bound hero receives also gets cast on the other hero. If the bind is broken before the duration expires, the initial target will be bound to its nearest allied hero in the radius.", "notes_zh": ["如果与另一个单位一起被束缚，作用下单位均被束缚，而且无法使用闪烁类技能。", "被束缚的单位都将提供视野。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["chain_duration", "chain_latch_radius", "chain_break_distance", "leash_limit_multiplier", "leash_radius_buffer", "creep_duration_pct", "bonus_reflected_spell_damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "grant_vision", "condition": "base"}, {"mechanism": "mobility_lock", "condition": "base"}, {"mechanism": "self_mobility", "condition": "base"}]}, {"subject": "grimstroke_ink_trail", "name_zh": "天涯墨客·墨痕", "name_en": "Ink Trail", "description_zh": "天涯墨客的攻击和技能会使受作用的敌方英雄在身后留下一道墨痕，对天涯墨客造成的伤害减少，持续%debuff_duration%秒。", "description_en": "Grimstroke's attacks and spells cause affected enemy heroes to leave a trail of Ink behind them and deal less damage to Grimstroke for %debuff_duration%s.", "notes_zh": ["获得作用下英雄的视野。", "天涯墨客的幻象（包括暗绘）也拥有墨痕。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["debuff_duration", "damage_reduction"], "judge": [{"mechanism": "grant_vision", "condition": "base"}]}, {"subject": "mars_spear", "name_zh": "玛尔斯·战神迅矛", "name_en": "Spear of Mars", "description_zh": "玛尔斯以致命的精准掷出他强大的战矛，对击中的每个敌方单位造成伤害。击中的第一个敌方英雄将被战矛刺穿，并被击退。若战矛击中树木、建筑或悬崖，目标将会被钉在上面，并受到眩晕。", "description_en": "Mars throws his legendary Spear with deadly precision, damaging each enemy unit it strikes. The first enemy hero it hits is skewered on the spear, pushing it back. If a skewered hero hits a tree, building, or cliff, they will be impaled to it and stunned.", "notes_zh": ["战神迅矛可以击中隐身单位，造成眩晕还使其显形。", "战神迅矛只会将单位从低地钉在地势变高的地方，否则会将他们推下高地。"], "granted_by": "", "upgrades": {"shard": {"zh": "战神迅矛可以刺中最多%max_impale_targets%名英雄，并留下一道火焰路径，持续造成伤害并减缓移动速度。", "en": "Spear of Mars impales up to %max_impale_targets% heroes and leaves a fire trail behind that deals damage over time and slows movement speed."}}, "is_passive": false, "value_names": ["damage", "spear_speed", "spear_width", "spear_vision", "max_impale_targets", "spear_range", "activity_duration", "stun_duration", "knockback_duration", "knockback_distance", "shard_trail_duration", "shard_trail_radius", "shard_dps", "shard_move_slow_pct", "shard_debuff_linger_duration"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "reveal", "condition": "base"}, {"mechanism": "slow", "condition": "shard"}, {"mechanism": "stun", "condition": "base"}]}, {"subject": "mars_gods_rebuke", "name_zh": "玛尔斯·神之谴戒", "name_en": "God's Rebuke", "description_zh": "玛尔斯举起他的战盾粉碎前方的敌人，将他们击退并且基于自身攻击力造成致命一击伤害。攻击英雄时攻击伤害提升。具有克敌机先效果。", "description_en": "Mars smashes enemies in front of him with his shield, knocking them back and damaging them with a critical hit based on his attack. Bonus damage is added when hitting heroes. Has True Strike.", "notes_zh": ["神之谴戒的攻击也有几率触发攻击特效。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["crit_mult", "angle", "radius", "knockback_duration", "knockback_distance", "knockback_slow", "knockback_slow_duration", "activity_duration", "bonus_damage_vs_heroes", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "attack_modifier", "condition": "base"}, {"mechanism": "critical", "condition": "base"}, {"mechanism": "displace_other", "condition": "base"}, {"mechanism": "pierce_evasion", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "mars_bulwark", "name_zh": "玛尔斯·护身甲盾", "name_en": "Bulwark", "description_zh": "每当玛尔斯受到来自正面或侧面的攻击时，他就挥舞他那面巨大的战盾来格挡一定百分比的伤害。可以开启，开启后获得相位移动状态，但无法攻击，自身锁定为面朝的方向，并且移动速度降低，但飞向队友的攻击弹道中%redirect_chance%%%将改变方向朝他飞去。", "description_en": "Mars wields his massive shield to block a portion of each physical attack when hit from the front or sides. Can be toggled, granting phased movement, removing Mars's ability to attack, and locking the direction he is facing. When active, reduces movement speed and re-directs %redirect_chance%%% of the attack projectiles aimed at allies towards himself.", "notes_zh": ["改向只会在弹道目标位于玛尔斯身后锥形区域内或他身边100范围内才会生效。", "破坏会使正面和侧面减伤效果失效。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["physical_damage_reduction", "forward_angle", "physical_damage_reduction_side", "side_angle", "redirect_chance", "redirect_range", "redirect_speed_penatly", "redirect_close_range", "forced_movement_immunity"], "judge": [{"mechanism": "phased", "condition": "base"}]}, {"subject": "mars_dauntless", "name_zh": "玛尔斯·无畏", "name_en": "Dauntless", "description_zh": "%radius%范围内敌方英雄数量更多时，玛尔斯就会获得生命恢复，敌人数量越多，生命恢复也越高。", "description_en": "Mars gets more HP Regen the more he is outnumbered by enemy heroes in %radius% radius.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["health_regen_per_enemy", "radius"], "judge": [{"mechanism": "healing", "condition": "base"}]}, {"subject": "mars_arena_of_blood", "name_zh": "玛尔斯·热血竞技场", "name_en": "Arena Of Blood", "description_zh": "经过短暂的列队时间，玛尔斯召唤出环绕着战士的竞技场，战士们将阻挡敌人的攻击和动向。竞技场内的敌方英雄靠近边缘时将被战矛攻击，受到伤害并被击退。", "description_en": "After a short formation time, Mars summons an arena lined with the undead warriors of the Ash Legion, who block enemy attacks and movement. Enemy heroes near the inside edge of the arena will be attacked by spears, dealing damage and knocking them back.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "冷却时间降低%bonus_AbilityCooldown%秒，持续时间提升。如果敌人在竞技场内阵亡，玛尔斯和竞技场内所有友军都会回复%arena_kill_buff_heal_pct%%%最大生命和魔法，并且获得%arena_kill_buff_damage_pct%%%攻击力加成，持续%arena_kill_buff_duration%秒。这个效果可以叠加。", "en": "Lowers cooldown by %bonus_AbilityCooldown%s and increases duration. If an enemy is killed in the Arena, Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%%  of their max health and mana and get a %arena_kill_buff_damage_pct%%  attack damage buff for %arena_kill_buff_duration%s. This effect stacks."}}, "is_passive": false, "value_names": ["duration", "radius", "width", "spear_damage", "formation_time", "spear_distance_from_wall", "spear_attack_interval", "warrior_count", "warrior_fade_min_dist", "warrior_fade_max_dist", "arena_kill_buff_duration", "arena_kill_buff_damage_pct", "arena_kill_buff_heal_pct", "allied_reduction_pct", "health_regen"], "judge": [{"mechanism": "summons", "condition": "base"}]}, {"subject": "void_spirit_aether_remnant", "name_zh": "虚无之灵·残阴", "name_en": "Aether Remnant", "description_zh": "虚无之灵向目标地点派出一个残像。残像观察着一片区域，面朝矢量的方向。当有目标进入其视线，残像会拉扯，并造成伤害。", "description_en": "Void Spirit dispatches a remnant to the target location. The remnant stands watch over the region, facing the direction of his vector. When a unit crosses its gaze, the remnant pulls it in and damages it.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "额外产生一道观察路径，会围绕残阴旋转。残阴现在会提供真实视域，不再对非英雄单位触发，而是每秒在两道路径上造成%creep_damage_pct%%%伤害。不会使守卫显形。", "en": "Creates an additional watcher path that rotates around the remnant.  The remnant now provides True Sight, and no longer triggers on creeps, instead dealing %creep_damage_pct%%% damage to them every second in both paths. Does not reveal wards."}}, "is_passive": false, "value_names": ["start_radius", "end_radius", "radius", "projectile_speed", "remnant_watch_distance", "remnant_watch_radius", "watch_path_vision_radius", "activation_delay", "impact_damage", "pull_duration", "pull_destination", "duration", "think_interval", "pierces_creeps", "damage_tick_rate"], "judge": [{"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "displace_other", "condition": "base"}, {"mechanism": "true_sight", "condition": "shard"}]}, {"subject": "void_spirit_dissimilate", "name_zh": "虚无之灵·异化", "name_en": "Dissimilate", "description_zh": "虚无之灵暂时遁入太虚，创造数个灵扉。穿过灵扉他能重组自身。穿出灵扉后，他对区域内所有敌人造成伤害。", "description_en": "Void Spirit temporarily fades into the aether, creating a number of portals through which he can reassemble himself. Upon exiting a portal, he damages all enemies in the area.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["phase_duration", "destination_fx_radius", "portals_per_ring", "angle_per_ring_portal", "first_ring_distance_offset", "damage_radius", "has_outer_ring", "aether_remnant_count", "artifice_duration_override_tooltip", "artifice_pct_effectiveness_tooltip", "artifice_extra_offset", "root_duration", "AbilityDamage", "AbilityCastPoint", "AbilityManaCost"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}]}, {"subject": "void_spirit_resonant_pulse", "name_zh": "虚无之灵·共鸣脉冲", "name_en": "Resonant Pulse", "description_zh": "虚无之灵将自己包裹在保护性护盾之中，可以吸收物理伤害，并围绕自身发出一次伤害性脉冲。脉冲每击中一名敌方英雄，护盾的伤害吸收量都会提升。", "description_en": "Void Spirit wraps himself in a protective shield that absorbs physical damage and emits a single damaging pulse around him. The shield gains increased damage absorption for each enemy hero the pulse hits.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "共鸣脉冲可以沉默敌人，并获得%max_charges%点能量点数。", "en": "Causes Resonant Pulse to silence and gain %max_charges% charges."}}, "is_passive": false, "value_names": ["radius", "speed", "damage", "buff_duration", "base_absorb_amount", "absorb_per_hero_hit", "is_all_barrier", "return_projectile_speed", "max_charges", "charge_restore_time", "silence_duration_scepter", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "charges", "condition": "scepter"}, {"mechanism": "damage_block", "condition": "base"}, {"mechanism": "silence", "condition": "scepter"}]}, {"subject": "void_spirit_intrinsic_edge", "name_zh": "虚无之灵·内在优势", "name_en": "Intrinsic Edge", "description_zh": "虚无之灵从每点属性获得的攻击力提升%damage_stat_bonus_pct%%%，并且从力量中获得的生命恢复、敏捷中获得的攻击速度和智力中获得的魔法恢复提升%secondary_stat_bonus_pct%%%。", "description_en": "Void Spirit gains %damage_stat_bonus_pct%%% more attack damage per point of each attribute, and %secondary_stat_bonus_pct%%% more HP regen from Strength, attack speed from Agility, and mana regen from Intelligence.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["secondary_stat_bonus_pct", "damage_stat_bonus_pct", "attack_damage", "hp_regen", "armor", "mp_regen", "magic_resist", "attackspeed"], "judge": [{"mechanism": "healing", "condition": "base"}, {"mechanism": "mana_gain", "condition": "base"}]}, {"subject": "void_spirit_astral_step", "name_zh": "虚无之灵·太虚之径", "name_en": "Astral Step", "description_zh": "虚无之灵撕裂现实进入精神位面，再出现在目标地点，对沿途的所有敌人造成伤害。此次攻击将施加一个太虚印记，造成%pop_damage_delay%秒减速，然后引爆。", "description_en": "Void Spirit tears a rift through the astral plane to appear at the target location, attacking all enemies along the path. This attack inflicts a void mark that slows for %pop_damage_delay% seconds and then detonates.", "notes_zh": ["太虚之径的攻击不会分裂。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "min_travel_distance", "max_travel_distance", "pop_damage_delay", "pop_damage", "movement_slow_pct", "crit_damage", "AbilityCastPoint", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "cleave", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "snapfire_scatterblast", "name_zh": "电炎绝手·电光石火", "name_en": "Scatterblast", "description_zh": "电炎绝手开枪产生大范围的爆炸，对锥形区域内的敌人造成伤害和减速。平射距离内的伤害提升%point_blank_dmg_bonus_pct%%%，移动速度减缓、攻击速度降低和减速持续时间额外提升%point_blank_debuff_duration_pct%%%。", "description_en": "Snapfire unloads with a wide blast that damages and slows enemies in a cone. Damage is increased by %point_blank_dmg_bonus_pct%%% and Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "blast_speed", "blast_width_initial", "blast_width_end", "debuff_duration", "movement_slow_pct", "attack_slow_pct", "point_blank_range", "point_blank_dmg_bonus_pct", "point_blank_debuff_duration_pct", "bonus_applies_at_long_range", "shard_knockback_distance", "shard_knockback_duration", "shard_stun_duration", "shard_bonus_point_blank_dmg_pct"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "snapfire_firesnap_cookie", "name_zh": "电炎绝手·龙炎饼干", "name_en": "Firesnap Cookie", "description_zh": "电炎绝手将一块烈性饼干喂给小莫迪或一名队友，使他们短距离跳跃。跳跃的单位将在落地时对敌人造成眩晕和伤害。", "description_en": "Snapfire feeds a potent cookie to Mortimer or an ally, causing them to hop a short distance. The hopping unit stuns and damages enemies in the landing zone.", "notes_zh": ["饼干的弹道速度为%projectile_speed%。"], "granted_by": "", "upgrades": {"shard": {"zh": "龙炎饼干变得更具威力，治疗目标，并且朝着陆地点发射一个%shard_damage_multiplier_tooltip%%%冲击伤害的蜥蜴绝吻。", "en": "Firesnap cookies become even more potent, healing the target and launching a Mortimer Kiss that does %shard_damage_multiplier_tooltip%%% impact damage to the landing destination."}}, "is_passive": false, "value_names": ["projectile_speed", "jump_duration", "jump_height", "jump_horizontal_distance", "pre_land_anim_time", "landing_gesture_duration", "impact_radius", "impact_damage", "impact_stun_duration", "self_cast_delay", "target_heal", "shard_damage_multiplier_tooltip", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "healing", "condition": "shard"}, {"mechanism": "stun", "condition": "base"}]}, {"subject": "snapfire_lil_shredder", "name_zh": "电炎绝手·霹雳铁手", "name_en": "Lil' Shredder", "description_zh": "电炎绝手开动蜥蜴坐骑上的加农炮，快速发动%buffed_attacks%次固定伤害加上自身攻击伤害一定百分比的攻击。每次攻击都将削弱敌人的护甲。在持续时间内提供攻击距离加成。", "description_en": "Snapfire heats up her mounted turret to rapidly fire %buffed_attacks% attacks dealing fixed damage plus a percentage of her attack damage. Each attack reduces the enemy's armor. Provides bonus attack range for the duration.", "notes_zh": ["持续时间内基础攻击间隔变为%base_attack_time%。", "霹雳铁手的攻击也有几率触发攻击特效。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "buffed_attacks", "damage_pct", "attack_speed_bonus", "attack_range_bonus", "buff_duration_tooltip", "base_attack_time", "armor_reduction_per_attack", "armor_duration", "extra_targets", "AbilityCastRange", "AbilityDuration", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "armor_reduction", "condition": "base"}]}, {"subject": "snapfire_spit_creep", "name_zh": "电炎绝手·喷吐", "name_en": "Spit Out", "description_zh": "小莫迪吐出他肚子里的单位，对大片区域造成冲击伤害和眩晕。留下的火痰根据蜥蜴绝吻的当前等级还将持续造成减速和伤害。喷吐没有最小发射距离。", "description_en": "Mortimer spits out the unit that's in his mouth, causing impact damage and stun in a large area. The glob leaves a pool of firespit based on the current level of Mortimer Kisses, that slows and applies damage over time. Spit Out has a no minimum launch range.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["projectile_speed", "projectile_width", "impact_radius", "projectile_vision", "burn_interval", "burn_damage", "move_slow_pct", "burn_ground_duration", "min_lob_travel_time", "max_lob_travel_time", "burn_linger_duration", "stun_duration", "min_height_above_lowest", "min_height_above_highest", "min_acceleration"], "judge": [{"mechanism": "aoe_damage", "condition": "scepter"}, {"mechanism": "slow", "condition": "scepter"}, {"mechanism": "stun", "condition": "scepter"}]}, {"subject": "snapfire_mortimer_kisses", "name_zh": "电炎绝手·蜥蜴绝吻", "name_en": "Mortimer Kisses", "description_zh": "电炎绝手的伙伴在%duration_tooltip%秒内喷吐出密集的火团。火团造成冲击伤害，在地面上产生炽烈的炎洼，可以使敌人减速并造成持续伤害。电炎绝手在持续时间内转身速率降低，并且具有最小喷吐距离，为%min_range%。点击右键可以选择火团的目标区域。", "description_en": "Snapfire's friend launches a barrage of firespit globs over %duration_tooltip% seconds. Globs cause impact damage and create pools of firespit, which slow and apply damage over time. Snapfire has a reduced turn rate for the duration and a minimum launch range of %min_range%. Each glob can be targeted with a right click.", "notes_zh": ["可以通过停止、停在原位或使用其他技能来终止。", "最短飞行时间为%min_lob_travel_time%秒，最长飞行时间为%max_lob_travel_time%秒。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["projectile_count", "has_bonus_projectile", "projectile_speed", "projectile_width", "impact_radius", "damage_per_impact", "duration_tooltip", "projectile_vision", "turn_rate", "burn_interval", "burn_damage", "move_slow_pct", "burn_ground_duration", "dist_change_speed", "min_range"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "flying", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "hoodwink_acorn_shot", "name_zh": "森海飞霞·爆栗出击", "name_en": "Acorn Shot", "description_zh": "森海飞霞向目标单位发射一颗橡栗，可以弹射至附近敌人，减缓他们的移动速度，并造成攻击伤害的一定百分比和额外伤害。\n可以对地面施放，在目标地点种出一棵树，而橡栗会弹射至附近目标。设为多样施法（右键点击技能栏图标）后会强制沿用该行为。", "description_en": "Fires Hoodwink's attack with an acorn at the target unit.  The acorn bounces to nearby targets, slowing them and dealing a percentage of Hoodwink's attack with bonus damage.\nIf point targeted, a tree is created at the target position and the acorn will bounce to nearby targets.  The ability may be placed on alt-cast to force this behavior.", "notes_zh": ["同一个目标可以被击中超过一次。", "弹射会搜寻525范围内战争迷雾中的单位，但无视隐身单位。", "种下的树持续20秒。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["bonus_range", "acorn_shot_damage", "base_damage_pct", "bounce_count", "bounce_range", "debuff_duration", "slow", "bounce_delay", "projectile_speed", "can_bounce_off_of_trees", "bounces_after_tree_bounce", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityManaCost"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "hoodwink_bushwhack", "name_zh": "森海飞霞·野地奇袭", "name_en": "Bushwhack", "description_zh": "扔出一张网，对区域内靠近树木的敌人造成眩晕。敌人会持续受到伤害并被拖拽到目标区域内最近的树上，并且眩晕期间视野降低至0。", "description_en": "Tosses a net trap that stuns enemies if they are near a tree in the area.  Affected enemies take damage over time and are pulled towards the tree nearest to them within the target area, and have their vision reduced to 0 for the duration of the stun.", "notes_zh": ["若树木被摧毁，被影响的单位将解除眩晕。", "野地奇袭不会击中隐身单位。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["trap_radius", "debuff_duration", "projectile_speed", "total_damage", "animation_rate", "visual_height", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "displace_other", "condition": "base"}, {"mechanism": "stun", "condition": "base"}, {"mechanism": "tree_destroy", "condition": "base"}]}, {"subject": "hoodwink_scurry", "name_zh": "森海飞霞·密林奔走", "name_en": "Scurry", "description_zh": "森海飞霞在短时间内获得移动速度加成，相位移动状态和穿行树木效果。开启时林渊旅人的转向几率为%evasion_multiplier%倍。", "description_en": "Hoodwink gains bonus movement speed, phased movement, and tree-walking for a brief time. While active, the redirect chance of Mistwoods Wayfarer is multiplied by %evasion_multiplier%.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["movement_speed_pct", "duration", "radius", "evasion_multiplier", "AbilityCastRange", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost"], "judge": [{"mechanism": "evasion", "condition": "base"}, {"mechanism": "phased", "condition": "base"}, {"mechanism": "tree_walk", "condition": "base"}]}, {"subject": "hoodwink_decoy", "name_zh": "森海飞霞·诱敌奇术", "name_en": "Decoy", "description_zh": "森海飞霞变为隐身，提升移动速度，并且产生一个引诱敌人的幻象，幻象会瞄准最近的敌方英雄开始蓄力准备发射伤害较低的一箭穿心。如果幻象被攻击或被指向性技能击中，幻象将被摧毁并且攻击者将受到较弱的野地奇袭效果。", "description_en": "Hoodwink turns invisible, increasing her movement speed, and creates a decoy illusion that starts aiming a decreased damage Sharpshooter at the nearest enemy hero. If the illusion is attacked or hit by a targeted ability, it is destroyed and it throws a lesser bushwhack towards the enemy.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["duration", "decoy_detonate_radius", "decoy_stun_duration", "images_do_damage_percent", "images_take_damage_percent", "projectile_speed", "movement_speed", "sharpshooter_damage_pct", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "illusions", "condition": "scepter"}, {"mechanism": "invisibility", "condition": "scepter"}]}, {"subject": "hoodwink_hunters_boomerang", "name_zh": "森海飞霞·猎手旋镖", "name_en": "Hunter's Boomerang", "description_zh": "掷出一把沿弧线飞行的回旋镖。击中后会飞回至森海飞霞。回旋镖对沿途击中的敌人都会造成伤害，并且施加一个负面效果，使受到作用的敌人被减速，承受的技能伤害增加。", "description_en": "Tosses a boomerang in an arc. Upon contact, it returns to Hoodwink.  The boomerang will deal damage as it passes through or hits enemies, and apply a debuff that causes affected enemies to be slowed and be more vulnerable to spell damage.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["speed", "radius", "damage", "mark_duration", "slow_pct", "spell_amp", "spread", "min_throw_duration", "max_throw_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "flying", "condition": "shard"}, {"mechanism": "slow", "condition": "shard"}]}, {"subject": "hoodwink_sharpshooter", "name_zh": "森海飞霞·一箭穿心", "name_en": "Sharpshooter", "description_zh": "森海飞霞装载她的弩机，射出致命的一箭，对一名敌方英雄造成高额伤害，并施加破坏和减速效果。伤害和负面状态持续时间随着装载时间增加，%max_charge_time%秒后达到最大效果，弩箭在%misfire_time%秒后自动发射。\n由于弩箭的威力，森海飞霞后退%recoil_distance%距离。弩箭穿过的非英雄单位会受到半额伤害。", "description_en": "Hoodwink charges up and fires a deadly bolt from her crossbow, dealing heavy damage, break and slow to an enemy Hero.  The damage and debuff duration scale up to max after %max_charge_time% seconds, and the bolt is fired automatically after %misfire_time% seconds.\nHoodwink is knocked backwards for a distance of %recoil_distance% from the force of the shot. Creeps hit by the bolt are damaged for half the values.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "提升箭矢速度和减速效果。", "en": "Increases arrow speed and movement speed slow."}}, "is_passive": false, "value_names": ["arrow_speed", "arrow_width", "arrow_range", "arrow_vision", "max_charge_time", "max_damage", "recoil_distance", "recoil_height", "recoil_duration", "max_slow_debuff_duration", "misfire_time", "slow_move_pct", "turn_rate", "turn_rate_tooltip", "vision_along_indicator"], "judge": [{"mechanism": "applies_break", "condition": "base"}, {"mechanism": "charges", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "dawnbreaker_fire_wreath", "name_zh": "破晓辰星·星破天惊", "name_en": "Starbreaker", "description_zh": "破晓辰星将她的战锤旋转3次，对敌人造成攻击伤害以及额外伤害。最后一次打击时，她将战锤击向地面，对她前方的敌人造成眩晕和伤害。", "description_en": "Dawnbreaker whirls her hammer around 3 times, damaging enemies with her attack plus bonus damage. On the final strike, she smashes her hammer down, stunning and damaging enemies in front of her.", "notes_zh": ["破晓辰星在技能持续时间内以%movement_speed%的移动速度行进，并且最后一击后需要%self_stun_duration%秒才能复原。", "连击期间无法施放上界重锤或天光现世。", "此技能不继承分裂效果。", "可以对自身施放来向前移动。", "前两次挥击会减少敌人%swipe_slow%%%移动速度，持续%sweep_stun_duration%秒。"], "granted_by": "", "upgrades": {"shard": {"zh": "破晓辰星在星破天惊期间获得减益免疫，%immunity_resist%%%魔法抗性加成和自由移动状态。破晓辰星会被减速%shard_movement_penalty%%%，移速最低为%movement_speed%。", "en": "Dawnbreaker gains debuff immunity with %immunity_resist%%% magic resistance and free movement during Starbreaker. Dawnbreaker is slowed by %shard_movement_penalty%%% down to a minimum of %movement_speed%."}}, "is_passive": false, "value_names": ["duration", "swipe_radius", "swipe_damage", "smash_radius", "smash_damage", "movement_speed", "total_attacks", "smash_stun_duration", "sweep_stun_duration", "self_stun_duration", "swipe_slow", "smash_distance_from_hero", "turn_rate", "shard_cast_point", "shard_movement_penalty"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "cleave", "condition": "base"}, {"mechanism": "debuff_immunity", "condition": "shard"}, {"mechanism": "slow", "condition": "base"}, {"mechanism": "slow", "condition": "shard"}, {"mechanism": "stun", "condition": "base"}]}, {"subject": "dawnbreaker_celestial_hammer", "name_zh": "破晓辰星·上界重锤", "name_en": "Celestial Hammer", "description_zh": "破晓辰星向一个目标扔出她的武器，对沿途的敌人造成伤害。战锤会在目的地停留%pause_duration%秒，再飞回她的手中，期间留下一道炽烈之径，减缓敌人的移动速度。破晓辰星可以随时召回战锤，将自身朝战锤牵引，使二者在中点相遇。", "description_en": "Dawnbreaker hurls her weapon at a target, damaging enemies struck along the way. The hammer pauses for %pause_duration% seconds at the destination before flying back to her, leaving a trail of fire that slows enemies. Dawnbreaker can recall the hammer at any time, pulling her towards it so they meet in the middle.", "notes_zh": ["战锤在飞出和飞回时都会对敌人造成伤害。", "破晓辰星的会合移动距离不会超过技能的施法距离。", "星破天惊无法在战锤脱手时施放。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["hammer_damage", "projectile_radius", "projectile_speed", "flare_debuff_duration", "flare_radius", "move_slow", "targets_allies", "burn_damage", "burn_interval", "pause_duration", "hammer_aoe_radius", "travel_speed_pct", "return_anim_distance_threshold", "range", "hammer_solar_guardian_radius"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "flying", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}]}
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "grimstroke_soul_chain",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被束缚的单位都将提供视野。",
+          "reason_zh": "基础技能使被束缚的单位提供视野。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "阻止他们远离彼此",
+          "reason_zh": "束缚阻止目标相互远离，符合限制位移。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将一名敌方英雄与束缚作用范围内最接近的队友相连",
+          "reason_zh": "技能连接并限制敌人，没有主动改变施法者自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "grimstroke_ink_trail",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得作用下英雄的视野。",
+          "reason_zh": "技能明确提供受影响英雄的视野。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_spear",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对击中的每个敌方单位造成伤害",
+          "reason_zh": "一次投矛可以伤害沿途多个敌方单位。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "留下一道火焰路径，持续造成伤害并减缓移动速度",
+          "reason_zh": "魔晶新增的火焰路径能对路径中的多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成眩晕还使其显形",
+          "reason_zh": "基础技能造成眩晕时会使隐身目标显形。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "留下一道火焰路径，持续造成伤害并减缓移动速度",
+          "reason_zh": "魔晶新增的火焰路径会降低敌人移动速度。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "目标将会被钉在上面，并受到眩晕",
+          "reason_zh": "战矛将目标钉住时施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_gods_rebuke",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "粉碎前方的敌人，将他们击退并且基于自身攻击力造成致命一击伤害",
+          "reason_zh": "一次施放能伤害前方多个敌人。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "神之谴戒的攻击也有几率触发攻击特效。",
+          "reason_zh": "触发其他攻击特效只是交互，而自身的暴击和攻击力提升不计为攻击特效。"
+        },
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "基于自身攻击力造成致命一击伤害",
+          "reason_zh": "技能攻击明确造成致命一击伤害。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将他们击退",
+          "reason_zh": "技能会击退敌人，属于位移他人。"
+        },
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "具有克敌机先效果。",
+          "reason_zh": "技能明确具有克敌机先。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "正文未说明减速效果，字段名不能单独证明减速。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_bulwark",
+      "judgments": [
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "开启后获得相位移动状态",
+          "reason_zh": "技能开启后明确赋予相位移动。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_dauntless",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "玛尔斯就会获得生命恢复",
+          "reason_zh": "技能提供生命恢复，符合治疗定义。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_arena_of_blood",
+      "judgments": [
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤出环绕着战士的竞技场，战士们将阻挡敌人的攻击和动向",
+          "reason_zh": "材料描述竞技场及边缘战士的阻挡和攻击效果，未支持召唤有血量的单位。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_aether_remnant",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "不再对非英雄单位触发，而是每秒在两道路径上造成%creep_damage_pct%%%伤害",
+          "reason_zh": "魔晶使两道路径持续伤害其中的非英雄单位，一次施放可伤害多个目标。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "当有目标进入其视线，残像会拉扯，并造成伤害。",
+          "reason_zh": "残像会拉扯目标，符合位移他人。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "残阴现在会提供真实视域",
+          "reason_zh": "魔晶明确赋予真实视域。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_dissimilate",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他对区域内所有敌人造成伤害",
+          "reason_zh": "一次穿出灵扉会伤害区域内所有敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_resonant_pulse",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "围绕自身发出一次伤害性脉冲",
+          "reason_zh": "一次脉冲能伤害自身周围多个敌人。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "共鸣脉冲可以沉默敌人，并获得%max_charges%点能量点数。",
+          "reason_zh": "A杖明确使技能获得施放充能。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "保护性护盾之中，可以吸收物理伤害",
+          "reason_zh": "基础技能提供吸收物理伤害的护盾。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "共鸣脉冲可以沉默敌人",
+          "reason_zh": "A杖新增对敌人的沉默效果。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_intrinsic_edge",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "从力量中获得的生命恢复、敏捷中获得的攻击速度和智力中获得的魔法恢复提升%secondary_stat_bonus_pct%%%",
+          "reason_zh": "技能增加自身从力量获得的生命恢复，属于属性生命恢复。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "智力中获得的魔法恢复提升%secondary_stat_bonus_pct%%%",
+          "reason_zh": "技能提高自身属性回蓝，符合回蓝及回蓝倍率的定义。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_astral_step",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对沿途的所有敌人造成伤害",
+          "reason_zh": "一次施放能伤害沿途多个敌人。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "太虚之径的攻击不会分裂。",
+          "reason_zh": "材料明确否定该攻击具有分裂效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成%pop_damage_delay%秒减速",
+          "reason_zh": "太虚印记明确使目标减速。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_scatterblast",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对锥形区域内的敌人造成伤害和减速",
+          "reason_zh": "一次施放能伤害锥形区域内多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对锥形区域内的敌人造成伤害和减速",
+          "reason_zh": "基础技能明确对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_firesnap_cookie",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "The hopping unit stuns and damages enemies in the landing zone.",
+          "reason_zh": "跳跃落地时会伤害落地区域内多个敌人。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "龙炎饼干变得更具威力，治疗目标",
+          "reason_zh": "魔晶新增治疗目标的效果。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "跳跃的单位将在落地时对敌人造成眩晕和伤害。",
+          "reason_zh": "基础技能使落地点的敌人受到眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_lil_shredder",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次攻击都将削弱敌人的护甲。",
+          "reason_zh": "技能攻击明确降低敌人的护甲。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_spit_creep",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "对大片区域造成冲击伤害和眩晕",
+          "reason_zh": "技能造成大范围伤害，且整个技能由A杖授予。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "留下的火痰根据蜥蜴绝吻的当前等级还将持续造成减速和伤害",
+          "reason_zh": "技能留下的火痰施加减速，且整个技能由A杖授予。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "对大片区域造成冲击伤害和眩晕",
+          "reason_zh": "技能明确造成眩晕，且整个技能由A杖授予。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_mortimer_kisses",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在地面上产生炽烈的炎洼，可以使敌人减速并造成持续伤害",
+          "reason_zh": "一次施放产生的炎洼可以伤害区域内多个敌人。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "最短飞行时间为%min_lob_travel_time%秒，最长飞行时间为%max_lob_travel_time%秒。",
+          "reason_zh": "这里的飞行属于火团弹道，没有赋予单位飞行移动。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以使敌人减速并造成持续伤害",
+          "reason_zh": "炎洼明确对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_acorn_shot",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以弹射至附近敌人，减缓他们的移动速度，并造成攻击伤害的一定百分比和额外伤害",
+          "reason_zh": "一次施放的橡栗能弹射并伤害多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓他们的移动速度",
+          "reason_zh": "橡栗命中会降低敌人移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_bushwhack",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对区域内靠近树木的敌人造成眩晕。敌人会持续受到伤害",
+          "reason_zh": "一次施放能使区域内多个符合条件的敌人持续受伤。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被拖拽到目标区域内最近的树上",
+          "reason_zh": "技能会拖拽敌人，符合位移他人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对区域内靠近树木的敌人造成眩晕",
+          "reason_zh": "技能明确对符合条件的敌人施加眩晕。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "若树木被摧毁，被影响的单位将解除眩晕。",
+          "reason_zh": "树木被摧毁只是解除眩晕的条件，没有说明技能自身能摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_scurry",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "开启时林渊旅人的转向几率为%evasion_multiplier%倍。",
+          "reason_zh": "提高另一技能的转向几率不等于本技能自身使敌方攻击概率落空。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得移动速度加成，相位移动状态和穿行树木效果",
+          "reason_zh": "技能明确赋予相位移动状态。"
+        },
+        {
+          "mechanism": "tree_walk",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "穿行树木效果",
+          "reason_zh": "技能明确允许穿过树木移动。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_decoy",
+      "judgments": [
+        {
+          "mechanism": "illusions",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "产生一个引诱敌人的幻象",
+          "reason_zh": "技能明确制造幻象，且整个技能由A杖授予。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "森海飞霞变为隐身",
+          "reason_zh": "技能使自身隐身，且整个技能由A杖授予。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_hunters_boomerang",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "回旋镖对沿途击中的敌人都会造成伤害",
+          "reason_zh": "一次投掷能伤害沿途多个敌人，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "掷出一把沿弧线飞行的回旋镖。",
+          "reason_zh": "飞行的是回旋镖，没有赋予单位飞行移动。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "使受到作用的敌人被减速",
+          "reason_zh": "技能明确使敌人减速，且整个技能由魔晶授予。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_sharpshooter",
+      "judgments": [
+        {
+          "mechanism": "applies_break",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并施加破坏和减速效果",
+          "reason_zh": "基础技能明确对目标施加破坏。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害和负面状态持续时间随着装载时间增加",
+          "reason_zh": "这里是蓄力影响伤害和持续时间，不是每次使用消耗一点的充能。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并施加破坏和减速效果",
+          "reason_zh": "基础技能已施加减速，A杖仅提高减速数值。"
+        }
+      ]
+    },
+    {
+      "subject": "dawnbreaker_fire_wreath",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将她的战锤旋转3次，对敌人造成攻击伤害以及额外伤害",
+          "reason_zh": "一次施放的战锤挥击能伤害多个敌人。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "此技能不继承分裂效果。",
+          "reason_zh": "技能的范围挥击不等于分裂，材料也明确说明不继承分裂。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "破晓辰星在星破天惊期间获得减益免疫",
+          "reason_zh": "魔晶新增技能期间的减益免疫。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "前两次挥击会减少敌人%swipe_slow%%%移动速度",
+          "reason_zh": "基础技能的前两次挥击会降低敌人移动速度。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "前两次挥击会减少敌人%swipe_slow%%%移动速度",
+          "reason_zh": "对敌减速属于基础效果，魔晶描述的自身减速是代价，不构成新增减速机制。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对她前方的敌人造成眩晕和伤害",
+          "reason_zh": "基础技能的最后一击会眩晕前方敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "dawnbreaker_celestial_hammer",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对沿途的敌人造成伤害",
+          "reason_zh": "一次投锤能伤害沿途多个敌人。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "再飞回她的手中",
+          "reason_zh": "材料描述战锤飞行及自身被牵引，没有赋予能越过地形的飞行移动。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "留下一道炽烈之径，减缓敌人的移动速度",
+          "reason_zh": "基础技能留下的路径会降低敌人移动速度。"
+        }
+      ]
+    }
+  ]
+}
+tokens used
+21,346
+{
+  "objects": [
+    {
+      "subject": "grimstroke_soul_chain",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被束缚的单位都将提供视野。",
+          "reason_zh": "基础技能使被束缚的单位提供视野。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "阻止他们远离彼此",
+          "reason_zh": "束缚阻止目标相互远离，符合限制位移。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将一名敌方英雄与束缚作用范围内最接近的队友相连",
+          "reason_zh": "技能连接并限制敌人，没有主动改变施法者自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "grimstroke_ink_trail",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得作用下英雄的视野。",
+          "reason_zh": "技能明确提供受影响英雄的视野。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_spear",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对击中的每个敌方单位造成伤害",
+          "reason_zh": "一次投矛可以伤害沿途多个敌方单位。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "留下一道火焰路径，持续造成伤害并减缓移动速度",
+          "reason_zh": "魔晶新增的火焰路径能对路径中的多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成眩晕还使其显形",
+          "reason_zh": "基础技能造成眩晕时会使隐身目标显形。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "留下一道火焰路径，持续造成伤害并减缓移动速度",
+          "reason_zh": "魔晶新增的火焰路径会降低敌人移动速度。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "目标将会被钉在上面，并受到眩晕",
+          "reason_zh": "战矛将目标钉住时施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_gods_rebuke",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "粉碎前方的敌人，将他们击退并且基于自身攻击力造成致命一击伤害",
+          "reason_zh": "一次施放能伤害前方多个敌人。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "神之谴戒的攻击也有几率触发攻击特效。",
+          "reason_zh": "触发其他攻击特效只是交互，而自身的暴击和攻击力提升不计为攻击特效。"
+        },
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "基于自身攻击力造成致命一击伤害",
+          "reason_zh": "技能攻击明确造成致命一击伤害。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将他们击退",
+          "reason_zh": "技能会击退敌人，属于位移他人。"
+        },
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "具有克敌机先效果。",
+          "reason_zh": "技能明确具有克敌机先。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "正文未说明减速效果，字段名不能单独证明减速。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_bulwark",
+      "judgments": [
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "开启后获得相位移动状态",
+          "reason_zh": "技能开启后明确赋予相位移动。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_dauntless",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "玛尔斯就会获得生命恢复",
+          "reason_zh": "技能提供生命恢复，符合治疗定义。"
+        }
+      ]
+    },
+    {
+      "subject": "mars_arena_of_blood",
+      "judgments": [
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤出环绕着战士的竞技场，战士们将阻挡敌人的攻击和动向",
+          "reason_zh": "材料描述竞技场及边缘战士的阻挡和攻击效果，未支持召唤有血量的单位。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_aether_remnant",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "不再对非英雄单位触发，而是每秒在两道路径上造成%creep_damage_pct%%%伤害",
+          "reason_zh": "魔晶使两道路径持续伤害其中的非英雄单位，一次施放可伤害多个目标。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "当有目标进入其视线，残像会拉扯，并造成伤害。",
+          "reason_zh": "残像会拉扯目标，符合位移他人。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "残阴现在会提供真实视域",
+          "reason_zh": "魔晶明确赋予真实视域。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_dissimilate",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他对区域内所有敌人造成伤害",
+          "reason_zh": "一次穿出灵扉会伤害区域内所有敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_resonant_pulse",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "围绕自身发出一次伤害性脉冲",
+          "reason_zh": "一次脉冲能伤害自身周围多个敌人。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "共鸣脉冲可以沉默敌人，并获得%max_charges%点能量点数。",
+          "reason_zh": "A杖明确使技能获得施放充能。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "保护性护盾之中，可以吸收物理伤害",
+          "reason_zh": "基础技能提供吸收物理伤害的护盾。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "共鸣脉冲可以沉默敌人",
+          "reason_zh": "A杖新增对敌人的沉默效果。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_intrinsic_edge",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "从力量中获得的生命恢复、敏捷中获得的攻击速度和智力中获得的魔法恢复提升%secondary_stat_bonus_pct%%%",
+          "reason_zh": "技能增加自身从力量获得的生命恢复，属于属性生命恢复。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "智力中获得的魔法恢复提升%secondary_stat_bonus_pct%%%",
+          "reason_zh": "技能提高自身属性回蓝，符合回蓝及回蓝倍率的定义。"
+        }
+      ]
+    },
+    {
+      "subject": "void_spirit_astral_step",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对沿途的所有敌人造成伤害",
+          "reason_zh": "一次施放能伤害沿途多个敌人。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "太虚之径的攻击不会分裂。",
+          "reason_zh": "材料明确否定该攻击具有分裂效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成%pop_damage_delay%秒减速",
+          "reason_zh": "太虚印记明确使目标减速。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_scatterblast",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对锥形区域内的敌人造成伤害和减速",
+          "reason_zh": "一次施放能伤害锥形区域内多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对锥形区域内的敌人造成伤害和减速",
+          "reason_zh": "基础技能明确对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_firesnap_cookie",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "The hopping unit stuns and damages enemies in the landing zone.",
+          "reason_zh": "跳跃落地时会伤害落地区域内多个敌人。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "龙炎饼干变得更具威力，治疗目标",
+          "reason_zh": "魔晶新增治疗目标的效果。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "跳跃的单位将在落地时对敌人造成眩晕和伤害。",
+          "reason_zh": "基础技能使落地点的敌人受到眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_lil_shredder",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次攻击都将削弱敌人的护甲。",
+          "reason_zh": "技能攻击明确降低敌人的护甲。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_spit_creep",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "对大片区域造成冲击伤害和眩晕",
+          "reason_zh": "技能造成大范围伤害，且整个技能由A杖授予。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "留下的火痰根据蜥蜴绝吻的当前等级还将持续造成减速和伤害",
+          "reason_zh": "技能留下的火痰施加减速，且整个技能由A杖授予。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "对大片区域造成冲击伤害和眩晕",
+          "reason_zh": "技能明确造成眩晕，且整个技能由A杖授予。"
+        }
+      ]
+    },
+    {
+      "subject": "snapfire_mortimer_kisses",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在地面上产生炽烈的炎洼，可以使敌人减速并造成持续伤害",
+          "reason_zh": "一次施放产生的炎洼可以伤害区域内多个敌人。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "最短飞行时间为%min_lob_travel_time%秒，最长飞行时间为%max_lob_travel_time%秒。",
+          "reason_zh": "这里的飞行属于火团弹道，没有赋予单位飞行移动。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以使敌人减速并造成持续伤害",
+          "reason_zh": "炎洼明确对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_acorn_shot",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以弹射至附近敌人，减缓他们的移动速度，并造成攻击伤害的一定百分比和额外伤害",
+          "reason_zh": "一次施放的橡栗能弹射并伤害多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓他们的移动速度",
+          "reason_zh": "橡栗命中会降低敌人移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_bushwhack",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对区域内靠近树木的敌人造成眩晕。敌人会持续受到伤害",
+          "reason_zh": "一次施放能使区域内多个符合条件的敌人持续受伤。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被拖拽到目标区域内最近的树上",
+          "reason_zh": "技能会拖拽敌人，符合位移他人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对区域内靠近树木的敌人造成眩晕",
+          "reason_zh": "技能明确对符合条件的敌人施加眩晕。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "若树木被摧毁，被影响的单位将解除眩晕。",
+          "reason_zh": "树木被摧毁只是解除眩晕的条件，没有说明技能自身能摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_scurry",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "开启时林渊旅人的转向几率为%evasion_multiplier%倍。",
+          "reason_zh": "提高另一技能的转向几率不等于本技能自身使敌方攻击概率落空。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得移动速度加成，相位移动状态和穿行树木效果",
+          "reason_zh": "技能明确赋予相位移动状态。"
+        },
+        {
+          "mechanism": "tree_walk",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "穿行树木效果",
+          "reason_zh": "技能明确允许穿过树木移动。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_decoy",
+      "judgments": [
+        {
+          "mechanism": "illusions",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "产生一个引诱敌人的幻象",
+          "reason_zh": "技能明确制造幻象，且整个技能由A杖授予。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "森海飞霞变为隐身",
+          "reason_zh": "技能使自身隐身，且整个技能由A杖授予。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_hunters_boomerang",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "回旋镖对沿途击中的敌人都会造成伤害",
+          "reason_zh": "一次投掷能伤害沿途多个敌人，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "掷出一把沿弧线飞行的回旋镖。",
+          "reason_zh": "飞行的是回旋镖，没有赋予单位飞行移动。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "使受到作用的敌人被减速",
+          "reason_zh": "技能明确使敌人减速，且整个技能由魔晶授予。"
+        }
+      ]
+    },
+    {
+      "subject": "hoodwink_sharpshooter",
+      "judgments": [
+        {
+          "mechanism": "applies_break",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并施加破坏和减速效果",
+          "reason_zh": "基础技能明确对目标施加破坏。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害和负面状态持续时间随着装载时间增加",
+          "reason_zh": "这里是蓄力影响伤害和持续时间，不是每次使用消耗一点的充能。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并施加破坏和减速效果",
+          "reason_zh": "基础技能已施加减速，A杖仅提高减速数值。"
+        }
+      ]
+    },
+    {
+      "subject": "dawnbreaker_fire_wreath",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将她的战锤旋转3次，对敌人造成攻击伤害以及额外伤害",
+          "reason_zh": "一次施放的战锤挥击能伤害多个敌人。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "此技能不继承分裂效果。",
+          "reason_zh": "技能的范围挥击不等于分裂，材料也明确说明不继承分裂。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "破晓辰星在星破天惊期间获得减益免疫",
+          "reason_zh": "魔晶新增技能期间的减益免疫。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "前两次挥击会减少敌人%swipe_slow%%%移动速度",
+          "reason_zh": "基础技能的前两次挥击会降低敌人移动速度。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "前两次挥击会减少敌人%swipe_slow%%%移动速度",
+          "reason_zh": "对敌减速属于基础效果，魔晶描述的自身减速是代价，不构成新增减速机制。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对她前方的敌人造成眩晕和伤害",
+          "reason_zh": "基础技能的最后一击会眩晕前方敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "dawnbreaker_celestial_hammer",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对沿途的敌人造成伤害",
+          "reason_zh": "一次投锤能伤害沿途多个敌人。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "再飞回她的手中",
+          "reason_zh": "材料描述战锤飞行及自身被牵引，没有赋予能越过地形的飞行移动。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "留下一道炽烈之径，减缓敌人的移动速度",
+          "reason_zh": "基础技能留下的路径会降低敌人移动速度。"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,380 @@
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a5b2-f87e-7c62-a70e-e0e36ae66c93
+--------
+user
+你在独立阅读Dota 2技能和装备的说明，判断每个对象具备词表里的哪些机制。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+要求：
+- 每个对象都要输出一条，`subject`原样返回。没有任何机制时`mechanisms`为空数组。
+- 逐个对象读完整说明，对照词表全部条目判断，不要只找明显的。说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 词表定义已经用户确认，必须遵守。另外：
+  - 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。
+  - 提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+  - 召唤物只算有血量的单位；按受攻击次数计算的不算。
+  - 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+  - 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `condition`：基础效果写`base`，只在有A杖时生效写`scepter`，只在有魔晶时写`shard`，装备写`item`。`granted_by`不为空的对象，整个技能按该升级记。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字（如“+ 35% Evasion”），可以当证据。`%xxx%`是数值占位符。
+- `quote`摘决定判断的原文片段；`uncertain`为true表示材料不足或需要游戏知识，不要猜。
+
+词表：
+[
+{
+"id": "stun",
+"zh": "眩晕",
+"definition": "使目标无法行动和施法的硬控（含小眩晕）"
+},
+{
+"id": "hex",
+"zh": "妖术",
+"definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品"
+},
+{
+"id": "silence",
+"zh": "沉默",
+"definition": "目标无法施放技能（仍可攻击、使用物品）"
+},
+{
+"id": "mute",
+"zh": "禁用物品",
+"definition": "目标无法使用物品"
+},
+{
+"id": "disarm",
+"zh": "缴械",
+"definition": "目标无法普通攻击"
+},
+{
+"id": "root",
+"zh": "定身",
+"definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"
+},
+{
+"id": "forced_action",
+"zh": "强制行为",
+"definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"
+},
+{
+"id": "sleep",
+"zh": "睡眠",
+"definition": "无法行动，受伤害后醒来"
+},
+{
+"id": "cyclone_banish",
+"zh": "吹风/放逐",
+"definition": "使目标短暂离开战场，期间无敌或不可被选取"
+},
+{
+"id": "slow",
+"zh": "减速",
+"definition": "降低移动速度或攻击速度"
+},
+{
+"id": "evasion",
+"zh": "闪避",
+"definition": "自身有概率使敌方攻击落空"
+},
+{
+"id": "blind",
+"zh": "致盲",
+"definition": "使敌方单位的攻击有概率落空"
+},
+{
+"id": "debuff_immunity",
+"zh": "减益免疫/技能免疫",
+"definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"
+},
+{
+"id": "pierces_debuff_immunity",
+"zh": "穿透减益免疫",
+"definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）"
+},
+{
+"id": "invulnerable_untargetable",
+"zh": "无敌/不可选取",
+"definition": "暂时无法被伤害或无法被指向"
+},
+{
+"id": "damage_block",
+"zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"
+},
+{
+"id": "death_prevention",
+"zh": "免死",
+"definition": "在一段时间内不会被打死（如薄葬、回光返照）"
+},
+{
+"id": "status_resistance",
+"zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"
+},
+{
+"id": "slow_resistance",
+"zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）"
+},
+{
+"id": "applies_basic_dispel",
+"zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果"
+},
+{
+"id": "applies_strong_dispel",
+"zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）"
+},
+{
+"id": "applies_break",
+"zh": "施加破坏",
+"definition": "使目标的被动技能暂时失效"
+},
+{
+"id": "invisibility",
+"zh": "隐身",
+"definition": "使自身、队友、召唤物或复制体隐身"
+},
+{
+"id": "true_sight",
+"zh": "真视",
+"definition": "可看见隐身单位"
+},
+{
+"id": "healing",
+"zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）"
+},
+{
+"id": "lifesteal",
+"zh": "吸血",
+"definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"
+},
+{
+"id": "heal_reduction",
+"zh": "治疗削减",
+"definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"
+},
+{
+"id": "mana_burn",
+"zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值"
+},
+{
+"id": "mana_gain",
+"zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"
+},
+{
+"id": "illusions",
+"zh": "幻象",
+"definition": "制造自身或他人的幻象"
+},
+{
+"id": "summons",
+"zh": "召唤物",
+"definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"
+},
+{
+"id": "self_mobility",
+"zh": "自身位移",
+"definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"
+},
+{
+"id": "displace_other",
+"zh": "位移他人",
+"definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"
+},
+{
+"id": "damage_return",
+"zh": "反伤",
+"definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件"
+},
+{
+"id": "bash",
+"zh": "重击",
+"definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算"
+},
+{
+"id": "pierce_evasion",
+"zh": "克敌机先",
+"definition": "攻击无视闪避（必中）"
+},
+{
+"id": "critical",
+"zh": "暴击",
+"definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"
+},
+{
+"id": "ethereal",
+"zh": "虚无",
+"definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"
+},
+{
+"id": "armor_reduction",
+"zh": "减护甲",
+"definition": "降低目标护甲"
+},
+{
+"id": "magic_resist_reduction",
+"zh": "减魔抗/魔法易伤",
+"definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"
+},
+{
+"id": "incoming_damage_amp",
+"zh": "伤害加深",
+"definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）"
+},
+{
+"id": "attack_damage_reduction",
+"zh": "减攻击力",
+"definition": "降低目标的攻击力"
+},
+{
+"id": "spell_block",
+"zh": "格挡指向技能",
+"definition": "使指向自身或队友的技能失效"
+},
+{
+"id": "spell_reflect",
+"zh": "反弹指向技能",
+"definition": "把指向技能反弹给施法者"
+},
+{
+"id": "projectile_dodge",
+"zh": "躲避弹道",
+"definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"
+},
+{
+"id": "channel_interrupt",
+"zh": "打断持续施法",
+"definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"
+},
+{
+"id": "mobility_lock",
+"zh": "限制位移",
+"definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"
+},
+{
+"id": "cleave",
+"zh": "分裂溅射",
+"definition": "攻击伤害波及周围单位"
+},
+{
+"id": "attack_modifier",
+"zh": "攻击特效",
+"definition": "给攻击附加效果的法球类技能"
+},
+{
+"id": "spell_amp",
+"zh": "法术放大",
+"definition": "提高技能造成的伤害"
+},
+{
+"id": "aura",
+"zh": "光环",
+"definition": "持续影响周围单位；对友军或敌方都算，并记作用对象"
+},
+{
+"id": "reveal",
+"zh": "显形",
+"definition": "使隐身单位显形，不等于持续真视"
+},
+{
+"id": "grant_vision",
+"zh": "提供视野",
+"definition": "提供目标或区域的视野"
+},
+{
+"id": "reduce_vision",
+"zh": "减视野",
+"definition": "降低目标的视野"
+},
+{
+"id": "phased",
+"zh": "相位移动",
+"definition": "移动不受单位碰撞阻挡"
+},
+{
+"id": "flying",
+"zh": "飞行",
+"definition": "飞行移动，能越过地形"
+},
+{
+"id": "tree_walk",
+"zh": "穿树",
+"definition": "能穿过树木移动"
+},
+{
+"id": "tree_destroy",
+"zh": "砍树",
+"definition": "能摧毁树木"
+},
+{
+"id": "respawn",
+"zh": "重生",
+"definition": "死亡后复活，或影响复活"
+},
+{
+"id": "execute",
+"zh": "斩杀",
+"definition": "目标低于生命阈值时直接杀死"
+},
+{
+"id": "hp_removal",
+"zh": "生命移除",
+"definition": "直接移除生命，不算伤害"
+},
+{
+"id": "spell_steal",
+"zh": "偷技能",
+"definition": "获得其他单位的技能"
+},
+{
+"id": "stat_steal",
+"zh": "偷属性",
+"definition": "夺取目标的属性"
+},
+{
+"id": "cooldown_reduction",
+"zh": "减冷却",
+"definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"
+},
+{
+"id": "cooldown_reset",
+"zh": "刷新冷却",
+"definition": "立刻重置冷却"
+},
+{
+"id": "economy",
+"zh": "经济经验",
+"definition": "提供额外金钱或经验；只是正常赏金不算"
+},
+{
+"id": "charges",
+"zh": "充能",
+"definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"
+},
+{
+"id": "aoe_damage",
+"zh": "范围伤害",
+"definition": "一次施放或一次攻击能对多个敌方单位造成伤害"
+}
+]
+
+待判断对象：
+[{"subject": "crystal_maiden_freezing_field", "name_zh": "水晶室女·极寒领域", "name_en": "Freezing Field", "description_zh": "持续施法 - 以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害。持续%abilitychanneltime%秒。", "description_en": "CHANNELED - Surrounds Crystal Maiden with %num_explosions% random icy explosions that slow enemies and deal massive damage. Lasts %abilitychanneltime% seconds.", "notes_zh": ["减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害（效果持续%slow_duration%秒）。", "每%explosion_interval_tooltip%秒产生一次爆炸。"], "granted_by": "", "upgrades": {"scepter": {"zh": "使自身在极寒领域期间可以移动、施法和攻击。仍然可以被敌人打断。在此期间移动速度降低%shard_self_movement_speed_slow_pct%%%。冰爆总数提升%shard_bonus_explosion%%%。对极寒领域内停留超过%frostbite_delay%秒的所有单位都会施加冰封禁制。", "en": "Allows you to move, cast and attack during Freezing Field. Can still be interrupted by enemies. You move %shard_self_movement_speed_slow_pct%%% slower during this. Increases total number of explosions by %shard_bonus_explosion%%%. Applies Frostbite to any unit that has been standing in the Freezing Field for over %frostbite_delay%s."}}, "is_passive": false, "value_names": ["radius", "explosion_radius", "explosion_interval_tooltip", "num_explosions", "movespeed_slow", "attack_slow", "slow_duration", "explosion_min_dist", "explosion_max_dist", "damage", "frostbite_delay", "shard_bonus_explosion", "shard_self_movement_speed_slow_pct", "can_move", "AbilityChannelTime"]}, {"subject": "drow_ranger_frost_arrows", "name_zh": "卓尔游侠·霜冻之箭", "name_en": "Frost Arrows", "description_zh": "卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害。持续%abilityduration%秒。", "description_en": "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.  Slow lasts %abilityduration% seconds.", "notes_zh": ["减速的持续时间在下一支冰箭射中后刷新。"], "granted_by": "", "upgrades": {"scepter": {"zh": "霜冻之箭现在对敌人施加低温的叠加效果，提升霜冻之箭的伤害，并且每层叠加效果都会降低生命回复。若敌人在低温效果下阵亡，他们将会爆炸，对范围内的敌人造成伤害和减速。", "en": "Frost Arrows now apply a Hypothermia stack to enemies, increasing damage from Frost Arrows and reducing their Health Restoration per stack. If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it."}}, "is_passive": false, "value_names": ["frost_arrows_movement_speed", "damage", "shard_regen_reduction_pct_per_stack", "shard_bonus_damage_per_stack", "shard_stack_duration", "shard_burst_radius", "shard_burst_damage_per_stack", "shard_burst_move_slow_pct", "shard_burst_slow_duration", "shard_max_stacks", "AbilityCastRange", "AbilityDuration", "AbilityManaCost"]}, {"subject": "drow_ranger_wave_of_silence", "name_zh": "卓尔游侠·狂风", "name_en": "Gust", "description_zh": "释放一阵狂风，沉默敌方单位并将其击退，同时使隐身敌人显形。击退距离与敌人和卓尔游侠的距离成反比。", "description_en": "Releases a wave that silences and knocks back and reveals invisible enemy units. Knockback distance is relative to how close they are to Drow.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["wave_speed", "wave_width", "silence_duration", "knockback_distance_max", "knockback_duration", "knockback_duration_min", "wave_length", "bonus_movespeed", "gust_reveals_invis", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "drow_ranger_multishot", "name_zh": "卓尔游侠·数箭齐发", "name_en": "Multishot", "description_zh": "持续施法 - 卓尔游侠在最多%abilitychanneltime%秒内不断地射出阵阵箭矢，对卓尔游侠攻击距离 + %arrow_range_base%的距离内击中的敌人造成额外伤害，并施加霜冻之箭效果。卓尔游侠在施放数箭齐发时可以缓慢移动和使用物品。", "description_en": "CHANNELED - Drow releases a flurry of arrows in continuous salvos, hitting enemies for extra damage and applying Frost Arrows with a range of Drow's Attack Range + %arrow_range_base%. Lasts up to %abilitychanneltime% seconds.Drow can move slowly and use items while casting Multishot.", "notes_zh": ["箭矢的基础伤害无视减益免疫。", "霜冻之箭的额外伤害和减速效果不无视减益免疫。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["wave_count", "arrow_count_per_wave", "arrow_damage_pct", "arrow_width", "arrow_speed", "arrow_range_multiplier", "arrow_range_base", "arrow_angle", "bypass_block", "multishot_movespeed", "AbilityChannelTime", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "drow_ranger_glacier", "name_zh": "卓尔游侠·冰川", "name_en": "Glacier", "description_zh": "卓尔游侠在她脚下创造一片冰山，击退附近的敌人。站在山上的单位会获得飞行视野，而卓尔游侠和她的远程友军会获得攻击距离加成。卓尔游侠站在山上时攻击下方目标时获得额外伤害。山的前面会阻挡视野，并且除了卓尔游侠外无法穿行。施放时不会打断数箭齐发。", "description_en": "Drow creates a hill of ice beneath her, knocking away nearby enemies. Units on the hill gain flying vision and Drow and her ranged allies gain bonus attack range. Drow gains additional damage while on the Glacier and attacking targets below her.The front of the hill obscures vision and cannot be moved through except by Drow. Does not interrupt Multishot when cast.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["shard_width", "shard_count", "shard_speed", "shard_duration", "shard_angle_step", "shard_distance", "end_height", "hilltop_offset", "ramp_radius", "attack_range_bonus", "knockback_duration", "knockback_distance", "knockback_height", "z_speed_override", "damage_bonus"]}, {"subject": "drow_ranger_trueshot", "name_zh": "卓尔游侠·精准光环", "name_en": "Precision Aura", "description_zh": "卓尔游侠根据她自身的当前敏捷和英雄等级获得敏捷加成。附近远程英雄获得%trueshot_agi_bonus_allies_pct%%%敏捷加成。", "description_en": "Grants Drow bonus agility based on Drow's current agility and level. Nearby ranged heroes received %trueshot_agi_bonus_allies_pct%%% of the bonus agility.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["radius", "trueshot_agi_bonus", "trueshot_agi_bonus_allies_pct"]}, {"subject": "drow_ranger_marksmanship", "name_zh": "卓尔游侠·射手天赋", "name_en": "Marksmanship", "description_zh": "卓尔游侠的战斗经验使她有概率发出极其精准高效的箭矢。箭矢将穿透敌人的防御，无视他们的基础护甲。如果%disable_range%范围内有敌方英雄，本技能没有效果。", "description_en": "Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, ignoring their base armor. This ability is disabled if there is an enemy hero within %disable_range% range.", "notes_zh": ["射手天赋的触发效果拥有克敌机先。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["chance", "bonus_damage", "disable_range"]}, {"subject": "earthshaker_fissure", "name_zh": "撼地者·沟壑", "name_en": "Fissure", "description_zh": "用威武的图腾猛击地面，沿直线裂开地面，制造一条无法通过的岩脊，对沿途的敌方单位造成眩晕和伤害。", "description_en": "Slams the ground with a mighty totem, creating an impassable ridge of stone while stunning and damaging enemy units along its line.", "notes_zh": ["小兵将会等待沟壑消失，不会去尝试绕开它。", "沟壑不会被林肯法球抵挡。"], "granted_by": "", "upgrades": {"shard": {"zh": "降低沟壑的冷却时间，并且撼地者每次施放其他技能时都会沿着沟壑释放余震，造成眩晕的时间有所降低。", "en": "Reduces Fissure cooldown and releases an Aftershock along its path that stuns for a shortened duration when Earthshaker casts another ability."}}, "is_passive": false, "value_names": ["fissure_duration", "fissure_radius", "stun_duration", "fissure_damage", "shard_aftershock_stun_duration_pct", "free_pathing_linger_duration", "fissure_max_distance_moved", "echoes_radius", "echoes_damage_multiplier", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "earthshaker_enchant_totem", "name_zh": "撼地者·强化图腾", "name_en": "Enchant Totem", "description_zh": "强化撼地者的图腾，使下次攻击拥有额外攻击力和%bonus_attack_range%攻击距离加成。", "description_en": "Empowers Earthshaker's totem, causing it to deal extra damage and have %bonus_attack_range% bonus attack range on the next attack.", "notes_zh": ["攻击力加成是基于基础攻击力和主属性数值。"], "granted_by": "", "upgrades": {"scepter": {"zh": "强化图腾可以对地施放，施放后会跳至半空中再降落至目标地点，在目标地点施放强化图腾。双击技能会按原技能施放，不会跳跃。强化图腾拥有分裂效果。", "en": "Enchant Totem becomes a ground target ability, causing Earthshaker to jump in the air and land at the target spot, casting Enchant Totem there.  Self-casting the ability will behave in the original form, without jumping. Grants Enchant Totem a cleaving attack."}}, "is_passive": false, "value_names": ["totem_damage_percentage", "distance_scepter", "scepter_height", "scepter_height_arcbuffer", "scepter_acceleration_z", "scepter_acceleration_horizontal", "scepter_leap_duration", "scepter_cleave_pct", "scepter_cleave_starting_width", "scepter_cleave_ending_width", "scepter_cleave_distance", "bonus_attack_range", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost"]}, {"subject": "earthshaker_aftershock", "name_zh": "撼地者·余震", "name_en": "Aftershock", "description_zh": "撼地者施放技能时会引起脚下的大地震动，眩晕附近的敌方单位并造成额外伤害。", "description_en": "Causes the earth to shake underfoot, adding additional damage and stuns to nearby enemy units when Earthshaker casts his abilities.", "notes_zh": ["使用物品不会触发余震。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["aftershock_range", "aftershock_damage", "AbilityDuration"]}, {"subject": "earthshaker_echo_slam", "name_zh": "撼地者·回音击", "name_en": "Echo Slam", "description_zh": "穿过地面的冲击波，伤害敌方单位。每个受到攻击的敌人都会引起伤害附近单位的反射波。英雄本体将引起两次反射。", "description_en": "Shockwaves travel through the ground, damaging enemy units.  Each enemy hit causes an echo to damage nearby units. Real heroes cause two echoes.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["echo_slam_damage_range", "echo_slam_echo_search_range", "echo_slam_echo_range", "echo_slam_echo_damage", "echo_slam_initial_damage", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "earthshaker_slugger", "name_zh": "撼地者·强击图腾", "name_en": "Slugger", "description_zh": "利用强化图腾的攻击或撼地者的其他技能击杀敌人后都会把尸体击飞，对击中的敌人造成伤害。", "description_en": "Enemies killed with Enchant Totem or Earthshaker's other abilities are sent flying, dealing damage to enemies they hit.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["projectile_body_on_kill", "projectile_body_initial_impact_radius", "projectile_body_speed", "projectile_body_distance", "projectile_body_width_creep", "projectile_body_width_hero", "projectile_body_vision", "projectile_body_damage_creep", "projectile_body_damage_hero", "projectile_body_damage_additional_percent_health"]}, {"subject": "juggernaut_blade_fury", "name_zh": "主宰·剑刃风暴", "name_en": "Blade Fury", "description_zh": "舞起具有破坏性力量的剑刃风暴，使主宰获得减益免疫状态，魔法抗性提升%immunity_resist%%%，并且每%blade_fury_damage_tick%秒对主宰周围的敌方单位造成伤害。旋转结束时施加强驱散效果。", "description_en": "Causes a bladestorm of destructive force around Juggernaut, rendering him debuff immune with %immunity_resist%%% magic resistance and dealing damage every %blade_fury_damage_tick%s to nearby enemy units. Applies a strong dispel at the end of the spin.", "notes_zh": ["剑刃风暴期间可以使用物品。", "主宰在施放剑刃风暴的过程中依然可以进行物理攻击。但是只有不受剑刃风暴伤害的单位，如守卫和建筑才会受到这些物理伤害。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["blade_fury_damage", "blade_fury_damage_tick", "blade_fury_radius", "duration", "bonus_movespeed", "immunity_resist", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "juggernaut_healing_ward", "name_zh": "主宰·治疗守卫", "name_en": "Healing Ward", "description_zh": "召唤一个治疗守卫，按周围友军单位最大生命值的一定比例治疗他们。治疗守卫可以移动，移动速度为%healing_ward_movespeed_tooltip%。持续%abilityduration%秒。", "description_en": "Summons a Healing Ward which heals all nearby allied units, based on their max health.  The Healing Ward moves at %healing_ward_movespeed_tooltip% movement speed after being summoned.  Lasts %abilityduration% seconds.", "notes_zh": ["可以控制治疗守卫。", "多个治疗守卫的效果不会叠加。"], "granted_by": "", "upgrades": {"shard": {"zh": "提升守卫的治疗量和生命值。", "en": "Increases ward healing and health."}}, "is_passive": false, "value_names": ["healing_ward_heal_amount", "healing_ward_aura_radius", "healing_ward_movespeed_tooltip", "healing_ward_bonus_health", "healing_ward_hits_to_kill_tooltip", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "juggernaut_blade_dance", "name_zh": "主宰·剑舞", "name_en": "Blade Dance", "description_zh": "主宰有一定概率在攻击时触发致命一击。", "description_en": "Gives Juggernaut a chance to deal critical damage with Blade Fury and on each attack.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["blade_dance_crit_chance", "blade_dance_crit_mult", "blade_dance_lifesteal"]}, {"subject": "juggernaut_swift_slash", "name_zh": "主宰·迅风斩", "name_en": "Swiftslash", "description_zh": "发动一次短时间的无敌斩，持续%duration%秒。", "description_en": "Performs a short Omnislash for %duration% seconds.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "juggernaut_bladeform", "name_zh": "主宰·剑心犹在", "name_en": "Bladeform", "description_zh": "主宰未受到伤害时每%stack_gain_time%秒获得一层剑心的叠加层数。每层叠加效果提供基础敏捷和移动速度加成。叠加效果在受到任何伤害时会粘滞%linger_duration%秒后再消失。", "description_en": "Juggernaut gains a stack of Bladeform every %stack_gain_time%s that Juggernaut does not take damage. Each stack grants bonus base Agility and Movement Speed. Stacks fade after %linger_duration%s upon taking any damage.", "notes_zh": ["破坏会使技能无法获得新的叠加效果。", "破坏不会使现有叠加效果提供的加成失效。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["max_stacks", "stack_gain_time", "agi_bonus_pct_per_stack", "movement_speed_pct_per_stack", "linger_duration"]}, {"subject": "juggernaut_omni_slash", "name_zh": "主宰·无敌斩", "name_en": "Omnislash", "description_zh": "主宰挥剑跃向敌方目标单位，随后再以更短的攻击频率斩击该单位和附近的其它敌方单位。主宰在无敌斩期间无敌。\n\n驱散类型：弱驱散", "description_en": "Juggernaut leaps towards the target enemy units, and then slashes the target and other nearby enemy units at an increased attack rate. Juggernaut is invulnerable for the duration.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["无敌斩期间可以使用物品。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["attack_rate_multiplier", "bonus_damage", "bonus_attack_speed", "duration", "omni_slash_radius", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "mirana_starfall", "name_zh": "米拉娜·群星风暴", "name_en": "Starstorm", "description_zh": "召唤一波流星砸向附近的敌方单位。%starfall_secondary_radius%范围内最近的敌方单位将会再受到一次冲击。", "description_en": "Calls down a wave of meteors to damage nearby enemy units. The closest enemy unit to Mirana in a %starfall_secondary_radius% radius will be struck a second time.", "notes_zh": ["群星风暴不会被林肯法球抵挡。", "群星风暴不能伤害隐身单位。", "如果原本要打击的目标死亡，群星风暴的第二次星落会重新选择一个目标。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "secondary_starfall_damage_percent", "starfall_radius", "starfall_secondary_radius", "secondary_targets", "starstruck_blind_pct", "starstruck_duration", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "mirana_arrow", "name_zh": "米拉娜·月神之箭", "name_en": "Sacred Arrow", "description_zh": "射出一支绝对精准的箭矢，对第一个击中的敌人造成伤害并眩晕目标。目标距离越远，眩晕时间越长，最短%arrow_min_stun%秒，最长可达%arrow_max_stun%秒。根据箭矢飞行的距离还将对目标额外造成最多%arrow_bonus_damage%点伤害。若击中的是非远古的普通单位，将直接秒杀。", "description_en": "Fires a long-range arrow with deadly precision, which stuns and damages the first enemy unit it strikes. The stun duration ranges from %arrow_min_stun% to %arrow_max_stun% seconds, with bonus damage up to %arrow_bonus_damage% added, based on the distance the arrow travels to its target. Instantly kills the first non-ancient creep it hits.", "notes_zh": ["神箭每飞行150码，中箭后眩晕的持续时间将提高0.5秒，额外伤害增加14点。", "月神之箭可以射中隐身单位。", "流星赶月不会对阿哈利姆神杖升级群星风暴的第二次流星生效。"], "granted_by": "", "upgrades": {"scepter": {"zh": "月神之箭在主神箭行进途中对敌人释放群星风暴。对击中的单位施放第二个群星风暴，造成的伤害有所降低。", "en": "Causes Sacred Arrow to release a Starstorm on enemies along the travel path of the primary arrow, releasing a second Starstorm that deals less damage to the impacted unit."}}, "is_passive": false, "value_names": ["arrow_speed", "arrow_width", "arrow_range", "arrow_max_stunrange", "arrow_min_stun", "arrow_max_stun", "arrow_bonus_damage", "arrow_vision", "scepter_radius", "scepter_starstorm_target_pct", "extra_arrows", "extra_arrows_angle", "AbilityDamage", "AbilityCastRange", "AbilityDuration"]}, {"subject": "mirana_leap", "name_zh": "米拉娜·跳跃", "name_en": "Leap", "description_zh": "米拉娜的坐骑向前跳跃加入战斗，发出一声凶狠的咆哮鼓舞它的主人，提升攻击和移动速度。速度加成持续%leap_bonus_duration%秒。", "description_en": "Mirana leaps forward into battle, empowering herself with a ferocious roar that grants bonus attack and movement speed. Speed bonus lasts %leap_bonus_duration% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "获得+%additional_charges%跳跃能量点数。", "en": "Grants +%additional_charges% Leap charge."}}, "is_passive": false, "value_names": ["leap_distance", "leap_speed", "leap_acceleration", "leap_speedbonus", "leap_speedbonus_as", "leap_bonus_duration", "additional_charges", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost"]}, {"subject": "mirana_celestial_quiver", "name_zh": "米拉娜·天界箭袋", "name_en": "Celestial Quiver", "description_zh": "有可用能量时，米拉娜的下次攻击会造成额外魔法伤害。", "description_en": "When a charge is available, Mirana's next attack will deal bonus magic damage.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "跳跃的加成状态生效时获得%quiver_restore%点临时能量。", "en": "Grants %quiver_restore% temporary Charges while Leap's buff is active."}}, "is_passive": false, "value_names": ["bonus_damage", "quiver_restore", "AbilityCastRange", "AbilityCharges", "AbilityChargeRestoreTime"]}, {"subject": "mirana_invis", "name_zh": "米拉娜·月之暗面", "name_en": "Moonlight Shadow", "description_zh": "让米拉娜和所有己方英雄进入隐身状态。米拉娜在持续时间内获得伤害输出加成。只要还在月光阴影的持续时间内，即使隐身被打破也会在短时间内重新淡入隐身。", "description_en": "Turns Mirana and all allied heroes invisible and grants bonus movement speed. Mirana gains bonus outgoing damage during the duration. If a hero is revealed, invisibility will restore after the fade delay as long as Moonlight Shadow's duration has not expired.", "notes_zh": ["受到作用的单位会自动停止攻击敌人。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["fade_delay", "duration", "bonus_movement_speed", "evasion", "bonus_outgoing_damage_pct", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "nevermore_shadowraze1", "name_zh": "影魔·毁灭阴影", "name_en": "Shadowraze", "description_zh": "影魔对其正前方区域释放毁灭能量，对该区域中的敌人造成伤害，并且根据当前支配死灵的灵魂数量造成额外伤害。在目标身上施加一个连中效果，持续时间内再被毁灭阴影击中将受到额外伤害。", "description_en": "Shadow Fiend razes the ground directly in front of him, dealing damage to enemy units in the area, dealing bonus damage based on his current Necromastery Soul amount. Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadowraze damage per stack.", "notes_zh": ["连中效果的持续时间在每次连中时刷新。"], "granted_by": "", "upgrades": {"shard": {"zh": "每击中一名敌方英雄后冷却时间减少%cooldown_reduction_on_hero_hit%秒。对击中的敌人施加可叠加的%movement_speed_debuff%%%移动速度减缓的负面效果。", "en": "Cooldown reduced by %cooldown_reduction_on_hero_hit%s per enemy hero hit. Applies a stacking %movement_speed_debuff%%% movement speed debuff on enemies hit."}}, "is_passive": false, "value_names": ["shadowraze_damage", "shadowraze_radius", "shadowraze_range", "shadowraze_cooldown", "stack_bonus_damage", "duration", "procs_attack", "movement_speed_debuff", "cooldown_reduction_on_hero_hit", "damage_per_soul", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "nevermore_frenzy", "name_zh": "影魔·灵魂盛宴", "name_en": "Feast of Souls", "description_zh": "影魔获得移动速度和攻击速度加成，持续%duration%秒。在持续时间内，每%soul_collection_interval%秒他从%soul_collection_radius%范围内的%soul_collection_per_interval%个敌人身上收集灵魂。效果结束后，灵魂拥有者还存活的话，影魔会失去这些灵魂，否则可以保留%linger_duration%秒，在这之后，超过支配死灵最大叠加数量的灵魂也会失去。\n\n从每个敌人身上只能收集一次灵魂。", "description_en": "Shadow Fiend gains Bonus Movement and Attack Speed for %duration% seconds. For the duration of the effect, every %soul_collection_interval%s he collects souls from %soul_collection_per_interval% enemies in a %soul_collection_radius% radius. After the effect is over, he loses the souls whose owners are still alive, retaining the rest for %linger_duration%s, after which souls that are over the Necromastery max stack count are also lost.\n\n Can only collect souls once from each individual enemy.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["bonus_attack_speed", "bonus_move_speed", "cast_speed_pct", "cast_speed_pct_tooltip", "duration", "max_collection_count", "soul_collection_per_interval", "soul_collection_radius", "soul_collection_interval", "soul_collection_per_hero", "soul_collection_per_creep", "linger_duration", "AbilityManaCost", "AbilityCooldown"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{"objects":[{"subject":"crystal_maiden_freezing_field","mechanisms":[{"mechanism":"slow","condition":"base","quote":"将其减速并造成大量伤害","uncertain":false},{"mechanism":"aura","condition":"base","quote":"减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害","uncertain":false}]},{"subject":"drow_ranger_frost_arrows","mechanisms":[{"mechanism":"slow","condition":"base","quote":"减缓敌人的移动速度","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害","uncertain":false},{"mechanism":"heal_reduction","condition":"scepter","quote":"每层叠加效果都会降低生命回复","uncertain":false},{"mechanism":"slow","condition":"scepter","quote":"他们将会爆炸，对范围内的敌人造成伤害和减速","uncertain":false},{"mechanism":"aoe_damage","condition":"scepter","quote":"他们将会爆炸，对范围内的敌人造成伤害和减速","uncertain":false}]},{"subject":"drow_ranger_wave_of_silence","mechanisms":[{"mechanism":"silence","condition":"base","quote":"沉默敌方单位","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"并将其击退","uncertain":false},{"mechanism":"reveal","condition":"base","quote":"同时使隐身敌人显形","uncertain":false}]},{"subject":"drow_ranger_multishot","mechanisms":[{"mechanism":"slow","condition":"base","quote":"霜冻之箭的额外伤害和减速效果不无视减益免疫","uncertain":false},{"mechanism":"pierces_debuff_immunity","condition":"base","quote":"箭矢的基础伤害无视减益免疫","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"不断地射出阵阵箭矢，对卓尔游侠攻击距离 + %arrow_range_base%的距离内击中的敌人造成额外伤害","uncertain":false}]},{"subject":"drow_ranger_glacier","mechanisms":[{"mechanism":"displace_other","condition":"shard","quote":"击退附近的敌人","uncertain":false},{"mechanism":"grant_vision","condition":"shard","quote":"站在山上的单位会获得飞行视野","uncertain":false},{"mechanism":"reduce_vision","condition":"shard","quote":"山的前面会阻挡视野","uncertain":false},{"mechanism":"aura","condition":"shard","quote":"站在山上的单位会获得飞行视野，而卓尔游侠和她的远程友军会获得攻击距离加成","uncertain":false}]},{"subject":"drow_ranger_trueshot","mechanisms":[{"mechanism":"aura","condition":"base","quote":"附近远程英雄获得%trueshot_agi_bonus_allies_pct%%%敏捷加成","uncertain":false}]},{"subject":"drow_ranger_marksmanship","mechanisms":[{"mechanism":"pierce_evasion","condition":"base","quote":"射手天赋的触发效果拥有克敌机先","uncertain":false}]},{"subject":"earthshaker_fissure","mechanisms":[{"mechanism":"stun","condition":"base","quote":"对沿途的敌方单位造成眩晕和伤害","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对沿途的敌方单位造成眩晕和伤害","uncertain":false},{"mechanism":"stun","condition":"shard","quote":"撼地者每次施放其他技能时都会沿着沟壑释放余震，造成眩晕的时间有所降低","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"撼地者每次施放其他技能时都会沿着沟壑释放余震","uncertain":false}]},{"subject":"earthshaker_enchant_totem","mechanisms":[{"mechanism":"self_mobility","condition":"scepter","quote":"施放后会跳至半空中再降落至目标地点","uncertain":false},{"mechanism":"cleave","condition":"scepter","quote":"强化图腾拥有分裂效果","uncertain":false},{"mechanism":"aoe_damage","condition":"scepter","quote":"Grants Enchant Totem a cleaving attack.","uncertain":false}]},{"subject":"earthshaker_aftershock","mechanisms":[{"mechanism":"stun","condition":"base","quote":"眩晕附近的敌方单位并造成额外伤害","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"眩晕附近的敌方单位并造成额外伤害","uncertain":false}]},{"subject":"earthshaker_echo_slam","mechanisms":[{"mechanism":"aoe_damage","condition":"base","quote":"每个受到攻击的敌人都会引起伤害附近单位的反射波","uncertain":false}]},{"subject":"earthshaker_slugger","mechanisms":[{"mechanism":"displace_other","condition":"base","quote":"把尸体击飞","uncertain":true},{"mechanism":"aoe_damage","condition":"base","quote":"把尸体击飞，对击中的敌人造成伤害","uncertain":false}]},{"subject":"juggernaut_blade_fury","mechanisms":[{"mechanism":"debuff_immunity","condition":"base","quote":"使主宰获得减益免疫状态","uncertain":false},{"mechanism":"applies_strong_dispel","condition":"base","quote":"旋转结束时施加强驱散效果","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"每%blade_fury_damage_tick%秒对主宰周围的敌方单位造成伤害","uncertain":false}]},{"subject":"juggernaut_healing_ward","mechanisms":[{"mechanism":"healing","condition":"base","quote":"按周围友军单位最大生命值的一定比例治疗他们","uncertain":false},{"mechanism":"aura","condition":"base","quote":"heals all nearby allied units, based on their max health","uncertain":false},{"mechanism":"summons","condition":"base","quote":"召唤一个治疗守卫；提升守卫的治疗量和生命值","uncertain":false}]},{"subject":"juggernaut_blade_dance","mechanisms":[{"mechanism":"critical","condition":"base","quote":"主宰有一定概率在攻击时触发致命一击","uncertain":false}]},{"subject":"juggernaut_swift_slash","mechanisms":[{"mechanism":"self_mobility","condition":"scepter","quote":"发动一次短时间的无敌斩，持续%duration%秒。","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"scepter","quote":"发动一次短时间的无敌斩，持续%duration%秒。","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"scepter","quote":"发动一次短时间的无敌斩，持续%duration%秒。","uncertain":true},{"mechanism":"aoe_damage","condition":"scepter","quote":"发动一次短时间的无敌斩，持续%duration%秒。","uncertain":false}]},{"subject":"juggernaut_bladeform","mechanisms":[]},{"subject":"juggernaut_omni_slash","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"主宰挥剑跃向敌方目标单位","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"主宰在无敌斩期间无敌","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"base","quote":"驱散类型：弱驱散","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"随后再以更短的攻击频率斩击该单位和附近的其它敌方单位","uncertain":false}]},{"subject":"mirana_starfall","mechanisms":[{"mechanism":"aoe_damage","condition":"base","quote":"召唤一波流星砸向附近的敌方单位","uncertain":false}]},{"subject":"mirana_arrow","mechanisms":[{"mechanism":"stun","condition":"base","quote":"对第一个击中的敌人造成伤害并眩晕目标","uncertain":false},{"mechanism":"aoe_damage","condition":"scepter","quote":"月神之箭在主神箭行进途中对敌人释放群星风暴","uncertain":false}]},{"subject":"mirana_leap","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"米拉娜的坐骑向前跳跃加入战斗","uncertain":false},{"mechanism":"charges","condition":"base","quote":"Grants +%additional_charges% Leap charge.","uncertain":true}]},{"subject":"mirana_celestial_quiver","mechanisms":[{"mechanism":"charges","condition":"base","quote":"有可用能量时，米拉娜的下次攻击会造成额外魔法伤害","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"米拉娜的下次攻击会造成额外魔法伤害","uncertain":false}]},{"subject":"mirana_invis","mechanisms":[{"mechanism":"invisibility","condition":"base","quote":"让米拉娜和所有己方英雄进入隐身状态","uncertain":false},{"mechanism":"spell_amp","condition":"base","quote":"Mirana gains bonus outgoing damage during the duration.","uncertain":false}]},{"subject":"nevermore_shadowraze1","mechanisms":[{"mechanism":"magic_resist_reduction","condition":"base","quote":"Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadowraze damage per stack.","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"影魔对其正前方区域释放毁灭能量，对该区域中的敌人造成伤害","uncertain":false},{"mechanism":"slow","condition":"shard","quote":"对击中的敌人施加可叠加的%movement_speed_debuff%%%移动速度减缓的负面效果","uncertain":false},{"mechanism":"cooldown_reduction","condition":"shard","quote":"每击中一名敌方英雄后冷却时间减少%cooldown_reduction_on_hero_hit%秒","uncertain":false}]},{"subject":"nevermore_frenzy","mechanisms":[]}]}
+tokens used
+30,374
+{"objects":[{"subject":"crystal_maiden_freezing_field","mechanisms":[{"mechanism":"slow","condition":"base","quote":"将其减速并造成大量伤害","uncertain":false},{"mechanism":"aura","condition":"base","quote":"减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害","uncertain":false}]},{"subject":"drow_ranger_frost_arrows","mechanisms":[{"mechanism":"slow","condition":"base","quote":"减缓敌人的移动速度","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害","uncertain":false},{"mechanism":"heal_reduction","condition":"scepter","quote":"每层叠加效果都会降低生命回复","uncertain":false},{"mechanism":"slow","condition":"scepter","quote":"他们将会爆炸，对范围内的敌人造成伤害和减速","uncertain":false},{"mechanism":"aoe_damage","condition":"scepter","quote":"他们将会爆炸，对范围内的敌人造成伤害和减速","uncertain":false}]},{"subject":"drow_ranger_wave_of_silence","mechanisms":[{"mechanism":"silence","condition":"base","quote":"沉默敌方单位","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"并将其击退","uncertain":false},{"mechanism":"reveal","condition":"base","quote":"同时使隐身敌人显形","uncertain":false}]},{"subject":"drow_ranger_multishot","mechanisms":[{"mechanism":"slow","condition":"base","quote":"霜冻之箭的额外伤害和减速效果不无视减益免疫","uncertain":false},{"mechanism":"pierces_debuff_immunity","condition":"base","quote":"箭矢的基础伤害无视减益免疫","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"不断地射出阵阵箭矢，对卓尔游侠攻击距离 + %arrow_range_base%的距离内击中的敌人造成额外伤害","uncertain":false}]},{"subject":"drow_ranger_glacier","mechanisms":[{"mechanism":"displace_other","condition":"shard","quote":"击退附近的敌人","uncertain":false},{"mechanism":"grant_vision","condition":"shard","quote":"站在山上的单位会获得飞行视野","uncertain":false},{"mechanism":"reduce_vision","condition":"shard","quote":"山的前面会阻挡视野","uncertain":false},{"mechanism":"aura","condition":"shard","quote":"站在山上的单位会获得飞行视野，而卓尔游侠和她的远程友军会获得攻击距离加成","uncertain":false}]},{"subject":"drow_ranger_trueshot","mechanisms":[{"mechanism":"aura","condition":"base","quote":"附近远程英雄获得%trueshot_agi_bonus_allies_pct%%%敏捷加成","uncertain":false}]},{"subject":"drow_ranger_marksmanship","mechanisms":[{"mechanism":"pierce_evasion","condition":"base","quote":"射手天赋的触发效果拥有克敌机先","uncertain":false}]},{"subject":"earthshaker_fissure","mechanisms":[{"mechanism":"stun","condition":"base","quote":"对沿途的敌方单位造成眩晕和伤害","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"对沿途的敌方单位造成眩晕和伤害","uncertain":false},{"mechanism":"stun","condition":"shard","quote":"撼地者每次施放其他技能时都会沿着沟壑释放余震，造成眩晕的时间有所降低","uncertain":false},{"mechanism":"aoe_damage","condition":"shard","quote":"撼地者每次施放其他技能时都会沿着沟壑释放余震","uncertain":false}]},{"subject":"earthshaker_enchant_totem","mechanisms":[{"mechanism":"self_mobility","condition":"scepter","quote":"施放后会跳至半空中再降落至目标地点","uncertain":false},{"mechanism":"cleave","condition":"scepter","quote":"强化图腾拥有分裂效果","uncertain":false},{"mechanism":"aoe_damage","condition":"scepter","quote":"Grants Enchant Totem a cleaving attack.","uncertain":false}]},{"subject":"earthshaker_aftershock","mechanisms":[{"mechanism":"stun","condition":"base","quote":"眩晕附近的敌方单位并造成额外伤害","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"眩晕附近的敌方单位并造成额外伤害","uncertain":false}]},{"subject":"earthshaker_echo_slam","mechanisms":[{"mechanism":"aoe_damage","condition":"base","quote":"每个受到攻击的敌人都会引起伤害附近单位的反射波","uncertain":false}]},{"subject":"earthshaker_slugger","mechanisms":[{"mechanism":"displace_other","condition":"base","quote":"把尸体击飞","uncertain":true},{"mechanism":"aoe_damage","condition":"base","quote":"把尸体击飞，对击中的敌人造成伤害","uncertain":false}]},{"subject":"juggernaut_blade_fury","mechanisms":[{"mechanism":"debuff_immunity","condition":"base","quote":"使主宰获得减益免疫状态","uncertain":false},{"mechanism":"applies_strong_dispel","condition":"base","quote":"旋转结束时施加强驱散效果","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"每%blade_fury_damage_tick%秒对主宰周围的敌方单位造成伤害","uncertain":false}]},{"subject":"juggernaut_healing_ward","mechanisms":[{"mechanism":"healing","condition":"base","quote":"按周围友军单位最大生命值的一定比例治疗他们","uncertain":false},{"mechanism":"aura","condition":"base","quote":"heals all nearby allied units, based on their max health","uncertain":false},{"mechanism":"summons","condition":"base","quote":"召唤一个治疗守卫；提升守卫的治疗量和生命值","uncertain":false}]},{"subject":"juggernaut_blade_dance","mechanisms":[{"mechanism":"critical","condition":"base","quote":"主宰有一定概率在攻击时触发致命一击","uncertain":false}]},{"subject":"juggernaut_swift_slash","mechanisms":[{"mechanism":"self_mobility","condition":"scepter","quote":"发动一次短时间的无敌斩，持续%duration%秒。","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"scepter","quote":"发动一次短时间的无敌斩，持续%duration%秒。","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"scepter","quote":"发动一次短时间的无敌斩，持续%duration%秒。","uncertain":true},{"mechanism":"aoe_damage","condition":"scepter","quote":"发动一次短时间的无敌斩，持续%duration%秒。","uncertain":false}]},{"subject":"juggernaut_bladeform","mechanisms":[]},{"subject":"juggernaut_omni_slash","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"主宰挥剑跃向敌方目标单位","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"主宰在无敌斩期间无敌","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"base","quote":"驱散类型：弱驱散","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"随后再以更短的攻击频率斩击该单位和附近的其它敌方单位","uncertain":false}]},{"subject":"mirana_starfall","mechanisms":[{"mechanism":"aoe_damage","condition":"base","quote":"召唤一波流星砸向附近的敌方单位","uncertain":false}]},{"subject":"mirana_arrow","mechanisms":[{"mechanism":"stun","condition":"base","quote":"对第一个击中的敌人造成伤害并眩晕目标","uncertain":false},{"mechanism":"aoe_damage","condition":"scepter","quote":"月神之箭在主神箭行进途中对敌人释放群星风暴","uncertain":false}]},{"subject":"mirana_leap","mechanisms":[{"mechanism":"self_mobility","condition":"base","quote":"米拉娜的坐骑向前跳跃加入战斗","uncertain":false},{"mechanism":"charges","condition":"base","quote":"Grants +%additional_charges% Leap charge.","uncertain":true}]},{"subject":"mirana_celestial_quiver","mechanisms":[{"mechanism":"charges","condition":"base","quote":"有可用能量时，米拉娜的下次攻击会造成额外魔法伤害","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"米拉娜的下次攻击会造成额外魔法伤害","uncertain":false}]},{"subject":"mirana_invis","mechanisms":[{"mechanism":"invisibility","condition":"base","quote":"让米拉娜和所有己方英雄进入隐身状态","uncertain":false},{"mechanism":"spell_amp","condition":"base","quote":"Mirana gains bonus outgoing damage during the duration.","uncertain":false}]},{"subject":"nevermore_shadowraze1","mechanisms":[{"mechanism":"magic_resist_reduction","condition":"base","quote":"Adds a stacking damage amplifier on the target that causes the enemy to take bonus Shadowraze damage per stack.","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"影魔对其正前方区域释放毁灭能量，对该区域中的敌人造成伤害","uncertain":false},{"mechanism":"slow","condition":"shard","quote":"对击中的敌人施加可叠加的%movement_speed_debuff%%%移动速度减缓的负面效果","uncertain":false},{"mechanism":"cooldown_reduction","condition":"shard","quote":"每击中一名敌方英雄后冷却时间减少%cooldown_reduction_on_hero_hit%秒","uncertain":false}]},{"subject":"nevermore_frenzy","mechanisms":[]}]}

@@ -1,0 +1,687 @@
+{
+  "objects": [
+    {
+      "subject": "phantom_assassin_coup_de_grace",
+      "judgments": [
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "必定产生一次致命一击",
+          "reason_zh": "基础效果明确使攻击产生暴击。"
+        }
+      ]
+    },
+    {
+      "subject": "pugna_nether_blast",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "An exploding pulse deals damage to enemies and structures in the area.",
+          "reason_zh": "一次爆炸对区域内多个敌方单位造成伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "pugna_decrepify",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "能使一个单位进入虚无状态",
+          "reason_zh": "材料描述的是单体状态效果，没有说明技能自身造成范围伤害。"
+        },
+        {
+          "mechanism": "ethereal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "能使一个单位进入虚无状态，无法攻击或受到攻击",
+          "reason_zh": "技能明确使目标进入虚无状态。"
+        },
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "承受额外魔法伤害",
+          "reason_zh": "这里只加深魔法伤害，应归入魔法易伤。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受作用的敌军会被减速，并且承受额外魔法伤害",
+          "reason_zh": "技能使敌方目标受到更多魔法伤害，符合魔法易伤定义。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受作用的敌军会被减速",
+          "reason_zh": "基础效果明确对敌军施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "pugna_oblivion_savant",
+      "judgments": [
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每摧毁一座防御塔，帕格纳都会获得%tower_scale%%%技能增强",
+          "reason_zh": "基础效果使帕格纳随防御塔被摧毁而获得法术放大。"
+        }
+      ]
+    },
+    {
+      "subject": "pugna_life_drain",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "使生命汲取可以折射至守卫附近%abilitycastrange%范围内所有敌方英雄",
+          "reason_zh": "魔晶使一次生命汲取可以同时作用于范围内多个敌方英雄。"
+        },
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "守卫被摧毁后效果将会中断",
+          "reason_zh": "这里只说明自身效果被中断，没有赋予技能打断其他单位持续施法的能力。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并获得其视野",
+          "reason_zh": "基础效果明确提供敌方目标的视野。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Pugna drains health from the target enemy unit to heal himself",
+          "reason_zh": "基础效果明确通过汲取敌方生命来治疗自身。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "并且自身的技能伤害输出提升",
+          "reason_zh": "神杖新增汲取过程中提高自身技能伤害的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "templar_assassin_refraction",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果单次伤害超过了剩余的护盾，该次的全部伤害都会被吸收",
+          "reason_zh": "基础护盾明确可以吸收受到的伤害。"
+        },
+        {
+          "mechanism": "hp_removal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "生命移除类伤害将无视折光（也不会减少折光次数）",
+          "reason_zh": "生命移除仅作为无视折光的交互出现，并非折光自身施加的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "templar_assassin_meld",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "额外伤害和隐匿的负面效果会施加给灵能之刃飞溅距离内所有敌人",
+          "reason_zh": "一次破隐攻击的额外伤害可以作用于范围内多个敌人。"
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并降低其护甲",
+          "reason_zh": "基础效果明确降低被攻击敌人的护甲。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "只要静止不动将一直处于隐身状态",
+          "reason_zh": "技能明确使自身在静止时保持隐身。"
+        }
+      ]
+    },
+    {
+      "subject": "templar_assassin_psi_blades",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以穿透敌人，对其正后方的敌方单位造成伤害",
+          "reason_zh": "一次攻击可以伤害主目标及其后方的敌方单位。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "飞溅伤害都会减少一定百分比",
+          "reason_zh": "材料描述的是攻击飞溅，按规则不计为攻击特效。"
+        },
+        {
+          "mechanism": "bash",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "重击等攻击特效只对主目标有效",
+          "reason_zh": "这里只说明与外部攻击特效的交互，没有说明灵能之刃自身提供重击。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "飞溅伤害可以伤害隐身单位",
+          "reason_zh": "能够伤害隐身单位不等于技能自身提供隐身。"
+        }
+      ]
+    },
+    {
+      "subject": "templar_assassin_trap_teleport",
+      "judgments": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "可以传送至任意灵能陷阱",
+          "reason_zh": "该技能由神杖授予，并明确使自身传送至陷阱。"
+        }
+      ]
+    },
+    {
+      "subject": "templar_assassin_psionic_trap",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "陷阱放置时间越久，引爆后减速效果越强",
+          "reason_zh": "这里的蓄积只决定效果强度，没有说明施放会消耗技能充能。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "还拥有技能免疫状态",
+          "reason_zh": "技能生成的陷阱明确具备技能免疫状态。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "现在陷阱引爆后还会沉默受到作用的敌人",
+          "reason_zh": "神杖明确新增陷阱引爆时的沉默效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "引爆后将减缓%trap_radius%范围内敌人的移动速度",
+          "reason_zh": "基础陷阱引爆后明确降低范围内敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "templar_assassin_inner_peace",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得生命恢复和魔法恢复加成",
+          "reason_zh": "基础效果提供生命恢复，符合治疗定义。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得生命恢复和魔法恢复加成",
+          "reason_zh": "基础效果提供自身魔法恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "viper_poison_attack",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "毒性攻击可以降低护甲",
+          "reason_zh": "魔晶明确新增毒性攻击降低护甲的效果。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使他的普通攻击附带效果，可以降低目标的移动速度和魔法抗性，并持续造成伤害",
+          "reason_zh": "普通攻击附带减速、减魔抗和持续伤害，符合攻击特效定义。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以降低目标的移动速度和魔法抗性",
+          "reason_zh": "基础效果明确降低目标魔法抗性。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以降低目标的移动速度",
+          "reason_zh": "基础效果明确降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "viper_nethertoxin",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "范围内的单位持续受到伤害",
+          "reason_zh": "一次施放可以持续伤害区域内多个单位。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时他们的攻击速度会被降低",
+          "reason_zh": "降低攻击速度符合减速定义。"
+        }
+      ]
+    },
+    {
+      "subject": "viper_corrosive_skin",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "%max_range%范围内任何伤害它的敌人都将受到伤害",
+          "reason_zh": "材料描述的是分别反击伤害自身的敌人，没有说明一次触发会伤害多个敌人。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "腐蚀皮肤的魔法抗性和每秒伤害会逐渐提升",
+          "reason_zh": "神杖只增强已有数值，没有说明新增范围伤害。"
+        },
+        {
+          "mechanism": "damage_return",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "%max_range%范围内任何伤害它的敌人都将受到伤害",
+          "reason_zh": "基础效果会对范围内伤害自身的敌人触发反击伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时攻击速度也被降低",
+          "reason_zh": "基础效果明确降低触发敌人的攻击速度。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "同时攻击速度也被降低；腐蚀皮肤会对距离冥界亚龙%effect_multiplier_distance%范围内的敌人施加%effect_multiplier%倍攻击速度降低效果",
+          "reason_zh": "减攻速属于基础机制，神杖只是提高其数值。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "这个技能造成的伤害被视为反弹伤害",
+          "reason_zh": "伤害被归类为反弹伤害不等于把指向技能反弹给施法者。"
+        }
+      ]
+    },
+    {
+      "subject": "viper_viper_strike",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低敌方目标单位的移动和攻击速度",
+          "reason_zh": "基础效果明确降低目标移动速度和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "luna_lucent_beam",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害并短暂眩晕目标",
+          "reason_zh": "材料只描述对目标造成伤害，没有说明一次施放可伤害多个敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "短暂眩晕目标",
+          "reason_zh": "基础效果明确造成短暂眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "luna_lunar_orbit",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "任何碰到月刃的敌方单位都会受到露娜攻击伤害的一定百分比",
+          "reason_zh": "一次施放产生的旋转月刃可以伤害多个接触它们的敌方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "luna_moon_glaive",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使攻击可以在敌方单位之间弹跳",
+          "reason_zh": "一次攻击通过弹跳可以对多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使攻击可以在敌方单位之间弹跳",
+          "reason_zh": "单纯使攻击弹跳按规则不计为攻击特效。"
+        }
+      ]
+    },
+    {
+      "subject": "luna_lunar_blessing",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提升露娜和附近%radius%范围内友方英雄的攻击力",
+          "reason_zh": "提高附近友军攻击力没有使技能自身造成范围伤害。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提升露娜和附近%radius%范围内友方英雄的攻击力",
+          "reason_zh": "技能持续影响露娜附近的友方英雄，符合友军光环定义。"
+        }
+      ]
+    },
+    {
+      "subject": "luna_eclipse",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "以她当前技能等级的月光随机打击附近敌人",
+          "reason_zh": "一次月蚀可以用多道月光伤害附近多个敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "月光只有伤害效果，不会造成眩晕",
+          "reason_zh": "材料明确否定月蚀的眩晕效果。"
+        }
+      ]
+    },
+    {
+      "subject": "dragon_knight_breathe_fire",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "向龙骑士的前方喷射出一团火焰，烧灼碰到的敌人",
+          "reason_zh": "一次喷火可以伤害前方多个被火焰碰到的敌人。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并使其攻击力降低",
+          "reason_zh": "降低敌人攻击力不属于吸收、延迟或按比例减少自身受到的伤害。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明技能能阻止闪烁、传送或离开范围。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹",
+          "reason_zh": "不触发法术抵抗是技能交互说明，没有赋予自身或队友格挡指向技能的能力。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹",
+          "reason_zh": "不触发法术反弹是交互说明，不表示技能自身能够反弹指向技能。"
+        }
+      ]
+    },
+    {
+      "subject": "dragon_knight_dragon_tail",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对它和它身边的目标造成眩晕和伤害",
+          "reason_zh": "一次施放同时伤害目标及其身边的其他目标。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对它和它身边的目标造成眩晕和伤害",
+          "reason_zh": "基础效果明确对目标及附近目标施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "dragon_knight_wyrms_wrath",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使其拥有作用范围加成，并且攻击会对敌方单位造成额外魔法伤害",
+          "reason_zh": "作用范围加成和攻击额外魔法伤害均未说明该技能使一次攻击伤害多个敌人。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击会对敌方单位造成额外魔法伤害",
+          "reason_zh": "造成额外魔法伤害不等于降低魔抗或施加魔法易伤。"
+        }
+      ]
+    },
+    {
+      "subject": "dragon_knight_fireball",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "点燃一片区域，对其中的敌人持续造成伤害",
+          "reason_zh": "该技能由魔晶授予，一次施放可以持续伤害区域内多个敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "dragon_knight_dragon_blood",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提升了龙骑士的生命恢复和护甲",
+          "reason_zh": "基础效果提供生命恢复，符合治疗定义。"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,714 @@
+{
+  "objects": [
+    {
+      "subject": "phoenix_icarus_dive",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对沿途的敌人造成持续伤害",
+          "reason_zh": "一次施放可以伤害沿途多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并减缓其移动速度",
+          "reason_zh": "技能明确降低敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_fire_spirits",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Each spirit can be launched independently at a targeted area of effect. Affected enemy units take damage over time",
+          "reason_zh": "单只精灵发射后即可对目标区域内多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤4只围绕凤凰飞行的烈火精灵。",
+          "reason_zh": "精灵的飞行描述不表示技能赋予单位越过地形的飞行移动能力。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "烈火精灵现在到达目标区域后将获得1秒的视野。",
+          "reason_zh": "技能明确提供目标区域的视野。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "烈火精灵现在到达目标区域后将获得1秒的视野。",
+          "reason_zh": "提供视野没有说明能使隐身单位显形。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "大幅降低他们的攻击速度",
+          "reason_zh": "降低攻击速度符合减速定义。"
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_sun_ray",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凤凰受到眩晕、沉默、飓风、妖术或睡眠等效果时烈日炙烤将会中断。",
+          "reason_zh": "材料说明该技能会被打断，没有说明它能打断其他单位持续施法。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且能治疗友军",
+          "reason_zh": "技能明确恢复友军生命值。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凤凰受到眩晕、沉默、飓风、妖术或睡眠等效果时烈日炙烤将会中断。",
+          "reason_zh": "沉默只是中断该技能的外来效果，并非该技能施加的效果。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凤凰受到眩晕、沉默、飓风、妖术或睡眠等效果时烈日炙烤将会中断。",
+          "reason_zh": "眩晕只是中断该技能的外来效果，并非该技能施加的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_dying_light",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凤凰每秒对%radius%范围内所有敌人造成%damage_pct%%%自身缺失生命值的魔法伤害。",
+          "reason_zh": "技能每次伤害可以同时作用于范围内多个敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "phoenix_supernova",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "灼烧附近一大片区域内的敌人",
+          "reason_zh": "一次施放可以伤害区域内多个敌人。"
+        },
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：强驱散",
+          "reason_zh": "材料明确标注技能施加强驱散。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "而凤凰的生命和魔法值都会回到满状态",
+          "reason_zh": "技能会为凤凰恢复魔法值至满状态。"
+        },
+        {
+          "mechanism": "respawn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凤凰十分乐意终结自己现在的生命来换取重生。",
+          "reason_zh": "基础描述明确包含凤凰自身的重生效果。"
+        },
+        {
+          "mechanism": "respawn",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "凤凰可以对友方英雄施放超新星，使双方共同变为恒星进行重生。",
+          "reason_zh": "A杖新增让友方英雄共同重生的效果。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "恒星将会爆炸，眩晕周围所有敌人",
+          "reason_zh": "技能明确对周围敌人施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "oracle_fortunes_end",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "材料明确标注技能施加弱驱散。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以作用无敌单位。",
+          "reason_zh": "可以作用于无敌单位是交互说明，并不赋予无敌或不可选取。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使其被缠绕",
+          "reason_zh": "技能明确对敌人施加缠绕定身。"
+        }
+      ]
+    },
+    {
+      "subject": "oracle_fates_edict",
+      "judgments": [
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将其缴械",
+          "reason_zh": "技能明确对目标施加缴械。"
+        }
+      ]
+    },
+    {
+      "subject": "oracle_purifying_flames",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使其在接下来的一段时间内逐渐恢复生命值",
+          "reason_zh": "技能直接使目标持续恢复生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "oracle_rain_of_destiny",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "站在该区域的敌人受到每秒伤害",
+          "reason_zh": "魔晶授予的整个技能可以对区域内多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "heal_reduction",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "站在该区域的敌人受到每秒伤害，并且治疗增强被削弱。",
+          "reason_zh": "技能降低敌人的治疗增强，减少其获得的生命恢复。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "区域内友军被治疗",
+          "reason_zh": "魔晶授予的技能直接治疗区域内友军。"
+        }
+      ]
+    },
+    {
+      "subject": "oracle_false_promise",
+      "judgments": [
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施放时将移除目标身上大部分的负面状态效果。\n\n驱散类型：强驱散",
+          "reason_zh": "技能施放时明确对目标施加强驱散。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "技能期间受到的任何治疗和伤害效果将在虚妄之诺结束后结算",
+          "reason_zh": "延迟受到的伤害结算符合伤害吸收减伤词条的定义。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "其中治疗效果结算时效果更强",
+          "reason_zh": "技能只延迟并增强已有治疗，没有自身提供生命恢复。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "结算时依然会考虑护甲和魔法抗性的减免",
+          "reason_zh": "结算时考虑魔抗不表示降低魔抗或增加魔法伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "oracle_prognosticate",
+      "judgments": [
+        {
+          "mechanism": "respawn",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "以及肉山的准确复活时间",
+          "reason_zh": "技能仅宣布复活时间，没有使单位复活或改变复活。"
+        }
+      ]
+    },
+    {
+      "subject": "techies_sticky_bomb",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "炸弹会爆炸，对爆炸区域内造成伤害",
+          "reason_zh": "一次爆炸可以伤害区域内多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓其移动速度",
+          "reason_zh": "技能明确降低敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "techies_reactive_tazer",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "电荷将会爆炸，使范围内所有敌人缴械并受到伤害",
+          "reason_zh": "一次爆炸可以对范围内多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击目标的敌人会受到伤害被暂时缴械，并且受到弱驱散效果。",
+          "reason_zh": "技能明确对攻击目标的敌人施加弱驱散。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "工程师对友军目标放出电荷",
+          "reason_zh": "电荷是技能效果描述，没有使用一次消耗一点的充能机制。"
+        },
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使范围内所有敌人缴械",
+          "reason_zh": "技能明确对敌人施加缴械。"
+        }
+      ]
+    },
+    {
+      "subject": "techies_suicide",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成大量范围伤害",
+          "reason_zh": "技能明确造成范围伤害。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "detonating charges upon impact",
+          "reason_zh": "此处charges指引爆的炸药，没有说明可消耗的技能充能。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并眩晕敌人",
+          "reason_zh": "技能明确对敌人施加眩晕。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "此技能将摧毁树木。",
+          "reason_zh": "注释明确说明技能可以摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "techies_mutually_assured_destruction",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "留下一个木桶，在%explosion_delay%秒后爆炸，对范围内敌人造成伤害",
+          "reason_zh": "基础效果的单次木桶爆炸可以伤害范围内多个敌人。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "工程师获得相当于最大魔法值一定百分比的魔法恢复。",
+          "reason_zh": "基础效果明确为工程师提供魔法恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "techies_minefield_sign",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "敌方单位在区域内移动都会受到伤害。",
+          "reason_zh": "A杖授予的技能能对雷区内多个移动的敌人造成伤害。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "使作用范围内的感应地雷为无敌状态",
+          "reason_zh": "A杖授予的技能明确使范围内地雷进入无敌状态。"
+        }
+      ]
+    },
+    {
+      "subject": "techies_land_mines",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "爆炸对%min_distance%范围内目标造成全额伤害，对边缘造成的伤害减少至%outer_damage%%%。",
+          "reason_zh": "单个地雷爆炸可以对范围内多个目标造成伤害。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "敌方英雄将地雷摧毁可以获得30金钱。",
+          "reason_zh": "摧毁地雷获得的是正常赏金，不属于额外经济效果。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "有敌方单位在地雷的%radius%生效范围内会显形",
+          "reason_zh": "这里显形的是地雷自身，没有使敌方隐身单位显形。"
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_arctic_burn",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被攻击的敌人在寒意作用下，移动速度会被减缓，同时每秒损失%percent_damage%%%当前生命值。",
+          "reason_zh": "材料仅说明对被攻击目标施加伤害，没有说明一次攻击可以伤害多个敌人。"
+        },
+        {
+          "mechanism": "mana_burn",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "开启后每秒消耗一定量魔法",
+          "reason_zh": "消耗施法者自身魔法是技能代价，不是削减目标法力。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "开启后每秒消耗一定量魔法",
+          "reason_zh": "A杖描述只有魔法消耗，没有恢复或吸取法力。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被攻击的敌人在寒意作用下，移动速度会被减缓",
+          "reason_zh": "基础效果明确降低被攻击敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_splinter_blast",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "附近%split_radius%基础范围内敌人都将因碎片的冲击受到伤害",
+          "reason_zh": "一次施放可以通过碎片伤害附近多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "移动速度减缓%movespeed_slow_tooltip%%%",
+          "reason_zh": "技能明确降低碎片命中敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_cold_embrace",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "恢复生命值，恢复数值为基础数值加上最大生命值的一定比例",
+          "reason_zh": "基础技能直接恢复目标的生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "winter_wyvern_winters_curse",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "附近的其他敌人将受到癫狂诅咒，对冻住的队友进行攻击",
+          "reason_zh": "技能迫使其他单位攻击单个目标，没有自身造成范围伤害的描述。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "无视主目标的减益免疫状态，但是对目标周围的减益免疫队友无效。",
+          "reason_zh": "这是与减益免疫的交互说明，技能没有赋予减益免疫。"
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_flux",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将不稳定的涡流能量灌注到落单敌人体内，造成持续伤害",
+          "reason_zh": "技能仅伤害单个目标，附近其他单位只是伤害生效条件。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "目标落单时乱流具有沉默效果",
+          "reason_zh": "A杖明确新增对落单目标施加沉默的效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓其移动速度",
+          "reason_zh": "基础技能明确降低目标的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_magnetic_field",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "其中的友方单位可以闪避来自磁场外的攻击",
+          "reason_zh": "技能明确赋予范围内友方单位闪避攻击的能力。"
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_spark_wraith",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "一旦有敌方单位进入范围，怨灵将贴近敌人自我熔化，造成魔法伤害并使目标减速。",
+          "reason_zh": "描述只支持怨灵伤害找到的单个目标，搜索范围不等于范围伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并使目标减速",
+          "reason_zh": "技能明确对命中的目标施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_tempest_double",
+      "judgments": [
+        {
+          "mechanism": "blind",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "复制体会逐渐失去自我意识，移动速度变慢，攻击准确度下降。",
+          "reason_zh": "准确度下降是自身复制体的负面代价，并非对敌人施加致盲。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "复制体会逐渐失去自我意识，移动速度变慢，攻击准确度下降。",
+          "reason_zh": "移动速度变慢是自身复制体的负面代价，按规则不计为减速机制。"
+        }
+      ]
+    }
+  ]
+}

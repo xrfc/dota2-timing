@@ -1,0 +1,633 @@
+{
+  "objects": [
+    {
+      "subject": "nyx_assassin_impale",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "岩石尖刺在地上沿一条直线穿刺而出。敌方单位受到伤害",
+          "reason_zh": "一次施放能伤害直线路径上的多个敌方单位。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明该技能给普通攻击附加效果。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "落地时被眩晕。",
+          "reason_zh": "技能明确对敌方单位施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "nyx_assassin_jolt",
+      "judgments": [
+        {
+          "mechanism": "mana_burn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并燃烧部分魔法。",
+          "reason_zh": "技能明确削减目标的魔法值。"
+        }
+      ]
+    },
+    {
+      "subject": "nyx_assassin_spiked_carapace",
+      "judgments": [
+        {
+          "mechanism": "damage_return",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "尖刺外壳可以反弹并无效化司夜刺客受到的伤害",
+          "reason_zh": "技能受到伤害后会反弹伤害，符合反伤定义。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "反弹的伤害与司夜刺客本应受到的实际伤害相同。",
+          "reason_zh": "材料描述的是伤害反弹，没有说明反弹指向技能本身。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时眩晕攻击者。",
+          "reason_zh": "技能明确眩晕造成伤害的攻击者。"
+        }
+      ]
+    },
+    {
+      "subject": "nyx_assassin_burrow",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "穿刺的冷却时间减少。",
+          "reason_zh": "该A杖授予的技能明确减少另一技能穿刺的冷却时间。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "钻地后司夜刺客固定在原地，无法攻击，并且是隐身状态。",
+          "reason_zh": "该A杖授予的技能使司夜刺客进入隐身状态。"
+        }
+      ]
+    },
+    {
+      "subject": "nyx_assassin_neuro_sting",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "司夜刺客对敌人造成伤害还会燃烧造成伤害一定百分比的魔法。",
+          "reason_zh": "材料只说明伤害附带烧蓝，没有说明该对象自身造成范围伤害。"
+        },
+        {
+          "mechanism": "mana_burn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "还会燃烧造成伤害一定百分比的魔法。",
+          "reason_zh": "该被动明确在造成伤害时燃烧敌人的魔法值。"
+        }
+      ]
+    },
+    {
+      "subject": "nyx_assassin_vendetta",
+      "judgments": [
+        {
+          "mechanism": "applies_break",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "当次攻击将造成超高额外伤害，并对目标施加破坏效果。",
+          "reason_zh": "基础效果明确通过破隐攻击施加破坏。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "司夜刺客进入隐身状态",
+          "reason_zh": "技能基础效果明确使自身隐身。"
+        }
+      ]
+    },
+    {
+      "subject": "naga_siren_mirror_image",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "技能明确具有弱驱散效果。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "娜迦海妖在施法时有%invuln_duration%秒的无敌时间",
+          "reason_zh": "施法时明确给予娜迦海妖短暂无敌。"
+        }
+      ]
+    },
+    {
+      "subject": "naga_siren_ensnare",
+      "judgments": [
+        {
+          "mechanism": "applies_break",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "诱捕会施加破坏效果。",
+          "reason_zh": "A杖升级明确新增破坏效果。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使其无法移动或闪烁。",
+          "reason_zh": "基础效果明确阻止目标闪烁，符合限制位移定义。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将其困在原地，使其无法移动或闪烁。",
+          "reason_zh": "技能限制目标移动，没有主动改变施法者自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "naga_siren_rip_tide",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并降低他们的护甲，持续%duration%秒。",
+          "reason_zh": "技能明确降低敌人的护甲。"
+        },
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使用激流不会打断持续施法。",
+          "reason_zh": "该句是否定描述，不能作为打断持续施法的证据。"
+        }
+      ]
+    },
+    {
+      "subject": "naga_siren_eelskin",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "娜迦海妖拥有闪避加成",
+          "reason_zh": "该被动明确提供自身闪避。"
+        }
+      ]
+    },
+    {
+      "subject": "keeper_of_the_light_illuminate",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "光波沿直线向前发出，造成伤害",
+          "reason_zh": "一次施放释放沿直线行进的伤害光波，可以命中路径上的多个敌人。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得沿途的视野。",
+          "reason_zh": "技能明确提供光波沿途的视野。"
+        }
+      ]
+    },
+    {
+      "subject": "keeper_of_the_light_blinding_light",
+      "judgments": [
+        {
+          "mechanism": "blind",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成致盲，使他们的部分攻击不能命中。",
+          "reason_zh": "技能明确使受影响单位的攻击有概率落空。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "落地后受作用单位将摧毁150范围内的树木。",
+          "reason_zh": "技能的击退效果明确导致落地范围内的树木被摧毁。"
+        }
+      ]
+    },
+    {
+      "subject": "keeper_of_the_light_chakra_magic",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减少所有冷却中基础技能（非大招）的冷却时间。",
+          "reason_zh": "技能明确缩短目标基础技能的冷却时间。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "恢复目标单位的魔法值，并减少所有冷却中基础技能（非大招）的冷却时间。对自身使用时效果提升%self_bonus%%%。",
+          "reason_zh": "技能恢复魔法值且明确可以对自身使用。"
+        }
+      ]
+    },
+    {
+      "subject": "keeper_of_the_light_radiant_bind",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "Grants %AbilityCharges% charges.",
+          "reason_zh": "魔晶升级明确给予技能充能次数。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施加减速效果，目标移动的距离越长，减速效果越大。",
+          "reason_zh": "基础效果明确对目标施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "keeper_of_the_light_will_o_wisp",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "该牵引效果不会打断。",
+          "reason_zh": "材料明确说明牵引不会打断，不能记为打断持续施法。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "幻火会对作用范围内所有敌人施加朝其牵引的效果",
+          "reason_zh": "该A杖授予的技能明确牵引范围内的敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "keeper_of_the_light_spirit_form",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "冲击波将由一个单独的灵魂施法，可以治疗友军。",
+          "reason_zh": "治疗由冲击波施加，灵魂形态自身只赋予另一技能治疗能力。"
+        }
+      ]
+    },
+    {
+      "subject": "wisp_tether",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "羁绊会对触碰到的敌人造成伤害。",
+          "reason_zh": "魔晶使同一次羁绊能够伤害触碰连接的多个敌人。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "当艾欧回复生命或魔法时，连在一起的友军将获得一部分回复效果。",
+          "reason_zh": "羁绊基础效果会向连接的友军提供生命回复。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "羁绊会减速触碰到的敌人。",
+          "reason_zh": "基础效果明确减速触碰连接的敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "wisp_spirits",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "幽魂会爆炸，对其附近的所有敌人造成伤害。",
+          "reason_zh": "幽魂爆炸本身能对附近多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "幽魂撞到英雄会将其短暂减速。",
+          "reason_zh": "A杖升级明确新增幽魂碰撞英雄后的减速效果。"
+        }
+      ]
+    },
+    {
+      "subject": "wisp_overcharge",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "基于最大生命值的生命恢复。",
+          "reason_zh": "技能明确提供生命恢复，符合治疗定义。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Io gains attack speed, spell amplification, and health regeneration based on max health.",
+          "reason_zh": "技能明确提供法术放大。"
+        }
+      ]
+    },
+    {
+      "subject": "wisp_relocate",
+      "judgments": [
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果艾欧在施法延迟期间被控制，降临将会取消。",
+          "reason_zh": "受到控制会取消传送只是技能交互，没有施加限制位移。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将艾欧和与其连接的友军传送到地图上任何位置。",
+          "reason_zh": "技能明确主动传送艾欧自身。"
+        }
+      ]
+    },
+    {
+      "subject": "wisp_equilibrium",
+      "judgments": [
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "艾欧获得伤害输出增强，血量越高，数值越高。",
+          "reason_zh": "该效果增强艾欧的伤害输出，没有让目标受到更多伤害的承伤效果。"
+        }
+      ]
+    },
+    {
+      "subject": "visage_gravekeepers_cloak",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "shard",
+          "quote": "获得主动效果，维萨吉可以化作石像形态，对身边375范围内的敌人造成0.8/1.0/1.2秒眩晕，同时造成60/100/140点伤害",
+          "reason_zh": "该技能具备范围伤害，但这是魔晶新增的主动效果。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对身边375范围内的敌人造成0.8/1.0/1.2秒眩晕，同时造成60/100/140点伤害",
+          "reason_zh": "魔晶主动效果明确伤害身边范围内的多个敌人。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "维萨吉产生数层屏障来保护他，降低受到的伤害。",
+          "reason_zh": "基础效果明确降低受到的伤害。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "获得6秒无敌状态。",
+          "reason_zh": "魔晶主动效果明确给予维萨吉无敌状态。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对身边375范围内的敌人造成0.8/1.0/1.2秒眩晕",
+          "reason_zh": "魔晶主动效果明确眩晕周围敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "visage_silent_as_the_grave",
+      "judgments": [
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "维萨吉获得飞行移动状态",
+          "reason_zh": "技能基础效果明确给予飞行移动。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "维萨吉和佣兽在持续时间内为隐身状态，直到失去飞行移动状态。",
+          "reason_zh": "A杖升级明确新增维萨吉和佣兽的隐身效果。"
+        }
+      ]
+    },
+    {
+      "subject": "visage_summon_familiars",
+      "judgments": [
+        {
+          "mechanism": "blind",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤%familiar_count%只盲眼的佣兽为维萨吉作战。",
+          "reason_zh": "盲眼只是佣兽的描述，没有使敌方攻击落空的效果。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "佣兽被击杀时给予高额奖励。",
+          "reason_zh": "佣兽被击杀的赏金属于正常击杀奖励，不是额外经济效果。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在石像形态中的佣兽无敌",
+          "reason_zh": "无敌来自佣兽自身的石像形态技能，召唤佣兽本身不施加无敌。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "佣兽拥有石像形态技能，可以化为石像，在落地时使敌人眩晕。",
+          "reason_zh": "眩晕由佣兽的石像形态技能施加，召唤佣兽本身不施加眩晕。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤%familiar_count%只盲眼的佣兽为维萨吉作战。佣兽拥有石像形态技能，可以化为石像，在落地时使敌人眩晕。在石像形态中的佣兽无敌，并且迅速回复生命值。",
+          "reason_zh": "技能召唤佣兽，且佣兽能回复生命值，支持其为有血量的召唤单位。"
+        }
+      ]
+    },
+    {
+      "subject": "slark_dark_pact",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对自己和周围敌方单位造成伤害。",
+          "reason_zh": "一次施放能伤害周围多个敌方单位。"
+        },
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：强驱散",
+          "reason_zh": "技能明确对自身施加强驱散。"
+        }
+      ]
+    }
+  ]
+}

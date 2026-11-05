@@ -1,0 +1,723 @@
+{
+  "objects": [
+    {
+      "subject": "dragon_knight_elder_dragon_form",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "2级赤龙：攻击获得溅射伤害。",
+          "reason_zh": "攻击具有溅射伤害，支持一次攻击伤害多个敌人。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "2级赤龙：攻击获得溅射伤害。",
+          "reason_zh": "攻击伤害发生溅射，符合分裂溅射的定义。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击获得无视减益免疫的移动速度和攻击速度降低效果。",
+          "reason_zh": "减速穿透减益免疫不代表自身获得减益免疫。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "3级苍龙：攻击获得无视减益免疫的移动速度和攻击速度降低效果。",
+          "reason_zh": "基础技能明确使攻击降低目标的移动速度和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "dazzle_poison_touch",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以打击多个敌方单位。造成持续伤害和减速。",
+          "reason_zh": "一次施放能对多个敌人造成持续伤害。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害格挡类技能不能减少该技能伤害。",
+          "reason_zh": "此处描述伤害格挡不能影响该技能，没有赋予该技能减伤效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成持续伤害和减速。",
+          "reason_zh": "技能明确对目标施加减速。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有提高技能伤害的法术放大效果。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有使指向技能失效的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "dazzle_shallow_grave",
+      "judgments": [
+        {
+          "mechanism": "death_prevention",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在其保护下不论受到多大的伤害都不会阵亡。",
+          "reason_zh": "技能明确保护目标在持续期间不会阵亡。"
+        },
+        {
+          "mechanism": "execute",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "但是斧王的淘汰之刃还是可以斩杀目标英雄。",
+          "reason_zh": "斩杀属于说明中提到的其他技能，并非薄葬自身的效果。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对该友军的治疗效果在持续时间内也会根据其生命值得到增强。",
+          "reason_zh": "增强受到的治疗不等于技能自身恢复生命。"
+        }
+      ]
+    },
+    {
+      "subject": "dazzle_shadow_wave",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗的同时还将对附近的敌方单位造成伤害。",
+          "reason_zh": "一次施放能伤害治疗目标附近的多个敌人。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "暗影波现在也可对敌人施放，在友军和敌人之间都可以弹跳。弹跳至敌人时，他们会受到伤害",
+          "reason_zh": "A杖新增在多个敌人之间弹跳并造成伤害的效果。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗的同时还将对附近的敌方单位造成伤害。施放暗影波时戴泽必定会享受到治疗效果。",
+          "reason_zh": "基础技能明确治疗队友和戴泽。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "弹跳至敌人时，他们会受到伤害，并且治疗附近友军",
+          "reason_zh": "A杖新增弹跳至敌人时治疗附近友军的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "dazzle_innate_weave",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提升友军的护甲并减少敌人的护甲。",
+          "reason_zh": "基础效果明确降低敌人的护甲。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对友军施加编织时，每层编织效果治疗%ally_heal%点。",
+          "reason_zh": "魔晶明确新增施加编织时的治疗效果。"
+        }
+      ]
+    },
+    {
+      "subject": "dazzle_nothl_projection",
+      "judgments": [
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "戴泽的灵魂离开身体超过%leash_start%距离后会被拉向身体。",
+          "reason_zh": "拉回作用于戴泽自身的灵魂，不是位移其他单位。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "穿过虚无之境变成无敌的幽灵",
+          "reason_zh": "技能明确使戴泽的灵魂进入无敌状态。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "戴泽的灵魂离开身体超过%leash_start%距离后会被拉向身体。",
+          "reason_zh": "这是技能对自身灵魂活动范围的限制，不算向目标施加限制位移。"
+        }
+      ]
+    },
+    {
+      "subject": "rattletrap_battery_assault",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "向附近敌方单位随机射出高能弹片，造成小额魔法伤害和短暂眩晕。",
+          "reason_zh": "一次施放会向附近敌人随机发射弹片，能够伤害多个敌方单位。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成小额魔法伤害和短暂眩晕。",
+          "reason_zh": "技能明确造成短暂眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "rattletrap_power_cogs",
+      "judgments": [
+        {
+          "mechanism": "mana_burn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在外侧的敌人碰到齿轮会被电流震退，损失一定的生命和魔法。",
+          "reason_zh": "齿轮震击明确使敌人损失法力。"
+        }
+      ]
+    },
+    {
+      "subject": "rattletrap_rocket_flare",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "击中时对区域内敌人造成伤害和短暂减速。",
+          "reason_zh": "一次火箭命中能对区域内多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "照明火箭提供%duration%秒击中区域的视野。",
+          "reason_zh": "技能明确提供命中区域的视野。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "击中时对区域内敌人造成伤害和短暂减速。",
+          "reason_zh": "技能明确对命中区域内敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "rattletrap_overclocking",
+      "judgments": [
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "发射钩爪：眩晕范围和时间均有提升。",
+          "reason_zh": "这里只提高其他技能已有眩晕的范围和时间，没有新增眩晕机制。"
+        }
+      ]
+    },
+    {
+      "subject": "rattletrap_jetpack",
+      "judgments": [
+        {
+          "mechanism": "flying",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "获得飞行移动状态，飞行视野和移动速度加成。",
+          "reason_zh": "该技能由魔晶授予，并明确提供飞行移动。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "获得飞行移动状态，飞行视野和移动速度加成。",
+          "reason_zh": "该技能由魔晶授予，并明确提供飞行视野。"
+        }
+      ]
+    },
+    {
+      "subject": "rattletrap_hookshot",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标附近%stun_radius%范围内所有敌人造成眩晕和伤害。",
+          "reason_zh": "一次命中能伤害目标附近范围内的所有敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对牵引时冲撞到的单位也造成伤害和眩晕。",
+          "reason_zh": "技能明确对命中及冲撞到的敌人造成眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "leshrac_split_earth",
+      "judgments": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害和短暂的眩晕。",
+          "reason_zh": "基础技能明确造成眩晕。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "撕裂大地将摧毁作用范围内的树木。",
+          "reason_zh": "说明明确写出技能会摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "leshrac_diabolic_edict",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使拉席克周围的区域充满魔法性爆炸，对敌方单位和建筑造成纯粹伤害。",
+          "reason_zh": "一次施放产生的多次爆炸能够伤害区域内多个敌方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "leshrac_lightning_storm",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击目标敌方单位，并跳跃到附近的敌方单位。",
+          "reason_zh": "一次施放的闪电能跳跃攻击多个敌方单位。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并跳跃到附近的敌方单位。",
+          "reason_zh": "跳跃的是闪电效果，没有改变施法者自身的位置。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被攻击的敌人将会被降低移动速度。",
+          "reason_zh": "技能明确降低命中敌人的移动速度。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤一片闪电风暴攻击目标敌方单位",
+          "reason_zh": "召唤的是闪电效果，材料没有描述有血量的单位。"
+        }
+      ]
+    },
+    {
+      "subject": "leshrac_greater_lightning_storm",
+      "judgments": [
+        {
+          "mechanism": "ethereal",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "使拉席克和范围内所有敌人变为虚无状态",
+          "reason_zh": "该技能由A杖授予，并明确使单位进入虚无状态。"
+        },
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "承受的魔法伤害增加",
+          "reason_zh": "这里只加深魔法伤害，应归入魔法易伤而非物理或全部伤害加深。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "承受的魔法伤害增加",
+          "reason_zh": "该A杖技能明确使敌人受到更多魔法伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "移动速度被减缓。拉席克的移动速度得到提升，而不是减缓。",
+          "reason_zh": "该A杖技能明确减缓范围内敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "leshrac_pulse_nova",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每秒对附近敌方单位造成伤害。",
+          "reason_zh": "一次开启能持续伤害附近多个敌方单位。"
+        },
+        {
+          "mechanism": "mana_burn",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次脉冲都会消耗拉席克的魔法。",
+          "reason_zh": "消耗的是施法者自身法力，属于技能代价。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次脉冲都会消耗拉席克的魔法。",
+          "reason_zh": "材料只描述消耗法力，没有恢复或吸取法力。"
+        }
+      ]
+    },
+    {
+      "subject": "furion_sprout",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "uncertain",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使一圈树木在一个单位的周围发芽，将其困在其中并造成伤害",
+          "reason_zh": "文字只明确对被围住的单位造成伤害，无法确定一次施放能否伤害多个敌人。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提供%vision_range%范围内的视野。",
+          "reason_zh": "技能明确提供区域视野。"
+        }
+      ]
+    },
+    {
+      "subject": "furion_teleportation",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "自然先知在施放技能时被打断将不会耗费魔法或使技能进入冷却。",
+          "reason_zh": "说明描述自身施法被打断的后果，没有施加打断效果。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "到达地点后获得一个护盾。",
+          "reason_zh": "基础技能明确在传送到达后提供护盾。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "传送到地图上任何位置。",
+          "reason_zh": "技能主动通过传送改变自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "furion_curse_of_the_forest",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对%range%范围内所有敌方英雄施加诅咒",
+          "reason_zh": "该魔晶技能一次对范围内所有敌方英雄施加持续伤害诅咒。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "使他们在迷雾中显形",
+          "reason_zh": "在战争迷雾中显示目标不等于使隐身单位显形。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "根据%radius%范围内树木的数量对他们造成减速和持续伤害。",
+          "reason_zh": "该魔晶技能明确根据附近树木数量对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "furion_spirit_of_the_forest",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "附近的每棵树都会让自然先知获得%damage_per_tree_pct%%%攻击力加成。",
+          "reason_zh": "技能只提供攻击力加成，没有让一次攻击或施放伤害多个敌人的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "furion_wrath_of_nature",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害性的能量在全地图跳跃，打击视野中的敌人",
+          "reason_zh": "一次施放的能量会连续跳跃并伤害多个敌人。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "缠绕所有击中的敌人。",
+          "reason_zh": "A杖明确新增对命中敌人的缠绕定身效果。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害性的能量在全地图跳跃",
+          "reason_zh": "跳跃的是伤害能量，没有改变施法者自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "life_stealer_rage",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "说明明确标注技能施加弱驱散。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "进入狂暴状态，变成减益免疫",
+          "reason_zh": "基础技能明确使自身进入减益免疫状态。"
+        }
+      ]
+    },
+    {
+      "subject": "life_stealer_open_wounds",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "噬魂鬼撕裂一个敌方单位，减缓受害者的移动速度",
+          "reason_zh": "材料描述的是单体减速及吸血效果，没有技能自身的多目标伤害。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使所有友军在攻击该单位时根据造成的伤害回复一定比例的生命。",
+          "reason_zh": "技能赋予攻击目标时恢复生命的效果，符合恢复生命的定义。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使所有友军在攻击该单位时根据造成的伤害回复一定比例的生命。",
+          "reason_zh": "攻击者根据对目标造成的伤害按比例恢复生命，符合吸血定义。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓受害者的移动速度",
+          "reason_zh": "技能明确降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "life_stealer_feast",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次攻击时还会根据目标最大生命值的一定百分比造成伤害，同时获得治疗。",
+          "reason_zh": "技能明确使自身在每次攻击时获得治疗。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Lifestealer's attacks deal damage and provide heal for a percentage of his target's max health.",
+          "reason_zh": "攻击按目标最大生命值比例恢复自身生命，符合给定吸血定义。"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,669 @@
+{
+  "objects": [
+    {
+      "subject": "invoker_ghost_walk",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "现在幽灵漫步还会对范围内的敌方英雄施加寒冰之墙的每秒伤害。",
+          "reason_zh": "魔晶新增对范围内敌方英雄持续造成伤害的效果。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使自己隐形",
+          "reason_zh": "基础技能明确使自身隐身。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得生命和魔法恢复",
+          "reason_zh": "基础技能明确提供自身魔法恢复。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "附近敌人的移动速度被减缓",
+          "reason_zh": "基础技能会降低附近敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_tornado",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "强袭飓风会沿其路径产生气旋。气旋在飓风的持续时间内会一直持续，并且飓风消失后还会基于冰的等级额外持续数秒。气旋每%twister_tick_rate%秒在%twister_radius%范围内基于雷的等级造成伤害。",
+          "reason_zh": "A杖新增的气旋会在范围内持续造成伤害。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "基础说明明确标注施加弱驱散。"
+        },
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被强袭飓风吹起时单位处于无敌状态",
+          "reason_zh": "技能将目标吹起并使其在此期间无敌，符合吹风定义。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被强袭飓风吹起时单位处于无敌状态",
+          "reason_zh": "基础技能明确使被吹起的单位处于无敌状态。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将路径上的敌方单位卷起，使其在空中无助地漂浮一段时间",
+          "reason_zh": "吹起效果不能直接作为阻止闪烁、传送或离开范围的证据。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_emp",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "祈求者在指定位置召唤出一道强力的自爆电磁脉冲，%delay%秒后将自动爆炸。",
+          "reason_zh": "蓄积能量后爆炸不属于每次使用消耗一点的充能机制。"
+        },
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对被吹起的单位（强袭飓风或Eul的神圣法杖）无效。",
+          "reason_zh": "材料仅描述与被吹起单位的交互，没有说明电磁脉冲自身施加吹风或放逐。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "将敌方单位以每秒%drag_speed%距离的速度向电磁脉冲的中心牵引",
+          "reason_zh": "魔晶新增牵引敌方单位的位移效果。"
+        },
+        {
+          "mechanism": "mana_burn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "根据雷元素的等级损毁敌方的魔法值",
+          "reason_zh": "基础技能明确削减敌方法力值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "祈求者将获得%self_mana_restore_pct%%%损毁的魔法。",
+          "reason_zh": "基础技能将损毁的部分魔法恢复给祈求者。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_chaos_meteor",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每隔一段时间撞击一次作用范围内的敌人",
+          "reason_zh": "一次施放的陨石能伤害作用范围内的多个敌人。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "流星着陆后会向前滚动一段距离",
+          "reason_zh": "材料描述的是陨石自身滚动，没有说明移动其他单位。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_sun_strike",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "区域内敌人将平摊所有伤害",
+          "reason_zh": "一次施放能对区域内多个敌人造成分摊伤害。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "每个敌方英雄附近%cataclysm_min_range%-%cataclysm_max_range%范围内产生%cataclysm_count%个可见的阳炎冲击，每个都具有%cataclysm_damage_pct%%%伤害。",
+          "reason_zh": "A杖新增毁天灭地，一次施放可产生多处造成范围伤害的阳炎冲击。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施放后立即获得目标区域的视野。",
+          "reason_zh": "基础技能明确提供目标区域的视野。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_forge_spirit",
+      "judgments": [
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "创造出熔炉精灵。熔炉精灵的攻击力和护甲取决于火元素的等级，攻击距离、持续时间和生命值取决于冰元素的等级。",
+          "reason_zh": "技能创造具有生命值的熔炉精灵，符合召唤物定义。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_ice_wall",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "The bitter cold emanating from it greatly slows nearby enemies based on the level of Quas and deals damage each second based on the level of Exort.",
+          "reason_zh": "一次施放的寒冰之墙能持续伤害附近多个敌人。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "在浮冰内停留超过%root_delay%秒的敌方英雄会基于冰的等级被缠绕并受到魔法伤害。",
+          "reason_zh": "A杖新增使范围内停留足够时间的敌方英雄被缠绕的效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "寒冰之气将对敌方单位造成减速和伤害",
+          "reason_zh": "基础技能明确对敌方单位施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "invoker_deafening_blast",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在自己前方释放出超强的声波，对所有敌方单位造成伤害",
+          "reason_zh": "一次声波施放能对多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时让他们无法进行攻击",
+          "reason_zh": "基础技能明确使目标无法攻击，符合缴械定义。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "声波的绝对冲击能够将敌方单位击退",
+          "reason_zh": "击退属于移动目标，材料未说明阻止闪烁、传送或离开范围。"
+        }
+      ]
+    },
+    {
+      "subject": "silencer_curse_of_the_silent",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "诅咒目标区域，造成伤害并使敌人持续受到伤害",
+          "reason_zh": "基础技能对目标区域内的敌人造成伤害，能命中多个单位。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "目标被沉默时不计入负面效果的持续时间。",
+          "reason_zh": "沉默仅作为暂停持续时间的交互条件，技能自身未施加沉默。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "移动速度被减缓",
+          "reason_zh": "基础技能明确降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "silencer_glaives_of_wisdom",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次攻击窃取目标的智力，并造成基于他智力值的额外伤害",
+          "reason_zh": "普通攻击附带智力窃取和额外伤害，符合攻击特效定义。"
+        },
+        {
+          "mechanism": "stat_steal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次攻击窃取目标的智力",
+          "reason_zh": "基础技能明确从目标窃取智力属性。"
+        }
+      ]
+    },
+    {
+      "subject": "silencer_last_word",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提供目标的视野",
+          "reason_zh": "基础技能明确提供目标视野。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "只要目标施放技能或魔咒消失，目标就会受到伤害并被沉默",
+          "reason_zh": "基础技能在目标施法或魔咒结束时施加沉默。"
+        }
+      ]
+    },
+    {
+      "subject": "silencer_brain_drain",
+      "judgments": [
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "沉默术士对被沉默的目标造成更多伤害，受到来自他们的伤害减少。",
+          "reason_zh": "被沉默仅为效果生效条件，材料没有说明该技能自身施加沉默。"
+        },
+        {
+          "mechanism": "stat_steal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "沉默术士都会永久窃取其%permanent_int_steal_amount%点智力",
+          "reason_zh": "基础技能在满足阵亡条件时永久窃取敌方英雄智力。"
+        }
+      ]
+    },
+    {
+      "subject": "silencer_global_silence",
+      "judgments": [
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "阻止地图上所有敌方英雄和单位施法",
+          "reason_zh": "基础技能明确阻止敌方单位施法，符合沉默定义。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "阻止地图上所有敌方英雄和单位施法。；全领域静默在全领域静默的持续时间内对英雄施加奥术诅咒。",
+          "reason_zh": "沉默属于基础效果，A杖新增的是奥术诅咒而非新的沉默效果。"
+        }
+      ]
+    },
+    {
+      "subject": "obsidian_destroyer_arcane_orb",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击附带基于剩余魔法值的额外纯粹伤害",
+          "reason_zh": "基础技能使普通攻击附带额外伤害，符合攻击特效定义。"
+        }
+      ]
+    },
+    {
+      "subject": "obsidian_destroyer_astral_imprisonment",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "星体禁锢现在会造成范围伤害。",
+          "reason_zh": "魔晶明确新增范围伤害。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被隐藏的英雄处于无敌和无法行动状态。",
+          "reason_zh": "基础技能明确使被禁锢目标无敌。"
+        }
+      ]
+    },
+    {
+      "subject": "obsidian_destroyer_objurgation",
+      "judgments": [
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "阻止生效时，殁境神蚀者获得一次强驱散",
+          "reason_zh": "A杖新增触发伤害阻止时对自身施加强驱散的效果。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施放后，殁境神蚀者获得全伤害护盾",
+          "reason_zh": "基础技能明确提供吸收伤害的护盾。"
+        }
+      ]
+    },
+    {
+      "subject": "obsidian_destroyer_equilibrium",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "通过攻击特效的技能回复的魔法会减少。",
+          "reason_zh": "材料只是描述对攻击特效技能的回蓝交互，没有让普通攻击附带效果。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被动拥有一定几率在施放技能时回复最大魔法值的一定百分比",
+          "reason_zh": "基础技能能在施法时概率恢复自身魔法值。"
+        }
+      ]
+    },
+    {
+      "subject": "obsidian_destroyer_sanity_eclipse",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Unleashes a psychic blast that deals damage to enemies based on the difference between your max mana and the target's max mana.",
+          "reason_zh": "英文说明明确一次神智冲击对多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "神智之蚀可以作用于星体禁锢中的单位。",
+          "reason_zh": "能命中已被禁锢的单位只是交互，不能证明自身施加位移限制。"
+        }
+      ]
+    },
+    {
+      "subject": "lycan_summon_wolves",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "所有召唤的精灵狼获得健步如飞技能，这个主动技能使精灵狼获得相位移动，闪避，移动速度和攻击速度。",
+          "reason_zh": "魔晶明确赋予召唤的精灵狼获得闪避的主动技能。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "这个主动技能使精灵狼获得相位移动",
+          "reason_zh": "魔晶明确赋予召唤的精灵狼获得相位移动的主动技能。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤%wolf_count%头精灵狼为狼人战斗。",
+          "reason_zh": "基础技能明确召唤参与战斗的精灵狼单位。"
+        }
+      ]
+    },
+    {
+      "subject": "lycan_howl",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "所有敌人的护甲和攻击力降低",
+          "reason_zh": "范围降低护甲和攻击力不等于直接造成范围伤害。"
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "所有敌人的护甲和攻击力降低",
+          "reason_zh": "基础技能明确降低敌人护甲。"
+        },
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "所有敌人的护甲和攻击力降低",
+          "reason_zh": "基础技能明确降低敌人攻击力。"
+        }
+      ]
+    },
+    {
+      "subject": "lycan_feral_impulse",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提升狼人和所有他控制的单位的生命恢复和攻击力。",
+          "reason_zh": "技能提供生命恢复，按规则计入治疗回复。"
+        }
+      ]
+    },
+    {
+      "subject": "lycan_wolf_bite",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "share the healing effect of Lifesteal with each other as long as they are within %lifesteal_range% range of each other",
+          "reason_zh": "技能明确让双方共享吸血产生的治疗，且整个技能由A杖提供。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "自身和目标都获得%lifesteal_percent%%%吸血效果",
+          "reason_zh": "技能明确赋予自身和目标吸血，且整个技能由A杖提供。"
+        }
+      ]
+    },
+    {
+      "subject": "lycan_shapeshift",
+      "judgments": [
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得致命一击的能力",
+          "reason_zh": "基础技能明确赋予致命一击，即暴击能力。"
+        }
+      ]
+    },
+    {
+      "subject": "brewmaster_thunder_clap",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "猛击地面，造成伤害并降低附近敌方单位的移动速度和攻击速度。",
+          "reason_zh": "一次猛击能对附近多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低附近敌方单位的移动速度和攻击速度",
+          "reason_zh": "基础技能明确降低敌方单位的移动速度和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "brewmaster_cinder_brew",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "向敌人扔出一个酒桶，对沿途的敌人造成伤害",
+          "reason_zh": "一次施放的酒桶能伤害路径上的多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "路径上和溅酒点的敌人会浸满余烬佳酿，并且被减速。",
+          "reason_zh": "基础技能明确对路径和溅酒区域内的敌人施加减速。"
+        }
+      ]
+    }
+  ]
+}

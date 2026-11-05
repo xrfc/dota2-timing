@@ -1,0 +1,1424 @@
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a5c5-36ea-7332-87c7-e2f9d65dab7f
+--------
+user
+你在独立阅读Dota 2技能和装备的说明，判断每个对象具备词表里的哪些机制。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+要求：
+- 每个对象都要输出一条，`subject`原样返回。没有任何机制时`mechanisms`为空数组。
+- 逐个对象读完整说明，对照词表全部条目判断，不要只找明显的。说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 词表定义已经用户确认，必须遵守。另外：
+  - 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。
+  - 提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+  - 召唤物只算有血量的单位；按受攻击次数计算的不算。
+  - 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+  - 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `condition`：基础效果写`base`，只在有A杖时生效写`scepter`，只在有魔晶时写`shard`，装备写`item`。`granted_by`不为空的对象，整个技能按该升级记。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字（如“+ 35% Evasion”），可以当证据。`%xxx%`是数值占位符。
+- `quote`摘决定判断的原文片段；`uncertain`为true表示材料不足或需要游戏知识，不要猜。
+
+词表：
+[
+{
+"id": "stun",
+"zh": "眩晕",
+"definition": "使目标无法行动和施法的硬控（含小眩晕）"
+},
+{
+"id": "hex",
+"zh": "妖术",
+"definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品"
+},
+{
+"id": "silence",
+"zh": "沉默",
+"definition": "目标无法施放技能（仍可攻击、使用物品）"
+},
+{
+"id": "mute",
+"zh": "禁用物品",
+"definition": "目标无法使用物品"
+},
+{
+"id": "disarm",
+"zh": "缴械",
+"definition": "目标无法普通攻击"
+},
+{
+"id": "root",
+"zh": "定身",
+"definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"
+},
+{
+"id": "forced_action",
+"zh": "强制行为",
+"definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"
+},
+{
+"id": "sleep",
+"zh": "睡眠",
+"definition": "无法行动，受伤害后醒来"
+},
+{
+"id": "cyclone_banish",
+"zh": "吹风/放逐",
+"definition": "使目标短暂离开战场，期间无敌或不可被选取"
+},
+{
+"id": "slow",
+"zh": "减速",
+"definition": "降低移动速度或攻击速度"
+},
+{
+"id": "evasion",
+"zh": "闪避",
+"definition": "自身有概率使敌方攻击落空"
+},
+{
+"id": "blind",
+"zh": "致盲",
+"definition": "使敌方单位的攻击有概率落空"
+},
+{
+"id": "debuff_immunity",
+"zh": "减益免疫/技能免疫",
+"definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"
+},
+{
+"id": "pierces_debuff_immunity",
+"zh": "穿透减益免疫",
+"definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）"
+},
+{
+"id": "invulnerable_untargetable",
+"zh": "无敌/不可选取",
+"definition": "暂时无法被伤害或无法被指向"
+},
+{
+"id": "damage_block",
+"zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"
+},
+{
+"id": "death_prevention",
+"zh": "免死",
+"definition": "在一段时间内不会被打死（如薄葬、回光返照）"
+},
+{
+"id": "status_resistance",
+"zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"
+},
+{
+"id": "slow_resistance",
+"zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）"
+},
+{
+"id": "applies_basic_dispel",
+"zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果"
+},
+{
+"id": "applies_strong_dispel",
+"zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）"
+},
+{
+"id": "applies_break",
+"zh": "施加破坏",
+"definition": "使目标的被动技能暂时失效"
+},
+{
+"id": "invisibility",
+"zh": "隐身",
+"definition": "使自身、队友、召唤物或复制体隐身"
+},
+{
+"id": "true_sight",
+"zh": "真视",
+"definition": "可看见隐身单位"
+},
+{
+"id": "healing",
+"zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）"
+},
+{
+"id": "lifesteal",
+"zh": "吸血",
+"definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"
+},
+{
+"id": "heal_reduction",
+"zh": "治疗削减",
+"definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"
+},
+{
+"id": "mana_burn",
+"zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值"
+},
+{
+"id": "mana_gain",
+"zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"
+},
+{
+"id": "illusions",
+"zh": "幻象",
+"definition": "制造自身或他人的幻象"
+},
+{
+"id": "summons",
+"zh": "召唤物",
+"definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"
+},
+{
+"id": "self_mobility",
+"zh": "自身位移",
+"definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"
+},
+{
+"id": "displace_other",
+"zh": "位移他人",
+"definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"
+},
+{
+"id": "damage_return",
+"zh": "反伤",
+"definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件"
+},
+{
+"id": "bash",
+"zh": "重击",
+"definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算"
+},
+{
+"id": "pierce_evasion",
+"zh": "克敌机先",
+"definition": "攻击无视闪避（必中）"
+},
+{
+"id": "critical",
+"zh": "暴击",
+"definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"
+},
+{
+"id": "ethereal",
+"zh": "虚无",
+"definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"
+},
+{
+"id": "armor_reduction",
+"zh": "减护甲",
+"definition": "降低目标护甲"
+},
+{
+"id": "magic_resist_reduction",
+"zh": "减魔抗/魔法易伤",
+"definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"
+},
+{
+"id": "incoming_damage_amp",
+"zh": "伤害加深",
+"definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）"
+},
+{
+"id": "attack_damage_reduction",
+"zh": "减攻击力",
+"definition": "降低目标的攻击力"
+},
+{
+"id": "spell_block",
+"zh": "格挡指向技能",
+"definition": "使指向自身或队友的技能失效"
+},
+{
+"id": "spell_reflect",
+"zh": "反弹指向技能",
+"definition": "把指向技能反弹给施法者"
+},
+{
+"id": "projectile_dodge",
+"zh": "躲避弹道",
+"definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"
+},
+{
+"id": "channel_interrupt",
+"zh": "打断持续施法",
+"definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"
+},
+{
+"id": "mobility_lock",
+"zh": "限制位移",
+"definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"
+},
+{
+"id": "cleave",
+"zh": "分裂溅射",
+"definition": "攻击伤害波及周围单位"
+},
+{
+"id": "attack_modifier",
+"zh": "攻击特效",
+"definition": "给攻击附加效果的法球类技能"
+},
+{
+"id": "spell_amp",
+"zh": "法术放大",
+"definition": "提高技能造成的伤害"
+},
+{
+"id": "aura",
+"zh": "光环",
+"definition": "持续影响周围单位；对友军或敌方都算，并记作用对象"
+},
+{
+"id": "reveal",
+"zh": "显形",
+"definition": "使隐身单位显形，不等于持续真视"
+},
+{
+"id": "grant_vision",
+"zh": "提供视野",
+"definition": "提供目标或区域的视野"
+},
+{
+"id": "reduce_vision",
+"zh": "减视野",
+"definition": "降低目标的视野"
+},
+{
+"id": "phased",
+"zh": "相位移动",
+"definition": "移动不受单位碰撞阻挡"
+},
+{
+"id": "flying",
+"zh": "飞行",
+"definition": "飞行移动，能越过地形"
+},
+{
+"id": "tree_walk",
+"zh": "穿树",
+"definition": "能穿过树木移动"
+},
+{
+"id": "tree_destroy",
+"zh": "砍树",
+"definition": "能摧毁树木"
+},
+{
+"id": "respawn",
+"zh": "重生",
+"definition": "死亡后复活，或影响复活"
+},
+{
+"id": "execute",
+"zh": "斩杀",
+"definition": "目标低于生命阈值时直接杀死"
+},
+{
+"id": "hp_removal",
+"zh": "生命移除",
+"definition": "直接移除生命，不算伤害"
+},
+{
+"id": "spell_steal",
+"zh": "偷技能",
+"definition": "获得其他单位的技能"
+},
+{
+"id": "stat_steal",
+"zh": "偷属性",
+"definition": "夺取目标的属性"
+},
+{
+"id": "cooldown_reduction",
+"zh": "减冷却",
+"definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"
+},
+{
+"id": "cooldown_reset",
+"zh": "刷新冷却",
+"definition": "立刻重置冷却"
+},
+{
+"id": "economy",
+"zh": "经济经验",
+"definition": "提供额外金钱或经验；只是正常赏金不算"
+},
+{
+"id": "charges",
+"zh": "充能",
+"definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"
+},
+{
+"id": "aoe_damage",
+"zh": "范围伤害",
+"definition": "一次施放或一次攻击能对多个敌方单位造成伤害"
+}
+]
+
+待判断对象：
+[{"subject": "winter_wyvern_eldwurms_edda", "name_zh": "寒冬飞龙·古龙诗集", "name_en": "Eldwurm's Edda", "description_zh": "寒冬飞龙获得物品“古龙诗集”，可以消耗，使一个基础技能的当前和最高等级均提升一级，另外寒冬飞龙的基础智力提升，数值为消耗时相应数值的%tooltip_int_pct%%%。", "description_en": "Grants Winter Wyvern the item Eldwurm's Edda, which can be consumed to increase the current and maximum level of a basic ability by one and Winter Wyvern's base intelligence by %tooltip_int_pct%%% of its current value at the time of consumption.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["tooltip_seconds", "tooltip_int_pct"]}, {"subject": "winter_wyvern_winters_curse", "name_zh": "寒冬飞龙·寒冬诅咒", "name_en": "Winter's Curse", "description_zh": "寒冬飞龙驱散一个敌方目标并将其冻在原地，附近的其他敌人将受到癫狂诅咒，对冻住的队友进行攻击，而且攻击速度得到提升。冻住的目标和被诅咒攻击队友的敌人不会受到任何来自敌方的伤害，不过寒冬飞龙或她控制的单位造成的伤害除外。敌方英雄进入施放后的诅咒范围内会增加诅咒的持续时间。", "description_en": "Winter Wyvern dispells then freezes an enemy in place while striking those nearby with a maddening curse which causes them to attack their frozen ally with increased attack speed. The frozen ally and those cursed to attack their ally are immune to all damage from their enemies with the exception of damage from Winter Wyvern or her controlled units. Enemy heroes which enter the cursed area after the cast add to the duration of the curse.", "notes_zh": ["如果目标被其队友击杀，击杀者将仍是寒冰飞龙。", "无视主目标的减益免疫状态，但是对目标周围的减益免疫队友无效。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "damage_reduction", "bonus_attack_speed", "duration", "max_duration", "bonus_duration_per_hero", "bonus_duration_per_creep", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "arc_warden_flux", "name_zh": "天穹守望者·乱流", "name_en": "Flux", "description_zh": "将不稳定的涡流能量灌注到落单敌人体内，造成持续伤害并减缓其移动速度。如目标周围有其他敌方单位 ，则不会造成伤害。", "description_en": "Infuses a lone enemy unit with swirling, volatile energy, dealing damage over time and slowing the target. The damage is not applied if another enemy unit is near the target.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "目标落单时乱流具有沉默效果，造成更高伤害，而且持续时间更长。", "en": "Flux silences when the target is alone, deals more damage, and lasts longer."}}, "is_passive": false, "value_names": ["duration", "search_radius", "think_interval", "damage_per_second", "move_speed_slow_pct", "applies_silence", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "arc_warden_magnetic_field", "name_zh": "天穹守望者·磁场", "name_en": "Magnetic Field", "description_zh": "天穹守望者制造一个充满磁能的圆形扭曲力场。磁场提供攻击速度加成，并且其中的友方单位可以闪避来自磁场外的攻击。磁场可以牵引神符，并且自动激活其中的神符。", "description_en": "Arc Warden generates a circular distortion field of magnetic energy. The Magnetic Field grants bonus attack speed and protects allied units within it by evading attacks coming from outside the field. The Magnetic Field pulls runes, and runes inside Magnetic Field automatically activate.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "duration", "attack_speed_bonus", "evasion_chance", "rune_pull_strength", "rune_pull_max_speed_as_multiplier_of_pull_strength", "rune_pull_falloff_multiplier", "rune_pull_radius", "rune_activate_radius_buffer", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "arc_warden_spark_wraith", "name_zh": "天穹守望者·闪光幽魂", "name_en": "Spark Wraith", "description_zh": "召唤一个缓慢实体化的闪光怨灵萦绕在目标区域，直到有敌人进入范围。一旦有敌方单位进入范围，怨灵将贴近敌人自我熔化，造成魔法伤害并使目标减速。", "description_en": "Summons a Spark Wraith that slowly materializes and patrols a targeted area until an enemy comes within its range. Once a target has been found the wraith fuses with them, dealing magical damage and slowing the unit.", "notes_zh": ["闪光幽魂无法被躲避。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "duration", "move_speed_slow_pct", "base_activation_delay", "spark_damage_base", "wraith_speed_base", "ministun_duration", "think_interval", "wraith_vision_radius", "wraith_vision_duration", "maximum_targets", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "arc_warden_runic_infusion", "name_zh": "天穹守望者·神符灌注", "name_en": "Runic Infusion", "description_zh": "神符之力与本尊融合。天穹守望者或风暴双雄每次激活强化神符后天穹守望者都会永久获得+%all_attribute_bonus_per_stack% 全属性。", "description_en": "Runes of Power fuse to the Self. Arc Warden gains +%all_attribute_bonus_per_stack% all attributes permanently whenever Arc Warden or the Tempest Double activates a Power Rune.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["water_bounty_rune_duration_pct", "bonus_stacks_per_rune_pickup", "all_attribute_bonus_per_stack"]}, {"subject": "arc_warden_tempest_double", "name_zh": "天穹守望者·风暴双雄", "name_en": "Tempest Double", "description_zh": "天穹守望者将破碎的自我汇聚到一起，创造出自身的完美电子复制体。复制体可以使用天穹守望者的当前所有物品和基础技能，但是大部分消耗品以及死亡时会掉落的物品除外。复制体的物品和技能冷却时间会独立计算。复制体会逐渐失去自我意识，移动速度变慢，攻击准确度下降。", "description_en": "Briefly refocusing its fractured elements into a single form, the Arc Warden is able to create a perfect electrical duplication of itself. The duplicate can use all of Arc Warden's current items and spells, except most consumables and items that drop on death. The duplicate has separate item and ability cooldowns.The Tempest Double loses its sense of self and fractures over time, becoming slower and less accurate.", "notes_zh": ["复制体无法使用风暴双雄或刷新球。"], "granted_by": "", "upgrades": {"shard": {"zh": "风暴双雄产生时带有奥术、隐身和极速神符的效果，持续%rune_duration%秒。不会触发神符灌注。", "en": "The Tempest Double is infused with the bonuses of Arcane, Invisibility, and Haste Runes for %rune_duration%s when created.Does not trigger Runic Infusion."}}, "is_passive": false, "value_names": ["bounty", "bounty_gold", "bounty_xp", "duration", "max_blind_chance", "max_slow", "has_debuff", "rune_duration", "invis_rune", "arcane_rune", "haste_rune", "AbilityCastRange", "AbilityCastPoint", "AbilityCooldown"]}, {"subject": "abyssal_underlord_firestorm", "name_zh": "孽主·火焰风暴", "name_en": "Firestorm", "description_zh": "召唤数波火焰风暴攻击目标区域内的所有单位，并额外持续造成烧灼伤害。", "description_en": "Calls down waves of fire that damage enemy units in the target area, burning for additional damage over time.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "火焰风暴可以对友军施放。施放后火焰风暴会跟随该英雄。火焰风暴的波数增加，伤害触发间隔/持续时间更短。", "en": "Firestorm can be allied targeted. When used that way, the Firestorm follows the hero around.  The wave count is increased, and tick rate / duration time occur more quickly."}}, "is_passive": false, "value_names": ["radius", "wave_duration", "wave_count", "wave_damage", "wave_interval", "burn_damage", "burn_interval", "burn_duration", "can_target_units", "shard_wave_count_bonus", "shard_wave_interval_reduction", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "abyssal_underlord_pit_of_malice", "name_zh": "孽主·怨念深渊", "name_en": "Pit of Malice", "description_zh": "在目标区域制造致命的深渊；踏入深渊的敌方单位将受到伤害并且被缠绕。每个敌方单位每隔%pit_interval%秒才会再次受到作用。", "description_en": "A deadly pit is conjured at the target location; any unit that enters will be damaged and rooted. Each enemy unit within the pit are affected by the root only every %pit_interval% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "pit_duration", "pit_interval", "pit_damage", "ensnare_duration", "speed_bonus", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "abyssal_underlord_atrophy_aura", "name_zh": "孽主·衰退光环", "name_en": "Atrophy Aura", "description_zh": "周围所有敌方单位遭到了削弱，损失部分基础攻击力。如果敌方英雄在光环范围内死亡，孽主将获得临时的额外攻击力加成。", "description_en": "Nearby enemy units are weakened, losing a portion of their base damage. If an enemy dies while under this effect, Underlord gains temporary bonus damage.", "notes_zh": ["破坏会使攻击力降低光环失效，并且孽主无法获得新的额外攻击力。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["radius", "damage_reduction_pct", "bonus_damage_from_creep", "bonus_damage_from_hero", "bonus_damage_duration"]}, {"subject": "abyssal_underlord_raid_boss", "name_zh": "孽主·侵略大军", "name_en": "Invading Force", "description_zh": "友方英雄传送后会临时获得承受伤害降低和移动速度加成。友军通过恶魔之扉传送后会获得%dark_portal_multiplier%倍加成。", "description_en": "After an allied hero Teleports, they temporarily gain Damage Reduction and Movement Speed. Allies receive %dark_portal_multiplier%x bonuses if teleporting via Fiend's Gate.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["damage_reduction", "bonus_ms", "dark_portal_multiplier", "buff_duration"]}, {"subject": "abyssal_underlord_dark_portal", "name_zh": "孽主·恶魔之扉", "name_en": "Fiend's Gate", "description_zh": "打开2个传送门，一个在孽主身旁，另一个在目标地点。英雄可以对一个传送门持续施法%warp_channel_duration%秒，传送至另一端。传送门之间的距离必须超过%minimum_distance%。", "description_en": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side. Portals have to be at least %minimum_distance% away from each other.", "notes_zh": ["双击会在己方基地的泉水前打开另一个传送门。"], "granted_by": "", "upgrades": {"scepter": {"zh": "在传送门两端各召唤一个怨念深渊。减少冷却时间。", "en": "Summons a Pit of Malice around each of the portals. Reduces cooldown."}}, "is_passive": false, "value_names": ["duration", "minimum_distance", "spawn_pit_on_cast", "warp_channel_duration", "distance_from_fountain", "dps", "radius", "cast_firestorm", "hull_radius", "gold_bounty", "xp_bounty", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "monkey_king_boundless_strike", "name_zh": "齐天大圣·棒击大地", "name_en": "Boundless Strike", "description_zh": "齐天大圣让金箍棒变大，并将其挥起猛击地面，眩晕一条直线上的敌人并造成额外伤害和基于他普通攻击的致命一击伤害。具有克敌机先效果。", "description_en": "Monkey King enlarges his staff and slams it against the ground, stunning enemies in a line and damaging them with bonus damage and a critical hit based on his attack. Has True Strike.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "棒击大地对沿途和末端的敌人施加乾坤之跃，威力为最长持续施法时间的%spring_channel_pct%%%。棒击大地设为多样施法（右键点击技能栏图标）后，齐天大圣还会跳跃至金箍棒的另一端。", "en": "Boundless Strike applies Primal Spring with %spring_channel_pct%%% of the max channeling duration power to enemies along the staff and at the end of the staff. When Boundless Strike is set to alt-cast, Monkey King leaps to the end of his staff."}}, "is_passive": false, "value_names": ["stun_duration", "strike_crit_mult", "strike_flat_damage", "strike_radius", "strike_cast_range", "acceleration_z", "min_height_above_lowest", "min_height_above_highest", "max_horizontal_acceleration", "duration", "spring_channel_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "monkey_king_tree_dance", "name_zh": "齐天大圣·丛林之舞", "name_en": "Tree Dance", "description_zh": "齐天大圣跳上一棵树并停在上面。停留时获得乾坤之跃技能——需要持续施法的跳跃式攻击。如果树木被摧毁，他将从树上掉下，并眩晕%unperched_stunned_duration%秒。在地面受到伤害时丛林之舞将在一定时间内无法使用，处于冷却状态。", "description_en": "Monkey King jumps to a tree and perches atop it. While perched, he gains the Primal Spring ability-a channeled leap attack. If Monkey King's tree is destroyed, he falls and is stunned for %unperched_stunned_duration%s. Taking damage while on the ground puts Tree Dance on cooldown.", "notes_zh": ["丛林之舞在落地时进入冷却。", "右键点击地面后齐天大圣会从树上跳下。", "齐天大圣受到眩晕、妖术或放逐作用时位移都会被打断。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["leap_speed", "spring_leap_speed", "give_up_distance", "ground_jump_distance", "perched_jump_distance", "jump_damage_cooldown", "perched_day_vision", "perched_night_vision", "perched_spot_height", "unperched_stunned_duration", "top_level_height", "impact_damage_tooltip", "impact_movement_slow_tooltip", "range", "max_level"]}, {"subject": "monkey_king_jingu_mastery", "name_zh": "齐天大圣·如意棒法", "name_en": "Jingu Mastery", "description_zh": "齐天大圣的攻击唤醒了金箍棒的力量。连续攻击四次同个敌方英雄后，齐天大圣的下%charges%次攻击得到加强，拥有攻击力加成和吸血效果。", "description_en": "Monkey King's attacks awaken the Jingu Bang's power. Upon the fourth hit on the same enemy hero, Monkey King earns %charges% charged attacks that have bonus damage and lifesteal.", "notes_zh": ["棒击大地击中敌人时也会计入攻击次数。", "再次攻击敌人将刷新如意棒法的计数持续时间。", "敌人身上的计数效果无法被驱散。", "自身的如意棒法效果可以被驱散。", "破坏会使技能无法获得新的叠加效果。", "破坏不会使现有叠加效果提供的加成失效。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["required_hits", "counter_duration", "charges", "bonus_damage", "lifesteal", "max_duration", "buff_is_undispellable"]}, {"subject": "monkey_king_mischief", "name_zh": "齐天大圣·七十二变", "name_en": "Mischief", "description_zh": "齐天大圣以周遭事物为启发进行伪装，改变自己的外形，从而欺骗对手。受到伤害，发动攻击或使用任意物品都会失去伪装效果。变化后%invul_duration%秒内免疫伤害。", "description_en": "Changes Monkey King's shape to deceive opponents, using the environment nearby as inspiration for the disguise. Taking damage, attacking, or using any item or ability breaks Monkey King's disguise. Grants damage immunity for %invul_duration% seconds upon transforming.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["movespeed", "reveal_radius", "invul_duration", "AbilityCooldown"]}, {"subject": "monkey_king_wukongs_command", "name_zh": "齐天大圣·猴子猴孙", "name_en": "Wukong's Command", "description_zh": "齐天大圣变出圆形的猴子猴孙阵列，猴子猴孙从他的位置散开。若齐天大圣离开范围，猴子猴孙将会消失。猴子猴孙继承齐天大圣的攻击力，攻击频率为固定的%attack_speed%秒，并且只会以敌方英雄为目标。在技能持续时间内齐天大圣获得护甲加成。齐天大圣可以在猴子猴孙期间变成其中一个猴子猴孙，短时间内取代其位置，无法和其他猴子猴孙相区分，并且在原地留下一个猴子猴孙。", "description_en": "Monkey King creates a circular formation of soldiers that spread out from his position. If Monkey King leaves the area his soldiers disperse. The soldiers have Monkey King's attack that attacks at a fixed rate of %attack_speed%s, and only targets enemy Heroes. Monkey King is granted bonus armor for the spell's duration.Monkey King can transform into any one of his soldiers during Wukong's command, taking its place for a short duration, becoming indistinguishable from other soldiers, and leaving another soldier in his stead.", "notes_zh": ["猴子猴孙不会获得如意棒法的加成效果。", "猴子猴孙不会继承碎颅锤和深渊之刃的效果。"], "granted_by": "", "upgrades": {"scepter": {"zh": "每隔一段时间在齐天大圣附近产生一个猴子猴孙。隐身或上树时不会产生。只有齐天大圣在附近时猴子猴孙才会攻击建筑。猴子猴孙现在独立获得如意棒法的效果。", "en": "Spawns a monkey soldier near Monkey King at regular intervals. Soldiers do not spawn while invisible or on trees. Soldiers only attack buildings when Monkey King himself is nearby. Soldiers can now gain Jingu Mastery charges independently."}}, "is_passive": false, "value_names": ["first_radius", "second_radius", "third_radius", "num_first_soldiers", "num_second_soldiers", "num_third_soldiers", "move_speed", "bonus_armor", "attack_speed", "duration", "leadership_time_buffer", "cast_range", "cast_range_scepter", "cooldown_scepter", "scepter_spawn_interval"]}, {"subject": "monkey_king_transfiguration", "name_zh": "齐天大圣·出神入化", "name_en": "Changing of the Guard", "description_zh": "齐天大圣可以在猴子猴孙期间变成其中一个猴子猴孙，%transfiguration_duration%秒内取代其位置，无法和其他猴子猴孙相区分，并且在原地留下一个猴子猴孙。变身后齐天大圣为无敌，但是无法攻击或施放技能。", "description_en": "Monkey King can transform into any one of his soldiers during Wukong's command, taking its place for a %transfiguration_duration%s, becoming indistinguishable from other soldiers, and leaving another soldier in his stead. While transformed, Monkey King is invulnerable, but cannot attack or cast spells", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["transfiguration_duration", "initial_cooldown", "AbilityCastPoint", "AbilityCooldown"]}, {"subject": "pangolier_swashbuckle", "name_zh": "石鳞剑士·虚张声势", "name_en": "Swashbuckle", "description_zh": "石鳞剑士先冲向目标地点，再向指示方向上的所有敌人刺出数剑并减速他们。\n\n刺剑有几率触发幸运一击。", "description_en": "Pangolier dashes along the target line, then slashes and briefly slows all enemies in the drawn direction with several quick swipes.\n\nLucky Shot has a chance to activate from this damage.", "notes_zh": ["在地雷滚滚期间施放虚张声势将使地雷滚滚提前结束。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["dash_range", "range", "damage", "attack_damage", "dash_speed", "attack_interval", "start_radius", "end_radius", "strikes", "procs_onhit_effects", "slow_duration", "slow_percent", "damage_penalty", "AbilityCastRange", "AbilityCastPoint"]}, {"subject": "pangolier_shield_crash", "name_zh": "石鳞剑士·甲盾冲击", "name_en": "Shield Crash", "description_zh": "石鳞剑士跃入空中，再落向当前位置的前方地面造成冲击，对范围内所有敌人造成伤害。甲盾冲击只要击中任意敌方英雄，他就能在短时间内获得一定数值的全伤害护盾。\n\n地雷滚滚过程中使用甲盾冲击将会保持前进，并且可以使地雷滚滚跨过地形障碍。", "description_en": "Pangolier jumps in the air and slams back to the ground in front of his current position damaging all enemies in a radius. Pangolier gains an all damage barrier for a short time if Shield Crash hits an enemy hero.\n\nForward movement is maintained if Shield Crash is used while Rolling Thunder is active, and allows Rolling Thunder to clear walls or cliffs.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "甲盾冲击将围绕英雄每90度施放一个刺击2次的虚张声势，造成%scepter_damage_outgoing_tooltip%%%伤害。", "en": "Causes Shield Crash to cast a 2-attack Swashbuckle every 90 degrees around your hero that deals %scepter_damage_outgoing_tooltip%%% damage."}}, "is_passive": false, "value_names": ["damage", "hero_shield", "duration", "radius", "can_double_jump", "min_damage_increase_pct", "max_damage_increase_pct", "min_barrier_increase_pct_tooltip", "jump_duration", "jump_duration_gyroshell", "jump_height", "jump_height_gyroshell", "jump_horizontal_distance", "scepter_damage_outgoing_tooltip", "AbilityManaCost"]}, {"subject": "pangolier_lucky_shot", "name_zh": "石鳞剑士·幸运一击", "name_en": "Lucky Shot", "description_zh": "石鳞剑士孤注一掷，让命运决定敌人的下场。石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度，同时削弱护甲。", "description_en": "Pangolier rolls the dice and lets fate decide the outcome for his enemies. Grants a chance to drastically slow their attack speed and reduce armor on any damage dealt by Pangolier's attacks or abilities.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["chance_pct", "duration", "attack_slow", "armor"]}, {"subject": "pangolier_rollup", "name_zh": "石鳞剑士·卷土重来", "name_en": "Roll Up", "description_zh": "石鳞剑士将自身卷成保护性的圆球，获得减益免疫状态，拥有%magic_resistance%%%魔法抗性加成，并且可以转身。可以在地雷滚滚期间施放，暂停滚动。可以在卷土重来期间施放地雷滚滚和甲盾冲击。若敌人在此期间发动攻击，将滚离攻击者，对途中的敌人施加地雷滚滚的伤害/眩晕。", "description_en": "Pangolier curls into an immobile protective ball, gaining debuff immunity, %magic_resistance%%% magic resistance, and allowing him to turn. Can be cast during Rolling Thunder to temporarily hit the brakes. Can cast Rolling Thunder and Shield Crash during Roll Up. If enemies attack Pangolier during this, he will roll away from the attacker, applying Rolling Thunder damage/stun if there are enemies in the way.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["cast_time_tooltip", "tick_interval", "forward_move_speed", "turn_rate_boosted", "turn_rate", "radius", "hit_radius", "bounce_duration", "stun_duration", "knockback_radius", "duration", "jump_recover_time", "rollup_bounce_duration", "magic_resistance", "AbilityCastPoint"]}, {"subject": "pangolier_gyroshell", "name_zh": "石鳞剑士·地雷滚滚", "name_en": "Rolling Thunder", "description_zh": "石鳞剑士卷成一个减益免疫状态的圆球，拥有%magic_resistance%%%魔法抗性，隆隆地向前滚去。滚动时移动速度提升，可以碾过树木，但是转身速率降低。敌人被击中后会被击退，然后受到与他的攻击力成正比的伤害，并且被眩晕。\n\n与地形障碍相撞后会暂时停止滚动，并且滚动方向变反。\n\n驱散类型：弱驱散", "description_en": "Pangolier curls into a debuff immune ball with %magic_resistance%%% magic resistance and rolls out. When rolling, he moves at an increased speed and can move through trees, but has a decreased ability to turn. Striking enemies knocks them back, inflicting damage proportional to his attack damage and stunning them when they land. \n\nColliding with walls or cliffs will cause a temporary pause while Pangolier reverses in direction.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["敌人在技能期间可以多次被眩晕，但是只有上一次眩晕结束后才会再次被眩晕。", "即使石鳞剑士在滚动时被控制，他依然会对范围内敌人造成眩晕和击退。", "石鳞剑士需要%move_speed_ramp_up_time%秒才能达到全额的滚动速度。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_pct", "cast_time_tooltip", "tick_interval", "forward_move_speed", "move_speed_ramp_up_time", "turn_rate_boosted", "turn_rate", "radius", "hit_radius", "bounce_duration", "stun_duration", "knockback_radius", "duration", "jump_recover_time", "magic_resistance"]}, {"subject": "pangolier_fortune_favors_the_bold", "name_zh": "石鳞剑士·天佑勇者", "name_en": "Fortune Favors the Bold", "description_zh": "附近敌人攻击石鳞剑士时，他们触发物品和技能的随机类攻击特效的几率有所降低。", "description_en": "Random item and ability effects of enemies near Pangolier have a reduced chance to affect him.", "notes_zh": ["对英雄技能和物品有效。", "效果是特效发生的几率相对降低。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["aura_radius", "chance_reduce"]}, {"subject": "dark_willow_bramble_maze", "name_zh": "邪影芳灵·荆棘迷宫", "name_en": "Bramble Maze", "description_zh": "%initial_creation_delay%秒后邪影芳灵在目标区域创造出%placement_range%范围的迷宫，迷宫拥有%placement_count%棵荆棘。进入荆棘的敌人将被缠绕，并且持续受到伤害。迷宫持续%placement_duration%秒。", "description_en": "Dark Willow creates a %placement_range% AoE maze of %placement_count% brambles that grow in the target area after %initial_creation_delay% seconds. Enemies that walk into a bramble are rooted and take damage over time. Lasts %placement_duration% seconds.", "notes_zh": ["缠绕无法打断持续施法。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["placement_range", "placement_count", "placement_duration", "extra_brambles_placement_duration", "latch_duration", "latch_range", "damage_per_tick", "latch_creation_interval", "latch_creation_delay", "initial_creation_delay", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "winter_wyvern_eldwurms_edda",
+      "mechanisms": []
+    },
+    {
+      "subject": "winter_wyvern_winters_curse",
+      "mechanisms": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "quote": "寒冬飞龙驱散一个敌方目标",
+          "uncertain": true
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "将其冻在原地",
+          "uncertain": false
+        },
+        {
+          "mechanism": "forced_action",
+          "condition": "base",
+          "quote": "附近的其他敌人将受到癫狂诅咒，对冻住的队友进行攻击",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "冻住的目标和被诅咒攻击队友的敌人不会受到任何来自敌方的伤害，不过寒冬飞龙或她控制的单位造成的伤害除外",
+          "uncertain": false
+        },
+        {
+          "mechanism": "pierces_debuff_immunity",
+          "condition": "base",
+          "quote": "无视主目标的减益免疫状态，但是对目标周围的减益免疫队友无效。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_flux",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "造成持续伤害并减缓其移动速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "silence",
+          "condition": "scepter",
+          "quote": "目标落单时乱流具有沉默效果",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_magnetic_field",
+      "mechanisms": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "quote": "其中的友方单位可以闪避来自磁场外的攻击",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "磁场提供攻击速度加成，并且其中的友方单位可以闪避来自磁场外的攻击",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_spark_wraith",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "造成魔法伤害并使目标减速",
+          "uncertain": false
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "quote": "召唤一个缓慢实体化的闪光怨灵萦绕在目标区域",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_runic_infusion",
+      "mechanisms": []
+    },
+    {
+      "subject": "arc_warden_tempest_double",
+      "mechanisms": [
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "quote": "创造出自身的完美电子复制体。复制体可以使用天穹守望者的当前所有物品和基础技能",
+          "uncertain": true
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "shard",
+          "quote": "风暴双雄产生时带有奥术、隐身和极速神符的效果",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_firestorm",
+      "mechanisms": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "召唤数波火焰风暴攻击目标区域内的所有单位，并额外持续造成烧灼伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_pit_of_malice",
+      "mechanisms": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "踏入深渊的敌方单位将受到伤害并且被缠绕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "在目标区域制造致命的深渊；踏入深渊的敌方单位将受到伤害并且被缠绕",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_atrophy_aura",
+      "mechanisms": [
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "quote": "周围所有敌方单位遭到了削弱，损失部分基础攻击力",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "周围所有敌方单位遭到了削弱，损失部分基础攻击力",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_raid_boss",
+      "mechanisms": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "友方英雄传送后会临时获得承受伤害降低",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_dark_portal",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "英雄可以对一个传送门持续施法%warp_channel_duration%秒，传送至另一端",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "英雄可以对一个传送门持续施法%warp_channel_duration%秒，传送至另一端",
+          "uncertain": false
+        },
+        {
+          "mechanism": "root",
+          "condition": "scepter",
+          "quote": "在传送门两端各召唤一个怨念深渊。\n踏入深渊的敌方单位将受到伤害并且被缠绕。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "quote": "在传送门两端各召唤一个怨念深渊。\n在目标区域制造致命的深渊；踏入深渊的敌方单位将受到伤害并且被缠绕。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_boundless_strike",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "眩晕一条直线上的敌人",
+          "uncertain": false
+        },
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "quote": "造成额外伤害和基于他普通攻击的致命一击伤害",
+          "uncertain": false
+        },
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "base",
+          "quote": "具有克敌机先效果",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "眩晕一条直线上的敌人并造成额外伤害和基于他普通攻击的致命一击伤害",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "quote": "齐天大圣还会跳跃至金箍棒的另一端",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_tree_dance",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "齐天大圣跳上一棵树并停在上面",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_jingu_mastery",
+      "mechanisms": [
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "quote": "下%charges%次攻击得到加强，拥有攻击力加成和吸血效果",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "下%charges%次攻击得到加强，拥有攻击力加成和吸血效果",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_mischief",
+      "mechanisms": [
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "quote": "变化后%invul_duration%秒内免疫伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_wukongs_command",
+      "mechanisms": [
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "quote": "齐天大圣变出圆形的猴子猴孙阵列，猴子猴孙从他的位置散开",
+          "uncertain": true
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "齐天大圣可以在猴子猴孙期间变成其中一个猴子猴孙，短时间内取代其位置",
+          "uncertain": false
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "scepter",
+          "quote": "猴子猴孙现在独立获得如意棒法的效果。\n下%charges%次攻击得到加强，拥有攻击力加成和吸血效果。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "scepter",
+          "quote": "猴子猴孙现在独立获得如意棒法的效果。\n下%charges%次攻击得到加强，拥有攻击力加成和吸血效果。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_transfiguration",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "变成其中一个猴子猴孙，%transfiguration_duration%秒内取代其位置",
+          "uncertain": false
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "quote": "变身后齐天大圣为无敌",
+          "uncertain": false
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "quote": "并且在原地留下一个猴子猴孙",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_swashbuckle",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "石鳞剑士先冲向目标地点",
+          "uncertain": false
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "向指示方向上的所有敌人刺出数剑并减速他们",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "向指示方向上的所有敌人刺出数剑",
+          "uncertain": false
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "quote": "刺剑有几率触发幸运一击。\n石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度，同时削弱护甲。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_shield_crash",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "石鳞剑士跃入空中，再落向当前位置的前方地面",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "甲盾冲击只要击中任意敌方英雄，他就能在短时间内获得一定数值的全伤害护盾",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对范围内所有敌人造成伤害",
+          "uncertain": false
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "quote": "甲盾冲击将围绕英雄每90度施放一个刺击2次的虚张声势\n向指示方向上的所有敌人刺出数剑并减速他们。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "scepter",
+          "quote": "甲盾冲击将围绕英雄每90度施放一个刺击2次的虚张声势\n刺剑有几率触发幸运一击。\n石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度，同时削弱护甲。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_lucky_shot",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "quote": "同时削弱护甲",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度，同时削弱护甲",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_rollup",
+      "mechanisms": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "shard",
+          "quote": "获得减益免疫状态",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "quote": "若敌人在此期间发动攻击，将滚离攻击者",
+          "uncertain": false
+        },
+        {
+          "mechanism": "stun",
+          "condition": "shard",
+          "quote": "对途中的敌人施加地雷滚滚的伤害/眩晕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_return",
+          "condition": "shard",
+          "quote": "若敌人在此期间发动攻击，将滚离攻击者，对途中的敌人施加地雷滚滚的伤害/眩晕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "对途中的敌人施加地雷滚滚的伤害/眩晕",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_gyroshell",
+      "mechanisms": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "quote": "石鳞剑士卷成一个减益免疫状态的圆球",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "隆隆地向前滚去",
+          "uncertain": false
+        },
+        {
+          "mechanism": "tree_walk",
+          "condition": "base",
+          "quote": "can move through trees",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "敌人被击中后会被击退",
+          "uncertain": false
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "然后受到与他的攻击力成正比的伤害，并且被眩晕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "Striking enemies knocks them back, inflicting damage proportional to his attack damage and stunning them when they land.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_fortune_favors_the_bold",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "附近敌人攻击石鳞剑士时，他们触发物品和技能的随机类攻击特效的几率有所降低",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "dark_willow_bramble_maze",
+      "mechanisms": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "进入荆棘的敌人将被缠绕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "迷宫拥有%placement_count%棵荆棘。进入荆棘的敌人将被缠绕，并且持续受到伤害",
+          "uncertain": false
+        }
+      ]
+    }
+  ]
+}
+tokens used
+31,989
+{
+  "objects": [
+    {
+      "subject": "winter_wyvern_eldwurms_edda",
+      "mechanisms": []
+    },
+    {
+      "subject": "winter_wyvern_winters_curse",
+      "mechanisms": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "quote": "寒冬飞龙驱散一个敌方目标",
+          "uncertain": true
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "将其冻在原地",
+          "uncertain": false
+        },
+        {
+          "mechanism": "forced_action",
+          "condition": "base",
+          "quote": "附近的其他敌人将受到癫狂诅咒，对冻住的队友进行攻击",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "冻住的目标和被诅咒攻击队友的敌人不会受到任何来自敌方的伤害，不过寒冬飞龙或她控制的单位造成的伤害除外",
+          "uncertain": false
+        },
+        {
+          "mechanism": "pierces_debuff_immunity",
+          "condition": "base",
+          "quote": "无视主目标的减益免疫状态，但是对目标周围的减益免疫队友无效。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_flux",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "造成持续伤害并减缓其移动速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "silence",
+          "condition": "scepter",
+          "quote": "目标落单时乱流具有沉默效果",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_magnetic_field",
+      "mechanisms": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "quote": "其中的友方单位可以闪避来自磁场外的攻击",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "磁场提供攻击速度加成，并且其中的友方单位可以闪避来自磁场外的攻击",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_spark_wraith",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "造成魔法伤害并使目标减速",
+          "uncertain": false
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "quote": "召唤一个缓慢实体化的闪光怨灵萦绕在目标区域",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "subject": "arc_warden_runic_infusion",
+      "mechanisms": []
+    },
+    {
+      "subject": "arc_warden_tempest_double",
+      "mechanisms": [
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "quote": "创造出自身的完美电子复制体。复制体可以使用天穹守望者的当前所有物品和基础技能",
+          "uncertain": true
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "shard",
+          "quote": "风暴双雄产生时带有奥术、隐身和极速神符的效果",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_firestorm",
+      "mechanisms": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "召唤数波火焰风暴攻击目标区域内的所有单位，并额外持续造成烧灼伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_pit_of_malice",
+      "mechanisms": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "踏入深渊的敌方单位将受到伤害并且被缠绕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "在目标区域制造致命的深渊；踏入深渊的敌方单位将受到伤害并且被缠绕",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_atrophy_aura",
+      "mechanisms": [
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "quote": "周围所有敌方单位遭到了削弱，损失部分基础攻击力",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "周围所有敌方单位遭到了削弱，损失部分基础攻击力",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_raid_boss",
+      "mechanisms": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "友方英雄传送后会临时获得承受伤害降低",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_dark_portal",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "英雄可以对一个传送门持续施法%warp_channel_duration%秒，传送至另一端",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "英雄可以对一个传送门持续施法%warp_channel_duration%秒，传送至另一端",
+          "uncertain": false
+        },
+        {
+          "mechanism": "root",
+          "condition": "scepter",
+          "quote": "在传送门两端各召唤一个怨念深渊。\n踏入深渊的敌方单位将受到伤害并且被缠绕。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "quote": "在传送门两端各召唤一个怨念深渊。\n在目标区域制造致命的深渊；踏入深渊的敌方单位将受到伤害并且被缠绕。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_boundless_strike",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "眩晕一条直线上的敌人",
+          "uncertain": false
+        },
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "quote": "造成额外伤害和基于他普通攻击的致命一击伤害",
+          "uncertain": false
+        },
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "base",
+          "quote": "具有克敌机先效果",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "眩晕一条直线上的敌人并造成额外伤害和基于他普通攻击的致命一击伤害",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "quote": "齐天大圣还会跳跃至金箍棒的另一端",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_tree_dance",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "齐天大圣跳上一棵树并停在上面",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_jingu_mastery",
+      "mechanisms": [
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "quote": "下%charges%次攻击得到加强，拥有攻击力加成和吸血效果",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "下%charges%次攻击得到加强，拥有攻击力加成和吸血效果",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_mischief",
+      "mechanisms": [
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "quote": "变化后%invul_duration%秒内免疫伤害",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_wukongs_command",
+      "mechanisms": [
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "quote": "齐天大圣变出圆形的猴子猴孙阵列，猴子猴孙从他的位置散开",
+          "uncertain": true
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "齐天大圣可以在猴子猴孙期间变成其中一个猴子猴孙，短时间内取代其位置",
+          "uncertain": false
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "scepter",
+          "quote": "猴子猴孙现在独立获得如意棒法的效果。\n下%charges%次攻击得到加强，拥有攻击力加成和吸血效果。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "scepter",
+          "quote": "猴子猴孙现在独立获得如意棒法的效果。\n下%charges%次攻击得到加强，拥有攻击力加成和吸血效果。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "monkey_king_transfiguration",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "变成其中一个猴子猴孙，%transfiguration_duration%秒内取代其位置",
+          "uncertain": false
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "quote": "变身后齐天大圣为无敌",
+          "uncertain": false
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "quote": "并且在原地留下一个猴子猴孙",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_swashbuckle",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "石鳞剑士先冲向目标地点",
+          "uncertain": false
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "向指示方向上的所有敌人刺出数剑并减速他们",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "向指示方向上的所有敌人刺出数剑",
+          "uncertain": false
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "quote": "刺剑有几率触发幸运一击。\n石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度，同时削弱护甲。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_shield_crash",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "石鳞剑士跃入空中，再落向当前位置的前方地面",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "甲盾冲击只要击中任意敌方英雄，他就能在短时间内获得一定数值的全伤害护盾",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对范围内所有敌人造成伤害",
+          "uncertain": false
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "quote": "甲盾冲击将围绕英雄每90度施放一个刺击2次的虚张声势\n向指示方向上的所有敌人刺出数剑并减速他们。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "scepter",
+          "quote": "甲盾冲击将围绕英雄每90度施放一个刺击2次的虚张声势\n刺剑有几率触发幸运一击。\n石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度，同时削弱护甲。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_lucky_shot",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度",
+          "uncertain": false
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "quote": "同时削弱护甲",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "石鳞剑士的攻击或技能拥有一定几率大幅降低攻击速度，同时削弱护甲",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_rollup",
+      "mechanisms": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "shard",
+          "quote": "获得减益免疫状态",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "quote": "若敌人在此期间发动攻击，将滚离攻击者",
+          "uncertain": false
+        },
+        {
+          "mechanism": "stun",
+          "condition": "shard",
+          "quote": "对途中的敌人施加地雷滚滚的伤害/眩晕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_return",
+          "condition": "shard",
+          "quote": "若敌人在此期间发动攻击，将滚离攻击者，对途中的敌人施加地雷滚滚的伤害/眩晕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "对途中的敌人施加地雷滚滚的伤害/眩晕",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_gyroshell",
+      "mechanisms": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "quote": "石鳞剑士卷成一个减益免疫状态的圆球",
+          "uncertain": false
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "隆隆地向前滚去",
+          "uncertain": false
+        },
+        {
+          "mechanism": "tree_walk",
+          "condition": "base",
+          "quote": "can move through trees",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "敌人被击中后会被击退",
+          "uncertain": false
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "然后受到与他的攻击力成正比的伤害，并且被眩晕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "Striking enemies knocks them back, inflicting damage proportional to his attack damage and stunning them when they land.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "pangolier_fortune_favors_the_bold",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "附近敌人攻击石鳞剑士时，他们触发物品和技能的随机类攻击特效的几率有所降低",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "dark_willow_bramble_maze",
+      "mechanisms": [
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "quote": "进入荆棘的敌人将被缠绕",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "迷宫拥有%placement_count%棵荆棘。进入荆棘的敌人将被缠绕，并且持续受到伤害",
+          "uncertain": false
+        }
+      ]
+    }
+  ]
+}

@@ -4,14 +4,14 @@
 
 ## 现状
 
-- MK-T3已结束（U67）。入口：`knowledge/mechanics/extractions/v10/`、`vocabulary-v9.json`（76项）。
-- MK-T4已结束（U73）：`knowledge/mechanics/rules-v4.json`（20条），计算结果`extractions/v10/rules-evaluation.json`，讨论过程[规则草稿](mk-t4-rules-draft.md)。
+- MK-T3已结束（U67）。入口：`knowledge/mechanics/extractions/v12/`、`vocabulary-v11.json`（81项）。
+- MK-T4已结束（U73）：`knowledge/mechanics/rules-v5.json`（20条），计算结果`extractions/v12/rules-evaluation.json`，讨论过程[规则草稿](mk-t4-rules-draft.md)。
 - 全部裁定在`knowledge/mechanics/reviews/user-rulings-001.jsonl`，汇总见[待用户裁定汇总](user-rulings-2026-11-02.md)。
 
 ## 下一步
 
 1. 第20条已改为范围伤害（U71、U72），入口更新为`extractions/v8/`、`vocabulary-v8.json`、`rules-v2.json`。
-2. MK-T4已结束（U73），当前任务MK-T5：英雄档案、装备档案、克制关系图、英雄特性v2已生成（`profiles/derived-v1/`，草稿）。下一步全量补漏（U81），再做U5抽查，否则抽查看不到缺的记录。
+2. MK-T4已结束（U73），当前任务MK-T5：英雄档案、装备档案、克制关系图、英雄特性v2已生成（`profiles/derived-v2/`，草稿）。全量补漏和第1–8轮复查已完成（U81–U89），下一步U5抽查。
 3. MK-T5要解决：第12条“脆弱”的判断、第13条例外清单、第15条依赖普攻（读M1出装，一号位默认算）、第8条“常规会出”的门槛；并按U5抽查。
 4. 新事实缺口出新版本，不改旧版本。
 
