@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
 OUT = Path(__file__).resolve().parent
-FACTS = "knowledge/mechanics/extractions/v13/facts-v13.json"
+FACTS = "knowledge/mechanics/extractions/v14/facts-v14.json"
 VOCABULARY = "knowledge/mechanics/vocabulary-v13.json"
 KEYS = ("id", "n", "m", "mz", "c", "d", "why", "t", "b")
 

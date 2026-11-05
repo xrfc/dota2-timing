@@ -1,0 +1,87 @@
+{
+  "summary_zh": "已只读复核 a40b7be，发现5处有证据的问题。范围内提取运行的36个测试用例通过，21条规则重算一致，克制图重建一致。未联网、未修改文件；完整构建及清单外输入未验证。",
+  "items": [
+    {
+      "item": 1,
+      "verdict": "partly",
+      "how_verified_zh": "逐项对照U93–U98及写入操作。疯狂生长A杖改分裂、蛊惑与位移分开、高空视野、减冷却口径均落实；逃生技最终按U97排除沉默/锁闭/缴械，重如铁锚保留U88束缚裁定，动能力场按最新裁定记场地魔法和减速。发现暗影步眩晕的basis未升级，以及两条明确排除裁定未记录到事实层，详见findings。"
+    },
+    {
+      "item": 2,
+      "verdict": "partly",
+      "how_verified_zh": "3176行的mechanism全部属于83项词表；22条规则的机制引用均有效，图的机制证据无forced_action、mobility_lock、flying。旧词保留在历史review_id、renamed_from和49条退役记录中。R11为状态抗性→包含减攻速的控制集合，R21为减速抗性→减速，R22为无视地形→创造地形，符合记录。页面生成函数使用当前机制和定义；实际page.html未列入允许读取范围，未检查。"
+    },
+    {
+      "item": 3,
+      "verdict": "done",
+      "how_verified_zh": "读取full-audit-007全部81个对象：49个含jump_dash，47个已有接受的terrain_walk；另外两个是天光现世和地雷滚滚，README分别记录用户裁定和助手排除理由。28个含teleport的对象中，仅兼有free_move的鬼影重重记无视地形，备注明确作用于幻象；未发现纯闪烁或传送误写。"
+    },
+    {
+      "item": 4,
+      "verdict": "done",
+      "how_verified_zh": "第二轮111条反馈逐字段核对，无遗漏或原话变化：100对、6错、5不确定。6条错均有对应裁定，最终状态符合原话及后续决定；圣洁吊坠被动未冒充用户确认。活跃行disputed_by_user确为0；33条unattached_feedback中仍有1条标错的来源疑问，原话及未回答状态已保留。旧第一轮93条仅核对产物内保留记录，未读取清单外原始文件。"
+    },
+    {
+      "item": 5,
+      "verdict": "partly",
+      "how_verified_zh": "逐条核对slow/terrain写入操作的条件、结论和basis，与事实一致；巨角冲撞无视地形为基础，丛林之眼高空视野为魔晶，疯狂生长分裂为A杖。全图每条机制证据的condition及condition_notes均与对应事实行一致。原始第2–8轮条件审查文件不在范围内，未能独立核实全部2443行说明最初是否摘录准确。"
+    },
+    {
+      "item": 6,
+      "verdict": "done",
+      "how_verified_zh": "3376条边中3172条candidate、204条pending，pending全部来自R13；R12/R15虽待定但无装备到英雄边。usable_edges默认返回3172条，显式包含待定返回3376条，confirmed_only返回17条。核对16129组英雄组合，hero_relations默认结果均等于剔除待定后的显式结果；抽看档案均保留相应【待定】标记。"
+    },
+    {
+      "item": 7,
+      "verdict": "partly",
+      "how_verified_zh": "范围内32次manifest哈希核对全部一致；构建代码包含输入及实现前后比对。提取运行36个范围内测试用例通过，重算21条规则一致；R18依赖清单外游戏字段，未重算。利用图内已有节点信息重建全图，与产物完全一致。完整输入追踪和构建会读取清单外文件，未执行；发现事实复现测试不比较新生成规则求值结果。"
+    },
+    {
+      "item": 8,
+      "verdict": "partly",
+      "how_verified_zh": "实际为3176行、接受2489、排除687；basis为two_ai 2471、user 435、user_spot_check 148、user_corrected 2、field 120，与事实README统计一致。83项词表、22条规则、3376条边、17条两端确认及第二轮111条反馈也一致。发现CHANGELOG/入口的输入数和条件说明数过时，以及无视地形来源统计和field用户确认表述不准确。"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "medium",
+      "confirmed": true,
+      "location": "knowledge/mechanics/extractions/v13/facts-v13.json:82145；knowledge/mechanics/profiles/derived-v3/heroes/hero-62.md:23",
+      "problem_zh": "U97明确确认暗影步算眩晕，但眩晕行仍被标为仅AI一致。",
+      "evidence_zh": "按review_id=c8288ad225616bae04db查询，得到bounty_hunter_wind_walk、stun、基础、accept、basis=two_ai。U97原话为“算眩晕啊”。同技能channel_interrupt行已更新为reject/user:U97，说明只落实了排除打断，没有同步眩晕的确认依据。",
+      "impact_zh": "英雄档案仍显示“眩晕 ?”；图中该技能作为R11目标、R17来源均为confirmed=false，丢失了用户确认状态。"
+    },
+    {
+      "severity": "low",
+      "confirmed": true,
+      "location": "knowledge/mechanics/reviews/full-audit-007/make_rulings.py:54；knowledge/mechanics/reviews/terrain-rulings-001.jsonl；knowledge/mechanics/extractions/v13/facts-v13.json 的 rows",
+      "problem_zh": "天光现世和星破天惊明确“不算无视地形”的裁定没有进入事实层。",
+      "evidence_zh": "分别筛选subject=dawnbreaker_solar_guardian和dawnbreaker_fire_wreath、mechanism=terrain_walk，均为0行，skill_notes也无相关记录。U96和U98已明确排除；生成器对天光现世直接跳过，星破天惊因分类不符合而跳过，没有生成reject及对应basis。",
+      "impact_zh": "当前没有错误的接受记录，但只读取facts-v13.json无法区分“用户明确排除”和“从未审查”，也无法追溯这两条裁定。"
+    },
+    {
+      "severity": "medium",
+      "confirmed": true,
+      "location": "tests/test_mechanics_facts_v13.py:78；scripts/build_mechanics_derived_v3.py 的 run",
+      "problem_zh": "事实复现测试丢弃新生成的rules-evaluation，无法守住规则求值代码的回归。",
+      "evidence_zh": "测试使用fresh, _ = builder.run(...)，只比较facts；派生复现又读取仓库现存rules-evaluation。内存替身实验保持事实不变、将返回的R22来源和目标清空，该复现测试的比对仍通过。实验未运行构建、未写文件。",
+      "impact_zh": "若evaluate_rule退回错误行为而事实行不变，这组复现断言不会发现新规则集合错误。当前存储的21条可独立重算规则本身一致。"
+    },
+    {
+      "severity": "low",
+      "confirmed": true,
+      "location": "CHANGELOG.md:5；CHANGELOG.md:8；knowledge/mechanics/README.md:31；knowledge/mechanics/extractions/v13/README.md:19",
+      "problem_zh": "当前版本的部分数字和来源说明没有同步。",
+      "evidence_zh": "重数rows及非空condition_notes得到3176和2443，CHANGELOG仍写3110和2467；manifest.input_sha256有160项，入口和CHANGELOG写158。无视地形63行中确有50行two_ai，但按“分类由Codex”操作筛选，只有36行two_ai来自跳跃冲刺分类，另外14行来自旧飞行迁移或明确地形说明。",
+      "impact_zh": "读者会误判当前条件说明覆盖率、依赖范围，以及无视地形事实的证据来源；数据主体统计未受影响。"
+    },
+    {
+      "severity": "low",
+      "confirmed": true,
+      "location": "knowledge/mechanics/extractions/v13/README.md:5、11",
+      "problem_zh": "basis表把field依据明确写成了“用户确认”。",
+      "evidence_zh": "表头为“算用户确认吗”，field对应120行标“算”。项目规则明确只有user*才算用户批准；mechanics_profiles.confirmed将user和field共同纳入程序的confirmed状态，并不能证明field获得过用户确认。",
+      "impact_zh": "文档把字段证据与用户批准混为一谈，容易将120条字段依据误计为用户确认记录。"
+    }
+  ]
+}

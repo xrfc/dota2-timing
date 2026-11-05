@@ -87,11 +87,11 @@
 
 ## 8. 复核后事实v4–v7与规则v1（2026-11-03至05）
 
-- **当前入口**：`knowledge/mechanics/extractions/v13/`、`vocabulary-v13.json`、`rules-v7.json`。v4起不重新抽取，只在冻结的v3上叠加判断，每组用`basis`标明依据。
+- **当前入口**：`knowledge/mechanics/extractions/v14/`、`vocabulary-v13.json`、`rules-v7.json`。v4起不重新抽取，只在冻结的v3上叠加判断，每组用`basis`标明依据。
 - **游戏文件**：`knowledge/game-files/`是公开镜像固定提交的快照。“能否被破坏”直接用`IsBreakable`（U48）；字段名不能单独当证据（U51）。
 - **词表缺口**：用户发现缺虚无后排查，增加A、B组29项，C组纯属性不进词表（U58、U62、U63）。
 - **升级只改数值不记机制**（U65、U66）：放在`numeric_upgrades`。
-- **规则层**（U68–U73，已结束）：20条，只说机制关系，不说“该出”。`mechanics_interactions`校验规则并算出来源和目标。
+- **规则层**（U68–U73，已结束；后续U94、U97增至22条）：只说机制关系，不说“该出”。`mechanics_interactions`校验规则并算出来源和目标。
 - **局限**：`patch_verified=false`，版本认证放到MK-T6（U66）；`two_ai`不算用户确认；未审候选和可能的漏记留到MK-T5抽查。
 - **漏记（MK-T5发现）**：候选靠关键词筛，复核看不到没被筛出的组合；莱恩·妖术、风暴之灵·球状闪电等都没有记录，见`knowledge/mechanics/reviews/recall-check-001/`。
-- **派生层**：`profiles/derived-v3/`含英雄档案、装备档案、克制关系图和英雄特性v2，每条带证据链；U5抽查前都是草稿；克制关系是候选，读取规则见`knowledge/mechanics/README.md`。
+- **派生层**：`profiles/derived-v4/`含英雄档案、装备档案、克制关系图和英雄特性v2，每条带证据链；U5抽查前都是草稿；克制关系是候选，读取规则见`knowledge/mechanics/README.md`。
