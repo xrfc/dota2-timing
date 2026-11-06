@@ -1,6 +1,8 @@
 # 变更记录
 
-## 2026-11-06 U113：MK-T6a统一入口、MK-T6b规则字段严格检查、PR #17复核修复、MK-T6c数值升级来源
+## 2026-11-06 U113：MK-T6a统一入口、MK-T6b规则字段严格检查、PR #17复核修复、MK-T6c数值升级来源、MK-T6d版本核对
+
+- MK-T6d：联网核对当前知识与7.41f一致（`knowledge/mechanics/reviews/patch-check-001/`）。官方补丁列表最新仍是7.41f；游戏文件镜像`ee99709`到最新`b671cd0`之间技能、英雄、物品脚本未变；Valve英雄数据新快照（`hero-capabilities/snapshots/2026-11-06/`）与11-01相同；新抓Valve英文装备数据147件（`items/sources/itemdata-english-2026-11-06/`），装备引用原文和属性数值都有当前依据，4处标记逐条核对为误报。新增`scripts/check_patch_knowledge.py`；`current.json`的`patch.verified=true`。回答了抽查时“奥术天球减伤是7.41f吗”：那是接口残留的旧A杖文字，已在v3去掉。
 
 - MK-T6c：事实v20（行同v19）给69组`numeric_upgrades`补`ruling`：40组指向用户逐条裁定（U65 3组、U66 18组、U72 19组，`reviews/user-rulings-001.jsonl`），29组来自U65冷却规则；对不上或裁定没用上都报错。派生层v11（内容同v10），`current.json`改指向v20、derived-v11。
 

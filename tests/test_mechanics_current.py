@@ -23,7 +23,8 @@ def test_current_json_is_up_to_date_and_valid():
         [sys.executable, "scripts/build_mechanics_current.py", "--check"], cwd=ROOT, check=True
     )
     doc = load_current(ROOT)
-    assert doc["patch"]["verified"] is False
+    assert doc["patch"]["verified"] is True
+    assert (ROOT / doc["patch"]["evidence"]).is_file()
     assert read_current("rules", ROOT)["version"]
 
 

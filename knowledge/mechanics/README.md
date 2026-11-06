@@ -51,7 +51,9 @@
 
 - **数值升级的来源**（MK-T6c，U113）：`numeric_upgrades`每组带`ruling`：用户逐条裁定（U65、U66、U72，指向`reviews/user-rulings-001.jsonl`）或U65冷却规则。
 
-MK-T6还要做：补丁版本认证、补丁更新流程、标注被替代的旧知识。
+- **版本核对**（MK-T6d，U99、U113）：2026-11-06核对当前知识与7.41f一致，结论和局限见`reviews/patch-check-001/README.md`；`current.json`的`patch.verified=true`。冻结事实包里的`patch_verified=false`不改。
+
+MK-T6还要做：补丁更新流程、标注被替代的旧知识。
 
 **当前入口：`current.json`（U113），即`extractions/v20/`、`vocabulary-v13.json`和`rules-v11.json`；派生层`profiles/derived-v11/`（草稿）。补漏见`reviews/full-audit-001/`、`full-audit-002/`，第1–8轮复查见`full-audit-003/`，控制分类重读见`full-audit-004/`，对照见`reviews/recall-check-002/`。**
 

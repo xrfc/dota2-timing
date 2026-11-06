@@ -31,8 +31,14 @@ ENTRIES = {
 }
 PATCH = {
     "name": "7.41f",
-    "verified": False,
-    "note_zh": "来源快照对应7.41f（U36），版本认证在MK-T6做（U66、U99）",
+    "verified": True,
+    "checked_at": "2026-11-06",
+    "evidence": "knowledge/mechanics/reviews/patch-check-001/README.md",
+    "note_zh": (
+        "MK-T6d（U99、U113）：官方补丁列表最新仍是7.41f；游戏脚本自固定版本起未变；"
+        "Valve英雄数据与11-01相同；142件装备的引用原文和属性数值都有当前官方依据，"
+        "4处标记经逐条核对为误报。只核对了文字和数据，没有在游戏里实测"
+    ),
 }
 
 
