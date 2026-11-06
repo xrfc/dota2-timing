@@ -245,6 +245,7 @@ SCRIPTS = {
     "build_mechanics_derived_v7": _S,
     "build_mechanics_derived_v8": _S,
     "check_mechanics_recall": _S,
+    "collect_build_survey": _S,
     "build_mechanics_profiles": _S,
     "build_stale_upgrade_text": _S,
     "fetch_game_files_snapshot": _S,
