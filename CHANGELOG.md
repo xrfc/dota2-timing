@@ -1,6 +1,8 @@
 # 变更记录
 
-## 2026-11-06 U113：MK-T6a统一入口
+## 2026-11-06 U113：MK-T6a统一入口、MK-T6b规则字段严格检查
+
+- MK-T6b：规则v11（`schema=mechanics-rules/2`）要求只记录不计算的字段在`not_computed`里写明字段、原因和用户决定，未声明或程序不认识的字段读取时报错（`data.mechanics_rules_v11`）。R08、R09、R19已声明。事实v19（行同v18）、派生层v9（关联边同v8）；`current.json`改指向v19、v11、derived-v9；召回检查和抽查页生成改为从`current.json`取路径。
 
 - MK-T6a：新增统一入口`knowledge/mechanics/current.json`（13份当前知识文件的路径和SHA-256）、读取模块`data.mechanics_current`、生成脚本`scripts/build_mechanics_current.py`和测试。路线按方案A：先MK-T6，R8、R15等B1采齐demo（U113）。
 

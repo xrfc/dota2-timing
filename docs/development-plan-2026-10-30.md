@@ -276,7 +276,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | MK-T3 | 事实层·官方说明事实：逐技能（含A杖/魔晶）、逐装备抽取词表中的机制，每条附原文引用与出处指针；排除误命中（如“破坏树木”）；覆盖率报告。装备中文官方说明不在本地，若需联网抓取须用户授权（Q7） |
 | MK-T4 | 机制规则层：机制间交互与装备↔机制克制关系（如弱驱散去除`dispellable=2`的正面效果；破坏使“整体失效”类被动失效；真视揭示隐身；穿透减益免疫），助手起草，用户定 |
 | MK-T5 | 推导层：英雄机制档案、装备机制档案、克制关系图，每条附证据链；hero-traits v2由此生成；抽查约1/3（U5） |
-| MK-T6 | 维护（U113拆成T6a–T6g，按序做）：T6a统一入口`current.json`（已完成）；T6b未生效规则字段改为明确报错；T6c数值升级补裁定来源；T6d补丁版本认证并联网核对全部知识（U66、U99）；T6e补丁更新流程；T6f标注被替代的旧知识；T6g文档与学习笔记。原列：统一入口`current.json`；数值升级补裁定来源；未生效规则字段改为明确报错（U92）；补丁版本认证（U66）；补丁更新流程（新快照→校验失败点→重算→差异报告）；标注被替代的旧知识（hero-traits v1、recommendation 7.41f-v1）；文档与学习笔记 |
+| MK-T6 | 维护（U113拆成T6a–T6g，按序做）：T6a统一入口`current.json`（已完成）；T6b未生效规则字段改为明确报错（已完成：规则v11、事实v19、派生层v9）；T6c数值升级补裁定来源；T6d补丁版本认证并联网核对全部知识（U66、U99）；T6e补丁更新流程；T6f标注被替代的旧知识；T6g文档与学习笔记。原列：统一入口`current.json`；数值升级补裁定来源；未生效规则字段改为明确报错（U92）；补丁版本认证（U66）；补丁更新流程（新快照→校验失败点→重算→差异报告）；标注被替代的旧知识（hero-traits v1、recommendation 7.41f-v1）；文档与学习笔记 |
 
 出口：词表与规则经用户确认；所有事实可追溯到官方原文；校验与覆盖率报告通过；v2特性由规则生成并经抽查。之后回M2b-T6d（触发条件直接引用MK规则）。
 
@@ -404,7 +404,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### 下一步（接手从这里开始）
 
-**当前：MK-T6（U113；MK-T5除R8、R15外已完成，R8、R15等B1数据）。** MK-T4已结束（U73），规则v2和事实v8是输入。全量补漏和第1–8轮高强度复查已完成（U81–U89），控制分类已细分，减速和无视地形已拆分（U93–U98），工程修复已完成并经Codex和Astra只读复核（U92）；入口事实v18、词表v13、规则v10，英雄档案、装备档案、克制关系图、英雄特性v3在`knowledge/mechanics/profiles/derived-v8/`（草稿）。U5第二轮抽查已结束（192条，`knowledge/mechanics/reviews/u5-spot-check-002/`）；R12、R13已定（U100）。下一步：MK-T6b（T6a统一入口已完成，U113）。R8、R15等数据，不阻塞MK结束：B0定义后在B1一次采齐两条线共用的demo再做（U108–U113）。然后MK-T6（含联网核对版本，U99）；R12、R13已定，单体指向已筛查（U100–U103）。交接见[MK交接（2026-11-05）](handoff/mk-handoff-2026-11-05.md)。
+**当前：MK-T6（U113；MK-T5除R8、R15外已完成，R8、R15等B1数据）。** MK-T4已结束（U73），规则v2和事实v8是输入。全量补漏和第1–8轮高强度复查已完成（U81–U89），控制分类已细分，减速和无视地形已拆分（U93–U98），工程修复已完成并经Codex和Astra只读复核（U92）；入口`knowledge/mechanics/current.json`：事实v19、词表v13、规则v11，英雄档案、装备档案、克制关系图、英雄特性v3在`knowledge/mechanics/profiles/derived-v9/`（草稿）。U5第二轮抽查已结束（192条，`knowledge/mechanics/reviews/u5-spot-check-002/`）；R12、R13已定（U100）。下一步：MK-T6c（T6a统一入口、T6b规则字段严格检查已完成，U113）。R8、R15等数据，不阻塞MK结束：B0定义后在B1一次采齐两条线共用的demo再做（U108–U113）。然后MK-T6（含联网核对版本，U99）；R12、R13已定，单体指向已筛查（U100–U103）。交接见[MK交接（2026-11-05）](handoff/mk-handoff-2026-11-05.md)。
 
 **2026-11-02 待用户裁定**：Codex第2轮19处分歧、U5抽查进度（93/497）及待决项已汇总到[待用户裁定汇总](handoff/user-rulings-2026-11-02.md)；19处分歧已由U39、U40全部裁定（`knowledge/mechanics/reviews/user-rulings-001.jsonl`）；U41定U5剩余组先交Codex只读复核，已完成（`knowledge/mechanics/reviews/codex-round-003/`：379组，同标签355、分歧24），分歧中H2的7组已由U42、U43裁定，召唤物规则已定（U43），H1及H3由U44、U45裁定，24组分歧全部裁定完毕（汇总H块）；U46对照游戏文件`IsBreakable`（`knowledge/mechanics/reviews/break-check-001/`）：180组中38组差异及16个漏记技能已由U47裁定，裁定后全部与标记一致；部分破坏附注已记条件（U48）；其他机制排查已完成（`knowledge/mechanics/reviews/game-files-audit-001/`），疑点已由第4轮复核（`codex-round-004/`：175组，同标签136、分歧39、都不确定9），已由U50–U52全部裁定；词表v4和复核后事实v4已生成（`knowledge/mechanics/extractions/v4/`，U54），第5轮复核702组只有Claude审过的组（`codex-round-005/`，同标签674、分歧28），28组已由U57–U59全部裁定；词表v5和复核后事实v5已生成（`knowledge/mechanics/extractions/v5/`，U60），词表缺口A、B组决定加入（U62、U63），第7轮Codex已审（`codex-round-007/`，分歧见汇总L块），已由U65裁定；词表v6和复核后事实v6已生成（`knowledge/mechanics/extractions/v6/`），MK-T3已结束（U67），MK-T4规则v1已生成（`knowledge/mechanics/rules-v1.json`，事实入口`extractions/v7/`，U70），第20条光环待用户定；词表待下一版更新。
 

@@ -9,8 +9,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
 OUT = Path(__file__).resolve().parent
-FACTS = "knowledge/mechanics/extractions/v18/facts-v18.json"
-VOCABULARY = "knowledge/mechanics/vocabulary-v13.json"
+# Current versions come from the single entry point (MK-T6a), not hard-coded paths.
+_CURRENT = json.loads((ROOT / "knowledge/mechanics/current.json").read_text(encoding="utf-8"))
+FACTS = _CURRENT["entries"]["facts"]["path"]
+VOCABULARY = _CURRENT["entries"]["vocabulary"]["path"]
 KEYS = ("id", "n", "m", "mz", "c", "d", "why", "t", "b")
 
 
