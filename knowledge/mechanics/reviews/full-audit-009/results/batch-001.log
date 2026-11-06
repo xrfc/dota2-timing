@@ -1,0 +1,392 @@
+[codex-prefer] account=temp
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty3
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1aedf-365e-7a61-8288-bb900f92e369
+--------
+user
+你在独立阅读Dota 2技能和装备的说明。下面每个对象都可以选一个单位作为施法目标。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+问题：选中的单位是不是这个技能真正作用的对象？林肯法球和清莲宝珠只对“作用于目标单位”的技能生效。
+
+每个对象输出一条，`subject`原样返回，`kind`取：
+- `acts_on_target`：效果作用在选中的单位身上（伤害、控制、增益、减益、位移、连接等），即使同时还影响周围。
+- `direction_only`：选中单位只是用来定方向或位置，技能沿固定方向或在一片区域生效，例如向目标方向放出一道波、一条直线或一个弹道，途中打到谁算谁。
+- `both`：两种方式都有（例如对目标施加效果，同时另有一段固定方向的范围效果）。
+- `unclear`：材料不足。
+
+说明里写“不会触发法术抵抗或法术反弹”可以当作`direction_only`的依据，但也要看效果描述。
+`quote`摘决定判断的原文片段，`reason_zh`一句中文说明，`uncertain`为true表示材料不足。`%xxx%`是数值占位符。
+
+待判断对象：
+[{"subject": "antimage_mana_void", "name_zh": "敌法师·法力虚空", "name_en": "Mana Void", "description_zh": "根据目标损失的魔法值，对目标和其周围的敌人造成伤害。所有受到伤害的单位都会被短暂眩晕。", "description_en": "For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies.  The main target is also mini-stunned.", "notes_zh": ["伤害的计算根据主目标失去的魔法，但是对作用范围内所有敌人均有效。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["mana_void_damage_per_mana", "mana_void_ministun", "mana_void_aoe_radius", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "axe_battle_hunger", "name_zh": "斧王·战斗饥渴", "name_en": "Battle Hunger", "description_zh": "激怒一个敌方单位，使他受到持续伤害，直到他杀死一个单位或者持续时间结束。敌人只要背朝斧王还将被减速。", "description_en": "Enrages an enemy unit, causing it to take damage over time until it kills another unit or the duration ends. The enemy is slowed as long as they are facing away from Axe.", "notes_zh": ["摧毁建筑也能移除该状态效果。"], "granted_by": "", "upgrades": {"shard": {"zh": "多个战斗饥渴效果可以叠加在单个目标身上。", "en": "Multiple instances of Battle Hunger can stack on a single target."}}, "is_passive": false, "value_names": ["duration", "slow", "damage_per_second", "speed_bonus", "should_stack", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "axe_culling_blade", "name_zh": "斧王·淘汰之刃", "name_en": "Culling Blade", "description_zh": "斧王洞察到弱点并出击，造成纯粹伤害。淘汰之刃击杀敌方英雄时将重置冷却时间，而附近所有友军单位获得移动速度和护甲加成。\n\n每当斧王通过淘汰之刃击杀敌方英雄，他的战刃就会浸满鲜血，获得永久叠加效果，每层都会提供护甲加成。", "description_en": "Axe spots a weakness and strikes, dealing pure damage. When an enemy hero is killed with Culling Blade, its cooldown is reset, and all nearby allied units gain bonus movement speed and armor.\n\nAxe permanently drenches his blade every time he kills an enemy Hero with Culling Blade, gaining bonus armor for each stack.", "notes_zh": ["淘汰之刃的斩杀效果无法被薄葬等技能阻止。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "speed_bonus", "armor_bonus", "speed_duration", "speed_aoe", "charge_speed", "armor_per_stack", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bane_enfeeble", "name_zh": "祸乱之源·虚弱", "name_en": "Enfeeble", "description_zh": "每秒造成伤害，并且降低敌人的总攻击力和施法距离。", "description_en": "Deals damage every second and lowers the enemy's total attack damage and cast range.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_reduction", "cast_reduction", "duration", "enfeeble_tick_damage", "damage_tick_rate", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bane_brain_sap", "name_zh": "祸乱之源·蚀脑", "name_en": "Brain Sap", "description_zh": "暴食一个敌方单位的生命能量，造成伤害并回复自身生命值。", "description_en": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "减少%bonus_AbilityCooldown%秒冷却时间。蚀脑变成%shard_radius%作用范围的技能。次级目标只有%shard_secondary_target_heal_pct%%%治疗效果。", "en": "Reduces cooldown by %bonus_AbilityCooldown%. Causes Brain Sap to become a %shard_radius% AoE spell. Secondary targets only heal for %shard_secondary_target_heal_pct%%%."}}, "is_passive": false, "value_names": ["brain_sap_damage", "shard_radius", "shard_secondary_target_heal_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bane_nightmare", "name_zh": "祸乱之源·噩梦", "name_en": "Nightmare", "description_zh": "让目标敌方或友方英雄进入沉睡。睡着的单位会向祸乱之源选定的方向走去，受到攻击便会醒来。目标被直接攻击时，噩梦将转移到攻击者身上。祸乱之源可以随意攻击噩梦中的目标或造成伤害，而且获得额外攻击速度。可以设为多样施法（右键点击技能栏图标），让目标站立不动。", "description_en": "Puts the target enemy or friendly Hero to sleep. Sleeping units walk in Bane's chosen direction and are awakened when damaged. If the target was directly attacked, the Nightmare passes to the attacking unit. Bane can attack and damage Nightmared targets freely. Can be put on alt-cast to have the target stand still.", "notes_zh": ["在噩梦的第一秒，作用单位是无敌状态。", "祸乱之源可以把自己从噩梦中唤醒。", "施放后将替换为结束噩梦：结束所有受作用单位身上的噩梦。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["nightmare_invuln_time", "animation_rate", "vector_render_radius", "walk_speed", "turn_rate", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bane_fiends_grip", "name_zh": "祸乱之源·魔爪", "name_en": "Fiend's Grip", "description_zh": "持续施法 - 抓住一个敌方单位，使其失去行动能力并持续受到大量伤害，同时每%fiend_grip_tick_interval%秒按目标最大魔法值一定比例吸取魔法。", "description_en": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "魔爪的冷却时间减少%bonus_AbilityCooldown%秒。魔爪将产生两个不可控制的幻象，幻象也将对目标持续施放魔爪。幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。伤害不会叠加。", "en": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack."}}, "is_passive": false, "value_names": ["fiend_grip_tick_interval", "fiend_grip_mana_drain", "fiend_grip_damage", "illusion_count", "scepter_incoming_illusion_damage", "AbilityCastRange", "AbilityChannelTime", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "bloodseeker_rupture", "name_zh": "血魔·割裂", "name_en": "Rupture", "description_zh": "让一个敌方单位皮开肉绽，根据其当前生命值造成初始伤害。单位移动后会根据移动的距离受到伤害。", "description_en": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health. If the unit moves, it takes damage based on the distance moved.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "提升初始伤害，并且提供%AbilityCharges%点割裂能量点数。", "en": "Increases initial damage and grants %AbilityCharges% Rupture Charges."}}, "is_passive": false, "value_names": ["duration", "movement_damage_pct", "hp_pct", "damage_cap_amount", "knockback", "knockback_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "crystal_maiden_frostbite", "name_zh": "水晶室女·冰封禁制", "name_en": "Frostbite", "description_zh": "操控冰霜包围一个敌方单位，禁止移动和攻击，并持续造成伤害。对非远古的普通单位施放将造成%creep_multiplier%倍伤害。", "description_en": "Encases an enemy unit in ice, prohibiting movement and attack, while dealing damage over time. Deals %creep_multiplier%x damage to non-ancient creeps.", "notes_zh": ["冰封禁制为捆缚效果。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_per_second", "duration", "creep_multiplier", "tick_interval", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "drow_ranger_frost_arrows", "name_zh": "卓尔游侠·霜冻之箭", "name_en": "Frost Arrows", "description_zh": "卓尔游侠在箭矢中附上冰冻效果，减缓敌人的移动速度并造成额外伤害。持续%abilityduration%秒。", "description_en": "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.  Slow lasts %abilityduration% seconds.", "notes_zh": ["减速的持续时间在下一支冰箭射中后刷新。"], "granted_by": "", "upgrades": {"scepter": {"zh": "霜冻之箭现在对敌人施加低温的叠加效果，提升霜冻之箭的伤害，并且每层叠加效果都会降低生命回复。若敌人在低温效果下阵亡，他们将会爆炸，对范围内的敌人造成伤害和减速。", "en": "Frost Arrows now apply a Hypothermia stack to enemies, increasing damage from Frost Arrows and reducing their Health Restoration per stack. If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it."}}, "is_passive": false, "value_names": ["frost_arrows_movement_speed", "damage", "shard_regen_reduction_pct_per_stack", "shard_bonus_damage_per_stack", "shard_stack_duration", "shard_burst_radius", "shard_burst_damage_per_stack", "shard_burst_move_slow_pct", "shard_burst_slow_duration", "shard_max_stacks", "AbilityCastRange", "AbilityDuration", "AbilityManaCost"]}, {"subject": "juggernaut_swift_slash", "name_zh": "主宰·迅风斩", "name_en": "Swiftslash", "description_zh": "发动一次短时间的无敌斩，持续%duration%秒。", "description_en": "Performs a short Omnislash for %duration% seconds.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "juggernaut_omni_slash", "name_zh": "主宰·无敌斩", "name_en": "Omnislash", "description_zh": "主宰挥剑跃向敌方目标单位，随后再以更短的攻击频率斩击该单位和附近的其它敌方单位。主宰在无敌斩期间无敌。\n\n驱散类型：弱驱散", "description_en": "Juggernaut leaps towards the target enemy units, and then slashes the target and other nearby enemy units at an increased attack rate. Juggernaut is invulnerable for the duration.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["无敌斩期间可以使用物品。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["attack_rate_multiplier", "bonus_damage", "bonus_attack_speed", "duration", "omni_slash_radius", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "mirana_celestial_quiver", "name_zh": "米拉娜·天界箭袋", "name_en": "Celestial Quiver", "description_zh": "有可用能量时，米拉娜的下次攻击会造成额外魔法伤害。", "description_en": "When a charge is available, Mirana's next attack will deal bonus magic damage.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "跳跃的加成状态生效时获得%quiver_restore%点临时能量。", "en": "Grants %quiver_restore% temporary Charges while Leap's buff is active."}}, "is_passive": false, "value_names": ["bonus_damage", "quiver_restore", "AbilityCastRange", "AbilityCharges", "AbilityChargeRestoreTime"]}, {"subject": "morphling_adaptive_strike_agi", "name_zh": "变体精灵·变体打击", "name_en": "Adaptive Strike", "description_zh": "用猛烈的水波打击一个敌方单位，将其击退并眩晕，同时造成伤害，伤害量为基础伤害加上变体精灵自身敏捷值乘以伤害系数的额外伤害。如果变体精灵的敏捷比力量高50%%，将采用最高伤害系数。\n\n击退距离和眩晕时间是根据变体精灵的力量值。如果变体精灵的力量比敏捷高50%%，将造成最大击退和眩晕。", "description_en": "Launches a surge of water toward an enemy unit, stunning them, knocking them back, and dealing base damage plus additional damage based on Morphling's agility times a multiplier.  If Morphling's agility is 50% higher than strength, the maximum agility multiplier is used.\n\nKnockback distance and stun duration are based on Morphling's strength. If his strength is 50% higher than his agility, the maximum knockback distance and stun duration is used.", "notes_zh": ["弹道移动速度为%projectile_speed%。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_base", "damage_min", "damage_max", "stun_min", "stun_max", "knockback_min", "knockback_max", "knockback_duration", "projectile_speed", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "morphling_replicate", "name_zh": "变体精灵·变形", "name_en": "Morph", "description_zh": "使自身向敌方目标改变，获得其基础技能，并且基于目标改变自己的主属性。技能持续时间内可以来回切换。", "description_en": "Morphling changes his form to match the targeted enemy, gaining their basic abilities and changing his primary attribute based on his target. Can be toggled for the duration of the ability.", "notes_zh": ["变体精灵自身及其控制的单位不能作为变形的目标。", "变形不会复制魔晶/神杖类技能，除非变体精灵自身也拥有相应物品。", "不会触发法术反弹。"], "granted_by": "", "upgrades": {"scepter": {"zh": "变形增加多样施法（右键点击技能栏图标）。开启后会产生目标英雄的强幻象，可以施放英雄的所有基础技能。如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。", "en": "Adds an alt-cast to Morph. When enabled, a strong illusion is created of the target hero that can cast all of the hero's basic abilities. If the illusion is alive when Morphling toggles the ability, he will take the place of the illusion, destroying it."}}, "is_passive": false, "value_names": ["duration", "scepter_stat_steal", "scepter_spell_amplify", "scepter_attack_speed", "scepter_status_resist", "scepter_additional_stats", "scepter_illusion_outgoing", "scepter_illusion_incoming", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "phantom_lancer_spirit_lance", "name_zh": "幻影长矛手·灵魂之矛", "name_en": "Spirit Lance", "description_zh": "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。", "description_en": "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit.", "notes_zh": ["幻影长矛手附近%fake_lance_distance%范围内的幻象也会模仿施法动作。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["lance_damage", "lance_speed", "duration", "movement_speed_pct", "illusion_duration", "illusion_damage_out_pct", "tooltip_illusion_damage", "illusion_damage_in_pct", "tooltip_illusion_total_damage_in_pct", "fake_lance_distance", "scepter_bounce_radius", "scepter_bonus_illusion_damage", "scepter_total_hits", "illusion_lance_damage_pct", "AbilityCastRange"]}, {"subject": "pudge_dismember", "name_zh": "帕吉·肢解", "name_en": "Dismember", "description_zh": "持续施法 - 帕吉撕咬一个敌方单位，使其失去行动能力并受到持续伤害。伤害量为基础伤害加上帕吉力量值的一定百分比，帕吉将回复与伤害量相等的生命。帕吉会将该单位以每秒%pull_units_per_second%的速度向自身牵引，最多牵引%pull_distance_limit%距离。", "description_en": "CHANNELED - Pudge chows down on an enemy unit, disabling it and dealing damage over time. Damage is increased by Pudge's Strength and heals him for the total amount. Pudge pulls the unit at a rate of %pull_units_per_second% units, up to a minimum of %pull_distance_limit% range.", "notes_zh": ["即使肢解的目标在受到作用的过程中隐身，还是不会脱离肢解的作用。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["dismember_damage", "strength_damage", "ticks", "pull_units_per_second", "pull_distance_limit", "animation_rate", "shard_regen_pct", "order_lock_duration", "shard_cast_range", "AbilityCastRange", "AbilityChannelTime", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "razor_static_link", "name_zh": "雷泽·静电连接", "name_en": "Static Link", "description_zh": "在雷泽和敌方英雄之间创造静电连接，偷取目标的攻击力并转移给雷泽。雷泽在连接生效时可以边移动边攻击。", "description_en": "Creates a charged link between Razor and an enemy Hero, stealing damage from the target and giving it to Razor. Allows Razor to attack while moving with the link active.", "notes_zh": ["链接在一方单位死亡或双方距离超过%drain_range_buffer%后断裂。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["drain_length", "drain_duration", "drain_rate", "drain_range_buffer", "radius", "speed", "vision_duration", "attack_speed_factor", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "storm_spirit_electric_vortex", "name_zh": "风暴之灵·电子涡流", "name_en": "Electric Vortex", "description_zh": "将一个敌人拖到风暴之灵所在位置的涡流。", "description_en": "A vortex that pulls an enemy unit to Storm Spirit's location.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "电子涡流变成范围型技能，可以作用于风暴之灵周围所有敌人。", "en": "Electric Vortex affects all enemies within a radius around Storm Spirit."}}, "is_passive": false, "value_names": ["electric_vortex_pull_distance", "electric_vortex_pull_tether_range", "electric_vortex_self_slow", "electric_vortex_self_slow_duration", "radius_scepter", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "sven_storm_bolt", "name_zh": "斯温·风暴之拳", "name_en": "Storm Hammer", "description_zh": "斯温用他充满魔力的手套对目标周围内所有敌人造成伤害和眩晕。", "description_en": "Sven unleashes his magical gauntlet that deals damage and stuns enemy units in a small area around the target.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "提升施法距离，并且对目标施加弱驱散效果。可以影响无敌目标。设为多样施法（右键点击技能栏图标）后，额外造成%scepter_bonus_damage%点伤害并且斯温会跟随风暴之拳行进。", "en": "Increases cast range and applies a basic dispel on the target. Affects invulnerable units. If alt-cast, it deals an additional %scepter_bonus_damage% damage and Sven travels with the Storm Hammer."}}, "is_passive": false, "value_names": ["bolt_speed", "bolt_stun_duration", "bolt_aoe", "vision_radius", "scepter_bonus_damage", "bonus_damage_pct", "AbilityDamage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "tiny_toss", "name_zh": "小小·投掷", "name_en": "Toss", "description_zh": "抓起小小身旁%grab_radius%范围内最近的单位，不论敌友，扔向目标单位或神符，落地时将造成伤害。", "description_en": "Grabs the nearest unit in a %grab_radius% radius around Tiny, ally or enemy, and launches it at the target unit or rune to deal damage where they land.", "notes_zh": ["你可以投掷队友，但他们不会受到伤害。", "投掷对建筑物造成33%的伤害。", "可以对减益免疫单位施放，但是不能将他们扔起，或对他们造成伤害。", "飞行时间是%duration%秒。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "grab_radius", "radius", "toss_damage", "toss_land_damage_pct", "AbilityCastRange", "AbilityCharges", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "tiny_toss_tree", "name_zh": "小小·扔树", "name_en": "Tree Throw", "description_zh": "将树木扔向目标单位，触发自身对其的攻击，并且对周围目标造成溅射伤害。", "description_en": "Throws the tree at the target unit, proccing your attack on it and splashing damage around the target.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["speed", "range", "bonus_damage", "splash_radius", "AbilityCastRange", "AbilityCastPoint"]}, {"subject": "vengefulspirit_magic_missile", "name_zh": "复仇之魂·魔法箭", "name_en": "Magic Missile", "description_zh": "向一个敌方单位射出魔法箭，眩晕并造成伤害。", "description_en": "Fires a magic missile at an enemy unit, stunning and dealing damage.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "可以对敌人弹射一次，以英雄优先，弹射距离为主目标的%bounce_range_pct%%%魔法箭施法距离内。", "en": "Bounces once on an enemy, prioritizing heroes, within %bounce_range_pct%%% of Magic Missile's current cast range from the first target."}}, "is_passive": false, "value_names": ["magic_missile_speed", "magic_missile_stun", "magic_missile_damage", "bounce_range_pct", "damage_per_lasthit", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "vengefulspirit_nether_swap", "name_zh": "复仇之魂·移形换位", "name_en": "Nether Swap", "description_zh": "与一个目标英雄瞬间交换位置，不论敌我。移形换位会打断目标的持续施法。敌方英雄被交换后受到伤害。复仇之魂和被交换的友方英雄都会获得等同于造成伤害的护盾。", "description_en": "Instantaneously swaps positions with a target Hero, friend or enemy. Nether Swap interrupts channeling abilities on the target. Enemy Swapped units take damage. Vengeful Spirit and allied swapped units gain a barrier equal to the damage dealt.", "notes_zh": ["对减益免疫单位有效。", "技能施放后复仇之魂和目标附近的树木将会被摧毁。", "移形换位能够打断持续施法。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_reduction_duration", "damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "windrunner_shackleshot", "name_zh": "风行者·束缚击", "name_en": "Shackleshot", "description_zh": "将目标束缚在正对其后的一个敌方单位或树上。若目标后面没有其它敌方单位或树木，则眩晕时间减少至%fail_stun_duration%秒。", "description_en": "Shackles the target to an enemy unit or tree in a line directly behind it.  If no unit or tree is present, the stun duration is reduced to %fail_stun_duration%.", "notes_zh": ["该技能可以将两个敌人一起束缚，使他们同时眩晕。", "束缚击能将目标束缚在身后最多%shackle_distance%距离的敌方单位或树木。", "束缚击可以被躲避。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["fail_stun_duration", "stun_duration", "shackle_distance", "arrow_speed", "shackle_count", "shackle_angle", "bonus_damage_per_hero", "bonus_damage_per_other_pct", "damage_buff_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}]
+2026-11-06T03:20:29.249631Z ERROR codex_core::shell_snapshot: Shell snapshot validation failed: Snapshot command exited with status exit status: 1: /bin/bash: line 1: /home/xrfc/.codex-temp/shell_snapshots/01a1aedf-365e-7a61-8288-bb900f92e369.tmp-1793935229221475170: No such file or directory
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "antimage_mana_void",
+      "kind": "acts_on_target",
+      "quote": "根据目标损失的魔法值，对目标和其周围的敌人造成伤害。",
+      "reason_zh": "选中目标直接受到伤害，周围敌人也受影响。",
+      "uncertain": false
+    },
+    {
+      "subject": "axe_battle_hunger",
+      "kind": "acts_on_target",
+      "quote": "激怒一个敌方单位，使他受到持续伤害",
+      "reason_zh": "持续伤害和条件减速直接作用于选中单位。",
+      "uncertain": false
+    },
+    {
+      "subject": "axe_culling_blade",
+      "kind": "acts_on_target",
+      "quote": "斧王洞察到弱点并出击，造成纯粹伤害。",
+      "reason_zh": "斧王对选中的敌人出击并造成伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "bane_enfeeble",
+      "kind": "acts_on_target",
+      "quote": "每秒造成伤害，并且降低敌人的总攻击力和施法距离。",
+      "reason_zh": "伤害及属性削弱直接作用于选中的敌人。",
+      "uncertain": false
+    },
+    {
+      "subject": "bane_brain_sap",
+      "kind": "acts_on_target",
+      "quote": "暴食一个敌方单位的生命能量，造成伤害并回复自身生命值。",
+      "reason_zh": "选中的敌方单位直接受到伤害，范围升级也未取消这一作用。",
+      "uncertain": false
+    },
+    {
+      "subject": "bane_nightmare",
+      "kind": "acts_on_target",
+      "quote": "让目标敌方或友方英雄进入沉睡。",
+      "reason_zh": "选中英雄被施加沉睡及相应移动效果。",
+      "uncertain": false
+    },
+    {
+      "subject": "bane_fiends_grip",
+      "kind": "acts_on_target",
+      "quote": "抓住一个敌方单位，使其失去行动能力并持续受到大量伤害",
+      "reason_zh": "选中单位直接受到控制、持续伤害和魔法吸取。",
+      "uncertain": false
+    },
+    {
+      "subject": "bloodseeker_rupture",
+      "kind": "acts_on_target",
+      "quote": "让一个敌方单位皮开肉绽，根据其当前生命值造成初始伤害。单位移动后会根据移动的距离受到伤害。",
+      "reason_zh": "初始伤害和移动触发的伤害均作用于选中单位。",
+      "uncertain": false
+    },
+    {
+      "subject": "crystal_maiden_frostbite",
+      "kind": "acts_on_target",
+      "quote": "操控冰霜包围一个敌方单位，禁止移动和攻击，并持续造成伤害。",
+      "reason_zh": "选中单位直接受到捆缚和持续伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "drow_ranger_frost_arrows",
+      "kind": "acts_on_target",
+      "quote": "减缓敌人的移动速度并造成额外伤害。",
+      "reason_zh": "箭矢命中的选中敌人直接受到减速和额外伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "juggernaut_swift_slash",
+      "kind": "acts_on_target",
+      "quote": "发动一次短时间的无敌斩，持续%duration%秒。",
+      "reason_zh": "同批材料说明无敌斩会斩击选中目标，迅风斩是其短时间版本。",
+      "uncertain": false
+    },
+    {
+      "subject": "juggernaut_omni_slash",
+      "kind": "acts_on_target",
+      "quote": "随后再以更短的攻击频率斩击该单位和附近的其它敌方单位。",
+      "reason_zh": "选中目标直接受到斩击，同时还可斩击附近敌人。",
+      "uncertain": false
+    },
+    {
+      "subject": "mirana_celestial_quiver",
+      "kind": "acts_on_target",
+      "quote": "有可用能量时，米拉娜的下次攻击会造成额外魔法伤害。",
+      "reason_zh": "额外魔法伤害作用于选中并攻击的单位。",
+      "uncertain": false
+    },
+    {
+      "subject": "morphling_adaptive_strike_agi",
+      "kind": "acts_on_target",
+      "quote": "用猛烈的水波打击一个敌方单位，将其击退并眩晕，同时造成伤害",
+      "reason_zh": "水波明确对选中单位造成伤害、击退和眩晕。",
+      "uncertain": false
+    },
+    {
+      "subject": "morphling_replicate",
+      "kind": "direction_only",
+      "quote": "使自身向敌方目标改变，获得其基础技能，并且基于目标改变自己的主属性。；不会触发法术反弹。",
+      "reason_zh": "目标仅提供变形参照，描述中的改变作用于自身，且注明不会触发法术反弹。",
+      "uncertain": false
+    },
+    {
+      "subject": "phantom_lancer_spirit_lance",
+      "kind": "acts_on_target",
+      "quote": "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。",
+      "reason_zh": "选中单位直接受到伤害、减速及幻象攻击。",
+      "uncertain": false
+    },
+    {
+      "subject": "pudge_dismember",
+      "kind": "acts_on_target",
+      "quote": "帕吉撕咬一个敌方单位，使其失去行动能力并受到持续伤害。",
+      "reason_zh": "选中单位直接受到控制、持续伤害和牵引。",
+      "uncertain": false
+    },
+    {
+      "subject": "razor_static_link",
+      "kind": "acts_on_target",
+      "quote": "在雷泽和敌方英雄之间创造静电连接，偷取目标的攻击力并转移给雷泽。",
+      "reason_zh": "选中英雄成为连接对象并被偷取攻击力。",
+      "uncertain": false
+    },
+    {
+      "subject": "storm_spirit_electric_vortex",
+      "kind": "acts_on_target",
+      "quote": "将一个敌人拖到风暴之灵所在位置的涡流。",
+      "reason_zh": "选中敌人直接受到拖拽位移。",
+      "uncertain": false
+    },
+    {
+      "subject": "sven_storm_bolt",
+      "kind": "acts_on_target",
+      "quote": "对目标施加弱驱散效果。可以影响无敌目标。",
+      "reason_zh": "目标处承受范围伤害和眩晕，升级还明确直接对目标施加驱散。",
+      "uncertain": false
+    },
+    {
+      "subject": "tiny_toss",
+      "kind": "direction_only",
+      "quote": "抓起小小身旁%grab_radius%范围内最近的单位，不论敌友，扔向目标单位或神符，落地时将造成伤害。",
+      "reason_zh": "选中单位用于确定投掷落点，被抓起的是身旁最近单位，伤害在落地处发生。",
+      "uncertain": false
+    },
+    {
+      "subject": "tiny_toss_tree",
+      "kind": "acts_on_target",
+      "quote": "将树木扔向目标单位，触发自身对其的攻击，并且对周围目标造成溅射伤害。",
+      "reason_zh": "选中单位直接承受攻击，周围单位另受溅射伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "vengefulspirit_magic_missile",
+      "kind": "acts_on_target",
+      "quote": "向一个敌方单位射出魔法箭，眩晕并造成伤害。",
+      "reason_zh": "魔法箭明确对选中敌人造成眩晕和伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "vengefulspirit_nether_swap",
+      "kind": "acts_on_target",
+      "quote": "与一个目标英雄瞬间交换位置，不论敌我。移形换位会打断目标的持续施法。",
+      "reason_zh": "选中英雄直接被交换位置并受到持续施法打断。",
+      "uncertain": false
+    },
+    {
+      "subject": "windrunner_shackleshot",
+      "kind": "acts_on_target",
+      "quote": "将目标束缚在正对其后的一个敌方单位或树上。若目标后面没有其它敌方单位或树木，则眩晕时间减少至%fail_stun_duration%秒。",
+      "reason_zh": "无论后方是否存在连接对象，选中目标都会受到眩晕。",
+      "uncertain": false
+    }
+  ]
+}
+tokens used
+24,547
+{
+  "objects": [
+    {
+      "subject": "antimage_mana_void",
+      "kind": "acts_on_target",
+      "quote": "根据目标损失的魔法值，对目标和其周围的敌人造成伤害。",
+      "reason_zh": "选中目标直接受到伤害，周围敌人也受影响。",
+      "uncertain": false
+    },
+    {
+      "subject": "axe_battle_hunger",
+      "kind": "acts_on_target",
+      "quote": "激怒一个敌方单位，使他受到持续伤害",
+      "reason_zh": "持续伤害和条件减速直接作用于选中单位。",
+      "uncertain": false
+    },
+    {
+      "subject": "axe_culling_blade",
+      "kind": "acts_on_target",
+      "quote": "斧王洞察到弱点并出击，造成纯粹伤害。",
+      "reason_zh": "斧王对选中的敌人出击并造成伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "bane_enfeeble",
+      "kind": "acts_on_target",
+      "quote": "每秒造成伤害，并且降低敌人的总攻击力和施法距离。",
+      "reason_zh": "伤害及属性削弱直接作用于选中的敌人。",
+      "uncertain": false
+    },
+    {
+      "subject": "bane_brain_sap",
+      "kind": "acts_on_target",
+      "quote": "暴食一个敌方单位的生命能量，造成伤害并回复自身生命值。",
+      "reason_zh": "选中的敌方单位直接受到伤害，范围升级也未取消这一作用。",
+      "uncertain": false
+    },
+    {
+      "subject": "bane_nightmare",
+      "kind": "acts_on_target",
+      "quote": "让目标敌方或友方英雄进入沉睡。",
+      "reason_zh": "选中英雄被施加沉睡及相应移动效果。",
+      "uncertain": false
+    },
+    {
+      "subject": "bane_fiends_grip",
+      "kind": "acts_on_target",
+      "quote": "抓住一个敌方单位，使其失去行动能力并持续受到大量伤害",
+      "reason_zh": "选中单位直接受到控制、持续伤害和魔法吸取。",
+      "uncertain": false
+    },
+    {
+      "subject": "bloodseeker_rupture",
+      "kind": "acts_on_target",
+      "quote": "让一个敌方单位皮开肉绽，根据其当前生命值造成初始伤害。单位移动后会根据移动的距离受到伤害。",
+      "reason_zh": "初始伤害和移动触发的伤害均作用于选中单位。",
+      "uncertain": false
+    },
+    {
+      "subject": "crystal_maiden_frostbite",
+      "kind": "acts_on_target",
+      "quote": "操控冰霜包围一个敌方单位，禁止移动和攻击，并持续造成伤害。",
+      "reason_zh": "选中单位直接受到捆缚和持续伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "drow_ranger_frost_arrows",
+      "kind": "acts_on_target",
+      "quote": "减缓敌人的移动速度并造成额外伤害。",
+      "reason_zh": "箭矢命中的选中敌人直接受到减速和额外伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "juggernaut_swift_slash",
+      "kind": "acts_on_target",
+      "quote": "发动一次短时间的无敌斩，持续%duration%秒。",
+      "reason_zh": "同批材料说明无敌斩会斩击选中目标，迅风斩是其短时间版本。",
+      "uncertain": false
+    },
+    {
+      "subject": "juggernaut_omni_slash",
+      "kind": "acts_on_target",
+      "quote": "随后再以更短的攻击频率斩击该单位和附近的其它敌方单位。",
+      "reason_zh": "选中目标直接受到斩击，同时还可斩击附近敌人。",
+      "uncertain": false
+    },
+    {
+      "subject": "mirana_celestial_quiver",
+      "kind": "acts_on_target",
+      "quote": "有可用能量时，米拉娜的下次攻击会造成额外魔法伤害。",
+      "reason_zh": "额外魔法伤害作用于选中并攻击的单位。",
+      "uncertain": false
+    },
+    {
+      "subject": "morphling_adaptive_strike_agi",
+      "kind": "acts_on_target",
+      "quote": "用猛烈的水波打击一个敌方单位，将其击退并眩晕，同时造成伤害",
+      "reason_zh": "水波明确对选中单位造成伤害、击退和眩晕。",
+      "uncertain": false
+    },
+    {
+      "subject": "morphling_replicate",
+      "kind": "direction_only",
+      "quote": "使自身向敌方目标改变，获得其基础技能，并且基于目标改变自己的主属性。；不会触发法术反弹。",
+      "reason_zh": "目标仅提供变形参照，描述中的改变作用于自身，且注明不会触发法术反弹。",
+      "uncertain": false
+    },
+    {
+      "subject": "phantom_lancer_spirit_lance",
+      "kind": "acts_on_target",
+      "quote": "对敌方目标单位投出一支有魔力的灵魂之矛，造成伤害并减速，同时召唤一个幻象攻击该单位。",
+      "reason_zh": "选中单位直接受到伤害、减速及幻象攻击。",
+      "uncertain": false
+    },
+    {
+      "subject": "pudge_dismember",
+      "kind": "acts_on_target",
+      "quote": "帕吉撕咬一个敌方单位，使其失去行动能力并受到持续伤害。",
+      "reason_zh": "选中单位直接受到控制、持续伤害和牵引。",
+      "uncertain": false
+    },
+    {
+      "subject": "razor_static_link",
+      "kind": "acts_on_target",
+      "quote": "在雷泽和敌方英雄之间创造静电连接，偷取目标的攻击力并转移给雷泽。",
+      "reason_zh": "选中英雄成为连接对象并被偷取攻击力。",
+      "uncertain": false
+    },
+    {
+      "subject": "storm_spirit_electric_vortex",
+      "kind": "acts_on_target",
+      "quote": "将一个敌人拖到风暴之灵所在位置的涡流。",
+      "reason_zh": "选中敌人直接受到拖拽位移。",
+      "uncertain": false
+    },
+    {
+      "subject": "sven_storm_bolt",
+      "kind": "acts_on_target",
+      "quote": "对目标施加弱驱散效果。可以影响无敌目标。",
+      "reason_zh": "目标处承受范围伤害和眩晕，升级还明确直接对目标施加驱散。",
+      "uncertain": false
+    },
+    {
+      "subject": "tiny_toss",
+      "kind": "direction_only",
+      "quote": "抓起小小身旁%grab_radius%范围内最近的单位，不论敌友，扔向目标单位或神符，落地时将造成伤害。",
+      "reason_zh": "选中单位用于确定投掷落点，被抓起的是身旁最近单位，伤害在落地处发生。",
+      "uncertain": false
+    },
+    {
+      "subject": "tiny_toss_tree",
+      "kind": "acts_on_target",
+      "quote": "将树木扔向目标单位，触发自身对其的攻击，并且对周围目标造成溅射伤害。",
+      "reason_zh": "选中单位直接承受攻击，周围单位另受溅射伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "vengefulspirit_magic_missile",
+      "kind": "acts_on_target",
+      "quote": "向一个敌方单位射出魔法箭，眩晕并造成伤害。",
+      "reason_zh": "魔法箭明确对选中敌人造成眩晕和伤害。",
+      "uncertain": false
+    },
+    {
+      "subject": "vengefulspirit_nether_swap",
+      "kind": "acts_on_target",
+      "quote": "与一个目标英雄瞬间交换位置，不论敌我。移形换位会打断目标的持续施法。",
+      "reason_zh": "选中英雄直接被交换位置并受到持续施法打断。",
+      "uncertain": false
+    },
+    {
+      "subject": "windrunner_shackleshot",
+      "kind": "acts_on_target",
+      "quote": "将目标束缚在正对其后的一个敌方单位或树上。若目标后面没有其它敌方单位或树木，则眩晕时间减少至%fail_stun_duration%秒。",
+      "reason_zh": "无论后方是否存在连接对象，选中目标都会受到眩晕。",
+      "uncertain": false
+    }
+  ]
+}

@@ -54,6 +54,9 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 | 编号 | 决定 | 日期 |
 |---|---|---|
 | U65 | 提升治疗量才算治疗，治疗增强不算 | 2026-11-04 |
+| U102、U103 | 单体指向筛查：震荡波、潮汐使者不算；巨浪、阴邪凝视A杖版不触发林肯莲花 | 2026-11-06 |
+| U101 | 工程审查修复第1、2项，第3项只做差异报告；幽鬼之刃、死亡搜寻的林肯和莲花；无影拳记无敌；筛查单体指向 | 2026-11-06 |
+| U99、U100 | U5第二轮抽查结束；R12按例外英雄定目标；R13拆成格挡和反弹；固定方向的范围技能不算单体指向 | 2026-11-06 |
 | — | Astra复核后修正：事实v14、派生层v4（无新用户决定） | 2026-11-06 |
 | U95–U98 | 飞行改无视地形（跳跃冲刺都算）；新增高空视野；减冷却只算能减别的技能；力场、竞技场算场地魔法；新增规则R22 | 2026-11-06 |
 | U93、U94 | 减速只算移速，新增减攻速；减速抗性不影响减攻速；被迫走向某处算蛊惑，不另记位移 | 2026-11-05 |
@@ -399,7 +402,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### 下一步（接手从这里开始）
 
-**当前：MK-T5。** MK-T4已结束（U73），规则v2和事实v8是输入。全量补漏和第1–8轮高强度复查已完成（U81–U89），控制分类已细分，减速和无视地形已拆分（U93–U98），工程修复已完成并经Codex和Astra只读复核（U92）；入口事实v14、词表v13、规则v7，英雄档案、装备档案、克制关系图、英雄特性v2在`knowledge/mechanics/profiles/derived-v4/`（草稿）。U5抽查第二轮进行中（`knowledge/mechanics/reviews/u5-spot-check-002/`，已标146条）。下一步：英雄特性映射、R8、R12、R13、R15、MK-T6；待用户答：无影拳记不记无敌。交接见[MK交接（2026-11-05）](handoff/mk-handoff-2026-11-05.md)。
+**当前：MK-T5。** MK-T4已结束（U73），规则v2和事实v8是输入。全量补漏和第1–8轮高强度复查已完成（U81–U89），控制分类已细分，减速和无视地形已拆分（U93–U98），工程修复已完成并经Codex和Astra只读复核（U92）；入口事实v16、词表v13、规则v9，英雄档案、装备档案、克制关系图、英雄特性v2在`knowledge/mechanics/profiles/derived-v6/`（草稿）。U5第二轮抽查已结束（192条，`knowledge/mechanics/reviews/u5-spot-check-002/`）；R12、R13已定（U100）。下一步：英雄特性映射、R8、R15、MK-T6（含联网核对版本，U99）；R12、R13已定，单体指向已筛查（U100–U103）。交接见[MK交接（2026-11-05）](handoff/mk-handoff-2026-11-05.md)。
 
 **2026-11-02 待用户裁定**：Codex第2轮19处分歧、U5抽查进度（93/497）及待决项已汇总到[待用户裁定汇总](handoff/user-rulings-2026-11-02.md)；19处分歧已由U39、U40全部裁定（`knowledge/mechanics/reviews/user-rulings-001.jsonl`）；U41定U5剩余组先交Codex只读复核，已完成（`knowledge/mechanics/reviews/codex-round-003/`：379组，同标签355、分歧24），分歧中H2的7组已由U42、U43裁定，召唤物规则已定（U43），H1及H3由U44、U45裁定，24组分歧全部裁定完毕（汇总H块）；U46对照游戏文件`IsBreakable`（`knowledge/mechanics/reviews/break-check-001/`）：180组中38组差异及16个漏记技能已由U47裁定，裁定后全部与标记一致；部分破坏附注已记条件（U48）；其他机制排查已完成（`knowledge/mechanics/reviews/game-files-audit-001/`），疑点已由第4轮复核（`codex-round-004/`：175组，同标签136、分歧39、都不确定9），已由U50–U52全部裁定；词表v4和复核后事实v4已生成（`knowledge/mechanics/extractions/v4/`，U54），第5轮复核702组只有Claude审过的组（`codex-round-005/`，同标签674、分歧28），28组已由U57–U59全部裁定；词表v5和复核后事实v5已生成（`knowledge/mechanics/extractions/v5/`，U60），词表缺口A、B组决定加入（U62、U63），第7轮Codex已审（`codex-round-007/`，分歧见汇总L块），已由U65裁定；词表v6和复核后事实v6已生成（`knowledge/mechanics/extractions/v6/`），MK-T3已结束（U67），MK-T4规则v1已生成（`knowledge/mechanics/rules-v1.json`，事实入口`extractions/v7/`，U70），第20条光环待用户定；词表待下一版更新。
 

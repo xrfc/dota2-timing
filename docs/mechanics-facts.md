@@ -4,7 +4,7 @@
 
 ## 交付与结果
 
-> **最新（2026-11-05，U85–U92）**：后续任务读取[复核后事实v14](../knowledge/mechanics/extractions/v14/README.md)；对照见`knowledge/mechanics/reviews/recall-check-002/`。[v12](../knowledge/mechanics/extractions/v12/README.md)、[v11](../knowledge/mechanics/extractions/v11/README.md)、[v10](../knowledge/mechanics/extractions/v10/README.md)保留。v9及之前：[复核后事实v9](../knowledge/mechanics/extractions/v9/README.md)，它在v3上叠加全部判断；v1–v8保留。
+> **最新（2026-11-05，U85–U92）**：后续任务读取[复核后事实v16](../knowledge/mechanics/extractions/v16/README.md)；对照见`knowledge/mechanics/reviews/recall-check-002/`。[v12](../knowledge/mechanics/extractions/v12/README.md)、[v11](../knowledge/mechanics/extractions/v11/README.md)、[v10](../knowledge/mechanics/extractions/v10/README.md)保留。v9及之前：[复核后事实v9](../knowledge/mechanics/extractions/v9/README.md)，它在v3上叠加全部判断；v1–v8保留。
 
 > **当前版本（2026-11-01）**：v2（词表v3、规则v2）见[知识框架§6](knowledge-framework.md)；v3在v2基础上去掉Valve标记为“当前无此升级”的A杖/魔晶文字，见§7，命令`PYTHONPATH=src python scripts/build_mechanics_facts_v3.py --output <新目录>`。下文描述v1，保留不改。
 

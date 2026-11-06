@@ -2,7 +2,9 @@
 
 全部由脚本生成，不手填，当前版本见下。`?`表示只有AI一致，用户尚未确认。
 
-- `derived-v4/`（当前，草稿）：由`scripts/build_mechanics_derived_v4.py`从事实v14、词表v13和规则v7生成，结构同v3。3,376条边只有124条两端都确认，204条来自待定规则。
+- `derived-v6/`（当前，草稿）：由`scripts/build_mechanics_derived_v6.py`从事实v16和规则v9（展开后）生成。关联条目带结构化状态（见`knowledge/mechanics/README.md`），页面写“候选机制关联”。
+- `derived-v5/`（已被取代）：由`scripts/build_mechanics_derived_v5.py`从事实v15、词表v13和规则v8（展开后）生成，结构同v3。3,607条边，140条两端都确认，没有待定规则了；R12边上若带`exception`，表示该英雄有A杖时是例外。档案页还不显示`exception`。Black Grimoire已移出装备。
+- `derived-v4/`：基于v14，已被取代，保留不改。3,376条边只有124条两端都确认，204条来自待定规则。
 - `derived-v3/`：基于v13，已被取代，保留不改。由`scripts/build_mechanics_derived_v3.py`从事实v13、词表v13和规则v7生成。127个英雄，143件现役装备。比v2多了：每条边的`relation`和`status`；证据里的`condition_notes`；档案里的“【待定】”和部分“AI说明条件”；熊灵的技能。
   - 局限：3,376条边只有17条两端都确认，其中204条来自待定规则R13；只是候选。档案只显示含夜晚、层数、概率等关键词的条件说明，完整文字在`facts-v13.json`。U5抽查还没做完。
 - `derived-v2/`：基于v12，已被取代，保留不改。由`scripts/build_mechanics_derived_v2.py`从事实v12、词表v11和规则v5生成。127个英雄，143件现役装备，文件结构同`derived-v1/`。

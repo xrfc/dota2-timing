@@ -1,5 +1,7 @@
 # 复核后事实 v14（U96–U98）
 
+已被[v15](../v15/README.md)取代。
+
 直接读冻结的v13（`extractions/v13/facts-v13.json`），写入Astra复核查出的裁定遗漏（`reviews/v14-inputs-001.json`）和第二轮抽查新增的35条标记（`reviews/u5-spot-check-002/verdicts-2026-11-06.jsonl`）。词表`vocabulary-v13.json`，规则`rules-v7.json`。共3178行：接受2489，排除689。
 
 | `basis` | 行数 | 程序算确认吗 |
