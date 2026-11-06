@@ -1,6 +1,8 @@
 # 变更记录
 
-## 2026-11-06 U113：MK-T6a统一入口、MK-T6b规则字段严格检查、PR #17复核修复
+## 2026-11-06 U113：MK-T6a统一入口、MK-T6b规则字段严格检查、PR #17复核修复、MK-T6c数值升级来源
+
+- MK-T6c：事实v20（行同v19）给69组`numeric_upgrades`补`ruling`：40组指向用户逐条裁定（U65 3组、U66 18组、U72 19组，`reviews/user-rulings-001.jsonl`），29组来自U65冷却规则；对不上或裁定没用上都报错。派生层v11（内容同v10），`current.json`改指向v20、derived-v11。
 
 - PR #17复核2条（P2）均成立并已修：①`usable_edges`、`hero_relations`只接受`/2`图谱，读当前`/3`图谱会报错，现在两者都接受，并新增“当前图谱→公共读取接口”集成测试；②装备档案没带升级条件（林肯的巨浪缺“有A杖时不成立”），新增`data.mechanics_profiles_v4`和派生层v10，装备关联保留逐技能条件，页面列出有条件的目标。`current.json`改指向derived-v10。
 

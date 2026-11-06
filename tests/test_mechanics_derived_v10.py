@@ -60,6 +60,6 @@ def test_item_relations_match_the_graph_for_every_item():
         assert profile["candidate_relations"] == item_relations(profile["subject"], graph)
 
 
-def test_current_entry_points_at_derived_v10():
-    entries = load_current(ROOT)["entries"]
-    assert entries["item_profiles"]["path"].startswith("knowledge/mechanics/profiles/derived-v10/")
+def test_current_entry_is_derived_v10_or_later():
+    path = load_current(ROOT)["entries"]["item_profiles"]["path"]
+    assert int(path.split("derived-v", 1)[1].split("/", 1)[0]) >= 10
