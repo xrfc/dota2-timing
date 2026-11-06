@@ -92,6 +92,6 @@
 - **词表缺口**：用户发现缺虚无后排查，增加A、B组29项，C组纯属性不进词表（U58、U62、U63）。
 - **升级只改数值不记机制**（U65、U66、U72）：放在`numeric_upgrades`；v20起每组带`ruling`写明裁定来源（MK-T6c）。
 - **规则层**（U68–U73，已结束；后续U94、U97增至22条）：只说机制关系，不说“该出”。`mechanics_interactions`校验规则并算出来源和目标。
-- **局限**：冻结事实包`patch_verified=false`；MK-T6d（2026-11-06）核对当前知识与7.41f一致，记在`current.json`（`reviews/patch-check-001/`）；`two_ai`不算用户确认；未审候选和可能的漏记留到MK-T5抽查。
+- **局限**：冻结事实包`patch_verified=false`；MK-T6d（2026-11-06）核对当前知识与7.41f一致，记在`current.json`（`reviews/patch-check-001/`）；以后的补丁按`docs/mechanics-patch-update.md`更新；`two_ai`不算用户确认；未审候选和可能的漏记留到MK-T5抽查。
 - **漏记（MK-T5发现）**：候选靠关键词筛，复核看不到没被筛出的组合；莱恩·妖术、风暴之灵·球状闪电等都没有记录，见`knowledge/mechanics/reviews/recall-check-001/`。
 - **派生层**：`profiles/derived-v11/`含英雄档案、装备档案、克制关系图和英雄特性v3，每条带证据链；U5抽查前都是草稿；克制关系是候选，读取规则见`knowledge/mechanics/README.md`。

@@ -1,6 +1,8 @@
 # 变更记录
 
-## 2026-11-06 U113：MK-T6a统一入口、MK-T6b规则字段严格检查、PR #17复核修复、MK-T6c数值升级来源、MK-T6d版本核对
+## 2026-11-06 U113：MK-T6a统一入口、MK-T6b规则字段严格检查、PR #17复核修复、MK-T6c数值升级来源、MK-T6d版本核对、MK-T6e补丁更新流程
+
+- MK-T6e：补丁更新流程`docs/mechanics-patch-update.md`（有无新补丁→抓快照→差异→影响范围→复核→出新版本→版本核对→文档），新增`scripts/patch_update.py`（`status`联网查补丁，`item-diff`、`game-diff`按装备和技能块比对，`impact`列出要复核的事实行、数值升级、规则和装备关联）和测试；真实数据试跑在`reviews/patch-update-dryrun-001/`。U114：小额被动生命恢复算治疗，下一版事实吸收。
 
 - MK-T6d：联网核对当前知识与7.41f一致（`knowledge/mechanics/reviews/patch-check-001/`）。官方补丁列表最新仍是7.41f；游戏文件镜像`ee99709`到最新`b671cd0`之间技能、英雄、物品脚本未变；Valve英雄数据新快照（`hero-capabilities/snapshots/2026-11-06/`）与11-01相同；新抓Valve英文装备数据147件（`items/sources/itemdata-english-2026-11-06/`），装备引用原文和属性数值都有当前依据，4处标记逐条核对为误报。新增`scripts/check_patch_knowledge.py`；`current.json`的`patch.verified=true`。回答了抽查时“奥术天球减伤是7.41f吗”：那是接口残留的旧A杖文字，已在v3去掉。
 

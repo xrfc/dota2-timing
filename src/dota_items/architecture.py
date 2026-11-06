@@ -257,6 +257,7 @@ SCRIPTS = {
     "build_mechanics_derived_v11": _S,
     "collect_build_survey": _S,
     "check_patch_knowledge": _S,
+    "patch_update": _S,
     "build_mechanics_current": _S,
     "build_mechanics_profiles": _S,
     "build_stale_upgrade_text": _S,
