@@ -1,6 +1,8 @@
 # 变更记录
 
-## 2026-11-06 U113：MK-T6a统一入口、MK-T6b规则字段严格检查
+## 2026-11-06 U113：MK-T6a统一入口、MK-T6b规则字段严格检查、PR #17复核修复
+
+- PR #17复核2条（P2）均成立并已修：①`usable_edges`、`hero_relations`只接受`/2`图谱，读当前`/3`图谱会报错，现在两者都接受，并新增“当前图谱→公共读取接口”集成测试；②装备档案没带升级条件（林肯的巨浪缺“有A杖时不成立”），新增`data.mechanics_profiles_v4`和派生层v10，装备关联保留逐技能条件，页面列出有条件的目标。`current.json`改指向derived-v10。
 
 - MK-T6b：规则v11（`schema=mechanics-rules/2`）要求只记录不计算的字段在`not_computed`里写明字段、原因和用户决定，未声明或程序不认识的字段读取时报错（`data.mechanics_rules_v11`）。R08、R09、R19已声明。事实v19（行同v18）、派生层v9（关联边同v8）；`current.json`改指向v19、v11、derived-v9；召回检查和抽查页生成改为从`current.json`取路径。
 

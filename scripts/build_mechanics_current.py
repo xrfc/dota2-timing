@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 E = "knowledge/mechanics/extractions/v19"
-D = "knowledge/mechanics/profiles/derived-v9"
+D = "knowledge/mechanics/profiles/derived-v10"
 
 # name -> (path, build manifest or None, what it is)
 ENTRIES = {

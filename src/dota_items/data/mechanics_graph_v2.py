@@ -98,10 +98,18 @@ def annotate_graph(graph, rules, doc):
     }
 
 
+# /3 (U104) adds per-ability conditions to /2 and keeps every /2 field, so both are readable.
+READABLE_SCHEMAS = ("mechanics-counter-graph/2", "mechanics-counter-graph/3")
+
+
+def _check_schema(graph):
+    if graph.get("schema") not in READABLE_SCHEMAS:
+        raise ValueError("Needs a counter graph that records edge status")
+
+
 def usable_edges(graph, *, confirmed_only=False, include_pending=False):
     """Edges a consumer may read; pending ones need an explicit request."""
-    if graph.get("schema") != "mechanics-counter-graph/2":
-        raise ValueError("Needs a counter graph that records edge status")
+    _check_schema(graph)
     return [
         edge
         for edge in graph["item_to_hero"]
@@ -112,8 +120,7 @@ def usable_edges(graph, *, confirmed_only=False, include_pending=False):
 
 def hero_relations(graph, source_hero, target_hero, *, include_pending=False):
     """Rules where one hero's abilities act on another's, with relation and status."""
-    if graph.get("schema") != "mechanics-counter-graph/2":
-        raise ValueError("Needs a counter graph that records edge status")
+    _check_schema(graph)
     found = []
     for rule in graph["rules"]:
         if rule["status"] == STATUS_PENDING and not include_pending:
