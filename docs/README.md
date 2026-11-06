@@ -32,6 +32,7 @@
 
 - [机制知识框架](knowledge-framework.md)：事实层→规则层→推导层设计（U26/U27）
 - [MK-T3机制事实：接口、复现与抽查](mechanics-facts.md)
+- [机制知识库：补丁更新流程](mechanics-patch-update.md)：新补丁出来后怎么找变化、复核、出新版本（MK-T6e）
 - [MK-T3语义复核：批次与判定方法](mechanics-review.md)
 - [知识维护、路径映射与证据恢复](knowledge-maintenance.md)
 - [英雄知识能否作为训练冷启动？](knowledge-cold-start.md)
