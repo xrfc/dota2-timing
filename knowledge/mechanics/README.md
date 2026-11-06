@@ -46,7 +46,9 @@
 - **没算的规则字段**：`pairs`、`target_exempt_mechanisms`、`parameters`现在不参与计算，`not_evaluated`会列出来。
 - **校验**：`manifest.json`记录数据输入（v18直接读冻结的v17，测试追踪真实读取）和导入到的全部仓库源码（测试沿导入关系检查）；数据和源码都在构建前后比对，中途变化或文件被删就报错。
 
-MK-T6再做：统一入口文件`current.json`、补丁状态、数值升级的裁定来源、未生效规则字段改为明确报错。
+**统一入口（MK-T6，U113）：`current.json`列出当前每份知识文件的路径和SHA-256。新代码用`dota_items.data.mechanics_current.read_current(名字)`读取；文件被改动、缺失或和构建manifest对不上都会报错。升版本时：生成并提交新版本文件 → 改`scripts/build_mechanics_current.py`里的列表 → 重新运行 → 同步文档；`tests/test_mechanics_current.py`会检查入口是否指向最新版本。**
+
+MK-T6还要做：补丁版本认证、数值升级的裁定来源、未生效规则字段改为明确报错、补丁更新流程、标注被替代的旧知识。
 
 **当前入口：`extractions/v18/`、`vocabulary-v13.json`和`rules-v10.json`（U83、U85–U106）；派生层`profiles/derived-v8/`（草稿）。补漏见`reviews/full-audit-001/`、`full-audit-002/`，第1–8轮复查见`full-audit-003/`，控制分类重读见`full-audit-004/`，对照见`reviews/recall-check-002/`。**
 
