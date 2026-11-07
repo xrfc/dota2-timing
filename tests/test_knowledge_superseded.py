@@ -34,4 +34,5 @@ def test_named_items_cover_old_traits_and_recommendation_package():
     assert superseded_status("knowledge/hero-traits/hero-traits-v1.json", doc)
     assert superseded_status("knowledge/recommendation/7.41f-v1/knowledge.json", doc)
     assert superseded_status("knowledge/mechanics/profiles/heroes-v1/hero-1.md", doc)
-    assert superseded_status("knowledge/mechanics/enums-v1.json", doc) is None
+    assert superseded_status("knowledge/mechanics/enums-v2.json", doc) is None
+    assert superseded_status("knowledge/mechanics/enums-v1.json", doc)

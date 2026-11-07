@@ -1,5 +1,7 @@
 # 复核后事实 v25（U120、U121）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 新增机制“加速”（`haste`，词表v14）：提升自身、自己的单位或友方移动速度的效果，顺带加一点移速的也算，只让敌人变慢的不算。
 
 - 116行加速，来自`reviews/haste-001`：249个候选由Codex（`gpt-6.1-sol`，high）独立判断，Claude看过依据；依据记`two_ai`（不是两边盲审，同U81做法）。12个不确定的没有记。
