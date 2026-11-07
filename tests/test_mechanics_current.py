@@ -74,7 +74,7 @@ def test_output_must_match_its_build_manifest(tmp_path):
     entries = _copy(tmp_path)
     manifest = tmp_path / entries["facts"]["manifest"]
     receipt = json.loads(manifest.read_text())
-    receipt["output_sha256"]["facts-v23.json"] = "0" * 64
+    receipt["output_sha256"]["facts-v24.json"] = "0" * 64
     manifest.write_text(json.dumps(receipt))
     with pytest.raises(ValueError, match="build manifest"):
         load_current(tmp_path)
