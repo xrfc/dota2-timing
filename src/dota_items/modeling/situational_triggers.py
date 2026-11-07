@@ -18,18 +18,29 @@ def trait_sums(trait_counts):
     }
 
 
-def rule_heroes(evaluation, registry_heroes):
-    """{rule_id: hero ids that own one of the rule's target abilities}."""
+def rule_heroes(evaluation, registry_heroes, spec=None):
+    """{rule_id: owner hero ids of its target abilities}, plus ``abilities:<list>`` entries
+    for named ability lists in the trigger spec (U125). Unknown abilities raise."""
     owner = {a["name"]: h["hero_id"] for h in registry_heroes for a in h["abilities"]}
-    return {
+    out = {
         rule["id"]: {owner[t] for t in rule["targets"] if t in owner}
         for rule in evaluation["rules"]
     }
+    for item in (spec or {}).get("items", []):
+        for key, abilities in item["pregame"].get("abilities_any", {}).items():
+            unknown = [a for a in abilities if a not in owner]
+            if unknown:
+                raise ValueError(f"{item['id']}: unknown abilities {unknown}")
+            out[f"abilities:{key}"] = {owner[a] for a in abilities}
+    return out
 
 
 def pregame_fires(item, enemies, sums, heroes_by_rule):
     """Whether one item's pregame trigger fires for these enemy hero ids."""
     condition = item["pregame"]
+    if "abilities_any" in condition:
+        lists = [heroes_by_rule[f"abilities:{key}"] for key in condition["abilities_any"]]
+        return bool(set(enemies) & set().union(*lists))
     if "trait" in condition:
         return sum(sums[condition["trait"]].get(h, 0) for h in enemies) >= condition["min_sum"]
     wanted = set().union(*(heroes_by_rule[r] for r in condition["rule_heroes"]))

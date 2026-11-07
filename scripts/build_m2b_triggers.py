@@ -15,7 +15,7 @@ from dota_items.modeling import situational_triggers as st
 from dota_items.storage import file_hash
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = "knowledge/situational-items/triggers-v1.json"
+SPEC = "knowledge/situational-items/triggers-v2.json"
 REGISTRY = "knowledge/hero-capabilities/hero-registry.json"
 IMPLEMENTATION = (
     "scripts/build_m2b_triggers.py",
@@ -34,7 +34,7 @@ def run(snapshot, output, repo=ROOT):
     registry = json.loads((repo / REGISTRY).read_text(encoding="utf-8"))["heroes"]
     current = load_current(repo)
     sums = st.trait_sums(read_current("hero_traits", repo)["traits"])
-    heroes_by_rule = st.rule_heroes(read_current("rules_evaluation", repo), registry)
+    heroes_by_rule = st.rule_heroes(read_current("rules_evaluation", repo), registry, spec)
     _, players, purchases, split = load_snapshot(snapshot)
     # Training split only; the validation split stays untouched for M4.
     result = st.validate(spec, players, purchases, split["train"], sums, heroes_by_rule)
@@ -46,7 +46,7 @@ def run(snapshot, output, repo=ROOT):
         output / "manifest.json",
         {
             "schema": "m2b-triggers-run/1",
-            "decision": "U123",
+            "decision": spec["decision"],
             "snapshot": str(snapshot),
             "split": "train",
             "knowledge": {

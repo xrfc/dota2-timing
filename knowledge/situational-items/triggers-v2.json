@@ -1,0 +1,128 @@
+{
+ "schema": "situational-triggers/1",
+ "version": "v2",
+ "decision": "U123,U124,U125",
+ "hero": {
+  "hero_id": 8,
+  "position": 1,
+  "name_zh": "主宰"
+ },
+ "note_zh": "主宰针对装的触发条件（Q10）。赛前只看敌方英雄（用英雄特性的基础数，不含A杖、魔晶，U104）；比赛中看已经看到敌方出的装备。“敌方常规会出”要等B1数据（R8），v1不用。阈值取M1训练集里敌方合计的前25%（U123按草案）。 v2：碎颅锤改为看用户确认的两份技能名单（U125）。",
+ "items": [
+  {
+   "id": "monkey_king_bar",
+   "zh": "金箍棒",
+   "pregame": {
+    "trait": "evasion",
+    "min_sum": 1
+   },
+   "ingame_items": [
+    "butterfly",
+    "heavens_halberd",
+    "radiance",
+    "talisman_of_evasion"
+   ],
+   "rules": [
+    "R07"
+   ]
+  },
+  {
+   "id": "skadi",
+   "zh": "斯嘉蒂之眼",
+   "pregame": {
+    "trait": "sustain",
+    "min_sum": 4
+   },
+   "ingame_items": [
+    "satanic",
+    "heart",
+    "vladmir",
+    "bloodstone",
+    "guardian_greaves",
+    "holy_locket"
+   ],
+   "rules": [
+    "R14"
+   ],
+   "note_zh": "比赛中的回复装：草案写“撒旦、挑战头巾路线”，挑战头巾一路是魔抗装、不是回复装，助手改为主要作用是回血或吸血的大件（实现选择，用户可改）"
+  },
+  {
+   "id": "basher",
+   "zh": "碎颅锤",
+   "pregame": {
+    "abilities_any": {
+     "channel_ultimates": [
+      "enigma_black_hole",
+      "witch_doctor_death_ward",
+      "crystal_maiden_freezing_field",
+      "pudge_dismember",
+      "pugna_life_drain",
+      "lion_mana_drain",
+      "shadow_shaman_shackles",
+      "bane_fiends_grip"
+     ],
+     "self_debuff_immunity": [
+      "juggernaut_blade_fury",
+      "life_stealer_rage",
+      "ursa_enrage",
+      "pangolier_rollup",
+      "pangolier_gyroshell",
+      "omniknight_martyr"
+     ]
+    }
+   },
+   "ingame_items": [],
+   "rules": [
+    "R10",
+    "R17"
+   ],
+   "note_zh": "敌方有值得打断的持续施法大招（R17里挑出的8个），或有能让英雄自己开减益免疫的基础技能（R10里挑出的6个，如噬魂鬼·狂暴）。召唤物、守卫、幻象的减益免疫不算；只在A杖或魔晶才有的（莱恩·法力吸取魔晶、破晓辰星·火焰花环魔晶、上古巨神·灵体游魂A杖、陈·上帝之手A杖）赛前不算（U104）。"
+  },
+  {
+   "id": "sange_and_yasha",
+   "zh": "散夜对剑",
+   "pregame": {
+    "trait": "disables",
+    "min_sum": 5
+   },
+   "ingame_items": [],
+   "rules": [
+    "R11",
+    "R21"
+   ]
+  },
+  {
+   "id": "diffusal",
+   "zh": "净魂之刃（含散魂剑）",
+   "pregame": {
+    "trait": "dispellable_save",
+    "min_sum": 2
+   },
+   "ingame_items": [],
+   "rules": [
+    "R01"
+   ],
+   "note_zh": "烧蓝（R12）不做触发：法力依赖英雄几乎每局都有4个以上"
+  },
+  {
+   "id": "nullifier",
+   "zh": "否决坠饰",
+   "pregame": {
+    "trait": "dispellable_save",
+    "min_sum": 2
+   },
+   "ingame_items": [
+    "force_staff",
+    "cyclone",
+    "glimmer_cape",
+    "ghost",
+    "hurricane_pike",
+    "wind_waker"
+   ],
+   "rules": [
+    "R01",
+    "R03"
+   ]
+  }
+ ]
+}
