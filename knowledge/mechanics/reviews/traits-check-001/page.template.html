@@ -61,6 +61,7 @@ details.zero summary{cursor:pointer;color:var(--muted);font-size:.9rem}
 .rel .rule{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:4px}
 .rel .tag{font-size:.72rem;color:var(--warn);margin-left:4px}
 .help{font-size:.85rem;color:var(--muted);max-width:68ch}
+.batch{display:inline-flex;gap:8px;align-items:center;margin:0 0 10px;padding:6px 12px;border:1px solid var(--accent);border-radius:8px;background:var(--accent-soft);color:var(--ink);font-size:.9rem;cursor:pointer}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <div class="wrap">
@@ -72,6 +73,7 @@ details.zero summary{cursor:pointer;color:var(--muted);font-size:.9rem}
     <h1>英雄特性抽查</h1>
     <p class="lede">从127个英雄里抽了32个（约1/4）。每个英雄看三部分：特性数量是否符合你的预期、每个技能记的机制有没有错或漏（如英雄特有的免死），以及“可能克制它的”候选关联是否合理。每项点“对 / 错 / 不确定”，错和不确定请写一句原因。没点的不算看过。</p>
     <p class="help">“基础”只算基础版和装备就有的技能；“含升级”再加上只有A杖或魔晶才有的技能。技能后面的橙字是生效条件，“未确认”表示这条事实目前只有AI一致。</p>
+    <label class="batch" id="batchbox" hidden><input type="checkbox" id="onlybatch" checked> 只看第二批（<span id="nbatch">0</span>项，都是还没标过的特性）</label>
     <div class="status"><span>已标 <b id="done">0</b> / <b id="total">0</b></span><span>错 <b id="nwrong">0</b></span><span>不确定 <b id="nunsure">0</b></span><span id="save">正在连接保存服务…</span></div>
     <div id="list"></div>
   </main>
@@ -85,10 +87,11 @@ for(const h of DATA.rows){for(const t of h.traits)items.push({id:t.id,hero:h.her
 $("total").textContent=items.length;
 function stats(){
   let done=0,w=0,u=0;
-  for(const it of items){const v=verdicts.get(it.id);if(v){done++;if(v.verdict==="wrong")w++;if(v.verdict==="unsure")u++}}
+  const scope=batchOnly()?items.filter(i=>BATCH.has(i.id)):items;$("total").textContent=scope.length;
+  for(const it of scope){const v=verdicts.get(it.id);if(v){done++;if(v.verdict==="wrong")w++;if(v.verdict==="unsure")u++}}
   $("done").textContent=done;$("nwrong").textContent=w;$("nunsure").textContent=u;
   for(const h of DATA.rows){
-    const own=items.filter(i=>i.hero===h.hero_id),n=own.filter(i=>verdicts.has(i.id)).length;
+    const own=items.filter(i=>i.hero===h.hero_id&&(!batchOnly()||BATCH.has(i.id))),n=own.filter(i=>verdicts.has(i.id)).length;
     const a=$("nav-"+h.hero_id);if(a){a.querySelector(".n").textContent=n+"/"+own.length;a.classList.toggle("done",n===own.length)}
   }
 }
@@ -172,9 +175,22 @@ function relBlock(h){
   box.appendChild(acts(h.rel_id,box));
   return box;
 }
+const BATCH=new Set(DATA.batch||[]);
+if(BATCH.size){$("batchbox").hidden=false;$("nbatch").textContent=BATCH.size;$("onlybatch").addEventListener("change",render)}
+function batchOnly(){return BATCH.size&&$("onlybatch").checked}
 function render(){
   const nav=$("nav"),list=$("list");nav.replaceChildren();list.replaceChildren();
+  const only=batchOnly();
   for(const h of DATA.rows){
+    if(only&&!h.traits.some(t=>BATCH.has(t.id)))continue;
+    if(only){
+      const a=document.createElement("a");a.href="#h"+h.hero_id;a.id="nav-"+h.hero_id;
+      const nm=document.createElement("span");nm.textContent=h.name;const n=document.createElement("span");n.className="n";a.append(nm,n);nav.appendChild(a);
+      const sec=document.createElement("section");sec.className="hero";sec.id="h"+h.hero_id;
+      const head=document.createElement("header");const h2=document.createElement("h2");h2.textContent=h.name;head.appendChild(h2);sec.appendChild(head);
+      for(const t of h.traits)if(BATCH.has(t.id))sec.appendChild(traitRow(t));
+      list.appendChild(sec);continue;
+    }
     const a=document.createElement("a");a.href="#h"+h.hero_id;a.id="nav-"+h.hero_id;
     const nm=document.createElement("span");nm.textContent=h.name;const n=document.createElement("span");n.className="n";
     a.append(nm,n);nav.appendChild(a);

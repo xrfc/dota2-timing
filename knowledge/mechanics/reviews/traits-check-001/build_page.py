@@ -13,7 +13,9 @@ def main():
     vocab_path = ROOT / current["entries"]["vocabulary"]["path"]
     vocab = json.loads(vocab_path.read_text(encoding="utf-8"))
     names = {term["id"]: term["zh"] for term in vocab["mechanisms"]}
-    data = {"rows": sample["rows"], "mz": names}
+    batch = OUT / "batch2.json"
+    batch_ids = json.loads(batch.read_text(encoding="utf-8"))["ids"] if batch.exists() else []
+    data = {"rows": sample["rows"], "mz": names, "batch": batch_ids}
     text = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
     template = (OUT / "page.template.html").read_text(encoding="utf-8")
     (OUT / "page.html").write_text(template.replace("__DATA__", text), encoding="utf-8")
