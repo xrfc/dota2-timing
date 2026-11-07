@@ -55,7 +55,9 @@
 
 - **补丁更新流程**（MK-T6e）：见`docs/mechanics-patch-update.md`；脚本`scripts/patch_update.py`（`status`、`item-diff`、`game-diff`、`impact`），试跑见`reviews/patch-update-dryrun-001/`。
 
-MK-T6还要做：标注被替代的旧知识、文档与学习笔记收尾。
+- **被取代的旧知识**（MK-T6f）：登记在`knowledge/superseded.json`——各版本族里比`current.json`旧的版本自动算被取代，另有英雄特性v1、阵容规则包7.41f-v1、早期档案目录逐项列出（含谁还在读、为什么被取代）。`data.knowledge_superseded.superseded_status(路径)`可查；测试保证当前入口不会指向被取代的文件。旧版本目录的README顶部加了提示，冻结文件本身不改。
+
+MK-T6还要做：文档与学习笔记收尾（并出事实下一版吸收U114）。
 
 **当前入口：`current.json`（U113），即`extractions/v20/`、`vocabulary-v13.json`和`rules-v11.json`；派生层`profiles/derived-v11/`（草稿）。补漏见`reviews/full-audit-001/`、`full-audit-002/`，第1–8轮复查见`full-audit-003/`，控制分类重读见`full-audit-004/`，对照见`reviews/recall-check-002/`。**
 

@@ -1,5 +1,7 @@
 # 复核后事实 v12（U85–U89）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 在v11上写入第1–8轮复查的裁定和控制分类细分（`reviews/recheck-rulings-001.jsonl`，由`reviews/full-audit-004/make_rulings.py`生成）。词表`vocabulary-v11.json`，规则`rules-v5.json`。共3109行：接受2413，排除696。
 
 | `basis` | 行数 | 算用户确认吗 |

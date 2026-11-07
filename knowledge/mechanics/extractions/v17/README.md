@@ -1,5 +1,7 @@
 # 复核后事实 v17（U104）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 已被[v18](../v18/README.md)取代。
 
 直接读冻结的v16，事实行不变，新增`condition_exceptions`（`reviews/v17-inputs-001.json`），规则v9按条件计算。

@@ -1,0 +1,54 @@
+{
+ "schema": "knowledge-superseded/1",
+ "decision": "MK-T6f（U113）",
+ "note_zh": "被取代的旧知识：保留用于复现冻结产物，新代码不要当作当前知识读取。当前入口是knowledge/mechanics/current.json。冻结文件本身不改动，标注集中记在这里。",
+ "families": [
+  {"pattern": "knowledge/mechanics/vocabulary-v(\\d+)\\.json", "current": "vocabulary", "zh": "机制词表"},
+  {"pattern": "knowledge/mechanics/rules-v(\\d+)\\.json", "current": "rules", "zh": "机制规则"},
+  {"pattern": "knowledge/mechanics/extractions/v(\\d+)/facts-v\\d+\\.json", "current": "facts", "zh": "复核后事实包"},
+  {"pattern": "knowledge/mechanics/profiles/derived-v(\\d+)/counter-graph\\.json", "current": "counter_graph", "zh": "派生层"},
+  {"pattern": "knowledge/mechanics/retired-items-v(\\d+)\\.json", "current": "retired_items", "zh": "退出装备标记"},
+  {"pattern": "knowledge/hero-traits/trait-mapping-v(\\d+)\\.json", "current": "trait_mapping", "zh": "英雄特性映射"}
+ ],
+ "items": [
+  {
+   "path": "knowledge/hero-traits/hero-traits-v1.json",
+   "zh": "英雄特性v1（助手手工标注，9个维度）",
+   "superseded_by": "current.json的hero_traits（由机制知识推导，映射见trait_mapping）",
+   "decision": "U23→U105–U107",
+   "still_read_by": [
+    "scripts/check_mechanics_recall.py（作为外部对照清单，不当真值）",
+    "scripts/build_mechanics_derived*.py（只用于和v1比较差异）",
+    "路线A冻结产物：M2b模型与参照统计、scripts/hero_trait_crosscheck.py"
+   ],
+   "reason_zh": "手工标注没有逐条证据链；MK推导的特性每条可追溯到事实和规则"
+  },
+  {
+   "path": "knowledge/recommendation/7.41f-v1/",
+   "zh": "阵容规则知识包7.41f-v1（只支持一号位主宰的手写需求规则和装备权重）",
+   "superseded_by": "机制事实和规则以current.json为准；该包的启发式权重没有替代品，仍是路线A旧页面的一部分",
+   "decision": "MK（U26、U27）",
+   "still_read_by": [
+    "scripts/audit_purchase_observations.py",
+    "docs/lineup-recommendation.md描述的本地推荐页（路线A，旧功能）"
+   ],
+   "reason_zh": "机制部分由人工摘要写成，MK之后有带官方原文出处、经审查的事实；新功能读MK"
+  },
+  {
+   "path": "knowledge/mechanics/profiles/heroes-v1/",
+   "zh": "基于事实v9的127个英雄档案（早期）",
+   "superseded_by": "current.json的hero_profiles",
+   "decision": "MK-T5",
+   "still_read_by": [],
+   "reason_zh": "早期格式，没有关联状态和条件"
+  },
+  {
+   "path": "knowledge/mechanics/profiles/sample-2026-11-07/",
+   "zh": "早期3个英雄档案样例",
+   "superseded_by": "current.json的hero_profiles",
+   "decision": "MK-T5",
+   "still_read_by": [],
+   "reason_zh": "样例，已被全量档案取代"
+  }
+ ]
+}

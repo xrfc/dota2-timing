@@ -1,5 +1,7 @@
 # 复核后事实 v15（U99、U100）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 已被[v16](../v16/README.md)取代。
 
 直接读冻结的v14，写入U99–U100（`reviews/v15-inputs-001.json`）和第二轮抽查最后46条标记（`reviews/u5-spot-check-002/verdicts-2026-11-06b.jsonl`）。词表`vocabulary-v13.json`，规则`rules-v8.json`。共3176行：接受2482，排除694。

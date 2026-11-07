@@ -1,5 +1,7 @@
 # 复核后事实 v13（U90、U92–U98）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 已被[v14](../v14/README.md)取代。
 
 在v12上加入：生效条件说明、用户反馈的真实含义、抽查结果、熊灵技能、减速拆分（`reviews/slow-rulings-001.jsonl`）、无视地形和高空视野（`reviews/terrain-rulings-001.jsonl`）。词表`vocabulary-v13.json`，规则`rules-v7.json`。共3176行：接受2489，排除687。

@@ -1,5 +1,7 @@
 # 复核后事实 v19（U113，MK-T6b）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 事实行和v18完全相同，只换用规则v11。规则v11让每条规则的每个字段都有交代：
 
 - 程序会算的字段照常算；

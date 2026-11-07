@@ -1,5 +1,7 @@
 # MK-T3 复核后事实 v6（U65）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 > 已被[v7](../v7/README.md)取代，保留不改。
 
 v6不重新抽取已有证据，只在冻结的v3上叠加全部判断，并加入词表v6新增机制的第7轮证据。这是MK-T4、T5应该读取的入口。

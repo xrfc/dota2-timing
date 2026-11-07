@@ -1,5 +1,7 @@
 # 版本化阵容规则知识包
 
+> **机制部分已被取代**（MK-T6f）：英雄和装备的机制事实、克制规则以`knowledge/mechanics/current.json`为准（带官方原文出处、经审查）。本包的启发式权重和需求规则没有替代品，仍是路线A旧推荐页的一部分；保留用于复现，新功能不要从这里读机制。见`knowledge/superseded.json`。
+
 当前包：[7.41f-v1](7.41f-v1/knowledge.json)，策略见 [policy.json](7.41f-v1/policy.json)。
 首版只启用一号位主宰；完整使用、来源边界、扩展方法和验收状态见
 [本地推荐说明](../../docs/lineup-recommendation.md)。

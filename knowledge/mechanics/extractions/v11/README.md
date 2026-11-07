@@ -1,5 +1,7 @@
 # 复核后事实 v11（U81、U83）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 在v10上写入全量补漏和U83裁定（`reviews/audit-adoptions-001.jsonl`）。词表`vocabulary-v10.json`，规则仍是`rules-v4.json`。共3127行：接受2433，排除694。
 
 | `origin` | 行数 | 含义 | 算用户确认吗 |
