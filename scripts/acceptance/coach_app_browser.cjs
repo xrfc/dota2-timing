@@ -1,4 +1,4 @@
-// Real-browser acceptance for the coach app (M2-T5, M2b-T5). Drives an isolated headless
+// Real-browser acceptance for the coach app (M2-T5, M2b-T5, M2b-T9). Drives an isolated headless
 // Chrome over CDP on 127.0.0.1:9229 against the app on 127.0.0.1:8780.
 // Usage: node scripts/acceptance/coach_app_browser.cjs OUTPUT_DIR
 const fs = require('node:fs');
@@ -65,8 +65,20 @@ const CDP = 'http://127.0.0.1:9229';
   const sit = await ev(`document.getElementById('sit-body').innerText`);
   record('jugg_first_item_baseline', (await ev(`document.querySelectorAll('#sit-body tr').length`)) === 6 && /^金箍棒[\s\S]*31%/.test(sit) && /净魂之刃路线/.test(sit), sit.slice(0, 300));
   record('jugg_verdict_unproven', /未被可靠证实[\s\S]*含 0/.test(await ev(`document.getElementById('sit-verdict').textContent`)), await ev(`document.getElementById('sit-verdict').textContent`));
-  record('situational_no_lineup_inputs', (await ev(`document.querySelectorAll('#view-situational input').length`)) === 0);
+  // M2b-T9 (U124 option A): lineup input, triggers with reasons, mechanisms and data verdicts.
+  record('trigger_section_visible', await ev(`!document.getElementById('sit-triggers').hidden && document.querySelectorAll('#enemy-picker select').length===5`));
+  record('trigger_prompt_without_enemies', /至少一个敌方英雄/.test(await ev(`document.getElementById('trigger-status').textContent`)));
+  const pick = (slot, id) => ev(`(()=>{const s=document.getElementById('enemy-${slot}');s.value='${id}';s.dispatchEvent(new Event('change'));return s.value})()`);
+  await pick(0, 12); await wait(500); await pick(1, 33); await wait(800);
+  const trig = await ev(`document.getElementById('trigger-list').innerText`);
+  record('trigger_mkb_fires_with_reason_and_data', /金箍棒[\s\S]*赛前触发[\s\S]*幻影长矛手[\s\S]*克敌机先[\s\S]*数据支持/.test(trig), trig.slice(0, 400));
+  record('trigger_basher_against_verdict', /碎颅锤[\s\S]*谜团·黑洞[\s\S]*反而更少出这件/.test(trig), trig.slice(0, 900));
+  record('trigger_six_items_listed', (await ev(`document.querySelectorAll('#trigger-list li').length`)) === 6);
+  await ev(`document.getElementById('seen-butterfly').click()`); await wait(800);
+  record('trigger_ingame_seen_item', /金箍棒[\s\S]*比赛中触发[\s\S]*已看到：蝴蝶/.test(await ev(`document.getElementById('trigger-list').innerText`)));
   await shot('situational-juggernaut.png');
+  await send('Page.reload'); await wait(1800);
+  record('trigger_lineup_persisted', (await ev(`document.getElementById('enemy-1').value`)) === '33' && (await ev(`document.getElementById('seen-butterfly').checked`)) === true);
   await ev(`[...document.querySelectorAll('#sit-heroes button')].find(b=>b.textContent.startsWith('神谕者')).click()`); await wait(400);
   const oracleSit = await ev(`document.getElementById('sit-body').innerText`);
   record('oracle_support_rates', (await ev(`document.querySelectorAll('#sit-body tr').length`)) === 9 && /圣洁吊坠/.test(oracleSit) && /固定装/.test(oracleSit) && /样本少/.test(oracleSit) && (await ev(`document.getElementById('sit-verdict').offsetParent`)) === null, oracleSit.slice(0, 300));
@@ -77,7 +89,7 @@ const CDP = 'http://127.0.0.1:9229';
   record('situational_mobile_no_horizontal_scroll', await ev(`document.documentElement.scrollWidth<=window.innerWidth+1`), await ev(`[document.documentElement.scrollWidth,window.innerWidth]`));
   await shot('situational-mobile-dark.png');
 
-  record('only_whitelisted_requests', requests.every(r => ['/', '/style.css', '/app.js', '/api/meta', '/api/situational', '/favicon.ico'].includes(r) || r.startsWith('/api/item-timing?')), [...new Set(requests)]);
+  record('only_whitelisted_requests', requests.every(r => ['/', '/style.css', '/app.js', '/api/meta', '/api/situational', '/favicon.ico'].includes(r) || r.startsWith('/api/item-timing?') || r.startsWith('/api/triggers?')), [...new Set(requests)]);
   record('no_console_errors', errors.length === 0, errors);
   const result = {schema: 'coach-app-browser-acceptance/1', browser: (await (await fetch(`${CDP}/json/version`)).json()).Browser, url: APP, checks, passed: Object.values(checks).every(c => c.ok)};
   fs.writeFileSync(path.join(out, 'browser-checks.json'), JSON.stringify(result, null, 2));

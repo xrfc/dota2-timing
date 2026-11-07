@@ -60,7 +60,7 @@
       <legend>我的英雄</legend>
       <div id="sit-heroes" class="segmented" role="group"></div>
     </fieldset>
-    <p class="muted side-note">针对装＝根据敌方阵容决定是否出的装备。这里是高分段整体比例，不随阵容变化。</p>
+    <p class="muted side-note">针对装＝根据敌方阵容决定是否出的装备。主宰：输入敌方阵容和比赛中看到的装备，看哪些针对装触发、为什么、高分段数据怎么说。辅助：只有高分段整体出现率。</p>
   </aside>
 
   <section class="panel result" aria-live="polite">
@@ -70,6 +70,18 @@
         <p id="sit-status" class="muted"></p>
       </div>
     </div>
+    <section id="sit-triggers" class="triggers" hidden aria-label="按敌方阵容看针对装">
+      <h2>敌方阵容</h2>
+      <div id="enemy-picker" class="enemy-picker"></div>
+      <fieldset class="seen">
+        <legend>比赛中已看到敌方出了（可选）</legend>
+        <div id="seen-items" class="checks"></div>
+      </fieldset>
+      <p id="trigger-status" class="muted"></p>
+      <ol id="trigger-list" class="trigger-list"></ol>
+      <p class="hint">条件由你定（U123–U125）；数据结论来自高分段主宰的描述统计：触发和不触发时出这件装的比例差。高分段常这样出不等于该这样出。</p>
+      <h2 class="baseline-head">不看阵容的整体比例</h2>
+    </section>
     <p id="sit-verdict" class="verdict"></p>
     <table class="share">
       <caption id="sit-caption"></caption>

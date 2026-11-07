@@ -47,6 +47,7 @@ class Knowledge:
         }
         heroes = json.loads((root / registry).read_text(encoding="utf-8"))["heroes"]
         self._owner = {a["name"]: h["hero_id"] for h in heroes for a in h["abilities"]}
+        self._ability_zh = {a["name"]: a["name_zh"] for h in heroes for a in h["abilities"]}
         self._hero_names = {h["hero_id"]: h["name_zh"] for h in heroes}
         traits = self._read("hero_traits")["traits"]
         self._traits = {
@@ -64,6 +65,21 @@ class Knowledge:
     # Heroes and traits -------------------------------------------------------------------
     def hero_ids(self):
         return sorted(self._hero_names)
+
+    def hero_name(self, hero_id):
+        if hero_id not in self._hero_names:
+            raise KeyError(f"Unknown hero {hero_id}")
+        return self._hero_names[hero_id]
+
+    def ability_name(self, ability):
+        if ability not in self._ability_zh:
+            raise KeyError(f"Unknown ability {ability}")
+        return self._ability_zh[ability]
+
+    def ability_owner(self, ability):
+        if ability not in self._owner:
+            raise KeyError(f"Unknown ability {ability}")
+        return self._owner[ability]
 
     def traits(self):
         """{trait id: Chinese name} for settled traits."""
