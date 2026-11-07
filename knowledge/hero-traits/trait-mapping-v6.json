@@ -1,0 +1,180 @@
+{
+ "schema": "hero-trait-mapping/3",
+ "status": "user_decided",
+ "decision": "U26,U23,U105,U106,U107,U118,U120,U121",
+ "note": "v3起由用户定：特性存数量（基础数和含升级数），不设门槛。魔法爆发用用户名单（U107）。 v5：魔法爆发名单加神谕者（U118）。 v6：可被弱驱散的保命效果加上用户确认的16个加速技能和风行的闪避（U120、U121）。",
+ "traits": {
+  "evasion": {
+   "zh": "自身闪避",
+   "v1": "evasion",
+   "v1_subtype": "self_evasion",
+   "mechanisms": [
+    "evasion"
+   ],
+   "note": "闪避和致盲分开（U30、R07）；v1合在一起"
+  },
+  "blind": {
+   "zh": "致盲敌人",
+   "v1": "evasion",
+   "v1_subtype": "blind",
+   "mechanisms": [
+    "blind"
+   ],
+   "note": "闪避和致盲分开（U30、R07）；v1合在一起"
+  },
+  "sustain": {
+   "zh": "治疗/吸血",
+   "v1": "sustain",
+   "mechanisms": [
+    "healing",
+    "lifesteal"
+   ]
+  },
+  "mobility": {
+   "zh": "机动性",
+   "v1": "mobility",
+   "mechanisms": [
+    "self_mobility",
+    "terrain_walk"
+   ],
+   "note": "U105：自身位移和无视地形合并"
+  },
+  "disables": {
+   "zh": "硬控技能",
+   "v1": "disables",
+   "mechanisms": [
+    "stun",
+    "hex",
+    "taunt",
+    "sleep",
+    "hypnotize",
+    "fear"
+   ],
+   "threshold": null,
+   "note": "U105：只算禁用主动物品、被控者没法自己驱散解除的控制；沉默、缠绕、捆缚、吹风不算"
+  },
+  "dispellable_save": {
+   "zh": "可被弱驱散的保命效果",
+   "v1": "dispellable_save",
+   "mechanisms": [
+    "damage_block",
+    "invulnerable_untargetable",
+    "death_prevention",
+    "debuff_immunity"
+   ],
+   "dispellable": [
+    2
+   ],
+   "note": "保命机制且dispellable=2，也就是R01能去掉的 U121：加速只算用户确认“主要作用是跑”的16个技能；闪避只算风行（U120）。",
+   "only_subjects": {
+    "haste": [
+     "mirana_leap",
+     "phantom_lancer_phantom_edge",
+     "windrunner_windrun",
+     "windrunner_tailwind",
+     "slardar_sprint",
+     "rattletrap_jetpack",
+     "spectre_spectral_dagger",
+     "spirit_breaker_bulldoze",
+     "tusk_drinking_buddies",
+     "legion_commander_press_the_attack",
+     "techies_reactive_tazer",
+     "grimstroke_spirit_walk",
+     "hoodwink_decoy",
+     "ringmaster_the_box",
+     "leshrac_greater_lightning_storm",
+     "dark_seer_surge"
+    ],
+    "evasion": [
+     "windrunner_windrun"
+    ]
+   }
+  },
+  "illusions": {
+   "zh": "幻象",
+   "v1": "illusions_summons",
+   "v1_subtype": "illusions",
+   "mechanisms": [
+    "illusions"
+   ]
+  },
+  "summons": {
+   "zh": "召唤物",
+   "v1": "illusions_summons",
+   "v1_subtype": "summons",
+   "mechanisms": [
+    "summons"
+   ],
+   "note": "只算有血量的单位（U76）"
+  },
+  "targeted_spells": {
+   "zh": "单体指向技能",
+   "mechanisms": [
+    "unit_target_spell"
+   ],
+   "threshold": null
+  },
+  "mana_dependent": {
+   "zh": "法力依赖",
+   "from_rule": "R12",
+   "note": "U105、U106：R12的例外英雄算不依赖，其余算依赖；有条件的例外在有A杖时不依赖"
+  },
+  "magic_burst": {
+   "zh": "魔法爆发",
+   "from_heroes": [
+    98,
+    59,
+    107,
+    14,
+    7,
+    137,
+    135,
+    2,
+    84,
+    123,
+    11,
+    48,
+    34,
+    22,
+    30,
+    31,
+    13,
+    45,
+    52,
+    86,
+    64,
+    76,
+    39,
+    36,
+    74,
+    25,
+    26,
+    17,
+    88,
+    105,
+    16,
+    33,
+    43,
+    111
+   ],
+   "note": "U107：用户列的33个英雄；短时间打出大量魔法或纯粹伤害 U118加神谕者，共34个。"
+  },
+  "silence": {
+   "zh": "沉默",
+   "mechanisms": [
+    "silence"
+   ],
+   "note": "U105另设"
+  }
+ },
+ "counting": {
+  "unit": "ability",
+  "base": "只算基础版和装备就有的技能",
+  "with_upgrades": "加上只在A杖或魔晶才有的技能"
+ },
+ "derived_from": {
+  "file": "knowledge/hero-traits/trait-mapping-v3.json",
+  "sha256": "634df95a6af736f6477f631c48815ca895495cc0a8c619426749756a7ebf3c05"
+ },
+ "version": null
+}
