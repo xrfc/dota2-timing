@@ -1,0 +1,1395 @@
+[codex-prefer] account=temp
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty3
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a71e-16a4-7f81-be24-ac02110957aa
+--------
+user
+你在独立核对Dota 2技能和装备的机制记录。每个对象的`judge`列出若干“对象 + 机制 + 生效条件”，其中有的成立，有的不成立，比例不告诉你。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+逐条判断`judge`里的每一项，不要增加也不要漏掉：
+- `decision`：`accept`（材料支持这个对象具备该机制）、`reject`（材料不支持，或不符合定义）、`uncertain`（材料不足或需要游戏知识，不要猜）。
+- `condition_correct`：只看生效条件是否写对。`base`是基础效果，`scepter`是只在有A杖时生效，`shard`是只在有魔晶时生效，`item`是装备。`granted_by`不为空的对象，整个技能按该升级记。如果`decision`不是`accept`，填true。
+- `correct_condition`：`condition_correct`为false时写正确条件，否则与给定条件相同。
+- `quote`摘决定判断的原文片段，没有就写空字符串。`reason_zh`用一句中文说明理由。
+- `mechanism`和`condition`原样返回，`subject`原样返回。
+
+判断规则，已由用户确认，必须遵守：
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+- 召唤物只算有血量的单位；按受攻击次数计算的不算；猴子猴孙、部署炮塔不算。
+- 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+- 固定在地上的区域算场地魔法；区域跟着单位移动的算光环。只起阻挡作用的墙和圈不算场地魔法。
+- 属性生命恢复算治疗。普攻附带的减甲、减速、减疗、烧蓝、额外伤害、中毒等算攻击特效；单纯提高攻击力、攻速、吸血、暴击、分裂或弹射不算攻击特效。
+- 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字，可以当证据。`%xxx%`是数值占位符。
+
+待判断内容：
+{"vocabulary": [{"id": "aoe_damage", "zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害"}, {"id": "applies_basic_dispel", "zh": "施加弱驱散", "definition": "移除目标身上可被弱驱散的效果"}, {"id": "applies_break", "zh": "施加破坏", "definition": "使目标的被动技能暂时失效"}, {"id": "armor_reduction", "zh": "减护甲", "definition": "降低目标护甲"}, {"id": "aura", "zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法"}, {"id": "charges", "zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"}, {"id": "cleave", "zh": "分裂溅射", "definition": "攻击伤害波及周围单位"}, {"id": "critical", "zh": "暴击", "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"}, {"id": "cyclone_banish", "zh": "吹风/放逐", "definition": "使目标短暂离开战场，期间无敌或不可被选取"}, {"id": "displace_other", "zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"}, {"id": "economy", "zh": "经济经验", "definition": "提供额外金钱或经验；只是正常赏金不算"}, {"id": "evasion", "zh": "闪避", "definition": "自身有概率使敌方攻击落空"}, {"id": "forced_action", "zh": "强制行为", "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"}, {"id": "healing", "zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）"}, {"id": "illusions", "zh": "幻象", "definition": "制造自身或他人的幻象"}, {"id": "invulnerable_untargetable", "zh": "无敌/不可选取", "definition": "暂时无法被伤害或无法被指向"}, {"id": "lifesteal", "zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"}, {"id": "mana_gain", "zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"}, {"id": "mobility_lock", "zh": "限制位移", "definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"}, {"id": "phased", "zh": "相位移动", "definition": "移动不受单位碰撞阻挡"}, {"id": "reveal", "zh": "显形", "definition": "使隐身单位显形，不等于持续真视"}, {"id": "root", "zh": "定身", "definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"}, {"id": "self_mobility", "zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"}, {"id": "slow", "zh": "减速", "definition": "降低移动速度或攻击速度"}, {"id": "spell_reflect", "zh": "反弹指向技能", "definition": "把指向技能反弹给施法者"}, {"id": "status_resistance", "zh": "状态抗性", "definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"}, {"id": "stun", "zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）"}, {"id": "summons", "zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"}], "objects": [{"subject": "brewmaster_drunken_brawler", "name_zh": "酒仙·醉拳", "name_en": "Drunken Brawler", "description_zh": "酒仙可以根据操控的元素来切换拳法。每当酒仙施放技能，他都会进入浸酒状态，拳法的威力提升%brewed_up_bonus%%%，持续%brewed_up_duration%秒。如果他在浸酒状态下又施放了技能，持续时间会延长%brewed_up_duration_extend%秒。浸酒状态结束后，他会进入大醉状态，%hangover_time%秒内无法再次进入浸酒状态。大地拳法 - 获得护甲和魔法抗性加成。狂风拳法 - 获得闪避和移动速度加成。烈火拳法 - 获得攻击速度加成，并且拥有几率造成致命一击伤害。", "description_en": "Brewmaster can switch stances based on the elements he controls.Whenever Brewmaster casts an ability, he becomes Brewed Up, increasing his stance power by %brewed_up_bonus%%% for %brewed_up_duration%s.  If he casts another ability while Brewed Up, the duration is extended by %brewed_up_duration_extend%s. After Brewed Up expires, he is hungover and cannot Brew Up again for %hangover_time%s.Earth Brawler gains bonus Magic Resistance and Armor.Storm Brawler gains bonus Evasion and Movement Speed.Fire Brawler gains bonus Attack Speed and chance to critical strike.", "notes_zh": ["与其他闪避效果为非线性叠加。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["magic_resist", "bonus_armor", "dodge_chance", "bonus_move_speed", "crit_chance", "crit_multiplier", "attack_speed", "stance_multiplier_tooltip", "brewed_up_duration", "brewed_up_duration_extend", "brewed_up_bonus", "hangover_time"], "judge": [{"mechanism": "critical", "condition": "base"}, {"mechanism": "evasion", "condition": "base"}]}, {"subject": "brewmaster_liquid_courage", "name_zh": "酒仙·壮胆酒", "name_en": "Liquid Courage", "description_zh": "当酒仙的生命值低于%min_health_threshold%%%，他就会获得状态抗性加成，而且他的移动速度每%speed_toggle_time%秒都会在加速和减速之间改变。血量越低，效果越强，从0开始到%max_health_threshold%%%生命值时达到最大数值。", "description_en": "When Brewmaster drops below %min_health_threshold%%% Health he gains a Status Resistance buff and his movement speed alternates every %speed_toggle_time%s between being faster and being slower. The effect becomes stronger at lower health, scaling from 0 up to max values at %max_health_threshold%%% Health.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "向队友丢出一杯烈酒，或自己一饮而尽，获得壮胆酒的最大效果，并且还会获得每秒%max_hp_regen%%%最大生命值的回复。持续%drink_duration%秒。", "en": "Toss a strong drink to a teammate or drink it yourself, activating the maximum power effect of Liquid Courage and granting %max_hp_regen%%% Max HP Regen per second.Lasts %drink_duration% seconds."}}, "is_passive": true, "value_names": ["min_health_threshold", "max_health_threshold", "status_resist", "min_speed", "max_speed", "speed_toggle_time", "drink_duration", "projectile_speed", "max_hp_regen", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "slow", "condition": "base"}, {"mechanism": "status_resistance", "condition": "base"}]}, {"subject": "brewmaster_primal_split", "name_zh": "酒仙·元素分离", "name_en": "Primal Split", "description_zh": "酒仙分裂成元素，产生3个各有所长的战士，生存能力极强，每个都拥有独特技能。只要其中任何一个在召唤时间结束后存活下来，酒仙就能重生。每个战士都会获得对应的醉拳拳法。", "description_en": "Splits Brewmaster into elements, forming 3 specialized warriors, adept at survival, each with their own abilities. If any of them survive until the end of their summoned timer, the Brewmaster is reborn.  Each Warrior gains its respective Drunken Brawler stance.", "notes_zh": ["大地战士将继承酒仙的所有光环，以及真视宝石的真视效果。", "烈火战士拥有相位移动的能力。", "技能结束后，酒仙会根据大地→狂风→烈火的顺序选择未阵亡的元素重生。"], "granted_by": "", "upgrades": {"scepter": {"zh": "元素分离获得%scepter_bonus_levels%级最高和当前等级，强化元素战士和他们的技能。元素分离可以提前结束，而且元素分离开始时元素战士是浸酒状态。", "en": "Primal Split gains %scepter_bonus_levels% max and current level, improving the Brewlings and their abilities.Allows Primal Split to be cancelled early, and causes the Brewlings to be Brewed Up when Primal Split begins."}}, "is_passive": false, "value_names": ["duration", "split_duration", "tooltip_earth_brewling_hp", "tooltip_earth_brewling_damage", "tooltip_storm_brewling_hp", "tooltip_storm_brewling_damage", "tooltip_fire_brewling_hp", "tooltip_fire_brewling_damage", "bonus_brewling_hp", "bonus_damage", "primal_split_cancel", "hp_per_attribute", "dmg_per_attribute", "attribute_share_pct", "give_brawler_passive"], "judge": [{"mechanism": "aura", "condition": "base"}, {"mechanism": "cleave", "condition": "base"}, {"mechanism": "phased", "condition": "base"}, {"mechanism": "summons", "condition": "base"}]}, {"subject": "shadow_demon_disruption", "name_zh": "暗影恶魔·崩裂禁锢", "name_en": "Disruption", "description_zh": "将目标单位从战场上放逐一段时间。回归时会产生该单位的2个具有额外基础攻击力的幻象，受暗影恶魔控制。", "description_en": "Banishes the targeted unit from the battlefield for a short duration.  Upon returning, two illusions of the banished unit with bonus base damage are created under Shadow Demon's control.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["disruption_duration", "illusion_duration", "illusion_outgoing_damage", "illusion_outgoing_tooltip", "illusion_flat_damage", "illusion_incoming_damage", "tooltip_total_illusion_incoming_damage", "illusion_bounty_growth", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "cyclone_banish", "condition": "base"}, {"mechanism": "illusions", "condition": "base"}]}, {"subject": "shadow_demon_disseminate", "name_zh": "暗影恶魔·散播", "name_en": "Disseminate", "description_zh": "只要目标受到伤害，目标附近%radius%范围内所有敌人，若目标为敌人那也包括目标自身，他们都将受到该伤害的一定百分比。可以对敌方或友方目标施放。敌人被崩裂禁锢隐藏时效果暂停。", "description_en": "Whenever the target takes damage, all enemies, including the target itself if it is an enemy, within %radius% range of the target also receive a portion of that damage. Can target enemy and allied units. Effect is paused if the target is hidden by Disruption.", "notes_zh": ["这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "damage_reflection_pct", "radius", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "spell_reflect", "condition": "base"}]}, {"subject": "shadow_demon_shadow_poison", "name_zh": "暗影恶魔·暗影剧毒", "name_en": "Shadow Poison", "description_zh": "在一条直线上造成伤害，并以毒咒折磨敌方单位。根据目标身上的叠加层数，毒咒造成1/2/4/8/16倍的叠加伤害，至多%max_multiply_stacks%层。更多层的叠加每层造成%bonus_stack_damage%点伤害。这部分延缓的伤害在暗影毒的持续时间结束后生效，或者使用附属技能立刻造成伤害。", "description_en": "Deals damage in a line, and afflicts enemy units with a poison effect. The poison deals 1/2/4/8/16 times the stack damage based on the number of stacks on the target, up to %max_multiply_stacks% stacks. Additional stacks cause %bonus_stack_damage% damage each.  This deferred damage is dealt when Shadow Poison's duration is expired, or the Release sub-ability is used.", "notes_zh": ["暗影剧毒可以作用处于崩裂禁锢的单位。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["stack_damage", "max_multiply_stacks", "bonus_stack_damage", "radius", "vision_radius", "speed", "hit_damage", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}]}, {"subject": "shadow_demon_demonic_cleanse", "name_zh": "暗影恶魔·邪恶净愈", "name_en": "Demonic Cleanse", "description_zh": "净愈目标友方单位，在持续时间内移除负面效果。在持续时间结束时该单位受到治疗效果。崩裂禁锢中的单位依然可以受到邪恶净愈的效果。驱散类型：弱驱散", "description_en": "Cleanses the target allied unit, removing negative buffs for the duration.  At the end of the duration, the unit is healed. Units under the effect of Disruption can still be affected by Demonic Cleanse.DISPEL TYPE: Basic Dispel", "notes_zh": ["净愈的持续时间内将持续移除目标的负面状态。"], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["purge_damage", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "applies_basic_dispel", "condition": "shard"}, {"mechanism": "healing", "condition": "shard"}]}, {"subject": "shadow_demon_demonic_purge", "name_zh": "暗影恶魔·邪恶净化", "name_en": "Demonic Purge", "description_zh": "净化目标敌方单位，移除增益魔法效果，并使目标在持续时间内减速。伤害在持续时间结束时计算，在此之前目标单位的移动速度缓慢地恢复。崩裂禁锢中的单位依然可以受到邪恶净化的影响。\n\n驱散类型：弱驱散", "description_en": "Purges the target enemy unit, removing positive buffs, and slowing the target for the duration.  The unit slowly regains its speed until the end of the duration, upon which damage is dealt.  Units under the effect of Disruption can still be affected by Demonic Purge.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["减速效果起始时为%max_slow%%%，然后持续减少至%min_slow%%%。", "邪恶净化的持续时间内将持续移除目标的有益状态。"], "granted_by": "", "upgrades": {"scepter": {"zh": "邪恶净化具有破坏效果，并获得%max_charges%点能量点数。", "en": "Causes Demonic Purge to break and gain %max_charges% charges."}}, "is_passive": false, "value_names": ["purge_damage", "max_charges", "charge_restore_time", "max_slow", "min_slow", "apply_poison_stacks", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "applies_basic_dispel", "condition": "base"}, {"mechanism": "applies_break", "condition": "scepter"}, {"mechanism": "charges", "condition": "scepter"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "shadow_demon_menace", "name_zh": "暗影恶魔·威胁", "name_en": "Menace", "description_zh": "暗影恶魔的攻击会对敌人施加一个可叠加的负面状态，使他们受到的伤害增加，持续%duration%秒。", "description_en": "Shadow Demon's Attacks apply a stacking debuff to the enemy for %duration% seconds that increases their damage taken.", "notes_zh": ["破坏会使技能无法施加新的叠加效果。", "破坏不会使现有叠加效果提供的状态失效。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["stack", "duration"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}]}, {"subject": "lone_druid_entangle", "name_zh": "独行德鲁伊·缠绕之根", "name_en": "Entangle", "description_zh": "敌方英雄获得%hits_required%层叠加效果后独行德鲁伊可以缠绕敌方英雄。被缠绕的英雄无法移动，并受到持续伤害。施放时，对区域内每个敌方英雄施加%hits_incremented_on_active%层叠加效果，对敌方非英雄单位施加%hits_required%层。独行德鲁伊的攻击还会被强化%lone_druid_buff_duration%秒，每次攻击敌方英雄都会施加%lone_druid_counters_applied_tooltip%层叠加效果。被缠绕的英雄无法获得叠加层数。升级这个技能也会升级熊灵的缠绕之爪技能。", "description_en": "Allows Lone Druid to Entangle enemies once they gain %hits_required% stacks. Entangled enemies are rooted and take damage over time.When cast, applies %hits_incremented_on_active% stacks to each enemy hero in the area and %hits_required% stacks to enemy creeps. Also empowers Lone Druid for %lone_druid_buff_duration%s, making him apply %lone_druid_counters_applied_tooltip% stack with each attack on enemy heroes. Enemies cannot gain stacks while Entangled.Leveling this ability also levels Spirit Bear's Entangling Claws ability.", "notes_zh": ["被缠绕的单位将无法使用闪烁类技能，如果进入隐身状态也会显形。", "独行德鲁伊的强化增益和敌人叠加计数减益无法被驱散。", "缠绕的减益效果可以被驱散。", "独行德鲁伊或者熊灵的攻击不会使非英雄单位获得叠加效果，只会在施放缠绕之根时使他们被缠绕。", "对肉山的作用机制和英雄相同。"], "granted_by": "", "upgrades": {"scepter": {"zh": "缠绕之根会对区域内敌方英雄施加%hits_required%层叠加效果，并且作用范围提升。触发缠绕的敌人不再受到保护，可以继续获得新的叠加层数。", "en": "Entangle applies %hits_required% stacks to enemy heroes in the area and has increased radius. Enemies no longer have protection from gaining stacks while Entangled."}}, "is_passive": false, "value_names": ["active_radius", "counter_duration", "lone_druid_counters_applied_tooltip", "hits_required", "hits_incremented_on_active", "lone_druid_buff_duration", "nostack_protection", "root_heroes_on_cast", "entangle_duration", "damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "reveal", "condition": "base"}, {"mechanism": "root", "condition": "base"}]}, {"subject": "lone_druid_spirit_link", "name_zh": "独行德鲁伊·灵魂链接", "name_en": "Spirit Link", "description_zh": "连接独行德鲁伊和熊灵，提升双方的移动速度，另外双方共享一定百分比的吸血效果。", "description_en": "Links Lone Druid and the Spirit Bear, increasing their movement speed as well as sharing a percentage of their lifesteal with each other.", "notes_zh": ["破坏会使共享吸血效果失效。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["bonus_movement_speed_druid", "bonus_movement_speed_bear", "lifesteal_percent", "creep_lifesteal_penalty", "lifesteal_both_ways", "duration", "active_bonus"], "judge": [{"mechanism": "lifesteal", "condition": "base"}]}, {"subject": "lone_druid_savage_roar", "name_zh": "独行德鲁伊·野蛮咆哮", "name_en": "Savage Roar", "description_zh": "独行德鲁伊和熊灵发出野性的咆哮，使周围敌人恐惧，朝自己的基地狂奔。敌人的移动速度将增加%bonus_speed%%%。", "description_en": "Lone Druid and the Spirit Bear roar fiercely causing nearby enemies to flee towards their base in terror. Their movement speed is increased by %bonus_speed%%%.", "notes_zh": ["被缠绕的英雄将无法移动。", "与熊灵共享冷却时间。"], "granted_by": "", "upgrades": {"shard": {"zh": "施加弱驱散效果，并对施法者附近范围内友军提供移动速度和攻击速度加成。施法效果会在独行德鲁伊和熊灵之间复制，不论双方是否可以施法。驱散类型：弱驱散", "en": "Applies a basic dispel and grants allies in an area around the caster bonus movement and attack speed. Replicates between Lone Druid and Spirit Bear regardless of castability on the other.DISPEL TYPE: Basic Dispel"}}, "is_passive": false, "value_names": ["radius", "bonus_speed", "duration", "only_affects_player_units", "shard_radius", "shard_movement_speed_pct", "shard_attack_speed", "shard_duration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "applies_basic_dispel", "condition": "shard"}, {"mechanism": "forced_action", "condition": "base"}]}, {"subject": "lone_druid_spirit_bear", "name_zh": "独行德鲁伊·熊灵伙伴", "name_en": "Summon Spirit Bear", "description_zh": "召唤一只可以装备物品的熊灵伙伴。若熊灵与独行德鲁伊的距离超过%bear_attack_leash_range%，则不能攻击。如果熊灵死亡，独行德鲁伊会受到自身最大生命值的%backlash_damage%%%作为反冲伤害。\n熊灵拥有粉碎击、回归、缠绕之爪、野蛮咆哮和灵魂链接技能。", "description_en": "Summons a powerful Spirit Bear companion that can equip items.If the bear moves %bear_attack_leash_range% distance away from the Lone Druid, it cannot attack.  Lone Druid suffers %backlash_damage%%% of his max health as backlash damage if the Spirit Bear dies.\nSpirit Bear has Demolish, Return, Entangling Claws, Savage Roar, and Spirit Link abilities.", "notes_zh": ["熊灵受到的大多数技能效果与英雄相同。", "熊灵的基础属性为0，基础护甲为0并拥有%base_magic_resistance%%%基础魔法抗性。熊灵装备的物品或享受的加成效果具有的属性对熊灵的加成效果与全才英雄类似。", "熊灵无法获得经验。熊灵会跟随独行德鲁伊一起升级。", "熊灵拥有自己的阿哈利姆神杖和魔晶升级效果。", "熊灵会获得独行德鲁伊身上中立物品的复制品。这件复制品拥有独立的冷却时间。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["bear_hp", "bear_regen_tooltip", "bear_bat", "bear_armor", "backlash_damage", "bear_movespeed", "bear_magic_resistance", "bear_attack_leash_range", "strength_gain_tooltip", "agility_gain_tooltip", "intelligence_gain_tooltip", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "economy", "condition": "base"}, {"mechanism": "mobility_lock", "condition": "base"}, {"mechanism": "root", "condition": "base"}, {"mechanism": "summons", "condition": "base"}]}, {"subject": "chaos_knight_chaos_bolt", "name_zh": "混沌骑士·混乱之箭", "name_en": "Chaos Bolt", "description_zh": "对目标单位投掷一支神秘的能量箭。造成随机时间的眩晕和随机的伤害。", "description_en": "Throws a mysterious bolt of energy at the target unit. It stuns for a random duration and deals random damage.", "notes_zh": ["眩晕持续时间和伤害值为负相关。", "附近的幻象也会模仿施法动作。"], "granted_by": "", "upgrades": {"shard": {"zh": "混乱之箭会制造一个混沌之军的幻象来攻击目标。这个幻象造成的伤害减少%illusion_damage_reduction_pct%%%。", "en": "Causes Chaos Bolt to create a Phantasm illusion to attack the target. This illusion deals %illusion_damage_reduction_pct%%% less damage."}}, "is_passive": false, "value_names": ["chaos_bolt_speed", "stun_min", "stun_max", "damage_min", "damage_max", "fake_bolt_distance", "illusion_duration", "illusion_damage_reduction_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "displace_other", "condition": "base"}, {"mechanism": "illusions", "condition": "shard"}, {"mechanism": "stun", "condition": "base"}]}, {"subject": "chaos_knight_reality_rift", "name_zh": "混沌骑士·实相裂隙", "name_en": "Reality Rift", "description_zh": "将混沌骑士及混沌骑士的幻象和目标单位传送到混沌骑士与目标连线上的一点。降低敌方单位的护甲，持续%duration%秒。", "description_en": "Teleports Chaos Knight, any illusions he has, and the target unit to a point along the line between him and the target. The enemy unit has their armor reduced for %duration%s.", "notes_zh": ["目标单位将会强制面向混沌骑士，而且混沌骑士和幻象默认对目标发动攻击。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["pull_distance", "armor_reduction", "duration", "pierces_immunity", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "armor_reduction", "condition": "base"}, {"mechanism": "self_mobility", "condition": "base"}]}, {"subject": "chaos_knight_chaos_strike", "name_zh": "混沌骑士·混沌一击", "name_en": "Chaos Strike", "description_zh": "混沌骑士和他的幻象在攻击时有几率造成威力不一的致命一击，并且触发时具有吸血效果。对非英雄单位的吸血效果减少。", "description_en": "Chaos Knight and his illusions' attacks have a chance to deal a critical strike of varying strength with bonus lifesteal. Lifesteal from creeps is reduced.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["chance", "crit_min", "crit_max", "lifesteal", "creep_multiplier"], "judge": [{"mechanism": "critical", "condition": "base"}, {"mechanism": "lifesteal", "condition": "base"}]}, {"subject": "chaos_knight_phantasm", "name_zh": "混沌骑士·混沌之军", "name_en": "Phantasm", "description_zh": "从其他维度召唤若干个混沌骑士的幻象。幻象继承%outgoing_damage_tooltip%%%攻击力，但是承受%incoming_damage_tooltip%%%伤害。\n驱散类型：弱驱散", "description_en": "Summons several phantasmal copies of the Chaos Knight from alternate dimensions. The phantasms are illusions that deal %outgoing_damage_tooltip%%% damage, but take %incoming_damage_tooltip%%% damage.\nDISPEL TYPE: Basic Dispel", "notes_zh": ["能够移除混沌骑士的大部分负面状态。", "混沌骑士在施放时有%invuln_duration%秒的无敌时间，可以躲避眩晕和伤害技能。"], "granted_by": "", "upgrades": {"scepter": {"zh": "增加被动效果。混沌骑士产生幻象时都会有%bonus_illusion_chance%%%几率额外产生一个在其控制下的幻象。施放混沌之军时，会产生全地图上所有友方英雄的一个幻象。", "en": "Gains a passive component.  When an illusion of Chaos Knight is created, there is a %bonus_illusion_chance%%% chance to create an additional illusion under Chaos Knight's control.When Phantasm is activated, also creates an illusion of allied heroes globally."}}, "is_passive": false, "value_names": ["images_count", "illusion_duration", "outgoing_damage", "outgoing_damage_tooltip", "incoming_damage", "incoming_damage_tooltip", "invuln_duration", "vision_radius", "bonus_illusion_chance", "bonus_illusion_count", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "applies_basic_dispel", "condition": "base"}, {"mechanism": "illusions", "condition": "base"}, {"mechanism": "illusions", "condition": "scepter"}, {"mechanism": "invulnerable_untargetable", "condition": "base"}]}, {"subject": "meepo_earthbind", "name_zh": "米波·地之束缚", "name_en": "Earthbind", "description_zh": "向目标地点扔出一张网，缠绕区域内所有敌方单位。", "description_en": "Tosses a net at the target point, rooting down all enemy units in an area around it.", "notes_zh": ["地之束缚可以使敌方单位在进入隐身后显形，但是不能作用于已经隐身的单位。", "对减益免疫单位和肉山无效。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "radius", "speed", "megameepo_net_offset", "true_strike", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "mobility_lock", "condition": "base"}, {"mechanism": "reveal", "condition": "base"}, {"mechanism": "root", "condition": "base"}]}, {"subject": "meepo_poof", "name_zh": "米波·忽悠", "name_en": "Poof", "description_zh": "通过从大地中汲取神秘的能量，一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处，在离开和到达的区域都对敌人造成伤害。如果技能设为多样施法（右键点击技能栏图标）状态，所有米波也会对目标施放忽悠。对地施放后，除了选中的米波外所有米波会忽悠至最近的地点。", "description_en": "Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for %cast_duration% seconds, damaging the enemy in both the departure and arrival locations. If the ability is in alt-cast state, all Meepos will also cast Poof to the target. When cast on the ground, all Meepos except the selected one will Poof to the closest location.", "notes_zh": ["可以点击小地图施放。", "可以传送至米波的幻象。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["cast_duration", "radius", "poof_damage", "megameepo_poof_scaling", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "self_mobility", "condition": "base"}]}, {"subject": "meepo_ransack", "name_zh": "米波·洗劫", "name_en": "Ransack", "description_zh": "每次攻击都会窃取敌人的生命值，并治疗所有其他米波相同数值生命。对非英雄单位的效果减少至60%。", "description_en": "Steals health from the enemy with each strike and heals all other Meepos for that amount.Reduced to 60% against creeps.", "notes_zh": ["治疗数值会被生命回复增强效果提升。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["health_steal_heroes"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "healing", "condition": "base"}]}, {"subject": "meepo_petrify", "name_zh": "米波·掘地", "name_en": "Dig", "description_zh": "挖掘进入地下，对自身施加驱散效果，无敌且不能作为目标，持续%duration%秒。持续时间内回复最大生命值的%hp_restore%%%。被缠绕时无法施放。驱散类型：弱驱散", "description_en": "Digs into the ground for a short duration, dispelling Meepo and causing him to become invulnerable and untargetable for %duration%s. Restores %hp_restore%%% of his max health over that duration.DISPEL TYPE: Basic Dispel", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["duration", "hp_restore", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "applies_basic_dispel", "condition": "shard"}, {"mechanism": "invulnerable_untargetable", "condition": "shard"}]}, {"subject": "meepo_megameepo", "name_zh": "米波·超大米波", "name_en": "MegaMeepo", "description_zh": "主米波将%radius%范围内其他米波放到自己的肩膀上。在这个形态下，他会获得其他米波%stats_pct%%%的属性，并且可以把他们扔向敌人，造成伤害和减速。\n\n生效时地之束缚会产生额外的网，身上每只米波都会使忽悠造成额外%poof_damage_factor%%%伤害。", "description_en": "Primary Meepo mounts all other Meepos in a %radius% radius around him on top of his shoulders. While in this form, he gains %stats_pct%%% of the other Meepo stats and can Fling them at enemies, dealing damage and slowing them.\n\n When cast, Earthbind generates additional nets and Poof deals %poof_damage_factor%%% more damage for each Meepo on top.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["radius", "duration", "damage_distribution_duration", "end_knockback_duration", "end_knockback_distance", "stats_pct", "poof_damage_factor", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "scepter"}, {"mechanism": "mobility_lock", "condition": "scepter"}, {"mechanism": "slow", "condition": "scepter"}]}, {"subject": "meepo_divided_we_stand", "name_zh": "米波·分则能成", "name_en": "Divided We Stand", "description_zh": "米波再召唤出一个米波，可以跟随米波本体升级并共用物品。技能的冷却时间相互独立，但是物品的冷却时间在米波之间共用，回城卷轴除外。来自物品的攻击力、攻击速度、生命值、魔法值、恢复效果、法力损毁和触发几率会根据米波数量均分，在每只身上的效果减少%dps_penalty_pct%%%。任意米波阵亡都会导致所有米波全体死亡。", "description_en": "Meepo summons another Meepo, which levels up and shares items and experience with the main Meepo. Ability cooldowns are independent, but items share cooldowns between Meepos, except Teleport Scrolls. Damage, attack speed, health, mana, regeneration, mana burn, and proc chance bonuses from items are distributed equally among the amount of Meepos, making them %dps_penalty_pct%%% less effective.If any Meepo dies, they all die.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["tooltip_clones", "required_level", "levels_between_upgrades", "max_level", "dps_penalty_pct"], "judge": [{"mechanism": "economy", "condition": "base"}, {"mechanism": "mana_gain", "condition": "base"}, {"mechanism": "summons", "condition": "base"}]}, {"subject": "meepo_geomancy", "name_zh": "米波·地卜术", "name_en": "Geomancy", "description_zh": "米波会根据所在地形给予自身和克隆体可叠加的加成效果。每个米波都会给予其他米波自身的加成。如果%tree_radius%范围内有树木，他会获得%tree_regen%点/秒生命恢复。如果他站在土地上，他会获得%dirt_move_speed%%%移动速度加成。如果他在水中，他的攻击会减缓目标%water_move_slow%%%移速，持续%water_slow_duration%秒。", "description_en": "Meepo grants stacking bonuses to himself and his clones based on their terrain.  Each Meepo grants his bonus to the other Meepos.If there is a tree within %tree_radius% range, he receives %tree_regen% HP regen.If he is standing on dirt, he receives %dirt_move_speed%%% bonus movement speed.If he is in the water, his attacks slow the target by %water_move_slow%%% for %water_slow_duration% seconds.", "notes_zh": ["土地包括所有水之外的地形。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["tree_radius", "tree_regen", "dirt_move_speed", "water_move_slow", "water_slow_duration"], "judge": [{"mechanism": "healing", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "meepo_megameepo_fling", "name_zh": "米波·超大米波摔扔", "name_en": "MegaMeepo Fling", "description_zh": "在超大米波形态下，米波将最上端的米波向%AbilityCastRange%范围内目标扔出，造成伤害和减速。", "description_en": "In MegaMeepo form, Meepo flings the topmost meepo towards a target within a %AbilityCastRange% range, dealing damage and slowing their movement speed.", "notes_zh": ["不会触发法术反弹。"], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["fling_damage", "fling_radius", "fling_movespeed", "fling_slow_duration", "movement_slow", "AbilityCastRange", "AbilityCastPoint", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "scepter"}, {"mechanism": "slow", "condition": "scepter"}, {"mechanism": "spell_reflect", "condition": "scepter"}]}]}
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "brewmaster_drunken_brawler",
+      "judgments": [
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "拥有几率造成致命一击伤害",
+          "reason_zh": "烈火拳法明确提供概率暴击。"
+        },
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "狂风拳法 - 获得闪避和移动速度加成。",
+          "reason_zh": "狂风拳法明确提供闪避。"
+        }
+      ]
+    },
+    {
+      "subject": "brewmaster_liquid_courage",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他的移动速度每%speed_toggle_time%秒都会在加速和减速之间改变",
+          "reason_zh": "减速是施加于自身的负面代价，不计为减速机制。"
+        },
+        {
+          "mechanism": "status_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他就会获得状态抗性加成",
+          "reason_zh": "技能明确给予自身状态抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "brewmaster_primal_split",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "大地战士将继承酒仙的所有光环",
+          "reason_zh": "继承已有光环属于与其他效果的交互，技能自身没有提供光环。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明攻击伤害会波及周围单位。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "烈火战士拥有相位移动的能力。",
+          "reason_zh": "相位移动属于召唤出的烈火战士，材料未说明该技能给予施法者相位移动。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "产生3个各有所长的战士，生存能力极强，每个都拥有独特技能。只要其中任何一个在召唤时间结束后存活下来",
+          "reason_zh": "技能召唤能够存活或阵亡的元素战士。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_disruption",
+      "judgments": [
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将目标单位从战场上放逐一段时间。",
+          "reason_zh": "技能明确将目标暂时放逐出战场。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "回归时会产生该单位的2个具有额外基础攻击力的幻象",
+          "reason_zh": "技能明确制造目标单位的幻象。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_disseminate",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "目标附近%radius%范围内所有敌人，若目标为敌人那也包括目标自身，他们都将受到该伤害的一定百分比",
+          "reason_zh": "一次施法产生的效果可以对目标周围多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "这个技能造成的伤害被视为反弹伤害。",
+          "reason_zh": "反弹伤害类型不等于把指向技能反弹给施法者。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_shadow_poison",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在一条直线上造成伤害，并以毒咒折磨敌方单位。",
+          "reason_zh": "一次施法能伤害直线路径上的多个敌方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_demonic_cleanse",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "净愈目标友方单位，在持续时间内移除负面效果。……驱散类型：弱驱散",
+          "reason_zh": "该魔晶授予的技能明确对友军施加弱驱散。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "在持续时间结束时该单位受到治疗效果。",
+          "reason_zh": "该魔晶授予的技能明确治疗目标。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_demonic_purge",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "移除增益魔法效果……驱散类型：弱驱散",
+          "reason_zh": "基础技能明确通过弱驱散移除敌人的增益效果。"
+        },
+        {
+          "mechanism": "applies_break",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "邪恶净化具有破坏效果",
+          "reason_zh": "A杖升级明确新增破坏效果。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "并获得%max_charges%点能量点数",
+          "reason_zh": "A杖升级明确赋予技能施放充能。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使目标在持续时间内减速",
+          "reason_zh": "基础技能明确降低敌方目标的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_menace",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击会对敌人施加一个可叠加的负面状态，使他们受到的伤害增加",
+          "reason_zh": "攻击施加的易伤状态没有说明能对多个敌人造成伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "lone_druid_entangle",
+      "judgments": [
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果进入隐身状态也会显形",
+          "reason_zh": "被技能缠绕的单位进入隐身后会显形。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被缠绕的英雄无法移动，并受到持续伤害。",
+          "reason_zh": "技能明确使被缠绕的英雄无法移动。"
+        }
+      ]
+    },
+    {
+      "subject": "lone_druid_spirit_link",
+      "judgments": [
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "双方共享一定百分比的吸血效果",
+          "reason_zh": "技能明确使独行德鲁伊和熊灵共享吸血效果。"
+        }
+      ]
+    },
+    {
+      "subject": "lone_druid_savage_roar",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "",
+          "reason_zh": "基础说明和魔晶升级均未描述造成范围伤害。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "施加弱驱散效果",
+          "reason_zh": "魔晶升级明确新增弱驱散效果。"
+        },
+        {
+          "mechanism": "forced_action",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使周围敌人恐惧，朝自己的基地狂奔",
+          "reason_zh": "技能通过恐惧强制敌人向基地移动。"
+        }
+      ]
+    },
+    {
+      "subject": "lone_druid_spirit_bear",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "熊灵无法获得经验。熊灵会跟随独行德鲁伊一起升级。",
+          "reason_zh": "跟随升级没有提供额外金钱或经验。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "若熊灵与独行德鲁伊的距离超过%bear_attack_leash_range%，则不能攻击。",
+          "reason_zh": "距离限制影响攻击，没有阻止移动、闪烁、传送或离开范围。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "熊灵拥有粉碎击、回归、缠绕之爪、野蛮咆哮和灵魂链接技能。",
+          "reason_zh": "仅列出召唤物的技能名称，未说明熊灵伙伴技能自身施加定身。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤一只可以装备物品的熊灵伙伴。……如果熊灵死亡",
+          "reason_zh": "技能召唤能够死亡的熊灵单位。"
+        }
+      ]
+    },
+    {
+      "subject": "chaos_knight_chaos_bolt",
+      "judgments": [
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标单位投掷一支神秘的能量箭。",
+          "reason_zh": "投掷的是能量箭，没有移动其他单位。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "混乱之箭会制造一个混沌之军的幻象来攻击目标。",
+          "reason_zh": "魔晶升级明确使技能制造幻象。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成随机时间的眩晕和随机的伤害。",
+          "reason_zh": "基础技能明确施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "chaos_knight_reality_rift",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低敌方单位的护甲，持续%duration%秒。",
+          "reason_zh": "技能明确降低敌方目标的护甲。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将混沌骑士及混沌骑士的幻象和目标单位传送到混沌骑士与目标连线上的一点。",
+          "reason_zh": "技能传送混沌骑士自身，主动改变自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "chaos_knight_chaos_strike",
+      "judgments": [
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在攻击时有几率造成威力不一的致命一击",
+          "reason_zh": "技能明确提供概率暴击。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "触发时具有吸血效果",
+          "reason_zh": "技能触发时明确提供攻击吸血。"
+        }
+      ]
+    },
+    {
+      "subject": "chaos_knight_phantasm",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "基础技能明确施加弱驱散。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "从其他维度召唤若干个混沌骑士的幻象。",
+          "reason_zh": "基础技能明确制造自身幻象。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "施放混沌之军时，会产生全地图上所有友方英雄的一个幻象。",
+          "reason_zh": "A杖新增制造友方英雄幻象的效果，超出单纯增加自身幻象数量。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "混沌骑士在施放时有%invuln_duration%秒的无敌时间",
+          "reason_zh": "基础技能施放期间明确给予自身短暂无敌。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_earthbind",
+      "judgments": [
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "缠绕区域内所有敌方单位",
+          "reason_zh": "材料只明确施加定身，没有独立说明阻止闪烁、传送或离开范围。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "地之束缚可以使敌方单位在进入隐身后显形",
+          "reason_zh": "技能明确使受影响的敌人在进入隐身后显形。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "rooting down all enemy units in an area around it",
+          "reason_zh": "技能明确对区域内敌方单位施加定身。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_poof",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在离开和到达的区域都对敌人造成伤害",
+          "reason_zh": "一次施法可以伤害出发和到达区域内的多个敌人。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处",
+          "reason_zh": "技能可以将施法的米波传送至另一个米波所在处。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_ransack",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次攻击都会窃取敌人的生命值，并治疗所有其他米波相同数值生命。",
+          "reason_zh": "治疗多个米波不代表一次攻击能伤害多个敌人。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗所有其他米波相同数值生命",
+          "reason_zh": "技能明确为其他米波恢复生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_petrify",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对自身施加驱散效果……驱散类型：弱驱散",
+          "reason_zh": "该魔晶授予的技能明确对自身施加弱驱散。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "无敌且不能作为目标，持续%duration%秒",
+          "reason_zh": "该魔晶授予的技能明确给予自身无敌和不可选取。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_megameepo",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "身上每只米波都会使忽悠造成额外%poof_damage_factor%%%伤害",
+          "reason_zh": "这里只提高另一技能的伤害数值，摔扔描述也未明确能伤害多个敌人。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "主米波将%radius%范围内其他米波放到自己的肩膀上。",
+          "reason_zh": "将其他米波放到肩上不明确构成阻止目标闪烁、传送或离开范围。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "可以把他们扔向敌人，造成伤害和减速",
+          "reason_zh": "该A杖授予的技能明确包含对敌人施加减速的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_divided_we_stand",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "shares items and experience with the main Meepo",
+          "reason_zh": "共享物品和经验不等于提供额外金钱或经验。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "来自物品的攻击力、攻击速度、生命值、魔法值、恢复效果、法力损毁和触发几率会根据米波数量均分",
+          "reason_zh": "技能分配的是物品效果，没有自身提供回蓝或吸蓝。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "米波再召唤出一个米波……任意米波阵亡都会导致所有米波全体死亡。",
+          "reason_zh": "技能明确召唤能够阵亡的米波单位。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_geomancy",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果%tree_radius%范围内有树木，他会获得%tree_regen%点/秒生命恢复。",
+          "reason_zh": "技能在附近有树木时提供生命恢复。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果他在水中，他的攻击会减缓目标%water_move_slow%%%移速",
+          "reason_zh": "技能在水中时使攻击降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_megameepo_fling",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "米波将最上端的米波向%AbilityCastRange%范围内目标扔出，造成伤害和减速。",
+          "reason_zh": "说明只描述对目标造成伤害，字段名不能证明存在范围伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "slowing their movement speed",
+          "reason_zh": "该A杖授予的技能明确降低目标移动速度。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "不会触发法术反弹。",
+          "reason_zh": "这是对法术反弹交互的否定说明，没有赋予技能反弹能力。"
+        }
+      ]
+    }
+  ]
+}
+tokens used
+32,505
+{
+  "objects": [
+    {
+      "subject": "brewmaster_drunken_brawler",
+      "judgments": [
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "拥有几率造成致命一击伤害",
+          "reason_zh": "烈火拳法明确提供概率暴击。"
+        },
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "狂风拳法 - 获得闪避和移动速度加成。",
+          "reason_zh": "狂风拳法明确提供闪避。"
+        }
+      ]
+    },
+    {
+      "subject": "brewmaster_liquid_courage",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他的移动速度每%speed_toggle_time%秒都会在加速和减速之间改变",
+          "reason_zh": "减速是施加于自身的负面代价，不计为减速机制。"
+        },
+        {
+          "mechanism": "status_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他就会获得状态抗性加成",
+          "reason_zh": "技能明确给予自身状态抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "brewmaster_primal_split",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "大地战士将继承酒仙的所有光环",
+          "reason_zh": "继承已有光环属于与其他效果的交互，技能自身没有提供光环。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明攻击伤害会波及周围单位。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "烈火战士拥有相位移动的能力。",
+          "reason_zh": "相位移动属于召唤出的烈火战士，材料未说明该技能给予施法者相位移动。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "产生3个各有所长的战士，生存能力极强，每个都拥有独特技能。只要其中任何一个在召唤时间结束后存活下来",
+          "reason_zh": "技能召唤能够存活或阵亡的元素战士。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_disruption",
+      "judgments": [
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将目标单位从战场上放逐一段时间。",
+          "reason_zh": "技能明确将目标暂时放逐出战场。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "回归时会产生该单位的2个具有额外基础攻击力的幻象",
+          "reason_zh": "技能明确制造目标单位的幻象。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_disseminate",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "目标附近%radius%范围内所有敌人，若目标为敌人那也包括目标自身，他们都将受到该伤害的一定百分比",
+          "reason_zh": "一次施法产生的效果可以对目标周围多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "这个技能造成的伤害被视为反弹伤害。",
+          "reason_zh": "反弹伤害类型不等于把指向技能反弹给施法者。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_shadow_poison",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在一条直线上造成伤害，并以毒咒折磨敌方单位。",
+          "reason_zh": "一次施法能伤害直线路径上的多个敌方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_demonic_cleanse",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "净愈目标友方单位，在持续时间内移除负面效果。……驱散类型：弱驱散",
+          "reason_zh": "该魔晶授予的技能明确对友军施加弱驱散。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "在持续时间结束时该单位受到治疗效果。",
+          "reason_zh": "该魔晶授予的技能明确治疗目标。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_demonic_purge",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "移除增益魔法效果……驱散类型：弱驱散",
+          "reason_zh": "基础技能明确通过弱驱散移除敌人的增益效果。"
+        },
+        {
+          "mechanism": "applies_break",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "邪恶净化具有破坏效果",
+          "reason_zh": "A杖升级明确新增破坏效果。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "并获得%max_charges%点能量点数",
+          "reason_zh": "A杖升级明确赋予技能施放充能。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使目标在持续时间内减速",
+          "reason_zh": "基础技能明确降低敌方目标的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "shadow_demon_menace",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击会对敌人施加一个可叠加的负面状态，使他们受到的伤害增加",
+          "reason_zh": "攻击施加的易伤状态没有说明能对多个敌人造成伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "lone_druid_entangle",
+      "judgments": [
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果进入隐身状态也会显形",
+          "reason_zh": "被技能缠绕的单位进入隐身后会显形。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被缠绕的英雄无法移动，并受到持续伤害。",
+          "reason_zh": "技能明确使被缠绕的英雄无法移动。"
+        }
+      ]
+    },
+    {
+      "subject": "lone_druid_spirit_link",
+      "judgments": [
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "双方共享一定百分比的吸血效果",
+          "reason_zh": "技能明确使独行德鲁伊和熊灵共享吸血效果。"
+        }
+      ]
+    },
+    {
+      "subject": "lone_druid_savage_roar",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "",
+          "reason_zh": "基础说明和魔晶升级均未描述造成范围伤害。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "施加弱驱散效果",
+          "reason_zh": "魔晶升级明确新增弱驱散效果。"
+        },
+        {
+          "mechanism": "forced_action",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使周围敌人恐惧，朝自己的基地狂奔",
+          "reason_zh": "技能通过恐惧强制敌人向基地移动。"
+        }
+      ]
+    },
+    {
+      "subject": "lone_druid_spirit_bear",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "熊灵无法获得经验。熊灵会跟随独行德鲁伊一起升级。",
+          "reason_zh": "跟随升级没有提供额外金钱或经验。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "若熊灵与独行德鲁伊的距离超过%bear_attack_leash_range%，则不能攻击。",
+          "reason_zh": "距离限制影响攻击，没有阻止移动、闪烁、传送或离开范围。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "熊灵拥有粉碎击、回归、缠绕之爪、野蛮咆哮和灵魂链接技能。",
+          "reason_zh": "仅列出召唤物的技能名称，未说明熊灵伙伴技能自身施加定身。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤一只可以装备物品的熊灵伙伴。……如果熊灵死亡",
+          "reason_zh": "技能召唤能够死亡的熊灵单位。"
+        }
+      ]
+    },
+    {
+      "subject": "chaos_knight_chaos_bolt",
+      "judgments": [
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标单位投掷一支神秘的能量箭。",
+          "reason_zh": "投掷的是能量箭，没有移动其他单位。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "混乱之箭会制造一个混沌之军的幻象来攻击目标。",
+          "reason_zh": "魔晶升级明确使技能制造幻象。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成随机时间的眩晕和随机的伤害。",
+          "reason_zh": "基础技能明确施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "chaos_knight_reality_rift",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低敌方单位的护甲，持续%duration%秒。",
+          "reason_zh": "技能明确降低敌方目标的护甲。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将混沌骑士及混沌骑士的幻象和目标单位传送到混沌骑士与目标连线上的一点。",
+          "reason_zh": "技能传送混沌骑士自身，主动改变自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "chaos_knight_chaos_strike",
+      "judgments": [
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在攻击时有几率造成威力不一的致命一击",
+          "reason_zh": "技能明确提供概率暴击。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "触发时具有吸血效果",
+          "reason_zh": "技能触发时明确提供攻击吸血。"
+        }
+      ]
+    },
+    {
+      "subject": "chaos_knight_phantasm",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "基础技能明确施加弱驱散。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "从其他维度召唤若干个混沌骑士的幻象。",
+          "reason_zh": "基础技能明确制造自身幻象。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "施放混沌之军时，会产生全地图上所有友方英雄的一个幻象。",
+          "reason_zh": "A杖新增制造友方英雄幻象的效果，超出单纯增加自身幻象数量。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "混沌骑士在施放时有%invuln_duration%秒的无敌时间",
+          "reason_zh": "基础技能施放期间明确给予自身短暂无敌。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_earthbind",
+      "judgments": [
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "缠绕区域内所有敌方单位",
+          "reason_zh": "材料只明确施加定身，没有独立说明阻止闪烁、传送或离开范围。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "地之束缚可以使敌方单位在进入隐身后显形",
+          "reason_zh": "技能明确使受影响的敌人在进入隐身后显形。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "rooting down all enemy units in an area around it",
+          "reason_zh": "技能明确对区域内敌方单位施加定身。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_poof",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在离开和到达的区域都对敌人造成伤害",
+          "reason_zh": "一次施法可以伤害出发和到达区域内的多个敌人。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处",
+          "reason_zh": "技能可以将施法的米波传送至另一个米波所在处。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_ransack",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次攻击都会窃取敌人的生命值，并治疗所有其他米波相同数值生命。",
+          "reason_zh": "治疗多个米波不代表一次攻击能伤害多个敌人。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗所有其他米波相同数值生命",
+          "reason_zh": "技能明确为其他米波恢复生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_petrify",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对自身施加驱散效果……驱散类型：弱驱散",
+          "reason_zh": "该魔晶授予的技能明确对自身施加弱驱散。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "无敌且不能作为目标，持续%duration%秒",
+          "reason_zh": "该魔晶授予的技能明确给予自身无敌和不可选取。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_megameepo",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "身上每只米波都会使忽悠造成额外%poof_damage_factor%%%伤害",
+          "reason_zh": "这里只提高另一技能的伤害数值，摔扔描述也未明确能伤害多个敌人。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "主米波将%radius%范围内其他米波放到自己的肩膀上。",
+          "reason_zh": "将其他米波放到肩上不明确构成阻止目标闪烁、传送或离开范围。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "可以把他们扔向敌人，造成伤害和减速",
+          "reason_zh": "该A杖授予的技能明确包含对敌人施加减速的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_divided_we_stand",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "shares items and experience with the main Meepo",
+          "reason_zh": "共享物品和经验不等于提供额外金钱或经验。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "来自物品的攻击力、攻击速度、生命值、魔法值、恢复效果、法力损毁和触发几率会根据米波数量均分",
+          "reason_zh": "技能分配的是物品效果，没有自身提供回蓝或吸蓝。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "米波再召唤出一个米波……任意米波阵亡都会导致所有米波全体死亡。",
+          "reason_zh": "技能明确召唤能够阵亡的米波单位。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_geomancy",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果%tree_radius%范围内有树木，他会获得%tree_regen%点/秒生命恢复。",
+          "reason_zh": "技能在附近有树木时提供生命恢复。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果他在水中，他的攻击会减缓目标%water_move_slow%%%移速",
+          "reason_zh": "技能在水中时使攻击降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "meepo_megameepo_fling",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "米波将最上端的米波向%AbilityCastRange%范围内目标扔出，造成伤害和减速。",
+          "reason_zh": "说明只描述对目标造成伤害，字段名不能证明存在范围伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "slowing their movement speed",
+          "reason_zh": "该A杖授予的技能明确降低目标移动速度。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "不会触发法术反弹。",
+          "reason_zh": "这是对法术反弹交互的否定说明，没有赋予技能反弹能力。"
+        }
+      ]
+    }
+  ]
+}

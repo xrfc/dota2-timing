@@ -1,0 +1,180 @@
+{
+ "schema": "mechanics-v13-inputs/1",
+ "note": "v13手工输入：熊灵和跳跃魔晶附注（U90）、疯狂生长（U93）、蛊惑与位移（U94）、抽查标错的裁定、旧“错”反馈的解决关系。",
+ "rulings": [
+  {
+   "op": "set",
+   "subject": "lone_druid_spirit_bear",
+   "mechanism": "root",
+   "decision": "reject",
+   "basis": "user:U90",
+   "note_zh": "缠绕属于熊灵的缠绕之爪，挪到那个技能",
+   "condition": null,
+   "quote": ""
+  },
+  {
+   "op": "set",
+   "subject": "lone_druid_spirit_bear_entangle",
+   "mechanism": "root",
+   "decision": "accept",
+   "basis": "user:U90",
+   "note_zh": "用户2026-11-01答缠绕之爪会定身；U90列在德鲁伊里",
+   "condition": "base",
+   "quote": "Entangled enemies are rooted and take damage over time."
+  },
+  {
+   "op": "set",
+   "subject": "treant_overgrowth",
+   "mechanism": "aoe_damage",
+   "decision": "reject",
+   "basis": "user:U93",
+   "note_zh": "是获得溅射，类似狂战斧和船长、斯温的被动",
+   "condition": "scepter",
+   "quote": ""
+  },
+  {
+   "op": "set",
+   "subject": "treant_overgrowth",
+   "mechanism": "cleave",
+   "decision": "accept",
+   "basis": "user:U93",
+   "note_zh": "是获得溅射，类似狂战斧和船长、斯温的被动",
+   "condition": "scepter",
+   "quote": ""
+  },
+  {
+   "op": "set",
+   "subject": "keeper_of_the_light_will_o_wisp",
+   "mechanism": "displace_other",
+   "decision": "reject",
+   "basis": "user:U94",
+   "note_zh": "被迫走向某处算蛊惑，不再另记位移",
+   "condition": null,
+   "quote": ""
+  },
+  {
+   "op": "set",
+   "subject": "void_spirit_aether_remnant",
+   "mechanism": "displace_other",
+   "decision": "reject",
+   "basis": "user:U94",
+   "note_zh": "被迫走向某处算蛊惑，不再另记位移",
+   "condition": null,
+   "quote": ""
+  },
+  {
+   "op": "set",
+   "subject": "ringmaster_wheel",
+   "mechanism": "displace_other",
+   "decision": "accept",
+   "basis": "user:U94",
+   "note_zh": "击退沿途敌人是另一个效果，保留",
+   "condition": null,
+   "quote": ""
+  },
+  {
+   "op": "set",
+   "subject": "ringmaster_the_box",
+   "mechanism": "silence",
+   "decision": "reject",
+   "basis": "user:U97",
+   "note_zh": "不记锁闭、缴械、沉默，本质是救人技能",
+   "condition": null,
+   "quote": ""
+  },
+  {
+   "op": "set",
+   "subject": "doom_bringer_devour",
+   "mechanism": "spell_amp",
+   "decision": "reject",
+   "basis": "user:U94",
+   "note_zh": "魔晶：会获得新技能，不会增加法伤",
+   "condition": null,
+   "quote": ""
+  }
+ ],
+ "notes": [
+  {
+   "subject": "mirana_leap",
+   "subject_zh": "米拉娜·跳跃",
+   "kind": "numeric_note",
+   "note_zh": "魔晶这件装备提供跳跃+1充能（只加数值，不算新机制）",
+   "decision": "U90"
+  },
+  {
+   "subject": "lone_druid_spirit_bear_return",
+   "subject_zh": "独行德鲁伊·熊灵·回归",
+   "kind": "bear_skill",
+   "note_zh": "熊灵的技能，机制还没审",
+   "decision": "U90"
+  },
+  {
+   "subject": "lone_druid_spirit_bear_demolish",
+   "subject_zh": "独行德鲁伊·熊灵·粉碎击",
+   "kind": "bear_skill",
+   "note_zh": "熊灵的技能，机制还没审",
+   "decision": "U90"
+  },
+  {
+   "subject": "lone_druid_spirit_bear_fetch",
+   "subject_zh": "独行德鲁伊·熊灵·取回（暂译）",
+   "kind": "bear_skill",
+   "note_zh": "熊灵的技能，官方说明没列，游戏文件里有；机制还没审",
+   "decision": "U90"
+  },
+  {
+   "subject": "tiny_insurmountable",
+   "subject_zh": "小小·不可逾越",
+   "kind": "slow_resist_attack_speed",
+   "note_zh": "官方说明写减速抗性还会降低攻击速度减少的影响；一般减速抗性不影响减攻速（U94）",
+   "decision": "U94"
+  }
+ ],
+ "corrections": [
+  {
+   "review_id": "3f688fde8c50c887101a",
+   "basis": "user_corrected:U5",
+   "note_zh": "用户抽查标错并说明：吃鱼会获得伤害格挡；现结论与之一致"
+  },
+  {
+   "review_id": "bf23e33ed21d08fb396f",
+   "basis": "user_corrected:U5",
+   "note_zh": "用户抽查说明：圣洁吊坠的主动技能也可以回复；现主动这一行与之一致"
+  },
+  {
+   "review_id": "f7b67f8c245ad7fdd7ca",
+   "basis": "two_ai",
+   "note_zh": "用户反馈说的是主动，不是这条被动；这条仍只算AI一致"
+  },
+  {
+   "review_id": "3b5b5e70f188aa193016",
+   "basis": "user:U93",
+   "note_zh": "降低攻击速度不是减速，已改记减攻速"
+  },
+  {
+   "review_id": "475adbf7b2e5de5aa8d5",
+   "basis": "user:U93",
+   "note_zh": "用户标错后裁定：不算范围伤害，算分裂"
+  },
+  {
+   "review_id": "c1de3d5e12d359ea5c6f",
+   "basis": "user:U97",
+   "note_zh": "用户先标错说会沉默队友，后定不记：本质是救人技能"
+  },
+  {
+   "review_id": "5f4b9f6778a26d56c606",
+   "basis": "user:U94",
+   "note_zh": "用户标错并说明：会获得新技能，不会增加法伤"
+  },
+  {
+   "review_id": "d79cea01edef8201f179",
+   "basis": "user:U97",
+   "note_zh": "算眩晕；所有眩晕都能打断施法，不另记打断"
+  },
+  {
+   "review_id": "04b7c4c0f4543d15adcc",
+   "basis": "user:U97",
+   "note_zh": "只会降低自身冷却；减冷却只算能减别的技能"
+  }
+ ]
+}

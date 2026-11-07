@@ -1,0 +1,380 @@
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a5bf-de5d-78f0-98c2-3665dc9586f8
+--------
+user
+你在独立阅读Dota 2技能和装备的说明，判断每个对象具备词表里的哪些机制。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+要求：
+- 每个对象都要输出一条，`subject`原样返回。没有任何机制时`mechanisms`为空数组。
+- 逐个对象读完整说明，对照词表全部条目判断，不要只找明显的。说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 词表定义已经用户确认，必须遵守。另外：
+  - 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。
+  - 提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+  - 召唤物只算有血量的单位；按受攻击次数计算的不算。
+  - 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+  - 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `condition`：基础效果写`base`，只在有A杖时生效写`scepter`，只在有魔晶时写`shard`，装备写`item`。`granted_by`不为空的对象，整个技能按该升级记。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字（如“+ 35% Evasion”），可以当证据。`%xxx%`是数值占位符。
+- `quote`摘决定判断的原文片段；`uncertain`为true表示材料不足或需要游戏知识，不要猜。
+
+词表：
+[
+{
+"id": "stun",
+"zh": "眩晕",
+"definition": "使目标无法行动和施法的硬控（含小眩晕）"
+},
+{
+"id": "hex",
+"zh": "妖术",
+"definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品"
+},
+{
+"id": "silence",
+"zh": "沉默",
+"definition": "目标无法施放技能（仍可攻击、使用物品）"
+},
+{
+"id": "mute",
+"zh": "禁用物品",
+"definition": "目标无法使用物品"
+},
+{
+"id": "disarm",
+"zh": "缴械",
+"definition": "目标无法普通攻击"
+},
+{
+"id": "root",
+"zh": "定身",
+"definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"
+},
+{
+"id": "forced_action",
+"zh": "强制行为",
+"definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"
+},
+{
+"id": "sleep",
+"zh": "睡眠",
+"definition": "无法行动，受伤害后醒来"
+},
+{
+"id": "cyclone_banish",
+"zh": "吹风/放逐",
+"definition": "使目标短暂离开战场，期间无敌或不可被选取"
+},
+{
+"id": "slow",
+"zh": "减速",
+"definition": "降低移动速度或攻击速度"
+},
+{
+"id": "evasion",
+"zh": "闪避",
+"definition": "自身有概率使敌方攻击落空"
+},
+{
+"id": "blind",
+"zh": "致盲",
+"definition": "使敌方单位的攻击有概率落空"
+},
+{
+"id": "debuff_immunity",
+"zh": "减益免疫/技能免疫",
+"definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"
+},
+{
+"id": "pierces_debuff_immunity",
+"zh": "穿透减益免疫",
+"definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）"
+},
+{
+"id": "invulnerable_untargetable",
+"zh": "无敌/不可选取",
+"definition": "暂时无法被伤害或无法被指向"
+},
+{
+"id": "damage_block",
+"zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"
+},
+{
+"id": "death_prevention",
+"zh": "免死",
+"definition": "在一段时间内不会被打死（如薄葬、回光返照）"
+},
+{
+"id": "status_resistance",
+"zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"
+},
+{
+"id": "slow_resistance",
+"zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）"
+},
+{
+"id": "applies_basic_dispel",
+"zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果"
+},
+{
+"id": "applies_strong_dispel",
+"zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）"
+},
+{
+"id": "applies_break",
+"zh": "施加破坏",
+"definition": "使目标的被动技能暂时失效"
+},
+{
+"id": "invisibility",
+"zh": "隐身",
+"definition": "使自身、队友、召唤物或复制体隐身"
+},
+{
+"id": "true_sight",
+"zh": "真视",
+"definition": "可看见隐身单位"
+},
+{
+"id": "healing",
+"zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）"
+},
+{
+"id": "lifesteal",
+"zh": "吸血",
+"definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"
+},
+{
+"id": "heal_reduction",
+"zh": "治疗削减",
+"definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"
+},
+{
+"id": "mana_burn",
+"zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值"
+},
+{
+"id": "mana_gain",
+"zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"
+},
+{
+"id": "illusions",
+"zh": "幻象",
+"definition": "制造自身或他人的幻象"
+},
+{
+"id": "summons",
+"zh": "召唤物",
+"definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"
+},
+{
+"id": "self_mobility",
+"zh": "自身位移",
+"definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"
+},
+{
+"id": "displace_other",
+"zh": "位移他人",
+"definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"
+},
+{
+"id": "damage_return",
+"zh": "反伤",
+"definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件"
+},
+{
+"id": "bash",
+"zh": "重击",
+"definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算"
+},
+{
+"id": "pierce_evasion",
+"zh": "克敌机先",
+"definition": "攻击无视闪避（必中）"
+},
+{
+"id": "critical",
+"zh": "暴击",
+"definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"
+},
+{
+"id": "ethereal",
+"zh": "虚无",
+"definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"
+},
+{
+"id": "armor_reduction",
+"zh": "减护甲",
+"definition": "降低目标护甲"
+},
+{
+"id": "magic_resist_reduction",
+"zh": "减魔抗/魔法易伤",
+"definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"
+},
+{
+"id": "incoming_damage_amp",
+"zh": "伤害加深",
+"definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）"
+},
+{
+"id": "attack_damage_reduction",
+"zh": "减攻击力",
+"definition": "降低目标的攻击力"
+},
+{
+"id": "spell_block",
+"zh": "格挡指向技能",
+"definition": "使指向自身或队友的技能失效"
+},
+{
+"id": "spell_reflect",
+"zh": "反弹指向技能",
+"definition": "把指向技能反弹给施法者"
+},
+{
+"id": "projectile_dodge",
+"zh": "躲避弹道",
+"definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"
+},
+{
+"id": "channel_interrupt",
+"zh": "打断持续施法",
+"definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"
+},
+{
+"id": "mobility_lock",
+"zh": "限制位移",
+"definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"
+},
+{
+"id": "cleave",
+"zh": "分裂溅射",
+"definition": "攻击伤害波及周围单位"
+},
+{
+"id": "attack_modifier",
+"zh": "攻击特效",
+"definition": "给攻击附加效果的法球类技能"
+},
+{
+"id": "spell_amp",
+"zh": "法术放大",
+"definition": "提高技能造成的伤害"
+},
+{
+"id": "aura",
+"zh": "光环",
+"definition": "持续影响周围单位；对友军或敌方都算，并记作用对象"
+},
+{
+"id": "reveal",
+"zh": "显形",
+"definition": "使隐身单位显形，不等于持续真视"
+},
+{
+"id": "grant_vision",
+"zh": "提供视野",
+"definition": "提供目标或区域的视野"
+},
+{
+"id": "reduce_vision",
+"zh": "减视野",
+"definition": "降低目标的视野"
+},
+{
+"id": "phased",
+"zh": "相位移动",
+"definition": "移动不受单位碰撞阻挡"
+},
+{
+"id": "flying",
+"zh": "飞行",
+"definition": "飞行移动，能越过地形"
+},
+{
+"id": "tree_walk",
+"zh": "穿树",
+"definition": "能穿过树木移动"
+},
+{
+"id": "tree_destroy",
+"zh": "砍树",
+"definition": "能摧毁树木"
+},
+{
+"id": "respawn",
+"zh": "重生",
+"definition": "死亡后复活，或影响复活"
+},
+{
+"id": "execute",
+"zh": "斩杀",
+"definition": "目标低于生命阈值时直接杀死"
+},
+{
+"id": "hp_removal",
+"zh": "生命移除",
+"definition": "直接移除生命，不算伤害"
+},
+{
+"id": "spell_steal",
+"zh": "偷技能",
+"definition": "获得其他单位的技能"
+},
+{
+"id": "stat_steal",
+"zh": "偷属性",
+"definition": "夺取目标的属性"
+},
+{
+"id": "cooldown_reduction",
+"zh": "减冷却",
+"definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"
+},
+{
+"id": "cooldown_reset",
+"zh": "刷新冷却",
+"definition": "立刻重置冷却"
+},
+{
+"id": "economy",
+"zh": "经济经验",
+"definition": "提供额外金钱或经验；只是正常赏金不算"
+},
+{
+"id": "charges",
+"zh": "充能",
+"definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"
+},
+{
+"id": "aoe_damage",
+"zh": "范围伤害",
+"definition": "一次施放或一次攻击能对多个敌方单位造成伤害"
+}
+]
+
+待判断对象：
+[{"subject": "undying_flesh_golem", "name_zh": "不朽尸王·血肉傀儡", "name_en": "Flesh Golem", "description_zh": "不朽尸王变身为一具令人毛骨悚然的血肉傀儡。在这个状态下，他获得一定百分比的力量加成，移动速度加成，并且攻击附带减速和伤害加深效果，还会产生墓碑的僵尸。", "description_en": "Undying transforms into a horrifying flesh golem.  While in this state, he gains a percentage increase to strength, bonus movement speed, and causes attacks to slow, apply damage amplification, and spawn Tombstone zombies.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["slow", "damage_amp", "slow_duration", "str_percentage", "duration", "movement_bonus", "spawn_zombie_on_attack", "zombie_duration", "zombie_spawn_padding", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "rubick_telekinesis", "name_zh": "拉比克·隔空取物", "name_en": "Telekinesis", "description_zh": "拉比克利用他的隔空取物能力，将敌人短暂抬到空中，然后猛投向地面。被投下的单位会砸晕落地点附近的敌人。", "description_en": "Rubick uses his telekinetic powers to lift the enemy into the air briefly and then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.", "notes_zh": ["目标滞空时，拉比克可以使用次级技能将目标扔往目标方向。", "单位落地后，自身不会受到范围眩晕效果。"], "granted_by": "", "upgrades": {"shard": {"zh": "可以对自身或友军施放隔空取物。投掷距离增加至%max_land_distance%，投掷延迟降低至%shard_teammate_throw_delay%秒。", "en": "Allows you to target yourself or allies with Telekinesis. Throw distance is increased to %max_land_distance% and throw delay is reduced to %shard_teammate_throw_delay% seconds."}}, "is_passive": false, "value_names": ["lift_duration", "stun_duration", "radius", "max_land_distance", "fall_duration", "shard_max_land_distance_bonus_pct", "shard_cooldown_reduction_pct", "shard_teammate_throw_delay", "landing_damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "rubick_fade_bolt", "name_zh": "拉比克·弱化能流", "name_en": "Fade Bolt", "description_zh": "拉比克制造一道强大的奥术能量流，在多个敌方单位之间流动，造成伤害并降低他们的攻击力和技能伤害。每次跳跃造成的伤害递减。", "description_en": "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack and spell damage. Each jump deals less damage.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "jump_damage_reduction_pct", "damage_reduction", "duration", "radius", "jump_delay", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "rubick_arcane_supremacy", "name_zh": "拉比克·奥术至尊", "name_en": "Arcane Supremacy", "description_zh": "拉比克对奥术的熟稔使他拥有更远的施法距离，和额外技能增强。", "description_en": "Rubick's mastery of the arcane allows him to have a larger cast range and bonus spell amplification.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["cast_range", "spell_amp"]}, {"subject": "rubick_spell_steal", "name_zh": "拉比克·技能窃取", "name_en": "Spell Steal", "description_zh": "拉比克钻研一个敌方英雄的魔法精华之痕，学习这个英雄最后释放的技能的秘密。拉比克将可以使用这个技能，维持几分钟或直到他死亡。", "description_en": "Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own for several minutes or until he dies.", "notes_zh": ["无法窃取物品类技能。", "拉比克若拥有阿哈利姆魔晶，则窃取的技能会是魔晶升级版本。", "不会触发法术反弹。"], "granted_by": "", "upgrades": {"scepter": {"zh": "可窃取的技能提升至2个。提升施法距离，并且窃取的技能会升级成神杖版本。", "en": "Increases the number of spells that can be stolen to 2. Increases cast range, and upgrades stolen spells to their Scepter version."}, "shard": {"zh": "窃取的技能升级为相应的魔晶版本。", "en": "Upgrades stolen spells to their Shard version."}}, "is_passive": false, "value_names": ["cast_range_scepter", "projectile_speed", "stolen_mana_reduction", "stolen_spell_cooldown_percent", "spell_amp_percent", "duration", "curiosity_steal_factor", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "rubick_curiosity", "name_zh": "拉比克·奇心", "name_en": "Curiosity", "description_zh": "拉比克现在每级获得%curiosity_per_level%层奇心的叠加效果，每层奇心提供%curiosity_attack_damage%点基础攻击力，%curiosity_modifier_amp%%%增益/减益持续时间，和%curiosity_aoe_bonus%作用范围加成。如果拉比克看到%charge_radius%范围内有敌方英雄施放技能，他就会获得%curiosity_per_spell_cast%层奇心，持续%curiosity_duration%秒。如果当前提供临时奇心的敌人在受到来自拉比克的伤害后%grace_period%秒内阵亡，他就会永久获得%curiosity_per_kill%层奇心。", "description_en": "Rubick gains %curiosity_per_level% stack of Curiosity per level that grants him %curiosity_attack_damage% base damage, %curiosity_modifier_amp%%% Buff/Debuff Duration, and %curiosity_aoe_bonus% AOE Bonus. If Rubick sees an enemy Hero cast an ability within %charge_radius% distance of him, he gains %curiosity_per_spell_cast% Curiosity for %curiosity_duration% seconds.  If an enemy Hero dies while Rubick has Curiosity from them and he damaged them in the last %grace_period% seconds, he gains %curiosity_per_kill% Curiosity permanently.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["curiosity_per_spell_cast", "curiosity_duration", "curiosity_per_level", "curiosity_attack_damage", "curiosity_modifier_amp", "curiosity_aoe_bonus", "curiosity_per_kill", "grace_period", "curiosity_factor", "charge_radius", "curiosity_permanent_gain", "current_debuff_amp", "current_aoe_bonus"]}, {"subject": "disruptor_thunder_strike", "name_zh": "干扰者·风雷之击", "name_en": "Thunder Strike", "description_zh": "用闪电反复打击目标单位。每次打击会伤害附近小范围内的敌方单位，并施加%slow_duration%秒的%slow_amount%%%攻击速度和移动速度降低效果。提供目标的视野。", "description_en": "Repeatedly strikes the targeted unit with lightning.  Each strike damages nearby enemy units in a small radius and slows enemy movement and attack speed by %slow_amount%%% for %slow_duration% seconds.  Provides vision of its target.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "strikes", "strike_interval", "strike_damage", "strike_damage_bonus", "slow_duration", "slow_amount", "shard_ground_delay", "hits_units_inside_kinetic", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "disruptor_glimpse", "name_zh": "干扰者·恶念瞥视", "name_en": "Glimpse", "description_zh": "将目标英雄传送回他%backtrack_time%秒前所在位置。瞬间消灭幻象单位。根据瞥视距离的一定百分比造成伤害，不能超过最大伤害。", "description_en": "Teleports the target hero back to where it was %backtrack_time% seconds ago.  Instantly kills illusions. Deals damage equal to a percentage of the distance glimpsed, that cannot go over a damage maximum.", "notes_zh": ["飞行时间由目标的飞行距离决定。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["backtrack_time", "cast_range", "min_damage", "max_damage", "damage_to_distance_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "disruptor_kinetic_field", "name_zh": "干扰者·动能力场", "name_en": "Kinetic Field", "description_zh": "在短暂的构造时间后，创造一个敌人无法通过的环形动能屏障。", "description_en": "After a short formation time, creates a circular barrier of kinetic energy that enemies can't pass.", "notes_zh": ["力场不能困住减益免疫单位。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "formation_time", "duration", "damage_per_second", "wall_thickness", "tick_rate", "cooldown_share", "strike_on_touch", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "disruptor_kinetic_fence", "name_zh": "干扰者·动能栅栏", "name_en": "Kinetic Fence", "description_zh": "在短暂的构造时间后，创造一面敌人无法通过的动能墙壁。", "description_en": "After a short formation time, creates a wall out of kinetic energy that enemies cannot pass.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["wall_width", "wall_thickness", "radius", "formation_time", "duration", "damage_per_second", "tick_rate", "cooldown_share", "strike_on_touch", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "disruptor_electromagnetic_repulsion", "name_zh": "干扰者·电磁排斥", "name_en": "Electromagnetic Repulsion", "description_zh": "每当干扰者受到%effect_radius%范围内来自任意来源的%damage_threshold%点伤害，附近所有敌人都会受到%damage_per_int%倍干扰者智力值的伤害，并且被推开最多%effect_radius%距离。", "description_en": "Whenever Disruptor takes more than %damage_threshold% damage from any source within %effect_radius% radius, all nearby enemies within take damage equal to %damage_per_int%x of Disruptor's Intelligence, and are pushed back up to a %effect_radius% distance away.", "notes_zh": ["%damage_reset_interval%秒后伤害计数会重置。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["damage_threshold", "effect_radius", "knockback_duration", "damage_reset_interval", "damage_per_int", "AbilityCooldown"]}, {"subject": "disruptor_static_storm", "name_zh": "干扰者·静态风暴", "name_en": "Static Storm", "description_zh": "创造一场静态风暴，在持续时间内伤害并沉默区域内的所有敌方单位。伤害刚开始时很低，但会在持续时间内逐渐增加。", "description_en": "Creates a damaging static storm that also silences all enemy units in the area for the duration.  The damage starts off weak, but increases in power over the duration.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "锁闭物品。", "en": "Mutes items."}}, "is_passive": false, "value_names": ["radius", "pulses", "damage_max", "duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "nyx_assassin_impale", "name_zh": "司夜刺客·穿刺", "name_en": "Impale", "description_zh": "岩石尖刺在地上沿一条直线穿刺而出。敌方单位受到伤害，然后被抛向空中，落地时被眩晕。", "description_en": "Rock spikes burst from the earth along a straight path. Enemy units take damage, then are hurled into the air and stunned.", "notes_zh": ["尖刺的移动速度是每秒%speed%，最远作用距离为%length%。", "穿刺不会被林肯法球格挡。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["width", "duration", "length", "speed", "impale_damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "nyx_assassin_jolt", "name_zh": "司夜刺客·神智爆裂", "name_en": "Mind Flare", "description_zh": "造成等同于目标最大魔法值一定百分比的伤害，并燃烧部分魔法。另外还会根据过去%damage_echo_duration%秒内目标受到来自司夜刺客的伤害再造成一定百分比的伤害。施加伤害前会重置累计伤害。", "description_en": "Deals damage equal to a percentage of the target's Max Mana and burns part of it away. Deals additional damage equal to a percentage of the damage the target has taken from Nyx Assassin in the last %damage_echo_duration%s. Resets accumulated damage before applying damage.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["max_mana_as_damage_pct", "mana_burn_pct", "aoe", "damage_echo_duration", "damage_echo_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "nyx_assassin_spiked_carapace", "name_zh": "司夜刺客·尖刺外壳", "name_en": "Spiked Carapace", "description_zh": "激活状态下，尖刺外壳可以反弹并无效化司夜刺客受到的伤害（每个攻击者最多作用一次），同时眩晕攻击者。激活尖刺外壳不会打破复仇的隐身状态。\n\n钻地状态下尖刺外壳施放后将立刻眩晕周围的敌人。", "description_en": "When activated while above ground, Spiked Carapace reflects and negates damage dealt to Nyx Assassin (max once from each source), as well as stunning the source of the damage. Activating Spiked Carapace will not break Vendetta invisibility.\n\nWhile Burrowed, Spiked Carapace instantly stuns nearby enemies when cast.", "notes_zh": ["反弹的伤害与司夜刺客本应受到的实际伤害相同。", "尖刺外壳只有在受到玩家控制来源的伤害后会反弹。", "反弹的伤害与司夜刺客受到的伤害类型相同。", "这个技能造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["reflect_duration", "stun_duration", "damage_reflect_pct", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "nyx_assassin_burrow", "name_zh": "司夜刺客·钻地", "name_en": "Burrow", "description_zh": "司夜刺客经过短时间的掘地后钻入地下。钻地后尖刺外壳一施放就会直接眩晕附近所有敌人，神智爆裂和穿刺的施法距离提升，穿刺的冷却时间减少。钻地后司夜刺客固定在原地，无法攻击，并且是隐身状态。同时司夜刺客受到的所有伤害都会降低。", "description_en": "Nyx Assassin buries himself beneath the battlefield over a short duration. Once burrowed, Spiked Carapace instantly stuns nearby enemies when cast, the range of Mind Flare and Impale is increased, and Impale's cooldown is decreased. While burrowed, Nyx Assassin is stationary, unable to attack, and invisible. Nyx Assassin gains damage reduction from all damage sources.", "notes_zh": ["施放复仇将取消钻地状态。"], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["health_regen_rate", "mana_regen_rate", "damage_reduction", "cast_range", "cooldown_reduction", "carapace_radius", "AbilityCastPoint"]}, {"subject": "nyx_assassin_neuro_sting", "name_zh": "司夜刺客·法力燃烧", "name_en": "Mana Burn", "description_zh": "司夜刺客对敌人造成伤害还会燃烧造成伤害一定百分比的魔法。", "description_en": "Nyx Assassin's damage on enemies also burns mana as a percentage of the damage dealt.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["mana_burn_pct"]}, {"subject": "nyx_assassin_vendetta", "name_zh": "司夜刺客·复仇", "name_en": "Vendetta", "description_zh": "司夜刺客进入隐身状态并获得移动速度加成。如果司夜刺客以攻击打破隐身，当次攻击将造成超高额外伤害，并对目标施加破坏效果。司夜刺客当次攻击具有%attack_range_bonus%额外攻击距离，并且攻击动作加快%attack_animation_bonus%%%。", "description_en": "Nyx Assassin becomes invisible and gains a speed bonus. If Nyx Assassin attacks to break the invisibility, massive bonus damage is dealt with the attack that applies a break to the target. Nyx Assassin has %attack_range_bonus% additional attack range and a %attack_animation_bonus%%% faster attack animation for this attack.", "notes_zh": ["如果在隐身期间使用了技能，或者隐身时间结束，额外伤害的效果将会消失。", "会在造成额外伤害前施加破坏效果。"], "granted_by": "", "upgrades": {"shard": {"zh": "冷却时间减少%bonus_AbilityCooldown%秒。在复仇的最初%free_pathing_duration%秒内，司夜刺客为极速状态，并且移动无视地形。", "en": "Decreases cooldown by %bonus_AbilityCooldown%s. For the first %free_pathing_duration%s of Vendetta, Nyx is hasted and has unobstructed pathing."}}, "is_passive": false, "value_names": ["duration", "movement_speed", "bonus_damage", "health_regen_rate_scepter", "mana_regen_rate_scepter", "break_duration", "free_pathing_duration", "free_pathing_movement_speed_bonus", "attack_animation_bonus", "attack_range_bonus", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "naga_siren_mirror_image", "name_zh": "娜迦海妖·镜像", "name_en": "Mirror Image", "description_zh": "制造多个受娜迦海妖控制的镜像。\n\n驱散类型：弱驱散", "description_en": "Creates multiple images of Naga Siren under her control.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["娜迦海妖在施法时有%invuln_duration%秒的无敌时间，可以用来躲避眩晕和伤害。", "施放后，将会移除娜迦海妖身上大部分效果。", "施放时现有的镜像幻象将被摧毁。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["illusion_duration", "outgoing_damage", "outgoing_damage_tooltip", "incoming_damage", "tooltip_incoming_damage_total_pct", "images_count", "invuln_duration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "naga_siren_ensnare", "name_zh": "娜迦海妖·诱捕", "name_en": "Ensnare", "description_zh": "打断目标的动作并将其困在原地，使其无法移动或闪烁。可以对海妖之歌作用下的单位施放。", "description_en": "Interrupts the target and traps them in place, preventing movement or blinking. Can target units affected by Song of the Siren.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "提升施法距离和弹道速度。诱捕可以对减益免疫单位施放并且生效。诱捕会施加破坏效果。", "en": "Increases cast range and projectile speed.  Allows Ensnare to target and affect Debuff Immune units. Ensnare applies Break."}}, "is_passive": false, "value_names": ["duration", "net_speed", "fake_ensnare_distance", "can_target_magic_immune", "does_break", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "naga_siren_rip_tide", "name_zh": "娜迦海妖·激流", "name_en": "Rip Tide", "description_zh": "娜迦海妖和她的幻象每经过%hits%次攻击后就会对敌人造成额外伤害，并降低他们的护甲，持续%duration%秒。", "description_en": "Naga Siren and her illusions deal bonus damage to enemies and reduce their armor for %duration% seconds every %hits% attacks.", "notes_zh": ["使用激流不会打断持续施法。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["hits", "armor_reduction", "damage", "radius", "duration"]}, {"subject": "naga_siren_eelskin", "name_zh": "娜迦海妖·鳗鱼皮", "name_en": "Eelskin", "description_zh": "娜迦海妖拥有闪避加成，%radius%内每增加一个娜迦海妖都会提升。", "description_en": "Naga Siren has bonus evasion, increased per every other Naga Siren within %radius% radius.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["evasion_per_naga", "radius"]}, {"subject": "naga_siren_song_of_the_siren", "name_zh": "娜迦海妖·海妖之歌", "name_en": "Song of the Siren", "description_zh": "娜迦海妖周围的所有敌人受到魔法影响陷入停滞状态，既无法行动也不会受到攻击。再次使用海妖之歌可以提前停止效果。", "description_en": "All enemies in range of the Naga Siren are put into a magical stasis where they cannot act or be attacked. Using Song of the Siren again will end the duration early.", "notes_zh": ["海妖之歌作用下的单位处于无敌状态，不会受到任何伤害。", "海妖之歌的作用范围以娜迦海妖为中心，如果她远离了作用单位，他们将会醒来。"], "granted_by": "", "upgrades": {"shard": {"zh": "海妖之歌范围内友军每秒会恢复一定百分比的生命和魔法。", "en": "Allies in range of Song of the Siren recover a percentage of their health and mana per second."}}, "is_passive": false, "value_names": ["radius", "duration", "animation_rate", "heal_pct", "mana_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "keeper_of_the_light_illuminate", "name_zh": "光之守卫·冲击波", "name_en": "Illuminate", "description_zh": "持续施法 - 引导光的能量，持续施法的时间越长，威力越大。释放后，光波沿直线向前发出，造成伤害并获得沿途的视野。", "description_en": "CHANNELED - Channels light energy, building power the longer it's channeled.  Once released, a wave is sent forth that deals damage and gives vision in its path.  The longer it is channeled, the more damage is dealt.", "notes_zh": ["在持续施法期间获得的视野不断增大。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["total_damage", "max_channel_time", "radius", "range", "speed", "vision_radius", "vision_duration", "channel_vision_radius", "channel_vision_interval", "channel_vision_duration", "channel_vision_step", "AbilityCastRange", "AbilityChannelTime", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "keeper_of_the_light_blinding_light", "name_zh": "光之守卫·致盲之光", "name_en": "Blinding Light", "description_zh": "一道致盲之光在目标区域闪现，把区域内的单位击退到区域边缘，并造成致盲，使他们的部分攻击不能命中。最短击退距离是在%knockback_duration%秒内击退%knockback_distance%距离。", "description_en": "A blinding light flashes over the targeted area, knocking back units to the edge of the area and blinding them, causing them to miss some attacks. Minimum knockback distance is %knockback_distance% range over %knockback_duration% seconds.", "notes_zh": ["落地后受作用单位将摧毁150范围内的树木。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["miss_rate", "duration", "radius", "knockback_duration", "knockback_distance", "damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{"objects":[{"subject":"undying_flesh_golem","mechanisms":[{"mechanism":"slow","condition":"base","quote":"攻击附带减速和伤害加深效果","uncertain":false},{"mechanism":"incoming_damage_amp","condition":"base","quote":"攻击附带减速和伤害加深效果","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"攻击附带减速和伤害加深效果，还会产生墓碑的僵尸","uncertain":false},{"mechanism":"summons","condition":"base","quote":"还会产生墓碑的僵尸","uncertain":true}]},{"subject":"rubick_telekinesis","mechanisms":[{"mechanism":"stun","condition":"base","quote":"被投下的单位会砸晕落地点附近的敌人","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"拉比克可以使用次级技能将目标扔往目标方向","uncertain":false},{"mechanism":"self_mobility","condition":"shard","quote":"可以对自身或友军施放隔空取物","uncertain":false}]},{"subject":"rubick_fade_bolt","mechanisms":[{"mechanism":"attack_damage_reduction","condition":"base","quote":"降低他们的攻击力和技能伤害","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"在多个敌方单位之间流动，造成伤害","uncertain":false}]},{"subject":"rubick_arcane_supremacy","mechanisms":[{"mechanism":"spell_amp","condition":"base","quote":"额外技能增强","uncertain":false}]},{"subject":"rubick_spell_steal","mechanisms":[{"mechanism":"spell_steal","condition":"base","quote":"学习这个英雄最后释放的技能的秘密。拉比克将可以使用这个技能","uncertain":false}]},{"subject":"rubick_curiosity","mechanisms":[]},{"subject":"disruptor_thunder_strike","mechanisms":[{"mechanism":"slow","condition":"base","quote":"攻击速度和移动速度降低效果","uncertain":false},{"mechanism":"grant_vision","condition":"base","quote":"提供目标的视野","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"每次打击会伤害附近小范围内的敌方单位","uncertain":false}]},{"subject":"disruptor_glimpse","mechanisms":[{"mechanism":"displace_other","condition":"base","quote":"将目标英雄传送回他%backtrack_time%秒前所在位置","uncertain":false}]},{"subject":"disruptor_kinetic_field","mechanisms":[{"mechanism":"mobility_lock","condition":"base","quote":"创造一个敌人无法通过的环形动能屏障","uncertain":false}]},{"subject":"disruptor_kinetic_fence","mechanisms":[{"mechanism":"mobility_lock","condition":"shard","quote":"创造一面敌人无法通过的动能墙壁","uncertain":false}]},{"subject":"disruptor_electromagnetic_repulsion","mechanisms":[{"mechanism":"damage_return","condition":"base","quote":"每当干扰者受到%effect_radius%范围内来自任意来源的%damage_threshold%点伤害，附近所有敌人都会受到%damage_per_int%倍干扰者智力值的伤害","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"被推开最多%effect_radius%距离","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"附近所有敌人都会受到%damage_per_int%倍干扰者智力值的伤害","uncertain":false}]},{"subject":"disruptor_static_storm","mechanisms":[{"mechanism":"silence","condition":"base","quote":"沉默区域内的所有敌方单位","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"在持续时间内伤害并沉默区域内的所有敌方单位","uncertain":false},{"mechanism":"mute","condition":"scepter","quote":"锁闭物品","uncertain":false}]},{"subject":"nyx_assassin_impale","mechanisms":[{"mechanism":"stun","condition":"base","quote":"落地时被眩晕","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"敌方单位受到伤害，然后被抛向空中","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"岩石尖刺在地上沿一条直线穿刺而出。敌方单位受到伤害","uncertain":false}]},{"subject":"nyx_assassin_jolt","mechanisms":[{"mechanism":"mana_burn","condition":"base","quote":"并燃烧部分魔法","uncertain":false}]},{"subject":"nyx_assassin_spiked_carapace","mechanisms":[{"mechanism":"stun","condition":"base","quote":"同时眩晕攻击者","uncertain":false},{"mechanism":"damage_block","condition":"base","quote":"无效化司夜刺客受到的伤害（每个攻击者最多作用一次）","uncertain":false},{"mechanism":"damage_return","condition":"base","quote":"尖刺外壳可以反弹并无效化司夜刺客受到的伤害（每个攻击者最多作用一次）","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"反弹并无效化司夜刺客受到的伤害（每个攻击者最多作用一次）","uncertain":true}]},{"subject":"nyx_assassin_burrow","mechanisms":[{"mechanism":"invisibility","condition":"scepter","quote":"并且是隐身状态","uncertain":false},{"mechanism":"damage_block","condition":"scepter","quote":"司夜刺客受到的所有伤害都会降低","uncertain":false},{"mechanism":"cooldown_reduction","condition":"scepter","quote":"穿刺的冷却时间减少","uncertain":false}]},{"subject":"nyx_assassin_neuro_sting","mechanisms":[{"mechanism":"mana_burn","condition":"base","quote":"燃烧造成伤害一定百分比的魔法","uncertain":false}]},{"subject":"nyx_assassin_vendetta","mechanisms":[{"mechanism":"invisibility","condition":"base","quote":"司夜刺客进入隐身状态","uncertain":false},{"mechanism":"applies_break","condition":"base","quote":"并对目标施加破坏效果","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"当次攻击将造成超高额外伤害，并对目标施加破坏效果","uncertain":false},{"mechanism":"flying","condition":"shard","quote":"移动无视地形","uncertain":false}]},{"subject":"naga_siren_mirror_image","mechanisms":[{"mechanism":"illusions","condition":"base","quote":"制造多个受娜迦海妖控制的镜像","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"base","quote":"驱散类型：弱驱散","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"娜迦海妖在施法时有%invuln_duration%秒的无敌时间","uncertain":false}]},{"subject":"naga_siren_ensnare","mechanisms":[{"mechanism":"root","condition":"base","quote":"将其困在原地，使其无法移动或闪烁","uncertain":false},{"mechanism":"pierces_debuff_immunity","condition":"scepter","quote":"诱捕可以对减益免疫单位施放并且生效","uncertain":false},{"mechanism":"applies_break","condition":"scepter","quote":"诱捕会施加破坏效果","uncertain":false}]},{"subject":"naga_siren_rip_tide","mechanisms":[{"mechanism":"armor_reduction","condition":"base","quote":"降低他们的护甲，持续%duration%秒","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"每经过%hits%次攻击后就会对敌人造成额外伤害，并降低他们的护甲","uncertain":false}]},{"subject":"naga_siren_eelskin","mechanisms":[{"mechanism":"evasion","condition":"base","quote":"娜迦海妖拥有闪避加成","uncertain":false}]},{"subject":"naga_siren_song_of_the_siren","mechanisms":[{"mechanism":"sleep","condition":"base","quote":"陷入停滞状态，既无法行动也不会受到攻击；如果她远离了作用单位，他们将会醒来","uncertain":true},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"海妖之歌作用下的单位处于无敌状态，不会受到任何伤害","uncertain":false},{"mechanism":"aura","condition":"base","quote":"娜迦海妖周围的所有敌人受到魔法影响陷入停滞状态","uncertain":false},{"mechanism":"healing","condition":"shard","quote":"海妖之歌范围内友军每秒会恢复一定百分比的生命和魔法","uncertain":false},{"mechanism":"mana_gain","condition":"shard","quote":"Allies in range of Song of the Siren recover a percentage of their health and mana per second.","uncertain":true},{"mechanism":"aura","condition":"shard","quote":"海妖之歌范围内友军每秒会恢复一定百分比的生命和魔法","uncertain":false}]},{"subject":"keeper_of_the_light_illuminate","mechanisms":[{"mechanism":"grant_vision","condition":"base","quote":"获得沿途的视野","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"光波沿直线向前发出，造成伤害","uncertain":false}]},{"subject":"keeper_of_the_light_blinding_light","mechanisms":[{"mechanism":"blind","condition":"base","quote":"造成致盲，使他们的部分攻击不能命中","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"把区域内的单位击退到区域边缘","uncertain":false},{"mechanism":"tree_destroy","condition":"base","quote":"落地后受作用单位将摧毁150范围内的树木","uncertain":false}]}]}
+tokens used
+28,621
+{"objects":[{"subject":"undying_flesh_golem","mechanisms":[{"mechanism":"slow","condition":"base","quote":"攻击附带减速和伤害加深效果","uncertain":false},{"mechanism":"incoming_damage_amp","condition":"base","quote":"攻击附带减速和伤害加深效果","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"攻击附带减速和伤害加深效果，还会产生墓碑的僵尸","uncertain":false},{"mechanism":"summons","condition":"base","quote":"还会产生墓碑的僵尸","uncertain":true}]},{"subject":"rubick_telekinesis","mechanisms":[{"mechanism":"stun","condition":"base","quote":"被投下的单位会砸晕落地点附近的敌人","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"拉比克可以使用次级技能将目标扔往目标方向","uncertain":false},{"mechanism":"self_mobility","condition":"shard","quote":"可以对自身或友军施放隔空取物","uncertain":false}]},{"subject":"rubick_fade_bolt","mechanisms":[{"mechanism":"attack_damage_reduction","condition":"base","quote":"降低他们的攻击力和技能伤害","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"在多个敌方单位之间流动，造成伤害","uncertain":false}]},{"subject":"rubick_arcane_supremacy","mechanisms":[{"mechanism":"spell_amp","condition":"base","quote":"额外技能增强","uncertain":false}]},{"subject":"rubick_spell_steal","mechanisms":[{"mechanism":"spell_steal","condition":"base","quote":"学习这个英雄最后释放的技能的秘密。拉比克将可以使用这个技能","uncertain":false}]},{"subject":"rubick_curiosity","mechanisms":[]},{"subject":"disruptor_thunder_strike","mechanisms":[{"mechanism":"slow","condition":"base","quote":"攻击速度和移动速度降低效果","uncertain":false},{"mechanism":"grant_vision","condition":"base","quote":"提供目标的视野","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"每次打击会伤害附近小范围内的敌方单位","uncertain":false}]},{"subject":"disruptor_glimpse","mechanisms":[{"mechanism":"displace_other","condition":"base","quote":"将目标英雄传送回他%backtrack_time%秒前所在位置","uncertain":false}]},{"subject":"disruptor_kinetic_field","mechanisms":[{"mechanism":"mobility_lock","condition":"base","quote":"创造一个敌人无法通过的环形动能屏障","uncertain":false}]},{"subject":"disruptor_kinetic_fence","mechanisms":[{"mechanism":"mobility_lock","condition":"shard","quote":"创造一面敌人无法通过的动能墙壁","uncertain":false}]},{"subject":"disruptor_electromagnetic_repulsion","mechanisms":[{"mechanism":"damage_return","condition":"base","quote":"每当干扰者受到%effect_radius%范围内来自任意来源的%damage_threshold%点伤害，附近所有敌人都会受到%damage_per_int%倍干扰者智力值的伤害","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"被推开最多%effect_radius%距离","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"附近所有敌人都会受到%damage_per_int%倍干扰者智力值的伤害","uncertain":false}]},{"subject":"disruptor_static_storm","mechanisms":[{"mechanism":"silence","condition":"base","quote":"沉默区域内的所有敌方单位","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"在持续时间内伤害并沉默区域内的所有敌方单位","uncertain":false},{"mechanism":"mute","condition":"scepter","quote":"锁闭物品","uncertain":false}]},{"subject":"nyx_assassin_impale","mechanisms":[{"mechanism":"stun","condition":"base","quote":"落地时被眩晕","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"敌方单位受到伤害，然后被抛向空中","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"岩石尖刺在地上沿一条直线穿刺而出。敌方单位受到伤害","uncertain":false}]},{"subject":"nyx_assassin_jolt","mechanisms":[{"mechanism":"mana_burn","condition":"base","quote":"并燃烧部分魔法","uncertain":false}]},{"subject":"nyx_assassin_spiked_carapace","mechanisms":[{"mechanism":"stun","condition":"base","quote":"同时眩晕攻击者","uncertain":false},{"mechanism":"damage_block","condition":"base","quote":"无效化司夜刺客受到的伤害（每个攻击者最多作用一次）","uncertain":false},{"mechanism":"damage_return","condition":"base","quote":"尖刺外壳可以反弹并无效化司夜刺客受到的伤害（每个攻击者最多作用一次）","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"反弹并无效化司夜刺客受到的伤害（每个攻击者最多作用一次）","uncertain":true}]},{"subject":"nyx_assassin_burrow","mechanisms":[{"mechanism":"invisibility","condition":"scepter","quote":"并且是隐身状态","uncertain":false},{"mechanism":"damage_block","condition":"scepter","quote":"司夜刺客受到的所有伤害都会降低","uncertain":false},{"mechanism":"cooldown_reduction","condition":"scepter","quote":"穿刺的冷却时间减少","uncertain":false}]},{"subject":"nyx_assassin_neuro_sting","mechanisms":[{"mechanism":"mana_burn","condition":"base","quote":"燃烧造成伤害一定百分比的魔法","uncertain":false}]},{"subject":"nyx_assassin_vendetta","mechanisms":[{"mechanism":"invisibility","condition":"base","quote":"司夜刺客进入隐身状态","uncertain":false},{"mechanism":"applies_break","condition":"base","quote":"并对目标施加破坏效果","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"当次攻击将造成超高额外伤害，并对目标施加破坏效果","uncertain":false},{"mechanism":"flying","condition":"shard","quote":"移动无视地形","uncertain":false}]},{"subject":"naga_siren_mirror_image","mechanisms":[{"mechanism":"illusions","condition":"base","quote":"制造多个受娜迦海妖控制的镜像","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"base","quote":"驱散类型：弱驱散","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"娜迦海妖在施法时有%invuln_duration%秒的无敌时间","uncertain":false}]},{"subject":"naga_siren_ensnare","mechanisms":[{"mechanism":"root","condition":"base","quote":"将其困在原地，使其无法移动或闪烁","uncertain":false},{"mechanism":"pierces_debuff_immunity","condition":"scepter","quote":"诱捕可以对减益免疫单位施放并且生效","uncertain":false},{"mechanism":"applies_break","condition":"scepter","quote":"诱捕会施加破坏效果","uncertain":false}]},{"subject":"naga_siren_rip_tide","mechanisms":[{"mechanism":"armor_reduction","condition":"base","quote":"降低他们的护甲，持续%duration%秒","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"每经过%hits%次攻击后就会对敌人造成额外伤害，并降低他们的护甲","uncertain":false}]},{"subject":"naga_siren_eelskin","mechanisms":[{"mechanism":"evasion","condition":"base","quote":"娜迦海妖拥有闪避加成","uncertain":false}]},{"subject":"naga_siren_song_of_the_siren","mechanisms":[{"mechanism":"sleep","condition":"base","quote":"陷入停滞状态，既无法行动也不会受到攻击；如果她远离了作用单位，他们将会醒来","uncertain":true},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"海妖之歌作用下的单位处于无敌状态，不会受到任何伤害","uncertain":false},{"mechanism":"aura","condition":"base","quote":"娜迦海妖周围的所有敌人受到魔法影响陷入停滞状态","uncertain":false},{"mechanism":"healing","condition":"shard","quote":"海妖之歌范围内友军每秒会恢复一定百分比的生命和魔法","uncertain":false},{"mechanism":"mana_gain","condition":"shard","quote":"Allies in range of Song of the Siren recover a percentage of their health and mana per second.","uncertain":true},{"mechanism":"aura","condition":"shard","quote":"海妖之歌范围内友军每秒会恢复一定百分比的生命和魔法","uncertain":false}]},{"subject":"keeper_of_the_light_illuminate","mechanisms":[{"mechanism":"grant_vision","condition":"base","quote":"获得沿途的视野","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"光波沿直线向前发出，造成伤害","uncertain":false}]},{"subject":"keeper_of_the_light_blinding_light","mechanisms":[{"mechanism":"blind","condition":"base","quote":"造成致盲，使他们的部分攻击不能命中","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"把区域内的单位击退到区域边缘","uncertain":false},{"mechanism":"tree_destroy","condition":"base","quote":"落地后受作用单位将摧毁150范围内的树木","uncertain":false}]}]}

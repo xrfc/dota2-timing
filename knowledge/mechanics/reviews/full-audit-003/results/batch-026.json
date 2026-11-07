@@ -1,0 +1,678 @@
+{
+  "objects": [
+    {
+      "subject": "ringmaster_funhouse_mirror",
+      "judgments": [
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "有%invuln_duration%秒的施法时间，其间处于无敌状态。",
+          "reason_zh": "施法期间自身处于无敌状态。"
+        }
+      ]
+    },
+    {
+      "subject": "ringmaster_whoopee_cushion",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使敌人减速%fart_cloud_slow%%%。",
+          "reason_zh": "留下的臭云会使敌人减速。"
+        }
+      ]
+    },
+    {
+      "subject": "ringmaster_summon_unicycle",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "撞到树木会将其摧毁，并且独轮车会减速。",
+          "reason_zh": "独轮车减速是自身撞树的代价，不算施加减速机制。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "撞到树木会将其摧毁",
+          "reason_zh": "独轮车能够通过碰撞摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "kez_echo_slash",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击区域内的敌人",
+          "reason_zh": "一次施放会攻击区域内的多个敌人。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会继承分裂效果。",
+          "reason_zh": "材料明确否定继承分裂，区域攻击本身也不等于分裂。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施加短暂的%tag_slow%%%减速",
+          "reason_zh": "技能会对命中的敌人施加减速。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "会摧毁树木。",
+          "reason_zh": "说明明确技能能够摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "kez_grappling_claw",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "抓钩碰到目标后，该单位会被减速。",
+          "reason_zh": "抓钩命中会使目标单位减速。"
+        }
+      ]
+    },
+    {
+      "subject": "kez_kazurai_katana",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料未说明一次施放或一次攻击能伤害多个敌人。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "长刀的攻击和技能会对敌人施加一个可叠加的持续伤害效果",
+          "reason_zh": "普通攻击会附加可叠加的持续伤害。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "刺中后凯能从当次攻击吸血%lifesteal_pct%%%。",
+          "reason_zh": "魔晶新增了刺中攻击的吸血效果。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "如果从背后刺中目标，目标会被眩晕。",
+          "reason_zh": "魔晶新增了背后刺中时的眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "kez_switch_weapons",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reset",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "施放任何武器的技能都会重置流派变换的冷却时间。",
+          "reason_zh": "A杖效果明确会重置流派变换的冷却。"
+        }
+      ]
+    },
+    {
+      "subject": "kez_raptor_dance",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凯会对周围发动致命的辐射状斩击，基于目标的最大生命值造成伤害",
+          "reason_zh": "一次施放会通过周围的辐射状斩击伤害多个敌人。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得一次弱驱散效果",
+          "reason_zh": "技能会对自身施加弱驱散。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害的一定百分比会治疗凯",
+          "reason_zh": "技能造成伤害后会恢复凯的生命值。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "%invuln_period%秒为无敌状态",
+          "reason_zh": "技能明确提供一段无敌时间。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害的一定百分比会治疗凯",
+          "reason_zh": "按技能造成伤害的比例恢复自身生命符合技能吸血定义。"
+        }
+      ]
+    },
+    {
+      "subject": "kez_falcon_rush",
+      "judgments": [
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凯拥有相位移动状态和减速抗性。",
+          "reason_zh": "技能状态明确提供相位移动。"
+        },
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凯拥有相位移动状态和减速抗性。",
+          "reason_zh": "技能状态明确提供减速抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "kez_talon_toss",
+      "judgments": [
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "固定伤害的攻击具有克敌机先效果。",
+          "reason_zh": "该技能施加的攻击明确具有克敌机先。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并造成沉默。",
+          "reason_zh": "技能会对目标施加沉默。"
+        }
+      ]
+    },
+    {
+      "subject": "kez_shodo_sai",
+      "judgments": [
+        {
+          "mechanism": "critical",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "装备双钗时凯的攻击有几率对敌人造成致命一击。",
+          "reason_zh": "基础效果使双钗攻击有概率暴击。"
+        },
+        {
+          "mechanism": "critical",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "招架会产生更强的印记，造成额外眩晕和致命一击伤害。",
+          "reason_zh": "魔晶只增强已有暴击的伤害数值，不新增暴击机制。"
+        },
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凯可以主动开启技能，使自身被缴械",
+          "reason_zh": "缴械是开启招架对自身的代价，按规则不计。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果有敌方英雄的攻击被招架，该英雄会被眩晕%parry_stun_duration%秒",
+          "reason_zh": "基础招架效果能够眩晕敌方英雄。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "招架会产生更强的印记，造成额外眩晕和致命一击伤害。",
+          "reason_zh": "魔晶仅增强已有印记的眩晕数值，不新增眩晕机制。"
+        }
+      ]
+    },
+    {
+      "subject": "kez_ravens_veil",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凯获得弱驱散效果",
+          "reason_zh": "技能会对凯自身施加弱驱散。"
+        },
+        {
+          "mechanism": "blind",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "暂时削弱他们的视野",
+          "reason_zh": "降低视野不等于使攻击概率落空，字段名也不能证明致盲。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "凯获得弱驱散效果、移动速度加成和隐身状态",
+          "reason_zh": "技能明确使凯进入隐身状态。"
+        },
+        {
+          "mechanism": "reduce_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对附近敌方英雄施加标记，暂时削弱他们的视野",
+          "reason_zh": "技能会暂时降低附近敌方英雄的视野。"
+        }
+      ]
+    },
+    {
+      "subject": "largo_catchy_lick",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "朗戈用他的舌头舔舐目标单位",
+          "reason_zh": "说明只描述对单个目标生效，没有多目标伤害依据。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施加弱驱散",
+          "reason_zh": "技能明确对目标施加弱驱散。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "击杀目标或驱散目标的效果后都会使朗戈暂时获得生命恢复。",
+          "reason_zh": "技能在满足条件后提供生命恢复，符合治疗定义。"
+        }
+      ]
+    },
+    {
+      "subject": "largo_frogstomp",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "朗戈把小青蛙扔到一片区域。他们每%stomp_interval%秒都会践踏地面，造成伤害和短暂眩晕",
+          "reason_zh": "一次施放产生区域践踏伤害，能够命中多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "区域内敌人的移动速度会被减缓",
+          "reason_zh": "技能会降低区域内敌人的移动速度。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害和短暂眩晕",
+          "reason_zh": "区域践踏明确造成短暂眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "largo_croak_of_genius",
+      "judgments": [
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害后会回响，接下来%damage_duration%秒内再次造成原本伤害的一定百分比。\n\n只适用于可受到技能增强作用的伤害来源。",
+          "reason_zh": "材料描述的是延迟伤害回响，对技能增强的提及只是适用范围说明，未赋予法术放大。"
+        }
+      ]
+    },
+    {
+      "subject": "largo_amphibian_rhapsody",
+      "judgments": [
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "朗戈准备好弹奏乐曲。他被缴械",
+          "reason_zh": "缴械是自身进入弹奏模式的代价，按规则不计。"
+        }
+      ]
+    },
+    {
+      "subject": "largo_song_fight_song",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对附近敌人造成%burst_damage%点魔法伤害",
+          "reason_zh": "一次乐曲会对附近多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "magic_resist_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "乐曲还会使附近友方英雄的技能增强提升，并且他们的攻击造成额外魔法伤害。",
+          "reason_zh": "增强友军伤害不等于降低敌人魔抗或对敌人施加魔法易伤。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使附近友方英雄的技能增强提升",
+          "reason_zh": "基础乐曲明确提高附近友方英雄的技能增强。"
+        }
+      ]
+    },
+    {
+      "subject": "largo_song_double_time",
+      "judgments": [
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "还有短时间的减速抗性",
+          "reason_zh": "乐曲明确为附近友方单位提供短暂减速抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "largo_song_good_vibrations",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "朗戈弹奏的乐曲会治疗附近友方英雄。",
+          "reason_zh": "乐曲直接治疗附近友方英雄。"
+        }
+      ]
+    },
+    {
+      "subject": "abyssal_blade",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "",
+          "reason_zh": "主动和被动均只描述对目标生效，没有范围伤害依据。"
+        },
+        {
+          "mechanism": "bash",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Bash  Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target",
+          "reason_zh": "装备被动使攻击有概率触发重击眩晕。"
+        },
+        {
+          "mechanism": "pierces_debuff_immunity",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Pierces Debuff Immunity.",
+          "reason_zh": "装备官方说明明确主动效果穿透减益免疫。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Stuns a target enemy unit for %stun_duration% seconds.",
+          "reason_zh": "装备主动能够眩晕敌方目标。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Stuns a target enemy unit for %stun_duration% seconds.",
+          "reason_zh": "装备主动能够眩晕敌方目标。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Stuns a target enemy unit for %stun_duration% seconds.",
+          "reason_zh": "装备主动能够眩晕敌方目标。"
+        }
+      ]
+    },
+    {
+      "subject": "aegis",
+      "judgments": [
+        {
+          "mechanism": "respawn",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Brings you to life with full health and mana %reincarnate_time% seconds after you die",
+          "reason_zh": "装备会使持有者死亡后满生命和法力复活。"
+        }
+      ]
+    },
+    {
+      "subject": "aeon_disk",
+      "judgments": [
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "a strong dispel is applied",
+          "reason_zh": "装备触发时会对自身施加强驱散。"
+        },
+        {
+          "mechanism": "status_resistance",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "provides +%status_resistance%%% Status Resistance",
+          "reason_zh": "装备触发后的增益明确提供状态抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "aether_lens",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 2.5 Mana Regeneration",
+          "reason_zh": "装备属性明确提供法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "ancient_janggo",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Swiftness Aura Grants %aura_movement_speed% movement speed and %aura_health_regen% health regeneration to allies.",
+          "reason_zh": "装备被动光环持续影响周围友军。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants %aura_movement_speed% movement speed and %aura_health_regen% health regeneration to allies.",
+          "reason_zh": "装备光环提供生命恢复，符合治疗定义。"
+        }
+      ]
+    },
+    {
+      "subject": "angels_demise",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 3 Mana Regeneration",
+          "reason_zh": "装备属性明确提供法力恢复。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "slows their movement speed by %slow%%% for %slow_duration%s",
+          "reason_zh": "装备被动会使触发目标的移动速度降低。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "slows their movement speed by %slow%%% for %slow_duration%s",
+          "reason_zh": "装备被动会使触发目标的移动速度降低。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "deals a separate %bonus_spell_damage% additional damage",
+          "reason_zh": "装备触发的是独立额外伤害，材料未说明提供法术放大。"
+        }
+      ]
+    }
+  ]
+}

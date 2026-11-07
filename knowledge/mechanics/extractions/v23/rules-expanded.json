@@ -1,0 +1,866 @@
+{
+ "schema": "mechanics-rules/1",
+ "source": "knowledge/mechanics/rules-v12.json",
+ "rules": [
+  {
+   "id": "R01",
+   "zh": "弱驱散去掉dispellable=2的效果，对1、3无效",
+   "relation": "removes",
+   "source_mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "target_enum": {
+    "dispellable": [
+     2
+    ]
+   },
+   "decision": "U30,U68"
+  },
+  {
+   "id": "R02",
+   "zh": "强驱散去掉dispellable=1、2的效果，对3无效",
+   "relation": "removes",
+   "source_mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "target_enum": {
+    "dispellable": [
+     1,
+     2
+    ]
+   },
+   "decision": "U30,U68"
+  },
+  {
+   "id": "R03",
+   "zh": "否决坠饰持续驱散，目标身上的推推、吹风无效",
+   "relation": "blocks",
+   "source_subjects": [
+    "nullifier"
+   ],
+   "target_subjects": [
+    "force_staff",
+    "hurricane_pike",
+    "cyclone",
+    "wind_waker"
+   ],
+   "decision": "U51,U68",
+   "note": "推推、吹风对应的装备由助手列出"
+  },
+  {
+   "id": "R04",
+   "zh": "破坏使IsBreakable=1的效果失效，部分破坏按附注",
+   "relation": "disables",
+   "source_mechanisms": [
+    "applies_break"
+   ],
+   "target_mechanisms": [
+    "break_sensitive"
+   ],
+   "decision": "U48,U68"
+  },
+  {
+   "id": "R05",
+   "zh": "怕破坏的英雄优先考虑破坏来源",
+   "relation": "counters",
+   "source_mechanisms": [
+    "applies_break"
+   ],
+   "target_subjects": [
+    "bristleback_bristleback",
+    "enchantress_untouchable",
+    "huskar_berserkers_blood",
+    "phantom_assassin_coup_de_grace",
+    "phantom_assassin_immaterial",
+    "shredder_reactive_armor",
+    "tidehunter_kraken_shell"
+   ],
+   "decision": "U35,U68",
+   "note": "目标取自break-vulnerable-heroes-v1.json的key_passives"
+  },
+  {
+   "id": "R06",
+   "zh": "真视、显形克制隐身；诡计之雾真视也看不破",
+   "relation": "counters",
+   "source_mechanisms": [
+    "true_sight",
+    "reveal"
+   ],
+   "target_mechanisms": [
+    "invisibility"
+   ],
+   "target_exclude": [
+    "smoke_of_deceit"
+   ],
+   "decision": "U59,U68"
+  },
+  {
+   "id": "R07",
+   "zh": "克敌机先克制闪避，不克制致盲",
+   "relation": "counters",
+   "source_mechanisms": [
+    "pierce_evasion"
+   ],
+   "target_mechanisms": [
+    "evasion"
+   ],
+   "decision": "U30,U68"
+  },
+  {
+   "id": "R08",
+   "zh": "克制判断看敌方装备：赛前按对方常规会出，游戏中按已看到对方出了",
+   "relation": "context",
+   "decision": "U22,U70",
+   "parameters": {
+    "pregame": "expected_common",
+    "ingame": "seen"
+   },
+   "note": "常规会出的门槛在T5读出装数据时定",
+   "not_computed": {
+    "fields": [
+     "parameters"
+    ],
+    "reason_zh": "背景规则，不产生关联；“常规会出”的门槛等B1采集的出装数据再定",
+    "decision": "U70,U113"
+   }
+  },
+  {
+   "id": "R09",
+   "zh": "减益免疫挡住不能穿透的效果，能穿透的仍生效",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "debuff_immunity"
+   ],
+   "target_exempt_mechanisms": [
+    "pierces_debuff_immunity"
+   ],
+   "decision": "U28,U68",
+   "note": "目标是所有不能穿透的效果，不逐个列出",
+   "not_computed": {
+    "fields": [
+     "target_exempt_mechanisms"
+    ],
+    "reason_zh": "目标是所有不能穿透的效果，按用户决定不逐个列出，所以不算目标集合",
+    "decision": "U68"
+   }
+  },
+  {
+   "id": "R10",
+   "zh": "碎颅锤重击可穿透减益免疫；对能强驱散自解控的英雄，可解控后再控",
+   "relation": "counters",
+   "source_subjects": [
+    "basher",
+    "abyssal_blade"
+   ],
+   "target_mechanisms": [
+    "debuff_immunity"
+   ],
+   "target_subjects": [
+    "ursa_enrage"
+   ],
+   "decision": "U28,U68"
+  },
+  {
+   "id": "R11",
+   "zh": "状态抗性缩短控制和减益时长",
+   "relation": "reduces",
+   "source_mechanisms": [
+    "status_resistance"
+   ],
+   "target_mechanisms": [
+    "stun",
+    "silence",
+    "hex",
+    "root",
+    "bind",
+    "disarm",
+    "sleep",
+    "taunt",
+    "fear",
+    "hypnotize",
+    "slow",
+    "attack_slow"
+   ],
+   "decision": "U29,U68,U88,U94",
+   "note": "“控制多”的门槛不在这里定"
+  },
+  {
+   "id": "R12",
+   "zh": "烧蓝克制没蓝放不了技能就很脆弱的英雄，不按蓝耗高低；少数英雄例外",
+   "relation": "counters",
+   "source_mechanisms": [
+    "mana_burn"
+   ],
+   "decision": "U68,U99,U100,U106",
+   "target_heroes": {
+    "abilities": "with_mana_cost",
+    "except": [
+     1,
+     2,
+     4,
+     6,
+     10,
+     12,
+     18,
+     26,
+     28,
+     32,
+     38,
+     44,
+     59,
+     61,
+     62,
+     70,
+     71,
+     76,
+     80,
+     95,
+     99,
+     102,
+     104,
+     113,
+     114
+    ],
+    "conditional": [
+     {
+      "hero_id": 84,
+      "condition": "A杖",
+      "note_zh": "食人魔魔法师有A杖时不容易被烧蓝克制"
+     },
+     {
+      "hero_id": 42,
+      "condition": "A杖",
+      "note_zh": "冥魂大帝有A杖时不容易被烧蓝克制"
+     }
+    ]
+   },
+   "note": "目标是例外以外所有英雄的耗蓝技能；有条件的例外照算目标，边上注明",
+   "target_subjects": [
+    "abyssal_underlord_dark_portal",
+    "abyssal_underlord_firestorm",
+    "abyssal_underlord_pit_of_malice",
+    "alchemist_acid_spray",
+    "alchemist_berserk_potion",
+    "alchemist_chemical_rage",
+    "alchemist_unstable_concoction",
+    "ancient_apparition_chilling_touch",
+    "ancient_apparition_cold_feet",
+    "ancient_apparition_ice_blast",
+    "ancient_apparition_ice_vortex",
+    "bane_brain_sap",
+    "bane_enfeeble",
+    "bane_fiends_grip",
+    "bane_nightmare",
+    "batrider_firefly",
+    "batrider_flamebreak",
+    "batrider_flaming_lasso",
+    "batrider_sticky_napalm",
+    "brewmaster_cinder_brew",
+    "brewmaster_primal_split",
+    "brewmaster_thunder_clap",
+    "centaur_hoof_stomp",
+    "centaur_stampede",
+    "centaur_work_horse",
+    "chaos_knight_chaos_bolt",
+    "chaos_knight_phantasm",
+    "chaos_knight_reality_rift",
+    "chen_divine_favor",
+    "chen_hand_of_god",
+    "chen_holy_persuasion",
+    "chen_penitence",
+    "chen_zealot",
+    "clinkz_burning_army",
+    "clinkz_burning_barrage",
+    "clinkz_death_pact",
+    "clinkz_searing_arrows",
+    "clinkz_strafe",
+    "clinkz_wind_walk",
+    "crystal_maiden_crystal_clone",
+    "crystal_maiden_crystal_nova",
+    "crystal_maiden_freezing_field",
+    "crystal_maiden_frostbite",
+    "dark_seer_ion_shell",
+    "dark_seer_surge",
+    "dark_seer_vacuum",
+    "dark_seer_wall_of_replica",
+    "dark_willow_bedlam",
+    "dark_willow_bramble_maze",
+    "dark_willow_cursed_crown",
+    "dark_willow_shadow_realm",
+    "dark_willow_terrorize",
+    "dawnbreaker_celestial_hammer",
+    "dawnbreaker_fire_wreath",
+    "dawnbreaker_solar_guardian",
+    "dazzle_nothl_projection",
+    "dazzle_poison_touch",
+    "dazzle_shadow_wave",
+    "dazzle_shallow_grave",
+    "death_prophet_carrion_swarm",
+    "death_prophet_exorcism",
+    "death_prophet_silence",
+    "death_prophet_spirit_siphon",
+    "disruptor_glimpse",
+    "disruptor_kinetic_fence",
+    "disruptor_kinetic_field",
+    "disruptor_static_storm",
+    "disruptor_thunder_strike",
+    "doom_bringer_devour",
+    "doom_bringer_doom",
+    "doom_bringer_infernal_blade",
+    "doom_bringer_scorched_earth",
+    "dragon_knight_breathe_fire",
+    "dragon_knight_dragon_tail",
+    "dragon_knight_elder_dragon_form",
+    "dragon_knight_fireball",
+    "earth_spirit_boulder_smash",
+    "earth_spirit_geomagnetic_grip",
+    "earth_spirit_magnetize",
+    "earth_spirit_petrify",
+    "earth_spirit_rolling_boulder",
+    "earthshaker_echo_slam",
+    "earthshaker_enchant_totem",
+    "earthshaker_fissure",
+    "elder_titan_ancestral_spirit",
+    "elder_titan_earth_splitter",
+    "elder_titan_echo_stomp",
+    "ember_spirit_activate_fire_remnant",
+    "ember_spirit_flame_guard",
+    "ember_spirit_searing_chains",
+    "ember_spirit_sleight_of_fist",
+    "enchantress_bunny_hop",
+    "enchantress_enchant",
+    "enchantress_impetus",
+    "enchantress_little_friends",
+    "enchantress_natures_attendants",
+    "enigma_black_hole",
+    "enigma_demonic_conversion",
+    "enigma_malefice",
+    "enigma_midnight_pulse",
+    "faceless_void_chronosphere",
+    "faceless_void_time_dilation",
+    "faceless_void_time_walk",
+    "furion_curse_of_the_forest",
+    "furion_force_of_nature",
+    "furion_sprout",
+    "furion_teleportation",
+    "furion_wrath_of_nature",
+    "grimstroke_dark_artistry",
+    "grimstroke_dark_portrait",
+    "grimstroke_ink_creature",
+    "grimstroke_soul_chain",
+    "grimstroke_spirit_walk",
+    "gyrocopter_call_down",
+    "gyrocopter_flak_cannon",
+    "gyrocopter_homing_missile",
+    "gyrocopter_rocket_barrage",
+    "hoodwink_acorn_shot",
+    "hoodwink_bushwhack",
+    "hoodwink_decoy",
+    "hoodwink_hunters_boomerang",
+    "hoodwink_scurry",
+    "hoodwink_sharpshooter",
+    "invoker_alacrity",
+    "invoker_chaos_meteor",
+    "invoker_cold_snap",
+    "invoker_deafening_blast",
+    "invoker_emp",
+    "invoker_forge_spirit",
+    "invoker_ghost_walk",
+    "invoker_ice_wall",
+    "invoker_sun_strike",
+    "invoker_tornado",
+    "jakiro_dual_breath",
+    "jakiro_ice_path",
+    "jakiro_liquid_fire",
+    "jakiro_liquid_ice",
+    "jakiro_macropyre",
+    "juggernaut_blade_fury",
+    "juggernaut_healing_ward",
+    "juggernaut_omni_slash",
+    "juggernaut_swift_slash",
+    "keeper_of_the_light_blinding_light",
+    "keeper_of_the_light_illuminate",
+    "keeper_of_the_light_radiant_bind",
+    "keeper_of_the_light_spirit_form",
+    "keeper_of_the_light_will_o_wisp",
+    "kez_echo_slash",
+    "kez_falcon_rush",
+    "kez_grappling_claw",
+    "kez_kazurai_katana",
+    "kez_raptor_dance",
+    "kez_ravens_veil",
+    "kez_shodo_sai",
+    "kez_talon_toss",
+    "kunkka_ghostship",
+    "kunkka_tidal_wave",
+    "kunkka_torrent",
+    "kunkka_x_marks_the_spot",
+    "largo_catchy_lick",
+    "largo_croak_of_genius",
+    "largo_frogstomp",
+    "largo_song_double_time",
+    "largo_song_fight_song",
+    "largo_song_good_vibrations",
+    "leshrac_diabolic_edict",
+    "leshrac_greater_lightning_storm",
+    "leshrac_lightning_storm",
+    "leshrac_pulse_nova",
+    "leshrac_split_earth",
+    "lich_chain_frost",
+    "lich_frost_nova",
+    "lich_frost_shield",
+    "lich_ice_spire",
+    "lich_sinister_gaze",
+    "life_stealer_infest",
+    "life_stealer_open_wounds",
+    "life_stealer_rage",
+    "lina_dragon_slave",
+    "lina_flame_cloak",
+    "lina_laguna_blade",
+    "lina_light_strike_array",
+    "luna_eclipse",
+    "luna_lucent_beam",
+    "luna_lunar_orbit",
+    "lycan_howl",
+    "lycan_shapeshift",
+    "lycan_summon_wolves",
+    "lycan_wolf_bite",
+    "magnataur_empower",
+    "magnataur_horn_toss",
+    "magnataur_reverse_polarity",
+    "magnataur_shockwave",
+    "magnataur_skewer",
+    "marci_bodyguard",
+    "marci_companion_run",
+    "marci_grapple",
+    "marci_unleash",
+    "mars_arena_of_blood",
+    "mars_gods_rebuke",
+    "mars_spear",
+    "medusa_gorgon_grasp",
+    "medusa_mystic_snake",
+    "medusa_stone_gaze",
+    "meepo_earthbind",
+    "meepo_petrify",
+    "meepo_poof",
+    "mirana_arrow",
+    "mirana_invis",
+    "mirana_leap",
+    "mirana_starfall",
+    "muerta_dead_shot",
+    "muerta_pierce_the_veil",
+    "muerta_spectral_slug",
+    "muerta_the_calling",
+    "naga_siren_ensnare",
+    "naga_siren_mirror_image",
+    "naga_siren_song_of_the_siren",
+    "necrolyte_death_pulse",
+    "necrolyte_death_seeker",
+    "necrolyte_ghost_shroud",
+    "necrolyte_reapers_scythe",
+    "nevermore_frenzy",
+    "nevermore_requiem",
+    "nevermore_shadowraze1",
+    "night_stalker_crippling_fear",
+    "night_stalker_darkness",
+    "night_stalker_void",
+    "nyx_assassin_impale",
+    "nyx_assassin_jolt",
+    "nyx_assassin_spiked_carapace",
+    "nyx_assassin_vendetta",
+    "ogre_magi_bloodlust",
+    "ogre_magi_fireblast",
+    "ogre_magi_ignite",
+    "ogre_magi_smash",
+    "ogre_magi_unrefined_fireblast",
+    "omniknight_guardian_angel",
+    "omniknight_martyr",
+    "omniknight_purification",
+    "oracle_false_promise",
+    "oracle_fates_edict",
+    "oracle_fortunes_end",
+    "oracle_purifying_flames",
+    "oracle_rain_of_destiny",
+    "pangolier_gyroshell",
+    "pangolier_rollup",
+    "pangolier_shield_crash",
+    "pangolier_swashbuckle",
+    "phoenix_fire_spirits",
+    "phoenix_sun_ray",
+    "phoenix_supernova",
+    "primal_beast_onslaught",
+    "primal_beast_pulverize",
+    "primal_beast_rock_throw",
+    "primal_beast_trample",
+    "puck_dream_coil",
+    "puck_illusory_orb",
+    "puck_waning_rift",
+    "pudge_dismember",
+    "pudge_flesh_heap",
+    "pudge_meat_hook",
+    "pugna_decrepify",
+    "pugna_life_drain",
+    "pugna_nether_blast",
+    "pugna_nether_ward",
+    "queenofpain_blink",
+    "queenofpain_scream_of_pain",
+    "queenofpain_shadow_strike",
+    "queenofpain_sonic_wave",
+    "rattletrap_battery_assault",
+    "rattletrap_hookshot",
+    "rattletrap_jetpack",
+    "rattletrap_overclocking",
+    "rattletrap_power_cogs",
+    "rattletrap_rocket_flare",
+    "razor_eye_of_the_storm",
+    "razor_plasma_field",
+    "razor_static_link",
+    "ringmaster_impalement",
+    "ringmaster_spotlight",
+    "ringmaster_tame_the_beasts",
+    "ringmaster_the_box",
+    "ringmaster_wheel",
+    "rubick_fade_bolt",
+    "rubick_spell_steal",
+    "rubick_telekinesis",
+    "sandking_burrowstrike",
+    "sandking_epicenter",
+    "sandking_sand_storm",
+    "sandking_scorpion_strike",
+    "shadow_demon_demonic_cleanse",
+    "shadow_demon_demonic_purge",
+    "shadow_demon_disruption",
+    "shadow_demon_disseminate",
+    "shadow_demon_shadow_poison",
+    "shadow_shaman_ether_shock",
+    "shadow_shaman_mass_serpent_ward",
+    "shadow_shaman_shackles",
+    "shadow_shaman_urnaconda",
+    "shadow_shaman_voodoo",
+    "shredder_chakram",
+    "shredder_flamethrower",
+    "shredder_timber_chain",
+    "shredder_whirling_death",
+    "silencer_curse_of_the_silent",
+    "silencer_glaives_of_wisdom",
+    "silencer_global_silence",
+    "silencer_last_word",
+    "skeleton_king_bone_guard",
+    "skeleton_king_hellfire_blast",
+    "skeleton_king_reincarnation",
+    "skywrath_mage_ancient_seal",
+    "skywrath_mage_arcane_bolt",
+    "skywrath_mage_concussive_shot",
+    "skywrath_mage_mystic_flare",
+    "slark_dark_pact",
+    "slark_depth_shroud",
+    "slark_pounce",
+    "slark_saltwater_shiv",
+    "slark_shadow_dance",
+    "snapfire_firesnap_cookie",
+    "snapfire_gobble_up",
+    "snapfire_lil_shredder",
+    "snapfire_mortimer_kisses",
+    "snapfire_scatterblast",
+    "sniper_assassinate",
+    "sniper_concussive_grenade",
+    "sniper_shrapnel",
+    "sniper_take_aim",
+    "spectre_haunt",
+    "spectre_shadow_step",
+    "spectre_spectral_dagger",
+    "storm_spirit_ball_lightning",
+    "storm_spirit_electric_vortex",
+    "storm_spirit_static_remnant",
+    "techies_land_mines",
+    "techies_reactive_tazer",
+    "techies_sticky_bomb",
+    "techies_suicide",
+    "templar_assassin_meld",
+    "templar_assassin_psionic_trap",
+    "templar_assassin_refraction",
+    "templar_assassin_trap_teleport",
+    "terrorblade_conjure_image",
+    "terrorblade_metamorphosis",
+    "terrorblade_reflection",
+    "terrorblade_sunder",
+    "terrorblade_terror_wave",
+    "tidehunter_anchor_smash",
+    "tidehunter_dead_in_the_water",
+    "tidehunter_gush",
+    "tidehunter_kraken_shell",
+    "tidehunter_ravage",
+    "tinker_deploy_turrets",
+    "tinker_laser",
+    "tinker_march_of_the_machines",
+    "tinker_rearm",
+    "tinker_warp_grenade",
+    "tiny_avalanche",
+    "tiny_toss",
+    "tiny_tree_channel",
+    "tiny_tree_grab",
+    "treant_eyes_in_the_forest",
+    "treant_leech_seed",
+    "treant_living_armor",
+    "treant_natures_grasp",
+    "treant_overgrowth",
+    "tusk_drinking_buddies",
+    "tusk_ice_shards",
+    "tusk_snowball",
+    "tusk_tag_team",
+    "tusk_walrus_kick",
+    "tusk_walrus_punch",
+    "undying_decay",
+    "undying_flesh_golem",
+    "undying_soul_rip",
+    "undying_tombstone",
+    "vengefulspirit_magic_missile",
+    "vengefulspirit_nether_swap",
+    "vengefulspirit_wave_of_terror",
+    "venomancer_noxious_plague",
+    "venomancer_plague_ward",
+    "venomancer_snakebite",
+    "venomancer_venomous_gale",
+    "viper_nethertoxin",
+    "viper_nose_dive",
+    "viper_poison_attack",
+    "viper_viper_strike",
+    "visage_grave_chill",
+    "visage_silent_as_the_grave",
+    "visage_soul_assumption",
+    "visage_summon_familiars",
+    "void_spirit_aether_remnant",
+    "void_spirit_astral_step",
+    "void_spirit_dissimilate",
+    "void_spirit_resonant_pulse",
+    "warlock_fatal_bonds",
+    "warlock_rain_of_chaos",
+    "warlock_shadow_word",
+    "warlock_upheaval",
+    "weaver_shukuchi",
+    "weaver_the_swarm",
+    "weaver_time_lapse",
+    "windrunner_focusfire",
+    "windrunner_gale_force",
+    "windrunner_powershot",
+    "windrunner_shackleshot",
+    "windrunner_windrun",
+    "winter_wyvern_arctic_burn",
+    "winter_wyvern_cold_embrace",
+    "winter_wyvern_splinter_blast",
+    "winter_wyvern_winters_curse",
+    "wisp_overcharge",
+    "wisp_relocate",
+    "wisp_spirits",
+    "wisp_tether",
+    "witch_doctor_death_ward",
+    "witch_doctor_maledict",
+    "witch_doctor_paralyzing_cask",
+    "witch_doctor_voodoo_restoration",
+    "witch_doctor_voodoo_switcheroo",
+    "zuus_arc_lightning",
+    "zuus_cloud",
+    "zuus_heavenly_jump",
+    "zuus_lightning_bolt",
+    "zuus_thundergods_wrath"
+   ]
+  },
+  {
+   "id": "R13",
+   "zh": "林肯格挡单体指向技能",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "spell_block"
+   ],
+   "target_mechanisms": [
+    "unit_target_spell"
+   ],
+   "decision": "U31,U68,U100,U101",
+   "note": "格挡和反弹分开算（U100）；幽鬼之刃、死亡搜寻也会被林肯挡（U101）；主宰无敌斩、迅风斩只挡第一下（U75，技能备注）"
+  },
+  {
+   "id": "R23",
+   "zh": "莲花反弹单体指向技能",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "spell_reflect"
+   ],
+   "target_mechanisms": [
+    "unit_target_spell"
+   ],
+   "target_exclude": [
+    "morphling_replicate",
+    "life_stealer_infest",
+    "rubick_spell_steal",
+    "meepo_megameepo_fling",
+    "necrolyte_death_seeker",
+    "spectre_spectral_dagger"
+   ],
+   "decision": "U31,U100,U101",
+   "note": "变形、感染、技能窃取、超大米波摔扔、幽鬼之刃不会被莲花弹（U100、U101）；死亡搜寻碰到莲花会失效但不反弹（U101，技能备注）；无敌斩、迅风斩莲花会让目标也进入该状态（U75、U77，技能备注）"
+  },
+  {
+   "id": "R24",
+   "zh": "斧王·淘汰之刃克制免死",
+   "relation": "counters",
+   "source_subjects": [
+    "axe_culling_blade"
+   ],
+   "target_mechanisms": [
+    "death_prevention"
+   ],
+   "decision": "U117",
+   "note": "用户原话只说淘汰之刃，没有推广到所有斩杀机制"
+  },
+  {
+   "id": "R14",
+   "zh": "治疗削减克制任何形式的生命恢复；提升生命上限不受影响",
+   "relation": "counters",
+   "source_mechanisms": [
+    "heal_reduction"
+   ],
+   "target_mechanisms": [
+    "healing",
+    "lifesteal"
+   ],
+   "target_exclude_note_kinds": [
+    "max_hp_gain"
+   ],
+   "decision": "U68,U69"
+  },
+  {
+   "id": "R15",
+   "zh": "致盲和闪避克制依赖普攻的英雄：看常规出装是否以属性和攻速为主，一号位默认算",
+   "relation": "counters",
+   "source_mechanisms": [
+    "blind",
+    "evasion"
+   ],
+   "decision": "U68",
+   "pending": "出装数据在T5读取"
+  },
+  {
+   "id": "R16",
+   "zh": "虚无分对敌和对己：对敌是控制和打输出，对己是防物理保命，代价都是多受魔法伤害",
+   "relation": "context",
+   "source_mechanisms": [
+    "ethereal"
+   ],
+   "decision": "U57,U69"
+  },
+  {
+   "id": "R17",
+   "zh": "打断和控制克制持续施法",
+   "relation": "counters",
+   "source_mechanisms": [
+    "channel_interrupt",
+    "stun",
+    "silence",
+    "hex",
+    "sleep",
+    "cyclone_banish",
+    "taunt",
+    "fear",
+    "hypnotize"
+   ],
+   "target_mechanisms": [
+    "channeled"
+   ],
+   "decision": "U69,U88",
+   "note": "哪些控制算打断由助手列出"
+  },
+  {
+   "id": "R18",
+   "zh": "缠绕、捆缚、束缚阻止带ROOT_DISABLES字段的位移",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "root",
+    "bind",
+    "leash"
+   ],
+   "target_mechanisms": [
+    "self_mobility"
+   ],
+   "target_game_field": "ROOT_DISABLES",
+   "decision": "U68,U88"
+  },
+  {
+   "id": "R19",
+   "zh": "减护甲放大物理，减魔抗放大魔法，只记方向，不算强度",
+   "relation": "amplifies",
+   "source_mechanisms": [
+    "armor_reduction",
+    "magic_resist_reduction"
+   ],
+   "target_mechanisms": [
+    "physical_damage",
+    "magical_damage"
+   ],
+   "pairs": [
+    [
+     "armor_reduction",
+     "physical_damage"
+    ],
+    [
+     "magic_resist_reduction",
+     "magical_damage"
+    ]
+   ],
+   "decision": "U69",
+   "note": "只记方向：减护甲对物理，减魔抗对魔法；不列目标技能",
+   "not_computed": {
+    "fields": [
+     "pairs"
+    ],
+    "reason_zh": "只记方向（减护甲对物理、减魔抗对魔法），按用户决定不列目标技能",
+    "decision": "U69"
+   }
+  },
+  {
+   "id": "R20",
+   "zh": "范围伤害和回音击类技能克制幻象，不克制召唤物",
+   "relation": "counters",
+   "source_mechanisms": [
+    "aoe_damage",
+    "cleave"
+   ],
+   "source_note_kinds": [
+    "scales_with_enemy_units"
+   ],
+   "target_mechanisms": [
+    "illusions"
+   ],
+   "decision": "U68,U69,U70,U71,U75,U81",
+   "note": "召唤多个单位分别打人不算范围伤害（U72）；伤害光环按范围伤害计算；恐怖利刃·倒影无敌，范围伤害打不到，不算目标（U81）",
+   "target_exclude": [
+    "terrorblade_reflection"
+   ]
+  },
+  {
+   "id": "R21",
+   "zh": "减速抗性减弱减速，不影响减攻速",
+   "relation": "reduces",
+   "source_mechanisms": [
+    "slow_resistance"
+   ],
+   "target_mechanisms": [
+    "slow"
+   ],
+   "decision": "U29,U94",
+   "note": "小小·不可逾越是例外，官方说明写它也影响攻速减少，记在技能备注"
+  },
+  {
+   "id": "R22",
+   "zh": "无视地形能越过创造地形",
+   "relation": "counters",
+   "source_mechanisms": [
+    "terrain_walk"
+   ],
+   "target_mechanisms": [
+    "terrain"
+   ],
+   "decision": "U97",
+   "note": "只对真正的地形，动能力场这类算场地魔法"
+  }
+ ]
+}

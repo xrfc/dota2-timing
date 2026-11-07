@@ -1,5 +1,7 @@
 # MK-T3 复核后事实 v7（U70）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 > 已被[v8](../v8/README.md)取代，保留不改。
 
 在v6上写入黑皇杖、末日、回光返照三处补充，并加入技能备注和规则计算结果。这是MK-T5应该读取的入口。

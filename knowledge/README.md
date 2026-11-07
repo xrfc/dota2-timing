@@ -2,7 +2,8 @@
 
 这里保存可追溯的公开知识快照、解释工作稿、来源核对和训练候选，不属于 `src/` 正式工程包，也不是已准入的训练集。
 
-- [机制知识框架（U26）](mechanics/README.md)：里程碑MK：官方原始枚举解码与机制词表（事实层），官方说明事实、机制规则与推导层待建。
+- **当前知识入口：`mechanics/current.json`**；被取代的旧知识登记在[`superseded.json`](superseded.json)，读取用`dota_items.data.knowledge_superseded`（MK-T6f）。
+- [机制知识框架（U26）](mechanics/README.md)：里程碑MK：官方原始枚举解码与机制词表（事实层），复核后事实、机制规则和推导层（草稿）已有，当前入口和读取规则见该目录的“当前数据流”。
 - [全英雄能力档案](hero-capabilities/HEROES.md)：当前官网快照，127 位英雄、734 个技能条目。
 - [能力评估定义](hero-capabilities/ASSESSMENT.md)：作用对象、条件、限制和升级要求。
 - [选人评估与维护命令](hero-capabilities/README.md)：双阵容证据清单，不输出强度或胜率。

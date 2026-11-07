@@ -1,0 +1,387 @@
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a5c7-d007-7ce1-b886-9d95e7b24b22
+--------
+user
+你在独立阅读Dota 2技能和装备的说明，判断每个对象具备词表里的哪些机制。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+要求：
+- 每个对象都要输出一条，`subject`原样返回。没有任何机制时`mechanisms`为空数组。
+- 逐个对象读完整说明，对照词表全部条目判断，不要只找明显的。说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 词表定义已经用户确认，必须遵守。另外：
+  - 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。
+  - 提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+  - 召唤物只算有血量的单位；按受攻击次数计算的不算。
+  - 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+  - 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `condition`：基础效果写`base`，只在有A杖时生效写`scepter`，只在有魔晶时写`shard`，装备写`item`。`granted_by`不为空的对象，整个技能按该升级记。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字（如“+ 35% Evasion”），可以当证据。`%xxx%`是数值占位符。
+- `quote`摘决定判断的原文片段；`uncertain`为true表示材料不足或需要游戏知识，不要猜。
+
+词表：
+[
+{
+"id": "stun",
+"zh": "眩晕",
+"definition": "使目标无法行动和施法的硬控（含小眩晕）"
+},
+{
+"id": "hex",
+"zh": "妖术",
+"definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品"
+},
+{
+"id": "silence",
+"zh": "沉默",
+"definition": "目标无法施放技能（仍可攻击、使用物品）"
+},
+{
+"id": "mute",
+"zh": "禁用物品",
+"definition": "目标无法使用物品"
+},
+{
+"id": "disarm",
+"zh": "缴械",
+"definition": "目标无法普通攻击"
+},
+{
+"id": "root",
+"zh": "定身",
+"definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"
+},
+{
+"id": "forced_action",
+"zh": "强制行为",
+"definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"
+},
+{
+"id": "sleep",
+"zh": "睡眠",
+"definition": "无法行动，受伤害后醒来"
+},
+{
+"id": "cyclone_banish",
+"zh": "吹风/放逐",
+"definition": "使目标短暂离开战场，期间无敌或不可被选取"
+},
+{
+"id": "slow",
+"zh": "减速",
+"definition": "降低移动速度或攻击速度"
+},
+{
+"id": "evasion",
+"zh": "闪避",
+"definition": "自身有概率使敌方攻击落空"
+},
+{
+"id": "blind",
+"zh": "致盲",
+"definition": "使敌方单位的攻击有概率落空"
+},
+{
+"id": "debuff_immunity",
+"zh": "减益免疫/技能免疫",
+"definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"
+},
+{
+"id": "pierces_debuff_immunity",
+"zh": "穿透减益免疫",
+"definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）"
+},
+{
+"id": "invulnerable_untargetable",
+"zh": "无敌/不可选取",
+"definition": "暂时无法被伤害或无法被指向"
+},
+{
+"id": "damage_block",
+"zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"
+},
+{
+"id": "death_prevention",
+"zh": "免死",
+"definition": "在一段时间内不会被打死（如薄葬、回光返照）"
+},
+{
+"id": "status_resistance",
+"zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"
+},
+{
+"id": "slow_resistance",
+"zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）"
+},
+{
+"id": "applies_basic_dispel",
+"zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果"
+},
+{
+"id": "applies_strong_dispel",
+"zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）"
+},
+{
+"id": "applies_break",
+"zh": "施加破坏",
+"definition": "使目标的被动技能暂时失效"
+},
+{
+"id": "invisibility",
+"zh": "隐身",
+"definition": "使自身、队友、召唤物或复制体隐身"
+},
+{
+"id": "true_sight",
+"zh": "真视",
+"definition": "可看见隐身单位"
+},
+{
+"id": "healing",
+"zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）"
+},
+{
+"id": "lifesteal",
+"zh": "吸血",
+"definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"
+},
+{
+"id": "heal_reduction",
+"zh": "治疗削减",
+"definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"
+},
+{
+"id": "mana_burn",
+"zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值"
+},
+{
+"id": "mana_gain",
+"zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"
+},
+{
+"id": "illusions",
+"zh": "幻象",
+"definition": "制造自身或他人的幻象"
+},
+{
+"id": "summons",
+"zh": "召唤物",
+"definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"
+},
+{
+"id": "self_mobility",
+"zh": "自身位移",
+"definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"
+},
+{
+"id": "displace_other",
+"zh": "位移他人",
+"definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"
+},
+{
+"id": "damage_return",
+"zh": "反伤",
+"definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件"
+},
+{
+"id": "bash",
+"zh": "重击",
+"definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算"
+},
+{
+"id": "pierce_evasion",
+"zh": "克敌机先",
+"definition": "攻击无视闪避（必中）"
+},
+{
+"id": "critical",
+"zh": "暴击",
+"definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"
+},
+{
+"id": "ethereal",
+"zh": "虚无",
+"definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"
+},
+{
+"id": "armor_reduction",
+"zh": "减护甲",
+"definition": "降低目标护甲"
+},
+{
+"id": "magic_resist_reduction",
+"zh": "减魔抗/魔法易伤",
+"definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"
+},
+{
+"id": "incoming_damage_amp",
+"zh": "伤害加深",
+"definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）"
+},
+{
+"id": "attack_damage_reduction",
+"zh": "减攻击力",
+"definition": "降低目标的攻击力"
+},
+{
+"id": "spell_block",
+"zh": "格挡指向技能",
+"definition": "使指向自身或队友的技能失效"
+},
+{
+"id": "spell_reflect",
+"zh": "反弹指向技能",
+"definition": "把指向技能反弹给施法者"
+},
+{
+"id": "projectile_dodge",
+"zh": "躲避弹道",
+"definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"
+},
+{
+"id": "channel_interrupt",
+"zh": "打断持续施法",
+"definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"
+},
+{
+"id": "mobility_lock",
+"zh": "限制位移",
+"definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"
+},
+{
+"id": "cleave",
+"zh": "分裂溅射",
+"definition": "攻击伤害波及周围单位"
+},
+{
+"id": "attack_modifier",
+"zh": "攻击特效",
+"definition": "给攻击附加效果的法球类技能"
+},
+{
+"id": "spell_amp",
+"zh": "法术放大",
+"definition": "提高技能造成的伤害"
+},
+{
+"id": "aura",
+"zh": "光环",
+"definition": "持续影响周围单位；对友军或敌方都算，并记作用对象"
+},
+{
+"id": "reveal",
+"zh": "显形",
+"definition": "使隐身单位显形，不等于持续真视"
+},
+{
+"id": "grant_vision",
+"zh": "提供视野",
+"definition": "提供目标或区域的视野"
+},
+{
+"id": "reduce_vision",
+"zh": "减视野",
+"definition": "降低目标的视野"
+},
+{
+"id": "phased",
+"zh": "相位移动",
+"definition": "移动不受单位碰撞阻挡"
+},
+{
+"id": "flying",
+"zh": "飞行",
+"definition": "飞行移动，能越过地形"
+},
+{
+"id": "tree_walk",
+"zh": "穿树",
+"definition": "能穿过树木移动"
+},
+{
+"id": "tree_destroy",
+"zh": "砍树",
+"definition": "能摧毁树木"
+},
+{
+"id": "respawn",
+"zh": "重生",
+"definition": "死亡后复活，或影响复活"
+},
+{
+"id": "execute",
+"zh": "斩杀",
+"definition": "目标低于生命阈值时直接杀死"
+},
+{
+"id": "hp_removal",
+"zh": "生命移除",
+"definition": "直接移除生命，不算伤害"
+},
+{
+"id": "spell_steal",
+"zh": "偷技能",
+"definition": "获得其他单位的技能"
+},
+{
+"id": "stat_steal",
+"zh": "偷属性",
+"definition": "夺取目标的属性"
+},
+{
+"id": "cooldown_reduction",
+"zh": "减冷却",
+"definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"
+},
+{
+"id": "cooldown_reset",
+"zh": "刷新冷却",
+"definition": "立刻重置冷却"
+},
+{
+"id": "economy",
+"zh": "经济经验",
+"definition": "提供额外金钱或经验；只是正常赏金不算"
+},
+{
+"id": "charges",
+"zh": "充能",
+"definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"
+},
+{
+"id": "aoe_damage",
+"zh": "范围伤害",
+"definition": "一次施放或一次攻击能对多个敌方单位造成伤害"
+}
+]
+
+待判断对象：
+[{"subject": "primal_beast_colossal", "name_zh": "獸·庞", "name_en": "Colossal", "description_zh": "獸拥有%base_slow_resist%%%基础减速抗性，每拥有%hp_per_threshold%点生命上限就获得+%aoe_per_threshold%%%作用范围加成和+%slow_resistance_per_threshold%%%减速抗性。", "description_en": "Primal Beast has %base_slow_resist%%% base Slow Resistance and gains %aoe_per_threshold%%% bonus Area of Effect and %slow_resistance_per_threshold%%% Slow Resistance for every %hp_per_threshold% Max Health.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["hp_per_threshold", "base_slow_resist", "slow_resistance_per_threshold", "aoe_per_threshold", "current_slow_resistance", "current_aoe", "trample_bonus", "model_scale_per_stack"]}, {"subject": "muerta_dead_shot", "name_zh": "琼英碧灵·弹无虚发", "name_en": "Dead Shot", "description_zh": "琼英碧灵向一个敌方单位或一棵树发射一颗幽灵子弹。子弹击中时会对敌人造成伤害和短暂减速，然后沿矢量目标的方向弹去。跳弹将会对穿过的所有单位造成伤害，击中英雄后停下。被跳弹击中的英雄会被恐惧。", "description_en": "Muerta fires a ghostly trickshot at an enemy unit or tree. When the bullet strikes, it damages and briefly slows, then ricochets in the targeted direction.The ricochet damages all units that it passes through, stopping when it hits a hero. Heroes hit by the ricochet are feared away from the impact.", "notes_zh": ["被恐惧的敌人为相位状态，无法被减速。", "跳弹的行进距离为弹无虚发施法距离的%ricochet_distance_multiplier%倍。", "可以弹离减益免疫目标。"], "granted_by": "", "upgrades": {"scepter": {"zh": "弹无虚发的伤害提升。弹无虚发的作用范围在弹跳后会扩大，并且跳弹恐惧敌人时会穿过敌方英雄。", "en": "Dead Shot damage is increased. Dead Shot expands after it ricochets and pierces through enemy heroes as it fears them."}}, "is_passive": false, "value_names": ["damage", "speed", "radius", "ricochet_radius_start", "ricochet_radius_end", "ricochet_radius_expansion_per_second", "ricochet_distance_multiplier", "ricochet_fear_duration", "impact_slow_percent", "impact_slow_duration", "scepter_pierces", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityManaCost"]}, {"subject": "muerta_the_calling", "name_zh": "琼英碧灵·唤魂", "name_en": "The Calling", "description_zh": "召唤%num_revenants%个亡魂，缓慢地环绕目标地点。在区域内的敌人会被减速。亡魂会在敌人穿过时造成伤害和沉默。", "description_en": "Summons a group of %num_revenants% revenants that slowly circle the targeted location. Enemies within the area are slowed. Revenants deal damage and silence enemies as they pass through them.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "duration", "hit_radius", "dead_zone_distance", "num_revenants", "speed_initial", "speed_max", "acceleration", "aura_movespeed_slow", "silence_duration", "rotation_direction", "hp_regen_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost"]}, {"subject": "muerta_gunslinger", "name_zh": "琼英碧灵·神枪在手", "name_en": "Gunslinger", "description_zh": "可以开关。开启后，琼英碧灵攻击时有几率对另一个目标再射一枪。", "description_en": "Toggleable. When toggled on, Muerta's attacks have a chance to fire a second shot at another target.", "notes_zh": ["如果距离内没有其他单位，她会向原目标发射两枪。", "第二枪可以击中琼英碧灵攻击距离加上%target_search_bonus_range%范围内的单位。", "第二枪可以触发攻击特效。", "以英雄优先，然后是非英雄单位，然后是建筑。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["double_shot_chance", "target_search_bonus_range", "bonus_damage"]}, {"subject": "muerta_spectral_slug", "name_zh": "琼英碧灵·幽魂子弹", "name_en": "Spectral Slug", "description_zh": "琼英碧灵对一个敌人射出一颗幽灵子弹，造成伤害，将其击退并将其变为虚无状态，持续%duration%秒——使他们对物理伤害免疫，并且无法攻击。目标被减速，并且承受的魔法伤害增加%bonus_spell_damage_pct%%%。敌人不会被击出琼英碧灵的攻击距离。", "description_en": "Muerta shoots a spectral bullet at an enemy, dealing damage, knocking them back, and turning them ethereal for %duration%s - rendering them immune to physical damage and unable to attack. The target is slowed and %bonus_spell_damage_pct%%% more vulnerable to magic damage. Enemies will not be knocked out of Muerta's attack range.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["projectile_speed", "damage", "knockback_distance", "knockback_duration", "duration", "slow_pct", "bonus_spell_damage_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "muerta_pierce_the_veil", "name_zh": "琼英碧灵·越界", "name_en": "Pierce the Veil", "description_zh": "琼英碧灵变身，成为虚无状态，获得基础攻击力加成和相位移动状态。被动使总是可以攻击虚无状态下的目标，并且她在虚无状态下也能攻击。在她或目标处于虚无时，她的所有攻击伤害均为魔法伤害，她的物理吸血被视为技能吸血。驱散类型：弱驱散", "description_en": "Muerta transforms, becoming ethereal, gaining bonus base damage and phased movement.Passively allows Muerta to always attack ethereal targets and attack when she is ethereal. When either she or her target is ethereal, all of her attack damage is dealt as magical damage and her physical lifesteal is treated as spell lifesteal.DISPEL TYPE: Basic Dispel", "notes_zh": ["琼英碧灵在变身期间可以躲避弹道。", "琼英碧灵在变身后无法攻击建筑。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "transform_duration", "base_damage_percent", "modelscale", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "muerta_supernatural", "name_zh": "琼英碧灵·超自然", "name_en": "Supernatural", "description_zh": "每当琼英碧灵附近%stack_collection_range%范围内有敌方英雄阵亡，她就会获得一层%spell_amp_per_stack%%%技能增强的叠加效果。琼英碧灵阵亡时，她会失去一半（向下取整）的叠加层数。", "description_en": "Whenever an enemy hero dies within %stack_collection_range% units of Muerta, she gains a stack of %spell_amp_per_stack%%% spell amplification. When Muerta dies she loses half the stacks, rounded down.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["stack_collection_range", "spell_amp_per_stack", "max_stacks"]}, {"subject": "ringmaster_tame_the_beasts", "name_zh": "百戏大王·驯兽术", "name_en": "Tame the Beasts", "description_zh": "持续施法 - 百戏大王卷起他的鞭子，最多持续%abilitychanneltime%秒，然后猛甩出去。被鞭打的敌人会受到伤害，并且被恐惧，逃离百戏大王。持续施法时间会使伤害和恐惧时间成倍增加，但是作用范围减少。", "description_en": "CHANNELED - Ringmaster twirls his whip for up to %abilitychanneltime% second then cracks it. Whipped enemies are damaged and flee in fear from Ringmaster. Channel time exponentially increases damage and extends the fear duration, but reduces the radius.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["start_width", "end_width", "damage_min", "damage_max", "crack_duration", "max_multiplier", "magic_resist", "has_debuff_immunity", "fear_duration_min", "fear_duration_max", "AbilityCastRange", "AbilityChannelTime", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "ringmaster_the_box", "name_zh": "百戏大王·逃生技", "name_en": "Escape Act", "description_zh": "把一名友方英雄装进可动的异维度箱子。友军被装入后拥有相位移动状态，获得额外魔法抗性、减速抗性和移动速度。并且无法成为目标，被锁闭、沉默和缴械。效果结束后或者移动到初始区域之外箱子都会打开。", "description_en": "Ringmaster packs himself or an allied hero into a mobile, extradimensional box. Boxed units gain phased movement, slow resistance, bonus magic resistance, and bonus movement speed. They are also untargetable, muted, silenced, and disarmed. The box will pop open after the effect expires or it moves out of the initial area.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "逃生技拥有%max_charges%点能量点数。逃生箱打开时会朝所有方向放出尖刀戏匕首，并且范围内所有敌人受到伤害。", "en": "Escape Act has %max_charges% charges. When the box pops open, Impalement Art daggers are thrown in all directions, and all enemies around it take damage."}}, "is_passive": false, "value_names": ["leash_radius", "invis_duration", "move_speed", "magic_resist", "slow_resist", "transform_time", "model_scale_time", "leap_distance", "leap_speed", "leap_acceleration", "strong_dispel", "grant_flying", "max_charges", "launch_daggers_count", "launch_daggers_range"]}, {"subject": "ringmaster_impalement", "name_zh": "百戏大王·尖刀戏", "name_en": "Impalement Arts", "description_zh": "百戏大王向自己精心选择的地点扔出一把匕首。匕首击中敌人会造成即时伤害，短暂减速击中的单位，并且使他们流血。流血的英雄受到基于目标最大生命值一定百分比的每秒伤害，流血的非英雄单位受到每秒固定伤害。", "description_en": "Ringmaster throws one of his daggers to a precise point of his choosing. If he strikes an enemy, the dagger deals impact damage, briefly slows the unit hit, and causes them to bleed. The bleeding deals a percentage of the victim's maximum health in damage every second to heroes and flat damage per second to creeps.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_impact", "bleed_health_pct", "bleed_creep_dps", "bleed_duration", "slow_percent", "slow_duration", "dagger_speed", "dagger_width", "dagger_vision", "tick_interval", "dagger_pass_through", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityChargeRestoreTime"]}, {"subject": "ringmaster_spotlight", "name_zh": "百戏大王·聚光灯", "name_en": "Spotlight", "description_zh": "百戏大王用%spotlight_count%束聚光灯照亮一片区域。灯光下的敌人有几率丢失攻击，隐身状态下也会显形。被光束击中的幻象会逐渐消散，每秒失去一定百分比的最大生命值。这些效果在灯束离开后会粘滞%linger_duration%秒。", "description_en": "Ringmaster shines %spotlight_count% spotlights that sweep over an area. Enemies in the light have a chance to miss their attacks and are revealed if invisible. Illusions hit by the beam fade away, losing a percentage of their maximum health each second. These effects linger for %linger_duration% seconds after leaving the light.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["radius", "illusion_percent_damage", "pulse_interval", "duration", "miss_chance", "initial_speed", "sweep_speed", "sweep_radius", "linger_duration", "spotlight_count", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "ringmaster_wheel", "name_zh": "百戏大王·奇观轮", "name_en": "Wheel of Wonder", "description_zh": "百戏大王推出奇观轮向目标地点滚去，击退沿途的敌人。到达目的地后，范围内的敌人会持续受到伤害，并且被减速%aura_slow%%%。敌方英雄面对转轮超过%face_duration%秒会被迷住，朝其走去。首个敌人着迷后会触发转轮爆炸的倒计时。如果没有触发倒计时，在%trap_duration%秒后转轮会自动爆炸。", "description_en": "Ringmaster rolls the Wheel of Wonder to the targeted location, knocking aside enemies along the way. After it reaches its target, enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%.Enemy heroes who face the wheel for more than %face_duration% seconds are mesmerized and drawn towards it. The first enemy to be mesmerized triggers a timer for the wheel to explode. If the timer is not triggered, it will automatically explode after %trap_duration% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["min_range", "mesmerize_radius", "projectile_speed", "trap_duration", "wheel_stun", "face_duration", "aura_tick_interval", "aura_damage", "aura_slow", "explosion_damage", "vision_radius", "tick_rate", "vision_cone", "knockback_radius", "knockback_duration"]}, {"subject": "ringmaster_dark_carnival_souvenirs", "name_zh": "百戏大王·暗黑狂欢主持", "name_en": "Dark Carnival Barker", "description_zh": "只要百戏大王附近%souvenir_collection_range%范围内有敌方英雄阵亡，他就会随机获得一件可用一次的暗黑狂欢纪念品。额外的纪念品会以能量的形式存下。如果百戏大王没有纪念品，阵亡时会获得一件。", "description_en": "Ringmaster receives a random single-use Dark Carnival Souvenir whenever an enemy hero dies within %souvenir_collection_range% units of him. Additional Souvenirs are held as charges.If Ringmaster does not have a Souvenir when he dies he will be granted one.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["souvenir_collection_range", "use_souvenir_set_1"]}, {"subject": "ringmaster_funhouse_mirror", "name_zh": "百戏大王·哈哈镜", "name_en": "Funhouse Mirror", "description_zh": "使用：比例失真制造英雄的%images_count%个不完美幻象，持续%illusion_duration%秒。幻象继承%tooltip_damage_outgoing_ranged%%%攻击力，承受%tooltip_damage_incoming_total_pct%%%伤害。", "description_en": "Use: Proportion DistortionCreates %images_count% imperfect image of your hero that lasts %illusion_duration% seconds. Your illusion deals %tooltip_damage_outgoing_ranged%%% and takes  %tooltip_damage_incoming_total_pct%%% damage.", "notes_zh": ["有%invuln_duration%秒的施法时间，其间处于无敌状态。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["images_count", "illusion_duration", "images_do_damage_percent_melee", "tooltip_damage_outgoing_melee", "images_take_damage_percent", "tooltip_damage_incoming_total_pct", "tooltip_damage_outgoing_ranged", "invuln_duration", "vision_radius", "num_scale_sets", "model_scale_animate_time", "illusion_model_scale_3", "health_bar_offset_1", "health_bar_offset_2", "health_bar_offset_3"]}, {"subject": "ringmaster_strongman_tonic", "name_zh": "百戏大王·强力水", "name_en": "Strongman Tonic", "description_zh": "使用：强力吸收暂时提升友方英雄的力量，数值为%strength_bonus_base% + %strength_bonus_per_level% * 百戏大王等级，持续%duration%秒。效果会维持%effect_strength_max_duration%秒然后在持续时间内不断减弱。", "description_en": "Use: Forcefully ImbibeTemporarily increases an allied hero's Strength by %strength_bonus_base% plus %strength_bonus_per_level% per Ringmaster's level for %duration% seconds. The effect holds for %effect_strength_max_duration% seconds and then deteriorates over the duration.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["projectile_speed", "strength_bonus_base", "strength_bonus_per_level", "model_scale", "model_scale_animate_time", "duration", "effect_strength_max_duration", "AbilityCastRange", "AbilityCharges", "AbilityCooldown"]}, {"subject": "ringmaster_whoopee_cushion", "name_zh": "百戏大王·整蛊垫", "name_en": "Whoopee Cushion", "description_zh": "使用：噗把英雄向前推动%leap_distance%距离。在身后留下一团%fart_cloud_radius%范围的臭云，持续%fart_cloud_duration%秒，使敌人减速%fart_cloud_slow%%%。", "description_en": "Use: WhoopsiePropels your hero forward %leap_distance% units. Leaves a %fart_cloud_radius% radius stink cloud behind for %fart_cloud_duration% seconds that slows enemies by %fart_cloud_slow%%%.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["leap_distance", "leap_speed", "leap_acceleration", "fart_cloud_duration", "fart_cloud_slow", "fart_cloud_aura_linger_duration", "fart_cloud_radius", "AbilityCharges", "AbilityCooldown"]}, {"subject": "ringmaster_summon_unicycle", "name_zh": "百戏大王·独轮车", "name_en": "Unicycle", "description_zh": "使用：上车召唤一辆快速的独轮车并骑上去，持续%mount_duration%秒。上车%damage_grace_period%秒后受到来自敌方英雄的伤害超过%damage_threshold%点会让他下车。撞到树木会将其摧毁，并且独轮车会减速。攻击、使用持续施法类技能或者撞到单位和其他障碍物都会使他下车。", "description_en": "Use: Saddle UpSummons a speedy unicycle to ride around on for %mount_duration% seconds. %damage_grace_period%s after mounting the unicycle, taking damage from enemy hero sources greater than %damage_threshold% dismounts the rider. Crashing into trees destroys them and slows the unicycle. Attacking, using channeled abilities, or crashing into units and other obstacles also dismounts the rider.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["mount_cast_point", "mount_duration", "tree_impact_speed_divisor", "max_speed", "acceleration", "turn_rate_min", "turn_rate_max", "impact_radius", "knockback_distance", "damage_grace_period", "damage_threshold", "AbilityCastPoint", "AbilityCharges", "AbilityCooldown"]}, {"subject": "kez_echo_slash", "name_zh": "凯·回音重斩", "name_en": "Echo Slash", "description_zh": "凯挥舞他的长刀向前沿一条直线斩击%katana_distance%距离，攻击区域内的敌人并施加短暂的%tag_slow%%%减速。经过短暂延迟后，这个区域会被再次攻击。英雄会承受额外伤害。", "description_en": "Kez slashes forward in a %katana_distance% distance line with his Katana, attacking enemies in an area and applying a brief %tag_slow%%% impact slow. After a short delay, the area is attacked again. Heroes take bonus damage.", "notes_zh": ["会摧毁树木。不会继承分裂效果。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["katana_echo_damage", "echo_hero_damage", "katana_strikes", "strike_interval", "katana_radius", "katana_distance", "travel_distance", "tag_slow", "tag_slow_duration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "kez_grappling_claw", "name_zh": "凯·制敌爪钩", "name_en": "Grappling Claw", "description_zh": "凯向目标单位或者树木发射一枚抓钩并摆荡过去。抓钩碰到目标后，该单位会被减速。凯到达敌方目标时，落地会发动一次攻击。", "description_en": "Kez swings on a grappling hook towards the target unit or tree.  When the grappling hook collides with the target, that unit has slowed movement speed. Upon reaching the enemy target, Kez lands an attack on them.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["land_distance", "projectile_speed", "grapple_speed", "max_distance_break", "debuff_duration", "katana_ms_slow_pct", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "kez_kazurai_katana", "name_zh": "凯·影武长刀", "name_en": "Kazurai Katana", "description_zh": "长刀的攻击和技能会对敌人施加一个可叠加的持续伤害效果，持续时间内造成原攻击伤害一定百分比的额外伤害。凯可以主动使用技能，刺中目标，阻止他们移动或转身。目标身上的影武长刀效果爆发，使部分叠加数值立刻造成伤害。", "description_en": "Katana attacks and abilities apply a stacking damage over time to enemies that deals a percentage of the original attack's damage as additional damage over time. Kez may activate the ability to impale the target with his attack, preventing them from moving or turning. The target's Katana debuff bursts, causing some of the stacks to deal damage instantly.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "刺中后凯能从当次攻击吸血%lifesteal_pct%%%。如果从背后刺中目标，目标会被眩晕。提升最大爆发叠加数值。", "en": "Kez lifesteals %lifesteal_pct%%% from the impale. If the impale comes from behind the target, the target is stunned. Increases max burst stacks."}}, "is_passive": false, "value_names": ["katana_bleed_duration", "katana_bleed_attack_damage_pct", "impale_duration", "bleed_as_rupture_pct", "lifesteal_pct", "creep_lifesteal_reduction_pct", "max_stacks", "backstab_angle", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "kez_switch_weapons", "name_zh": "凯·流派变换", "name_en": "Switch Discipline", "description_zh": "凯可以在影武长刀和翔影双钗之间变换。基于装备的武器，他会获得不同的攻击特性和技能。技能会一起升级，而且使用后，相对的武器技能也会进入冷却。凯切换到长刀后第一次长刀攻击或技能会造成额外伤害，切换到双钗后会获得额外移动速度。", "description_en": "Kez switches between his Kazurai Katana and Shodo Sai.He gains different attack capabilities and abilities based on the weapon equipped. The abilities level up together, and when an ability is used, the associated alternate weapon ability also goes on cooldown.Kez deals extra damage on the first Katana hit or ability after switching to Katana, and gains bonus speed after switching to Sai.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "在使用流派变换后%scepter_cooldown_timer%秒内施放的第一个技能不会使相对的武器技能进入冷却，或者已进入冷却的技能会结束冷却。施放任何武器的技能都会重置流派变换的冷却时间。", "en": "Casting a weapon ability that would set its alternate weapon ability on cooldown does not do so if it's the first one used within %scepter_cooldown_timer% seconds after casting Switch Discipline or if it was already on cooldown.Casting any weapon ability refreshes the cooldown of Switch Discipline."}}, "is_passive": false, "value_names": ["katana_attack_range", "katana_base_attack_time", "katana_agility_bonus_base_damage", "katana_swap_bonus_damage", "sai_attack_range", "sai_base_attack_time", "sai_swap_bonus_movement_speed", "sai_swap_duration", "scepter_cooldown_timer", "AbilityCooldown"]}, {"subject": "kez_raptor_dance", "name_zh": "凯·猛禽之舞", "name_en": "Raptor Dance", "description_zh": "凯进入不可控制的状态，持续%AbilityCastPoint%秒，%invuln_period%秒为无敌状态并获得一次弱驱散效果。如果施法成功完成，凯会对周围发动致命的辐射状斩击，基于目标的最大生命值造成伤害，并且造成伤害的一定百分比会治疗凯。", "description_en": "Kez enters into an uncontrollable state for %AbilityCastPoint% second, becoming invulnerable for %invuln_period%s and receiving a basic dispel.If the cast completes successfully, Kez performs a series of deadly radial slashes around him that deal damage based on the max health of the target and heal Kez for a percentage of all damage dealt.", "notes_zh": ["斩击非英雄单位或幻象时吸血量减少至%illusion_lifesteal_pct%%%。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["strike_interval", "strikes", "radius", "base_damage", "max_health_damage_pct", "lifesteal_pct", "illusion_lifesteal_pct", "invuln_period", "basic_dispel", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "kez_falcon_rush", "name_zh": "凯·天隼冲击", "name_en": "Falcon Rush", "description_zh": "开启后凯可以向敌方目标冲去，发动的攻击会重复一次。在这个状态下，凯拥有相位移动状态和减速抗性。", "description_en": "Kez gains the ability to rush towards enemy targets to deliver echoing secondary attacks.  While in this state, Kez has phased collision and slow resistance.", "notes_zh": ["不会对建筑生效。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["rush_range", "rush_speed", "base_echo_damage", "slow_resist", "duration", "break_range", "bonus_attack_speed", "echo_proc_chance_reduction", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "kez_talon_toss", "name_zh": "凯·利爪飞掷", "name_en": "Talon Toss", "description_zh": "凯向目标单位掷出一把钗，施加一次固定伤害的攻击，并造成沉默。", "description_en": "Kez throws a Sai at the target unit, applying a fixed damage attack and silence.", "notes_zh": ["固定伤害的攻击具有克敌机先效果。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "speed", "silence_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "kez_shodo_sai", "name_zh": "凯·翔影之钗", "name_en": "Shodo Sai", "description_zh": "装备双钗时凯的攻击有几率对敌人造成致命一击。凯可以主动开启技能，使自身被缴械，面朝方向被锁定，招架来自目标方向的攻击和攻击效果，持续%parry_duration%秒。如果有敌方英雄的攻击被招架，该英雄会被眩晕%parry_stun_duration%秒并获得印记，拥有印记的目标被凯攻击时必定会造成致命一击，并且被眩晕。子技能可以用于提前取消招架状态。", "description_en": "Kez has a chance to critically strike the target when attacking with Sais.Kez may activate the ability to disarm himself, lock his facing, and parry attacks and attack effects from the targeted direction for %parry_duration% seconds. If an attack is parried from an enemy Hero in this way, that Hero is stunned for %parry_stun_duration%s and gains a Mark.  When a Marked target is attacked by Kez, it will guarantee a critical strike and stun the target.The sub-ability may be used to cancel the blocking early.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "招架会产生更强的印记，造成额外眩晕和致命一击伤害。", "en": "Parrying creates a stronger Mark that deals additional stun and critical damage."}}, "is_passive": false, "value_names": ["sai_proc_vuln_chance", "base_crit_pct", "stun_duration", "vuln_duration", "forward_angle", "speed_penalty", "parry_duration", "parry_bonus_crit", "parry_bonus_stun_duration", "parry_stun_duration", "parry_only_heroes", "AbilityManaCost", "AbilityCooldown"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+2026-11-04T09:02:03.287357Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+ERROR: Reconnecting... 2/5
+2026-11-04T09:02:09.015764Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+ERROR: Reconnecting... 3/5
+2026-11-04T09:02:12.413052Z ERROR codex_api::endpoint::responses_websocket: failed to connect to Responses WebSocket stage=Unknown
+ERROR: Reconnecting... 4/5
+2026-11-04T09:02:40.872084Z ERROR codex_models_manager::manager: failed to refresh available models: request timed out
+codex
+{"objects":[{"subject":"primal_beast_colossal","mechanisms":[{"mechanism":"slow_resistance","condition":"base","quote":"獸拥有%base_slow_resist%%%基础减速抗性","uncertain":false}]},{"subject":"muerta_dead_shot","mechanisms":[{"mechanism":"slow","condition":"base","quote":"子弹击中时会对敌人造成伤害和短暂减速","uncertain":false},{"mechanism":"forced_action","condition":"base","quote":"被跳弹击中的英雄会被恐惧。","uncertain":false},{"mechanism":"phased","condition":"base","quote":"被恐惧的敌人为相位状态","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"跳弹将会对穿过的所有单位造成伤害","uncertain":false}]},{"subject":"muerta_the_calling","mechanisms":[{"mechanism":"silence","condition":"base","quote":"亡魂会在敌人穿过时造成伤害和沉默。","uncertain":false},{"mechanism":"slow","condition":"base","quote":"在区域内的敌人会被减速。","uncertain":false},{"mechanism":"summons","condition":"base","quote":"召唤%num_revenants%个亡魂，缓慢地环绕目标地点。","uncertain":true},{"mechanism":"aura","condition":"base","quote":"在区域内的敌人会被减速。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"Revenants deal damage and silence enemies as they pass through them.","uncertain":false}]},{"subject":"muerta_gunslinger","mechanisms":[{"mechanism":"aoe_damage","condition":"base","quote":"琼英碧灵攻击时有几率对另一个目标再射一枪。","uncertain":false}]},{"subject":"muerta_spectral_slug","mechanisms":[{"mechanism":"disarm","condition":"shard","quote":"并且无法攻击","uncertain":false},{"mechanism":"slow","condition":"shard","quote":"目标被减速","uncertain":false},{"mechanism":"displace_other","condition":"shard","quote":"造成伤害，将其击退","uncertain":false},{"mechanism":"ethereal","condition":"shard","quote":"将其变为虚无状态","uncertain":false},{"mechanism":"magic_resist_reduction","condition":"shard","quote":"承受的魔法伤害增加%bonus_spell_damage_pct%%%","uncertain":false}]},{"subject":"muerta_pierce_the_veil","mechanisms":[{"mechanism":"applies_basic_dispel","condition":"base","quote":"驱散类型：弱驱散","uncertain":false},{"mechanism":"ethereal","condition":"base","quote":"琼英碧灵变身，成为虚无状态","uncertain":false},{"mechanism":"projectile_dodge","condition":"base","quote":"琼英碧灵在变身期间可以躲避弹道。","uncertain":false},{"mechanism":"phased","condition":"base","quote":"获得基础攻击力加成和相位移动状态","uncertain":false}]},{"subject":"muerta_supernatural","mechanisms":[{"mechanism":"spell_amp","condition":"base","quote":"获得一层%spell_amp_per_stack%%%技能增强的叠加效果","uncertain":false}]},{"subject":"ringmaster_tame_the_beasts","mechanisms":[{"mechanism":"forced_action","condition":"base","quote":"被恐惧，逃离百戏大王","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"被鞭打的敌人会受到伤害","uncertain":false}]},{"subject":"ringmaster_the_box","mechanisms":[{"mechanism":"silence","condition":"base","quote":"被锁闭、沉默和缴械","uncertain":false},{"mechanism":"mute","condition":"base","quote":"They are also untargetable, muted, silenced, and disarmed.","uncertain":false},{"mechanism":"disarm","condition":"base","quote":"被锁闭、沉默和缴械","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"无法成为目标","uncertain":false},{"mechanism":"slow_resistance","condition":"base","quote":"获得额外魔法抗性、减速抗性和移动速度","uncertain":false},{"mechanism":"phased","condition":"base","quote":"友军被装入后拥有相位移动状态","uncertain":false},{"mechanism":"charges","condition":"scepter","quote":"逃生技拥有%max_charges%点能量点数。","uncertain":false},{"mechanism":"aoe_damage","condition":"scepter","quote":"范围内所有敌人受到伤害","uncertain":false}]},{"subject":"ringmaster_impalement","mechanisms":[{"mechanism":"slow","condition":"base","quote":"短暂减速击中的单位","uncertain":false}]},{"subject":"ringmaster_spotlight","mechanisms":[{"mechanism":"blind","condition":"shard","quote":"灯光下的敌人有几率丢失攻击","uncertain":false},{"mechanism":"reveal","condition":"shard","quote":"隐身状态下也会显形","uncertain":false},{"mechanism":"aura","condition":"shard","quote":"灯光下的敌人有几率丢失攻击，隐身状态下也会显形。","uncertain":false},{"mechanism":"hp_removal","condition":"shard","quote":"被光束击中的幻象会逐渐消散，每秒失去一定百分比的最大生命值。","uncertain":true},{"mechanism":"aoe_damage","condition":"shard","quote":"Illusions hit by the beam fade away, losing a percentage of their maximum health each second.","uncertain":true}]},{"subject":"ringmaster_wheel","mechanisms":[{"mechanism":"forced_action","condition":"base","quote":"敌方英雄面对转轮超过%face_duration%秒会被迷住，朝其走去。","uncertain":false},{"mechanism":"slow","condition":"base","quote":"被减速%aura_slow%%%","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"击退沿途的敌人","uncertain":false},{"mechanism":"aura","condition":"base","quote":"范围内的敌人会持续受到伤害，并且被减速%aura_slow%%%","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"范围内的敌人会持续受到伤害","uncertain":false}]},{"subject":"ringmaster_dark_carnival_souvenirs","mechanisms":[{"mechanism":"charges","condition":"base","quote":"随机获得一件可用一次的暗黑狂欢纪念品。额外的纪念品会以能量的形式存下。","uncertain":false}]},{"subject":"ringmaster_funhouse_mirror","mechanisms":[{"mechanism":"invulnerable_untargetable","condition":"base","quote":"有%invuln_duration%秒的施法时间，其间处于无敌状态。","uncertain":false},{"mechanism":"illusions","condition":"base","quote":"制造英雄的%images_count%个不完美幻象","uncertain":false}]},{"subject":"ringmaster_strongman_tonic","mechanisms":[]},{"subject":"ringmaster_whoopee_cushion","mechanisms":[{"mechanism":"slow","condition":"base","quote":"使敌人减速%fart_cloud_slow%%%","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"把英雄向前推动%leap_distance%距离","uncertain":false},{"mechanism":"aura","condition":"base","quote":"留下一团%fart_cloud_radius%范围的臭云，持续%fart_cloud_duration%秒，使敌人减速%fart_cloud_slow%%%","uncertain":false}]},{"subject":"ringmaster_summon_unicycle","mechanisms":[{"mechanism":"summons","condition":"base","quote":"召唤一辆快速的独轮车并骑上去","uncertain":true},{"mechanism":"self_mobility","condition":"base","quote":"Summons a speedy unicycle to ride around on for %mount_duration% seconds.","uncertain":true},{"mechanism":"tree_destroy","condition":"base","quote":"撞到树木会将其摧毁","uncertain":false}]},{"subject":"kez_echo_slash","mechanisms":[{"mechanism":"slow","condition":"base","quote":"施加短暂的%tag_slow%%%减速","uncertain":false},{"mechanism":"tree_destroy","condition":"base","quote":"会摧毁树木。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"攻击区域内的敌人","uncertain":false}]},{"subject":"kez_grappling_claw","mechanisms":[{"mechanism":"slow","condition":"base","quote":"抓钩碰到目标后，该单位会被减速。","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"凯向目标单位或者树木发射一枚抓钩并摆荡过去。","uncertain":false}]},{"subject":"kez_kazurai_katana","mechanisms":[{"mechanism":"root","condition":"base","quote":"阻止他们移动或转身","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"长刀的攻击和技能会对敌人施加一个可叠加的持续伤害效果","uncertain":false},{"mechanism":"stun","condition":"shard","quote":"如果从背后刺中目标，目标会被眩晕。","uncertain":false},{"mechanism":"healing","condition":"shard","quote":"刺中后凯能从当次攻击吸血%lifesteal_pct%%%","uncertain":false},{"mechanism":"lifesteal","condition":"shard","quote":"刺中后凯能从当次攻击吸血%lifesteal_pct%%%","uncertain":false},{"mechanism":"bash","condition":"shard","quote":"刺中后凯能从当次攻击吸血%lifesteal_pct%%%。如果从背后刺中目标，目标会被眩晕。","uncertain":false}]},{"subject":"kez_switch_weapons","mechanisms":[{"mechanism":"cooldown_reset","condition":"scepter","quote":"已进入冷却的技能会结束冷却。施放任何武器的技能都会重置流派变换的冷却时间。","uncertain":false}]},{"subject":"kez_raptor_dance","mechanisms":[{"mechanism":"invulnerable_untargetable","condition":"base","quote":"%invuln_period%秒为无敌状态","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"base","quote":"获得一次弱驱散效果","uncertain":false},{"mechanism":"healing","condition":"base","quote":"造成伤害的一定百分比会治疗凯","uncertain":false},{"mechanism":"lifesteal","condition":"base","quote":"造成伤害的一定百分比会治疗凯","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"凯会对周围发动致命的辐射状斩击，基于目标的最大生命值造成伤害","uncertain":false}]},{"subject":"kez_falcon_rush","mechanisms":[{"mechanism":"slow_resistance","condition":"base","quote":"凯拥有相位移动状态和减速抗性","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"开启后凯可以向敌方目标冲去","uncertain":false},{"mechanism":"phased","condition":"base","quote":"凯拥有相位移动状态","uncertain":false}]},{"subject":"kez_talon_toss","mechanisms":[{"mechanism":"silence","condition":"base","quote":"并造成沉默","uncertain":false},{"mechanism":"pierce_evasion","condition":"base","quote":"固定伤害的攻击具有克敌机先效果。","uncertain":false}]},{"subject":"kez_shodo_sai","mechanisms":[{"mechanism":"stun","condition":"base","quote":"该英雄会被眩晕%parry_stun_duration%秒","uncertain":false},{"mechanism":"damage_block","condition":"base","quote":"招架来自目标方向的攻击和攻击效果","uncertain":false},{"mechanism":"bash","condition":"base","quote":"拥有印记的目标被凯攻击时必定会造成致命一击，并且被眩晕。","uncertain":false},{"mechanism":"critical","condition":"base","quote":"装备双钗时凯的攻击有几率对敌人造成致命一击。","uncertain":false}]}]}
+tokens used
+7,666
+{"objects":[{"subject":"primal_beast_colossal","mechanisms":[{"mechanism":"slow_resistance","condition":"base","quote":"獸拥有%base_slow_resist%%%基础减速抗性","uncertain":false}]},{"subject":"muerta_dead_shot","mechanisms":[{"mechanism":"slow","condition":"base","quote":"子弹击中时会对敌人造成伤害和短暂减速","uncertain":false},{"mechanism":"forced_action","condition":"base","quote":"被跳弹击中的英雄会被恐惧。","uncertain":false},{"mechanism":"phased","condition":"base","quote":"被恐惧的敌人为相位状态","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"跳弹将会对穿过的所有单位造成伤害","uncertain":false}]},{"subject":"muerta_the_calling","mechanisms":[{"mechanism":"silence","condition":"base","quote":"亡魂会在敌人穿过时造成伤害和沉默。","uncertain":false},{"mechanism":"slow","condition":"base","quote":"在区域内的敌人会被减速。","uncertain":false},{"mechanism":"summons","condition":"base","quote":"召唤%num_revenants%个亡魂，缓慢地环绕目标地点。","uncertain":true},{"mechanism":"aura","condition":"base","quote":"在区域内的敌人会被减速。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"Revenants deal damage and silence enemies as they pass through them.","uncertain":false}]},{"subject":"muerta_gunslinger","mechanisms":[{"mechanism":"aoe_damage","condition":"base","quote":"琼英碧灵攻击时有几率对另一个目标再射一枪。","uncertain":false}]},{"subject":"muerta_spectral_slug","mechanisms":[{"mechanism":"disarm","condition":"shard","quote":"并且无法攻击","uncertain":false},{"mechanism":"slow","condition":"shard","quote":"目标被减速","uncertain":false},{"mechanism":"displace_other","condition":"shard","quote":"造成伤害，将其击退","uncertain":false},{"mechanism":"ethereal","condition":"shard","quote":"将其变为虚无状态","uncertain":false},{"mechanism":"magic_resist_reduction","condition":"shard","quote":"承受的魔法伤害增加%bonus_spell_damage_pct%%%","uncertain":false}]},{"subject":"muerta_pierce_the_veil","mechanisms":[{"mechanism":"applies_basic_dispel","condition":"base","quote":"驱散类型：弱驱散","uncertain":false},{"mechanism":"ethereal","condition":"base","quote":"琼英碧灵变身，成为虚无状态","uncertain":false},{"mechanism":"projectile_dodge","condition":"base","quote":"琼英碧灵在变身期间可以躲避弹道。","uncertain":false},{"mechanism":"phased","condition":"base","quote":"获得基础攻击力加成和相位移动状态","uncertain":false}]},{"subject":"muerta_supernatural","mechanisms":[{"mechanism":"spell_amp","condition":"base","quote":"获得一层%spell_amp_per_stack%%%技能增强的叠加效果","uncertain":false}]},{"subject":"ringmaster_tame_the_beasts","mechanisms":[{"mechanism":"forced_action","condition":"base","quote":"被恐惧，逃离百戏大王","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"被鞭打的敌人会受到伤害","uncertain":false}]},{"subject":"ringmaster_the_box","mechanisms":[{"mechanism":"silence","condition":"base","quote":"被锁闭、沉默和缴械","uncertain":false},{"mechanism":"mute","condition":"base","quote":"They are also untargetable, muted, silenced, and disarmed.","uncertain":false},{"mechanism":"disarm","condition":"base","quote":"被锁闭、沉默和缴械","uncertain":false},{"mechanism":"invulnerable_untargetable","condition":"base","quote":"无法成为目标","uncertain":false},{"mechanism":"slow_resistance","condition":"base","quote":"获得额外魔法抗性、减速抗性和移动速度","uncertain":false},{"mechanism":"phased","condition":"base","quote":"友军被装入后拥有相位移动状态","uncertain":false},{"mechanism":"charges","condition":"scepter","quote":"逃生技拥有%max_charges%点能量点数。","uncertain":false},{"mechanism":"aoe_damage","condition":"scepter","quote":"范围内所有敌人受到伤害","uncertain":false}]},{"subject":"ringmaster_impalement","mechanisms":[{"mechanism":"slow","condition":"base","quote":"短暂减速击中的单位","uncertain":false}]},{"subject":"ringmaster_spotlight","mechanisms":[{"mechanism":"blind","condition":"shard","quote":"灯光下的敌人有几率丢失攻击","uncertain":false},{"mechanism":"reveal","condition":"shard","quote":"隐身状态下也会显形","uncertain":false},{"mechanism":"aura","condition":"shard","quote":"灯光下的敌人有几率丢失攻击，隐身状态下也会显形。","uncertain":false},{"mechanism":"hp_removal","condition":"shard","quote":"被光束击中的幻象会逐渐消散，每秒失去一定百分比的最大生命值。","uncertain":true},{"mechanism":"aoe_damage","condition":"shard","quote":"Illusions hit by the beam fade away, losing a percentage of their maximum health each second.","uncertain":true}]},{"subject":"ringmaster_wheel","mechanisms":[{"mechanism":"forced_action","condition":"base","quote":"敌方英雄面对转轮超过%face_duration%秒会被迷住，朝其走去。","uncertain":false},{"mechanism":"slow","condition":"base","quote":"被减速%aura_slow%%%","uncertain":false},{"mechanism":"displace_other","condition":"base","quote":"击退沿途的敌人","uncertain":false},{"mechanism":"aura","condition":"base","quote":"范围内的敌人会持续受到伤害，并且被减速%aura_slow%%%","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"范围内的敌人会持续受到伤害","uncertain":false}]},{"subject":"ringmaster_dark_carnival_souvenirs","mechanisms":[{"mechanism":"charges","condition":"base","quote":"随机获得一件可用一次的暗黑狂欢纪念品。额外的纪念品会以能量的形式存下。","uncertain":false}]},{"subject":"ringmaster_funhouse_mirror","mechanisms":[{"mechanism":"invulnerable_untargetable","condition":"base","quote":"有%invuln_duration%秒的施法时间，其间处于无敌状态。","uncertain":false},{"mechanism":"illusions","condition":"base","quote":"制造英雄的%images_count%个不完美幻象","uncertain":false}]},{"subject":"ringmaster_strongman_tonic","mechanisms":[]},{"subject":"ringmaster_whoopee_cushion","mechanisms":[{"mechanism":"slow","condition":"base","quote":"使敌人减速%fart_cloud_slow%%%","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"把英雄向前推动%leap_distance%距离","uncertain":false},{"mechanism":"aura","condition":"base","quote":"留下一团%fart_cloud_radius%范围的臭云，持续%fart_cloud_duration%秒，使敌人减速%fart_cloud_slow%%%","uncertain":false}]},{"subject":"ringmaster_summon_unicycle","mechanisms":[{"mechanism":"summons","condition":"base","quote":"召唤一辆快速的独轮车并骑上去","uncertain":true},{"mechanism":"self_mobility","condition":"base","quote":"Summons a speedy unicycle to ride around on for %mount_duration% seconds.","uncertain":true},{"mechanism":"tree_destroy","condition":"base","quote":"撞到树木会将其摧毁","uncertain":false}]},{"subject":"kez_echo_slash","mechanisms":[{"mechanism":"slow","condition":"base","quote":"施加短暂的%tag_slow%%%减速","uncertain":false},{"mechanism":"tree_destroy","condition":"base","quote":"会摧毁树木。","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"攻击区域内的敌人","uncertain":false}]},{"subject":"kez_grappling_claw","mechanisms":[{"mechanism":"slow","condition":"base","quote":"抓钩碰到目标后，该单位会被减速。","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"凯向目标单位或者树木发射一枚抓钩并摆荡过去。","uncertain":false}]},{"subject":"kez_kazurai_katana","mechanisms":[{"mechanism":"root","condition":"base","quote":"阻止他们移动或转身","uncertain":false},{"mechanism":"attack_modifier","condition":"base","quote":"长刀的攻击和技能会对敌人施加一个可叠加的持续伤害效果","uncertain":false},{"mechanism":"stun","condition":"shard","quote":"如果从背后刺中目标，目标会被眩晕。","uncertain":false},{"mechanism":"healing","condition":"shard","quote":"刺中后凯能从当次攻击吸血%lifesteal_pct%%%","uncertain":false},{"mechanism":"lifesteal","condition":"shard","quote":"刺中后凯能从当次攻击吸血%lifesteal_pct%%%","uncertain":false},{"mechanism":"bash","condition":"shard","quote":"刺中后凯能从当次攻击吸血%lifesteal_pct%%%。如果从背后刺中目标，目标会被眩晕。","uncertain":false}]},{"subject":"kez_switch_weapons","mechanisms":[{"mechanism":"cooldown_reset","condition":"scepter","quote":"已进入冷却的技能会结束冷却。施放任何武器的技能都会重置流派变换的冷却时间。","uncertain":false}]},{"subject":"kez_raptor_dance","mechanisms":[{"mechanism":"invulnerable_untargetable","condition":"base","quote":"%invuln_period%秒为无敌状态","uncertain":false},{"mechanism":"applies_basic_dispel","condition":"base","quote":"获得一次弱驱散效果","uncertain":false},{"mechanism":"healing","condition":"base","quote":"造成伤害的一定百分比会治疗凯","uncertain":false},{"mechanism":"lifesteal","condition":"base","quote":"造成伤害的一定百分比会治疗凯","uncertain":false},{"mechanism":"aoe_damage","condition":"base","quote":"凯会对周围发动致命的辐射状斩击，基于目标的最大生命值造成伤害","uncertain":false}]},{"subject":"kez_falcon_rush","mechanisms":[{"mechanism":"slow_resistance","condition":"base","quote":"凯拥有相位移动状态和减速抗性","uncertain":false},{"mechanism":"self_mobility","condition":"base","quote":"开启后凯可以向敌方目标冲去","uncertain":false},{"mechanism":"phased","condition":"base","quote":"凯拥有相位移动状态","uncertain":false}]},{"subject":"kez_talon_toss","mechanisms":[{"mechanism":"silence","condition":"base","quote":"并造成沉默","uncertain":false},{"mechanism":"pierce_evasion","condition":"base","quote":"固定伤害的攻击具有克敌机先效果。","uncertain":false}]},{"subject":"kez_shodo_sai","mechanisms":[{"mechanism":"stun","condition":"base","quote":"该英雄会被眩晕%parry_stun_duration%秒","uncertain":false},{"mechanism":"damage_block","condition":"base","quote":"招架来自目标方向的攻击和攻击效果","uncertain":false},{"mechanism":"bash","condition":"base","quote":"拥有印记的目标被凯攻击时必定会造成致命一击，并且被眩晕。","uncertain":false},{"mechanism":"critical","condition":"base","quote":"装备双钗时凯的攻击有几率对敌人造成致命一击。","uncertain":false}]}]}

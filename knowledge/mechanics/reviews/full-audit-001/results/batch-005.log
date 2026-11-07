@@ -1,0 +1,1316 @@
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a5b4-de3c-78f0-bf08-e67a0db11fff
+--------
+user
+你在独立阅读Dota 2技能和装备的说明，判断每个对象具备词表里的哪些机制。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+要求：
+- 每个对象都要输出一条，`subject`原样返回。没有任何机制时`mechanisms`为空数组。
+- 逐个对象读完整说明，对照词表全部条目判断，不要只找明显的。说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 词表定义已经用户确认，必须遵守。另外：
+  - 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。
+  - 提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+  - 召唤物只算有血量的单位；按受攻击次数计算的不算。
+  - 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+  - 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `condition`：基础效果写`base`，只在有A杖时生效写`scepter`，只在有魔晶时写`shard`，装备写`item`。`granted_by`不为空的对象，整个技能按该升级记。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字（如“+ 35% Evasion”），可以当证据。`%xxx%`是数值占位符。
+- `quote`摘决定判断的原文片段；`uncertain`为true表示材料不足或需要游戏知识，不要猜。
+
+词表：
+[
+{
+"id": "stun",
+"zh": "眩晕",
+"definition": "使目标无法行动和施法的硬控（含小眩晕）"
+},
+{
+"id": "hex",
+"zh": "妖术",
+"definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品"
+},
+{
+"id": "silence",
+"zh": "沉默",
+"definition": "目标无法施放技能（仍可攻击、使用物品）"
+},
+{
+"id": "mute",
+"zh": "禁用物品",
+"definition": "目标无法使用物品"
+},
+{
+"id": "disarm",
+"zh": "缴械",
+"definition": "目标无法普通攻击"
+},
+{
+"id": "root",
+"zh": "定身",
+"definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"
+},
+{
+"id": "forced_action",
+"zh": "强制行为",
+"definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"
+},
+{
+"id": "sleep",
+"zh": "睡眠",
+"definition": "无法行动，受伤害后醒来"
+},
+{
+"id": "cyclone_banish",
+"zh": "吹风/放逐",
+"definition": "使目标短暂离开战场，期间无敌或不可被选取"
+},
+{
+"id": "slow",
+"zh": "减速",
+"definition": "降低移动速度或攻击速度"
+},
+{
+"id": "evasion",
+"zh": "闪避",
+"definition": "自身有概率使敌方攻击落空"
+},
+{
+"id": "blind",
+"zh": "致盲",
+"definition": "使敌方单位的攻击有概率落空"
+},
+{
+"id": "debuff_immunity",
+"zh": "减益免疫/技能免疫",
+"definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"
+},
+{
+"id": "pierces_debuff_immunity",
+"zh": "穿透减益免疫",
+"definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）"
+},
+{
+"id": "invulnerable_untargetable",
+"zh": "无敌/不可选取",
+"definition": "暂时无法被伤害或无法被指向"
+},
+{
+"id": "damage_block",
+"zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"
+},
+{
+"id": "death_prevention",
+"zh": "免死",
+"definition": "在一段时间内不会被打死（如薄葬、回光返照）"
+},
+{
+"id": "status_resistance",
+"zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"
+},
+{
+"id": "slow_resistance",
+"zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）"
+},
+{
+"id": "applies_basic_dispel",
+"zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果"
+},
+{
+"id": "applies_strong_dispel",
+"zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）"
+},
+{
+"id": "applies_break",
+"zh": "施加破坏",
+"definition": "使目标的被动技能暂时失效"
+},
+{
+"id": "invisibility",
+"zh": "隐身",
+"definition": "使自身、队友、召唤物或复制体隐身"
+},
+{
+"id": "true_sight",
+"zh": "真视",
+"definition": "可看见隐身单位"
+},
+{
+"id": "healing",
+"zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）"
+},
+{
+"id": "lifesteal",
+"zh": "吸血",
+"definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"
+},
+{
+"id": "heal_reduction",
+"zh": "治疗削减",
+"definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"
+},
+{
+"id": "mana_burn",
+"zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值"
+},
+{
+"id": "mana_gain",
+"zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"
+},
+{
+"id": "illusions",
+"zh": "幻象",
+"definition": "制造自身或他人的幻象"
+},
+{
+"id": "summons",
+"zh": "召唤物",
+"definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"
+},
+{
+"id": "self_mobility",
+"zh": "自身位移",
+"definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"
+},
+{
+"id": "displace_other",
+"zh": "位移他人",
+"definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"
+},
+{
+"id": "damage_return",
+"zh": "反伤",
+"definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件"
+},
+{
+"id": "bash",
+"zh": "重击",
+"definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算"
+},
+{
+"id": "pierce_evasion",
+"zh": "克敌机先",
+"definition": "攻击无视闪避（必中）"
+},
+{
+"id": "critical",
+"zh": "暴击",
+"definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"
+},
+{
+"id": "ethereal",
+"zh": "虚无",
+"definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"
+},
+{
+"id": "armor_reduction",
+"zh": "减护甲",
+"definition": "降低目标护甲"
+},
+{
+"id": "magic_resist_reduction",
+"zh": "减魔抗/魔法易伤",
+"definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"
+},
+{
+"id": "incoming_damage_amp",
+"zh": "伤害加深",
+"definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）"
+},
+{
+"id": "attack_damage_reduction",
+"zh": "减攻击力",
+"definition": "降低目标的攻击力"
+},
+{
+"id": "spell_block",
+"zh": "格挡指向技能",
+"definition": "使指向自身或队友的技能失效"
+},
+{
+"id": "spell_reflect",
+"zh": "反弹指向技能",
+"definition": "把指向技能反弹给施法者"
+},
+{
+"id": "projectile_dodge",
+"zh": "躲避弹道",
+"definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"
+},
+{
+"id": "channel_interrupt",
+"zh": "打断持续施法",
+"definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"
+},
+{
+"id": "mobility_lock",
+"zh": "限制位移",
+"definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"
+},
+{
+"id": "cleave",
+"zh": "分裂溅射",
+"definition": "攻击伤害波及周围单位"
+},
+{
+"id": "attack_modifier",
+"zh": "攻击特效",
+"definition": "给攻击附加效果的法球类技能"
+},
+{
+"id": "spell_amp",
+"zh": "法术放大",
+"definition": "提高技能造成的伤害"
+},
+{
+"id": "aura",
+"zh": "光环",
+"definition": "持续影响周围单位；对友军或敌方都算，并记作用对象"
+},
+{
+"id": "reveal",
+"zh": "显形",
+"definition": "使隐身单位显形，不等于持续真视"
+},
+{
+"id": "grant_vision",
+"zh": "提供视野",
+"definition": "提供目标或区域的视野"
+},
+{
+"id": "reduce_vision",
+"zh": "减视野",
+"definition": "降低目标的视野"
+},
+{
+"id": "phased",
+"zh": "相位移动",
+"definition": "移动不受单位碰撞阻挡"
+},
+{
+"id": "flying",
+"zh": "飞行",
+"definition": "飞行移动，能越过地形"
+},
+{
+"id": "tree_walk",
+"zh": "穿树",
+"definition": "能穿过树木移动"
+},
+{
+"id": "tree_destroy",
+"zh": "砍树",
+"definition": "能摧毁树木"
+},
+{
+"id": "respawn",
+"zh": "重生",
+"definition": "死亡后复活，或影响复活"
+},
+{
+"id": "execute",
+"zh": "斩杀",
+"definition": "目标低于生命阈值时直接杀死"
+},
+{
+"id": "hp_removal",
+"zh": "生命移除",
+"definition": "直接移除生命，不算伤害"
+},
+{
+"id": "spell_steal",
+"zh": "偷技能",
+"definition": "获得其他单位的技能"
+},
+{
+"id": "stat_steal",
+"zh": "偷属性",
+"definition": "夺取目标的属性"
+},
+{
+"id": "cooldown_reduction",
+"zh": "减冷却",
+"definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"
+},
+{
+"id": "cooldown_reset",
+"zh": "刷新冷却",
+"definition": "立刻重置冷却"
+},
+{
+"id": "economy",
+"zh": "经济经验",
+"definition": "提供额外金钱或经验；只是正常赏金不算"
+},
+{
+"id": "charges",
+"zh": "充能",
+"definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"
+},
+{
+"id": "aoe_damage",
+"zh": "范围伤害",
+"definition": "一次施放或一次攻击能对多个敌方单位造成伤害"
+}
+]
+
+待判断对象：
+[{"subject": "tiny_toss_tree", "name_zh": "小小·扔树", "name_en": "Tree Throw", "description_zh": "将树木扔向目标单位，触发自身对其的攻击，并且对周围目标造成溅射伤害。", "description_en": "Throws the tree at the target unit, proccing your attack on it and splashing damage around the target.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["speed", "range", "bonus_damage", "splash_radius", "AbilityCastRange", "AbilityCastPoint"]}, {"subject": "vengefulspirit_magic_missile", "name_zh": "复仇之魂·魔法箭", "name_en": "Magic Missile", "description_zh": "向一个敌方单位射出魔法箭，眩晕并造成伤害。", "description_en": "Fires a magic missile at an enemy unit, stunning and dealing damage.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "可以对敌人弹射一次，以英雄优先，弹射距离为主目标的%bounce_range_pct%%%魔法箭施法距离内。", "en": "Bounces once on an enemy, prioritizing heroes, within %bounce_range_pct%%% of Magic Missile's current cast range from the first target."}}, "is_passive": false, "value_names": ["magic_missile_speed", "magic_missile_stun", "magic_missile_damage", "bounce_range_pct", "damage_per_lasthit", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "vengefulspirit_wave_of_terror", "name_zh": "复仇之魂·恐怖波动", "name_en": "Wave of Terror", "description_zh": "复仇之魂放出邪恶的嚎叫，削弱敌人的总攻击力和护甲，并打开前方经过路径的视野。", "description_en": "Vengeful Spirit lets loose a wicked cry, weakening the total attack damage and armor of enemies, and giving vision of the path ahead.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "wave_speed", "wave_width", "armor_reduction", "attack_reduction", "vision_aoe", "vision_duration", "steal_pct", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "vengefulspirit_command_aura", "name_zh": "复仇之魂·复仇光环", "name_en": "Vengeance Aura", "description_zh": "复仇之魂的存在提升了附近友方英雄的攻击力。复仇之魂自身获得%self_multiplier%%%额外加成。", "description_en": "Vengeful Spirit's presence increases the damage of nearby friendly heroes. Vengeful Spirit herself receives %self_multiplier%%% extra bonus.", "notes_zh": ["破坏会使攻击力光环失效。"], "granted_by": "", "upgrades": {"scepter": {"zh": "提升自身加成系数。死亡时产生一个复仇之魂的强幻象，继承全额攻击力，可以施放自己的所有技能。复仇之魂复活时若幻象依然存在，则自身会直接将其取代。幻象获得的经验将给予英雄。强幻象不会被相关技能秒杀。", "en": "Increases self multiplier. Upon death, creates a strong illusion of Vengeful Spirit that deals full damage, and can cast all of her spells.If the illusion is alive when Vengeful Spirit respawn, she will take its place. XP earned by her illusion is given to her. Strong Illusions are not instantly killed by spells."}}, "is_passive": true, "value_names": ["bonus_base_damage", "self_multiplier", "aura_radius", "scepter_illusion_damage_out_pct", "scepter_illusion_damage_in_pct", "scepter_illusion_ms_bonus_pct", "AbilityCastRange"]}, {"subject": "vengefulspirit_retribution", "name_zh": "复仇之魂·恶有恶报", "name_en": "Retribution", "description_zh": "复仇之魂的攻击同时被视为远程和近战，可以获得相应加成。只要敌方英雄击杀了复仇之魂，他们会获得一个负面效果，直到下次阵亡，期间复仇之魂会对他们造成%bonus_damage%%%额外伤害。同一时间只能存在一个负面效果。", "description_en": "Vengeful Spirit is considered both a ranged and a melee attacker to gain the respective bonuses.When killed by an enemy hero, Vengeful Spirit deals %bonus_damage%%% bonus damage to her killer until their next death. Only one debuff can exist at a time.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["bonus_damage"]}, {"subject": "vengefulspirit_nether_swap", "name_zh": "复仇之魂·移形换位", "name_en": "Nether Swap", "description_zh": "与一个目标英雄瞬间交换位置，不论敌我。移形换位会打断目标的持续施法。敌方英雄被交换后受到伤害。复仇之魂和被交换的友方英雄都会获得等同于造成伤害的护盾。", "description_en": "Instantaneously swaps positions with a target Hero, friend or enemy. Nether Swap interrupts channeling abilities on the target. Enemy Swapped units take damage. Vengeful Spirit and allied swapped units gain a barrier equal to the damage dealt.", "notes_zh": ["对减益免疫单位有效。", "技能施放后复仇之魂和目标附近的树木将会被摧毁。", "移形换位能够打断持续施法。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_reduction_duration", "damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "windrunner_shackleshot", "name_zh": "风行者·束缚击", "name_en": "Shackleshot", "description_zh": "将目标束缚在正对其后的一个敌方单位或树上。若目标后面没有其它敌方单位或树木，则眩晕时间减少至%fail_stun_duration%秒。", "description_en": "Shackles the target to an enemy unit or tree in a line directly behind it.  If no unit or tree is present, the stun duration is reduced to %fail_stun_duration%.", "notes_zh": ["该技能可以将两个敌人一起束缚，使他们同时眩晕。", "束缚击能将目标束缚在身后最多%shackle_distance%距离的敌方单位或树木。", "束缚击可以被躲避。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["fail_stun_duration", "stun_duration", "shackle_distance", "arrow_speed", "shackle_count", "shackle_angle", "bonus_damage_per_hero", "bonus_damage_per_other_pct", "damage_buff_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "windrunner_powershot", "name_zh": "风行者·强力击", "name_en": "Powershot", "description_zh": "持续施法 - 风行者为她的弓蓄力，射出一支强力的箭矢，最长可蓄力%abilitychanneltime%秒，其间可以打断蓄力，蓄力时间越长，箭矢伤害越高。这支箭会对穿过的所有敌方单位造成伤害和减速效果，并破坏树木。每伤害一个单位，箭矢的伤害和减速效果都会降低。", "description_en": "CHANNELED - Windranger charges her bow for up to %abilitychanneltime% second for a single powerful shot, which deals more damage the longer it is charged. The arrow damages and slows enemies' movement speed along its path. For each enemy that Powershot hits, its damage and slow is reduced.", "notes_zh": ["强力击将摧毁作用范围内的树木。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["powershot_damage", "slow", "slow_duration", "damage_reduction", "arrow_width", "arrow_range", "arrow_speed", "tree_width", "vision_radius", "vision_duration", "min_execute_threshold", "max_execute_threshold", "AbilityCastRange", "AbilityChannelTime", "AbilityManaCost"]}, {"subject": "windrunner_windrun", "name_zh": "风行者·风行", "name_en": "Windrun", "description_zh": "提升移动速度，并闪避一切物理攻击。", "description_en": "Increases movement speed and adds evasion from all physical attacks.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["movespeed_bonus_pct", "evasion_pct_tooltip", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "windrunner_gale_force", "name_zh": "风行者·狂风之力", "name_en": "Gale Force", "description_zh": "以矢量为目标。召唤出一阵强风，将目标区域内所有敌人朝目标方向推去。", "description_en": "Vector Targeted. Summons a strong wind that pushes all enemies in the target area towards the target direction.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["duration", "wind_strength", "radius", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "windrunner_focusfire", "name_zh": "风行者·集中火力", "name_en": "Focus Fire", "description_zh": "风行者受风的引领，攻击敌方单位或建筑的攻击速度增加%bonus_attack_speed%，但是攻击力降低。不过次级物品效果的额外伤害不会降低。", "description_en": "Windranger channels the wind to gain %bonus_attack_speed% additional attack speed against a single enemy unit or structure, though with a reduction to her attack damage.  Extra damage from secondary item effects is not reduced.", "notes_zh": ["下达停在原地的指令会暂停风行者的攻击。", "风行者在攻击时可以移动。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["bonus_attack_speed", "attacks_per_second", "focusfire_damage_reduction", "focusfire_fire_on_the_move", "process_procs", "is_unfocused", "cooldown_reduction_per_kill", "bonus_range", "unfocused_cancel_initial_cooldown", "AbilityCastRange", "AbilityDuration", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "windrunner_tailwind", "name_zh": "风行者·一路顺风", "name_en": "Tailwind", "description_zh": "施放技能会召唤一阵顺风，向风行者提供短时间的移动速度爆发。移动速度加成在顺风持续时间的半途开始逐渐衰减。\n\n被动提升风行者的移动速度上限。", "description_en": "Using an ability conjures a stacking Tailwind that gives Windranger a brief burst of movement speed. Movement speed bonus gradually starts fading halfway through the Tailwind duration.\n\nPassively increases Windranger's max movement speed.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "攻击也会提供顺风效果。顺风的持续时间更长，并且不可驱散。", "en": "Attacks grant Tailwind. Tailwind lasts longer and is undispellable."}}, "is_passive": true, "value_names": ["movespeed_bonus", "duration", "max_movespeed", "applies_on_attack", "undispellable"]}, {"subject": "zuus_arc_lightning", "name_zh": "宙斯·弧形闪电", "name_en": "Arc Lightning", "description_zh": "释放一道会跳跃穿越附近敌人的闪电，并造成伤害。", "description_en": "Hurls a bolt of lightning that leaps through nearby enemy units that deal damage.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["arc_damage", "radius", "jump_count", "jump_delay", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "zuus_lightning_bolt", "name_zh": "宙斯·雷击", "name_en": "Lightning Bolt", "description_zh": "召唤一道闪电打击一个敌方单位，造成伤害及短暂眩晕。施放后，雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。本技能可以对地施放，将会自动作用于%spread_aoe%范围内最近的敌方英雄上。", "description_en": "Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a %sight_radius_night% radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.", "notes_zh": ["该技能可以打断持续施法类技能和物品。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "true_sight_radius", "sight_radius_day", "sight_radius_night", "sight_duration", "spread_aoe", "ministun_duration", "aoe_radius", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "zuus_heavenly_jump", "name_zh": "宙斯·神圣一跳", "name_en": "Heavenly Jump", "description_zh": "宙斯作出神圣一跳，向前跳跃并震击最近的可见敌人（以英雄优先），造成伤害，并减缓其移动速度、攻击速度。宙斯获得附近%vision_radius%范围的顺畅视野，持续3秒。", "description_en": "Zeus performs a Heavenly Jump, leaping forward and shocking the closest visible nearby enemy (prioritizing heroes), dealing damage as well as reducing their movement and attack speed. Zeus gets %vision_radius% unobstructed vision around him for 3 seconds.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "hop_distance", "hop_duration", "hop_height", "range", "vision_radius", "vision_duration", "duration", "move_slow", "aspd_slow", "targets", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "zuus_cloud", "name_zh": "宙斯·雷云", "name_en": "Nimbus", "description_zh": "在地图任意地点创造一朵雷云，雷云将自动对附近敌人施放雷击。", "description_en": "Creates a storm cloud anywhere on the map that automatically casts Lightning Bolt on nearby enemies.", "notes_zh": ["敌方英雄将其摧毁后可以获得%cloud_bounty_tooltip%金。", "以宙斯当前等级的雷击作用于最近的敌方单位。", "防御塔和非英雄单位对雷云造成半额伤害。"], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["cloud_duration", "cloud_bolt_interval", "cloud_radius", "hits_to_kill_tooltip", "creep_hits_to_kill_tooltip", "cloud_bounty_tooltip", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "zuus_lightning_hands", "name_zh": "宙斯·霹雳之手", "name_en": "Lightning Hands", "description_zh": "宙斯获得攻击速度加成，并且他的攻击会产生弧形闪电，造成一定百分比的伤害。可以关闭，使攻击不附带该效果。", "description_en": "Zeus gains bonus attack speed and his attacks create Arc Lightnings that deal a percentage of its damage. Can be toggled off to stop this effect.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["attack_speed_bonus", "arc_lightning_damage_pct", "arc_lightning_damage_illusion_pct"]}, {"subject": "zuus_thundergods_wrath", "name_zh": "宙斯·雷神之怒", "name_en": "Thundergod's Wrath", "description_zh": "用闪电打击所有敌方英雄，对他们造成伤害，无论他们身在何处。在打击前提供每个英雄的真实视域。", "description_en": "Strikes all enemy heroes with a bolt of lightning, dealing damage no matter where they may be. Provides True Sight around each hero before they are struck.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["sight_radius_day", "sight_radius_night", "sight_duration", "damage", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "zuus_static_field", "name_zh": "宙斯·静电场", "name_en": "Static Field", "description_zh": "宙斯攻击或通过技能击中敌人都会电击他们，造成他们当前生命值一定百分比的伤害。", "description_en": "Zeus shocks any enemy that he attacks or is hit by his abilities, causing damage equal to a percentage of their current health.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["damage_health_pct"]}, {"subject": "kunkka_torrent", "name_zh": "昆卡·洪流", "name_en": "Torrent", "description_zh": "召唤喷涌的洪流，短暂延迟后，将敌人冲上天，造成伤害、眩晕和减速。", "description_en": "Summons a rising torrent that, after a short delay, hurls enemy units into the sky, stunning, dealing damage and slowing movement speed.", "notes_zh": ["初始泡泡效果仅对队友可见，并且提供战争迷雾中的视野。", "飞到半空的单位将会被眩晕并且可以被攻击。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "movespeed_bonus", "slow_duration", "stun_duration", "delay", "torrent_damage", "damage_tick_interval", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "kunkka_tidebringer", "name_zh": "昆卡·潮汐使者", "name_en": "Tidebringer", "description_zh": "昆卡的传奇之剑使他的下一次攻击附加额外的攻击力并在前方造成大范围的分裂攻击伤害。", "description_en": "Kunkka's legendary sword grants increased damage and cleaves a large area of effect in front of him for a single strike.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["cleave_starting_width", "cleave_ending_width", "cleave_distance", "damage_bonus", "cleave_damage", "movespeed_slow", "movespeed_slow_duration", "pierces_armor", "AbilityCastRange", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityCooldown"]}, {"subject": "kunkka_x_marks_the_spot", "name_zh": "昆卡·X标记", "name_en": "X Marks the Spot", "description_zh": "对友方或敌方英雄使用，用 X 标记他们当前位置，数秒后将他们送回 X 标记处。在技能持续时间内，昆卡可以手动触发送回。对友方英雄使用后持续时间加倍。", "description_en": "Targets a friendly or enemy Hero, marks their position with an X, and returns them to it after several seconds.  Kunkka can trigger the return at any time during the duration. Lasts twice as long on allied heroes.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "allied_duration", "fow_range", "fow_duration", "rum_allies_radius", "buff_duration", "movespeed_bonus", "ghostship_absorb", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "kunkka_admirals_rum", "name_zh": "昆卡·统帅朗姆酒", "name_en": "Admiral's Rum", "description_zh": "如果昆卡受到来自敌方英雄、建筑或肉山的伤害会使他的生命低于%damage_threshold%%%临界值，那么他会浸在统帅朗姆酒中，获得移动速度加成，并且延后承受即将受到的%ghostship_absorb%%%伤害，持续%buff_duration%秒。", "description_en": "Damage from enemy heroes, buildings, or Roshan that would reduce Kunkka below %damage_threshold%%% threshold causes him to douse himself with The Admiral's Rum, receiving bonus movement speed and a delayed reaction to %ghostship_absorb%%% of incoming damage for %buff_duration%s.", "notes_zh": ["在朗姆酒效果消失后造成的伤害不能致死，而且不能杀死英雄。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["damage_threshold", "ghostship_absorb", "buff_duration", "movespeed_bonus", "AbilityCooldown"]}, {"subject": "kunkka_tidal_wave", "name_zh": "昆卡·潮汐波", "name_en": "Tidal Wave", "description_zh": "释放一道在昆卡身后出现的潮汐波。造成点伤害，并将敌人沿着波浪拖拽距离。敌人被拖拽时无法攻击。", "description_en": "Releases a Tidal Wave that spawns behind Kunkka. Deals damage and drags enemies along it. Enemies cannot attack while being dragged.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["speed", "radius", "damage", "duration", "wave_distance_tooltip", "knockback_distance", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "kunkka_ghostship", "name_zh": "昆卡·幽灵船", "name_en": "Ghostship", "description_zh": "召唤一艘幽灵船驶过战场，直到撞成粉碎，残骸周围的敌人将会因撞击受到伤害并眩晕。被幽灵船碰到的友军会获得2倍效果的统帅朗姆酒。", "description_en": "Summons a ghostly ship that sails through the battle before smashing apart, damaging and stunning all enemies caught near the wreckage.Allied heroes touched by the Ghostship are given a %rum_factor%x strong swig of The Admiral's Rum.", "notes_zh": ["幽灵船实际的碰撞范围比船本身大。", "幽灵船的移动速度为%ghostship_speed%。"], "granted_by": "", "upgrades": {"scepter": {"zh": "幽灵船在目标地点以%fleet_interval%秒的间隔产生%fleet_count%艘船组成的舰队。每艘船现在还会从左舷和右舷发射%num_cannon_volleys%波炮弹，穿过敌人时造成%cannon_ball_damage_pct%%%幽灵船伤害。", "en": "Ghostship creates a fleet of %fleet_count% ships at the target point on a %fleet_interval% second interval. Each ship now also fires %num_cannon_volleys% waves of cannonballs from the port and starboard side that deal %cannon_ball_damage_pct%%% of Ghostship's damage as they pass through enemies."}}, "is_passive": false, "value_names": ["tooltip_delay", "ghostship_distance", "ghostship_width", "stun_duration", "ghostship_speed", "rum_factor", "fleet_interval", "fleet_count", "fire_cannons", "cannon_ball_damage_pct", "cannon_ball_distance", "cannon_ball_speed", "cannon_count", "cannon_ball_radius", "num_cannon_volleys"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "tiny_toss_tree",
+      "mechanisms": [
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "quote": "触发自身对其的攻击，并且对周围目标造成溅射伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对周围目标造成溅射伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_magic_missile",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "眩晕并造成伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "可以对敌人弹射一次，以英雄优先",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_wave_of_terror",
+      "mechanisms": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "quote": "削弱敌人的总攻击力和护甲",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "quote": "削弱敌人的总攻击力和护甲",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "打开前方经过路径的视野。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_command_aura",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "复仇之魂的存在提升了附近友方英雄的攻击力。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "scepter",
+          "quote": "死亡时产生一个复仇之魂的强幻象",
+          "uncertain": false
+        },
+        {
+          "mechanism": "respawn",
+          "condition": "scepter",
+          "quote": "复仇之魂复活时若幻象依然存在，则自身会直接将其取代。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "economy",
+          "condition": "scepter",
+          "quote": "幻象获得的经验将给予英雄。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_retribution",
+      "mechanisms": [
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "quote": "他们会获得一个负面效果，直到下次阵亡，期间复仇之魂会对他们造成%bonus_damage%%%额外伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_nether_swap",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "与一个目标英雄瞬间交换位置，不论敌我。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "与一个目标英雄瞬间交换位置，不论敌我。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "quote": "移形换位会打断目标的持续施法。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "复仇之魂和被交换的友方英雄都会获得等同于造成伤害的护盾。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "pierces_debuff_immunity",
+          "condition": "base",
+          "quote": "对减益免疫单位有效。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "quote": "技能施放后复仇之魂和目标附近的树木将会被摧毁。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_shackleshot",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "该技能可以将两个敌人一起束缚，使他们同时眩晕。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_powershot",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "这支箭会对穿过的所有敌方单位造成伤害和减速效果",
+          "uncertain": false
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "quote": "强力击将摧毁作用范围内的树木。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "这支箭会对穿过的所有敌方单位造成伤害和减速效果",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_windrun",
+      "mechanisms": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "quote": "闪避一切物理攻击。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_gale_force",
+      "mechanisms": [
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "quote": "将目标区域内所有敌人朝目标方向推去。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_focusfire",
+      "mechanisms": []
+    },
+    {
+      "subject": "windrunner_tailwind",
+      "mechanisms": []
+    },
+    {
+      "subject": "zuus_arc_lightning",
+      "mechanisms": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "释放一道会跳跃穿越附近敌人的闪电，并造成伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_lightning_bolt",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "造成伤害及短暂眩晕。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "quote": "雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_heavenly_jump",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "宙斯作出神圣一跳，向前跳跃",
+          "uncertain": false
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "减缓其移动速度、攻击速度。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "宙斯获得附近%vision_radius%范围的顺畅视野，持续3秒。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_cloud",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "quote": "以宙斯当前等级的雷击作用于最近的敌方单位。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "scepter",
+          "quote": "雷云将自动对附近敌人施放雷击。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "scepter",
+          "quote": "雷云将自动对附近敌人施放雷击。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "scepter",
+          "quote": "防御塔和非英雄单位对雷云造成半额伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "summons",
+          "condition": "scepter",
+          "quote": "在地图任意地点创造一朵雷云，雷云将自动对附近敌人施放雷击。",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "subject": "zuus_lightning_hands",
+      "mechanisms": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "shard",
+          "quote": "他的攻击会产生弧形闪电，造成一定百分比的伤害。可以关闭，使攻击不附带该效果。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "他的攻击会产生弧形闪电，造成一定百分比的伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_thundergods_wrath",
+      "mechanisms": [
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "quote": "在打击前提供每个英雄的真实视域。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "用闪电打击所有敌方英雄，对他们造成伤害，无论他们身在何处。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_static_field",
+      "mechanisms": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "宙斯攻击或通过技能击中敌人都会电击他们，造成他们当前生命值一定百分比的伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_torrent",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "造成伤害、眩晕和减速。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "造成伤害、眩晕和减速。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "将敌人冲上天",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "初始泡泡效果仅对队友可见，并且提供战争迷雾中的视野。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "hurls enemy units into the sky, stunning, dealing damage and slowing movement speed.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_tidebringer",
+      "mechanisms": [
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "quote": "在前方造成大范围的分裂攻击伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "使他的下一次攻击附加额外的攻击力并在前方造成大范围的分裂攻击伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "在前方造成大范围的分裂攻击伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_x_marks_the_spot",
+      "mechanisms": [
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "用 X 标记他们当前位置，数秒后将他们送回 X 标记处。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_admirals_rum",
+      "mechanisms": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "延后承受即将受到的%ghostship_absorb%%%伤害，持续%buff_duration%秒。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_tidal_wave",
+      "mechanisms": [
+        {
+          "mechanism": "disarm",
+          "condition": "shard",
+          "quote": "敌人被拖拽时无法攻击。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "quote": "将敌人沿着波浪拖拽距离。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "Deals damage and drags enemies along it.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_ghostship",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "残骸周围的敌人将会因撞击受到伤害并眩晕。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "被幽灵船碰到的友军会获得2倍效果的统帅朗姆酒。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "残骸周围的敌人将会因撞击受到伤害并眩晕。",
+          "uncertain": false
+        }
+      ]
+    }
+  ]
+}
+tokens used
+29,084
+{
+  "objects": [
+    {
+      "subject": "tiny_toss_tree",
+      "mechanisms": [
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "quote": "触发自身对其的攻击，并且对周围目标造成溅射伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "对周围目标造成溅射伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_magic_missile",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "眩晕并造成伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "可以对敌人弹射一次，以英雄优先",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_wave_of_terror",
+      "mechanisms": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "quote": "削弱敌人的总攻击力和护甲",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "quote": "削弱敌人的总攻击力和护甲",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "打开前方经过路径的视野。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_command_aura",
+      "mechanisms": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "quote": "复仇之魂的存在提升了附近友方英雄的攻击力。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "scepter",
+          "quote": "死亡时产生一个复仇之魂的强幻象",
+          "uncertain": false
+        },
+        {
+          "mechanism": "respawn",
+          "condition": "scepter",
+          "quote": "复仇之魂复活时若幻象依然存在，则自身会直接将其取代。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "economy",
+          "condition": "scepter",
+          "quote": "幻象获得的经验将给予英雄。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_retribution",
+      "mechanisms": [
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "quote": "他们会获得一个负面效果，直到下次阵亡，期间复仇之魂会对他们造成%bonus_damage%%%额外伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_nether_swap",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "与一个目标英雄瞬间交换位置，不论敌我。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "与一个目标英雄瞬间交换位置，不论敌我。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "quote": "移形换位会打断目标的持续施法。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "复仇之魂和被交换的友方英雄都会获得等同于造成伤害的护盾。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "pierces_debuff_immunity",
+          "condition": "base",
+          "quote": "对减益免疫单位有效。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "quote": "技能施放后复仇之魂和目标附近的树木将会被摧毁。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_shackleshot",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "该技能可以将两个敌人一起束缚，使他们同时眩晕。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_powershot",
+      "mechanisms": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "这支箭会对穿过的所有敌方单位造成伤害和减速效果",
+          "uncertain": false
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "quote": "强力击将摧毁作用范围内的树木。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "这支箭会对穿过的所有敌方单位造成伤害和减速效果",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_windrun",
+      "mechanisms": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "quote": "闪避一切物理攻击。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_gale_force",
+      "mechanisms": [
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "quote": "将目标区域内所有敌人朝目标方向推去。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_focusfire",
+      "mechanisms": []
+    },
+    {
+      "subject": "windrunner_tailwind",
+      "mechanisms": []
+    },
+    {
+      "subject": "zuus_arc_lightning",
+      "mechanisms": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "释放一道会跳跃穿越附近敌人的闪电，并造成伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_lightning_bolt",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "造成伤害及短暂眩晕。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "quote": "雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_heavenly_jump",
+      "mechanisms": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "quote": "宙斯作出神圣一跳，向前跳跃",
+          "uncertain": false
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "减缓其移动速度、攻击速度。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "宙斯获得附近%vision_radius%范围的顺畅视野，持续3秒。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_cloud",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "quote": "以宙斯当前等级的雷击作用于最近的敌方单位。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "scepter",
+          "quote": "雷云将自动对附近敌人施放雷击。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "scepter",
+          "quote": "雷云将自动对附近敌人施放雷击。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "scepter",
+          "quote": "防御塔和非英雄单位对雷云造成半额伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "summons",
+          "condition": "scepter",
+          "quote": "在地图任意地点创造一朵雷云，雷云将自动对附近敌人施放雷击。",
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "subject": "zuus_lightning_hands",
+      "mechanisms": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "shard",
+          "quote": "他的攻击会产生弧形闪电，造成一定百分比的伤害。可以关闭，使攻击不附带该效果。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "他的攻击会产生弧形闪电，造成一定百分比的伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_thundergods_wrath",
+      "mechanisms": [
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "quote": "在打击前提供每个英雄的真实视域。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "用闪电打击所有敌方英雄，对他们造成伤害，无论他们身在何处。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "zuus_static_field",
+      "mechanisms": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "宙斯攻击或通过技能击中敌人都会电击他们，造成他们当前生命值一定百分比的伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_torrent",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "造成伤害、眩晕和减速。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "quote": "造成伤害、眩晕和减速。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "将敌人冲上天",
+          "uncertain": false
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "quote": "初始泡泡效果仅对队友可见，并且提供战争迷雾中的视野。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "hurls enemy units into the sky, stunning, dealing damage and slowing movement speed.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_tidebringer",
+      "mechanisms": [
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "quote": "在前方造成大范围的分裂攻击伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "quote": "使他的下一次攻击附加额外的攻击力并在前方造成大范围的分裂攻击伤害。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "在前方造成大范围的分裂攻击伤害。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_x_marks_the_spot",
+      "mechanisms": [
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "quote": "用 X 标记他们当前位置，数秒后将他们送回 X 标记处。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_admirals_rum",
+      "mechanisms": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "延后承受即将受到的%ghostship_absorb%%%伤害，持续%buff_duration%秒。",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_tidal_wave",
+      "mechanisms": [
+        {
+          "mechanism": "disarm",
+          "condition": "shard",
+          "quote": "敌人被拖拽时无法攻击。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "quote": "将敌人沿着波浪拖拽距离。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "quote": "Deals damage and drags enemies along it.",
+          "uncertain": false
+        }
+      ]
+    },
+    {
+      "subject": "kunkka_ghostship",
+      "mechanisms": [
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "quote": "残骸周围的敌人将会因撞击受到伤害并眩晕。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "被幽灵船碰到的友军会获得2倍效果的统帅朗姆酒。",
+          "uncertain": false
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "quote": "残骸周围的敌人将会因撞击受到伤害并眩晕。",
+          "uncertain": false
+        }
+      ]
+    }
+  ]
+}

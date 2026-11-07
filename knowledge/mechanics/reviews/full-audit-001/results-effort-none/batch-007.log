@@ -1,0 +1,740 @@
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: none
+reasoning summaries: none
+session id: 01a1a5b0-7678-7022-9435-de5b4c0b3812
+--------
+user
+你在独立阅读Dota 2技能和装备的说明，判断每个对象具备词表里的哪些机制。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+要求：
+- 每个对象都要输出一条，`subject`原样返回。没有任何机制时`mechanisms`为空数组。
+- 逐个对象读完整说明，对照词表全部条目判断，不要只找明显的。说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 词表定义已经用户确认，必须遵守。另外：
+  - 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。
+  - 提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+  - 召唤物只算有血量的单位；按受攻击次数计算的不算。
+  - 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+  - 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `condition`：基础效果写`base`，只在有A杖时生效写`scepter`，只在有魔晶时写`shard`，装备写`item`。`granted_by`不为空的对象，整个技能按该升级记。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字（如“+ 35% Evasion”），可以当证据。`%xxx%`是数值占位符。
+- `quote`摘决定判断的原文片段；`uncertain`为true表示材料不足或需要游戏知识，不要猜。
+
+词表：
+[
+{
+"id": "stun",
+"zh": "眩晕",
+"definition": "使目标无法行动和施法的硬控（含小眩晕）"
+},
+{
+"id": "hex",
+"zh": "妖术",
+"definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品"
+},
+{
+"id": "silence",
+"zh": "沉默",
+"definition": "目标无法施放技能（仍可攻击、使用物品）"
+},
+{
+"id": "mute",
+"zh": "禁用物品",
+"definition": "目标无法使用物品"
+},
+{
+"id": "disarm",
+"zh": "缴械",
+"definition": "目标无法普通攻击"
+},
+{
+"id": "root",
+"zh": "定身",
+"definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"
+},
+{
+"id": "forced_action",
+"zh": "强制行为",
+"definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"
+},
+{
+"id": "sleep",
+"zh": "睡眠",
+"definition": "无法行动，受伤害后醒来"
+},
+{
+"id": "cyclone_banish",
+"zh": "吹风/放逐",
+"definition": "使目标短暂离开战场，期间无敌或不可被选取"
+},
+{
+"id": "slow",
+"zh": "减速",
+"definition": "降低移动速度或攻击速度"
+},
+{
+"id": "evasion",
+"zh": "闪避",
+"definition": "自身有概率使敌方攻击落空"
+},
+{
+"id": "blind",
+"zh": "致盲",
+"definition": "使敌方单位的攻击有概率落空"
+},
+{
+"id": "debuff_immunity",
+"zh": "减益免疫/技能免疫",
+"definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"
+},
+{
+"id": "pierces_debuff_immunity",
+"zh": "穿透减益免疫",
+"definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）"
+},
+{
+"id": "invulnerable_untargetable",
+"zh": "无敌/不可选取",
+"definition": "暂时无法被伤害或无法被指向"
+},
+{
+"id": "damage_block",
+"zh": "护盾/伤害吸收/减伤",
+"definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"
+},
+{
+"id": "death_prevention",
+"zh": "免死",
+"definition": "在一段时间内不会被打死（如薄葬、回光返照）"
+},
+{
+"id": "status_resistance",
+"zh": "状态抗性",
+"definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）"
+},
+{
+"id": "slow_resistance",
+"zh": "减速抗性",
+"definition": "降低自身受到的减速效果（如散夜对剑+30%）"
+},
+{
+"id": "applies_basic_dispel",
+"zh": "施加弱驱散",
+"definition": "移除目标身上可被弱驱散的效果"
+},
+{
+"id": "applies_strong_dispel",
+"zh": "施加强驱散",
+"definition": "移除目标身上可被强驱散的效果（含多数眩晕）"
+},
+{
+"id": "applies_break",
+"zh": "施加破坏",
+"definition": "使目标的被动技能暂时失效"
+},
+{
+"id": "invisibility",
+"zh": "隐身",
+"definition": "使自身、队友、召唤物或复制体隐身"
+},
+{
+"id": "true_sight",
+"zh": "真视",
+"definition": "可看见隐身单位"
+},
+{
+"id": "healing",
+"zh": "治疗/回复",
+"definition": "恢复生命值（治疗、生命恢复）"
+},
+{
+"id": "lifesteal",
+"zh": "吸血",
+"definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"
+},
+{
+"id": "heal_reduction",
+"zh": "治疗削减",
+"definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"
+},
+{
+"id": "mana_burn",
+"zh": "烧蓝/法力削减",
+"definition": "减少目标的法力值"
+},
+{
+"id": "mana_gain",
+"zh": "自身回蓝/吸蓝",
+"definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"
+},
+{
+"id": "illusions",
+"zh": "幻象",
+"definition": "制造自身或他人的幻象"
+},
+{
+"id": "summons",
+"zh": "召唤物",
+"definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"
+},
+{
+"id": "self_mobility",
+"zh": "自身位移",
+"definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"
+},
+{
+"id": "displace_other",
+"zh": "位移他人",
+"definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"
+},
+{
+"id": "damage_return",
+"zh": "反伤",
+"definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件"
+},
+{
+"id": "bash",
+"zh": "重击",
+"definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算"
+},
+{
+"id": "pierce_evasion",
+"zh": "克敌机先",
+"definition": "攻击无视闪避（必中）"
+},
+{
+"id": "critical",
+"zh": "暴击",
+"definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算"
+},
+{
+"id": "ethereal",
+"zh": "虚无",
+"definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用"
+},
+{
+"id": "armor_reduction",
+"zh": "减护甲",
+"definition": "降低目标护甲"
+},
+{
+"id": "magic_resist_reduction",
+"zh": "减魔抗/魔法易伤",
+"definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害"
+},
+{
+"id": "incoming_damage_amp",
+"zh": "伤害加深",
+"definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）"
+},
+{
+"id": "attack_damage_reduction",
+"zh": "减攻击力",
+"definition": "降低目标的攻击力"
+},
+{
+"id": "spell_block",
+"zh": "格挡指向技能",
+"definition": "使指向自身或队友的技能失效"
+},
+{
+"id": "spell_reflect",
+"zh": "反弹指向技能",
+"definition": "把指向技能反弹给施法者"
+},
+{
+"id": "projectile_dodge",
+"zh": "躲避弹道",
+"definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"
+},
+{
+"id": "channel_interrupt",
+"zh": "打断持续施法",
+"definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"
+},
+{
+"id": "mobility_lock",
+"zh": "限制位移",
+"definition": "阻止目标闪烁、传送或离开范围；只是不能走的归定身"
+},
+{
+"id": "cleave",
+"zh": "分裂溅射",
+"definition": "攻击伤害波及周围单位"
+},
+{
+"id": "attack_modifier",
+"zh": "攻击特效",
+"definition": "给攻击附加效果的法球类技能"
+},
+{
+"id": "spell_amp",
+"zh": "法术放大",
+"definition": "提高技能造成的伤害"
+},
+{
+"id": "aura",
+"zh": "光环",
+"definition": "持续影响周围单位；对友军或敌方都算，并记作用对象"
+},
+{
+"id": "reveal",
+"zh": "显形",
+"definition": "使隐身单位显形，不等于持续真视"
+},
+{
+"id": "grant_vision",
+"zh": "提供视野",
+"definition": "提供目标或区域的视野"
+},
+{
+"id": "reduce_vision",
+"zh": "减视野",
+"definition": "降低目标的视野"
+},
+{
+"id": "phased",
+"zh": "相位移动",
+"definition": "移动不受单位碰撞阻挡"
+},
+{
+"id": "flying",
+"zh": "飞行",
+"definition": "飞行移动，能越过地形"
+},
+{
+"id": "tree_walk",
+"zh": "穿树",
+"definition": "能穿过树木移动"
+},
+{
+"id": "tree_destroy",
+"zh": "砍树",
+"definition": "能摧毁树木"
+},
+{
+"id": "respawn",
+"zh": "重生",
+"definition": "死亡后复活，或影响复活"
+},
+{
+"id": "execute",
+"zh": "斩杀",
+"definition": "目标低于生命阈值时直接杀死"
+},
+{
+"id": "hp_removal",
+"zh": "生命移除",
+"definition": "直接移除生命，不算伤害"
+},
+{
+"id": "spell_steal",
+"zh": "偷技能",
+"definition": "获得其他单位的技能"
+},
+{
+"id": "stat_steal",
+"zh": "偷属性",
+"definition": "夺取目标的属性"
+},
+{
+"id": "cooldown_reduction",
+"zh": "减冷却",
+"definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"
+},
+{
+"id": "cooldown_reset",
+"zh": "刷新冷却",
+"definition": "立刻重置冷却"
+},
+{
+"id": "economy",
+"zh": "经济经验",
+"definition": "提供额外金钱或经验；只是正常赏金不算"
+},
+{
+"id": "charges",
+"zh": "充能",
+"definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"
+},
+{
+"id": "aoe_damage",
+"zh": "范围伤害",
+"definition": "一次施放或一次攻击能对多个敌方单位造成伤害"
+}
+]
+
+待判断对象：
+[{"subject": "slardar_bash", "name_zh": "斯拉达·深海重击", "name_en": "Bash of the Deep", "description_zh": "%attack_count%次攻击后，下次攻击会重击目标。", "description_en": "After %attack_count% attacks, your next attack will bash the target.", "notes_zh": ["不能与碎颅锤叠加。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["bonus_damage", "duration", "attack_count"]}, {"subject": "slardar_seaborn_sentinel", "name_zh": "斯拉达·汪洋前哨", "name_en": "Seaborn Sentinel", "description_zh": "斯拉达在水洼、水迹或河道中将获得移动速度、生命恢复、攻击力和护甲加成。", "description_en": "Slardar gains bonus movement speed, health regeneration, attack damage, and armor while in a puddle, trail, or river.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "在水洼、水迹或河道中获得额外生命恢复、护甲，还有状态抗性。水洼/水迹的作用范围提升%scepter_puddle_radius_tooltip%%%，水洼的持续时间提升%scepter_puddle_duration_increase_tooltip%秒。", "en": "Provides additional HP Regen, Armor and Status Resistance while in a puddle, trail, or river. Increases puddle/trail radius by %scepter_puddle_radius_tooltip%%% and puddle/trail duration by %scepter_puddle_duration_increase_tooltip%s."}}, "is_passive": true, "value_names": ["river_speed", "puddle_regen", "puddle_armor", "puddle_status_resistance", "river_damage_pct", "scepter_puddle_radius_tooltip", "scepter_puddle_duration_increase_tooltip"]}, {"subject": "slardar_amplify_damage", "name_zh": "斯拉达·侵蚀雾霭", "name_en": "Corrosive Haze", "description_zh": "削弱敌人的护甲，加深他受到的物理伤害，同时提供目标的真实视域，显示隐身单位。敌方单位将在身后留下水迹。", "description_en": "Reduces enemy armor to amplify physical damage and provides True Sight and vision of the targeted unit, revealing invisibility. The enemy unit leaves a trail of water behind it.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["armor_reduction", "duration", "undispellable", "puddle_radius", "puddle_duration", "has_self_buff", "armor_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "tidehunter_gush", "name_zh": "潮汐猎人·巨浪", "name_en": "Gush", "description_zh": "召唤一股巨浪攻击一个敌方单位，减速并削弱护甲。", "description_en": "Summons a gush of water to damage an enemy unit, reducing their movement speed and armor.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "巨浪变成点地施放的波形技能，可以作用于直线上的单位。降低冷却时间。", "en": "Gush becomes a ground targeted wave ability that affects enemy units in a line.  Decreases cooldown."}}, "is_passive": false, "value_names": ["gush_damage", "projectile_speed", "movement_speed", "negative_armor", "speed_scepter", "aoe_scepter", "cooldown_scepter", "cast_range_scepter", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "tidehunter_kraken_shell", "name_zh": "潮汐猎人·海妖外壳", "name_en": "Kraken Shell", "description_zh": "加厚潮汐猎人的外皮，可以被动格挡物理伤害。对非英雄单位的格挡伤害有所减少。潮汐猎人的外皮在他受到的伤害超过临界值后还将移除负面的状态效果。\n\n可以主动开启，以%active_move_speed_penalty_pct%%%移动速度的代价使伤害格挡量加倍。持续%active_duration%秒。\n\n驱散类型：强驱散", "description_en": "Thickens Tidehunter's hide to passively block a portion of any incoming physical attack damage. Reduced block amount versus creeps. The hide also removes negative status effects if the damage taken crosses a threshold.\n\nCan be activated to double the block amount at the cost of %active_move_speed_penalty_pct%%% movement speed. Lasts %active_duration%s.\n\nDISPEL TYPE: Strong Dispel", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_reduction", "bonus_reduction_per_kill", "creep_reduction_penalty_pct", "active_pct_effectiveness", "active_move_speed_penalty_pct", "active_duration", "damage_cleanse", "damage_reset_interval", "smash_on_purge", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "tidehunter_anchor_smash", "name_zh": "潮汐猎人·锚击", "name_en": "Anchor Smash", "description_zh": "潮汐猎人挥动他巨大的锚攻击附近的敌人，攻击时获得攻击力加成，同时降低敌人的攻击力。锚击的作用范围为潮汐猎人的攻击距离 + %additional_range%。", "description_en": "Tidehunter swings his mighty anchor to attack and deal bonus damage to nearby enemies and reduce their attack damage. The radius of Anchor Smash is Tidehunter's attack range plus %additional_range% units.", "notes_zh": ["锚击对远古生物同样有效，不过对肉山无效。", "海妖外壳净化触发的锚击造成的伤害被视为反弹伤害。反弹伤害不提供任何吸血，而且无法反弹。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["attack_damage", "damage_reduction", "reduction_duration", "targets_buildings", "building_pct_damage", "smash_on_attack", "additional_range", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "tidehunter_dead_in_the_water", "name_zh": "潮汐猎人·重如铁锚", "name_en": "Dead in the Water", "description_zh": "潮汐猎人将一只重锚栓到一名敌方英雄身上。被栓到锚上的英雄处于被束缚状态。尝试移动到距离巨锚%chain_length%距离外会导致英雄的移动速度降低至%max_movement_speed%，而且会一直拽着长锚。巨锚承受%attacks_to_destroy%次英雄攻击后会被摧毁。", "description_en": "Tidehunter attaches a heavy anchor to an enemy hero. The hero is leashed while attached to the anchor. Attempting to move more than %chain_length% units away from the anchor forces the hero to %max_movement_speed% move speed, dragging the anchor behind them. The anchor can be destroyed with %attacks_to_destroy% hero attacks.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["attacks_to_destroy", "max_movement_speed", "chain_length", "duration", "projectile_speed", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "tidehunter_ravage", "name_zh": "潮汐猎人·毁灭", "name_en": "Ravage", "description_zh": "猛击地面，触手向各个方向穿出，伤害并眩晕附近所有敌方单位。", "description_en": "Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units.", "notes_zh": ["毁灭能伤害隐身单位。", "毁灭以%speed%的速度向外扩散。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "speed", "duration", "AbilityDamage", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "tidehunter_leviathans_catch", "name_zh": "潮汐猎人·利维坦的渔获", "name_en": "Leviathan's Catch", "description_zh": "每当敌方英雄被潮汐猎人击杀，或者阵亡时带着他的负面状态，他们原地都会出现一条鱼；潮汐猎人可以吃掉鱼，永久获得%fish_health_bonus%点最大生命值，%fish_attack_range%攻击距离和%fish_damage_block%额外伤害格挡。潮汐猎人每次升到偶数等级都会自动吃下一条鱼。", "description_en": "Whenever an enemy hero is killed by Tidehunter or dies under his debuffs, a fish appears in their place; Tidehunter can eat the fish to permanently gain %fish_health_bonus% Health, %fish_attack_range% Attack Range, and %fish_damage_block% Bonus Damage Block.Tidehunter eats a free fish every time he reaches an even hero level.", "notes_zh": ["敌人可以摧毁鱼。", "额外伤害格挡只会在有伤害格挡来源施加给即将受到的物理攻击时才会施加"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["fish_duration", "fish_attack_range", "fish_damage_block", "fish_health_bonus", "fish_model_scale", "max_fish_spawn_distance", "health_bar_offset_base", "health_bar_offset_per_level", "permanent_health_gain", "permanent_attack_range_gain", "permanent_damage_block_gain"]}, {"subject": "witch_doctor_paralyzing_cask", "name_zh": "巫医·麻痹药剂", "name_en": "Paralyzing Cask", "description_zh": "抛出一个装满麻痹粉末的药剂，在敌方单位之间弹跳，眩晕击中的敌人并造成伤害。每次弹跳都会提升伤害。", "description_en": "Launches a cask of paralyzing powder that ricochets between enemy units, stunning and damaging those it hits. Damage increases each bounce.", "notes_zh": ["目标可以受到多次作用，只要附近有其他单位可以进行弹跳。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["hero_duration", "creep_duration", "base_damage", "bounce_range", "bounces", "speed", "bounce_delay", "bounce_bonus_damage", "creep_damage_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "witch_doctor_voodoo_restoration", "name_zh": "巫医·巫毒疗法", "name_en": "Voodoo Restoration", "description_zh": "巫医集中魔力治疗附近的友军单位，开启巫毒疗法后会持续消耗巫医的魔法。", "description_en": "Witch Doctor focuses his magic to heal nearby allied units, costing Witch Doctor mana every second Voodoo Restoration is active.", "notes_zh": ["治疗间隔为%heal_interval%秒。", "对减益免疫单位有效。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["mana_per_second", "tooltip_mana_per_second", "radius", "heal", "heal_interval", "does_heal_all_allies", "does_damage", "self_only_heal_percentage", "bonus_heal_percent", "AbilityManaCost"]}, {"subject": "witch_doctor_maledict", "name_zh": "巫医·巫蛊咒术", "name_en": "Maledict", "description_zh": "对一个较小区域内所有敌方英雄和玩家控制的目标施放诅咒，他们将每秒受到固定伤害，并且从诅咒开始每4秒根据失去的血量再受到爆发伤害。", "description_en": "Curses all enemy Heroes and player-controlled targets in a small area, causing them to take a set amount of damage each second, as well as bursts of damage every 4 seconds based on how much health they have lost since the curse began.", "notes_zh": ["受到作用的英雄如果在结算时当前血量高于原血量，则额外伤害为0。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "bonus_damage", "bonus_damage_threshold", "ticks", "spread_pct", "spread_radius", "spread_speed", "AbilityDamage", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "witch_doctor_voodoo_switcheroo", "name_zh": "巫医·巫毒变身术", "name_en": "Voodoo Switcheroo", "description_zh": "巫医暂时变成死亡守卫，死亡守卫的攻击速度有所降低。这段时间内自己为隐藏状态。", "description_en": "Turns Witch Doctor into a Death Ward briefly with reduced attack speed. He is hidden during this time.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["duration", "attack_speed_reduction", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "witch_doctor_gris_gris", "name_zh": "巫医·驱邪护符", "name_en": "Gris-Gris", "description_zh": "巫医获得了驱邪护符，这件物品无法丢弃或放在背包里。拥有者阵亡时，死亡损失金钱的%death_gold_lost_reduction_pct_tooltip%%%会加入到该物品中，物品被消耗后将退回这些金钱。驱邪护符的价值每%gold_tick_interval_tooltip%秒会增加1金。右键点击可以消耗这件物品，并将其永久移除。", "description_en": "Witch Doctor gets a Gris-Gris, an item that cannot be dropped or placed in the backpack. When the owner dies, %death_gold_lost_reduction_pct_tooltip%%% of the gold lost from death is added to the item, and will be refunded when the item is consumed. The value of the Gris-Gris is increased by 1 every %gold_tick_interval_tooltip%s.  Right-click to consume and permanently remove the item.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["death_gold_lost_reduction_pct_tooltip", "gold_tick_interval_tooltip"]}, {"subject": "witch_doctor_death_ward", "name_zh": "巫医·死亡守卫", "name_en": "Death Ward", "description_zh": "持续施法 - 召唤一个死亡守卫，会优先攻击其攻击距离内的敌方英雄。最多持续%abilitychanneltime%秒。死亡守卫拥有%bonus_accuracy%%%额外必中率。", "description_en": "CHANNELED - Summons a deadly ward to attack enemy heroes within its attack range. Lasts a maximum of %abilitychanneltime% seconds. Death Ward has %bonus_accuracy%%% bonus accuracy.", "notes_zh": ["死亡守卫是无敌的，只有在巫医被打断或持续时间结束后才会被摧毁。", "死亡守卫可以受到控制，选择攻击特定目标。", "死亡守卫每0.22秒攻击一次。"], "granted_by": "", "upgrades": {"scepter": {"zh": "死亡守卫的攻击会向附近英雄弹射。", "en": "Death Ward attacks bounce between nearby enemies."}}, "is_passive": false, "value_names": ["damage", "attack_range_tooltip", "bonus_attack_range", "bounce_radius", "scepter_lifesteal", "bonus_accuracy", "initial_target_count", "secondary_attack_damage_pct", "AbilityCastRange", "AbilityChannelTime", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "riki_smoke_screen", "name_zh": "力丸·烟幕", "name_en": "Smoke Screen", "description_zh": "丢下一个烟雾弹，沉默其中的敌人，同时使他们的攻击落空。", "description_en": "Throws down a smoke bomb, silencing enemies and causing them to miss attacks.", "notes_zh": ["可以在绝杀秘技期间施放。", "不能阻止使用物品。"], "granted_by": "", "upgrades": {"shard": {"zh": "烟幕中的敌人护甲降低%armor_reduction%点，而且无法成为他们友军的目标。", "en": "Enemies caught in the smoke screen have their armor reduced by %armor_reduction% and cannot be targeted by their allies."}}, "is_passive": false, "value_names": ["radius", "miss_rate", "block_targeting", "armor_reduction", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "riki_blink_strike", "name_zh": "力丸·闪烁突袭", "name_en": "Blink Strike", "description_zh": "传送到目标背后，如果是敌人对其造成%slow_pct_tooltip%%%短暂减速，并发动一次拥有额外伤害的攻击。", "description_en": "Teleports behind the target unit, momentarily slowing them by %slow_pct_tooltip%%% and attacking them with bonus damage if it is an enemy.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["bonus_damage", "slow", "slow_pct_tooltip", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "riki_tricks_of_the_trade", "name_zh": "力丸·绝杀秘技", "name_en": "Tricks of the Trade", "description_zh": "持续施法 - 力丸转移出现实位面，每隔一段时间从背后随机攻击附近的%interval_targets%个随机敌方单位。期间他的攻击伤害为固定值。", "description_en": "CHANNELED - Riki phases out of the world and periodically strikes %interval_targets% random enemy units from behind in an area around him. He has fixed attack damage while phased out.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "提升施法距离至%AbilityCastRange%。可以对友方单位施放，持续时间内藏在他们体内。藏在友方单位体内时，他会拥有%scepter_movespeed%%%移动速度加成，同时绝杀秘技的持续时间提升%scepter_bonus_duration%秒，并且额外发动%scepter_bonus_attacks%次攻击。", "en": "Increases Cast Range to %AbilityCastRange%. Allows you to target an allied unit, hiding inside them for the duration. While hiding in an allied unit, they have %scepter_movespeed%%% bonus movement speed, and Tricks of the Trade lasts %scepter_bonus_duration%s longer and does an additional %scepter_bonus_attacks% attacks."}}, "is_passive": false, "value_names": ["radius", "attack_count", "speed_per_attack", "interval_targets", "attack_damage", "base_attack_damage_pct", "pocket_riki_enabled", "scepter_movespeed", "scepter_bonus_duration", "scepter_bonus_attacks", "creep_agility_multiplier", "cooldown_reduction_per_creep_kill", "AbilityCastRange", "AbilityChannelTime", "AbilityCastPoint"]}, {"subject": "riki_innate_backstab", "name_zh": "力丸·背刺", "name_en": "Backstab", "description_zh": "力丸每次从背后攻击敌人时都会造成额外伤害，伤害量为自身敏捷的一定倍数。", "description_en": "Every time Riki strikes his enemy from behind, he deals additional bonus damage equal to a multiple of his Agility.", "notes_zh": ["反补友方单位时具有%ally_multiplier%%%效果。", "力丸的幻象也会有背刺的动作，但是不会造成额外伤害。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["damage_multiplier", "ally_multiplier", "backstab_angle", "bonus_xp_kill", "bonus_xp_assist", "bonus_xp_assist_other"]}, {"subject": "riki_backstab", "name_zh": "力丸·刀光谍影", "name_en": "Cloak and Dagger", "description_zh": "力丸遁入阴影，变为隐身状态，主动攻击敌人后力丸将会显形。击杀英雄和助攻会提供额外经验。", "description_en": "Riki fades into the shadows, becoming invisible until he attacks. Hero kills and assists grant additional experience.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["fade_delay", "invis_movespeed_bonus_percent", "bonus_xp_kill", "bonus_xp_assist"]}, {"subject": "enigma_malefice", "name_zh": "谜团·憎恶", "name_en": "Malefice", "description_zh": "将谜团的力量集中于一个目标，使它受到多次伤害并反复被眩晕。每%tick_rate%秒眩晕一次。", "description_en": "Focuses Enigma's power on a target, causing it to take damage and become repeatedly stunned for multiple instances.  An instance strikes every %tick_rate% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "憎恶的眩晕时间增加%shard_bonus_stun_duration_tooltip%秒，并且每次眩晕都会在目标身旁产生一个虚灵体。这些虚灵体不会再次分裂。", "en": "Increases Malefice stun duration by %shard_bonus_stun_duration_tooltip%s and creates an Eidolon next to the target every instance of Malefice stun. These Eidolons will not multiply further."}}, "is_passive": false, "value_names": ["tick_rate", "stun_duration", "shard_bonus_stun_duration_tooltip", "damage", "stun_instances", "eidolon_spawns_per_tick", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "enigma_demonic_conversion", "name_zh": "谜团·恶魔召唤", "name_en": "Demonic Summoning", "description_zh": "以生命为代价召唤三个谜团自身的碎片。虚灵的生命值会有所增加，数值为谜团当前生命值的%current_health_pct%%%。这些虚灵都由谜团控制，在反复经过几次成功的攻击后，虚灵会再次分裂，并完全回复生命值。", "description_en": "Summons three fragments of Enigma himself at the cost of health.  The eidolons health is increased by %current_health_pct%%% of Enigma's current health. These eidolons are all under Enigma's control, and repeated successful attacks cause them to multiply.  When this happens, the eidolons have their health restored.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["spawn_count", "split_attack_count", "eidelon_max_health", "life_extension", "eidelon_base_damage", "eidolon_damage_spread", "eidolon_bonus_damage", "eidolon_bonus_attack_speed", "eidelon_base_movespeed", "creep_max_level", "eidolon_magic_resist", "eidolon_attack_range", "allied_damage_pct", "self_modelscale", "spawn_offset"]}, {"subject": "enigma_midnight_pulse", "name_zh": "谜团·午夜凋零", "name_en": "Midnight Pulse", "description_zh": "使一块区域浸入暗共振中，对敌方单位造成%base_damage% + 基于敌人当前生命值的伤害。", "description_en": "Steeps an area in dark resonance, dealing %base_damage% + a percentage of the enemies current HP as damage.", "notes_zh": ["此技能将摧毁范围内的树木。", "多个午夜凋零的效果不会叠加。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "base_damage", "damage_percent", "duration", "tick_rate", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "enigma_event_horizon", "name_zh": "谜团·事件视界", "name_en": "Event Horizon", "description_zh": "%radius%范围内的单位远离谜团时会受到移速惩罚。", "description_en": "Units in a %radius% radius moving away from Enigma have a movespeed penalty.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["radius", "speed_bonus", "vision_cone"]}, {"subject": "enigma_black_hole", "name_zh": "谜团·黑洞", "name_en": "Black Hole", "description_zh": "持续施法 - 召唤一个强引力漩涡吸住敌方单位。被黑洞影响的单位不能移动、攻击或施法。", "description_en": "CHANNELED - Summons a vortex that sucks in nearby enemy units.  Enemies affected by Black Hole cannot move, attack, or cast spells.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "黑洞额外造成等同于单位%scepter_pct_damage%%%最大生命值的每秒伤害，并且产生一个%scepter_radius%范围，没有打断效果的牵引效果。牵引速度为%scepter_drag_speed%。", "en": "Black Hole deals additional damage equivalent to %scepter_pct_damage%%% of the unit's Max Health per second and does a non-interrupting pull towards it in a %scepter_radius% AoE. Pulls at a rate of %scepter_drag_speed%."}}, "is_passive": false, "value_names": ["damage", "radius", "pull_speed", "tick_rate", "duration", "vision_radius", "pull_rotate_speed", "animation_rate", "scepter_pct_damage", "scepter_radius", "scepter_drag_speed", "scepter_pull_rotate_speed", "AbilityCastRange", "AbilityChannelTime", "AbilityCastPoint"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "slardar_bash",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "下次攻击会重击目标。", "uncertain": false},
+        {"mechanism": "bash", "condition": "base", "quote": "%attack_count%次攻击后，下次攻击会重击目标。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "slardar_seaborn_sentinel",
+      "mechanisms": [
+        {"mechanism": "healing", "condition": "base", "quote": "获得移动速度、生命恢复、攻击力和护甲加成", "uncertain": false},
+        {"mechanism": "status_resistance", "condition": "scepter", "quote": "获得额外生命恢复、护甲，还有状态抗性", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "slardar_amplify_damage",
+      "mechanisms": [
+        {"mechanism": "armor_reduction", "condition": "base", "quote": "削弱敌人的护甲", "uncertain": false},
+        {"mechanism": "true_sight", "condition": "base", "quote": "provides True Sight", "uncertain": false},
+        {"mechanism": "grant_vision", "condition": "base", "quote": "vision of the targeted unit", "uncertain": false},
+        {"mechanism": "reveal", "condition": "base", "quote": "显示隐身单位", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_gush",
+      "mechanisms": [
+        {"mechanism": "slow", "condition": "base", "quote": "减速并削弱护甲", "uncertain": false},
+        {"mechanism": "armor_reduction", "condition": "base", "quote": "减速并削弱护甲", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "scepter", "quote": "巨浪变成点地施放的波形技能，可以作用于直线上的单位。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_kraken_shell",
+      "mechanisms": [
+        {"mechanism": "damage_block", "condition": "base", "quote": "可以被动格挡物理伤害", "uncertain": false},
+        {"mechanism": "applies_strong_dispel", "condition": "base", "quote": "受到的伤害超过临界值后还将移除负面的状态效果。\n\n可以主动开启，以%active_move_speed_penalty_pct%%%移动速度的代价使伤害格挡量加倍。持续%active_duration%秒。\n\n驱散类型：强驱散", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_anchor_smash",
+      "mechanisms": [
+        {"mechanism": "attack_damage_reduction", "condition": "base", "quote": "降低敌人的攻击力", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "挥动他巨大的锚攻击附近的敌人", "uncertain": false},
+        {"mechanism": "damage_return", "condition": "base", "quote": "海妖外壳净化触发的锚击造成的伤害被视为反弹伤害。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_dead_in_the_water",
+      "mechanisms": [
+        {"mechanism": "mobility_lock", "condition": "shard", "quote": "The hero is leashed while attached to the anchor.", "uncertain": false},
+        {"mechanism": "slow", "condition": "shard", "quote": "尝试移动到距离巨锚%chain_length%距离外会导致英雄的移动速度降低至%max_movement_speed%", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_ravage",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "伤害并眩晕附近所有敌方单位", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "伤害并眩晕附近所有敌方单位", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_leviathans_catch",
+      "mechanisms": [
+        {"mechanism": "damage_block", "condition": "base", "quote": "永久获得%fish_health_bonus%点最大生命值，%fish_attack_range%攻击距离和%fish_damage_block%额外伤害格挡", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_paralyzing_cask",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "眩晕击中的敌人并造成伤害", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "在敌方单位之间弹跳，眩晕击中的敌人并造成伤害", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_voodoo_restoration",
+      "mechanisms": [
+        {"mechanism": "healing", "condition": "base", "quote": "治疗附近的友军单位", "uncertain": false},
+        {"mechanism": "aura", "condition": "base", "quote": "heal nearby allied units, costing Witch Doctor mana every second Voodoo Restoration is active", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_maledict",
+      "mechanisms": [
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "对一个较小区域内所有敌方英雄和玩家控制的目标施放诅咒，他们将每秒受到固定伤害", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_voodoo_switcheroo",
+      "mechanisms": [
+        {"mechanism": "invulnerable_untargetable", "condition": "shard", "quote": "这段时间内自己为隐藏状态。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_gris_gris",
+      "mechanisms": [
+        {"mechanism": "economy", "condition": "base", "quote": "死亡损失金钱的%death_gold_lost_reduction_pct_tooltip%%%会加入到该物品中，物品被消耗后将退回这些金钱。驱邪护符的价值每%gold_tick_interval_tooltip%秒会增加1金。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_death_ward",
+      "mechanisms": [
+        {"mechanism": "pierce_evasion", "condition": "base", "quote": "死亡守卫拥有%bonus_accuracy%%%额外必中率。", "uncertain": false},
+        {"mechanism": "invulnerable_untargetable", "condition": "base", "quote": "死亡守卫是无敌的", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "scepter", "quote": "死亡守卫的攻击会向附近英雄弹射。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "riki_smoke_screen",
+      "mechanisms": [
+        {"mechanism": "silence", "condition": "base", "quote": "沉默其中的敌人", "uncertain": false},
+        {"mechanism": "blind", "condition": "base", "quote": "使他们的攻击落空", "uncertain": false},
+        {"mechanism": "armor_reduction", "condition": "shard", "quote": "烟幕中的敌人护甲降低%armor_reduction%点", "uncertain": false},
+        {"mechanism": "invulnerable_untargetable", "condition": "shard", "quote": "无法成为他们友军的目标", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "riki_blink_strike",
+      "mechanisms": [
+        {"mechanism": "self_mobility", "condition": "base", "quote": "传送到目标背后", "uncertain": false},
+        {"mechanism": "slow", "condition": "base", "quote": "如果是敌人对其造成%slow_pct_tooltip%%%短暂减速", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "riki_tricks_of_the_trade",
+      "mechanisms": [
+        {"mechanism": "invulnerable_untargetable", "condition": "base", "quote": "力丸转移出现实位面", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "每隔一段时间从背后随机攻击附近的%interval_targets%个随机敌方单位", "uncertain": false},
+        {"mechanism": "self_mobility", "condition": "scepter", "quote": "可以对友方单位施放，持续时间内藏在他们体内。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "riki_innate_backstab",
+      "mechanisms": []
+    },
+    {
+      "subject": "riki_backstab",
+      "mechanisms": [
+        {"mechanism": "invisibility", "condition": "base", "quote": "力丸遁入阴影，变为隐身状态", "uncertain": false},
+        {"mechanism": "economy", "condition": "base", "quote": "击杀英雄和助攻会提供额外经验。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_malefice",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "使它受到多次伤害并反复被眩晕", "uncertain": false},
+        {"mechanism": "summons", "condition": "shard", "quote": "每次眩晕都会在目标身旁产生一个虚灵体。这些虚灵体不会再次分裂。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_demonic_conversion",
+      "mechanisms": [
+        {"mechanism": "summons", "condition": "base", "quote": "召唤三个谜团自身的碎片。虚灵的生命值会有所增加", "uncertain": false},
+        {"mechanism": "healing", "condition": "base", "quote": "虚灵会再次分裂，并完全回复生命值。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_midnight_pulse",
+      "mechanisms": [
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "使一块区域浸入暗共振中，对敌方单位造成%base_damage% + 基于敌人当前生命值的伤害。", "uncertain": false},
+        {"mechanism": "tree_destroy", "condition": "base", "quote": "此技能将摧毁范围内的树木。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_event_horizon",
+      "mechanisms": [
+        {"mechanism": "slow", "condition": "base", "quote": "%radius%范围内的单位远离谜团时会受到移速惩罚。", "uncertain": false},
+        {"mechanism": "aura", "condition": "base", "quote": "%radius%范围内的单位远离谜团时会受到移速惩罚。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_black_hole",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "被黑洞影响的单位不能移动、攻击或施法。", "uncertain": false},
+        {"mechanism": "displace_other", "condition": "base", "quote": "Summons a vortex that sucks in nearby enemy units.", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "scepter", "quote": "黑洞额外造成等同于单位%scepter_pct_damage%%%最大生命值的每秒伤害，并且产生一个%scepter_radius%范围", "uncertain": false}
+      ]
+    }
+  ]
+}
+tokens used
+26,628
+{
+  "objects": [
+    {
+      "subject": "slardar_bash",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "下次攻击会重击目标。", "uncertain": false},
+        {"mechanism": "bash", "condition": "base", "quote": "%attack_count%次攻击后，下次攻击会重击目标。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "slardar_seaborn_sentinel",
+      "mechanisms": [
+        {"mechanism": "healing", "condition": "base", "quote": "获得移动速度、生命恢复、攻击力和护甲加成", "uncertain": false},
+        {"mechanism": "status_resistance", "condition": "scepter", "quote": "获得额外生命恢复、护甲，还有状态抗性", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "slardar_amplify_damage",
+      "mechanisms": [
+        {"mechanism": "armor_reduction", "condition": "base", "quote": "削弱敌人的护甲", "uncertain": false},
+        {"mechanism": "true_sight", "condition": "base", "quote": "provides True Sight", "uncertain": false},
+        {"mechanism": "grant_vision", "condition": "base", "quote": "vision of the targeted unit", "uncertain": false},
+        {"mechanism": "reveal", "condition": "base", "quote": "显示隐身单位", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_gush",
+      "mechanisms": [
+        {"mechanism": "slow", "condition": "base", "quote": "减速并削弱护甲", "uncertain": false},
+        {"mechanism": "armor_reduction", "condition": "base", "quote": "减速并削弱护甲", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "scepter", "quote": "巨浪变成点地施放的波形技能，可以作用于直线上的单位。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_kraken_shell",
+      "mechanisms": [
+        {"mechanism": "damage_block", "condition": "base", "quote": "可以被动格挡物理伤害", "uncertain": false},
+        {"mechanism": "applies_strong_dispel", "condition": "base", "quote": "受到的伤害超过临界值后还将移除负面的状态效果。\n\n可以主动开启，以%active_move_speed_penalty_pct%%%移动速度的代价使伤害格挡量加倍。持续%active_duration%秒。\n\n驱散类型：强驱散", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_anchor_smash",
+      "mechanisms": [
+        {"mechanism": "attack_damage_reduction", "condition": "base", "quote": "降低敌人的攻击力", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "挥动他巨大的锚攻击附近的敌人", "uncertain": false},
+        {"mechanism": "damage_return", "condition": "base", "quote": "海妖外壳净化触发的锚击造成的伤害被视为反弹伤害。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_dead_in_the_water",
+      "mechanisms": [
+        {"mechanism": "mobility_lock", "condition": "shard", "quote": "The hero is leashed while attached to the anchor.", "uncertain": false},
+        {"mechanism": "slow", "condition": "shard", "quote": "尝试移动到距离巨锚%chain_length%距离外会导致英雄的移动速度降低至%max_movement_speed%", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_ravage",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "伤害并眩晕附近所有敌方单位", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "伤害并眩晕附近所有敌方单位", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "tidehunter_leviathans_catch",
+      "mechanisms": [
+        {"mechanism": "damage_block", "condition": "base", "quote": "永久获得%fish_health_bonus%点最大生命值，%fish_attack_range%攻击距离和%fish_damage_block%额外伤害格挡", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_paralyzing_cask",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "眩晕击中的敌人并造成伤害", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "在敌方单位之间弹跳，眩晕击中的敌人并造成伤害", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_voodoo_restoration",
+      "mechanisms": [
+        {"mechanism": "healing", "condition": "base", "quote": "治疗附近的友军单位", "uncertain": false},
+        {"mechanism": "aura", "condition": "base", "quote": "heal nearby allied units, costing Witch Doctor mana every second Voodoo Restoration is active", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_maledict",
+      "mechanisms": [
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "对一个较小区域内所有敌方英雄和玩家控制的目标施放诅咒，他们将每秒受到固定伤害", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_voodoo_switcheroo",
+      "mechanisms": [
+        {"mechanism": "invulnerable_untargetable", "condition": "shard", "quote": "这段时间内自己为隐藏状态。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_gris_gris",
+      "mechanisms": [
+        {"mechanism": "economy", "condition": "base", "quote": "死亡损失金钱的%death_gold_lost_reduction_pct_tooltip%%%会加入到该物品中，物品被消耗后将退回这些金钱。驱邪护符的价值每%gold_tick_interval_tooltip%秒会增加1金。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "witch_doctor_death_ward",
+      "mechanisms": [
+        {"mechanism": "pierce_evasion", "condition": "base", "quote": "死亡守卫拥有%bonus_accuracy%%%额外必中率。", "uncertain": false},
+        {"mechanism": "invulnerable_untargetable", "condition": "base", "quote": "死亡守卫是无敌的", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "scepter", "quote": "死亡守卫的攻击会向附近英雄弹射。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "riki_smoke_screen",
+      "mechanisms": [
+        {"mechanism": "silence", "condition": "base", "quote": "沉默其中的敌人", "uncertain": false},
+        {"mechanism": "blind", "condition": "base", "quote": "使他们的攻击落空", "uncertain": false},
+        {"mechanism": "armor_reduction", "condition": "shard", "quote": "烟幕中的敌人护甲降低%armor_reduction%点", "uncertain": false},
+        {"mechanism": "invulnerable_untargetable", "condition": "shard", "quote": "无法成为他们友军的目标", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "riki_blink_strike",
+      "mechanisms": [
+        {"mechanism": "self_mobility", "condition": "base", "quote": "传送到目标背后", "uncertain": false},
+        {"mechanism": "slow", "condition": "base", "quote": "如果是敌人对其造成%slow_pct_tooltip%%%短暂减速", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "riki_tricks_of_the_trade",
+      "mechanisms": [
+        {"mechanism": "invulnerable_untargetable", "condition": "base", "quote": "力丸转移出现实位面", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "每隔一段时间从背后随机攻击附近的%interval_targets%个随机敌方单位", "uncertain": false},
+        {"mechanism": "self_mobility", "condition": "scepter", "quote": "可以对友方单位施放，持续时间内藏在他们体内。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "riki_innate_backstab",
+      "mechanisms": []
+    },
+    {
+      "subject": "riki_backstab",
+      "mechanisms": [
+        {"mechanism": "invisibility", "condition": "base", "quote": "力丸遁入阴影，变为隐身状态", "uncertain": false},
+        {"mechanism": "economy", "condition": "base", "quote": "击杀英雄和助攻会提供额外经验。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_malefice",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "使它受到多次伤害并反复被眩晕", "uncertain": false},
+        {"mechanism": "summons", "condition": "shard", "quote": "每次眩晕都会在目标身旁产生一个虚灵体。这些虚灵体不会再次分裂。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_demonic_conversion",
+      "mechanisms": [
+        {"mechanism": "summons", "condition": "base", "quote": "召唤三个谜团自身的碎片。虚灵的生命值会有所增加", "uncertain": false},
+        {"mechanism": "healing", "condition": "base", "quote": "虚灵会再次分裂，并完全回复生命值。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_midnight_pulse",
+      "mechanisms": [
+        {"mechanism": "aoe_damage", "condition": "base", "quote": "使一块区域浸入暗共振中，对敌方单位造成%base_damage% + 基于敌人当前生命值的伤害。", "uncertain": false},
+        {"mechanism": "tree_destroy", "condition": "base", "quote": "此技能将摧毁范围内的树木。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_event_horizon",
+      "mechanisms": [
+        {"mechanism": "slow", "condition": "base", "quote": "%radius%范围内的单位远离谜团时会受到移速惩罚。", "uncertain": false},
+        {"mechanism": "aura", "condition": "base", "quote": "%radius%范围内的单位远离谜团时会受到移速惩罚。", "uncertain": false}
+      ]
+    },
+    {
+      "subject": "enigma_black_hole",
+      "mechanisms": [
+        {"mechanism": "stun", "condition": "base", "quote": "被黑洞影响的单位不能移动、攻击或施法。", "uncertain": false},
+        {"mechanism": "displace_other", "condition": "base", "quote": "Summons a vortex that sucks in nearby enemy units.", "uncertain": false},
+        {"mechanism": "aoe_damage", "condition": "scepter", "quote": "黑洞额外造成等同于单位%scepter_pct_damage%%%最大生命值的每秒伤害，并且产生一个%scepter_radius%范围", "uncertain": false}
+      ]
+    }
+  ]
+}

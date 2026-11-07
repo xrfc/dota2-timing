@@ -1,0 +1,723 @@
+{
+  "objects": [
+    {
+      "subject": "slark_pounce",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "变为充能型技能，并且提升距离。",
+          "reason_zh": "A杖明确使技能变为充能型技能。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "该单位只能在斯拉克着地点附近的有限范围内移动。",
+          "reason_zh": "束缚会阻止目标离开限定范围。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "斯拉克向前跳跃",
+          "reason_zh": "技能主动使斯拉克向前跳跃。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "斯拉克落地点附近的树木将会被摧毁。",
+          "reason_zh": "技能明确摧毁落地点附近的树木。"
+        }
+      ]
+    },
+    {
+      "subject": "slark_saltwater_shiv",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "斯拉克用他的海浪短刀划开目标",
+          "reason_zh": "材料仅描述技能划击，没有说明为普通攻击附加效果。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "窃取目标一部分的移动速度、生命恢复和生命回复。",
+          "reason_zh": "窃取生命恢复使自身获得生命恢复，符合回复定义。"
+        }
+      ]
+    },
+    {
+      "subject": "slark_essence_shift",
+      "judgments": [
+        {
+          "mechanism": "stat_steal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次吸取他们的%stat_loss%点全属性并转化成自身额外%agi_gain%点敏捷值。",
+          "reason_zh": "技能夺取敌方属性并转化为自身敏捷。"
+        }
+      ]
+    },
+    {
+      "subject": "slark_shadow_dance",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "当斯拉克不处于敌方视野内时，他会被动获得移动速度加成和生命恢复。",
+          "reason_zh": "技能在满足条件时提供生命恢复。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击、施法、使用物品都不会使斯拉克显形",
+          "reason_zh": "这里是否定自身显形，没有使隐身单位显形的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "medusa_split_shot",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "美杜莎施展魔法将她的箭分裂成若干支箭矢。分裂箭造成的伤害为正常攻击力的一定百分比。",
+          "reason_zh": "一次攻击的多支箭矢能够伤害多个敌方目标。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "额外目标不会受到其他攻击特效（比如致命一击）的作用。",
+          "reason_zh": "基础效果仅增加攻击目标，且明确不向额外目标附加其他攻击特效。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "使分裂箭的次级攻击也能继承攻击特效，并且目标数量提升。",
+          "reason_zh": "升级仅允许继承其他来源的攻击特效，没有自身施加的额外攻击效果。"
+        }
+      ]
+    },
+    {
+      "subject": "medusa_mystic_snake",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "放出一条秘术异蛇在敌人之间跳跃，造成伤害。",
+          "reason_zh": "一次施放的异蛇能够连续伤害多个敌人。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "抵达最后一个目标后，它会返回到美杜莎身上为其恢复魔法值。",
+          "reason_zh": "异蛇返回时明确为美杜莎恢复魔法值。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "放出一条秘术异蛇在敌人之间跳跃",
+          "reason_zh": "移动的是异蛇，没有改变美杜莎自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "medusa_gorgon_grasp",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "美杜莎沿着一条直线射出%volley_count%组箭矢，每组的作用范围递增。齐射的箭矢击中的敌人会受到初始爆发伤害",
+          "reason_zh": "一次施放的多组范围箭矢能够伤害多个敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "medusa_mana_shield",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提高物理护甲，物理格挡和魔法抗性都不能减少吸收相同伤害所需的魔法。",
+          "reason_zh": "护甲仅出现在伤害吸收的交互说明中，没有降低目标护甲。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "创造一个魔法护盾，消耗美杜莎的魔法值以吸收%absorption_pct%%%的伤害。",
+          "reason_zh": "护盾明确消耗魔法值吸收伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "medusa_stone_gaze",
+      "judgments": [
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到物理攻击时承受额外伤害。",
+          "reason_zh": "石化使目标承受更多物理攻击伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "任何盯着蛇发女妖的敌方单位的攻击速度和移动速度均将被减缓。",
+          "reason_zh": "技能明确降低敌人的攻击速度和移动速度。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被石化的单位处于眩晕状态",
+          "reason_zh": "技能造成的石化明确包含眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "troll_warlord_whirling_axes_ranged",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减速并伤害前方%axe_range%范围锥形区域内的敌方单位。",
+          "reason_zh": "一次施放能够伤害锥形区域内的多个敌方单位。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "旋风飞斧（远程）可以驱散敌人。降低冷却时间和魔法消耗。驱散类型：弱驱散",
+          "reason_zh": "A杖明确使远程飞斧对敌人施加弱驱散。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减速并伤害前方%axe_range%范围锥形区域内的敌方单位。",
+          "reason_zh": "技能明确使命中的敌方单位减速。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "这里只描述与法术抵抗的交互，没有提供指向技能格挡。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "这里只描述不会触发反弹，没有赋予反弹指向技能的能力。"
+        }
+      ]
+    },
+    {
+      "subject": "troll_warlord_whirling_axes_melee",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "巨魔战将掷出两把飞斧环绕在他周围，使敌方单位受到伤害",
+          "reason_zh": "一次施放能伤害周围的多个敌方单位。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "旋风飞斧（近战）可以驱散自己。降低冷却时间和魔法消耗。驱散类型：弱驱散",
+          "reason_zh": "A杖明确使近战飞斧对自身施加弱驱散。"
+        },
+        {
+          "mechanism": "blind",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且部分普通攻击将不能命中。",
+          "reason_zh": "技能使受影响敌人的普通攻击有概率落空。"
+        }
+      ]
+    },
+    {
+      "subject": "troll_warlord_fervor",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "在攻击敌方单位时拥有%base_chance%%% + 热血战魂叠加次数*%extra_attack_chance_per_stack%%%的几率对远程攻击距离 + %range_buffer%范围内任意单位发动一次额外的远程攻击。",
+          "reason_zh": "魔晶使一次攻击有概率触发对范围内其他单位的额外攻击，从而伤害多个目标。"
+        }
+      ]
+    },
+    {
+      "subject": "troll_warlord_berserkers_rage",
+      "judgments": [
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "阻止目标移动或使用位移类技能。",
+          "reason_zh": "诱捕明确禁止目标使用位移类技能。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且降低目标的移动和攻击速度。",
+          "reason_zh": "远程形态的残废明确降低移动速度和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "troll_warlord_battle_trance",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施放时施加弱驱散。",
+          "reason_zh": "技能明确在施放时施加弱驱散。"
+        },
+        {
+          "mechanism": "execute",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "斧王的淘汰之刃还是能斩杀巨魔战将。",
+          "reason_zh": "斩杀属于斧王的技能，并非战斗专注自身效果。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "巨魔战将会获得目标的视野。",
+          "reason_zh": "技能明确提供目标视野。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提供额外吸血",
+          "reason_zh": "技能明确提供吸血。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "但是无法执行其他指令。",
+          "reason_zh": "无法执行其他指令是技能对自身的限制代价，不计限制位移。"
+        },
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提供额外吸血，攻击速度，减速抗性和移动速度。",
+          "reason_zh": "技能明确提供减速抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "centaur_hoof_stomp",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕并伤害身边的敌方单位。",
+          "reason_zh": "一次践踏能够伤害周围多个敌方单位。"
+        },
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在延迟期间，他被缴械，但可以移动。",
+          "reason_zh": "缴械是施法期间对自身的代价，不计缴械机制。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕并伤害身边的敌方单位。",
+          "reason_zh": "践踏明确眩晕周围敌方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "centaur_double_edge",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标周围单位和自身造成伤害。",
+          "reason_zh": "一次施放能够伤害目标及其周围的敌方单位。"
+        },
+        {
+          "mechanism": "death_prevention",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "此技能无法用于自杀。",
+          "reason_zh": "仅自身技能伤害不能致死，不代表一段时间内免于被打死。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "双刃剑可以对敌人造成减速",
+          "reason_zh": "魔晶明确为双刃剑增加对敌人的减速。"
+        }
+      ]
+    },
+    {
+      "subject": "centaur_return",
+      "judgments": [
+        {
+          "mechanism": "damage_return",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "半人马战行者向攻击他的单位发出反击。反弹固定伤害加上自身力量的一定百分比。",
+          "reason_zh": "受到攻击时向攻击者造成反击伤害。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "这个技能造成的伤害被视为反弹伤害。",
+          "reason_zh": "反弹伤害不等于把指向技能反弹给施法者。"
+        }
+      ]
+    },
+    {
+      "subject": "centaur_stampede",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每个敌人只会受到一次踩踏作用，并受到基于半人马战行者力量值的伤害。",
+          "reason_zh": "一次施放期间可以踩踏并伤害多个敌人。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Each enemy can be trampled once.",
+          "reason_zh": "每名敌人只受一次踩踏是命中次数限制，没有消耗式充能。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并使踩到的敌人减速。",
+          "reason_zh": "奔袭冲撞明确使被踩踏的敌人减速。"
+        }
+      ]
+    },
+    {
+      "subject": "magnataur_shockwave",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对一条直线上的敌方单位造成伤害",
+          "reason_zh": "一次能量波能够伤害直线上的多个敌方单位。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时受到短暂减速效果。",
+          "reason_zh": "技能明确对敌人施加短暂减速。"
+        }
+      ]
+    },
+    {
+      "subject": "magnataur_empower",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "给予攻击力加成并使其获得分裂效果。",
+          "reason_zh": "赋予的分裂使一次攻击能够伤害多个敌方单位。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "给予攻击力加成并使其获得分裂效果。",
+          "reason_zh": "技能明确赋予分裂效果。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "分裂伤害无视减益免疫。",
+          "reason_zh": "伤害无视减益免疫是交互说明，没有赋予减益免疫。"
+        }
+      ]
+    },
+    {
+      "subject": "magnataur_skewer",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "马格纳斯受到眩晕、妖术或放逐作用时，巨角冲撞都会被打断。",
+          "reason_zh": "这里只说明自身技能会被打断，没有说明打断目标持续施法。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "马格纳斯向前冲刺",
+          "reason_zh": "技能主动使马格纳斯向前冲刺。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "然后受到伤害并且移动速度被减缓。",
+          "reason_zh": "被击中的英雄明确受到移动速度减缓。"
+        },
+        {
+          "mechanism": "tree_walk",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "提升距离，并且使敌人穿过树木和高台时造成额外伤害。",
+          "reason_zh": "魔晶描述的是拖拽敌人经过地形时的伤害，没有赋予自身穿树移动能力。"
+        }
+      ]
+    },
+    {
+      "subject": "magnataur_horn_toss",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "马格纳斯顶起前方的敌人，将其甩在身后。敌人受到伤害",
+          "reason_zh": "该A杖授予技能一次能够抛起并伤害前方多个敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "滞空%air_duration%秒并处于眩晕状态，而且落地后还会眩晕一段时间。",
+          "reason_zh": "该A杖授予技能明确在滞空及落地后造成眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "magnataur_solid_core",
+      "judgments": [
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "马格纳斯的减速抗性得到提升",
+          "reason_zh": "技能明确提高自身减速抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "magnataur_reverse_polarity",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将附近的敌人拖拽至他的前方，并且以震击对他们造成伤害和眩晕。",
+          "reason_zh": "一次施放能够对附近多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将附近的敌人拖拽至他的前方",
+          "reason_zh": "技能主动拖拽敌人并改变其位置。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且以震击对他们造成伤害和眩晕。",
+          "reason_zh": "技能明确对敌人造成眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "shredder_whirling_death",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "Timbersaw whirls extremely sharp edges, damaging enemies and destroying trees around him in an area.",
+          "reason_zh": "一次旋转刀刃能够伤害自身周围范围内的多个敌人。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对敌人造成伤害并摧毁他周围的树木。",
+          "reason_zh": "技能明确摧毁周围树木。"
+        }
+      ]
+    }
+  ]
+}

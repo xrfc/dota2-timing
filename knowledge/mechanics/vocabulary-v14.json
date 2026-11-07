@@ -1,0 +1,862 @@
+{
+ "schema": "mechanics-vocabulary/1",
+ "version": "v14-2026-11-07",
+ "decision": "U39,U40,U43,U48-U51,U57-U59,U62,U63,U64,U65,U68,U69,U70,U71,U75-U79,U83,U85-U89,U93,U94,U95-U98,U120,U121",
+ "status": "definitions_confirmed",
+ "note": "在v12基础上写入U95–U98：飞行改名无视地形；新增高空视野；减冷却只算能减别的技能。v1–v12及其冻结包保持不变。 v14：新增“加速”（U120）。",
+ "categories": {
+  "control": "控制",
+  "defense": "防御/保命",
+  "status": "状态与驱散",
+  "resource": "生命/法力",
+  "units": "单位",
+  "movement": "位移",
+  "damage": "伤害",
+  "attack": "攻击修正",
+  "casting": "施法方式"
+ },
+ "mechanisms": [
+  {
+   "id": "stun",
+   "zh": "眩晕",
+   "category": "control",
+   "definition": "使目标无法行动和施法的硬控（含小眩晕）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "hex",
+   "zh": "妖术",
+   "category": "control",
+   "definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "silence",
+   "zh": "沉默",
+   "category": "control",
+   "definition": "目标无法施放技能（仍可攻击、使用物品）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "mute",
+   "zh": "锁闭",
+   "category": "control",
+   "definition": "目标无法使用物品",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U88：原名禁用物品，改用官方名字"
+  },
+  {
+   "id": "disarm",
+   "zh": "缴械",
+   "category": "control",
+   "definition": "目标无法普通攻击",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U89：捆缚的技能继续记缴械"
+  },
+  {
+   "id": "root",
+   "zh": "缠绕",
+   "category": "control",
+   "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U88：原名定身，改用官方名字；能否攻击分成缠绕和捆缚。U68：ROOT_DISABLES字段含义是助手按名字推断，用户未反对"
+  },
+  {
+   "id": "taunt",
+   "zh": "嘲讽",
+   "category": "control",
+   "definition": "单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U88：由强制行为拆出；战斗专注算嘲讽自身。定义措辞是助手草稿"
+  },
+  {
+   "id": "fear",
+   "zh": "恐惧",
+   "category": "control",
+   "definition": "目标被迫逃跑或远离某处",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U87、U88：由强制行为拆出。定义措辞是助手草稿"
+  },
+  {
+   "id": "hypnotize",
+   "zh": "蛊惑",
+   "category": "control",
+   "definition": "目标被迫走向施法者、某个单位或指定方向",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U87、U88：由强制行为拆出；魅惑魔女·魅惑是夺取控制，归召唤物。定义措辞是助手草稿"
+  },
+  {
+   "id": "sleep",
+   "zh": "睡眠",
+   "category": "control",
+   "definition": "无法行动，受伤害后醒来",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "cyclone_banish",
+   "zh": "吹风/放逐",
+   "category": "control",
+   "definition": "使目标短暂离开战场，期间无敌或不可被选取",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U57：虚无不算吹风/放逐，另见ethereal"
+  },
+  {
+   "id": "slow",
+   "zh": "减速",
+   "category": "control",
+   "definition": "降低敌方单位的移动速度",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U93：只算移速，降攻速的另记减攻速。说明只写“减速”、没说降什么的也留在这里，可能同时降攻速"
+  },
+  {
+   "id": "attack_slow",
+   "zh": "减攻速",
+   "category": "control",
+   "definition": "降低敌方单位的攻击速度",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U93：由减速拆出。U94：状态抗性缩短持续时间，减速抗性不影响。定义措辞是助手草稿"
+  },
+  {
+   "id": "evasion",
+   "zh": "闪避",
+   "category": "defense",
+   "definition": "自身有概率使敌方攻击落空",
+   "evidence": [
+    "official_text",
+    "item_attr:bonus_evasion",
+    "item_attr:evasion"
+   ],
+   "note": "U30：用户确认闪避与致盲分开（金箍棒只穿透闪避，致盲靠驱散或离开范围）；v3：装备属性中的闪避（如蝴蝶、闪避护符、辉耀）也作为字段证据"
+  },
+  {
+   "id": "blind",
+   "zh": "致盲",
+   "category": "defense",
+   "definition": "使敌方单位的攻击有概率落空",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "debuff_immunity",
+   "zh": "减益免疫/技能免疫",
+   "category": "defense",
+   "definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U69：黑皇杖算"
+  },
+  {
+   "id": "pierces_debuff_immunity",
+   "zh": "穿透减益免疫",
+   "category": "control",
+   "definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）",
+   "evidence": [
+    "enum:immunity",
+    "official_text"
+   ]
+  },
+  {
+   "id": "invulnerable_untargetable",
+   "zh": "无敌/不可选取",
+   "category": "defense",
+   "definition": "暂时无法被伤害或无法被指向",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "damage_block",
+   "zh": "护盾/伤害吸收/减伤",
+   "category": "defense",
+   "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）",
+   "evidence": [
+    "official_text",
+    "item_attr:block_damage_melee",
+    "item_attr:damage_block_melee",
+    "item_attr:barrier_block"
+   ],
+   "note": "U33、U35：延迟伤害算减伤"
+  },
+  {
+   "id": "death_prevention",
+   "zh": "免死",
+   "category": "defense",
+   "definition": "在一段时间内不会被打死（如薄葬、回光返照）",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U70：回光返照把伤害转为治疗，也算"
+  },
+  {
+   "id": "status_resistance",
+   "zh": "状态抗性",
+   "category": "defense",
+   "definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）",
+   "evidence": [
+    "official_text",
+    "item_attr:status_resistance"
+   ],
+   "note": "U29：用户指出散夜对剑能降低被控制时间；装备数值在OpenDota属性字段，不在技能说明里"
+  },
+  {
+   "id": "slow_resistance",
+   "zh": "减速抗性",
+   "category": "defense",
+   "definition": "降低自身受到的减速效果（如散夜对剑+30%）",
+   "evidence": [
+    "official_text",
+    "item_attr:slow_resistance"
+   ]
+  },
+  {
+   "id": "haste",
+   "zh": "加速",
+   "category": "movement",
+   "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U120：给队友加速也算；是否算“可被弱驱散的保命效果”由用户逐个定（U121）"
+  },
+  {
+   "id": "applies_basic_dispel",
+   "zh": "施加弱驱散",
+   "category": "status",
+   "definition": "移除目标身上可被弱驱散的效果",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "applies_strong_dispel",
+   "zh": "施加强驱散",
+   "category": "status",
+   "definition": "移除目标身上可被强驱散的效果（含多数眩晕）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "effect_dispellability",
+   "zh": "效果可驱散性",
+   "category": "status",
+   "definition": "技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散",
+   "evidence": [
+    "enum:dispellable"
+   ]
+  },
+  {
+   "id": "applies_break",
+   "zh": "施加破坏",
+   "category": "status",
+   "definition": "使目标的被动技能暂时失效",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "break_sensitive",
+   "zh": "可被破坏",
+   "category": "status",
+   "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准",
+   "evidence": [
+    "field:behavior",
+    "official_text",
+    "manual"
+   ],
+   "note": "U48：直接用IsBreakable，不靠读文字推断；部分破坏把附注记成条件；U47：无标记的先天无法破坏，贪魔的贪婪可破坏；U33、U35：英雄有多怕破坏见knowledge/mechanics/break-vulnerable-heroes-v1.json（推导层）；U77–U79：IsBreakable可能有旧版残留，主动技能说明里看不到被动效果时要问用户（法力虚空、自然之助、战吼、踏是残留）",
+   "game_file_evidence": [
+    "IsBreakable"
+   ]
+  },
+  {
+   "id": "invisibility",
+   "zh": "隐身",
+   "category": "status",
+   "definition": "使自身、队友、召唤物或复制体隐身",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U59：真视也看不破的诡计之雾也算；U40、U59：隐形的只是物体不算（感应地雷、蛛纱陷阱、灵能陷阱、丛林之眼、岗哨守卫）；U57：风暴双雄（魔晶）、召狼（3级）算"
+  },
+  {
+   "id": "true_sight",
+   "zh": "真视",
+   "category": "status",
+   "definition": "可看见隐身单位",
+   "evidence": [
+    "official_text",
+    "item_attr:true_sight_range"
+   ]
+  },
+  {
+   "id": "healing",
+   "zh": "治疗/回复",
+   "category": "resource",
+   "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U33：只延迟或放大治疗（如虚妄之诺）不算治疗；U50：治疗增强不算治疗；U65：升级只提升治疗量不记治疗，基础组保留；升级新增治疗仍记"
+  },
+  {
+   "id": "lifesteal",
+   "zh": "吸血",
+   "category": "resource",
+   "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）",
+   "evidence": [
+    "official_text",
+    "item_attr:lifesteal_percent",
+    "item_attr:spell_lifesteal"
+   ],
+   "note": "U33：盛宴（按目标最大生命）也算吸血；U51：固定回血也算吸血；U57：击杀回血不算吸血，记治疗（血魔·食血动物）"
+  },
+  {
+   "id": "heal_reduction",
+   "zh": "治疗削减",
+   "category": "resource",
+   "definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响",
+   "evidence": [
+    "official_text",
+    "item_attr:heal_reduction"
+   ],
+   "note": "U68、U69"
+  },
+  {
+   "id": "mana_burn",
+   "zh": "烧蓝/法力削减",
+   "category": "resource",
+   "definition": "减少目标的法力值",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "mana_gain",
+   "zh": "自身回蓝/吸蓝",
+   "category": "resource",
+   "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U42：能给自己回蓝的算；U49：属性回蓝算；U50：回蓝倍率算，记条件“倍率，效果取决于已有回蓝”"
+  },
+  {
+   "id": "mana_cost",
+   "zh": "法力消耗",
+   "category": "resource",
+   "definition": "技能的法力消耗（数值，来自官方字段），用于判断法力依赖",
+   "evidence": [
+    "field:mana_costs"
+   ],
+   "note": "法力依赖在推导层判断：高蓝耗且缺少自身回蓝手段（见mana_gain），如莱恩蓝耗高但法力吸取可抽取其他单位蓝量，所以依赖低；门槛在MK-T4/T5定"
+  },
+  {
+   "id": "illusions",
+   "zh": "幻象",
+   "category": "units",
+   "definition": "制造自身或他人的幻象",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "summons",
+   "zh": "召唤物",
+   "category": "units",
+   "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U33：不可控的召唤单位也算（如术士小鬼、骷髅王骷髅兵）；U35：夺取控制归入召唤物；U43：能被选中、控制或攻击的独立单位才算；U39：毒蛇撕咬、闪光幽魂、唤魂不算，灵光的幻火算；U76、U78：只算有血量的单位，取代U39、U40、U43的相应结果"
+  },
+  {
+   "id": "self_mobility",
+   "zh": "自身位移",
+   "category": "movement",
+   "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "displace_other",
+   "zh": "位移他人",
+   "category": "movement",
+   "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）",
+   "evidence": [
+    "official_text"
+   ]
+  },
+  {
+   "id": "magical_damage",
+   "zh": "魔法伤害",
+   "category": "damage",
+   "definition": "技能伤害类型为魔法",
+   "evidence": [
+    "enum:damage"
+   ]
+  },
+  {
+   "id": "pure_damage",
+   "zh": "纯粹伤害",
+   "category": "damage",
+   "definition": "技能伤害类型为纯粹",
+   "evidence": [
+    "enum:damage"
+   ]
+  },
+  {
+   "id": "physical_damage",
+   "zh": "物理伤害",
+   "category": "damage",
+   "definition": "技能伤害类型为物理",
+   "evidence": [
+    "enum:damage"
+   ]
+  },
+  {
+   "id": "damage_return",
+   "zh": "反伤",
+   "category": "damage",
+   "definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U33：固定值反击也算；U40、U43：受伤阈值触发的范围伤害（钢毛后背、净化锚击）、勇气之霎（打她正在攻击的目标）附条件算；反弹法术不算（U51前复核一致，助手整理）"
+  },
+  {
+   "id": "bash",
+   "zh": "重击",
+   "category": "attack",
+   "definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U58：不靠概率也算（深海重击、暗影冲刺、幽冥一击）；U51：致残不算重击（狼人·召狼）"
+  },
+  {
+   "id": "pierce_evasion",
+   "zh": "克敌机先",
+   "category": "attack",
+   "definition": "攻击无视闪避（必中）",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U43：官方中文写法；概率必中也算，如死亡守卫50%必中（U42）"
+  },
+  {
+   "id": "critical",
+   "zh": "暴击",
+   "category": "attack",
+   "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U51：不靠概率的强化攻击也算（如冥魂大帝·本命一击、巨人之槌）"
+  },
+  {
+   "id": "unit_target_spell",
+   "zh": "单体指向技能",
+   "category": "casting",
+   "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。",
+   "evidence": [
+    "field:behavior",
+    "enum:target_team"
+   ],
+   "note": "U31：骨灰类是用户指出的例外。目标字段只证明指向方式；格挡和反弹不能相互推断，也不能从大部分推为全部。物品例子的目标方式来自现有社区快照；v1抽取器仍绑定旧词表，不在此自动重跑。；U33：可主动施放或开关的攻击类技能（连击、天界箭袋、影武长刀）也算，但用户报告它们不触发法术反制、清莲宝珠、林肯法球；U51：CUSTOM阵营看能否选敌方单位（残岩魔咒、血盆大口的敌方小兵、投掷到敌方都算）"
+  },
+  {
+   "id": "channeled",
+   "zh": "持续施法",
+   "category": "casting",
+   "definition": "施法者自身需要持续引导，被打断即停止",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U51：别的单位引导（恶魔之扉使用者）或由它给出的技能引导（丛林之舞的乾坤之跃）不算；字段CHANNELLED不一定等于用户口径（蛛纱陷阱不算）；U88：噩梦算，这个状态算祸乱之源持续给目标作用的"
+  },
+  {
+   "id": "ethereal",
+   "zh": "虚无",
+   "category": "status",
+   "definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U57、U58：虚无单独是一个状态，不算吹风/放逐；定义措辞是助手草稿；琼英碧灵·越界在虚无时仍能攻击，是该技能的例外；U69：分对敌和对己两种用途，记在skill-notes-v1.json"
+  },
+  {
+   "id": "armor_reduction",
+   "zh": "减护甲",
+   "category": "attack",
+   "definition": "降低目标护甲",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "magic_resist_reduction",
+   "zh": "减魔抗/魔法易伤",
+   "category": "damage",
+   "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U65：受到的技能伤害增加归这里（猎手旋镖、血精石、纷争面纱）"
+  },
+  {
+   "id": "incoming_damage_amp",
+   "zh": "伤害加深",
+   "category": "damage",
+   "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "attack_damage_reduction",
+   "zh": "减攻击力",
+   "category": "attack",
+   "definition": "降低目标的攻击力",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "spell_block",
+   "zh": "格挡指向技能",
+   "category": "defense",
+   "definition": "使指向自身或队友的技能失效",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "spell_reflect",
+   "zh": "反弹指向技能",
+   "category": "defense",
+   "definition": "把指向技能反弹给施法者",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "projectile_dodge",
+   "zh": "躲避弹道",
+   "category": "defense",
+   "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U65：靠无敌躲开不算；传送类如幻象法球算"
+  },
+  {
+   "id": "channel_interrupt",
+   "zh": "打断持续施法",
+   "category": "control",
+   "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U65：眩晕附带的打断不记；U97：所有眩晕都能打断施法，不另记"
+  },
+  {
+   "id": "bind",
+   "zh": "捆缚",
+   "category": "control",
+   "definition": "目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U88：用户定义；U89：继续另记缴械"
+  },
+  {
+   "id": "leash",
+   "zh": "束缚",
+   "category": "control",
+   "definition": "目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U88：取代限制位移。官方中文“束缚”对应英文Leash；名字带束缚的技能不一定是（地之束缚是缠绕）"
+  },
+  {
+   "id": "terrain",
+   "zh": "创造地形",
+   "category": "movement",
+   "definition": "在地上造出单位不能穿过的地形，无视地形的单位能越过",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U89新增；U97：动能力场、动能栅栏、热血竞技场不算，更像场地魔法。"
+  },
+  {
+   "id": "cleave",
+   "zh": "分裂溅射",
+   "category": "attack",
+   "definition": "攻击伤害波及周围单位",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U65：多射几支箭（分裂箭）不算"
+  },
+  {
+   "id": "attack_modifier",
+   "zh": "攻击特效",
+   "category": "attack",
+   "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "spell_amp",
+   "zh": "法术放大",
+   "category": "damage",
+   "definition": "提高技能造成的伤害",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "aura",
+   "zh": "光环",
+   "category": "status",
+   "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "ground_zone",
+   "zh": "场地魔法",
+   "category": "status",
+   "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "；U97、U98：动能力场、动能栅栏、热血竞技场算，取代U85对它们的处理"
+  },
+  {
+   "id": "reveal",
+   "zh": "显形",
+   "category": "status",
+   "definition": "使隐身单位显形，不等于持续真视",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "grant_vision",
+   "zh": "提供视野",
+   "category": "status",
+   "definition": "提供目标或区域的视野",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "reduce_vision",
+   "zh": "减视野",
+   "category": "status",
+   "definition": "降低目标的视野",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "phased",
+   "zh": "相位移动",
+   "category": "movement",
+   "definition": "移动不受单位碰撞阻挡",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "terrain_walk",
+   "zh": "无视地形",
+   "category": "movement",
+   "definition": "移动时不受悬崖等不可通行地形阻挡，也能穿过树木",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U95：由飞行改名。U96：跳跃和冲刺都算，闪烁和传送不算。U97：幻象和分身也算。定义措辞是助手草稿"
+  },
+  {
+   "id": "high_ground_vision",
+   "zh": "高空视野",
+   "category": "movement",
+   "definition": "获得不被阻挡的视野，如暗夜魔王的大招",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U95：用户决定新增"
+  },
+  {
+   "id": "tree_walk",
+   "zh": "穿树",
+   "category": "movement",
+   "definition": "移动时能穿过树木，但不能越过悬崖或地形",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U95：能越过悬崖的归无视地形。U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "tree_destroy",
+   "zh": "砍树",
+   "category": "movement",
+   "definition": "能摧毁树木",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "respawn",
+   "zh": "重生",
+   "category": "status",
+   "definition": "死亡后复活，或影响复活",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U65：召唤物复活也算"
+  },
+  {
+   "id": "execute",
+   "zh": "斩杀",
+   "category": "damage",
+   "definition": "目标低于生命阈值时直接杀死",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "hp_removal",
+   "zh": "生命移除",
+   "category": "damage",
+   "definition": "直接移除生命，不算伤害",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "spell_steal",
+   "zh": "偷技能",
+   "category": "casting",
+   "definition": "获得其他单位的技能",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "stat_steal",
+   "zh": "偷属性",
+   "category": "resource",
+   "definition": "夺取目标的属性",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "cooldown_reduction",
+   "zh": "减冷却",
+   "category": "casting",
+   "definition": "减少别的技能或物品的冷却；只减这个技能自身的不算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U97：取代U64中“降低自身冷却算减冷却”。U65：升级只改数值不记机制，取代U64"
+  },
+  {
+   "id": "cooldown_reset",
+   "zh": "刷新冷却",
+   "category": "casting",
+   "definition": "立刻重置冷却",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U62：用户决定加入，定义是助手草稿，用户未提出修改"
+  },
+  {
+   "id": "economy",
+   "zh": "经济经验",
+   "category": "resource",
+   "definition": "提供额外金钱或经验；只是正常赏金不算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U65：驱邪护符、金袋算"
+  },
+  {
+   "id": "charges",
+   "zh": "充能",
+   "category": "casting",
+   "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U65"
+  },
+  {
+   "id": "aoe_damage",
+   "zh": "范围伤害",
+   "category": "damage",
+   "definition": "一次施放或一次攻击能对多个敌方单位造成伤害",
+   "evidence": [
+    "official_text"
+   ],
+   "note": "U71：定义是助手草稿；只打单个目标的不算；分裂攻击同时记分裂溅射。U72：召唤多个单位分别打人不算；升级只改数值不记"
+  }
+ ],
+ "derived_from": {
+  "file": "knowledge/mechanics/vocabulary-v12.json",
+  "sha256": "e0745f28e9551e6198f1511883d6c486288b0cebdc2a24dd85e7cb18bb816fe3"
+ }
+}

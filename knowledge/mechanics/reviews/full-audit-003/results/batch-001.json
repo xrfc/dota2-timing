@@ -1,0 +1,615 @@
+{
+  "objects": [
+    {
+      "subject": "antimage_mana_break",
+      "judgments": [
+        {
+          "mechanism": "mana_burn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次攻击损毁目标魔法值",
+          "reason_zh": "基础攻击效果明确削减目标魔法值。"
+        }
+      ]
+    },
+    {
+      "subject": "antimage_blink",
+      "judgments": [
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "短距离传送",
+          "reason_zh": "短距离传送属于位移，材料未说明具有飞行移动。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "阻止目标在短时间内恢复或获得魔法",
+          "reason_zh": "阻止敌人回蓝并不为自身恢复或抽取魔法。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "闪烁可以躲避多种飞行过程中的攻击和技能弹道。",
+          "reason_zh": "基础说明明确可以躲避飞行中的弹道。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "短距离传送，能让敌法师自由出入战场。",
+          "reason_zh": "技能通过传送主动改变自身位置。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "短距离传送，能让敌法师自由出入战场。",
+          "reason_zh": "自身传送是基础效果，不依赖神杖。"
+        }
+      ]
+    },
+    {
+      "subject": "antimage_counterspell",
+      "judgments": [
+        {
+          "mechanism": "damage_return",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "抵挡和反弹所有指向性技能",
+          "reason_zh": "反弹指向技能不属于受到攻击或伤害后触发的反伤。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "在敌方施法者身边制造一个敌法师的闪烁碎片",
+          "reason_zh": "制造闪烁碎片没有说明移动敌法师自身。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "抵挡和反弹所有指向性技能",
+          "reason_zh": "基础主动效果明确抵挡指向性技能。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "抵挡和反弹所有指向性技能",
+          "reason_zh": "基础主动效果明确反弹指向性技能。"
+        }
+      ]
+    },
+    {
+      "subject": "antimage_persectur",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击会根据敌人缺失的魔法值造成减速。",
+          "reason_zh": "基础攻击效果明确使敌人减速。"
+        }
+      ]
+    },
+    {
+      "subject": "antimage_mana_void",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标和其周围的敌人造成伤害",
+          "reason_zh": "一次施放能伤害目标及周围多个敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "所有受到伤害的单位都会被短暂眩晕。",
+          "reason_zh": "基础说明明确施加短暂眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "axe_berserkers_call",
+      "judgments": [
+        {
+          "mechanism": "forced_action",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "斧王嘲讽附近的敌方单位，强迫他们攻击自己",
+          "reason_zh": "嘲讽强迫敌人攻击自身，符合强制行为定义。"
+        }
+      ]
+    },
+    {
+      "subject": "axe_battle_hunger",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "激怒一个敌方单位，使他受到持续伤害",
+          "reason_zh": "材料只说明对一个敌方单位造成持续伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "敌人只要背朝斧王还将被减速。",
+          "reason_zh": "基础效果会在敌人背朝斧王时施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "axe_counter_helix",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对附近所有敌方单位造成纯粹伤害",
+          "reason_zh": "一次螺旋反击能伤害附近多个敌方单位。"
+        },
+        {
+          "mechanism": "damage_return",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到一定次数攻击后，斧王就会做出螺旋反击，对附近所有敌方单位造成纯粹伤害。",
+          "reason_zh": "受到攻击累计触发范围反击伤害，符合反伤定义。"
+        }
+      ]
+    },
+    {
+      "subject": "axe_culling_blade",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reset",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "淘汰之刃击杀敌方英雄时将重置冷却时间",
+          "reason_zh": "基础效果明确在击杀敌方英雄时重置自身冷却。"
+        }
+      ]
+    },
+    {
+      "subject": "bane_enfeeble",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每秒造成伤害，并且降低敌人的总攻击力和施法距离。",
+          "reason_zh": "材料没有说明一次施放能伤害多个敌方单位。"
+        },
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低敌人的总攻击力",
+          "reason_zh": "基础效果明确降低敌人的攻击力。"
+        }
+      ]
+    },
+    {
+      "subject": "bane_brain_sap",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "shard",
+          "quote": "蚀脑变成%shard_radius%作用范围的技能。",
+          "reason_zh": "范围伤害由魔晶将原本的单体伤害技能改为范围技能后提供。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害并回复自身生命值",
+          "reason_zh": "基础效果明确回复自身生命值。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "造成伤害并回复自身生命值",
+          "reason_zh": "自身治疗已是基础效果，魔晶没有新增独立的治疗机制。"
+        }
+      ]
+    },
+    {
+      "subject": "bane_nightmare",
+      "judgments": [
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在噩梦的第一秒，作用单位是无敌状态。",
+          "reason_zh": "基础效果明确使受作用单位在第一秒无敌。"
+        },
+        {
+          "mechanism": "sleep",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "让目标敌方或友方英雄进入沉睡。睡着的单位会向祸乱之源选定的方向走去，受到攻击便会醒来。",
+          "reason_zh": "材料明确施加沉睡且受到攻击会醒来。"
+        }
+      ]
+    },
+    {
+      "subject": "bane_fiends_grip",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "抓住一个敌方单位，使其失去行动能力并持续受到大量伤害",
+          "reason_zh": "基础效果只对一个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "幻象承受%scepter_incoming_illusion_damage%%%伤害，并且被打断后立刻消失。",
+          "reason_zh": "这里描述幻象被打断后的结果，没有说明技能主动打断持续施法。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "魔爪将产生两个不可控制的幻象",
+          "reason_zh": "神杖升级明确新增两个幻象。"
+        },
+        {
+          "mechanism": "mana_burn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "按目标最大魔法值一定比例吸取魔法",
+          "reason_zh": "从目标吸取魔法会削减目标魔法值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "按目标最大魔法值一定比例吸取魔法",
+          "reason_zh": "基础效果明确从目标吸取魔法，符合自身吸蓝定义。"
+        }
+      ]
+    },
+    {
+      "subject": "bane_ichor_of_nyctasha",
+      "judgments": [
+        {
+          "mechanism": "status_resistance",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使敌人对祸乱之源施加的负面状态的状态抗性减少",
+          "reason_zh": "降低敌人的状态抗性不符合缩短自身所受控制与减益时间的定义。"
+        }
+      ]
+    },
+    {
+      "subject": "bloodseeker_bloodrage",
+      "judgments": [
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "deal more spell damage",
+          "reason_zh": "基础效果明确提高技能造成的伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "bloodseeker_blood_bath",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "区域范围内所有敌人都会受到伤害",
+          "reason_zh": "一次施放能对区域内多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "区域范围内所有敌人都会受到伤害，并被沉默。",
+          "reason_zh": "基础效果明确使区域内敌人沉默。"
+        }
+      ]
+    },
+    {
+      "subject": "bloodseeker_thirst",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他还将获得该英雄的视野和真实视域",
+          "reason_zh": "基础效果在敌方英雄生命值足够低时提供该英雄的视野。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他还将获得该英雄的视野和真实视域",
+          "reason_zh": "提供视野与真视没有使任何单位隐身。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "he will also gain vision and True Sight of that hero",
+          "reason_zh": "基础效果明确提供低生命值敌方英雄的真视。"
+        }
+      ]
+    },
+    {
+      "subject": "bloodseeker_sanguivore",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "血魔每杀死一个单位都会回复部分生命",
+          "reason_zh": "基础效果明确通过击杀单位回复生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "bloodseeker_rupture",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "让一个敌方单位皮开肉绽，根据其当前生命值造成初始伤害。",
+          "reason_zh": "材料只描述对一个目标造成初始伤害及移动伤害。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "grants %AbilityCharges% Rupture Charges",
+          "reason_zh": "神杖升级明确为割裂提供施放充能。"
+        }
+      ]
+    },
+    {
+      "subject": "crystal_maiden_crystal_nova",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "A burst of damaging frost slows enemy movement in the targeted area.",
+          "reason_zh": "冰爆会对目标区域内的敌人造成伤害。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "冰霜新星在持续时间内提供目标区域的视野。",
+          "reason_zh": "基础说明明确提供目标区域视野。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低目标区域内的敌人的移动速度",
+          "reason_zh": "基础效果明确降低敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "crystal_maiden_frostbite",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "操控冰霜包围一个敌方单位，禁止移动和攻击，并持续造成伤害。",
+          "reason_zh": "该对象自身只描述对一个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "冰封禁制为捆缚效果。",
+          "reason_zh": "基础说明明确其为禁止移动的捆缚效果。"
+        }
+      ]
+    },
+    {
+      "subject": "crystal_maiden_brilliance_aura",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "地图上所有友方单位获得额外魔法恢复。水晶室女附近%proximity_bonus_radius%范围内友军获得更高的魔法恢复。水晶室女被动获得魔法恢复增强。",
+          "reason_zh": "基础效果提供友方魔法恢复且自身获得魔法恢复增强。"
+        }
+      ]
+    },
+    {
+      "subject": "crystal_maiden_crystal_clone",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对附近%frostbite_radius%范围内敌人施加冰封禁制。",
+          "reason_zh": "克隆碎裂会向多个敌人施加材料中明确具有持续伤害的冰封禁制，且整个技能由魔晶提供。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "向一个方向滑行",
+          "reason_zh": "滑行描述没有说明飞行移动或能够越过地形。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "躲避多种飞行过程中的攻击和技能弹道",
+          "reason_zh": "技能明确躲避飞行中的弹道，且整个技能由魔晶提供。"
+        }
+      ]
+    },
+    {
+      "subject": "crystal_maiden_glacial_guard",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "水晶室女消耗在她技能上的一部分魔法会转化为物理护盾。",
+          "reason_zh": "基础效果明确将部分魔法消耗转化为物理护盾。"
+        }
+      ]
+    },
+    {
+      "subject": "crystal_maiden_freezing_field",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "以水晶室女为中心召唤%num_explosions%次随机冰爆轰炸敌人，将其减速并造成大量伤害。",
+          "reason_zh": "一次施放产生多次冰爆，能伤害多个敌人。"
+        },
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "仍然可以被敌人打断。",
+          "reason_zh": "说明的是自身可被打断，没有赋予打断敌人持续施法的效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减速效果对作用范围内所有敌人有效，即使他们没有受到冰爆的伤害",
+          "reason_zh": "基础效果明确使作用范围内的敌人减速。"
+        }
+      ]
+    }
+  ]
+}

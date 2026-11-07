@@ -1,0 +1,1287 @@
+[codex-prefer] account=temp
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty3
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a71c-16e0-70c3-bf54-a5c7c46c080f
+--------
+user
+你在独立核对Dota 2技能和装备的机制记录。每个对象的`judge`列出若干“对象 + 机制 + 生效条件”，其中有的成立，有的不成立，比例不告诉你。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+逐条判断`judge`里的每一项，不要增加也不要漏掉：
+- `decision`：`accept`（材料支持这个对象具备该机制）、`reject`（材料不支持，或不符合定义）、`uncertain`（材料不足或需要游戏知识，不要猜）。
+- `condition_correct`：只看生效条件是否写对。`base`是基础效果，`scepter`是只在有A杖时生效，`shard`是只在有魔晶时生效，`item`是装备。`granted_by`不为空的对象，整个技能按该升级记。如果`decision`不是`accept`，填true。
+- `correct_condition`：`condition_correct`为false时写正确条件，否则与给定条件相同。
+- `quote`摘决定判断的原文片段，没有就写空字符串。`reason_zh`用一句中文说明理由。
+- `mechanism`和`condition`原样返回，`subject`原样返回。
+
+判断规则，已由用户确认，必须遵守：
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+- 召唤物只算有血量的单位；按受攻击次数计算的不算；猴子猴孙、部署炮塔不算。
+- 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+- 固定在地上的区域算场地魔法；区域跟着单位移动的算光环。只起阻挡作用的墙和圈不算场地魔法。
+- 属性生命恢复算治疗。普攻附带的减甲、减速、减疗、烧蓝、额外伤害、中毒等算攻击特效；单纯提高攻击力、攻速、吸血、暴击、分裂或弹射不算攻击特效。
+- 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字，可以当证据。`%xxx%`是数值占位符。
+
+待判断内容：
+{"vocabulary": [{"id": "aoe_damage", "zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害"}, {"id": "applies_basic_dispel", "zh": "施加弱驱散", "definition": "移除目标身上可被弱驱散的效果"}, {"id": "armor_reduction", "zh": "减护甲", "definition": "降低目标护甲"}, {"id": "attack_modifier", "zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条"}, {"id": "aura", "zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法"}, {"id": "channel_interrupt", "zh": "打断持续施法", "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记"}, {"id": "charges", "zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"}, {"id": "damage_block", "zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"}, {"id": "debuff_immunity", "zh": "减益免疫/技能免疫", "definition": "处于减益免疫（技能免疫）时，只有能穿透减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）"}, {"id": "displace_other", "zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）"}, {"id": "economy", "zh": "经济经验", "definition": "提供额外金钱或经验；只是正常赏金不算"}, {"id": "flying", "zh": "飞行", "definition": "飞行移动，能越过地形"}, {"id": "forced_action", "zh": "强制行为", "definition": "嘲讽、恐惧、催眠等强制目标攻击或移动；夺取控制权不在此类（归召唤物）"}, {"id": "healing", "zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）"}, {"id": "illusions", "zh": "幻象", "definition": "制造自身或他人的幻象"}, {"id": "invisibility", "zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身"}, {"id": "mana_gain", "zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"}, {"id": "phased", "zh": "相位移动", "definition": "移动不受单位碰撞阻挡"}, {"id": "pierce_evasion", "zh": "克敌机先", "definition": "攻击无视闪避（必中）"}, {"id": "projectile_dodge", "zh": "躲避弹道", "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算"}, {"id": "root", "zh": "定身", "definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"}, {"id": "self_mobility", "zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"}, {"id": "silence", "zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）"}, {"id": "slow", "zh": "减速", "definition": "降低移动速度或攻击速度"}, {"id": "spell_reflect", "zh": "反弹指向技能", "definition": "把指向技能反弹给施法者"}, {"id": "stun", "zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）"}, {"id": "summons", "zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算"}], "objects": [{"subject": "life_stealer_infest", "name_zh": "噬魂鬼·感染", "name_en": "Infest", "description_zh": "噬魂鬼进入目标单位的身体，无法被察觉，而且自身在体内时每秒恢复最大生命值的一定百分比。接着可以从宿主体内现身，对周围所有敌方单位造成伤害。如果被感染单位是敌方非英雄单位或中立生物，噬魂鬼可以控制其进行移动和攻击，而且该生物会持续失去最大生命值的一部分。无法对敌方英雄生效。\n\n驱散类型：弱驱散", "description_en": "Lifestealer infests the body of a target unit, becoming undetectable, and healing for a portion of his max hitpoints every second while inside. He can then explode from the host body, dealing damage to nearby enemies. If the infested unit is an enemy creep or a neutral creep, he can take control of the unit's ability to move and attack, and the creep loses a portion of their max hitpoints over time. Does not work on enemy heroes.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["噬魂鬼在感染一个单位期间能够从周围死亡的单位身上获得经验。", "被感染控制的单位会获得感染的移动速度加成。", "不会触发法术反弹。", "感染可以对远古生物使用。"], "granted_by": "", "upgrades": {"scepter": {"zh": "提升施法距离并且冷却时间降低至%bonus_AbilityCooldown%秒。感染可以对敌方英雄施放，持续时间较短，并在他们体内发动攻击，同时提升噬魂鬼的恢复速率。", "en": "Increases cast range and reduces cooldown to %bonus_AbilityCooldown%s.  Infest may target enemy heroes for a short duration, attacking them from the inside while increasing Lifestealer's regeneration rate."}, "shard": {"zh": "吞噬感染的中立生物会使敌人沾满鲜血，根据宿主的剩余生命值造成持续伤害。", "en": "Consuming a creep with Infest drenches enemies in blood which deals damage over time based on the host's remaining health."}}, "is_passive": false, "value_names": ["radius", "damage", "bonus_movement_speed", "bonus_health", "self_regen", "infest_duration_enemy", "attack_rate_enemy", "creep_max_hp_drain_pct_per_second", "can_target_ancients", "dot_damage_as_pct_of_damage_dealt", "dot_duration", "dot_tick_interval", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "applies_basic_dispel", "condition": "base"}, {"mechanism": "healing", "condition": "base"}, {"mechanism": "spell_reflect", "condition": "base"}, {"mechanism": "summons", "condition": "base"}]}, {"subject": "dark_seer_vacuum", "name_zh": "黑暗贤者·真空", "name_en": "Vacuum", "description_zh": "黑暗贤者在目标区域制造一个真空环境，将周围的敌方单位吸入，具有打断效果并造成伤害。", "description_en": "Dark Seer creates a vacuum over the target area that sucks in enemy units, disrupting them and dealing damage.", "notes_zh": ["此技能可以打断持续施法。", "牵引过程为%duration%秒，伤害在牵引后产生。", "真空中央附近的树木将会被摧毁。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "duration", "damage", "radius_tree", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "channel_interrupt", "condition": "base"}]}, {"subject": "dark_seer_ion_shell", "name_zh": "黑暗贤者·离子外壳", "name_en": "Ion Shell", "description_zh": "将目标用一个尖刺之盾包裹起来，对周围的敌人造成伤害。", "description_en": "Surrounds the target unit with a bristling shield that damages enemy units in an area around it.", "notes_zh": ["每%tick_interval%秒造成一次若干伤害。", "离子外壳对其作用单位没有伤害。", "如果对已经套上离子外壳的单位再次施放，新的离子外壳会取代旧的。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "damage_per_second", "duration", "tick_interval", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}]}, {"subject": "dark_seer_surge", "name_zh": "黑暗贤者·奔腾", "name_en": "Surge", "description_zh": "为一个友方目标注入能量，使其在短时间内移动速度爆发，并且获得相位移动状态。允许单位达到移动速度上限，并且无法被减速。", "description_en": "Charges a target friendly unit with power, giving it a brief burst of phased movement speed. Allows the unit to reach maximum movement speed and cannot be slowed.", "notes_zh": ["奔腾的单位不受减速影响，除非奔腾效果消失。"], "granted_by": "", "upgrades": {"shard": {"zh": "奔腾单位的身后留下一道路径，作用范围为%trail_radius%，持续%trail_duration%秒，对附近的敌人造成%trail_move_slow%%%减速，并且每秒造成%trail_damage%点伤害，伤害间隔为%trail_damage_interval%秒。可以设为多样施法（右键点击技能栏图标），禁止留下路径。", "en": "Surged units leave behind a %trail_radius% radius trail that lasts %trail_duration%s, slows enemies around it by %trail_move_slow%%% and deals %trail_damage% damage per second in %trail_damage_interval%s intervals. Can be put on alt-cast to disable the trail."}}, "is_passive": false, "value_names": ["duration", "speed_boost", "trail_radius", "trail_duration", "trail_move_slow", "trail_damage", "trail_damage_interval", "aoe_radius", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "charges", "condition": "base"}, {"mechanism": "phased", "condition": "base"}, {"mechanism": "slow", "condition": "shard"}]}, {"subject": "dark_seer_normal_punch", "name_zh": "黑暗贤者·普通一拳", "name_en": "Normal Punch", "description_zh": "被动技能。使黑暗贤者下次对英雄的攻击具有克敌机先效果，可以打出目标的复制体，并且根据过去%recent_duration%秒内黑暗贤者的移动距离造成伤害和眩晕。移动%max_distance%距离以上将造成最大威力。", "description_en": "Passive ability. Causes Dark Seer's next attack on a hero to have True Strike, knock a replica out of the victim, damaging and stunning them based on how far Dark Seer has moved in the past %recent_duration% seconds. Max power is reached after %max_distance% distance moved.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": true, "value_names": ["max_stun", "recent_duration", "max_distance", "knockback_distance", "illusion_duration", "max_damage", "normal_punch_illusion_delay", "AbilityCooldown"], "judge": [{"mechanism": "pierce_evasion", "condition": "scepter"}, {"mechanism": "stun", "condition": "scepter"}]}, {"subject": "dark_seer_aggrandize", "name_zh": "黑暗贤者·才思敏捷", "name_en": "Quick Wit", "description_zh": "黑暗贤者从每点智力获得%int_to_atkspd%攻击速度。\n\n黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。", "description_en": "Dark Seer gains %int_to_atkspd% Attack Speed from each point of Intelligence.\n\nWhen Dark Seer levels up, he restores a percentage of his max health and mana.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["int_to_atkspd", "attack_speed_tooltip", "heal_pct"], "judge": [{"mechanism": "healing", "condition": "base"}, {"mechanism": "mana_gain", "condition": "base"}]}, {"subject": "dark_seer_wall_of_replica", "name_zh": "黑暗贤者·复制之墙", "name_en": "Wall of Replica", "description_zh": "制造一堵扭曲的光墙，对穿过的敌方英雄造成伤害和减速，并复制一个其自身的幻象，幻象由黑暗贤者控制，持续到光墙消失，或者被敌人消灭。", "description_en": "Raises a wall of warping light that slows, damages, and creates replicas of any enemy hero who crosses it. Enemy replicas serve at the Dark Seer's will. Replicas last until they are destroyed, or until the wall's duration ends.", "notes_zh": ["幻象不会产生幻象。", "每堵光墙同一时间产生的为一名英雄产生的幻象只有一个。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "replica_damage_outgoing", "tooltip_outgoing", "replica_damage_incoming", "tooltip_replica_total_damage_incoming", "width", "movement_slow", "slow_duration", "scepter_length_multiplier", "wall_damage", "cooldown_reduction", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "illusions", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "clinkz_searing_arrows", "name_zh": "克林克兹·灼热之箭", "name_en": "Searing Arrows", "description_zh": "让克林克兹的箭矢带有火焰，造成更多伤害。骷髅弓手在攻击克林克兹的攻击目标时会发射灼热之箭，造成%skeleton_damage_pct%%%伤害。", "description_en": "Imbues Clinkz's arrows with fire for extra damage.Skeleton Archers will fire Searing Arrows at targets Clinkz attacks for %skeleton_damage_pct%%% damage.", "notes_zh": ["灼热之箭能对建筑造成伤害。", "伤害直接作为物理伤害加到克林克兹的攻击伤害中。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_bonus", "has_multishot", "skeleton_damage_pct", "AbilityCastRange", "AbilityManaCost"], "judge": [{"mechanism": "attack_modifier", "condition": "base"}]}, {"subject": "clinkz_death_pact", "name_zh": "克林克兹·死亡契约", "name_en": "Death Pact", "description_zh": "克林克兹以敌方非英雄单位或友方骷髅弓手为吞噬的目标，治疗并获得最大生命值。不会使克林克兹脱离骨隐步。", "description_en": "Clinkz consumes the target enemy creep or friendly Skeleton Archer, healing and gaining max health. Does not take Clinkz out of Skeleton Walk.", "notes_zh": ["如果目标是敌方单位，克林克兹将获得经验和金钱。", "克林克兹的当前血量和生命值上限都将提高。", "持续时间结束后，血量上限回到正常值，但是当前生命值不变（不会高于血量上限）。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "health_gain", "spawn_skeleton_on_origin", "creep_level", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost"], "judge": [{"mechanism": "healing", "condition": "base"}]}, {"subject": "clinkz_burning_barrage", "name_zh": "克林克兹·炽烈火雨", "name_en": "Burning Barrage", "description_zh": "持续施法 - 克林克兹持续施法，朝目标方向射出多支灼热的箭矢，击中所有敌人，造成克林克兹攻击伤害的一定百分比并施加攻击特效。", "description_en": "CHANNELED - Clinkz channels and shoots multiple piercing arrows in the target direction that hit all enemy units dealing a percentage of Clinkz' attack damage and applying attack modifiers.", "notes_zh": ["攻击距离加成会提升炽烈火雨的长度。"], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["wave_count", "range", "damage_pct", "projectile_width", "AbilityChannelTime", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "shard"}, {"mechanism": "attack_modifier", "condition": "shard"}]}, {"subject": "clinkz_wind_walk", "name_zh": "克林克兹·骨隐步", "name_en": "Skeleton Walk", "description_zh": "克林克兹进入隐身状态，移动可以穿过其他单位，攻击或使用物品时现形。脱离隐身后会产生骷髅弓手。骷髅弓手不能移动，需要多次英雄或防御塔攻击才会被击杀。骷髅弓手继承克林克兹一定百分比的攻击力，对建筑造成的伤害降低%skeleton_building_damage_reduction%%%。攻击距离与克林克兹相同。", "description_en": "Clinkz moves invisibly through units until the moment he attacks or uses items. Leaving Skeleton Walk creates Skeleton Archers.Skeleton Archers are immobile and die within multiple attacks from a hero or tower. Skeleton Archers deal a percentage of Clinkz' damage, and deal %skeleton_building_damage_reduction%%% less damage to buildings. Attack range is equal to Clinkz' attack range.", "notes_zh": ["渐隐时间为%fade_time%秒。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "fade_time", "move_speed_bonus_pct", "skeleton_count", "skeleton_offset", "skeleton_offset_min", "skeleton_duration", "skeleton_health", "skeleton_health_tooltip", "skeleton_building_damage_reduction", "attack_rate", "damage_percent", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "damage_block", "condition": "base"}, {"mechanism": "invisibility", "condition": "base"}]}, {"subject": "clinkz_infernal_shred", "name_zh": "克林克兹·地狱之裂", "name_en": "Infernal Shred", "description_zh": "克林克兹和他的骷髅弓手会施加一个可叠加的负面效果，使他们的攻击可以穿透最高目标%max_armor_piercing_pct%%%总物理护甲（不会降低他们的护甲）。克林克兹每次攻击施加%hero_stacks%%%，骷髅弓手施加%skeleton_stacks%%%。持续%duration%秒。", "description_en": "Clinkz and his skeletons apply a stacking debuff that causes their attacks to pierce up to %max_armor_piercing_pct%%% of the target's total physical armor (does not reduce their armor).  Clinkz applies %hero_stacks%%% per attack, and skeletons apply %skeleton_stacks%%%. Lasts %duration% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["duration", "hero_stacks", "skeleton_stacks", "max_armor_piercing_pct"], "judge": [{"mechanism": "armor_reduction", "condition": "base"}]}, {"subject": "omniknight_purification", "name_zh": "全能骑士·洗礼", "name_en": "Purification", "description_zh": "立即治疗一个友方单位，并对周围的敌军造成伤害。", "description_en": "Instantly heals a friendly unit and damages all nearby enemy units.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "%recast_delay%秒延迟后目标会再次受到%recast_effectiveness_pct%%%威力的洗礼。", "en": "After a %recast_delay%s delay, the target is Purified again with %recast_effectiveness_pct%%% effectiveness."}}, "is_passive": false, "value_names": ["heal", "radius", "recast_delay", "recast_effectiveness_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "healing", "condition": "base"}]}, {"subject": "omniknight_martyr", "name_zh": "全能骑士·驱逐", "name_en": "Repel", "description_zh": "提供减益免疫状态和%magic_resist%%%魔法抗性，以及额外生命恢复。", "description_en": "Grants Debuff Immunity with %magic_resist%%% magic resistance, as well as bonus HP Regen.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["base_hpregen", "duration", "magic_resist", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "debuff_immunity", "condition": "base"}, {"mechanism": "healing", "condition": "base"}]}, {"subject": "omniknight_hammer_of_purity", "name_zh": "全能骑士·纯洁之锤", "name_en": "Hammer of Purity", "description_zh": "全能骑士将神圣之力注入他的战锤，使他的攻击距离提升，会根据基础攻击力的一定百分比造成纯粹伤害，并且使目标短时间内被减速。全能骑士会在%heal_duration%秒内回复%heal_pct%%%造成的伤害。", "description_en": "Omniknight imbues his hammer with holy power, causing his attack to have increased range, deal pure damage based on a percentage of his base damage and slow his target for a short duration. Omniknight heals for %heal_pct%%% of the damage dealt over %heal_duration%s.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["base_damage", "bonus_damage", "heal_pct", "heal_duration", "total_ticks", "attack_cooldown", "attack_range_bonus", "duration", "movement_slow", "AbilityCastRange", "AbilityCooldown"], "judge": [{"mechanism": "attack_modifier", "condition": "base"}, {"mechanism": "healing", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "omniknight_degen_aura", "name_zh": "全能骑士·退化光环", "name_en": "Degen Aura", "description_zh": "削弱过于靠近的敌方单位的移动能力，降低其移动速度。", "description_en": "Degenerates the movement capabilities of enemy units that stray too near, slowing their movement speed.", "notes_zh": ["对减益免疫单位无效。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["speed_bonus", "radius", "linger_duration"], "judge": [{"mechanism": "aura", "condition": "base"}, {"mechanism": "slow", "condition": "base"}]}, {"subject": "omniknight_guardian_angel", "name_zh": "全能骑士·守护天使", "name_en": "Guardian Angel", "description_zh": "全能骑士召唤出守护天使，使全能骑士附近的所有友方单位对物理伤害免疫。", "description_en": "Omniknight calls upon a Guardian Angel that grants immunity from physical damage to all allied units near Omniknight.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "守护天使的作用范围为全地图，影响建筑并增强生命回复。", "en": "Guardian Angel has global radius, affects buildings, and amplifies health restoration."}}, "is_passive": false, "value_names": ["duration", "radius", "is_global", "affects_buildings", "heal_and_regen_amp", "model_scale", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "summons", "condition": "base"}]}, {"subject": "enchantress_impetus", "name_zh": "魅惑魔女·推进", "name_en": "Impetus", "description_zh": "激活后每次攻击都有附魔效果，根据与目标的距离造成额外伤害。目标越远，伤害越高。对幻象造成双倍伤害。", "description_en": "Places an enchantment on each attack while activated, causing it to deal additional damage based on how far away the target is.  The farther the target, the greater the damage dealt. Deals double damage to illusions.", "notes_zh": ["造成伤害上限的距离是%distance_cap%。", "计算与目标之间的距离在攻击弹道击中目标时。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["distance_damage_pct", "distance_cap", "illusion_damage_multiplier", "AbilityCastRange", "AbilityDuration", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "attack_modifier", "condition": "base"}]}, {"subject": "enchantress_enchant", "name_zh": "魅惑魔女·魅惑", "name_en": "Enchant", "description_zh": "魅惑魔女诱惑一个敌人。如果目标是英雄，将被驱散，其移动速度也会被减缓，持续%slow_duration%秒，而魅惑魔女和她的单位攻击目标时拥有额外攻击距离。\n\n如果目标是非英雄单位，魅惑魔女会将其控制，并获得%xp_gain_pct%%%相应的击杀经验。魅惑魔女控制的非英雄单位最多持续%dominate_duration%秒。\n\n驱散类型：弱驱散", "description_en": "Enchantress charms an enemy. If the enemy is a hero, they are dispelled and slowed for %slow_duration%s, and Enchantress and her units gain bonus attack range against the target.\n\n If the enemy is a creep, she brings it under her control and receives %xp_gain_pct%%% of their experience bounty.  Enchantress can control creeps for up to %dominate_duration%s. \n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["可以转化幻象。"], "granted_by": "", "upgrades": {"scepter": {"zh": "魅惑魔女可以同时控制多个非英雄单位。", "en": "Enchantress can control multiple creeps at a time."}}, "is_passive": false, "value_names": ["slow_movement_speed", "slow_duration", "attack_range_bonus", "dominate_duration", "enchant_health", "enchant_damage", "xp_gain_pct", "level_req", "max_creeps", "bonus_armor", "bonus_health", "bonus_damage", "bonus_attackspeed", "AbilityCastRange", "AbilityCastPoint"], "judge": [{"mechanism": "applies_basic_dispel", "condition": "base"}, {"mechanism": "economy", "condition": "base"}, {"mechanism": "slow", "condition": "base"}, {"mechanism": "summons", "condition": "base"}]}, {"subject": "enchantress_natures_attendants", "name_zh": "魅惑魔女·自然之助", "name_en": "Nature's Attendants", "description_zh": "召唤一群小精灵治疗魅惑魔女以及身边的友方单位。", "description_en": "A cloud of wisps heals Enchantress and any friendly units nearby.", "notes_zh": ["不会选择满血单位进行治疗。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["heal_duration", "heal_interval", "heal", "radius", "wisp_count", "movespeed", "total_max_heal", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "healing", "condition": "base"}]}, {"subject": "enchantress_bunny_hop", "name_zh": "魅惑魔女·跃动", "name_en": "Sproink", "description_zh": "向后跳跃，躲避多种飞行过程中的攻击和技能弹道，并向魅惑魔女的攻击距离+%bonus_attack_range%范围内最远的%attack_targets%个敌方单位发动一次附有推进的攻击。", "description_en": "Leaps backward, dodges incoming projectiles, and launches an Impetus attack on the %attack_targets% furthest enemy units within Enchantress' attack range + %bonus_attack_range%.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["hop_distance", "hop_duration", "hop_height", "attack_targets", "bonus_attack_range", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "flying", "condition": "shard"}, {"mechanism": "projectile_dodge", "condition": "shard"}, {"mechanism": "self_mobility", "condition": "shard"}]}, {"subject": "enchantress_little_friends", "name_zh": "魅惑魔女·密友", "name_en": "Little Friends", "description_zh": "魅惑魔女缠绕一个敌方单位。目标附近所有敌方、友方和中立非英雄单位会攻击魅惑魔女选定的目标，并且具有攻击速度和移动速度加成，持续%duration%秒。", "description_en": "Enchantress roots an enemy unit. All creeps, ally, enemy and neutral within a radius will gain bonus movement and attack speed and attack the chosen target for %duration% seconds.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["duration", "bonus_attack_speed", "bonus_move_speed", "radius", "root_base_duration", "root_per_target", "max_root", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"], "judge": [{"mechanism": "forced_action", "condition": "scepter"}, {"mechanism": "root", "condition": "scepter"}]}, {"subject": "enchantress_untouchable", "name_zh": "魅惑魔女·不可侵犯", "name_en": "Untouchable", "description_zh": "魅惑魔女让她的敌人神魂颠倒，受到他们攻击时会降低其攻击速度。", "description_en": "Enchantress beguiles her enemies, slowing their attacks when she is attacked.", "notes_zh": ["所有直接攻击魅惑魔女的敌方单位都会被减速。", "减速效果在攻击单位产生攻击动作时出现，而不是伤害生效时。"], "granted_by": "", "upgrades": {}, "is_passive": true, "value_names": ["slow_attack_speed", "slow_duration"], "judge": [{"mechanism": "slow", "condition": "base"}]}, {"subject": "huskar_inner_fire", "name_zh": "哈斯卡·心炎", "name_en": "Inner Fire", "description_zh": "在炽烈的狂暴下将附近所有敌人击退至固定距离外，造成伤害和沉默。", "description_en": "In a fiery rage, knocks all nearby enemies away from you to a fixed distance, dealing damage and silencing them.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["health_cost", "damage", "radius", "disarm_duration", "knockback_distance", "min_knockback_distance", "knockback_duration", "min_knockback_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityCooldown"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "displace_other", "condition": "base"}, {"mechanism": "silence", "condition": "base"}]}, {"subject": "huskar_burning_spear", "name_zh": "哈斯卡·沸血之矛", "name_en": "Burning Spear", "description_zh": "哈斯卡将其长矛点燃，在普通攻击的同时对敌方单位造成持续伤害。多次攻击会造成持续伤害叠加。每次攻击都将牺牲哈斯卡部分生命值。", "description_en": "Huskar sets his spears aflame, dealing damage over time with his regular attack.  Multiple attacks will stack additional damage.  Each attack drains some of Huskar's health.", "notes_zh": ["沸血之矛在多次施放到目标身上效果可以叠加。没有叠加上限。", "哈斯卡不能使用此技能自杀。", "炙矛可热不会对肉山造成额外的最大生命值烧灼伤害。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["max_health_cost", "burn_damage", "burn_damage_max_pct", "duration", "AbilityCastRange"], "judge": [{"mechanism": "aoe_damage", "condition": "base"}, {"mechanism": "attack_modifier", "condition": "base"}]}]}
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "life_stealer_infest",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对周围所有敌方单位造成伤害",
+          "reason_zh": "一次现身能伤害周围多个敌方单位。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "吞噬感染的中立生物会使敌人沾满鲜血，根据宿主的剩余生命值造成持续伤害。",
+          "reason_zh": "魔晶新增对多个敌人施加持续伤害的效果。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "驱散类型说明效果可被弱驱散，不表示技能施加弱驱散。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "自身在体内时每秒恢复最大生命值的一定百分比",
+          "reason_zh": "感染期间会持续恢复自身生命值。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术反弹。",
+          "reason_zh": "不触发法术反弹是交互说明，不是自身反弹技能。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果被感染单位是敌方非英雄单位或中立生物，噬魂鬼可以控制其进行移动和攻击",
+          "reason_zh": "夺取已有非英雄单位的控制权符合召唤物定义。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_vacuum",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将周围的敌方单位吸入，具有打断效果并造成伤害",
+          "reason_zh": "一次施放能对区域内多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "此技能可以打断持续施法。",
+          "reason_zh": "说明明确写明可以打断持续施法。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_ion_shell",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对周围的敌人造成伤害",
+          "reason_zh": "一次施放的外壳能伤害目标周围多个敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_surge",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对附近的敌人造成%trail_move_slow%%%减速，并且每秒造成%trail_damage%点伤害",
+          "reason_zh": "魔晶留下的路径能对附近多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明技能具有每次使用消耗一点的充能。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且获得相位移动状态",
+          "reason_zh": "基础说明明确赋予目标相位移动。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对附近的敌人造成%trail_move_slow%%%减速",
+          "reason_zh": "魔晶路径会降低附近敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_normal_punch",
+      "judgments": [
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "使黑暗贤者下次对英雄的攻击具有克敌机先效果",
+          "reason_zh": "该技能由A杖授予，并明确使下一次对英雄的攻击具有克敌机先。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "根据过去%recent_duration%秒内黑暗贤者的移动距离造成伤害和眩晕",
+          "reason_zh": "该技能由A杖授予，并明确对攻击目标造成眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_aggrandize",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。",
+          "reason_zh": "技能会在升级时恢复自身生命值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。",
+          "reason_zh": "技能会在升级时恢复自身魔法值。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_wall_of_replica",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对穿过的敌方英雄造成伤害和减速",
+          "reason_zh": "一次施放的光墙能伤害多个穿过它的敌方英雄。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并复制一个其自身的幻象，幻象由黑暗贤者控制",
+          "reason_zh": "光墙会制造敌方英雄的幻象。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对穿过的敌方英雄造成伤害和减速",
+          "reason_zh": "光墙会减速穿过它的敌方英雄。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_searing_arrows",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "让克林克兹的箭矢带有火焰，造成更多伤害。",
+          "reason_zh": "技能让普通攻击附带额外伤害，符合攻击特效定义。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_death_pact",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗并获得最大生命值",
+          "reason_zh": "说明明确包含治疗效果。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_burning_barrage",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "朝目标方向射出多支灼热的箭矢，击中所有敌人，造成克林克兹攻击伤害的一定百分比",
+          "reason_zh": "该技能由魔晶授予，一次施放的箭矢能伤害多个敌人。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "造成克林克兹攻击伤害的一定百分比并施加攻击特效",
+          "reason_zh": "这里只说明技能能施加已有攻击特效，未说明它自身为普通攻击附加效果。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_wind_walk",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对建筑造成的伤害降低%skeleton_building_damage_reduction%%%",
+          "reason_zh": "这是骷髅弓手输出伤害的降低，不是受到伤害的减免。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "克林克兹进入隐身状态",
+          "reason_zh": "技能明确使自身隐身。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_infernal_shred",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会降低他们的护甲",
+          "reason_zh": "说明明确指出穿透护甲不会降低目标护甲。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_purification",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并对周围的敌军造成伤害",
+          "reason_zh": "一次施放能对治疗目标周围多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "立即治疗一个友方单位",
+          "reason_zh": "技能直接治疗友方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_martyr",
+      "judgments": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提供减益免疫状态",
+          "reason_zh": "技能明确提供减益免疫状态。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "以及额外生命恢复",
+          "reason_zh": "额外生命恢复属于治疗回复机制。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_hammer_of_purity",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "会根据基础攻击力的一定百分比造成纯粹伤害，并且使目标短时间内被减速",
+          "reason_zh": "技能使攻击附带纯粹伤害和减速效果。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "全能骑士会在%heal_duration%秒内回复%heal_pct%%%造成的伤害。",
+          "reason_zh": "技能会根据造成的伤害回复自身生命值。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使目标短时间内被减速",
+          "reason_zh": "技能明确对目标施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_degen_aura",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "削弱过于靠近的敌方单位的移动能力，降低其移动速度。",
+          "reason_zh": "被动持续影响自身附近敌方单位，符合对敌光环定义。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低其移动速度",
+          "reason_zh": "技能会降低附近敌方单位的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_guardian_angel",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使全能骑士附近的所有友方单位对物理伤害免疫",
+          "reason_zh": "技能提供友方物理伤害免疫，没有造成范围伤害的说明。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤出守护天使，使全能骑士附近的所有友方单位对物理伤害免疫",
+          "reason_zh": "召唤守护天使的措辞仅用于描述保护效果，没有召唤有血量单位的证据。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_impetus",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "激活后每次攻击都有附魔效果，根据与目标的距离造成额外伤害。",
+          "reason_zh": "技能让普通攻击根据距离附带额外伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_enchant",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果目标是英雄，将被驱散",
+          "reason_zh": "技能明确对英雄目标施加驱散，材料标明驱散类型为弱驱散。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "魅惑魔女会将其控制，并获得%xp_gain_pct%%%相应的击杀经验",
+          "reason_zh": "技能在控制非英雄单位时直接提供经验，属于正常击杀之外的经验收益。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "其移动速度也会被减缓",
+          "reason_zh": "技能会降低敌方英雄目标的移动速度。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果目标是非英雄单位，魅惑魔女会将其控制",
+          "reason_zh": "夺取已有非英雄单位的控制权符合召唤物定义。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_natures_attendants",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗魅惑魔女以及身边的友方单位",
+          "reason_zh": "技能会恢复自身及附近友方单位的生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_bunny_hop",
+      "judgments": [
+        {
+          "mechanism": "flying",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "向后跳跃",
+          "reason_zh": "跳跃位移不等于飞行移动，材料没有说明获得越过地形的飞行能力。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "躲避多种飞行过程中的攻击和技能弹道",
+          "reason_zh": "该魔晶技能明确能主动躲避飞来的弹道。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "向后跳跃",
+          "reason_zh": "该魔晶技能通过跳跃主动改变自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_little_friends",
+      "judgments": [
+        {
+          "mechanism": "forced_action",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "目标附近所有敌方、友方和中立非英雄单位会攻击魅惑魔女选定的目标",
+          "reason_zh": "该A杖技能强制附近非英雄单位攻击指定目标。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "Enchantress roots an enemy unit.",
+          "reason_zh": "该A杖技能明确对敌方单位施加定身。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_untouchable",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到他们攻击时会降低其攻击速度",
+          "reason_zh": "降低攻击者的攻击速度符合减速定义。"
+        }
+      ]
+    },
+    {
+      "subject": "huskar_inner_fire",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将附近所有敌人击退至固定距离外，造成伤害和沉默",
+          "reason_zh": "一次施放能伤害附近多个敌人。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将附近所有敌人击退至固定距离外",
+          "reason_zh": "技能会击退其他单位，主动改变其位置。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害和沉默",
+          "reason_zh": "技能明确对敌人施加沉默。"
+        }
+      ]
+    },
+    {
+      "subject": "huskar_burning_spear",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在普通攻击的同时对敌方单位造成持续伤害。多次攻击会造成持续伤害叠加。",
+          "reason_zh": "材料只描述普通攻击对目标施加持续伤害，没有一次攻击伤害多个敌人的效果。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在普通攻击的同时对敌方单位造成持续伤害",
+          "reason_zh": "技能让普通攻击附带可叠加的持续伤害。"
+        }
+      ]
+    }
+  ]
+}
+tokens used
+30,152
+{
+  "objects": [
+    {
+      "subject": "life_stealer_infest",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对周围所有敌方单位造成伤害",
+          "reason_zh": "一次现身能伤害周围多个敌方单位。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "吞噬感染的中立生物会使敌人沾满鲜血，根据宿主的剩余生命值造成持续伤害。",
+          "reason_zh": "魔晶新增对多个敌人施加持续伤害的效果。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱散类型：弱驱散",
+          "reason_zh": "驱散类型说明效果可被弱驱散，不表示技能施加弱驱散。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "自身在体内时每秒恢复最大生命值的一定百分比",
+          "reason_zh": "感染期间会持续恢复自身生命值。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术反弹。",
+          "reason_zh": "不触发法术反弹是交互说明，不是自身反弹技能。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果被感染单位是敌方非英雄单位或中立生物，噬魂鬼可以控制其进行移动和攻击",
+          "reason_zh": "夺取已有非英雄单位的控制权符合召唤物定义。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_vacuum",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将周围的敌方单位吸入，具有打断效果并造成伤害",
+          "reason_zh": "一次施放能对区域内多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "此技能可以打断持续施法。",
+          "reason_zh": "说明明确写明可以打断持续施法。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_ion_shell",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对周围的敌人造成伤害",
+          "reason_zh": "一次施放的外壳能伤害目标周围多个敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_surge",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对附近的敌人造成%trail_move_slow%%%减速，并且每秒造成%trail_damage%点伤害",
+          "reason_zh": "魔晶留下的路径能对附近多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料没有说明技能具有每次使用消耗一点的充能。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且获得相位移动状态",
+          "reason_zh": "基础说明明确赋予目标相位移动。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "对附近的敌人造成%trail_move_slow%%%减速",
+          "reason_zh": "魔晶路径会降低附近敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_normal_punch",
+      "judgments": [
+        {
+          "mechanism": "pierce_evasion",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "使黑暗贤者下次对英雄的攻击具有克敌机先效果",
+          "reason_zh": "该技能由A杖授予，并明确使下一次对英雄的攻击具有克敌机先。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "根据过去%recent_duration%秒内黑暗贤者的移动距离造成伤害和眩晕",
+          "reason_zh": "该技能由A杖授予，并明确对攻击目标造成眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_aggrandize",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。",
+          "reason_zh": "技能会在升级时恢复自身生命值。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "黑暗贤者升级时会恢复最大生命值和魔法值的一定百分比。",
+          "reason_zh": "技能会在升级时恢复自身魔法值。"
+        }
+      ]
+    },
+    {
+      "subject": "dark_seer_wall_of_replica",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对穿过的敌方英雄造成伤害和减速",
+          "reason_zh": "一次施放的光墙能伤害多个穿过它的敌方英雄。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并复制一个其自身的幻象，幻象由黑暗贤者控制",
+          "reason_zh": "光墙会制造敌方英雄的幻象。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对穿过的敌方英雄造成伤害和减速",
+          "reason_zh": "光墙会减速穿过它的敌方英雄。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_searing_arrows",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "让克林克兹的箭矢带有火焰，造成更多伤害。",
+          "reason_zh": "技能让普通攻击附带额外伤害，符合攻击特效定义。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_death_pact",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗并获得最大生命值",
+          "reason_zh": "说明明确包含治疗效果。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_burning_barrage",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "朝目标方向射出多支灼热的箭矢，击中所有敌人，造成克林克兹攻击伤害的一定百分比",
+          "reason_zh": "该技能由魔晶授予，一次施放的箭矢能伤害多个敌人。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "造成克林克兹攻击伤害的一定百分比并施加攻击特效",
+          "reason_zh": "这里只说明技能能施加已有攻击特效，未说明它自身为普通攻击附加效果。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_wind_walk",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对建筑造成的伤害降低%skeleton_building_damage_reduction%%%",
+          "reason_zh": "这是骷髅弓手输出伤害的降低，不是受到伤害的减免。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "克林克兹进入隐身状态",
+          "reason_zh": "技能明确使自身隐身。"
+        }
+      ]
+    },
+    {
+      "subject": "clinkz_infernal_shred",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会降低他们的护甲",
+          "reason_zh": "说明明确指出穿透护甲不会降低目标护甲。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_purification",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并对周围的敌军造成伤害",
+          "reason_zh": "一次施放能对治疗目标周围多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "立即治疗一个友方单位",
+          "reason_zh": "技能直接治疗友方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_martyr",
+      "judgments": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提供减益免疫状态",
+          "reason_zh": "技能明确提供减益免疫状态。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "以及额外生命恢复",
+          "reason_zh": "额外生命恢复属于治疗回复机制。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_hammer_of_purity",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "会根据基础攻击力的一定百分比造成纯粹伤害，并且使目标短时间内被减速",
+          "reason_zh": "技能使攻击附带纯粹伤害和减速效果。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "全能骑士会在%heal_duration%秒内回复%heal_pct%%%造成的伤害。",
+          "reason_zh": "技能会根据造成的伤害回复自身生命值。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使目标短时间内被减速",
+          "reason_zh": "技能明确对目标施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_degen_aura",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "削弱过于靠近的敌方单位的移动能力，降低其移动速度。",
+          "reason_zh": "被动持续影响自身附近敌方单位，符合对敌光环定义。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低其移动速度",
+          "reason_zh": "技能会降低附近敌方单位的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "omniknight_guardian_angel",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使全能骑士附近的所有友方单位对物理伤害免疫",
+          "reason_zh": "技能提供友方物理伤害免疫，没有造成范围伤害的说明。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤出守护天使，使全能骑士附近的所有友方单位对物理伤害免疫",
+          "reason_zh": "召唤守护天使的措辞仅用于描述保护效果，没有召唤有血量单位的证据。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_impetus",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "激活后每次攻击都有附魔效果，根据与目标的距离造成额外伤害。",
+          "reason_zh": "技能让普通攻击根据距离附带额外伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_enchant",
+      "judgments": [
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果目标是英雄，将被驱散",
+          "reason_zh": "技能明确对英雄目标施加驱散，材料标明驱散类型为弱驱散。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "魅惑魔女会将其控制，并获得%xp_gain_pct%%%相应的击杀经验",
+          "reason_zh": "技能在控制非英雄单位时直接提供经验，属于正常击杀之外的经验收益。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "其移动速度也会被减缓",
+          "reason_zh": "技能会降低敌方英雄目标的移动速度。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果目标是非英雄单位，魅惑魔女会将其控制",
+          "reason_zh": "夺取已有非英雄单位的控制权符合召唤物定义。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_natures_attendants",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗魅惑魔女以及身边的友方单位",
+          "reason_zh": "技能会恢复自身及附近友方单位的生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_bunny_hop",
+      "judgments": [
+        {
+          "mechanism": "flying",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "向后跳跃",
+          "reason_zh": "跳跃位移不等于飞行移动，材料没有说明获得越过地形的飞行能力。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "躲避多种飞行过程中的攻击和技能弹道",
+          "reason_zh": "该魔晶技能明确能主动躲避飞来的弹道。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "向后跳跃",
+          "reason_zh": "该魔晶技能通过跳跃主动改变自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_little_friends",
+      "judgments": [
+        {
+          "mechanism": "forced_action",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "目标附近所有敌方、友方和中立非英雄单位会攻击魅惑魔女选定的目标",
+          "reason_zh": "该A杖技能强制附近非英雄单位攻击指定目标。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "Enchantress roots an enemy unit.",
+          "reason_zh": "该A杖技能明确对敌方单位施加定身。"
+        }
+      ]
+    },
+    {
+      "subject": "enchantress_untouchable",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到他们攻击时会降低其攻击速度",
+          "reason_zh": "降低攻击者的攻击速度符合减速定义。"
+        }
+      ]
+    },
+    {
+      "subject": "huskar_inner_fire",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将附近所有敌人击退至固定距离外，造成伤害和沉默",
+          "reason_zh": "一次施放能伤害附近多个敌人。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将附近所有敌人击退至固定距离外",
+          "reason_zh": "技能会击退其他单位，主动改变其位置。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害和沉默",
+          "reason_zh": "技能明确对敌人施加沉默。"
+        }
+      ]
+    },
+    {
+      "subject": "huskar_burning_spear",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在普通攻击的同时对敌方单位造成持续伤害。多次攻击会造成持续伤害叠加。",
+          "reason_zh": "材料只描述普通攻击对目标施加持续伤害，没有一次攻击伤害多个敌人的效果。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在普通攻击的同时对敌方单位造成持续伤害",
+          "reason_zh": "技能让普通攻击附带可叠加的持续伤害。"
+        }
+      ]
+    }
+  ]
+}

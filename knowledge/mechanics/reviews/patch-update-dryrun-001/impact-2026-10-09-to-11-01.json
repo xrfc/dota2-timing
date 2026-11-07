@@ -1,0 +1,370 @@
+{
+ "schema": "mechanics-patch-impact/1",
+ "note_zh": "需要重新复核的范围；不是判断结果",
+ "changed_subjects": {
+  "antimage_blink": [
+   "herodata/schinese: ability_changed ['scepter_loc']"
+  ],
+  "lion_finger_of_death": [
+   "herodata/schinese: ability_changed ['desc_loc']"
+  ],
+  "monkey_king_boundless_strike": [
+   "herodata/schinese: ability_changed ['name_loc', 'shard_loc']"
+  ],
+  "monkey_king_jingu_mastery": [
+   "herodata/schinese: ability_changed ['notes_loc']"
+  ],
+  "npc_dota_hero_monkey_king": [
+   "herodata/schinese: hero_fields"
+  ],
+  "silencer_glaives_of_wisdom": [
+   "herodata/schinese: ability_changed ['shard_loc']"
+  ],
+  "storm_spirit_static_remnant": [
+   "herodata/schinese: ability_changed ['desc_loc']"
+  ]
+ },
+ "changed_but_not_in_facts": [
+  "npc_dota_hero_monkey_king"
+ ],
+ "fact_rows_to_recheck": [
+  {
+   "subject": "lion_finger_of_death",
+   "mechanism": "aoe_damage",
+   "decision": "accept",
+   "basis": "user:U72",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "lion_finger_of_death",
+   "mechanism": "aoe_damage",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "scepter_upgrade",
+    "requires_scepter": true,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_boundless_strike",
+   "mechanism": "aoe_damage",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_jingu_mastery",
+   "mechanism": "aoe_damage",
+   "decision": "reject",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "silencer_glaives_of_wisdom",
+   "mechanism": "aoe_damage",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_scepter": false,
+    "requires_shard": true
+   }
+  },
+  {
+   "subject": "storm_spirit_static_remnant",
+   "mechanism": "aoe_damage",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_jingu_mastery",
+   "mechanism": "attack_modifier",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "silencer_glaives_of_wisdom",
+   "mechanism": "attack_modifier",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_jingu_mastery",
+   "mechanism": "break_sensitive",
+   "decision": "accept",
+   "basis": "field:IsBreakable",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_boundless_strike",
+   "mechanism": "channeled",
+   "decision": "reject",
+   "basis": "two_ai",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_scepter": false,
+    "requires_shard": true
+   }
+  },
+  {
+   "subject": "monkey_king_jingu_mastery",
+   "mechanism": "charges",
+   "decision": "reject",
+   "basis": "user:U65",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "lion_finger_of_death",
+   "mechanism": "cleave",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_boundless_strike",
+   "mechanism": "critical",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "storm_spirit_static_remnant",
+   "mechanism": "grant_vision",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "storm_spirit_static_remnant",
+   "mechanism": "high_ground_vision",
+   "decision": "reject",
+   "basis": "user:U97",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_jingu_mastery",
+   "mechanism": "lifesteal",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "antimage_blink",
+   "mechanism": "mana_gain",
+   "decision": "reject",
+   "basis": "two_ai",
+   "condition": {
+    "context": "scepter_upgrade",
+    "requires_scepter": true,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_boundless_strike",
+   "mechanism": "pierce_evasion",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "antimage_blink",
+   "mechanism": "projectile_dodge",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "lion_finger_of_death",
+   "mechanism": "projectile_dodge",
+   "decision": "reject",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "antimage_blink",
+   "mechanism": "self_mobility",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "antimage_blink",
+   "mechanism": "self_mobility",
+   "decision": "reject",
+   "basis": "two_ai",
+   "condition": {
+    "context": "scepter_upgrade",
+    "requires_scepter": true,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_boundless_strike",
+   "mechanism": "self_mobility",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_scepter": false,
+    "requires_shard": true
+   }
+  },
+  {
+   "subject": "silencer_glaives_of_wisdom",
+   "mechanism": "silence",
+   "decision": "reject",
+   "basis": "user:U51",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "silencer_glaives_of_wisdom",
+   "mechanism": "stat_steal",
+   "decision": "accept",
+   "basis": "user_spot_check",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_boundless_strike",
+   "mechanism": "stun",
+   "decision": "accept",
+   "basis": "user_spot_check",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "monkey_king_boundless_strike",
+   "mechanism": "terrain_walk",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_scepter": false,
+    "requires_shard": true
+   }
+  },
+  {
+   "subject": "lion_finger_of_death",
+   "mechanism": "unit_target_spell",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  },
+  {
+   "subject": "silencer_glaives_of_wisdom",
+   "mechanism": "unit_target_spell",
+   "decision": "accept",
+   "basis": "two_ai",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   }
+  }
+ ],
+ "numeric_upgrades_to_recheck": [
+  "monkey_king_boundless_strike",
+  "lion_finger_of_death"
+ ],
+ "rules_touched": [
+  "R02",
+  "R04",
+  "R07",
+  "R11",
+  "R12",
+  "R13",
+  "R14",
+  "R17",
+  "R18",
+  "R20",
+  "R22",
+  "R23"
+ ],
+ "item_edges_touched": 20
+}

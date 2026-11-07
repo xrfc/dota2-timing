@@ -1,0 +1,633 @@
+{
+  "objects": [
+    {
+      "subject": "slardar_slithereen_crush",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对附近敌方单位造成伤害并眩晕",
+          "reason_zh": "一次施放可伤害附近多个敌方单位。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕结束后还会受到减速。",
+          "reason_zh": "基础效果明确施加减速。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对附近敌方单位造成伤害并眩晕",
+          "reason_zh": "基础效果明确施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "slardar_seaborn_sentinel",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得移动速度、生命恢复、攻击力和护甲加成",
+          "reason_zh": "基础效果提供生命恢复，符合治疗定义。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "获得额外生命恢复、护甲，还有状态抗性",
+          "reason_zh": "A杖只是提高已有生命恢复数值，不新增治疗机制。"
+        },
+        {
+          "mechanism": "status_resistance",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "在水洼、水迹或河道中获得额外生命恢复、护甲，还有状态抗性。",
+          "reason_zh": "A杖升级明确新增状态抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "slardar_amplify_damage",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "",
+          "reason_zh": "材料未说明该技能对多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "削弱敌人的护甲",
+          "reason_zh": "技能明确降低敌人护甲。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "provides True Sight and vision of the targeted unit",
+          "reason_zh": "技能明确提供目标单位的视野。"
+        },
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "加深他受到的物理伤害",
+          "reason_zh": "说明明确表示目标受到的物理伤害增加。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "显示隐身单位",
+          "reason_zh": "显示隐身单位不等于使单位隐身。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "显示隐身单位",
+          "reason_zh": "技能明确使隐身目标显形。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "provides True Sight",
+          "reason_zh": "英文说明明确提供真视。"
+        }
+      ]
+    },
+    {
+      "subject": "tidehunter_gush",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "scepter",
+          "quote": "巨浪变成点地施放的波形技能，可以作用于直线上的单位。",
+          "reason_zh": "A杖使原本单体伤害的巨浪能作用于直线上多个单位。"
+        },
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减速并削弱护甲",
+          "reason_zh": "基础效果明确降低目标护甲。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减速并削弱护甲",
+          "reason_zh": "基础效果明确使目标减速。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤一股巨浪攻击一个敌方单位",
+          "reason_zh": "巨浪并非材料明确描述的有血量单位。"
+        }
+      ]
+    },
+    {
+      "subject": "tidehunter_kraken_shell",
+      "judgments": [
+        {
+          "mechanism": "applies_strong_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到的伤害超过临界值后还将移除负面的状态效果。\n\n可以主动开启，以%active_move_speed_penalty_pct%%%移动速度的代价使伤害格挡量加倍。持续%active_duration%秒。\n\n驱散类型：强驱散",
+          "reason_zh": "技能在伤害达到阈值时对自身施加强驱散。"
+        }
+      ]
+    },
+    {
+      "subject": "tidehunter_anchor_smash",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "挥动他巨大的锚攻击附近的敌人",
+          "reason_zh": "一次施放能攻击附近多个敌人并造成伤害。"
+        },
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时降低敌人的攻击力",
+          "reason_zh": "技能明确降低敌人的攻击力。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时降低敌人的攻击力",
+          "reason_zh": "降低敌方攻击力不属于吸收伤害或减少自身所受伤害的机制。"
+        }
+      ]
+    },
+    {
+      "subject": "tidehunter_dead_in_the_water",
+      "judgments": [
+        {
+          "mechanism": "mobility_lock",
+          "condition": "shard",
+          "decision": "uncertain",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "被栓到锚上的英雄处于被束缚状态。尝试移动到距离巨锚%chain_length%距离外会导致英雄的移动速度降低至%max_movement_speed%，而且会一直拽着长锚。",
+          "reason_zh": "材料只说明束缚和越界减速，是否阻止闪烁或传送需要额外游戏知识。"
+        }
+      ]
+    },
+    {
+      "subject": "tidehunter_ravage",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害并眩晕附近所有敌方单位",
+          "reason_zh": "一次施放能伤害附近所有敌方单位。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "毁灭能伤害隐身单位。",
+          "reason_zh": "能够伤害隐身单位只是与隐身的交互，不会施加隐身。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "伤害并眩晕附近所有敌方单位",
+          "reason_zh": "技能明确眩晕附近敌方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "witch_doctor_paralyzing_cask",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在敌方单位之间弹跳，眩晕击中的敌人并造成伤害",
+          "reason_zh": "一次施放通过弹跳能伤害多个敌方单位。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "眩晕击中的敌人",
+          "reason_zh": "技能明确使击中的敌人眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "witch_doctor_voodoo_restoration",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "巫医集中魔力治疗附近的友军单位",
+          "reason_zh": "技能明确治疗附近友军。"
+        }
+      ]
+    },
+    {
+      "subject": "witch_doctor_gris_gris",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "驱邪护符的价值每%gold_tick_interval_tooltip%秒会增加1金。",
+          "reason_zh": "技能提供随时间增长且可领取的额外金钱。"
+        }
+      ]
+    },
+    {
+      "subject": "witch_doctor_death_ward",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "只有在巫医被打断或持续时间结束后才会被摧毁",
+          "reason_zh": "这里描述巫医自身被打断，并非死亡守卫打断他人持续施法。"
+        }
+      ]
+    },
+    {
+      "subject": "riki_smoke_screen",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "烟幕中的敌人护甲降低%armor_reduction%点",
+          "reason_zh": "魔晶升级新增对烟幕内敌人的减甲效果。"
+        },
+        {
+          "mechanism": "blind",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使他们的攻击落空",
+          "reason_zh": "基础效果使敌人的攻击落空，符合致盲定义。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "沉默其中的敌人",
+          "reason_zh": "基础效果明确沉默烟幕中的敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "riki_blink_strike",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "传送到目标背后，如果是敌人对其造成%slow_pct_tooltip%%%短暂减速，并发动一次拥有额外伤害的攻击。",
+          "reason_zh": "材料只描述对目标发动一次攻击，未支持多目标伤害。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "传送到目标背后",
+          "reason_zh": "技能主动传送自身，符合自身位移定义。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对其造成%slow_pct_tooltip%%%短暂减速",
+          "reason_zh": "技能明确使敌方目标短暂减速。"
+        }
+      ]
+    },
+    {
+      "subject": "riki_tricks_of_the_trade",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每隔一段时间从背后随机攻击附近的%interval_targets%个随机敌方单位",
+          "reason_zh": "一次持续施法可反复攻击附近不同敌方单位，符合多目标伤害定义。"
+        }
+      ]
+    },
+    {
+      "subject": "riki_innate_backstab",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次从背后攻击敌人时都会造成额外伤害",
+          "reason_zh": "材料只支持对被攻击目标造成额外伤害，未描述伤害波及其他单位。"
+        }
+      ]
+    },
+    {
+      "subject": "riki_backstab",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "击杀英雄和助攻会提供额外经验。",
+          "reason_zh": "技能明确提供额外经验。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "力丸遁入阴影，变为隐身状态",
+          "reason_zh": "技能明确使力丸自身隐身。"
+        },
+        {
+          "mechanism": "reveal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "主动攻击敌人后力丸将会显形",
+          "reason_zh": "攻击后自身失去隐身属于自身效果的限制，不算施加显形机制。"
+        }
+      ]
+    },
+    {
+      "subject": "enigma_malefice",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将谜团的力量集中于一个目标，使它受到多次伤害",
+          "reason_zh": "基础效果只对单个目标多次造成伤害。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "每次眩晕都会在目标身旁产生一个虚灵体。这些虚灵体不会再次分裂。",
+          "reason_zh": "产生虚灵体及其能否分裂都不属于攻击伤害波及周围单位的分裂溅射。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "反复被眩晕",
+          "reason_zh": "基础效果明确反复眩晕目标。"
+        }
+      ]
+    },
+    {
+      "subject": "enigma_demonic_conversion",
+      "judgments": [
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在反复经过几次成功的攻击后，虚灵会再次分裂",
+          "reason_zh": "虚灵分裂是单位增殖，不是攻击伤害波及周围单位。"
+        }
+      ]
+    },
+    {
+      "subject": "enigma_midnight_pulse",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使一块区域浸入暗共振中，对敌方单位造成%base_damage% + 基于敌人当前生命值的伤害。",
+          "reason_zh": "一次施放能对区域内多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "此技能将摧毁范围内的树木。",
+          "reason_zh": "材料明确说明技能摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "enigma_black_hole",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "没有打断效果的牵引效果",
+          "reason_zh": "A杖牵引明确没有打断效果，否定描述不能算打断机制。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "产生一个%scepter_radius%范围，没有打断效果的牵引效果。牵引速度为%scepter_drag_speed%。",
+          "reason_zh": "A杖新增范围牵引效果，会移动其他单位。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤一个强引力漩涡吸住敌方单位",
+          "reason_zh": "引力漩涡并非有血量的召唤单位。"
+        }
+      ]
+    },
+    {
+      "subject": "tinker_laser",
+      "judgments": [
+        {
+          "mechanism": "blind",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标造成伤害和致盲。被致盲的单位，所有物理攻击都会落空。",
+          "reason_zh": "基础效果明确致盲目标并使其物理攻击落空。"
+        }
+      ]
+    },
+    {
+      "subject": "tinker_march_of_the_machines",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "机械行军在穿过友方英雄时会施加不可叠加的持续治疗效果。",
+          "reason_zh": "A杖升级明确新增对友方英雄的持续治疗。"
+        }
+      ]
+    },
+    {
+      "subject": "tinker_deploy_turrets",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被炮塔撞击的敌人受到伤害，并向远离落地点的方向推去。",
+          "reason_zh": "部署时的落地撞击可伤害多个敌人，属于该次施放的范围伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "tinker_warp_grenade",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "向一个敌人扔出一枚光弹，造成伤害",
+          "reason_zh": "材料只描述对单个敌人造成伤害。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "将其向远离修补匠的方向传送并且缠绕",
+          "reason_zh": "技能明确缠绕敌方目标，且整个技能由魔晶授予。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "将其向远离修补匠的方向传送",
+          "reason_zh": "被传送的是敌方目标，技能没有移动修补匠自身。"
+        }
+      ]
+    }
+  ]
+}

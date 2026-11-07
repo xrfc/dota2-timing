@@ -1,0 +1,696 @@
+{
+  "objects": [
+    {
+      "subject": "treant_natures_grasp",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "藤蔓对穿过的敌人造成减速和伤害。",
+          "reason_zh": "一次施放制造的藤蔓能伤害多个穿过的敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "藤蔓对穿过的敌人造成减速和伤害。",
+          "reason_zh": "藤蔓明确对敌人施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "treant_leech_seed",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "该单位会受到额外魔法伤害",
+          "reason_zh": "材料只描述对种子目标造成伤害，附近多个单位受到的是治疗。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "树精卫士的攻击会对敌方单位种下一颗吸取生命的种子。该单位会受到额外魔法伤害，被缠绕和缴械一小段时间",
+          "reason_zh": "攻击附带额外魔法伤害、缠绕和缴械，符合攻击特效。"
+        },
+        {
+          "mechanism": "disarm",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被缠绕和缴械一小段时间",
+          "reason_zh": "技能明确使目标缴械。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "最多对附近%max_heal_units%名友军根据当次攻击造成的伤害进行治疗",
+          "reason_zh": "种子的治疗脉冲明确恢复附近友军的生命。"
+        },
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "该单位会受到额外魔法伤害",
+          "reason_zh": "额外魔法伤害不等于使目标受到的伤害增加。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "is rooted and disarmed for a short duration",
+          "reason_zh": "英文说明明确使目标定身。"
+        }
+      ]
+    },
+    {
+      "subject": "treant_living_armor",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗目标并格挡来自玩家控制来源的伤害",
+          "reason_zh": "技能明确格挡伤害。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗目标",
+          "reason_zh": "技能明确治疗目标。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "格挡来自玩家控制来源的伤害",
+          "reason_zh": "格挡伤害不代表使指向技能失效。"
+        }
+      ]
+    },
+    {
+      "subject": "treant_eyes_in_the_forest",
+      "judgments": [
+        {
+          "mechanism": "tree_destroy",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "但是寄生的树木被摧毁或者树眼直接被攻击后都会被摧毁",
+          "reason_zh": "树木被摧毁只是树眼消失的触发条件，技能自身没有摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "treant_natures_guise",
+      "judgments": [
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "自然蔽护可以主动使用，使树精卫士获得隐身状态",
+          "reason_zh": "技能主动效果明确使自身隐身。"
+        },
+        {
+          "mechanism": "tree_walk",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "自然蔽护效果下树精卫士可以直接穿过树木。",
+          "reason_zh": "技能明确允许穿过树木移动。"
+        }
+      ]
+    },
+    {
+      "subject": "treant_overgrowth",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在树精卫士周围召唤出疯狂生长的伤害性藤条和枝干，造成伤害",
+          "reason_zh": "一次施放能伤害周围多个被缠绕的敌人。"
+        },
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击",
+          "reason_zh": "神杖新增溅射攻击，使一次攻击能伤害范围内多个敌人。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "拥有在%splash_radius%范围内造成%splash_pct%%%攻击伤害的溅射攻击",
+          "reason_zh": "神杖明确新增攻击伤害溅射。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "效果无视减益免疫，但是在期间获得减益免疫状态将挣脱控制。",
+          "reason_zh": "材料描述的是与减益免疫的交互，技能不授予减益免疫。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "阻止被缠绕的敌人移动、闪烁、进入隐身或攻击",
+          "reason_zh": "技能阻止敌人进入隐身，并不赋予隐身。"
+        },
+        {
+          "mechanism": "phased",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "变大后他会获得相位移动状态",
+          "reason_zh": "神杖升级明确赋予相位移动。"
+        },
+        {
+          "mechanism": "root",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "阻止被缠绕的敌人移动、闪烁",
+          "reason_zh": "技能阻止目标移动和闪烁，符合定身。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "阻止被缠绕的敌人移动、闪烁",
+          "reason_zh": "阻止敌方位移不属于主动改变自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "ogre_magi_fireblast",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "以一波火焰轰击一个敌方单位",
+          "reason_zh": "材料仅描述单体伤害，多重施法说明也未表明能伤害多个目标。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害并使目标眩晕",
+          "reason_zh": "技能明确使目标眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "ogre_magi_ignite",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "受到伤害并且移动缓慢",
+          "reason_zh": "技能明确降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "ogre_magi_unrefined_fireblast",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "操控一波火焰轰击一个敌方单位",
+          "reason_zh": "材料仅描述单体伤害，没有支持一次施放伤害多个敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "并使目标眩晕",
+          "reason_zh": "技能明确造成眩晕，且整个技能由神杖授予。"
+        }
+      ]
+    },
+    {
+      "subject": "ogre_magi_smash",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "吸收接下来%attacks%次来自敌方英雄攻击的一定百分比伤害",
+          "reason_zh": "魔晶授予的技能明确按比例吸收攻击伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "ogre_magi_dumb_luck",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "他通过力量来获得魔法和魔法恢复。",
+          "reason_zh": "技能明确提供由力量产生的自身魔法恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "undying_decay",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不朽尸王偷取区域内所有敌方英雄的力量，造成基础伤害",
+          "reason_zh": "一次施放对区域内多个敌方英雄造成伤害。"
+        },
+        {
+          "mechanism": "spell_steal",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "偷取区域内所有敌方英雄的力量",
+          "reason_zh": "技能偷取的是力量属性，没有获得其他单位的技能。"
+        },
+        {
+          "mechanism": "stat_steal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并将敌人的力量据为己有",
+          "reason_zh": "技能明确夺取目标力量并归自身所有。"
+        }
+      ]
+    },
+    {
+      "subject": "undying_soul_rip",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不朽尸王从附近的所有单位身上扯出生命力",
+          "reason_zh": "说明明确一次施放会从附近所有单位抽走生命，能够同时损伤多个敌方单位。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并使用它治疗队友或伤害敌人。可以使用噬魂治疗墓碑。",
+          "reason_zh": "技能明确能够治疗队友和墓碑。"
+        }
+      ]
+    },
+    {
+      "subject": "undying_tombstone",
+      "judgments": [
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "僵尸和墓碑均免疫技能。",
+          "reason_zh": "材料明确说明墓碑及其僵尸具备技能免疫。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "墓碑免疫技能，但是可以被噬魂治疗。",
+          "reason_zh": "墓碑只是能被其他技能治疗，自身没有施加治疗。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "僵尸拥有死亡渴望技能，使他们的攻击带有减速效果",
+          "reason_zh": "墓碑产生的僵尸明确通过攻击施加减速。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "如果英雄在内时墓碑被摧毁，该英雄会被眩晕%tombstone_stun_penalty%秒。",
+          "reason_zh": "此眩晕是友军使用躲入墓碑效果的代价，不计作技能的眩晕机制。"
+        }
+      ]
+    },
+    {
+      "subject": "undying_ceaseless_dirge",
+      "judgments": [
+        {
+          "mechanism": "respawn",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不朽尸王阵亡时会立刻在泉水复活。",
+          "reason_zh": "技能明确使自身死亡后立即复活。"
+        }
+      ]
+    },
+    {
+      "subject": "undying_flesh_golem",
+      "judgments": [
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击附带减速和伤害加深效果",
+          "reason_zh": "变身后的攻击明确对目标施加伤害加深。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击附带减速和伤害加深效果",
+          "reason_zh": "变身后的攻击明确对目标施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "rubick_telekinesis",
+      "judgments": [
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "目标滞空时，拉比克可以使用次级技能将目标扔往目标方向。",
+          "reason_zh": "基础技能已能投掷敌人，魔晶只是扩展可选目标，因此位移他人应记为基础效果。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被投下的单位会砸晕落地点附近的敌人。",
+          "reason_zh": "基础技能明确使落地点附近的敌人眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "rubick_fade_bolt",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在多个敌方单位之间流动，造成伤害",
+          "reason_zh": "一次施放的能量流能伤害多个敌方单位。"
+        },
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低他们的攻击力和技能伤害",
+          "reason_zh": "技能明确降低目标攻击力。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在多个敌方单位之间流动",
+          "reason_zh": "流动和跳跃的是能量流，材料没有描述施法者自身位移。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "降低他们的攻击力和技能伤害",
+          "reason_zh": "技能降低敌方技能伤害，没有提高技能伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "rubick_arcane_supremacy",
+      "judgments": [
+        {
+          "mechanism": "spell_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "bonus spell amplification",
+          "reason_zh": "英文说明明确提供额外法术放大。"
+        }
+      ]
+    },
+    {
+      "subject": "rubick_spell_steal",
+      "judgments": [
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术反弹。",
+          "reason_zh": "材料只是说明不触发法术反弹，并未赋予反弹能力。"
+        },
+        {
+          "mechanism": "spell_steal",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "学习这个英雄最后释放的技能的秘密。拉比克将可以使用这个技能",
+          "reason_zh": "基础技能明确使拉比克获得并使用敌方英雄的技能。"
+        },
+        {
+          "mechanism": "spell_steal",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "base",
+          "quote": "拉比克将可以使用这个技能；窃取的技能升级为相应的魔晶版本。",
+          "reason_zh": "偷技能本身是基础效果，魔晶仅改变所获技能的升级版本。"
+        }
+      ]
+    },
+    {
+      "subject": "rubick_curiosity",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每层奇心提供%curiosity_attack_damage%点基础攻击力，%curiosity_modifier_amp%%%增益/减益持续时间，和%curiosity_aoe_bonus%作用范围加成",
+          "reason_zh": "技能提供攻击力、持续时间和作用范围加成，但自身没有造成范围伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "disruptor_thunder_strike",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次打击会伤害附近小范围内的敌方单位",
+          "reason_zh": "每次闪电打击都能伤害附近多个敌方单位。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提供目标的视野。",
+          "reason_zh": "技能明确提供目标视野。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "施加%slow_duration%秒的%slow_amount%%%攻击速度和移动速度降低效果",
+          "reason_zh": "技能明确降低攻击速度和移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "disruptor_glimpse",
+      "judgments": [
+        {
+          "mechanism": "execute",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "瞬间消灭幻象单位。",
+          "reason_zh": "直接消灭幻象不涉及生命阈值，不符合斩杀定义。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "飞行时间由目标的飞行距离决定。",
+          "reason_zh": "传送过程的飞行时间说明不代表赋予越过地形的飞行移动能力。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将目标英雄传送回他%backtrack_time%秒前所在位置。",
+          "reason_zh": "技能移动的是目标英雄，材料没有描述自身位移。"
+        }
+      ]
+    },
+    {
+      "subject": "disruptor_electromagnetic_repulsion",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "附近所有敌人都会受到%damage_per_int%倍干扰者智力值的伤害",
+          "reason_zh": "一次触发会对附近所有敌人造成伤害。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并且被推开最多%effect_radius%距离",
+          "reason_zh": "技能明确将附近敌人推开。"
+        }
+      ]
+    },
+    {
+      "subject": "disruptor_static_storm",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在持续时间内伤害并沉默区域内的所有敌方单位",
+          "reason_zh": "一次施放能持续伤害区域内多个敌方单位。"
+        },
+        {
+          "mechanism": "mute",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "锁闭物品。",
+          "reason_zh": "神杖升级明确新增禁用物品效果。"
+        },
+        {
+          "mechanism": "silence",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "在持续时间内伤害并沉默区域内的所有敌方单位",
+          "reason_zh": "基础技能明确沉默区域内的敌人。"
+        }
+      ]
+    }
+  ]
+}

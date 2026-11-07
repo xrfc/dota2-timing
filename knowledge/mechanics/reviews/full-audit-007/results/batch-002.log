@@ -1,0 +1,388 @@
+[codex-prefer] account=temp
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty3
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1ac75-ef5b-7653-bfab-67fef9e5ef77
+--------
+user
+你在独立阅读Dota 2技能和装备的说明。下面每个对象都能让单位自己移动。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+每个对象输出一条，`subject`原样返回，`kinds`列出它具有的全部移动方式：
+- `jump_dash`：跳跃、冲刺、滑行、翻滚、向前冲、飞向目标，单位在途中连续经过路径。
+- `teleport`：闪烁、传送，单位瞬间或延迟后出现在别处，途中不经过路径。
+- `free_move`：一段时间内可以自由移动且移动方式改变（如飞行、飘在空中移动、在特定路径上移动）。
+- `speed_only`：只是提高移动速度。
+- `other`：不属于以上，写在`reason_zh`里。
+
+`quote`摘决定判断的原文片段，`reason_zh`一句中文说明，`uncertain`为true表示材料不足。`%xxx%`是数值占位符。
+
+待判断对象：
+[{"subject": "viper_nose_dive", "name_zh": "冥界亚龙·极恶俯冲", "name_en": "Nosedive", "description_zh": "冥界亚龙冲向地面，释放幽冥剧毒并且%corrosive_radius%范围内所有敌人均被溅上持续%effect_duration%秒的腐蚀皮肤酸液。", "description_en": "Viper slams into the ground, releasing a Nethertoxin and splattering each enemy in a %corrosive_radius% AoE for %effect_duration% seconds with the effect of Corrosive Skin.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["corrosive_radius", "duration", "effect_duration", "dive_speed", "start_height", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "rattletrap_hookshot", "name_zh": "发条技师·发射钩爪", "name_en": "Hookshot", "description_zh": "向目标位置高速射出钩爪，如果命中一个单位，发条技师会将自己牵引到目标身边，对目标附近%stun_radius%范围内所有敌人造成眩晕和伤害。对牵引时冲撞到的单位也造成伤害和眩晕。", "description_en": "Fires a grappling device rapidly at the target location.  If the hook hits a unit, Clockwerk launches himself into the target, stunning and dealing damage to everyone in a %stun_radius% radius around the hit target. Any enemies Clockwerk collides with along the way are damaged and stunned.", "notes_zh": ["发射钩爪可以抓住友方单位并将发条技师牵引过去，但是不会造成伤害和眩晕。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["latch_radius", "stun_radius", "radius_ally", "duration", "speed", "damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "furion_teleportation", "name_zh": "自然先知·传送", "name_en": "Teleportation", "description_zh": "传送到地图上任何位置。到达地点后获得一个护盾。", "description_en": "Teleports to any point on the map. Gains a barrier after arriving to its destination.", "notes_zh": ["魔耗和冷却时间都是在技能施放结束后结算。自然先知在施放技能时被打断将不会耗费魔法或使技能进入冷却。", "施法开始后，目标地点将产生视觉特效，对队友和敌人均可见。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["barrier", "buff_duration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "enchantress_bunny_hop", "name_zh": "魅惑魔女·跃动", "name_en": "Sproink", "description_zh": "向后跳跃，躲避多种飞行过程中的攻击和技能弹道，并向魅惑魔女的攻击距离+%bonus_attack_range%范围内最远的%attack_targets%个敌方单位发动一次附有推进的攻击。", "description_en": "Leaps backward, dodges incoming projectiles, and launches an Impetus attack on the %attack_targets% furthest enemy units within Enchantress' attack range + %bonus_attack_range%.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["hop_distance", "hop_duration", "hop_height", "attack_targets", "bonus_attack_range", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "huskar_life_break", "name_zh": "哈斯卡·牺牲", "name_en": "Life Break", "description_zh": "哈斯卡牺牲自己的生命来摧毁敌人的生命，他跃向一个目标，造成目标当前生命值一定百分比的伤害，并且降低目标的移动和攻击速度。哈斯卡在跳跃过程中为减益免疫，并且魔法抗性提升%immunity_resist%%%。\n\n驱散类型：弱驱散", "description_en": "Huskar draws upon his health to break an enemy's life, leaping at a target to shatter a percentage of that hero's current health and slow both their movement and attack speed.  While leaping, Huskar is Debuff Immune with %immunity_resist%%% magic resistance.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["如果哈斯卡在跳跃时受到控制技能，或目标在0.015秒内移动1400码以上，跳跃就会停止。", "减速效果无视减益免疫。", "牺牲无法被躲避。"], "granted_by": "", "upgrades": {"scepter": {"zh": "强迫敌方目标攻击哈斯卡，并提升施法距离。", "en": "Forces the enemy target to attack Huskar and increases cast range."}}, "is_passive": false, "value_names": ["health_cost_percent", "health_damage", "charge_speed", "tooltip_health_damage", "tooltip_health_cost_percent", "movespeed", "attack_speed", "slow_duration_tooltip", "taunt_duration", "cast_range_bonus", "immunity_resist", "AbilityCastRange", "AbilityDuration", "AbilityCastPoint", "AbilityCooldown"]}, {"subject": "weaver_time_lapse", "name_zh": "编织者·时光倒流", "name_en": "Time Lapse", "description_zh": "编织者回到五秒前的时间点，获得当时的生命值和魔法值。不影响冷却时间、金钱和经验。\n\n驱散类型：强驱散", "description_en": "Weaver warps backward to whatever position it was in five seconds earlier--regaining the HP and mana from that time. No effect on cooldown, gold or experience.\n\nDISPEL TYPE: Strong Dispel", "notes_zh": ["能够移除编织者身上大部分的负面状态。", "时光倒流可以躲避攻击和技能弹道。"], "granted_by": "", "upgrades": {"scepter": {"zh": "时光倒流可以对%abilitycastrange%施法距离内的友方英雄施放。", "en": "Time Lapse may target allied Heroes with %abilitycastrange% cast range."}}, "is_passive": false, "value_names": ["targets_allies", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "spectre_shadow_step", "name_zh": "幽鬼·如影随形", "name_en": "Shadow Step", "description_zh": "对目标制造一个无法控制的幻象，对其进行攻击。子技能空降可以将本体传送至幻象，并将其摧毁。", "description_en": "Sends an uncontrollable illusion at a target that follows and attacks the target.The Reality sub-ability may be used to teleport to the illusion, destroying it.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["duration", "illusion_damage_incoming", "tooltip_illusion_total_damage_incoming", "illusion_outgoing_damage", "move_speed", "bonus_move_speed_illusion_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "spectre_haunt", "name_zh": "幽鬼·鬼影重重", "name_en": "Haunt", "description_zh": "创造一个复仇鬼影分别攻击每个敌方英雄。鬼影无法控制，受到额外伤害，造成的伤害低于幽鬼本体。鬼影移动无视地形。子技能空降可以将本体传送至幻象，并将其摧毁。", "description_en": "Creates a spectral nemesis to haunt all enemy Heroes.Haunt illusions are uncontrollable, take extra damage, and deal less damage than Spectre herself.  They ignore terrain.The Reality sub-ability may be used to teleport to the illusion, destroying it.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "幽鬼第一次对鬼影重重的幻象使用空降时，目标附近%fear_aoe%范围内的敌人会被恐惧，朝远离幽鬼的方向奔跑%fear_duration%秒，并且移动速度降低%fear_movespeed_slow%%%。冷却时间减少%scepter_cooldown_reduction_tooltip%秒。", "en": "The first time Spectre uses Reality on a Haunt illusion, enemies in a %fear_aoe% area around the target are Feared away from Spectre for %fear_duration%s and have their movement speed slowed by %fear_movespeed_slow%%%.Reduces cooldown by %scepter_cooldown_reduction_tooltip%s."}}, "is_passive": false, "value_names": ["scepter_cooldown_reduction_tooltip", "duration", "illusion_damage_outgoing", "tooltip_outgoing", "illusion_damage_incoming", "tooltip_illusion_total_damage_incoming", "destroy_if_target_is_dead", "fear_duration", "fear_aoe", "fear_movespeed_slow", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "ursa_earthshock", "name_zh": "熊战士·震撼大地", "name_en": "Earthshock", "description_zh": "熊战士向前跳跃%hop_distance%距离并猛击地面带来强烈的冲击，对附近范围内的所有敌方单位造成伤害并减速%abilityduration%秒。", "description_en": "Ursa leaps forward %hop_distance% units and slams the earth, causing a powerful shock to damage and slow all enemy units in a nearby area for %abilityduration% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "震撼大地对击中的敌人施加%fury_swipe_stacks_on_hit%层怒意狂击。", "en": "Earthshock applies %fury_swipe_stacks_on_hit% Fury Swipes to enemies hit."}}, "is_passive": false, "value_names": ["shock_radius", "movement_slow", "hop_distance", "hop_duration", "hop_height", "fury_swipe_stacks_on_hit", "AbilityDamage", "AbilityDuration", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "spirit_breaker_charge_of_darkness", "name_zh": "裂魂人·暗影冲刺", "name_en": "Charge of Darkness", "description_zh": "裂魂人盯紧一个敌方单位，开始无视一切物体的冲刺，起始为%min_movespeed_bonus_pct%%%额外移速，%windup_time%秒后达到最大速度。途中经过的所有敌方单位和目标单位都将受到巨力重击。如果目标单位在到达前阵亡，裂魂人将他的目标改为原路径上最近的一个敌方单位。", "description_en": "Spirit Breaker fixes his sight on an enemy unit and starts charging through all objects, starting at %min_movespeed_bonus_pct%%% of the bonus speed and reaching his max speed after %windup_time%s.All enemy units passed through and the targeted unit will be hit by a Greater Bash.  If the targeted unit dies, Spirit Breaker will change his target to the nearest enemy unit to that location.", "notes_zh": ["裂魂人在冲刺过程中能穿过树木，悬崖和任何单位。", "冲刺指示特效仅对队友可见。", "裂魂人将获得并共享目标的视野。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["movement_speed", "stun_duration", "bash_radius", "vision_radius", "vision_duration", "windup_time", "min_movespeed_bonus_pct", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "spirit_breaker_nether_strike", "name_zh": "裂魂人·幽冥一击", "name_en": "Nether Strike", "description_zh": "裂魂人遁入幽冥领域，从不幸的目标身旁再次出现，发动当前等级的巨力重击并造成额外伤害。击退距离为平常的两倍。", "description_en": "Spirit Breaker slips into the nether realm, reappearing next to his hapless victim. Upon reappearing, a Greater Bash of the current level occurs and deals bonus damage. Knocks back for double the normal distance.", "notes_zh": ["裂魂人将在目标身后出现并发动巨力重击。"], "granted_by": "", "upgrades": {"scepter": {"zh": "大幅提升击退效果。", "en": "Greatly increases knockback."}}, "is_passive": false, "value_names": ["damage", "fade_time", "shard_bonus_damage", "shard_break_duration", "shard_spell_immune_duration", "knockback_amp", "knockback_amp_duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "chaos_knight_reality_rift", "name_zh": "混沌骑士·实相裂隙", "name_en": "Reality Rift", "description_zh": "将混沌骑士及混沌骑士的幻象和目标单位传送到混沌骑士与目标连线上的一点。降低敌方单位的护甲，持续%duration%秒。", "description_en": "Teleports Chaos Knight, any illusions he has, and the target unit to a point along the line between him and the target. The enemy unit has their armor reduced for %duration%s.", "notes_zh": ["目标单位将会强制面向混沌骑士，而且混沌骑士和幻象默认对目标发动攻击。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["pull_distance", "armor_reduction", "duration", "pierces_immunity", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "meepo_poof", "name_zh": "米波·忽悠", "name_en": "Poof", "description_zh": "通过从大地中汲取神秘的能量，一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处，在离开和到达的区域都对敌人造成伤害。如果技能设为多样施法（右键点击技能栏图标）状态，所有米波也会对目标施放忽悠。对地施放后，除了选中的米波外所有米波会忽悠至最近的地点。", "description_en": "Drawing mystical energies from the earth, a Meepo can teleport to another Meepo or itself after channeling for %cast_duration% seconds, damaging the enemy in both the departure and arrival locations. If the ability is in alt-cast state, all Meepos will also cast Poof to the target. When cast on the ground, all Meepos except the selected one will Poof to the closest location.", "notes_zh": ["可以点击小地图施放。", "可以传送至米波的幻象。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["cast_duration", "radius", "poof_damage", "megameepo_poof_scaling", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "wisp_tether", "name_zh": "艾欧·羁绊", "name_en": "Tether", "description_zh": "将艾欧和一个友方单位连接在一起，提高双方的移动速度。当艾欧回复生命或魔法时，连在一起的友军将获得一部分回复效果。距离过远时连接将会断开，也可以主动断开连接。羁绊会减速触碰到的敌人。", "description_en": "Tethers Io to an allied unit, granting bonus movement speed to both. When Io restores health or mana, the tethered unit gains a portion of that amount. The tether breaks when the allied unit moves too far away, or Io cancels the tether. Tether slows enemies touching it.", "notes_zh": ["如果羁绊的目标距离艾欧700码以外，艾欧将链接目标并将自己向目标牵引（牵引后相距300码）。", "被羁绊连接的单位回复速度相比更快，艾欧满血时也能回复。", "艾欧的移动速度与羁绊目标一致。"], "granted_by": "", "upgrades": {"shard": {"zh": "羁绊会对触碰到的敌人造成伤害。艾欧会回复%damage_to_heal%%%造成伤害。", "en": "Tether damages enemies touching it. Io is healed for %damage_to_heal%%% of the damage done."}}, "is_passive": false, "value_names": ["radius", "movespeed", "latch_distance", "latch_speed", "tether_heal_amp", "tether_mana_amp", "slow", "slow_duration", "damage", "damage_to_heal", "tick_rate", "tether_attack_damage_pct", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "wisp_relocate", "name_zh": "艾欧·降临", "name_en": "Relocate", "description_zh": "将艾欧和与其连接的友军传送到地图上任何位置。持续时间结束后艾欧和相连的友军会被传送回原位。双击将传送回己方的泉水。", "description_en": "Teleports Io and a tethered ally to any location. After the spell expires, Io and the tethered ally will return to their original location. Double-click to teleport to your team's base fountain.", "notes_zh": ["敌人在施法延迟期间会在大地图和小地图上目标区域都收到视觉特效提示。", "如果艾欧在施法延迟期间被控制，降临将会取消。", "如果羁绊连接了友方英雄，该英雄将和你一起被传送。你可以随时断开连接，防止英雄和你一同传送。", "只有英雄、类英雄单位和幻象可以降临。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["cast_delay", "return_time", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "slark_pounce", "name_zh": "斯拉克·突袭", "name_en": "Pounce", "description_zh": "斯拉克向前跳跃，束缚第一个碰到的英雄并施加能量转移的叠加效果。该单位只能在斯拉克着地点附近的有限范围内移动。", "description_en": "Slark leaps forward, leashing and applying Essence Shift stacks to the first hero he connects. That unit can only move a limited distance away from Slark's landing position.", "notes_zh": ["施放后斯拉克以%pounce_speed%的速度向前跳跃，抓住敌方英雄或跳跃%pounce_distance%距离后停下。", "不能束缚减益免疫单位。", "斯拉克落地点附近的树木将会被摧毁。"], "granted_by": "", "upgrades": {"scepter": {"zh": "变为充能型技能，并且提升距离。", "en": "Provides charges and increases range."}}, "is_passive": false, "value_names": ["pounce_distance", "pounce_speed", "pounce_acceleration", "pounce_radius", "leash_duration", "leash_radius", "max_charges", "charge_restore_time", "pounce_distance_scepter", "essence_stacks", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "magnataur_skewer", "name_zh": "马格纳斯·巨角冲撞", "name_en": "Skewer", "description_zh": "马格纳斯向前冲刺，用他巨大的犀角将敌人挑起。被击中的英雄将被拽至终点，然后受到伤害并且移动速度被减缓。根据行进的距离伤害也会提升。", "description_en": "Magnus rushes forward, goring enemy units on his massive tusk. Heroes hit on the way will be dragged to the destination, then damaged and affected by slowed movement speed. The damage is increased based on distance traveled.", "notes_zh": ["马格纳斯受到眩晕、妖术或放逐作用时，巨角冲撞都会被打断。"], "granted_by": "", "upgrades": {"shard": {"zh": "提升距离，并且使敌人穿过树木和高台时造成额外伤害。", "en": "Increases range and deals additional damage when skewering enemies into trees or cliffs."}}, "is_passive": false, "value_names": ["skewer_speed", "range", "slow_pct", "skewer_radius", "slow_duration", "skewer_damage", "damage_distance_pct", "tree_radius", "tree_hit_damage", "cliff_hit_damage", "terrain_hit_cooldown", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "shredder_timber_chain", "name_zh": "伐木机·伐木锯链", "name_en": "Timber Chain", "description_zh": "伐木机发射一条锯链，锯链会嵌入第一棵碰到的树里，然后将他拉向那棵树。行进过程中任何碰到的敌方单位都会受到伤害。", "description_en": "Timbersaw fires a chain that embeds itself in the first tree it hits, pulling him towards it.  Any enemy in the path takes damage.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["chain_radius", "radius", "speed", "damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "tusk_snowball", "name_zh": "巨牙海民·雪球", "name_en": "Snowball", "description_zh": "巨牙海民开始卷成雪球。右键点击%snowball_grab_radius%范围内的友方英雄能使其加入雪球。发动雪球后，雪球经过的单位将会被眩晕并受到伤害。雪球每卷入一个英雄，它的伤害和眩晕时间都会得到提升。", "description_en": "Tusk begins rolling into a snowball. Allies within a %snowball_grab_radius% radius can also be added to the snowball by right-clicking on them, even while the snowball is moving. Once launched, any enemies caught in the snowball's path will be stunned and take damage. Each allied Hero in the snowball will add to its damage and stun duration.", "notes_zh": ["雪球在发动后经过最大3秒将会解体。", "使用发动雪球技能就能提前发动雪球。", "幻象不会进入雪球，但是米波的克隆体以及巨牙海民控制的其他单位将一同进入雪球。", "米波的分身也能卷入雪球，并提升雪球的伤害。", "队友可以点击雪球，使自己进入雪球。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["snowball_damage", "snowball_speed", "snowball_damage_bonus", "stun_duration", "stun_duration_bonus", "snowball_windup_radius", "snowball_duration", "snowball_radius", "snowball_grow_rate", "snowball_windup", "snowball_grab_radius", "snowball_speed_bonus", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost"]}, {"subject": "tusk_drinking_buddies", "name_zh": "巨牙海民·酒友", "name_en": "Drinking Buddies", "description_zh": "巨牙海民伸出手来触碰友方单位，拉近彼此。触碰后巨牙海民和他的友军获得移动速度和护甲加成。", "description_en": "Tusk reaches out to tag an allied unit, pulling them closer. Once tagged, both Tusk and his tagged ally gain movement speed and armor.", "notes_zh": ["如果巨牙海民和目标友军相距在%min_distance%距离以内，就不会拉动他们。", "在雪球期间无法使用。"], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["alt_cast_castrange_pct", "buff_duration", "pull_duration", "min_distance", "max_distance", "movespeed_bonus", "armor_bonus", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "elder_titan_echo_stomp", "name_zh": "上古巨神·回音重踏", "name_en": "Echo Stomp", "description_zh": "持续施法 - 上古巨神与他的灵体游魂一起践踏地面，对敌方单位造成伤害并使他们在原地昏迷。上古巨神造成物理伤害，灵体游魂造成魔法伤害。", "description_en": "CHANNELED - Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations.  The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.", "notes_zh": ["若同时处于灵体游魂和上古巨神的回音重踏作用范围内将受到两次伤害。"], "granted_by": "", "upgrades": {"shard": {"zh": "减少冷却时间。回音重踏可以设为多样施法（右键点击技能栏图标）状态，使上古巨神完成重踏后会取代灵体游魂。", "en": "Lowers Cooldown. Echo Stomp may be placed on alt-cast to allow Elder Titan to take the place of the Astral Spirit as it completes its stomp."}}, "is_passive": false, "value_names": ["cast_time", "radius", "sleep_duration", "stomp_damage", "initial_stun_duration", "wake_damage_limit", "can_swap_places", "AbilityCastRange", "AbilityChannelTime", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "ember_spirit_sleight_of_fist", "name_zh": "灰烬之灵·无影拳", "name_en": "Sleight of Fist", "description_zh": "灰烬之灵以燎原之火的速度横冲直撞，攻击目标区域内所有敌人，随后返回所在位置。对英雄造成额外伤害。", "description_en": "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location.  Deals bonus damage to heroes.", "notes_zh": ["在施放技能时作用的目标就已决定。", "对目标的攻击每次间隔为%attack_interval%秒。", "炘拥有的攻击特效（如致命一击、重击、分裂、连锁闪电等效果）在技能攻击期间都能生效。", "施放无影拳时间可以使用其他技能和物品。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "bonus_hero_damage", "attack_interval", "AbilityCastRange", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "ember_spirit_activate_fire_remnant", "name_zh": "灰烬之灵·激活残焰", "name_en": "Activate Fire Remnant", "description_zh": "选择残焰，灰烬之灵将向其冲去。", "description_en": "Select the Fire Remnant to arrive at.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["speed_multiplier", "max_charges", "charge_restore_time", "damage", "radius", "speed", "scepter_mana_cost", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost"]}, {"subject": "ember_spirit_fire_remnant", "name_zh": "灰烬之灵·残焰", "name_en": "Fire Remnant", "description_zh": "可以放出一个残焰，向目标地点冲去，速度为灰烬之灵移动速度的%speed_multiplier%%%。使用“激活残焰”技能后，灰烬之灵向所有残焰像冲去，将其摧毁并造成范围伤害，并移动至最近的残焰像。灰烬之灵最后会到达离目标地点最近的残焰像。", "description_en": "Sends a Fire Remnant that runs to the target location at %speed_multiplier%%% Ember Spirit's speed. Using Activate Fire Remnant, Ember Spirit will dash out to all active Fire Remnants, destroying them and dealing damage in an area and then moving to the nearest Remnant.  Ember Spirit will end at the Remnant closest to the targeted location.", "notes_zh": ["学习后马上拥有3个残焰（上限数量）。"], "granted_by": "", "upgrades": {"scepter": {"zh": "提升施法距离、初始残焰速度和最大能量点数。", "en": "Increases cast range, initial remnant speed, and maximum charges."}, "shard": {"zh": "灰烬之灵附近范围内有敌方英雄阵亡时，恢复一点残焰能量点数。另外，灰烬之灵阵亡时会在原地留下一个残焰。", "en": "If an enemy hero dies near Ember Spirit, a Fire Remnant charge will be replenished. Additionally, when Ember Spirit dies a Fire Remnant is spawned at his location."}}, "is_passive": false, "value_names": ["speed_multiplier", "damage", "radius", "duration", "scepter_range", "scepter_speed_multiplier", "scepter_max_charges", "shard_charge_radius", "apply_immolation_to_remnant", "AbilityCastRange", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityCooldown"]}, {"subject": "earth_spirit_rolling_boulder", "name_zh": "大地之灵·巨石翻滚", "name_en": "Rolling Boulder", "description_zh": "大地之灵化身为巨石，经过%delay%秒延迟后向目标位置翻滚，对经过的敌人造成伤害和眩晕，伤害值为%damage% + %damage_str%%%力量。如果撞到敌方英雄或自身被眩晕，翻滚都会中止。如果翻滚过程中经过残岩将会大幅提高翻滚距离和速度，造成的眩晕时间更长。", "description_en": "Earth Spirit gathers himself into a boulder and, after a %delay%s delay, rolls toward the target location, dealing %damage% + %damage_str%%% STR damage and stunning enemy units. He will stop if he collides with an enemy hero or is stunned. If he rolls over a Stone Remnant, he will travel further and faster, and stun enemies for longer.", "notes_zh": ["翻滚时经过残岩会将其摧毁。", "巨石的作用范围为%radius%。", "大地之灵在滚动时无法作为目标，而且无敌。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "speed", "rock_speed", "distance", "rock_distance_multiplier", "delay", "damage", "stun_duration", "rock_bonus_duration", "damage_str", "destroy_stone", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "viper_nose_dive",
+      "kinds": ["jump_dash"],
+      "quote": "冥界亚龙冲向地面",
+      "reason_zh": "向地面俯冲属于沿路径连续移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "rattletrap_hookshot",
+      "kinds": ["jump_dash"],
+      "quote": "发条技师会将自己牵引到目标身边……对牵引时冲撞到的单位也造成伤害和眩晕。",
+      "reason_zh": "自身被牵引至目标，且途中可以冲撞单位，属于连续路径移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "furion_teleportation",
+      "kinds": ["teleport"],
+      "quote": "传送到地图上任何位置。",
+      "reason_zh": "说明明确将自身传送到指定位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "enchantress_bunny_hop",
+      "kinds": ["jump_dash"],
+      "quote": "向后跳跃",
+      "reason_zh": "向后跳跃属于沿路径连续移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "huskar_life_break",
+      "kinds": ["jump_dash"],
+      "quote": "他跃向一个目标",
+      "reason_zh": "自身跳向目标，存在明确的跳跃过程。",
+      "uncertain": false
+    },
+    {
+      "subject": "weaver_time_lapse",
+      "kinds": ["teleport"],
+      "quote": "Weaver warps backward to whatever position it was in five seconds earlier",
+      "reason_zh": "英文明确表示跃迁回五秒前所在的位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "spectre_shadow_step",
+      "kinds": ["teleport"],
+      "quote": "子技能空降可以将本体传送至幻象，并将其摧毁。",
+      "reason_zh": "通过子技能将本体传送到幻象所在位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "spectre_haunt",
+      "kinds": ["teleport", "free_move"],
+      "quote": "鬼影移动无视地形。子技能空降可以将本体传送至幻象，并将其摧毁。",
+      "reason_zh": "鬼影具有无视地形的移动方式，本体还可通过空降传送至幻象。",
+      "uncertain": false
+    },
+    {
+      "subject": "ursa_earthshock",
+      "kinds": ["jump_dash"],
+      "quote": "熊战士向前跳跃%hop_distance%距离",
+      "reason_zh": "自身向前跳跃一段距离。",
+      "uncertain": false
+    },
+    {
+      "subject": "spirit_breaker_charge_of_darkness",
+      "kinds": ["jump_dash"],
+      "quote": "开始无视一切物体的冲刺……途中经过的所有敌方单位和目标单位都将受到巨力重击。",
+      "reason_zh": "朝目标连续冲刺并经过沿途单位，加速属于该冲刺过程。",
+      "uncertain": false
+    },
+    {
+      "subject": "spirit_breaker_nether_strike",
+      "kinds": ["teleport"],
+      "quote": "裂魂人遁入幽冥领域，从不幸的目标身旁再次出现",
+      "reason_zh": "自身消失后在目标身旁重新出现，属于传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "chaos_knight_reality_rift",
+      "kinds": ["teleport"],
+      "quote": "将混沌骑士及混沌骑士的幻象和目标单位传送到混沌骑士与目标连线上的一点。",
+      "reason_zh": "明确将自身及相关单位传送到连线上的位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "meepo_poof",
+      "kinds": ["teleport"],
+      "quote": "一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处",
+      "reason_zh": "持续施法结束后发生传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "wisp_tether",
+      "kinds": ["jump_dash", "speed_only"],
+      "quote": "提高双方的移动速度。……如果羁绊的目标距离艾欧700码以外，艾欧将链接目标并将自己向目标牵引（牵引后相距300码）。",
+      "reason_zh": "既提供移速加成，也能在距离满足条件时将自身连续牵引向目标。",
+      "uncertain": false
+    },
+    {
+      "subject": "wisp_relocate",
+      "kinds": ["teleport"],
+      "quote": "将艾欧和与其连接的友军传送到地图上任何位置。持续时间结束后艾欧和相连的友军会被传送回原位。",
+      "reason_zh": "前往目的地及返回原位均为传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "slark_pounce",
+      "kinds": ["jump_dash"],
+      "quote": "斯拉克向前跳跃",
+      "reason_zh": "自身沿前方路径跳跃。",
+      "uncertain": false
+    },
+    {
+      "subject": "magnataur_skewer",
+      "kinds": ["jump_dash"],
+      "quote": "马格纳斯向前冲刺",
+      "reason_zh": "自身向前连续冲刺并可沿途撞中敌人。",
+      "uncertain": false
+    },
+    {
+      "subject": "shredder_timber_chain",
+      "kinds": ["jump_dash"],
+      "quote": "然后将他拉向那棵树。行进过程中任何碰到的敌方单位都会受到伤害。",
+      "reason_zh": "自身被锯链沿路径拉向树木。",
+      "uncertain": false
+    },
+    {
+      "subject": "tusk_snowball",
+      "kinds": ["jump_dash"],
+      "quote": "Tusk begins rolling into a snowball.……Once launched, any enemies caught in the snowball's path will be stunned and take damage.",
+      "reason_zh": "自身卷成雪球后沿路径滚动。",
+      "uncertain": false
+    },
+    {
+      "subject": "tusk_drinking_buddies",
+      "kinds": ["jump_dash", "speed_only"],
+      "quote": "巨牙海民伸出手来触碰友方单位，拉近彼此。触碰后巨牙海民和他的友军获得移动速度和护甲加成。",
+      "reason_zh": "双方可被连续拉近，触碰后还获得独立的移速加成。",
+      "uncertain": false
+    },
+    {
+      "subject": "elder_titan_echo_stomp",
+      "kinds": ["teleport"],
+      "quote": "使上古巨神完成重踏后会取代灵体游魂。",
+      "reason_zh": "魔晶升级使自身在重踏完成后出现在灵体游魂的位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "ember_spirit_sleight_of_fist",
+      "kinds": ["jump_dash"],
+      "quote": "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location.",
+      "reason_zh": "材料将其描述为高速冲刺攻击并返回起点。",
+      "uncertain": false
+    },
+    {
+      "subject": "ember_spirit_activate_fire_remnant",
+      "kinds": ["jump_dash"],
+      "quote": "选择残焰，灰烬之灵将向其冲去。",
+      "reason_zh": "自身冲向选定残焰，属于沿路径连续移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "ember_spirit_fire_remnant",
+      "kinds": ["jump_dash"],
+      "quote": "使用“激活残焰”技能后，灰烬之灵向所有残焰像冲去",
+      "reason_zh": "配合激活残焰时，本体会连续冲向残焰。",
+      "uncertain": false
+    },
+    {
+      "subject": "earth_spirit_rolling_boulder",
+      "kinds": ["jump_dash"],
+      "quote": "经过%delay%秒延迟后向目标位置翻滚，对经过的敌人造成伤害和眩晕",
+      "reason_zh": "延迟结束后沿路径翻滚，途中经过敌人。",
+      "uncertain": false
+    }
+  ]
+}
+tokens used
+25,732
+{
+  "objects": [
+    {
+      "subject": "viper_nose_dive",
+      "kinds": ["jump_dash"],
+      "quote": "冥界亚龙冲向地面",
+      "reason_zh": "向地面俯冲属于沿路径连续移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "rattletrap_hookshot",
+      "kinds": ["jump_dash"],
+      "quote": "发条技师会将自己牵引到目标身边……对牵引时冲撞到的单位也造成伤害和眩晕。",
+      "reason_zh": "自身被牵引至目标，且途中可以冲撞单位，属于连续路径移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "furion_teleportation",
+      "kinds": ["teleport"],
+      "quote": "传送到地图上任何位置。",
+      "reason_zh": "说明明确将自身传送到指定位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "enchantress_bunny_hop",
+      "kinds": ["jump_dash"],
+      "quote": "向后跳跃",
+      "reason_zh": "向后跳跃属于沿路径连续移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "huskar_life_break",
+      "kinds": ["jump_dash"],
+      "quote": "他跃向一个目标",
+      "reason_zh": "自身跳向目标，存在明确的跳跃过程。",
+      "uncertain": false
+    },
+    {
+      "subject": "weaver_time_lapse",
+      "kinds": ["teleport"],
+      "quote": "Weaver warps backward to whatever position it was in five seconds earlier",
+      "reason_zh": "英文明确表示跃迁回五秒前所在的位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "spectre_shadow_step",
+      "kinds": ["teleport"],
+      "quote": "子技能空降可以将本体传送至幻象，并将其摧毁。",
+      "reason_zh": "通过子技能将本体传送到幻象所在位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "spectre_haunt",
+      "kinds": ["teleport", "free_move"],
+      "quote": "鬼影移动无视地形。子技能空降可以将本体传送至幻象，并将其摧毁。",
+      "reason_zh": "鬼影具有无视地形的移动方式，本体还可通过空降传送至幻象。",
+      "uncertain": false
+    },
+    {
+      "subject": "ursa_earthshock",
+      "kinds": ["jump_dash"],
+      "quote": "熊战士向前跳跃%hop_distance%距离",
+      "reason_zh": "自身向前跳跃一段距离。",
+      "uncertain": false
+    },
+    {
+      "subject": "spirit_breaker_charge_of_darkness",
+      "kinds": ["jump_dash"],
+      "quote": "开始无视一切物体的冲刺……途中经过的所有敌方单位和目标单位都将受到巨力重击。",
+      "reason_zh": "朝目标连续冲刺并经过沿途单位，加速属于该冲刺过程。",
+      "uncertain": false
+    },
+    {
+      "subject": "spirit_breaker_nether_strike",
+      "kinds": ["teleport"],
+      "quote": "裂魂人遁入幽冥领域，从不幸的目标身旁再次出现",
+      "reason_zh": "自身消失后在目标身旁重新出现，属于传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "chaos_knight_reality_rift",
+      "kinds": ["teleport"],
+      "quote": "将混沌骑士及混沌骑士的幻象和目标单位传送到混沌骑士与目标连线上的一点。",
+      "reason_zh": "明确将自身及相关单位传送到连线上的位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "meepo_poof",
+      "kinds": ["teleport"],
+      "quote": "一个米波可以在持续施法%cast_duration%秒后传送至另一个米波或自身所在之处",
+      "reason_zh": "持续施法结束后发生传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "wisp_tether",
+      "kinds": ["jump_dash", "speed_only"],
+      "quote": "提高双方的移动速度。……如果羁绊的目标距离艾欧700码以外，艾欧将链接目标并将自己向目标牵引（牵引后相距300码）。",
+      "reason_zh": "既提供移速加成，也能在距离满足条件时将自身连续牵引向目标。",
+      "uncertain": false
+    },
+    {
+      "subject": "wisp_relocate",
+      "kinds": ["teleport"],
+      "quote": "将艾欧和与其连接的友军传送到地图上任何位置。持续时间结束后艾欧和相连的友军会被传送回原位。",
+      "reason_zh": "前往目的地及返回原位均为传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "slark_pounce",
+      "kinds": ["jump_dash"],
+      "quote": "斯拉克向前跳跃",
+      "reason_zh": "自身沿前方路径跳跃。",
+      "uncertain": false
+    },
+    {
+      "subject": "magnataur_skewer",
+      "kinds": ["jump_dash"],
+      "quote": "马格纳斯向前冲刺",
+      "reason_zh": "自身向前连续冲刺并可沿途撞中敌人。",
+      "uncertain": false
+    },
+    {
+      "subject": "shredder_timber_chain",
+      "kinds": ["jump_dash"],
+      "quote": "然后将他拉向那棵树。行进过程中任何碰到的敌方单位都会受到伤害。",
+      "reason_zh": "自身被锯链沿路径拉向树木。",
+      "uncertain": false
+    },
+    {
+      "subject": "tusk_snowball",
+      "kinds": ["jump_dash"],
+      "quote": "Tusk begins rolling into a snowball.……Once launched, any enemies caught in the snowball's path will be stunned and take damage.",
+      "reason_zh": "自身卷成雪球后沿路径滚动。",
+      "uncertain": false
+    },
+    {
+      "subject": "tusk_drinking_buddies",
+      "kinds": ["jump_dash", "speed_only"],
+      "quote": "巨牙海民伸出手来触碰友方单位，拉近彼此。触碰后巨牙海民和他的友军获得移动速度和护甲加成。",
+      "reason_zh": "双方可被连续拉近，触碰后还获得独立的移速加成。",
+      "uncertain": false
+    },
+    {
+      "subject": "elder_titan_echo_stomp",
+      "kinds": ["teleport"],
+      "quote": "使上古巨神完成重踏后会取代灵体游魂。",
+      "reason_zh": "魔晶升级使自身在重踏完成后出现在灵体游魂的位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "ember_spirit_sleight_of_fist",
+      "kinds": ["jump_dash"],
+      "quote": "Ember Spirit dashes around with blazing speed, attacking all enemies in the targeted area of effect, then returning to his start location.",
+      "reason_zh": "材料将其描述为高速冲刺攻击并返回起点。",
+      "uncertain": false
+    },
+    {
+      "subject": "ember_spirit_activate_fire_remnant",
+      "kinds": ["jump_dash"],
+      "quote": "选择残焰，灰烬之灵将向其冲去。",
+      "reason_zh": "自身冲向选定残焰，属于沿路径连续移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "ember_spirit_fire_remnant",
+      "kinds": ["jump_dash"],
+      "quote": "使用“激活残焰”技能后，灰烬之灵向所有残焰像冲去",
+      "reason_zh": "配合激活残焰时，本体会连续冲向残焰。",
+      "uncertain": false
+    },
+    {
+      "subject": "earth_spirit_rolling_boulder",
+      "kinds": ["jump_dash"],
+      "quote": "经过%delay%秒延迟后向目标位置翻滚，对经过的敌人造成伤害和眩晕",
+      "reason_zh": "延迟结束后沿路径翻滚，途中经过敌人。",
+      "uncertain": false
+    }
+  ]
+}

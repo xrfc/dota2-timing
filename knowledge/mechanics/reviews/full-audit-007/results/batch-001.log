@@ -1,0 +1,388 @@
+[codex-prefer] account=temp
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty3
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1ac75-ef70-7fe2-9a3c-6e90c09f14f5
+--------
+user
+你在独立阅读Dota 2技能和装备的说明。下面每个对象都能让单位自己移动。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+每个对象输出一条，`subject`原样返回，`kinds`列出它具有的全部移动方式：
+- `jump_dash`：跳跃、冲刺、滑行、翻滚、向前冲、飞向目标，单位在途中连续经过路径。
+- `teleport`：闪烁、传送，单位瞬间或延迟后出现在别处，途中不经过路径。
+- `free_move`：一段时间内可以自由移动且移动方式改变（如飞行、飘在空中移动、在特定路径上移动）。
+- `speed_only`：只是提高移动速度。
+- `other`：不属于以上，写在`reason_zh`里。
+
+`quote`摘决定判断的原文片段，`reason_zh`一句中文说明，`uncertain`为true表示材料不足。`%xxx%`是数值占位符。
+
+待判断对象：
+[{"subject": "antimage_blink", "name_zh": "敌法师·闪烁", "name_en": "Blink", "description_zh": "短距离传送，能让敌法师自由出入战场。", "description_en": "Short distance teleportation that allows Anti-Mage to move in and out of combat.", "notes_zh": ["闪烁可以躲避多种飞行过程中的攻击和技能弹道。"], "granted_by": "", "upgrades": {"scepter": {"zh": "施放闪烁后，%empowered_mana_break_duration%秒内的法力损毁将额外燃烧%empowered_max_burn_pct_tooltip%%%最大魔法值，并且阻止目标在短时间内恢复或获得魔法。这个负面状态无法驱散。", "en": "After casting Blink, your next Mana Break within %empowered_mana_break_duration%s burns an additional %empowered_max_burn_pct_tooltip%%% max mana and prevents the target from regenerating or gaining mana for a short duration. This debuff is undispellable."}}, "is_passive": false, "value_names": ["min_blink_range", "empowered_mana_break_duration", "empowered_max_burn_pct_tooltip", "empowered_mana_break_debuff_duration_tooltip", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "crystal_maiden_crystal_clone", "name_zh": "水晶室女·冰晶克隆", "name_en": "Crystal Clone", "description_zh": "向一个方向滑行，在原地制造一个自身的冰晶克隆，并且躲避多种飞行过程中的攻击和技能弹道。如果克隆受到了足量伤害，或者超过一定时间都会碎裂，对附近%frostbite_radius%范围内敌人施加冰封禁制。克隆体也可以被水晶室女自身的技能摧毁。", "description_en": "Slides in a direction, creating a crystal clone of herself in her place and disjointing incoming projectiles. If the clone takes enough damage or times out, it shatters, Frostbiting enemies in a %frostbite_radius% AoE around its place. The Clone can also be destroyed by Crystal Maiden's own spells.", "notes_zh": [], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["hop_distance", "hop_duration", "clone_duration", "frostbite_radius", "anim_delay", "clone_health", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "earthshaker_enchant_totem", "name_zh": "撼地者·强化图腾", "name_en": "Enchant Totem", "description_zh": "强化撼地者的图腾，使下次攻击拥有额外攻击力和%bonus_attack_range%攻击距离加成。", "description_en": "Empowers Earthshaker's totem, causing it to deal extra damage and have %bonus_attack_range% bonus attack range on the next attack.", "notes_zh": ["攻击力加成是基于基础攻击力和主属性数值。"], "granted_by": "", "upgrades": {"scepter": {"zh": "强化图腾可以对地施放，施放后会跳至半空中再降落至目标地点，在目标地点施放强化图腾。双击技能会按原技能施放，不会跳跃。强化图腾拥有分裂效果。", "en": "Enchant Totem becomes a ground target ability, causing Earthshaker to jump in the air and land at the target spot, casting Enchant Totem there.  Self-casting the ability will behave in the original form, without jumping. Grants Enchant Totem a cleaving attack."}}, "is_passive": false, "value_names": ["totem_damage_percentage", "distance_scepter", "scepter_height", "scepter_height_arcbuffer", "scepter_acceleration_z", "scepter_acceleration_horizontal", "scepter_leap_duration", "scepter_cleave_pct", "scepter_cleave_starting_width", "scepter_cleave_ending_width", "scepter_cleave_distance", "bonus_attack_range", "AbilityDuration", "AbilityCastPoint", "AbilityManaCost"]}, {"subject": "juggernaut_swift_slash", "name_zh": "主宰·迅风斩", "name_en": "Swiftslash", "description_zh": "发动一次短时间的无敌斩，持续%duration%秒。", "description_en": "Performs a short Omnislash for %duration% seconds.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["duration", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "juggernaut_omni_slash", "name_zh": "主宰·无敌斩", "name_en": "Omnislash", "description_zh": "主宰挥剑跃向敌方目标单位，随后再以更短的攻击频率斩击该单位和附近的其它敌方单位。主宰在无敌斩期间无敌。\n\n驱散类型：弱驱散", "description_en": "Juggernaut leaps towards the target enemy units, and then slashes the target and other nearby enemy units at an increased attack rate. Juggernaut is invulnerable for the duration.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["无敌斩期间可以使用物品。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["attack_rate_multiplier", "bonus_damage", "bonus_attack_speed", "duration", "omni_slash_radius", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "mirana_leap", "name_zh": "米拉娜·跳跃", "name_en": "Leap", "description_zh": "米拉娜的坐骑向前跳跃加入战斗，发出一声凶狠的咆哮鼓舞它的主人，提升攻击和移动速度。速度加成持续%leap_bonus_duration%秒。", "description_en": "Mirana leaps forward into battle, empowering herself with a ferocious roar that grants bonus attack and movement speed. Speed bonus lasts %leap_bonus_duration% seconds.", "notes_zh": [], "granted_by": "", "upgrades": {"shard": {"zh": "获得+%additional_charges%跳跃能量点数。", "en": "Grants +%additional_charges% Leap charge."}}, "is_passive": false, "value_names": ["leap_distance", "leap_speed", "leap_acceleration", "leap_speedbonus", "leap_speedbonus_as", "leap_bonus_duration", "additional_charges", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost"]}, {"subject": "morphling_waveform", "name_zh": "变体精灵·波浪形态", "name_en": "Waveform", "description_zh": "变体精灵化为波浪向前涌进，对路径上的敌人造成伤害。变体精灵在波浪形态中是无敌的。", "description_en": "Morphling dissolves into liquid and surges forward, damaging enemy units in his path. Morphling is invulnerable during Waveform.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["speed", "width", "process_procs", "AbilityDamage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "morphling_replicate", "name_zh": "变体精灵·变形", "name_en": "Morph", "description_zh": "使自身向敌方目标改变，获得其基础技能，并且基于目标改变自己的主属性。技能持续时间内可以来回切换。", "description_en": "Morphling changes his form to match the targeted enemy, gaining their basic abilities and changing his primary attribute based on his target. Can be toggled for the duration of the ability.", "notes_zh": ["变体精灵自身及其控制的单位不能作为变形的目标。", "变形不会复制魔晶/神杖类技能，除非变体精灵自身也拥有相应物品。", "不会触发法术反弹。"], "granted_by": "", "upgrades": {"scepter": {"zh": "变形增加多样施法（右键点击技能栏图标）。开启后会产生目标英雄的强幻象，可以施放英雄的所有基础技能。如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。", "en": "Adds an alt-cast to Morph. When enabled, a strong illusion is created of the target hero that can cast all of the hero's basic abilities. If the illusion is alive when Morphling toggles the ability, he will take the place of the illusion, destroying it."}}, "is_passive": false, "value_names": ["duration", "scepter_stat_steal", "scepter_spell_amplify", "scepter_attack_speed", "scepter_status_resist", "scepter_additional_stats", "scepter_illusion_outgoing", "scepter_illusion_incoming", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "phantom_lancer_doppelwalk", "name_zh": "幻影长矛手·神行百变", "name_en": "Doppelganger", "description_zh": "幻影长矛手暂时从战场上消失。经过%delay%秒，幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置，并产生两个新的幻象。施放技能后延长所有幻象的持续时间。新加的两个幻象拥有不同的特性：一个承受正常百分比的伤害，不具有攻击力，另一个额外承受%illusion_2_damage_in_pct%%%伤害，继承的攻击力相比本体减少%illusion_2_damage_out_pct%%%。\n\n驱散类型：弱驱散", "description_en": "Phantom Lancer briefly vanishes from the battlefield. After %delay% second, Phantom Lancer and any of his nearby illusions reappear at a random position within the targeted location, along with two additional doppelgangers. Extends duration of all illusions. The two added doppelgangers have different properties: one takes normal damage and deals none, while the other takes %illusion_2_damage_in_pct%%% bonus damage and deals %illusion_2_damage_out_pct%%% less damage.\n\nDISPEL TYPE: Basic Dispel", "notes_zh": ["这个技能可以躲避攻击和技能弹道，并且驱散负面效果。", "重新现身的单位附近的树木将会被摧毁。", "幻影长矛手和他的队友可以分辨出哪个幻象承受100%伤害。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["illusion_1_damage_out_pct", "illusion_2_damage_out_pct", "illusion_2_damage_in_pct", "target_aoe", "search_radius", "delay", "illusion_duration", "illusion_extended_duration", "illusion_2_amount", "hp_missing_per_extra_illusion_pct", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "phantom_lancer_phantom_edge", "name_zh": "幻影长矛手·幻影冲锋", "name_en": "Phantom Rush", "description_zh": "对目标发动攻击后，幻影长矛手将快速向其冲去，获得移动速度和闪避提升。", "description_en": "When targeting an enemy for an attack, Phantom Lancer quickly charges into range, gaining increased movement speed and evasion.", "notes_zh": ["如果冲锋中途取消攻击指令，那么移动速度加成就会消失。", "冲锋过程中移动速度为%bonus_speed%。"], "granted_by": "", "upgrades": {"scepter": {"zh": "提升距离。每当幻影长矛手冲锋时穿过敌人，他就会制造并列幻象攻击他们。另外，每冲锋%illusion_spawn_travel_distance%距离还会在幻影长矛手身旁制造一个并列幻象，向目标冲去。", "en": "Increases Range. Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them. Additionally, every %illusion_spawn_travel_distance% units rushed creates a Juxtapose illusion that rushes to the target alongside Phantom Lancer."}}, "is_passive": false, "value_names": ["min_distance", "max_distance", "bonus_speed", "illusion_spawn_radius", "illusion_spawn_travel_distance", "evasion", "AbilityCooldown"]}, {"subject": "puck_illusory_orb", "name_zh": "帕克·幻象法球", "name_en": "Illusory Orb", "description_zh": "以矢量为目标。帕克向路线方向发出一个魔法球，对经过路径上的敌人造成伤害。法球每%damage_interval%秒会在作用范围内额外造成%damage_over_time_pct%%%击中伤害，但超过最大施法距离后法球会被摧毁。\n\n在幻象法球飞行过程中，帕克可以使用灵动之翼来传送到法球所在的位置。可以设为多样施法（右键点击技能栏图标），让法球的路线为向前的直线。", "description_en": "Vector Targeted. Puck launches a magic orb that travels along the path, damaging enemy units along the way. The orb deals an additional %damage_over_time_pct%%% of its impact damage every %damage_interval%s in its area of effect, but if it exceeds the max cast range it will be destroyed.\n\n At any point, Puck may teleport to the orb's location using Ethereal Jaunt. Can be put on alt-cast to launch the Orb straight ahead.", "notes_zh": ["幻象法球在飞行途中提供顺畅视野。", "将自己传送到幻象法球可以躲避攻击和技能弹道。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "max_distance", "orb_speed", "orb_vision", "vision_duration", "damage", "warning_sound_time", "curve_orb", "curve_orb_duration_multiplier", "curve_orb_max_acceleration", "curve_orb_pullback_bonus_launch_speed", "curve_strength", "vector_reticle_distance", "damage_over_time_pct", "damage_interval"]}, {"subject": "puck_waning_rift", "name_zh": "帕克·新月之痕", "name_en": "Waning Rift", "description_zh": "帕克传送至目标地点洒出它神秘的仙女粉尘，对周围的敌人造成伤害和沉默。", "description_en": "Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["radius", "silence_duration", "damage", "max_distance", "push_pull_enabled", "knock_distance", "knock_duration", "pull_distance", "pull_duration", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "sandking_burrowstrike", "name_zh": "沙王·掘地穿刺", "name_en": "Burrowstrike", "description_zh": "沙王钻入地面挖掘隧道前进，穿出地面时伤害并眩晕上方的敌方单位。对击中的英雄施加腐尸毒。可以设为多样施法（右键点击技能栏图标），直接朝指定方向立刻施放，不需要走向目标地点。", "description_en": "Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Adds Caustic Finale poison to heroes hit Can be put on alt-cast to immediately cast in the desired direction, without walking towards the targeted location.", "notes_zh": ["不会触发法术抵抗或法术反弹。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["burrow_width", "burrow_duration", "burrow_speed", "burrow_anim_time", "AbilityDamage", "AbilityCastRange", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "storm_spirit_ball_lightning", "name_zh": "风暴之灵·球状闪电", "name_en": "Ball Lightning", "description_zh": "风暴之灵变成不稳定的电流在战场上横冲直撞，直到他的魔法耗尽或到达目标才停下。施法消耗为%ball_lightning_initial_mana_base%+总魔法量的%ball_lightning_initial_mana_percentage%%%，每移动100距离消耗%ball_lightning_travel_cost_base%+总魔法量的%ball_lightning_travel_cost_percent%%%，本技能造成的伤害每飞行100距离就会递增。", "description_en": "Storm Spirit becomes volatile electricity, charging across the battlefield until he depletes his mana or reaches his target. The activation mana cost is %ball_lightning_initial_mana_base%+%ball_lightning_initial_mana_percentage%%% of his total mana pool, and the cost per 100 units traveled is %ball_lightning_travel_cost_base%+%ball_lightning_travel_cost_percent%%% of his total mana pool.  Damage is expressed in damage per 100 units traveled.", "notes_zh": ["行进过程中可以使用技能和物品。", "该技能可以摧毁树木。", "风暴之灵在球状闪电期间是无敌状态。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["ball_lightning_initial_mana_percentage", "ball_lightning_initial_mana_base", "ball_lightning_move_speed", "ball_lightning_aoe", "ball_lightning_travel_cost_base", "ball_lightning_travel_cost_percent", "ball_lightning_vision_radius", "blocker_duration", "scepter_remnant_interval", "auto_remnant_interval", "AbilityDamage", "AbilityCastPoint", "AbilityManaCost"]}, {"subject": "sven_storm_bolt", "name_zh": "斯温·风暴之拳", "name_en": "Storm Hammer", "description_zh": "斯温用他充满魔力的手套对目标周围内所有敌人造成伤害和眩晕。", "description_en": "Sven unleashes his magical gauntlet that deals damage and stuns enemy units in a small area around the target.", "notes_zh": [], "granted_by": "", "upgrades": {"scepter": {"zh": "提升施法距离，并且对目标施加弱驱散效果。可以影响无敌目标。设为多样施法（右键点击技能栏图标）后，额外造成%scepter_bonus_damage%点伤害并且斯温会跟随风暴之拳行进。", "en": "Increases cast range and applies a basic dispel on the target. Affects invulnerable units. If alt-cast, it deals an additional %scepter_bonus_damage% damage and Sven travels with the Storm Hammer."}}, "is_passive": false, "value_names": ["bolt_speed", "bolt_stun_duration", "bolt_aoe", "vision_radius", "scepter_bonus_damage", "bonus_damage_pct", "AbilityDamage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "vengefulspirit_nether_swap", "name_zh": "复仇之魂·移形换位", "name_en": "Nether Swap", "description_zh": "与一个目标英雄瞬间交换位置，不论敌我。移形换位会打断目标的持续施法。敌方英雄被交换后受到伤害。复仇之魂和被交换的友方英雄都会获得等同于造成伤害的护盾。", "description_en": "Instantaneously swaps positions with a target Hero, friend or enemy. Nether Swap interrupts channeling abilities on the target. Enemy Swapped units take damage. Vengeful Spirit and allied swapped units gain a barrier equal to the damage dealt.", "notes_zh": ["对减益免疫单位有效。", "技能施放后复仇之魂和目标附近的树木将会被摧毁。", "移形换位能够打断持续施法。"], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage_reduction_duration", "damage", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "zuus_heavenly_jump", "name_zh": "宙斯·神圣一跳", "name_en": "Heavenly Jump", "description_zh": "宙斯作出神圣一跳，向前跳跃并震击最近的可见敌人（以英雄优先），造成伤害，并减缓其移动速度、攻击速度。宙斯获得附近%vision_radius%范围的顺畅视野，持续3秒。", "description_en": "Zeus performs a Heavenly Jump, leaping forward and shocking the closest visible nearby enemy (prioritizing heroes), dealing damage as well as reducing their movement and attack speed. Zeus gets %vision_radius% unobstructed vision around him for 3 seconds.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["damage", "hop_distance", "hop_duration", "hop_height", "range", "vision_radius", "vision_duration", "duration", "move_slow", "aspd_slow", "targets", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "riki_blink_strike", "name_zh": "力丸·闪烁突袭", "name_en": "Blink Strike", "description_zh": "传送到目标背后，如果是敌人对其造成%slow_pct_tooltip%%%短暂减速，并发动一次拥有额外伤害的攻击。", "description_en": "Teleports behind the target unit, momentarily slowing them by %slow_pct_tooltip%%% and attacking them with bonus damage if it is an enemy.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["bonus_damage", "slow", "slow_pct_tooltip", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "sniper_concussive_grenade", "name_zh": "狙击手·震荡手雷", "name_en": "Concussive Grenade", "description_zh": "向目标区域扔出一枚手雷，对敌人造成伤害并将他们和狙击手一同击退。受到作用的敌人被击退后还会被缴械和减速。", "description_en": "Launches a grenade at the target area, dealing damage to enemies and knocking them and Sniper back. Enemies affected are disarmed and have their movement slowed after the knockback.", "notes_zh": [], "granted_by": "shard", "upgrades": {"shard": {"zh": "降低冷却时间，提升伤害并允许技能也能击退狙击手。", "en": "Reduces cooldown, increases damage, and allows the knockback to affect Sniper as well."}}, "is_passive": false, "value_names": ["damage", "radius", "slow", "debuff_duration", "knockback_height", "knockback_distance", "knockback_duration", "self_push", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "necrolyte_death_seeker", "name_zh": "瘟疫法师·死亡搜寻", "name_en": "Death Seeker", "description_zh": "瘟疫法师变成一个大死亡脉冲，向目标单位的地点移动。到达该地点后，死亡脉冲会扩散至附近敌人和友军。", "description_en": "Necrophos turns into a large Death Pulse towards the target unit's position. Once it arrives to the location, the Death Pulse spreads towards nearby enemies and allies.", "notes_zh": ["不会触发法术反弹。"], "granted_by": "shard", "upgrades": {}, "is_passive": false, "value_names": ["projectile_multiplier", "ethereal_duration", "magic_resistance_reduction", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "queenofpain_blink", "name_zh": "痛苦女王·闪烁", "name_en": "Blink", "description_zh": "短距离传送，能让痛苦女王自由出入战场。", "description_en": "Short distance teleportation that allows Queen of Pain to move in and out of combat.", "notes_zh": ["闪烁可以躲避多种飞行过程中的攻击和技能弹道。"], "granted_by": "", "upgrades": {"shard": {"zh": "在痛苦女王的闪烁起点和落地点各释放一次音爆。在%shard_aoe%范围内造成%shard_damage%点伤害，并沉默%shard_duration%秒。", "en": "Releases a sonic boom when Queen of Pain blinks, at both her starting and ending locations. Deals %shard_damage% damage in a %shard_aoe% AoE and silences the target for %shard_duration% seconds."}}, "is_passive": false, "value_names": ["min_blink_range", "shard_damage", "shard_duration", "shard_aoe", "AbilityCastRange", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "faceless_void_time_walk", "name_zh": "虚空假面·时间漫游", "name_en": "Time Walk", "description_zh": "冲到目标位置，并取消最近%backtrack_duration%秒内受到的任何伤害。", "description_en": "Rushes to a target location while backtracking any damage taken the last %backtrack_duration% seconds.", "notes_zh": ["虚空假面在时间漫游过程中为无敌状态。"], "granted_by": "", "upgrades": {"scepter": {"zh": "在落地点对所有单位施加一次时间锁定。", "en": "Applies a Time Lock to all units at the landing destination."}}, "is_passive": false, "value_names": ["speed", "range", "backtrack_duration", "backtrack_time_walk_duration", "dodge_chance_pct", "radius", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "faceless_void_time_walk_reverse", "name_zh": "虚空假面·反时间漫游", "name_en": "Reverse Time Walk", "description_zh": "时间漫游落地后1.5秒内可使用。施放时，自身将逆转时间漫游，回到上一个施放地点。不会影响生命值或触发神杖效果。", "description_en": "Available for 1.5 seconds after landing Time Walk. If used in this period, you will reverse your time walk back to your previous cast location. Does not affect health or proc scepter hits.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["buff_duration", "speed", "AbilityCooldown"]}, {"subject": "phantom_assassin_phantom_strike", "name_zh": "幻影刺客·幻影突袭", "name_en": "Phantom Strike", "description_zh": "传送到一个单位身旁，敌我皆可，如果目标是敌方单位将进行攻击并获得攻速加成。", "description_en": "Teleports to a unit, friendly or enemy, and grants bonus attack speed while attacking if it's an enemy unit.", "notes_zh": [], "granted_by": "", "upgrades": {}, "is_passive": false, "value_names": ["bonus_attack_speed", "duration", "creep_lifesteal_penalty", "AbilityCastRange", "AbilityCastPoint", "AbilityCharges", "AbilityChargeRestoreTime", "AbilityManaCost", "AbilityCooldown"]}, {"subject": "templar_assassin_trap_teleport", "name_zh": "圣堂刺客·灵能投射", "name_en": "Psionic Projection", "description_zh": "持续施法 - 圣堂刺客经过%abilitychanneltime%秒持续施法后可以传送至任意灵能陷阱，到达时引爆灵能陷阱，陷阱总是最大效果，并且立刻造成%extra_damage%点额外伤害。灵能投射在持续施法时不会脱离隐匿效果。", "description_en": "CHANNELED - Allows Templar Assassin to teleport to any Psionic Trap after channeling for %abilitychanneltime% seconds, detonating it upon arrival as if it was fully charged and instantly dealing %extra_damage% bonus damage. Channeling Psionic Projection does not break Meld.", "notes_zh": [], "granted_by": "scepter", "upgrades": {}, "is_passive": false, "value_names": ["extra_damage", "AbilityChannelTime", "AbilityCastPoint", "AbilityManaCost", "AbilityCooldown"]}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "antimage_blink",
+      "kinds": ["teleport"],
+      "quote": "短距离传送，能让敌法师自由出入战场。",
+      "reason_zh": "明确通过短距离传送改变位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "crystal_maiden_crystal_clone",
+      "kinds": ["jump_dash"],
+      "quote": "向一个方向滑行",
+      "reason_zh": "向指定方向滑行属于沿路径连续移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "earthshaker_enchant_totem",
+      "kinds": ["jump_dash"],
+      "quote": "施放后会跳至半空中再降落至目标地点",
+      "reason_zh": "神杖升级允许跳向目标地点。",
+      "uncertain": false
+    },
+    {
+      "subject": "juggernaut_swift_slash",
+      "kinds": ["jump_dash"],
+      "quote": "发动一次短时间的无敌斩，持续%duration%秒。；主宰挥剑跃向敌方目标单位",
+      "reason_zh": "迅风斩明确发动短时间无敌斩，而同份材料中的无敌斩说明包含跃向目标。",
+      "uncertain": false
+    },
+    {
+      "subject": "juggernaut_omni_slash",
+      "kinds": ["jump_dash"],
+      "quote": "主宰挥剑跃向敌方目标单位",
+      "reason_zh": "说明明确写出跃向目标，后续斩击未明确描述其他移动方式。",
+      "uncertain": false
+    },
+    {
+      "subject": "mirana_leap",
+      "kinds": ["jump_dash", "speed_only"],
+      "quote": "米拉娜的坐骑向前跳跃加入战斗，发出一声凶狠的咆哮鼓舞它的主人，提升攻击和移动速度。",
+      "reason_zh": "既有向前跳跃，也有独立的移动速度加成。",
+      "uncertain": false
+    },
+    {
+      "subject": "morphling_waveform",
+      "kinds": ["jump_dash"],
+      "quote": "变体精灵化为波浪向前涌进，对路径上的敌人造成伤害。",
+      "reason_zh": "化为波浪沿路径向前冲进。",
+      "uncertain": false
+    },
+    {
+      "subject": "morphling_replicate",
+      "kinds": ["teleport"],
+      "quote": "如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。",
+      "reason_zh": "神杖升级允许切换时取代幻象的位置，属于位置替换式传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "phantom_lancer_doppelwalk",
+      "kinds": ["teleport"],
+      "quote": "幻影长矛手暂时从战场上消失。经过%delay%秒，幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置",
+      "reason_zh": "先消失再延迟出现在目标区域，属于延迟传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "phantom_lancer_phantom_edge",
+      "kinds": ["jump_dash", "speed_only"],
+      "quote": "幻影长矛手将快速向其冲去，获得移动速度和闪避提升。；每当幻影长矛手冲锋时穿过敌人",
+      "reason_zh": "明确向目标冲锋并穿过路径，同时获得移动速度提升。",
+      "uncertain": false
+    },
+    {
+      "subject": "puck_illusory_orb",
+      "kinds": ["teleport"],
+      "quote": "在幻象法球飞行过程中，帕克可以使用灵动之翼来传送到法球所在的位置。",
+      "reason_zh": "单位通过灵动之翼传送到法球位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "puck_waning_rift",
+      "kinds": ["teleport"],
+      "quote": "帕克传送至目标地点",
+      "reason_zh": "明确传送至目标地点。",
+      "uncertain": false
+    },
+    {
+      "subject": "sandking_burrowstrike",
+      "kinds": ["jump_dash"],
+      "quote": "沙王钻入地面挖掘隧道前进，穿出地面时伤害并眩晕上方的敌方单位。",
+      "reason_zh": "钻地后沿隧道连续向前移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "storm_spirit_ball_lightning",
+      "kinds": ["jump_dash"],
+      "quote": "风暴之灵变成不稳定的电流在战场上横冲直撞，直到他的魔法耗尽或到达目标才停下。",
+      "reason_zh": "化为电流沿路径冲向目标并在到达或魔法耗尽时停止。",
+      "uncertain": false
+    },
+    {
+      "subject": "sven_storm_bolt",
+      "kinds": ["jump_dash"],
+      "quote": "设为多样施法（右键点击技能栏图标）后，额外造成%scepter_bonus_damage%点伤害并且斯温会跟随风暴之拳行进。",
+      "reason_zh": "神杖升级的多样施法允许自身随风暴之拳沿路径行进。",
+      "uncertain": false
+    },
+    {
+      "subject": "vengefulspirit_nether_swap",
+      "kinds": ["teleport"],
+      "quote": "与一个目标英雄瞬间交换位置，不论敌我。",
+      "reason_zh": "瞬间交换位置属于传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "zuus_heavenly_jump",
+      "kinds": ["jump_dash"],
+      "quote": "宙斯作出神圣一跳，向前跳跃",
+      "reason_zh": "明确向前跳跃。",
+      "uncertain": false
+    },
+    {
+      "subject": "riki_blink_strike",
+      "kinds": ["teleport"],
+      "quote": "传送到目标背后",
+      "reason_zh": "明确传送到目标背后。",
+      "uncertain": false
+    },
+    {
+      "subject": "sniper_concussive_grenade",
+      "kinds": ["other"],
+      "quote": "对敌人造成伤害并将他们和狙击手一同击退。",
+      "reason_zh": "自身移动方式为击退，属于所列跳跃冲刺等方式之外的受力位移。",
+      "uncertain": false
+    },
+    {
+      "subject": "necrolyte_death_seeker",
+      "kinds": ["jump_dash"],
+      "quote": "瘟疫法师变成一个大死亡脉冲，向目标单位的地点移动。到达该地点后，死亡脉冲会扩散至附近敌人和友军。",
+      "reason_zh": "自身化为死亡脉冲向目标地点行进并到达，属于沿路径移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "queenofpain_blink",
+      "kinds": ["teleport"],
+      "quote": "短距离传送，能让痛苦女王自由出入战场。",
+      "reason_zh": "明确通过短距离传送改变位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "faceless_void_time_walk",
+      "kinds": ["jump_dash"],
+      "quote": "冲到目标位置",
+      "reason_zh": "明确冲向目标位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "faceless_void_time_walk_reverse",
+      "kinds": ["jump_dash"],
+      "quote": "自身将逆转时间漫游，回到上一个施放地点。；冲到目标位置",
+      "reason_zh": "说明将逆转时间漫游返回，而同份材料将时间漫游描述为冲到目标位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "phantom_assassin_phantom_strike",
+      "kinds": ["teleport"],
+      "quote": "传送到一个单位身旁，敌我皆可",
+      "reason_zh": "明确传送到目标单位身旁。",
+      "uncertain": false
+    },
+    {
+      "subject": "templar_assassin_trap_teleport",
+      "kinds": ["teleport"],
+      "quote": "圣堂刺客经过%abilitychanneltime%秒持续施法后可以传送至任意灵能陷阱",
+      "reason_zh": "持续施法结束后传送至灵能陷阱。",
+      "uncertain": false
+    }
+  ]
+}
+tokens used
+24,536
+{
+  "objects": [
+    {
+      "subject": "antimage_blink",
+      "kinds": ["teleport"],
+      "quote": "短距离传送，能让敌法师自由出入战场。",
+      "reason_zh": "明确通过短距离传送改变位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "crystal_maiden_crystal_clone",
+      "kinds": ["jump_dash"],
+      "quote": "向一个方向滑行",
+      "reason_zh": "向指定方向滑行属于沿路径连续移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "earthshaker_enchant_totem",
+      "kinds": ["jump_dash"],
+      "quote": "施放后会跳至半空中再降落至目标地点",
+      "reason_zh": "神杖升级允许跳向目标地点。",
+      "uncertain": false
+    },
+    {
+      "subject": "juggernaut_swift_slash",
+      "kinds": ["jump_dash"],
+      "quote": "发动一次短时间的无敌斩，持续%duration%秒。；主宰挥剑跃向敌方目标单位",
+      "reason_zh": "迅风斩明确发动短时间无敌斩，而同份材料中的无敌斩说明包含跃向目标。",
+      "uncertain": false
+    },
+    {
+      "subject": "juggernaut_omni_slash",
+      "kinds": ["jump_dash"],
+      "quote": "主宰挥剑跃向敌方目标单位",
+      "reason_zh": "说明明确写出跃向目标，后续斩击未明确描述其他移动方式。",
+      "uncertain": false
+    },
+    {
+      "subject": "mirana_leap",
+      "kinds": ["jump_dash", "speed_only"],
+      "quote": "米拉娜的坐骑向前跳跃加入战斗，发出一声凶狠的咆哮鼓舞它的主人，提升攻击和移动速度。",
+      "reason_zh": "既有向前跳跃，也有独立的移动速度加成。",
+      "uncertain": false
+    },
+    {
+      "subject": "morphling_waveform",
+      "kinds": ["jump_dash"],
+      "quote": "变体精灵化为波浪向前涌进，对路径上的敌人造成伤害。",
+      "reason_zh": "化为波浪沿路径向前冲进。",
+      "uncertain": false
+    },
+    {
+      "subject": "morphling_replicate",
+      "kinds": ["teleport"],
+      "quote": "如果变体精灵切换变形时幻象还存活，他就会摧毁该幻象，并取而代之。",
+      "reason_zh": "神杖升级允许切换时取代幻象的位置，属于位置替换式传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "phantom_lancer_doppelwalk",
+      "kinds": ["teleport"],
+      "quote": "幻影长矛手暂时从战场上消失。经过%delay%秒，幻影长矛手和附近的所有幻象都会出现在目标地点的随机位置",
+      "reason_zh": "先消失再延迟出现在目标区域，属于延迟传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "phantom_lancer_phantom_edge",
+      "kinds": ["jump_dash", "speed_only"],
+      "quote": "幻影长矛手将快速向其冲去，获得移动速度和闪避提升。；每当幻影长矛手冲锋时穿过敌人",
+      "reason_zh": "明确向目标冲锋并穿过路径，同时获得移动速度提升。",
+      "uncertain": false
+    },
+    {
+      "subject": "puck_illusory_orb",
+      "kinds": ["teleport"],
+      "quote": "在幻象法球飞行过程中，帕克可以使用灵动之翼来传送到法球所在的位置。",
+      "reason_zh": "单位通过灵动之翼传送到法球位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "puck_waning_rift",
+      "kinds": ["teleport"],
+      "quote": "帕克传送至目标地点",
+      "reason_zh": "明确传送至目标地点。",
+      "uncertain": false
+    },
+    {
+      "subject": "sandking_burrowstrike",
+      "kinds": ["jump_dash"],
+      "quote": "沙王钻入地面挖掘隧道前进，穿出地面时伤害并眩晕上方的敌方单位。",
+      "reason_zh": "钻地后沿隧道连续向前移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "storm_spirit_ball_lightning",
+      "kinds": ["jump_dash"],
+      "quote": "风暴之灵变成不稳定的电流在战场上横冲直撞，直到他的魔法耗尽或到达目标才停下。",
+      "reason_zh": "化为电流沿路径冲向目标并在到达或魔法耗尽时停止。",
+      "uncertain": false
+    },
+    {
+      "subject": "sven_storm_bolt",
+      "kinds": ["jump_dash"],
+      "quote": "设为多样施法（右键点击技能栏图标）后，额外造成%scepter_bonus_damage%点伤害并且斯温会跟随风暴之拳行进。",
+      "reason_zh": "神杖升级的多样施法允许自身随风暴之拳沿路径行进。",
+      "uncertain": false
+    },
+    {
+      "subject": "vengefulspirit_nether_swap",
+      "kinds": ["teleport"],
+      "quote": "与一个目标英雄瞬间交换位置，不论敌我。",
+      "reason_zh": "瞬间交换位置属于传送。",
+      "uncertain": false
+    },
+    {
+      "subject": "zuus_heavenly_jump",
+      "kinds": ["jump_dash"],
+      "quote": "宙斯作出神圣一跳，向前跳跃",
+      "reason_zh": "明确向前跳跃。",
+      "uncertain": false
+    },
+    {
+      "subject": "riki_blink_strike",
+      "kinds": ["teleport"],
+      "quote": "传送到目标背后",
+      "reason_zh": "明确传送到目标背后。",
+      "uncertain": false
+    },
+    {
+      "subject": "sniper_concussive_grenade",
+      "kinds": ["other"],
+      "quote": "对敌人造成伤害并将他们和狙击手一同击退。",
+      "reason_zh": "自身移动方式为击退，属于所列跳跃冲刺等方式之外的受力位移。",
+      "uncertain": false
+    },
+    {
+      "subject": "necrolyte_death_seeker",
+      "kinds": ["jump_dash"],
+      "quote": "瘟疫法师变成一个大死亡脉冲，向目标单位的地点移动。到达该地点后，死亡脉冲会扩散至附近敌人和友军。",
+      "reason_zh": "自身化为死亡脉冲向目标地点行进并到达，属于沿路径移动。",
+      "uncertain": false
+    },
+    {
+      "subject": "queenofpain_blink",
+      "kinds": ["teleport"],
+      "quote": "短距离传送，能让痛苦女王自由出入战场。",
+      "reason_zh": "明确通过短距离传送改变位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "faceless_void_time_walk",
+      "kinds": ["jump_dash"],
+      "quote": "冲到目标位置",
+      "reason_zh": "明确冲向目标位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "faceless_void_time_walk_reverse",
+      "kinds": ["jump_dash"],
+      "quote": "自身将逆转时间漫游，回到上一个施放地点。；冲到目标位置",
+      "reason_zh": "说明将逆转时间漫游返回，而同份材料将时间漫游描述为冲到目标位置。",
+      "uncertain": false
+    },
+    {
+      "subject": "phantom_assassin_phantom_strike",
+      "kinds": ["teleport"],
+      "quote": "传送到一个单位身旁，敌我皆可",
+      "reason_zh": "明确传送到目标单位身旁。",
+      "uncertain": false
+    },
+    {
+      "subject": "templar_assassin_trap_teleport",
+      "kinds": ["teleport"],
+      "quote": "圣堂刺客经过%abilitychanneltime%秒持续施法后可以传送至任意灵能陷阱",
+      "reason_zh": "持续施法结束后传送至灵能陷阱。",
+      "uncertain": false
+    }
+  ]
+}

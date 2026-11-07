@@ -1,0 +1,391 @@
+{
+ "schema": "mechanics-rules/1",
+ "version": "v9",
+ "status": "user_confirmed_rules",
+ "note": "MK-T4机制规则。写法由助手整理，核心来自用户决定；不说“该出”。 v5只跟随U88换词，规则含义不变。 v6把R11拆成状态抗性（R11）和减速抗性（R21）。 v7新增R22。 v8：R12按用户例外名单定目标；R13拆成格挡（R13）和反弹（R23）。 v9：R13不再排除幽鬼之刃（U101）。",
+ "vocabulary": "knowledge/mechanics/vocabulary-v13.json",
+ "rules": [
+  {
+   "id": "R01",
+   "zh": "弱驱散去掉dispellable=2的效果，对1、3无效",
+   "relation": "removes",
+   "source_mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "target_enum": {
+    "dispellable": [
+     2
+    ]
+   },
+   "decision": "U30,U68"
+  },
+  {
+   "id": "R02",
+   "zh": "强驱散去掉dispellable=1、2的效果，对3无效",
+   "relation": "removes",
+   "source_mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "target_enum": {
+    "dispellable": [
+     1,
+     2
+    ]
+   },
+   "decision": "U30,U68"
+  },
+  {
+   "id": "R03",
+   "zh": "否决坠饰持续驱散，目标身上的推推、吹风无效",
+   "relation": "blocks",
+   "source_subjects": [
+    "nullifier"
+   ],
+   "target_subjects": [
+    "force_staff",
+    "hurricane_pike",
+    "cyclone",
+    "wind_waker"
+   ],
+   "decision": "U51,U68",
+   "note": "推推、吹风对应的装备由助手列出"
+  },
+  {
+   "id": "R04",
+   "zh": "破坏使IsBreakable=1的效果失效，部分破坏按附注",
+   "relation": "disables",
+   "source_mechanisms": [
+    "applies_break"
+   ],
+   "target_mechanisms": [
+    "break_sensitive"
+   ],
+   "decision": "U48,U68"
+  },
+  {
+   "id": "R05",
+   "zh": "怕破坏的英雄优先考虑破坏来源",
+   "relation": "counters",
+   "source_mechanisms": [
+    "applies_break"
+   ],
+   "target_subjects": [
+    "bristleback_bristleback",
+    "enchantress_untouchable",
+    "huskar_berserkers_blood",
+    "phantom_assassin_coup_de_grace",
+    "phantom_assassin_immaterial",
+    "shredder_reactive_armor",
+    "tidehunter_kraken_shell"
+   ],
+   "decision": "U35,U68",
+   "note": "目标取自break-vulnerable-heroes-v1.json的key_passives"
+  },
+  {
+   "id": "R06",
+   "zh": "真视、显形克制隐身；诡计之雾真视也看不破",
+   "relation": "counters",
+   "source_mechanisms": [
+    "true_sight",
+    "reveal"
+   ],
+   "target_mechanisms": [
+    "invisibility"
+   ],
+   "target_exclude": [
+    "smoke_of_deceit"
+   ],
+   "decision": "U59,U68"
+  },
+  {
+   "id": "R07",
+   "zh": "克敌机先克制闪避，不克制致盲",
+   "relation": "counters",
+   "source_mechanisms": [
+    "pierce_evasion"
+   ],
+   "target_mechanisms": [
+    "evasion"
+   ],
+   "decision": "U30,U68"
+  },
+  {
+   "id": "R08",
+   "zh": "克制判断看敌方装备：赛前按对方常规会出，游戏中按已看到对方出了",
+   "relation": "context",
+   "decision": "U22,U70",
+   "parameters": {
+    "pregame": "expected_common",
+    "ingame": "seen"
+   },
+   "note": "常规会出的门槛在T5读出装数据时定"
+  },
+  {
+   "id": "R09",
+   "zh": "减益免疫挡住不能穿透的效果，能穿透的仍生效",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "debuff_immunity"
+   ],
+   "target_exempt_mechanisms": [
+    "pierces_debuff_immunity"
+   ],
+   "decision": "U28,U68",
+   "note": "目标是所有不能穿透的效果，不逐个列出"
+  },
+  {
+   "id": "R10",
+   "zh": "碎颅锤重击可穿透减益免疫；对能强驱散自解控的英雄，可解控后再控",
+   "relation": "counters",
+   "source_subjects": [
+    "basher",
+    "abyssal_blade"
+   ],
+   "target_mechanisms": [
+    "debuff_immunity"
+   ],
+   "target_subjects": [
+    "ursa_enrage"
+   ],
+   "decision": "U28,U68"
+  },
+  {
+   "id": "R11",
+   "zh": "状态抗性缩短控制和减益时长",
+   "relation": "reduces",
+   "source_mechanisms": [
+    "status_resistance"
+   ],
+   "target_mechanisms": [
+    "stun",
+    "silence",
+    "hex",
+    "root",
+    "bind",
+    "disarm",
+    "sleep",
+    "taunt",
+    "fear",
+    "hypnotize",
+    "slow",
+    "attack_slow"
+   ],
+   "decision": "U29,U68,U88,U94",
+   "note": "“控制多”的门槛不在这里定"
+  },
+  {
+   "id": "R12",
+   "zh": "烧蓝克制没蓝放不了技能就很脆弱的英雄，不按蓝耗高低；少数英雄例外",
+   "relation": "counters",
+   "source_mechanisms": [
+    "mana_burn"
+   ],
+   "decision": "U68,U99,U100",
+   "target_heroes": {
+    "abilities": "with_mana_cost",
+    "except": [
+     59,
+     2,
+     71,
+     6,
+     95,
+     44,
+     1,
+     80,
+     26,
+     76
+    ],
+    "conditional": [
+     {
+      "hero_id": 84,
+      "condition": "A杖",
+      "note_zh": "食人魔魔法师有A杖时不容易被烧蓝克制"
+     },
+     {
+      "hero_id": 42,
+      "condition": "A杖",
+      "note_zh": "冥魂大帝有A杖时不容易被烧蓝克制"
+     }
+    ]
+   },
+   "note": "目标是例外以外所有英雄的耗蓝技能；有条件的例外照算目标，边上注明"
+  },
+  {
+   "id": "R13",
+   "zh": "林肯格挡单体指向技能",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "spell_block"
+   ],
+   "target_mechanisms": [
+    "unit_target_spell"
+   ],
+   "decision": "U31,U68,U100,U101",
+   "note": "格挡和反弹分开算（U100）；幽鬼之刃、死亡搜寻也会被林肯挡（U101）；主宰无敌斩、迅风斩只挡第一下（U75，技能备注）"
+  },
+  {
+   "id": "R23",
+   "zh": "莲花反弹单体指向技能",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "spell_reflect"
+   ],
+   "target_mechanisms": [
+    "unit_target_spell"
+   ],
+   "target_exclude": [
+    "morphling_replicate",
+    "life_stealer_infest",
+    "rubick_spell_steal",
+    "meepo_megameepo_fling",
+    "necrolyte_death_seeker",
+    "spectre_spectral_dagger"
+   ],
+   "decision": "U31,U100,U101",
+   "note": "变形、感染、技能窃取、超大米波摔扔、幽鬼之刃不会被莲花弹（U100、U101）；死亡搜寻碰到莲花会失效但不反弹（U101，技能备注）；无敌斩、迅风斩莲花会让目标也进入该状态（U75、U77，技能备注）"
+  },
+  {
+   "id": "R14",
+   "zh": "治疗削减克制任何形式的生命恢复；提升生命上限不受影响",
+   "relation": "counters",
+   "source_mechanisms": [
+    "heal_reduction"
+   ],
+   "target_mechanisms": [
+    "healing",
+    "lifesteal"
+   ],
+   "target_exclude_note_kinds": [
+    "max_hp_gain"
+   ],
+   "decision": "U68,U69"
+  },
+  {
+   "id": "R15",
+   "zh": "致盲和闪避克制依赖普攻的英雄：看常规出装是否以属性和攻速为主，一号位默认算",
+   "relation": "counters",
+   "source_mechanisms": [
+    "blind",
+    "evasion"
+   ],
+   "decision": "U68",
+   "pending": "出装数据在T5读取"
+  },
+  {
+   "id": "R16",
+   "zh": "虚无分对敌和对己：对敌是控制和打输出，对己是防物理保命，代价都是多受魔法伤害",
+   "relation": "context",
+   "source_mechanisms": [
+    "ethereal"
+   ],
+   "decision": "U57,U69"
+  },
+  {
+   "id": "R17",
+   "zh": "打断和控制克制持续施法",
+   "relation": "counters",
+   "source_mechanisms": [
+    "channel_interrupt",
+    "stun",
+    "silence",
+    "hex",
+    "sleep",
+    "cyclone_banish",
+    "taunt",
+    "fear",
+    "hypnotize"
+   ],
+   "target_mechanisms": [
+    "channeled"
+   ],
+   "decision": "U69,U88",
+   "note": "哪些控制算打断由助手列出"
+  },
+  {
+   "id": "R18",
+   "zh": "缠绕、捆缚、束缚阻止带ROOT_DISABLES字段的位移",
+   "relation": "blocks",
+   "source_mechanisms": [
+    "root",
+    "bind",
+    "leash"
+   ],
+   "target_mechanisms": [
+    "self_mobility"
+   ],
+   "target_game_field": "ROOT_DISABLES",
+   "decision": "U68,U88"
+  },
+  {
+   "id": "R19",
+   "zh": "减护甲放大物理，减魔抗放大魔法，只记方向，不算强度",
+   "relation": "amplifies",
+   "source_mechanisms": [
+    "armor_reduction",
+    "magic_resist_reduction"
+   ],
+   "target_mechanisms": [
+    "physical_damage",
+    "magical_damage"
+   ],
+   "pairs": [
+    [
+     "armor_reduction",
+     "physical_damage"
+    ],
+    [
+     "magic_resist_reduction",
+     "magical_damage"
+    ]
+   ],
+   "decision": "U69",
+   "note": "只记方向：减护甲对物理，减魔抗对魔法；不列目标技能"
+  },
+  {
+   "id": "R20",
+   "zh": "范围伤害和回音击类技能克制幻象，不克制召唤物",
+   "relation": "counters",
+   "source_mechanisms": [
+    "aoe_damage",
+    "cleave"
+   ],
+   "source_note_kinds": [
+    "scales_with_enemy_units"
+   ],
+   "target_mechanisms": [
+    "illusions"
+   ],
+   "decision": "U68,U69,U70,U71,U75,U81",
+   "note": "召唤多个单位分别打人不算范围伤害（U72）；伤害光环按范围伤害计算；恐怖利刃·倒影无敌，范围伤害打不到，不算目标（U81）",
+   "target_exclude": [
+    "terrorblade_reflection"
+   ]
+  },
+  {
+   "id": "R21",
+   "zh": "减速抗性减弱减速，不影响减攻速",
+   "relation": "reduces",
+   "source_mechanisms": [
+    "slow_resistance"
+   ],
+   "target_mechanisms": [
+    "slow"
+   ],
+   "decision": "U29,U94",
+   "note": "小小·不可逾越是例外，官方说明写它也影响攻速减少，记在技能备注"
+  },
+  {
+   "id": "R22",
+   "zh": "无视地形能越过创造地形",
+   "relation": "counters",
+   "source_mechanisms": [
+    "terrain_walk"
+   ],
+   "target_mechanisms": [
+    "terrain"
+   ],
+   "decision": "U97",
+   "note": "只对真正的地形，动能力场这类算场地魔法"
+  }
+ ]
+}

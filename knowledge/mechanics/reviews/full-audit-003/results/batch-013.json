@@ -1,0 +1,669 @@
+{
+  "objects": [
+    {
+      "subject": "jakiro_ice_path",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对触及到的敌人造成伤害并眩晕",
+          "reason_zh": "一次施放形成的路径能伤害多个触及的敌人。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对触及到的敌人造成伤害并眩晕",
+          "reason_zh": "技能明确对触及路径的敌人施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "jakiro_liquid_fire",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "杰奇洛的火焰燃烧效果范围内的敌人",
+          "reason_zh": "一次攻击附加的燃烧能伤害范围内多个敌人。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "fire added to his attack, while slowing their attacks",
+          "reason_zh": "攻击附带燃烧和降低攻击速度的效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并降低他们的攻击速度",
+          "reason_zh": "降低敌人攻击速度符合减速定义。"
+        }
+      ]
+    },
+    {
+      "subject": "jakiro_liquid_ice",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "杰奇洛的攻击使他的敌人受寒",
+          "reason_zh": "材料只说明攻击目标受寒及承受额外伤害，没有范围伤害效果。"
+        },
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "杰奇洛的攻击使他的敌人受寒，减缓其移动速度",
+          "reason_zh": "攻击附带减速及后续额外伤害效果。"
+        },
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被杰奇洛的攻击和其他技能击中后承受额外伤害",
+          "reason_zh": "目标受到杰奇洛攻击和技能时承受更多伤害，且不限于魔法伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减缓其移动速度，持续%duration%秒",
+          "reason_zh": "技能明确降低目标移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "jakiro_double_trouble",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "第二次攻击无视伤害格挡。",
+          "reason_zh": "无视伤害格挡只是与该机制的交互，不是自身提供伤害吸收或减伤。"
+        }
+      ]
+    },
+    {
+      "subject": "jakiro_macropyre",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "烈焰风暴每秒都会对作用范围内的敌人造成伤害",
+          "reason_zh": "一次施放的烈焰能持续伤害范围内多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "杰奇洛会在烈焰焚身边缘放出两道冰墙，对试图穿过的所有敌人减速",
+          "reason_zh": "A杖升级新增冰墙减速效果。"
+        }
+      ]
+    },
+    {
+      "subject": "batrider_sticky_napalm",
+      "judgments": [
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "所有来自蝙蝠骑士的伤害均会加深，辉耀，淬毒之珠，影之灵龛和魂之灵瓮除外。",
+          "reason_zh": "燃油使目标承受更多来自蝙蝠骑士的伤害，且不限于魔法伤害。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并降低他们的移动速度和转身速率",
+          "reason_zh": "技能明确降低敌人移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "batrider_flamebreak",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "击退区域内的敌人并造成减速和持续伤害",
+          "reason_zh": "一次爆炸能对区域内多个敌人造成持续伤害。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "击退区域内的敌人",
+          "reason_zh": "击退敌人属于位移他人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并造成减速和持续伤害",
+          "reason_zh": "技能明确施加减速。"
+        }
+      ]
+    },
+    {
+      "subject": "batrider_firefly",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "燃烧尾迹会破坏树木，对经过的敌人造成伤害",
+          "reason_zh": "一次施放留下的燃烧尾迹能伤害多个经过的敌人。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "火焰飞行期间蝙蝠骑士可以飞越任何单位，树木和不可通行的地形。",
+          "reason_zh": "技能使蝙蝠骑士能够飞越地形。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "燃烧尾迹会破坏树木",
+          "reason_zh": "技能明确能够摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "batrider_flaming_lasso",
+      "judgments": [
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "用枷锁捆住一个敌人，在蝙蝠骑士的后面拖行。",
+          "reason_zh": "技能拖动的是敌人，没有主动改变蝙蝠骑士自身位置的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "chen_penitence",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对敌方单位造成伤害",
+          "reason_zh": "材料仅描述对单个目标造成伤害，没有范围伤害效果。"
+        }
+      ]
+    },
+    {
+      "subject": "chen_holy_persuasion",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "陈控制住敌方小兵或者中立生物",
+          "reason_zh": "夺取单位控制权不构成一次施放对多个敌人造成伤害。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并获得击杀金钱一定百分比的金钱",
+          "reason_zh": "技能在劝化时提供金钱收益。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "劝化时单位的魔法恢复至满魔。",
+          "reason_zh": "恢复法力的是被劝化单位，材料没有为陈自身回蓝的效果。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "陈控制住敌方小兵或者中立生物",
+          "reason_zh": "夺取已有单位的控制权符合召唤物定义。"
+        }
+      ]
+    },
+    {
+      "subject": "chen_divine_favor",
+      "judgments": [
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被动提供光环，提供生命恢复加成。",
+          "reason_zh": "技能明确以光环向周围友军提供生命恢复。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "被动提供光环，提供生命恢复加成。",
+          "reason_zh": "被动光环提供生命恢复，符合回复定义。"
+        }
+      ]
+    },
+    {
+      "subject": "chen_zealot",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以牺牲自己治疗友军，或者对敌人造成伤害",
+          "reason_zh": "材料未描述一次施放或一次攻击能伤害多个敌人。"
+        }
+      ]
+    },
+    {
+      "subject": "chen_hand_of_god",
+      "judgments": [
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "可以治疗无敌和被隐藏/放逐友军。",
+          "reason_zh": "能够治疗被放逐友军属于交互，不是技能自身施加放逐。"
+        },
+        {
+          "mechanism": "debuff_immunity",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "持续施法期间其他附近友方单位变为减益免疫状态",
+          "reason_zh": "A杖升级明确为附近其他友军提供减益免疫。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "治疗地图上的所有友军英雄以及陈控制的所有单位。",
+          "reason_zh": "基础技能直接治疗友方英雄及陈控制的单位。"
+        }
+      ]
+    },
+    {
+      "subject": "spectre_spectral_dagger",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对路径上的敌人造成伤害并减缓其移动速度",
+          "reason_zh": "一次投掷能伤害路径上的多个敌人。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并减缓其移动速度",
+          "reason_zh": "技能明确降低敌人移动速度。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发相关机制的描述不表示技能能够格挡指向技能。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "不会触发法术抵抗或法术反弹。",
+          "reason_zh": "不触发法术反弹不等于自身能够反弹指向技能。"
+        }
+      ]
+    },
+    {
+      "subject": "spectre_dispersion",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "将其反弹给附近的所有敌人",
+          "reason_zh": "一次受伤触发的反弹能同时伤害附近多个敌人。"
+        },
+        {
+          "mechanism": "damage_return",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "分散对她造成的部分伤害，将其反弹给附近的所有敌人",
+          "reason_zh": "受到伤害时将部分伤害反弹给附近敌人，符合反伤定义。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "这个技能造成的伤害被视为反弹伤害。",
+          "reason_zh": "技能反弹的是伤害，没有把指向技能反弹给施法者。"
+        }
+      ]
+    },
+    {
+      "subject": "spectre_desolate",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "当敌人附近%radius%范围内没有他们的友军时，幽鬼和她的幻象的攻击对他们造成额外纯粹伤害。",
+          "reason_zh": "范围仅用于检查触发条件，额外伤害作用于攻击目标。"
+        }
+      ]
+    },
+    {
+      "subject": "spectre_haunt",
+      "judgments": [
+        {
+          "mechanism": "forced_action",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "敌人会被恐惧，朝远离幽鬼的方向奔跑%fear_duration%秒",
+          "reason_zh": "A杖新增恐惧并强制敌人远离幽鬼移动。"
+        },
+        {
+          "mechanism": "incoming_damage_amp",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "鬼影无法控制，受到额外伤害",
+          "reason_zh": "鬼影自身承受额外伤害属于自身代价，不是对目标施加伤害加深。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "并且移动速度降低%fear_movespeed_slow%%%",
+          "reason_zh": "A杖升级明确对受影响敌人施加移动减速。"
+        }
+      ]
+    },
+    {
+      "subject": "doom_bringer_devour",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "Devour has %AbilityCharges% charges",
+          "reason_zh": "魔晶升级明确使吞噬拥有可供施放消耗的充能。"
+        },
+        {
+          "mechanism": "economy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "末日使者将获得该生物的正常金钱，还有技能的额外金钱。",
+          "reason_zh": "技能明确提供正常赏金之外的额外金钱。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "获得的野怪技能拥有%bonus_aoe_pct%%%额外作用范围和%bonus_spell_amp_pct%%%额外技能增强。",
+          "reason_zh": "魔晶升级新增对获取的野怪技能的法术放大效果。"
+        }
+      ]
+    },
+    {
+      "subject": "doom_bringer_scorched_earth",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "用火焰覆盖周围的土地，对敌人造成伤害",
+          "reason_zh": "一次施放能持续伤害周围多个敌人。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "同时末日使者的移动速度和生命恢复得到提升",
+          "reason_zh": "技能提供生命恢复，符合回复定义。"
+        }
+      ]
+    },
+    {
+      "subject": "doom_bringer_infernal_blade",
+      "judgments": [
+        {
+          "mechanism": "attack_modifier",
+          "condition": "base",
+          "decision": "uncertain",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "末日挥舞他的炽烈之剑，将敌人点燃。",
+          "reason_zh": "材料没有明确说明这是普通攻击附带的效果，仅凭挥剑描述无法确定。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成%ministun_duration%秒眩晕",
+          "reason_zh": "技能明确对目标施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "doom_bringer_doom",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "scepter",
+          "quote": "末日作用下目标%scepter_aura_radius%范围内友军也会受到末日的作用。",
+          "reason_zh": "基础效果作用于单个敌人，A杖才使持续伤害扩展到周围单位。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对其进行驱散；驱散类型：弱驱散",
+          "reason_zh": "基础技能明确对敌人施加弱驱散。"
+        },
+        {
+          "mechanism": "applies_break",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "末日对敌人施加破坏效果。",
+          "reason_zh": "A杖升级明确新增破坏效果。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使其无法施放技能或获得任何治疗效果",
+          "reason_zh": "阻止目标获得治疗不属于恢复生命值。"
+        }
+      ]
+    },
+    {
+      "subject": "doom_bringer_lvl_pain",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对自身和%spread_radius%范围内所有敌方单位造成伤害",
+          "reason_zh": "一次攻击施加的诅咒爆发能伤害目标及周围多个敌方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "ancient_apparition_cold_feet",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对一个敌人施加诅咒，造成持续伤害。",
+          "reason_zh": "材料明确描述单个敌人受伤，距离要求只是眩晕的触发条件。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "如果目标没有在%AbilityDuration%秒内远离初始地点走出足够距离，那么将被眩晕并冻在原地。",
+          "reason_zh": "目标未及时离开规定距离时，技能会施加眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "ancient_apparition_ice_vortex",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对范围内敌人造成伤害和减速",
+          "reason_zh": "一次施放创造的漩涡能伤害范围内多个敌人。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提供放置地点的小片视野。",
+          "reason_zh": "技能明确提供放置区域的视野。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对范围内敌人造成伤害和减速",
+          "reason_zh": "技能明确对范围内敌人施加减速。"
+        }
+      ]
+    }
+  ]
+}

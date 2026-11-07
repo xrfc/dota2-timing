@@ -1,0 +1,1287 @@
+[codex-prefer] account=temp
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/951a2075-822d-4d4c-ba42-0aab58e18f8f/scratchpad/empty3
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1a723-da08-7112-90ed-7761a675eddc
+--------
+user
+你在独立核对Dota 2技能和装备的机制记录。每个对象的`judge`列出若干“对象 + 机制 + 生效条件”，其中有的成立，有的不成立，比例不告诉你。只依据下面的JSON，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果。
+
+逐条判断`judge`里的每一项，不要增加也不要漏掉：
+- `decision`：`accept`（材料支持这个对象具备该机制）、`reject`（材料不支持，或不符合定义）、`uncertain`（材料不足或需要游戏知识，不要猜）。
+- `condition_correct`：只看生效条件是否写对。`base`是基础效果，`scepter`是只在有A杖时生效，`shard`是只在有魔晶时生效，`item`是装备。`granted_by`不为空的对象，整个技能按该升级记。如果`decision`不是`accept`，填true。
+- `correct_condition`：`condition_correct`为false时写正确条件，否则与给定条件相同。
+- `quote`摘决定判断的原文片段，没有就写空字符串。`reason_zh`用一句中文说明理由。
+- `mechanism`和`condition`原样返回，`subject`原样返回。
+
+判断规则，已由用户确认，必须遵守：
+- 机制必须由这个对象自身施加或具备。只是触发条件、与该机制的交互、否定描述、对自身的代价，都不算。
+- 说明换了说法也算，例如“变成无害的野兽”是妖术，“冲向目标地点”是自身位移，“把树变成树人”是召唤物。
+- 只提高数值的升级不算新机制；A杖或魔晶带来新效果才记。提升治疗量的增强不算治疗；减少冷却只在说明明确时记。
+- 召唤物只算有血量的单位；按受攻击次数计算的不算；猴子猴孙、部署炮塔不算。
+- 范围伤害：一次施放或一次攻击能打到多个敌方单位；分别召唤多个单位打人不算。
+- 固定在地上的区域算场地魔法；区域跟着单位移动的算光环。只起阻挡作用的墙和圈不算场地魔法。
+- 属性生命恢复算治疗。普攻附带的减甲、减速、减疗、烧蓝、额外伤害、中毒等算攻击特效；单纯提高攻击力、攻速、吸血、暴击、分裂或弹射不算攻击特效。
+- 纯属性加成（力量、敏捷、攻击力、攻速、移速、护甲、生命等）不进词表。
+- `value_names`只是字段名，不能单独当证据。装备的`attributes`是官方显示的属性文字，可以当证据。`%xxx%`是数值占位符。
+
+待判断内容：
+{"vocabulary": [{"id": "aoe_damage", "zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害"}, {"id": "applies_basic_dispel", "zh": "施加弱驱散", "definition": "移除目标身上可被弱驱散的效果"}, {"id": "applies_break", "zh": "施加破坏", "definition": "使目标的被动技能暂时失效"}, {"id": "aura", "zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法"}, {"id": "charges", "zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算"}, {"id": "cooldown_reduction", "zh": "减冷却", "definition": "技能能缩短技能或物品的冷却；A杖或魔晶只降低技能自身冷却的不记，从字段读"}, {"id": "cyclone_banish", "zh": "吹风/放逐", "definition": "使目标短暂离开战场，期间无敌或不可被选取"}, {"id": "damage_block", "zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）"}, {"id": "evasion", "zh": "闪避", "definition": "自身有概率使敌方攻击落空"}, {"id": "grant_vision", "zh": "提供视野", "definition": "提供目标或区域的视野"}, {"id": "heal_reduction", "zh": "治疗削减", "definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响"}, {"id": "healing", "zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）"}, {"id": "invisibility", "zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身"}, {"id": "invulnerable_untargetable", "zh": "无敌/不可选取", "definition": "暂时无法被伤害或无法被指向"}, {"id": "lifesteal", "zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）"}, {"id": "mana_gain", "zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算"}, {"id": "phased", "zh": "相位移动", "definition": "移动不受单位碰撞阻挡"}, {"id": "root", "zh": "定身", "definition": "目标无法移动；带ROOT_DISABLES字段的位移（所有闪烁类）也不能使用"}, {"id": "self_mobility", "zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置"}, {"id": "slow", "zh": "减速", "definition": "降低移动速度或攻击速度"}, {"id": "spell_amp", "zh": "法术放大", "definition": "提高技能造成的伤害"}, {"id": "spell_block", "zh": "格挡指向技能", "definition": "使指向自身或队友的技能失效"}, {"id": "spell_reflect", "zh": "反弹指向技能", "definition": "把指向技能反弹给施法者"}, {"id": "true_sight", "zh": "真视", "definition": "可看见隐身单位"}], "objects": [{"subject": "silver_edge", "name_zh": "白银之锋", "name_en": "Silver Edge", "description_en": "Active: Shadow Walk Makes you invisible for %windwalk_duration% seconds, or until you attack or cast a spell.  While invisible, you move %windwalk_movement_speed%%% faster and can move through units.    Attacking to end the invisibility will deal %windwalk_bonus_damage% bonus physical damage, disable their passive abilities for %backstab_duration% seconds, and cap their movement speed to %max_movement_speed%.", "notes_en": [], "attributes": ["+ 70 Damage", "+ 35 Attack Speed"], "is_item": true, "judge": [{"mechanism": "applies_break", "condition": "item"}, {"mechanism": "invisibility", "condition": "item"}]}, {"subject": "skadi", "name_zh": "斯嘉蒂之眼", "name_en": "Eye of Skadi", "description_en": "Passive: Cold Attack  Attacks lower enemy movement by %cold_slow_melee%%% if they are melee and %cold_slow_ranged%%% if they are ranged. Attacks also lower enemy attack speed by %cold_attack_slow_melee%%% and Health Restoration by %restoration_reduction%%%. Lasts for %cold_duration% seconds.", "notes_en": [], "attributes": ["+ 35 All Attributes"], "is_item": true, "judge": [{"mechanism": "heal_reduction", "condition": "item"}, {"mechanism": "slow", "condition": "item"}]}, {"subject": "sobi_mask", "name_zh": "贤者面罩", "name_en": "Sage's Mask", "description_en": "", "notes_en": [], "attributes": ["+ 0.7 Mana Regeneration"], "is_item": true, "judge": [{"mechanism": "mana_gain", "condition": "item"}]}, {"subject": "solar_crest", "name_zh": "炎阳纹章", "name_en": "Solar Crest", "description_en": "Active: Shine When cast on an ally, grants them %target_armor% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed and a %absorb_amount% physical damage barrier.   Does not grant bonus armor, movement or attack speed if used on self.   Duration: %duration%", "notes_en": ["Shares cooldown with Pavise."], "attributes": ["+ 7 Armor", "+ 25 Movement Speed", "+ 200 Mana", "+ 200 Health"], "is_item": true, "judge": [{"mechanism": "damage_block", "condition": "item"}]}, {"subject": "soul_ring", "name_zh": "灵魂之戒", "name_en": "Soul Ring", "description_en": "Active: Sacrifice  Consume %AbilityHealthCost% health to temporarily gain %mana_gain% mana.  Lasts %duration% seconds.  If the mana gained cannot fit in your mana pool, it creates a buffer of mana that will be used before your mana pool.", "notes_en": ["If this mana is not used before the duration ends, the extra mana is lost."], "attributes": ["+ 6 Strength", "+ 2 Armor"], "is_item": true, "judge": [{"mechanism": "mana_gain", "condition": "item"}]}, {"subject": "sphere", "name_zh": "林肯法球", "name_en": "Linken's Sphere", "description_en": "Passive: Spellblock Blocks most targeted spells once every %block_cooldown% seconds.   Active: Transfer Spellblock Temporarily removes Spellblock from the item's owner and transfers it to an allied unit for %block_cooldown% seconds.", "notes_en": ["Targeted abilities from neutral items do not trigger Spellblock."], "attributes": ["+ 16 All Attributes", "+ 6.5 Health Regeneration", "+ 4.25 Mana Regeneration"], "is_item": true, "judge": [{"mechanism": "mana_gain", "condition": "item"}, {"mechanism": "spell_block", "condition": "item"}]}, {"subject": "spirit_vessel", "name_zh": "魂之灵瓮", "name_en": "Spirit Vessel", "description_en": "Active: Soul Release  When used against enemies, it reduces health by %enemy_hp_drain%%% of current health per second, and reduces Health Restoration by %restoration_reduction_enemy%%%. Deals %soul_damage_amount% damage per second.   When used on allies, it provides %soul_heal_amount% health regeneration per second.   Lasts %duration% seconds.  Gains charges every time an enemy hero dies within %soul_radius% units or the user dies.", "notes_en": ["Empty vessels gain 2 charges.", "Only the closest Spirit Vessel to the dying hero will gain a charge.", "If the allied unit is attacked by an enemy hero or Roshan, the effect is lost.", "Does not trigger spell block or spell reflect."], "attributes": ["+ 1.75 Mana Regeneration", "+ 10 All Attributes", "+ 2 Armor"], "is_item": true, "judge": [{"mechanism": "heal_reduction", "condition": "item"}, {"mechanism": "healing", "condition": "item"}, {"mechanism": "mana_gain", "condition": "item"}, {"mechanism": "spell_block", "condition": "item"}, {"mechanism": "spell_reflect", "condition": "item"}]}, {"subject": "swift_blink", "name_zh": "迅疾闪光", "name_en": "Swift Blink", "description_en": "Active: Swift Blink  Teleport to a target point up to %blink_range% units away.  After teleportation, you gain %bonus_movement%%% phased movement speed and +%bonus_agi_active% Agility for %duration% seconds.   Swift Blink cannot be used for %blink_damage_cooldown% seconds after taking damage from an enemy hero or Roshan.", "notes_en": ["Self-casting will cause you to teleport in the direction of your team's fountain."], "attributes": ["+ 25 Agility"], "is_item": true, "judge": [{"mechanism": "phased", "condition": "item"}, {"mechanism": "self_mobility", "condition": "item"}, {"mechanism": "self_mobility", "condition": "item"}]}, {"subject": "talisman_of_evasion", "name_zh": "闪避护符", "name_en": "Talisman of Evasion", "description_en": "", "notes_en": ["Stacks diminishingly with other sources of Evasion."], "attributes": ["+ 15% Evasion"], "is_item": true, "judge": [{"mechanism": "evasion", "condition": "item"}]}, {"subject": "tango", "name_zh": "树之祭祀", "name_en": "Tango", "description_en": "Use: Devour  Consumes a target tree to gain %health_regen% health regeneration for %buff_duration% seconds. Consuming an Ironwood Tree doubles the heal duration.  Comes with %tooltip_charges% charges.  Can be used on an allied hero to give them one Tango.  Tree Range: %abilitycastrange%", "notes_en": ["Heals for double duration when used on a Ironwood Tree or Wards."], "attributes": [], "is_item": true, "judge": [{"mechanism": "charges", "condition": "item"}, {"mechanism": "healing", "condition": "item"}]}, {"subject": "tango_single", "name_zh": "树之祭祀（共享）", "name_en": "Tango (Shared)", "description_en": "Use: Devour  Consumes a target tree to gain %health_regen% health regeneration for %buff_duration% seconds. Consuming an Ironwood Tree doubles the heal duration.  Tree Range: %abilitycastrange%", "notes_en": ["Heals for double duration when used on a Ironwood Tree or Wards."], "attributes": [], "is_item": true, "judge": [{"mechanism": "healing", "condition": "item"}]}, {"subject": "tiara_of_selemene", "name_zh": "赛莉蒙妮之冠", "name_en": "Tiara of Selemene", "description_en": "", "notes_en": [], "attributes": ["+ 6 Mana Regeneration"], "is_item": true, "judge": [{"mechanism": "mana_gain", "condition": "item"}]}, {"subject": "tpscroll", "name_zh": "回城卷轴", "name_en": "Town Portal Scroll", "description_en": "Use: Teleport After channeling for %tooltip_channel_time% seconds, teleports you to a target friendly building.   Double-click to teleport to your team's base fountain.", "notes_en": ["If multiple heroes teleport to the same location in succession, the channeling time will be increased for each successive hero.", "Teleport can be prevented or canceled by Root abilities."], "attributes": [], "is_item": true, "judge": [{"mechanism": "root", "condition": "item"}, {"mechanism": "self_mobility", "condition": "item"}, {"mechanism": "self_mobility", "condition": "item"}]}, {"subject": "tranquil_boots", "name_zh": "静谧之鞋", "name_en": "Tranquil Boots", "description_en": "Passive: Break  Whenever you attack a hero or are attacked by any unit, the bonus %bonus_health_regen% HP regen is lost and the movement speed bonus is reduced to %broken_movement_speed% for %break_time% seconds. Movement speed bonuses from multiple pairs of boots do not stack.", "notes_en": [], "attributes": ["+ 65 Movement Speed", "+ 14 Health Regeneration"], "is_item": true, "judge": [{"mechanism": "healing", "condition": "item"}]}, {"subject": "travel_boots", "name_zh": "远行鞋", "name_en": "Boots of Travel", "description_en": "Upgrade: Town Portal Scroll Upgrades your Town Portal Scroll, allowing it to target units, reduces cooldown and does not consume a charge on usage.  Movement speed bonuses from multiple pairs of boots do not stack.", "notes_en": ["Movement speed bonuses from boots do not stack."], "attributes": ["+ 90 Movement Speed", "TOWN PORTAL SCROLL COOLDOWN: 40"], "is_item": true, "judge": [{"mechanism": "cooldown_reduction", "condition": "item"}]}, {"subject": "travel_boots_2", "name_zh": "远行鞋", "name_en": "Boots of Travel 2", "description_en": "Upgrade: Town Portal Scroll Upgrades your Town Portal Scroll, allowing it to target units and heroes, reduces cooldown, channel time and does not consume a charge on usage.  Movement speed bonuses from multiple pairs of boots do not stack.", "notes_en": ["Movement speed bonuses from boots do not stack."], "attributes": ["+ 110 Movement Speed", "TOWN PORTAL SCROLL COOLDOWN: 40", "TOWN PORTAL SCROLL CHANNEL TIME: 2"], "is_item": true, "judge": [{"mechanism": "cooldown_reduction", "condition": "item"}]}, {"subject": "urn_of_shadows", "name_zh": "影之灵龛", "name_en": "Urn of Shadows", "description_en": "Active: Soul Release  Provides %soul_heal_amount% health regeneration when cast on allies, and deals %soul_damage_amount% damage per second when cast on enemies.  Lasts %duration% seconds.  Gains charges every time an enemy hero dies within %soul_radius% units.", "notes_en": ["Empty urns gain 2 charges.", "If the allied unit is attacked by an enemy hero or Roshan, the effect is lost.", "Does not trigger spell block or spell reflect."], "attributes": ["+ 1.0 Mana Regeneration", "+ 2 All Attributes", "+ 2 Armor"], "is_item": true, "judge": [{"mechanism": "aoe_damage", "condition": "item"}, {"mechanism": "healing", "condition": "item"}, {"mechanism": "mana_gain", "condition": "item"}, {"mechanism": "spell_block", "condition": "item"}, {"mechanism": "spell_reflect", "condition": "item"}]}, {"subject": "vanguard", "name_zh": "先锋盾", "name_en": "Vanguard", "description_en": "Passive: Damage Block  Grants a %block_chance%%% chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.", "notes_en": ["Multiple sources of damage block do not stack."], "attributes": ["+ 250 Health", "+ 4.5 Health Regeneration"], "is_item": true, "judge": [{"mechanism": "aoe_damage", "condition": "item"}, {"mechanism": "damage_block", "condition": "item"}]}, {"subject": "veil_of_discord", "name_zh": "纷争面纱", "name_en": "Veil of Discord", "description_en": "Active: Spell Weakness  Cast a %debuff_radius% radius blast that causes enemy heroes to take %spell_amp%%% increased damage from spells.  Can be cast while channeling.  Duration: %resist_debuff_duration% seconds.", "notes_en": ["Spell Weakness does not stack with Bloodstone's Spell Weakness Aura."], "attributes": ["+ 175 Health", "+ 10 Intelligence", "+ 18% Spell Lifesteal"], "is_item": true, "judge": [{"mechanism": "aoe_damage", "condition": "item"}, {"mechanism": "aura", "condition": "item"}, {"mechanism": "spell_amp", "condition": "item"}]}, {"subject": "vladmir", "name_zh": "弗拉迪米尔的祭品", "name_en": "Vladmir's Offering", "description_en": "Passive: Vladmir's Aura Grants %lifesteal_aura%%% lifesteal, %damage_aura%%% bonus damage, %mana_regen_aura% mana regeneration, and %armor_aura% armor to nearby allies.  Radius: %aura_radius%", "notes_en": ["Lifesteal on attacks against creeps is reduced to %lifesteal_creeps_tooltip%%%."], "attributes": ["+ 1 Armor", "+ 0.75 Mana Regeneration"], "is_item": true, "judge": [{"mechanism": "aoe_damage", "condition": "item"}, {"mechanism": "aura", "condition": "item"}, {"mechanism": "lifesteal", "condition": "item"}, {"mechanism": "lifesteal", "condition": "item"}, {"mechanism": "mana_gain", "condition": "item"}]}, {"subject": "void_stone", "name_zh": "虚无宝石", "name_en": "Void Stone", "description_en": "", "notes_en": [], "attributes": ["+ 1.75 Mana Regeneration"], "is_item": true, "judge": [{"mechanism": "mana_gain", "condition": "item"}]}, {"subject": "voodoo_mask", "name_zh": "巫毒面具", "name_en": "Voodoo Mask", "description_en": "Passive: Spell Lifesteal Heals the wearer for a percentage of spell damage dealt to enemies.", "notes_en": ["Does not heal from Pure or Reflected damage."], "attributes": ["+ 15% Spell Lifesteal"], "is_item": true, "judge": [{"mechanism": "aoe_damage", "condition": "item"}, {"mechanism": "healing", "condition": "item"}, {"mechanism": "spell_amp", "condition": "item"}]}, {"subject": "ward_observer", "name_zh": "侦察守卫", "name_en": "Observer Ward", "description_en": "Use: Plant Plants an Observer Ward, an invisible watcher that gives ground vision in a %vision_range_tooltip% radius to your team. Lasts %duration_minutes_tooltip% minutes.  Hold Control to give one Observer Ward to an allied hero.", "notes_en": [], "attributes": [], "is_item": true, "judge": [{"mechanism": "grant_vision", "condition": "item"}]}, {"subject": "ward_sentry", "name_zh": "岗哨守卫", "name_en": "Sentry Ward", "description_en": "Use: Plant  Plants a Sentry Ward, an invisible watcher that grants True Sight, the ability to see invisible enemy units and wards, to any existing allied vision within a %true_sight_range% radius. Lasts %duration_minutes_tooltip% minutes.  Does not grant ground vision. Hold Control to give one Sentry Ward to an allied hero.", "notes_en": [], "attributes": [], "is_item": true, "judge": [{"mechanism": "grant_vision", "condition": "item"}, {"mechanism": "true_sight", "condition": "item"}]}, {"subject": "wind_waker", "name_zh": "风之杖", "name_en": "Wind Waker", "description_en": "Active: Cyclone  Sweeps a target unit up into a cyclone, making them invulnerable for %cyclone_duration% seconds. Cyclone can be cast on yourself, enemy units or allied units. When cast on yourself, you can move the tornado at a speed of %tornado_speed%.  Enemy units take %tooltip_drop_damage% magical damage upon landing. Dispel Type:  Basic Dispel", "notes_en": ["Cyclone can dispel some buffs and debuffs.", "When cast on yourself, the cyclone can be moved anywhere at a speed of 360.", "Cyclone duration is unaffected by status resistance."], "attributes": ["+ 30 Movement Speed", "+ 3.0 Mana Regeneration", "+ 35 Intelligence"], "is_item": true, "judge": [{"mechanism": "aoe_damage", "condition": "item"}, {"mechanism": "applies_basic_dispel", "condition": "item"}, {"mechanism": "cyclone_banish", "condition": "item"}, {"mechanism": "invulnerable_untargetable", "condition": "item"}, {"mechanism": "mana_gain", "condition": "item"}]}]}
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "silver_edge",
+      "judgments": [
+        {
+          "mechanism": "applies_break",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "disable their passive abilities for %backstab_duration% seconds",
+          "reason_zh": "破隐攻击会使目标的被动技能暂时失效，符合破坏定义。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Makes you invisible for %windwalk_duration% seconds",
+          "reason_zh": "主动效果使使用者隐身。"
+        }
+      ]
+    },
+    {
+      "subject": "skadi",
+      "judgments": [
+        {
+          "mechanism": "heal_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Attacks also lower enemy attack speed by %cold_attack_slow_melee%%% and Health Restoration by %restoration_reduction%%%.",
+          "reason_zh": "攻击会降低敌人的生命恢复效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Attacks lower enemy movement by %cold_slow_melee%%% if they are melee and %cold_slow_ranged%%% if they are ranged.",
+          "reason_zh": "攻击会降低敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "sobi_mask",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 0.7 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "solar_crest",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "a %absorb_amount% physical damage barrier",
+          "reason_zh": "主动效果提供吸收物理伤害的护盾。"
+        }
+      ]
+    },
+    {
+      "subject": "soul_ring",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Consume %AbilityHealthCost% health to temporarily gain %mana_gain% mana.",
+          "reason_zh": "主动效果消耗生命以获得自身法力。"
+        }
+      ]
+    },
+    {
+      "subject": "sphere",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 4.25 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Blocks most targeted spells once every %block_cooldown% seconds.",
+          "reason_zh": "装备能周期性格挡指向技能。"
+        }
+      ]
+    },
+    {
+      "subject": "spirit_vessel",
+      "judgments": [
+        {
+          "mechanism": "heal_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "reduces Health Restoration by %restoration_reduction_enemy%%%",
+          "reason_zh": "对敌使用会降低目标的生命恢复效果。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "When used on allies, it provides %soul_heal_amount% health regeneration per second.",
+          "reason_zh": "对友军使用会提供生命恢复。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 1.75 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "不触发技能格挡是交互说明，不能证明装备具备技能格挡。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "不触发技能反弹是交互说明，不能证明装备具备技能反弹。"
+        }
+      ]
+    },
+    {
+      "subject": "swift_blink",
+      "judgments": [
+        {
+          "mechanism": "phased",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "After teleportation, you gain %bonus_movement%%% phased movement speed",
+          "reason_zh": "传送后获得相位移动效果。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport to a target point up to %blink_range% units away.",
+          "reason_zh": "主动效果将使用者传送至目标地点。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport to a target point up to %blink_range% units away.",
+          "reason_zh": "主动效果将使用者传送至目标地点。"
+        }
+      ]
+    },
+    {
+      "subject": "talisman_of_evasion",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 15% Evasion",
+          "reason_zh": "装备属性明确提供闪避。"
+        }
+      ]
+    },
+    {
+      "subject": "tango",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Comes with %tooltip_charges% charges.  Can be used on an allied hero to give them one Tango.",
+          "reason_zh": "说明明确物品带有可逐份使用或共享的充能。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Consumes a target tree to gain %health_regen% health regeneration for %buff_duration% seconds.",
+          "reason_zh": "吞噬树木后提供生命恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "tango_single",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Consumes a target tree to gain %health_regen% health regeneration for %buff_duration% seconds.",
+          "reason_zh": "吞噬树木后提供生命恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "tiara_of_selemene",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 6 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "tpscroll",
+      "judgments": [
+        {
+          "mechanism": "root",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport can be prevented or canceled by Root abilities.",
+          "reason_zh": "说明仅表示传送会受定身阻止或取消，并未施加定身。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "After channeling for %tooltip_channel_time% seconds, teleports you to a target friendly building.",
+          "reason_zh": "引导结束后将使用者传送至友方建筑。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "After channeling for %tooltip_channel_time% seconds, teleports you to a target friendly building.",
+          "reason_zh": "引导结束后将使用者传送至友方建筑。"
+        }
+      ]
+    },
+    {
+      "subject": "tranquil_boots",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 14 Health Regeneration",
+          "reason_zh": "装备属性提供生命恢复，符合治疗定义。"
+        }
+      ]
+    },
+    {
+      "subject": "travel_boots",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Upgrades your Town Portal Scroll, allowing it to target units, reduces cooldown and does not consume a charge on usage.",
+          "reason_zh": "说明明确装备会缩短回城卷轴的冷却。"
+        }
+      ]
+    },
+    {
+      "subject": "travel_boots_2",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Upgrades your Town Portal Scroll, allowing it to target units and heroes, reduces cooldown, channel time and does not consume a charge on usage.",
+          "reason_zh": "说明明确装备会缩短回城卷轴的冷却。"
+        }
+      ]
+    },
+    {
+      "subject": "urn_of_shadows",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "deals %soul_damage_amount% damage per second when cast on enemies",
+          "reason_zh": "材料只说明对敌施放造成持续伤害，未支持一次施放伤害多个敌人。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Provides %soul_heal_amount% health regeneration when cast on allies",
+          "reason_zh": "对友军施放会提供生命恢复。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 1.0 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "不触发技能格挡是交互说明，不能证明装备具备技能格挡。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "不触发技能反弹是交互说明，不能证明装备具备技能反弹。"
+        }
+      ]
+    },
+    {
+      "subject": "vanguard",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "",
+          "reason_zh": "材料没有装备造成范围伤害的描述。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants a %block_chance%%% chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.",
+          "reason_zh": "被动效果有概率格挡攻击造成的一定伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "veil_of_discord",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Cast a %debuff_radius% radius blast that causes enemy heroes to take %spell_amp%%% increased damage from spells.",
+          "reason_zh": "范围效果施加法术易伤，材料未说明此次施放本身造成伤害。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Spell Weakness does not stack with Bloodstone's Spell Weakness Aura.",
+          "reason_zh": "光环仅出现在与另一装备的交互说明中，不能算作本装备的机制。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "causes enemy heroes to take %spell_amp%%% increased damage from spells",
+          "reason_zh": "主动效果使敌人受到更多法术伤害，符合提高技能伤害的定义。"
+        }
+      ]
+    },
+    {
+      "subject": "vladmir",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "",
+          "reason_zh": "材料只描述对附近友军的增益，未说明一次施放或攻击伤害多个敌人。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Vladmir's Aura Grants %lifesteal_aura%%% lifesteal, %damage_aura%%% bonus damage, %mana_regen_aura% mana regeneration, and %armor_aura% armor to nearby allies.",
+          "reason_zh": "被动光环持续为附近友军提供增益，作用对象为友方单位。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants %lifesteal_aura%%% lifesteal",
+          "reason_zh": "装备光环明确提供吸血。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants %lifesteal_aura%%% lifesteal",
+          "reason_zh": "装备光环明确提供吸血。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 0.75 Mana Regeneration",
+          "reason_zh": "装备属性明确提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "void_stone",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 1.75 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "voodoo_mask",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Heals the wearer for a percentage of spell damage dealt to enemies.",
+          "reason_zh": "效果根据已有的法术伤害恢复生命，并不由装备自身造成范围伤害。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Heals the wearer for a percentage of spell damage dealt to enemies.",
+          "reason_zh": "被动效果明确恢复佩戴者的生命值。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Heals the wearer for a percentage of spell damage dealt to enemies.",
+          "reason_zh": "法术吸血根据伤害回血，材料没有提高技能伤害的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "ward_observer",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "gives ground vision in a %vision_range_tooltip% radius to your team",
+          "reason_zh": "放置的守卫为队伍提供区域地面视野。"
+        }
+      ]
+    },
+    {
+      "subject": "ward_sentry",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not grant ground vision.",
+          "reason_zh": "说明明确不提供地面视野，真视只作用于已有的友方视野。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "grants True Sight, the ability to see invisible enemy units and wards",
+          "reason_zh": "放置的守卫提供看见隐身敌方单位和守卫的真视。"
+        }
+      ]
+    },
+    {
+      "subject": "wind_waker",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Sweeps a target unit up into a cyclone",
+          "reason_zh": "旋风作用于一个目标，材料没有一次施放伤害多个敌人的描述。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Dispel Type:  Basic Dispel",
+          "reason_zh": "主动效果明确施加弱驱散。"
+        },
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Sweeps a target unit up into a cyclone, making them invulnerable for %cyclone_duration% seconds.",
+          "reason_zh": "将目标吹起并使其暂时无敌，符合吹风定义。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "making them invulnerable for %cyclone_duration% seconds",
+          "reason_zh": "主动效果明确使目标暂时无敌。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 3.0 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        }
+      ]
+    }
+  ]
+}
+tokens used
+26,552
+{
+  "objects": [
+    {
+      "subject": "silver_edge",
+      "judgments": [
+        {
+          "mechanism": "applies_break",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "disable their passive abilities for %backstab_duration% seconds",
+          "reason_zh": "破隐攻击会使目标的被动技能暂时失效，符合破坏定义。"
+        },
+        {
+          "mechanism": "invisibility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Makes you invisible for %windwalk_duration% seconds",
+          "reason_zh": "主动效果使使用者隐身。"
+        }
+      ]
+    },
+    {
+      "subject": "skadi",
+      "judgments": [
+        {
+          "mechanism": "heal_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Attacks also lower enemy attack speed by %cold_attack_slow_melee%%% and Health Restoration by %restoration_reduction%%%.",
+          "reason_zh": "攻击会降低敌人的生命恢复效果。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Attacks lower enemy movement by %cold_slow_melee%%% if they are melee and %cold_slow_ranged%%% if they are ranged.",
+          "reason_zh": "攻击会降低敌人的移动速度。"
+        }
+      ]
+    },
+    {
+      "subject": "sobi_mask",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 0.7 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "solar_crest",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "a %absorb_amount% physical damage barrier",
+          "reason_zh": "主动效果提供吸收物理伤害的护盾。"
+        }
+      ]
+    },
+    {
+      "subject": "soul_ring",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Consume %AbilityHealthCost% health to temporarily gain %mana_gain% mana.",
+          "reason_zh": "主动效果消耗生命以获得自身法力。"
+        }
+      ]
+    },
+    {
+      "subject": "sphere",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 4.25 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Blocks most targeted spells once every %block_cooldown% seconds.",
+          "reason_zh": "装备能周期性格挡指向技能。"
+        }
+      ]
+    },
+    {
+      "subject": "spirit_vessel",
+      "judgments": [
+        {
+          "mechanism": "heal_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "reduces Health Restoration by %restoration_reduction_enemy%%%",
+          "reason_zh": "对敌使用会降低目标的生命恢复效果。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "When used on allies, it provides %soul_heal_amount% health regeneration per second.",
+          "reason_zh": "对友军使用会提供生命恢复。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 1.75 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "不触发技能格挡是交互说明，不能证明装备具备技能格挡。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "不触发技能反弹是交互说明，不能证明装备具备技能反弹。"
+        }
+      ]
+    },
+    {
+      "subject": "swift_blink",
+      "judgments": [
+        {
+          "mechanism": "phased",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "After teleportation, you gain %bonus_movement%%% phased movement speed",
+          "reason_zh": "传送后获得相位移动效果。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport to a target point up to %blink_range% units away.",
+          "reason_zh": "主动效果将使用者传送至目标地点。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport to a target point up to %blink_range% units away.",
+          "reason_zh": "主动效果将使用者传送至目标地点。"
+        }
+      ]
+    },
+    {
+      "subject": "talisman_of_evasion",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 15% Evasion",
+          "reason_zh": "装备属性明确提供闪避。"
+        }
+      ]
+    },
+    {
+      "subject": "tango",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Comes with %tooltip_charges% charges.  Can be used on an allied hero to give them one Tango.",
+          "reason_zh": "说明明确物品带有可逐份使用或共享的充能。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Consumes a target tree to gain %health_regen% health regeneration for %buff_duration% seconds.",
+          "reason_zh": "吞噬树木后提供生命恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "tango_single",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Consumes a target tree to gain %health_regen% health regeneration for %buff_duration% seconds.",
+          "reason_zh": "吞噬树木后提供生命恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "tiara_of_selemene",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 6 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "tpscroll",
+      "judgments": [
+        {
+          "mechanism": "root",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Teleport can be prevented or canceled by Root abilities.",
+          "reason_zh": "说明仅表示传送会受定身阻止或取消，并未施加定身。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "After channeling for %tooltip_channel_time% seconds, teleports you to a target friendly building.",
+          "reason_zh": "引导结束后将使用者传送至友方建筑。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "After channeling for %tooltip_channel_time% seconds, teleports you to a target friendly building.",
+          "reason_zh": "引导结束后将使用者传送至友方建筑。"
+        }
+      ]
+    },
+    {
+      "subject": "tranquil_boots",
+      "judgments": [
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 14 Health Regeneration",
+          "reason_zh": "装备属性提供生命恢复，符合治疗定义。"
+        }
+      ]
+    },
+    {
+      "subject": "travel_boots",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Upgrades your Town Portal Scroll, allowing it to target units, reduces cooldown and does not consume a charge on usage.",
+          "reason_zh": "说明明确装备会缩短回城卷轴的冷却。"
+        }
+      ]
+    },
+    {
+      "subject": "travel_boots_2",
+      "judgments": [
+        {
+          "mechanism": "cooldown_reduction",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Upgrades your Town Portal Scroll, allowing it to target units and heroes, reduces cooldown, channel time and does not consume a charge on usage.",
+          "reason_zh": "说明明确装备会缩短回城卷轴的冷却。"
+        }
+      ]
+    },
+    {
+      "subject": "urn_of_shadows",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "deals %soul_damage_amount% damage per second when cast on enemies",
+          "reason_zh": "材料只说明对敌施放造成持续伤害，未支持一次施放伤害多个敌人。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Provides %soul_heal_amount% health regeneration when cast on allies",
+          "reason_zh": "对友军施放会提供生命恢复。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 1.0 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        },
+        {
+          "mechanism": "spell_block",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "不触发技能格挡是交互说明，不能证明装备具备技能格挡。"
+        },
+        {
+          "mechanism": "spell_reflect",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "不触发技能反弹是交互说明，不能证明装备具备技能反弹。"
+        }
+      ]
+    },
+    {
+      "subject": "vanguard",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "",
+          "reason_zh": "材料没有装备造成范围伤害的描述。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants a %block_chance%%% chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.",
+          "reason_zh": "被动效果有概率格挡攻击造成的一定伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "veil_of_discord",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Cast a %debuff_radius% radius blast that causes enemy heroes to take %spell_amp%%% increased damage from spells.",
+          "reason_zh": "范围效果施加法术易伤，材料未说明此次施放本身造成伤害。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Spell Weakness does not stack with Bloodstone's Spell Weakness Aura.",
+          "reason_zh": "光环仅出现在与另一装备的交互说明中，不能算作本装备的机制。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "causes enemy heroes to take %spell_amp%%% increased damage from spells",
+          "reason_zh": "主动效果使敌人受到更多法术伤害，符合提高技能伤害的定义。"
+        }
+      ]
+    },
+    {
+      "subject": "vladmir",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "",
+          "reason_zh": "材料只描述对附近友军的增益，未说明一次施放或攻击伤害多个敌人。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Passive: Vladmir's Aura Grants %lifesteal_aura%%% lifesteal, %damage_aura%%% bonus damage, %mana_regen_aura% mana regeneration, and %armor_aura% armor to nearby allies.",
+          "reason_zh": "被动光环持续为附近友军提供增益，作用对象为友方单位。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants %lifesteal_aura%%% lifesteal",
+          "reason_zh": "装备光环明确提供吸血。"
+        },
+        {
+          "mechanism": "lifesteal",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Grants %lifesteal_aura%%% lifesteal",
+          "reason_zh": "装备光环明确提供吸血。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 0.75 Mana Regeneration",
+          "reason_zh": "装备属性明确提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "void_stone",
+      "judgments": [
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 1.75 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "voodoo_mask",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Heals the wearer for a percentage of spell damage dealt to enemies.",
+          "reason_zh": "效果根据已有的法术伤害恢复生命，并不由装备自身造成范围伤害。"
+        },
+        {
+          "mechanism": "healing",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Heals the wearer for a percentage of spell damage dealt to enemies.",
+          "reason_zh": "被动效果明确恢复佩戴者的生命值。"
+        },
+        {
+          "mechanism": "spell_amp",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Heals the wearer for a percentage of spell damage dealt to enemies.",
+          "reason_zh": "法术吸血根据伤害回血，材料没有提高技能伤害的效果。"
+        }
+      ]
+    },
+    {
+      "subject": "ward_observer",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "gives ground vision in a %vision_range_tooltip% radius to your team",
+          "reason_zh": "放置的守卫为队伍提供区域地面视野。"
+        }
+      ]
+    },
+    {
+      "subject": "ward_sentry",
+      "judgments": [
+        {
+          "mechanism": "grant_vision",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Does not grant ground vision.",
+          "reason_zh": "说明明确不提供地面视野，真视只作用于已有的友方视野。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "grants True Sight, the ability to see invisible enemy units and wards",
+          "reason_zh": "放置的守卫提供看见隐身敌方单位和守卫的真视。"
+        }
+      ]
+    },
+    {
+      "subject": "wind_waker",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "item",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Sweeps a target unit up into a cyclone",
+          "reason_zh": "旋风作用于一个目标，材料没有一次施放伤害多个敌人的描述。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Dispel Type:  Basic Dispel",
+          "reason_zh": "主动效果明确施加弱驱散。"
+        },
+        {
+          "mechanism": "cyclone_banish",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "Sweeps a target unit up into a cyclone, making them invulnerable for %cyclone_duration% seconds.",
+          "reason_zh": "将目标吹起并使其暂时无敌，符合吹风定义。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "making them invulnerable for %cyclone_duration% seconds",
+          "reason_zh": "主动效果明确使目标暂时无敌。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "item",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "item",
+          "quote": "+ 3.0 Mana Regeneration",
+          "reason_zh": "装备属性提供自身法力恢复。"
+        }
+      ]
+    }
+  ]
+}

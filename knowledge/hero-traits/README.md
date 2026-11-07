@@ -1,5 +1,11 @@
 # 英雄特性表（U23）
 
-- `hero-traits-v1.json`：9个维度的英雄标签（助手标注v1，待用户抽查）。每条有技能证据与置信度；`targeted_spells`不在文件中标注，由`dota_items.data.hero_traits.targeted()`按官方原始枚举计算。
+> 当前英雄特性由机制知识推导：映射`trait-mapping-v6.json`，结果见`knowledge/mechanics/current.json`的`hero_traits`。下面的`hero-traits-v1.json`和映射v2、v3**已被取代**，只用于复现和对照（`knowledge/superseded.json`）。
+
+- `hero-traits-v1.json`（已被取代，MK-T6f）：9个维度的英雄标签（助手标注v1）。现在只作外部对照清单和路线A旧产物的输入。每条有技能证据与置信度；`targeted_spells`不在文件中标注，由`dota_items.data.hero_traits.targeted()`按官方原始枚举计算。
 - 读取一律用`dota_items.data.hero_traits.load_traits(doc, registry_heroes)`：校验英雄、技能名均在`knowledge/hero-capabilities/hero-registry.json`中，禁止重复。
 - 分析与抽查清单：`docs/hero-traits-analysis.md`。修改须记决策并升版本（v2…），旧版本不覆盖。
+- `trait-mapping-v6.json`（当前，U121）：同v5；“可被弱驱散的保命效果”另算用户确认的16个加速技能和风行的闪避（`only_subjects`，`data.mechanics_traits_v4`）。
+- `trait-mapping-v5.json`（已被v6取代，U118）：同v4，魔法爆发名单加神谕者，共34个。
+- `trait-mapping-v4.json`（已被v5取代，U105、U106）：特性存数量，每个英雄每个特性都有“基础数”和“含升级数”，0也记。硬控只算眩晕、妖术、嘲讽、睡眠、蛊惑、恐惧；沉默单列；机动性=自身位移＋无视地形；法力依赖来自R12的例外名单；魔法爆发是用户列的33个英雄（U107）。v6的结果在`knowledge/mechanics/profiles/derived-v16/hero-traits-v3.json`（文件名沿用，schema为`hero-traits/4`）。
+- `trait-mapping-v3.json`（已被取代）：v2各维度由哪些机制算出（助手草稿，待用户看）。结果在`knowledge/mechanics/profiles/derived-v8/hero-traits-v2.json`，并含与v1的差异。映射未经用户审阅，不能替代v1。

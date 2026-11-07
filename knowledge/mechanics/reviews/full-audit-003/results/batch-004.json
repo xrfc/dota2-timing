@@ -1,0 +1,705 @@
+{
+  "objects": [
+    {
+      "subject": "storm_spirit_ball_lightning",
+      "judgments": [
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "风暴之灵在球状闪电期间是无敌状态。",
+          "reason_zh": "说明明确赋予施法者无敌状态。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "该技能可以摧毁树木。",
+          "reason_zh": "说明明确技能能够摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "storm_spirit_galvanized",
+      "judgments": [
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "风暴之灵每次击杀都会获得一点提供%mp_per_kill%点/秒魔法恢复的能量",
+          "reason_zh": "能量只是决定恢复数值的叠层，不是使用一次消耗一点的充能。"
+        },
+        {
+          "mechanism": "mana_gain",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "每次获得一点能量时他还会永久获得%perma_mp_per_kill%点/秒魔法恢复。",
+          "reason_zh": "技能为自身提供魔法恢复。"
+        }
+      ]
+    },
+    {
+      "subject": "sven_storm_bolt",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标周围内所有敌人造成伤害和眩晕。",
+          "reason_zh": "一次施放能够伤害目标周围的多个敌人。"
+        },
+        {
+          "mechanism": "applies_basic_dispel",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "提升施法距离，并且对目标施加弱驱散效果。",
+          "reason_zh": "A杖升级明确增加对目标的弱驱散。"
+        },
+        {
+          "mechanism": "invulnerable_untargetable",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "可以影响无敌目标。",
+          "reason_zh": "能够影响无敌目标只是交互规则，不代表技能赋予无敌。"
+        },
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标周围内所有敌人造成伤害和眩晕。",
+          "reason_zh": "材料只说明眩晕，没有独立阻止闪烁、传送或离开范围的效果。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对目标周围内所有敌人造成伤害和眩晕。",
+          "reason_zh": "基础说明明确对敌人造成眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "sven_great_cleave",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对所有附近的敌方单位造成分裂攻击伤害。",
+          "reason_zh": "一次攻击能够对附近多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对所有附近的敌方单位造成分裂攻击伤害。",
+          "reason_zh": "说明明确攻击具有分裂伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "sven_warcry",
+      "judgments": [
+        {
+          "mechanism": "damage_block",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "现在战吼不可驱散，并提供%base_barrier_amount%点物理伤害护盾。",
+          "reason_zh": "魔晶升级新增物理伤害护盾。"
+        }
+      ]
+    },
+    {
+      "subject": "sven_gods_strength",
+      "judgments": [
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "获得攻击力加成和减速抗性",
+          "reason_zh": "基础效果明确提供减速抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "tiny_avalanche",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "用岩石轰炸一块区域，对敌方单位造成短间隔的伤害并眩晕。",
+          "reason_zh": "一次施放对区域内的多个敌方单位造成伤害。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "对敌方单位造成短间隔的伤害并眩晕。",
+          "reason_zh": "说明明确技能会眩晕敌方单位。"
+        }
+      ]
+    },
+    {
+      "subject": "tiny_toss",
+      "judgments": [
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "抓起小小身旁%grab_radius%范围内最近的单位，不论敌友，扔向目标单位或神符",
+          "reason_zh": "技能抓起并投掷其他单位，主动改变其位置。"
+        },
+        {
+          "mechanism": "flying",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "飞行时间是%duration%秒。",
+          "reason_zh": "这里描述被投掷单位的飞行过程，没有赋予飞行移动能力。"
+        }
+      ]
+    },
+    {
+      "subject": "tiny_tree_grab",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使小小在有限次数的攻击里获得攻击距离加成、攻击力加成和溅射攻击。",
+          "reason_zh": "溅射攻击使一次攻击能够伤害多个敌人。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "使小小在有限次数的攻击里获得攻击距离加成、攻击力加成和溅射攻击。",
+          "reason_zh": "技能明确赋予攻击溅射效果。"
+        }
+      ]
+    },
+    {
+      "subject": "tiny_tree_channel",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "每棵树对该区域内敌人造成的伤害为小小的攻击伤害加上扔树的额外伤害。",
+          "reason_zh": "技能对目标区域内多个敌人造成伤害，且整个技能由A杖授予。"
+        }
+      ]
+    },
+    {
+      "subject": "tiny_insurmountable",
+      "judgments": [
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "减速抗性还会降低攻击速度减少的影响。",
+          "reason_zh": "技能降低自身受到的减速影响，没有施加减速。"
+        },
+        {
+          "mechanism": "slow_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "小小从力量中获得状态和减速抗性。",
+          "reason_zh": "基础效果明确提供减速抗性。"
+        },
+        {
+          "mechanism": "status_resistance",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "小小从力量中获得状态和减速抗性。",
+          "reason_zh": "基础效果明确提供状态抗性。"
+        }
+      ]
+    },
+    {
+      "subject": "tiny_grow",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "都会在落地点的更大范围内造成额外伤害和减速效果。",
+          "reason_zh": "魔晶升级新增落地点范围伤害。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提升了攻击力、移动速度、护甲和投掷的威力",
+          "reason_zh": "基础效果只增强投掷威力，本技能自身没有投掷或移动其他单位。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "shard",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "现在投掷扔出的单位，扔树和树木连掷扔出的树木都会在落地点的更大范围内造成额外伤害和减速效果。",
+          "reason_zh": "魔晶新增的是落地伤害和减速，位移仍由其他技能施加。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "shard",
+          "quote": "都会在落地点的更大范围内造成额外伤害和减速效果。",
+          "reason_zh": "符合定义的对外减速由魔晶新增，基础的自身攻速降低只是代价。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "shard",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "shard",
+          "quote": "都会在落地点的更大范围内造成额外伤害和减速效果。",
+          "reason_zh": "魔晶升级明确新增落地点的减速效果。"
+        }
+      ]
+    },
+    {
+      "subject": "tiny_toss_tree",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "触发自身对其的攻击，并且对周围目标造成溅射伤害。",
+          "reason_zh": "一次施放造成的攻击及溅射能够伤害多个目标。"
+        },
+        {
+          "mechanism": "cleave",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "触发自身对其的攻击，并且对周围目标造成溅射伤害。",
+          "reason_zh": "技能触发的攻击伤害会溅射到周围目标。"
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_magic_missile",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": false,
+          "correct_condition": "shard",
+          "quote": "可以对敌人弹射一次，以英雄优先",
+          "reason_zh": "魔晶新增弹射后一次施放能伤害多个敌人，基础效果只作用于单个目标。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "向一个敌方单位射出魔法箭，眩晕并造成伤害。",
+          "reason_zh": "基础说明明确魔法箭会眩晕目标。"
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_wave_of_terror",
+      "judgments": [
+        {
+          "mechanism": "armor_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "削弱敌人的总攻击力和护甲",
+          "reason_zh": "技能明确降低敌人的护甲。"
+        },
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "削弱敌人的总攻击力和护甲",
+          "reason_zh": "技能明确降低敌人的总攻击力。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并打开前方经过路径的视野。",
+          "reason_zh": "技能明确提供经过路径的视野。"
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_command_aura",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "复仇之魂的存在提升了附近友方英雄的攻击力。",
+          "reason_zh": "提升附近友军攻击力并不等于本技能造成范围伤害。"
+        },
+        {
+          "mechanism": "aura",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "复仇之魂的存在提升了附近友方英雄的攻击力。",
+          "reason_zh": "技能以自身为中心持续影响附近友方英雄，属于友军光环。"
+        },
+        {
+          "mechanism": "execute",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "强幻象不会被相关技能秒杀。",
+          "reason_zh": "这是幻象免受秒杀的否定描述，没有赋予斩杀能力。"
+        },
+        {
+          "mechanism": "illusions",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "死亡时产生一个复仇之魂的强幻象",
+          "reason_zh": "A杖升级明确新增死亡时制造强幻象的效果。"
+        },
+        {
+          "mechanism": "respawn",
+          "condition": "scepter",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "复仇之魂复活时若幻象依然存在，则自身会直接将其取代。",
+          "reason_zh": "A杖使复活时本体取代仍存的幻象，影响复活位置。"
+        }
+      ]
+    },
+    {
+      "subject": "vengefulspirit_nether_swap",
+      "judgments": [
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "移形换位会打断目标的持续施法。",
+          "reason_zh": "说明明确技能会打断目标持续施法，且未依赖眩晕或沉默。"
+        },
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "复仇之魂和被交换的友方英雄都会获得等同于造成伤害的护盾。",
+          "reason_zh": "技能明确为自身和被交换的友方英雄提供护盾。"
+        },
+        {
+          "mechanism": "displace_other",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "与一个目标英雄瞬间交换位置，不论敌我。",
+          "reason_zh": "交换位置会主动改变目标英雄的位置。"
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_shackleshot",
+      "judgments": [
+        {
+          "mechanism": "mobility_lock",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "该技能可以将两个敌人一起束缚，使他们同时眩晕。",
+          "reason_zh": "束缚在材料中体现为眩晕，没有独立的位移限制效果。"
+        },
+        {
+          "mechanism": "projectile_dodge",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "束缚击可以被躲避。",
+          "reason_zh": "技能弹道能够被躲避，不代表本技能主动躲避其他弹道。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "该技能可以将两个敌人一起束缚，使他们同时眩晕。",
+          "reason_zh": "说明明确技能会使敌人眩晕。"
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_powershot",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "这支箭会对穿过的所有敌方单位造成伤害和减速效果",
+          "reason_zh": "一次施放能够伤害路径上的多个敌方单位。"
+        },
+        {
+          "mechanism": "channel_interrupt",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "其间可以打断蓄力",
+          "reason_zh": "这里指自身蓄力可以中止，没有施加打断目标持续施法的效果。"
+        },
+        {
+          "mechanism": "charges",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "蓄力时间越长，箭矢伤害越高。",
+          "reason_zh": "蓄力影响伤害数值，不是使用时消耗次数的充能。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "这支箭会对穿过的所有敌方单位造成伤害和减速效果",
+          "reason_zh": "基础说明明确箭矢会减速敌方单位。"
+        },
+        {
+          "mechanism": "tree_destroy",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "强力击将摧毁作用范围内的树木。",
+          "reason_zh": "说明明确技能能够摧毁树木。"
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_windrun",
+      "judgments": [
+        {
+          "mechanism": "evasion",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提升移动速度，并闪避一切物理攻击。",
+          "reason_zh": "技能明确赋予自身闪避攻击的能力。"
+        }
+      ]
+    },
+    {
+      "subject": "windrunner_focusfire",
+      "judgments": [
+        {
+          "mechanism": "attack_damage_reduction",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "攻击速度增加%bonus_attack_speed%，但是攻击力降低。",
+          "reason_zh": "降低的是施法者自身攻击力，属于自身代价。"
+        }
+      ]
+    },
+    {
+      "subject": "zuus_arc_lightning",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "释放一道会跳跃穿越附近敌人的闪电，并造成伤害。",
+          "reason_zh": "一次施放的闪电能够跳跃伤害多个敌人。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "释放一道会跳跃穿越附近敌人的闪电",
+          "reason_zh": "跳跃的是闪电，技能没有改变宙斯自身位置。"
+        }
+      ]
+    },
+    {
+      "subject": "zuus_lightning_bolt",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "本技能可以对地施放，将会自动作用于%spread_aoe%范围内最近的敌方英雄上。",
+          "reason_zh": "对地施放仍只选择最近的一个敌方英雄，视野范围也不是伤害范围。"
+        },
+        {
+          "mechanism": "grant_vision",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "雷击在目标周围%sight_radius_night%范围内提供空中视野和真实视域。",
+          "reason_zh": "技能明确提供目标周围的区域视野。"
+        },
+        {
+          "mechanism": "stun",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "造成伤害及短暂眩晕。",
+          "reason_zh": "短暂眩晕符合眩晕机制定义。"
+        },
+        {
+          "mechanism": "summons",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "召唤一道闪电打击一个敌方单位",
+          "reason_zh": "召唤的是伤害闪电，没有召唤有血量的单位。"
+        },
+        {
+          "mechanism": "true_sight",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "提供空中视野和真实视域。",
+          "reason_zh": "说明明确技能提供真实视域。"
+        }
+      ]
+    },
+    {
+      "subject": "zuus_heavenly_jump",
+      "judgments": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "base",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "震击最近的可见敌人（以英雄优先），造成伤害",
+          "reason_zh": "材料只说明伤害最近的一个敌人，不能凭字段名推断多个伤害目标。"
+        },
+        {
+          "mechanism": "self_mobility",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "宙斯作出神圣一跳，向前跳跃",
+          "reason_zh": "技能使宙斯主动向前跳跃，改变自身位置。"
+        },
+        {
+          "mechanism": "slow",
+          "condition": "base",
+          "decision": "accept",
+          "condition_correct": true,
+          "correct_condition": "base",
+          "quote": "并减缓其移动速度、攻击速度。",
+          "reason_zh": "技能明确降低敌人的移动速度和攻击速度。"
+        }
+      ]
+    },
+    {
+      "subject": "zuus_cloud",
+      "judgments": [
+        {
+          "mechanism": "economy",
+          "condition": "scepter",
+          "decision": "reject",
+          "condition_correct": true,
+          "correct_condition": "scepter",
+          "quote": "敌方英雄将其摧毁后可以获得%cloud_bounty_tooltip%金。",
+          "reason_zh": "这是敌方摧毁雷云获得的正常赏金，不属于提供额外金钱或经验的机制。"
+        }
+      ]
+    }
+  ]
+}

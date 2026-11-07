@@ -32,6 +32,7 @@
 
 - [机制知识框架](knowledge-framework.md)：事实层→规则层→推导层设计（U26/U27）
 - [MK-T3机制事实：接口、复现与抽查](mechanics-facts.md)
+- [机制知识库：补丁更新流程](mechanics-patch-update.md)：新补丁出来后怎么找变化、复核、出新版本（MK-T6e）
 - [MK-T3语义复核：批次与判定方法](mechanics-review.md)
 - [知识维护、路径映射与证据恢复](knowledge-maintenance.md)
 - [英雄知识能否作为训练冷启动？](knowledge-cold-start.md)
@@ -103,6 +104,7 @@
 - [词表v6新增机制草稿](handoff/vocabulary-v6-draft.md)
 - [MK-T4规则草稿](handoff/mk-t4-rules-draft.md)
 - [MK交接（2026-11-05）](handoff/mk-handoff-2026-11-05.md)
+- [MK-T5英雄机制档案](../knowledge/mechanics/profiles/README.md)
 - 历史交接：[双分支上下文（10-16）](handoff/2026-10-16-context.md) · [单目录整合（10-16）](handoff/single-workspace-2026-10-16.md) · [数据接口交接](handoff/purchase-data-interface.md) · [数据agent提示词](handoff/data-agent-prompt.md) · [模型agent提示词](handoff/model-agent-prompt.md)
 
 ## 6. 历史归档
