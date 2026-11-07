@@ -10,18 +10,18 @@ from pathlib import Path
 
 from dota_items.data.match_snapshot import load_snapshot
 from dota_items.data.match_snapshot import write_new_json as write
-from dota_items.data.mechanics_current import load_current, read_current
+from dota_items.data.mechanics_api import Knowledge
 from dota_items.modeling import situational_triggers as st
 from dota_items.storage import file_hash
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = "knowledge/situational-items/triggers-v2.json"
-REGISTRY = "knowledge/hero-capabilities/hero-registry.json"
 IMPLEMENTATION = (
     "scripts/build_m2b_triggers.py",
     "src/dota_items/modeling/situational_triggers.py",
     "src/dota_items/modeling/situational_items.py",
     "src/dota_items/modeling/situational_reference.py",
+    "src/dota_items/data/mechanics_api.py",
 )
 
 
@@ -31,13 +31,10 @@ def run(snapshot, output, repo=ROOT):
         raise ValueError("Output exists")
     before = {name: file_hash(repo / name) for name in (*IMPLEMENTATION, SPEC)}
     spec = json.loads((repo / SPEC).read_text(encoding="utf-8"))
-    registry = json.loads((repo / REGISTRY).read_text(encoding="utf-8"))["heroes"]
-    current = load_current(repo)
-    sums = st.trait_sums(read_current("hero_traits", repo)["traits"])
-    heroes_by_rule = st.rule_heroes(read_current("rules_evaluation", repo), registry, spec)
+    kb = Knowledge(repo)
     _, players, purchases, split = load_snapshot(snapshot)
     # Training split only; the validation split stays untouched for M4.
-    result = st.validate(spec, players, purchases, split["train"], sums, heroes_by_rule)
+    result = st.validate(spec, players, purchases, split["train"], kb)
     if {n: file_hash(repo / n) for n in before} != before:
         raise ValueError("Inputs changed during build")
     output.mkdir(parents=True)
@@ -49,9 +46,7 @@ def run(snapshot, output, repo=ROOT):
             "decision": spec["decision"],
             "snapshot": str(snapshot),
             "split": "train",
-            "knowledge": {
-                k: current["entries"][k]["sha256"] for k in ("hero_traits", "rules_evaluation")
-            },
+            "knowledge": kb.version,
             "inputs": before,
             "outputs": {"triggers-validation.json": file_hash(output / "triggers-validation.json")},
         },

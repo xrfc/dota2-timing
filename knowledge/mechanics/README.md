@@ -47,7 +47,7 @@
 - **没算的规则字段**（MK-T6b，U113）：`pairs`、`target_exempt_mechanisms`、`parameters`不参与计算。规则v11必须在`not_computed`里写明字段、原因和用户决定，否则读取报错；程序不认识的字段也报错（`data.mechanics_rules_v11`）。目前只有R08、R09、R19这样声明，求值结果带`not_computed`和`not_evaluated`。
 - **校验**：`manifest.json`记录数据输入（v18直接读冻结的v17，测试追踪真实读取）和导入到的全部仓库源码（测试沿导入关系检查）；数据和源码都在构建前后比对，中途变化或文件被删就报错。
 
-**统一入口（MK-T6，U113）：`current.json`列出当前每份知识文件的路径和SHA-256。新代码用`dota_items.data.mechanics_current.read_current(名字)`读取；文件被改动、缺失或和构建manifest对不上都会报错；构建时用到的输入也必须是入口里登记的版本（如派生层用映射v6构建、入口却写v5，会报错，U124）。升版本时：生成并提交新版本文件 → 改`scripts/build_mechanics_current.py`里的列表 → 重新运行 → 同步文档；`tests/test_mechanics_current.py`会检查入口是否指向最新版本。**
+**读取知识请用接口`data.mechanics_api.Knowledge`（`docs/knowledge-api.md`，U124）；下面是它底下的文件。** **统一入口（MK-T6，U113）：`current.json`列出当前每份知识文件的路径和SHA-256。新代码用`dota_items.data.mechanics_current.read_current(名字)`读取；文件被改动、缺失或和构建manifest对不上都会报错；构建时用到的输入也必须是入口里登记的版本（如派生层用映射v6构建、入口却写v5，会报错，U124）。升版本时：生成并提交新版本文件 → 改`scripts/build_mechanics_current.py`里的列表 → 重新运行 → 同步文档；`tests/test_mechanics_current.py`会检查入口是否指向最新版本。**
 
 - **数值升级的来源**（MK-T6c，U113）：`numeric_upgrades`每组带`ruling`：用户逐条裁定（U65、U66、U72，指向`reviews/user-rulings-001.jsonl`）或U65冷却规则。
 

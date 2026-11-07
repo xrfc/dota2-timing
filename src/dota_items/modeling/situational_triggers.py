@@ -1,7 +1,8 @@
 """M2b-T6d/T8: user-defined triggers for Juggernaut's situational items (U123).
 
-Pregame triggers read enemy heroes only (hero trait base counts, or heroes that own a
-rule's target abilities). In-game triggers read enemy items bought before a given second.
+Pregame triggers read enemy heroes only, through the knowledge API (hero trait base counts,
+heroes owning named abilities, or heroes owning a rule's target abilities). In-game
+triggers read enemy items bought before a given second.
 Validation is descriptive: buy rates with and without a trigger on the training split.
 """
 
@@ -9,41 +10,19 @@ from dota_items.modeling import situational_items as si
 from dota_items.modeling.situational_reference import _diff
 
 
-def trait_sums(trait_counts):
-    """{trait: {hero_id: base}} from hero traits; pregame uses base counts (U104)."""
-    return {
-        trait: {c["hero_id"]: c["base"] for c in spec["counts"]}
-        for trait, spec in trait_counts.items()
-        if not spec.get("pending")
-    }
+def pregame_fires(item, enemies, kb):
+    """Whether one item's pregame trigger fires for these enemy hero ids.
 
-
-def rule_heroes(evaluation, registry_heroes, spec=None):
-    """{rule_id: owner hero ids of its target abilities}, plus ``abilities:<list>`` entries
-    for named ability lists in the trigger spec (U125). Unknown abilities raise."""
-    owner = {a["name"]: h["hero_id"] for h in registry_heroes for a in h["abilities"]}
-    out = {
-        rule["id"]: {owner[t] for t in rule["targets"] if t in owner}
-        for rule in evaluation["rules"]
-    }
-    for item in (spec or {}).get("items", []):
-        for key, abilities in item["pregame"].get("abilities_any", {}).items():
-            unknown = [a for a in abilities if a not in owner]
-            if unknown:
-                raise ValueError(f"{item['id']}: unknown abilities {unknown}")
-            out[f"abilities:{key}"] = {owner[a] for a in abilities}
-    return out
-
-
-def pregame_fires(item, enemies, sums, heroes_by_rule):
-    """Whether one item's pregame trigger fires for these enemy hero ids."""
+    `kb` is a `dota_items.data.mechanics_api.Knowledge` (or anything with the same three
+    methods): pregame uses base trait counts (U104); unknown heroes or abilities raise.
+    """
     condition = item["pregame"]
     if "abilities_any" in condition:
-        lists = [heroes_by_rule[f"abilities:{key}"] for key in condition["abilities_any"]]
-        return bool(set(enemies) & set().union(*lists))
+        owners = set().union(*(kb.heroes_owning(a) for a in condition["abilities_any"].values()))
+        return bool(set(enemies) & owners)
     if "trait" in condition:
-        return sum(sums[condition["trait"]].get(h, 0) for h in enemies) >= condition["min_sum"]
-    wanted = set().union(*(heroes_by_rule[r] for r in condition["rule_heroes"]))
+        return kb.team_trait_sum(enemies, condition["trait"], "base") >= condition["min_sum"]
+    wanted = set().union(*(kb.rule_target_heroes(r) for r in condition["rule_heroes"]))
     return bool(set(enemies) & wanted)
 
 
@@ -63,7 +42,7 @@ def _juggernauts(players, match_ids):
     }
 
 
-def validate(spec, players, purchases, match_ids, sums, heroes_by_rule):
+def validate(spec, players, purchases, match_ids, kb):
     """Per item: pregame and in-game trigger rates and Juggernaut's buy rates with/without."""
     targets = _juggernauts(players, match_ids)
     by_match = {}
@@ -101,7 +80,7 @@ def validate(spec, players, purchases, match_ids, sums, heroes_by_rule):
     out = []
     for item in spec["items"]:
         cls = item["id"]
-        pre = [pregame_fires(item, s["enemies"], sums, heroes_by_rule) for s in samples]
+        pre = [pregame_fires(item, s["enemies"], kb) for s in samples]
         row = {
             "item": cls,
             "zh": item["zh"],

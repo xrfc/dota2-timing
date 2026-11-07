@@ -93,6 +93,7 @@ MODULES = {
     "data.mechanics_facts_v18": (_S, "active"),
     "data.mechanics_traits_v3": (_S, "active"),
     "data.mechanics_current": (_S, "active"),
+    "data.mechanics_api": (_S, "active"),
     "data.knowledge_superseded": (_S, "active"),
     "data.mechanics_rules_v11": (_S, "active"),
     "data.mechanics_facts_v19": (_S, "active"),

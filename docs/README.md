@@ -32,6 +32,7 @@
 
 - [机制知识框架](knowledge-framework.md)：事实层→规则层→推导层设计（U26/U27）
 - [MK-T3机制事实：接口、复现与抽查](mechanics-facts.md)
+- [知识读取接口](knowledge-api.md)：路线A、B读取机制知识的统一方式和固定含义（U124）
 - [M2b主宰针对装：触发条件与数据验证](m2b-triggers.md)：用户定的触发条件（U123）和在M1训练集上的验证（M2b-T6d、T8）
 - [机制知识库：补丁更新流程](mechanics-patch-update.md)：新补丁出来后怎么找变化、复核、出新版本（MK-T6e）
 - [MK-T3语义复核：批次与判定方法](mechanics-review.md)
