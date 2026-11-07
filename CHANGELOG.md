@@ -1,5 +1,9 @@
 # 变更记录
 
+## 2026-11-07 U123：M2b主宰针对装触发条件和数据验证
+
+- PR #17已合并（`082f58a`），新分支`claude/m2b-triggers-2026-11-07`。用户定触发条件（`knowledge/situational-items/triggers-v1.json`，阈值取M1训练集敌方合计前25%）；新增`modeling.situational_triggers`和`scripts/build_m2b_triggers.py`，在M1训练集1458局一号位主宰上验证（`docs/m2b-triggers.md`）：金箍棒+11%（比赛中+18%），散夜对剑+5%，其余看不出，碎颅锤83%的局都触发。
+
 ## 2026-11-07 U122：英雄特性抽查结束，MK结束
 
 - 第二批19项全部为对，抽查共68项结束（`traits-check-001/verdicts-2026-11-07b.jsonl`）。MK机制知识底座结束（R8、R15移到B1）；计划§7状态改为当前路线B的B0，路线A可开始M2b-T6d。

@@ -428,3 +428,12 @@ Codex目前只人工审过24组，不能把其余1,527组的关键词候选当�
 
 自己复算：`PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_mechanics_current.py tests/test_knowledge_superseded.py tests/test_patch_check.py`
 
+## 2026-11-07：规则先由人定，再用数据检查（U123）
+
+- **规则写得太宽就没用**：“敌方有持续施法”在83%的局都成立，触发了也区分不出什么。好的触发条件要在一部分局成立、另一部分不成立。
+- **阈值从分布里取**：先看敌方合计的分布（中位数、前25%），再定“≥5”这种阈值；但要检查实际触发比例，“前25%”的分界点本身可能占四成。
+- **行为不等于最优**：数据只能说明高分段主宰见到闪避会多出金箍棒，不能说明不出就错。看不出差别的触发，可能是规则不对，也可能是大家确实不这么出。
+- **验证集不碰**：所有检查只用训练集，验证集留给最后一次评估，避免“看着验证集调规则”。
+
+自己复算：`PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_situational_triggers.py`
+
