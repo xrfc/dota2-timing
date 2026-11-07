@@ -136,7 +136,8 @@ function traitRow(t){
 function abilityRow(a){
   const row=document.createElement("div");row.className="row";
   const name=document.createElement("div");name.className="tname";name.textContent=a.name;
-  if(a.dispellable){const s=document.createElement("span");s.className="tsrc";s.textContent=a.dispellable;name.appendChild(s)}
+  const tags=[a.damage_type?a.damage_type+"伤害":"",a.dispellable||""].filter(Boolean);
+  if(tags.length){const s=document.createElement("span");s.className="tsrc";s.textContent=tags.join("，");name.appendChild(s)}
   const c=document.createElement("div");c.className="count";c.textContent=a.mechanisms.length;
   const sm=document.createElement("small");sm.textContent="条机制";c.appendChild(sm);
   const body=document.createElement("div");body.className="body";

@@ -87,7 +87,12 @@ def main():
     heroes = registry["heroes"]
     names = {h["hero_id"]: h["name_zh"] for h in heroes}
     profiles = {p["hero_id"]: p for p in read_current("hero_profiles")["profiles"]}
-    chosen, why = pick(traits, heroes, rules)
+    previous = OUT / "sample.json"
+    if previous.exists():  # keep the heroes the user is already reviewing
+        old = json.loads(previous.read_text(encoding="utf-8"))["rows"]
+        chosen, why = [r["hero_id"] for r in old], {r["hero_id"]: r["why"] for r in old}
+    else:
+        chosen, why = pick(traits, heroes, rules)
     rows = []
     for hero_id in chosen:
         hero_traits = []
@@ -114,6 +119,7 @@ def main():
                 "id": f"a-{ability['subject']}",
                 "name": ability["name_zh"],
                 "dispellable": ability.get("dispellable"),
+                "damage_type": ability.get("damage_type"),
                 "mechanisms": [
                     {
                         "zh": m["zh"],

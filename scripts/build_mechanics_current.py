@@ -10,8 +10,8 @@ import hashlib
 import json
 from pathlib import Path
 
-E = "knowledge/mechanics/extractions/v22"
-D = "knowledge/mechanics/profiles/derived-v13"
+E = "knowledge/mechanics/extractions/v23"
+D = "knowledge/mechanics/profiles/derived-v14"
 
 # name -> (path, build manifest or None, what it is)
 ENTRIES = {
@@ -20,8 +20,8 @@ ENTRIES = {
     "rules": ("knowledge/mechanics/rules-v12.json", None, "机制规则"),
     "extra_abilities": ("knowledge/mechanics/extra-abilities-v1.json", None, "注册表外技能"),
     "retired_items": ("knowledge/mechanics/retired-items-v2.json", None, "已退出装备"),
-    "trait_mapping": ("knowledge/hero-traits/trait-mapping-v4.json", None, "英雄特性映射"),
-    "facts": (f"{E}/facts-v22.json", f"{E}/manifest.json", "复核后事实"),
+    "trait_mapping": ("knowledge/hero-traits/trait-mapping-v5.json", None, "英雄特性映射"),
+    "facts": (f"{E}/facts-v23.json", f"{E}/manifest.json", "复核后事实"),
     "rules_evaluation": (f"{E}/rules-evaluation.json", f"{E}/manifest.json", "规则求值"),
     "rules_expanded": (f"{E}/rules-expanded.json", f"{E}/manifest.json", "规则展开"),
     "counter_graph": (f"{D}/counter-graph.json", f"{D}/manifest.json", "候选克制关系"),

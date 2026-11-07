@@ -13,4 +13,6 @@ python knowledge/mechanics/reviews/traits-check-001/build_page.py
 python knowledge/mechanics/reviews/traits-check-001/export_verdicts.py <JSON目录> <输出.jsonl>
 ```
 
+- 2026-11-07第一轮：49项，对44、错3、不确定2（`verdicts-2026-11-07.jsonl`），按U118调整。之后重建页面时沿用同一批32个英雄（`build_sample.py`读已有`sample.json`），已标结果按项目编号保留。
+
 标“错”的项按以前的办法处理：助手查原因（事实、映射还是规则），用户裁定，出新版本。

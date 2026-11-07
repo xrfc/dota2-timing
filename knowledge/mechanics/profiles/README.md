@@ -2,7 +2,8 @@
 
 全部由脚本生成，不手填，当前版本见下。`?`表示只有AI一致，用户尚未确认。
 
-- `derived-v13/`（当前，草稿，U117）：由`scripts/build_mechanics_derived_v13.py`从事实v22和规则v12生成；虚妄之诺加了免死，新增R24（淘汰之刃克制免死）。
+- `derived-v14/`（当前，草稿，U118）：由`scripts/build_mechanics_derived_v14.py`从事实v23和特性映射v5生成；神谕者加入魔法爆发，狼人不再算自身闪避。
+- `derived-v13/`（已被v14取代，U117）：由`scripts/build_mechanics_derived_v13.py`从事实v22和规则v12生成；虚妄之诺加了免死，新增R24（淘汰之刃克制免死）。
 - `derived-v12/`（已被v13取代，U114）：由`scripts/build_mechanics_derived_v12.py`从事实v21生成；只有17行治疗事实的依据变为用户确认，关联边不变。
 - `derived-v11/`（已被v12取代，U113）：由`scripts/build_mechanics_derived_v11.py`从事实v20生成；内容和v10相同，只换来源版本。
 - `derived-v10/`（已被v11取代）：由`scripts/build_mechanics_derived_v10.py`生成；在v9基础上，装备档案的每条关联保留逐个技能的生效条件（PR #17复核）。英雄档案、克制关系图、英雄特性和v9相同。
