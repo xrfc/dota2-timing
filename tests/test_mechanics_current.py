@@ -1,3 +1,4 @@
+import hashlib
 import json
 import re
 import shutil
@@ -55,6 +56,9 @@ def _copy(tmp_path):
                 target = tmp_path / entry[key]
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy(ROOT / entry[key], target)
+    (tmp_path / "knowledge/superseded.json").write_text(
+        (ROOT / "knowledge/superseded.json").read_text()
+    )
     (tmp_path / "knowledge/mechanics/current.json").write_text((MECH / "current.json").read_text())
     return entries
 
@@ -80,3 +84,18 @@ def test_output_must_match_its_build_manifest(tmp_path):
         load_current(tmp_path)
     with pytest.raises(KeyError):
         read_current("nope", ROOT)
+
+
+def test_mixed_versions_are_refused(tmp_path):
+    """current.json pointing at mapping v5 while the derived layer was built from v6."""
+    _copy(tmp_path)
+    old = "knowledge/hero-traits/trait-mapping-v5.json"
+    target = tmp_path / old
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy(ROOT / old, target)
+    current = json.loads((tmp_path / "knowledge/mechanics/current.json").read_text())
+    current["entries"]["trait_mapping"]["path"] = old
+    current["entries"]["trait_mapping"]["sha256"] = hashlib.sha256(target.read_bytes()).hexdigest()
+    (tmp_path / "knowledge/mechanics/current.json").write_text(json.dumps(current))
+    with pytest.raises(ValueError, match="built from"):
+        load_current(tmp_path)

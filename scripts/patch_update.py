@@ -107,9 +107,15 @@ def game_diff(old_snapshot, new_snapshot):
     return {"schema": "game-files-diff/1", "changes": changes}
 
 
-def _changed_subjects(hero_diff, item_diff_doc, game_diff_doc):
-    """subject -> list of reasons, from every diff given."""
-    reasons = {}
+def _changed_subjects(hero_diff, item_diff_doc, game_diff_doc, hero_abilities=None):
+    """subject -> list of reasons, plus hero-level changes that need a person.
+
+    A hero-level change (facets, talents, a removed hero) is expanded to every ability of
+    that hero in the registry, keeping the hero-level reason (PR #17 review). A hero the
+    registry does not know (a new hero) cannot be expanded and goes to manual review.
+    """
+    reasons, manual = {}, []
+    hero_abilities = hero_abilities or {}
 
     def add(subject, reason):
         reasons.setdefault(subject, []).append(reason)
@@ -120,14 +126,21 @@ def _changed_subjects(hero_diff, item_diff_doc, game_diff_doc):
                 fields = change.get("text_fields", []) + change.get("other_fields", [])
                 add(change["ability"], f"herodata/{language}: {change['change']} {fields}")
             else:
-                add(change["hero"], f"herodata/{language}: {change['change']}")
+                fields = change.get("fields", [])
+                reason = f"herodata/{language}: hero-level {change['change']} {fields}"
+                abilities = hero_abilities.get(change.get("hero_id"))
+                if abilities and change["change"] != "hero_added":
+                    for ability in abilities:
+                        add(ability, reason)
+                else:
+                    manual.append({"hero": change["hero"], "reason": reason})
     for change in (item_diff_doc or {}).get("changes", []):
         add(change["subject"], f"itemdata: {change['change']} {change.get('fields', [])}")
     for change in (game_diff_doc or {}).get("changes", []):
         name = change["block"]
         subject = name[5:] if name.startswith("item_") else name
         add(subject, f"game files: {change['change']} {change.get('keys', [])}")
-    return reasons
+    return reasons, manual
 
 
 def impact(hero_diff, item_diff_doc=None, game_diff_doc=None, root=ROOT):
@@ -136,7 +149,9 @@ def impact(hero_diff, item_diff_doc=None, game_diff_doc=None, root=ROOT):
     facts = read_current("facts", root)
     evaluation = read_current("rules_evaluation", root)
     graph = read_current("counter_graph", root)
-    reasons = _changed_subjects(hero_diff, item_diff_doc, game_diff_doc)
+    registry = json.loads((root / REGISTRY).read_text(encoding="utf-8"))["heroes"]
+    hero_abilities = {h["hero_id"]: [a["name"] for a in h["abilities"]] for h in registry}
+    reasons, manual = _changed_subjects(hero_diff, item_diff_doc, game_diff_doc, hero_abilities)
     known = {row["subject"] for row in facts["rows"]}
     known |= {entry["subject"] for entry in facts["numeric_upgrades"]}
     rows = [
@@ -168,6 +183,7 @@ def impact(hero_diff, item_diff_doc=None, game_diff_doc=None, root=ROOT):
         "note_zh": "需要重新复核的范围；不是判断结果",
         "changed_subjects": {s: reasons[s] for s in sorted(reasons)},
         "changed_but_not_in_facts": sorted(s for s in reasons if s not in known),
+        "manual_review": manual,
         "fact_rows_to_recheck": rows,
         "numeric_upgrades_to_recheck": numeric,
         "rules_touched": rules,
