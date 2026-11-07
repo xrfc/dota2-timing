@@ -6,9 +6,9 @@
 |---|---|---|
 | 1 事实层：官方原始枚举的含义 | `enums-v1.json` | 已经用户确认（U30，MK-T2完成） |
 | 1 事实层：机制词表 | `vocabulary-v13.json`（v1–v12保留） | 83项，定义来自用户决定，措辞由助手整理 |
-| 1 事实层：复核后事实 | `extractions/v20/`（v1–v19保留） | MK-T3已结束（U67），`basis`标明依据 |
-| 2 机制规则层：机制交互与克制 | `rules-v11.json`，结果在`extractions/v20/rules-evaluation.json` | 23条（U73结束T4，U94拆出R21，U97加R22，U100拆出R23），第8、12、13、15条的细节到T5 |
-| 3 推导层：英雄/装备机制档案、克制图、英雄特性v3 | `profiles/derived-v11/` | 草稿；U5抽查已结束，R8、R15等B1数据 |
+| 1 事实层：复核后事实 | `extractions/v21/`（v1–v20保留） | MK-T3已结束（U67），`basis`标明依据 |
+| 2 机制规则层：机制交互与克制 | `rules-v11.json`，结果在`extractions/v21/rules-evaluation.json` | 23条（U73结束T4，U94拆出R21，U97加R22，U100拆出R23），第8、12、13、15条的细节到T5 |
+| 3 推导层：英雄/装备机制档案、克制图、英雄特性v3 | `profiles/derived-v12/` | 草稿；U5抽查已结束，R8、R15等B1数据 |
 
 - 读取一律用`dota_items.data.mechanics.load_enums(doc, registry_heroes)`与`load_vocabulary(doc, enums)`：每个例子技能必须存在且取值一致；登记表中出现的取值必须全部有解释，补丁更新出现新取值时直接报错。
 - 修改须记决策并升版本（v2…），旧版本不覆盖。
@@ -28,9 +28,9 @@
 ## 当前数据流（2026-11-06，U92–U113）
 
 ```
-来源快照（Valve说明、游戏文件） → 候选 → AI审查＋用户裁定 → 事实v20
-事实v20 ＋ 词表v13 ＋ 规则v11 → rules-evaluation（来源集合、目标集合）
-                                → 派生层derived-v11（档案、克制关系候选）
+来源快照（Valve说明、游戏文件） → 候选 → AI审查＋用户裁定 → 事实v21
+事实v21 ＋ 词表v13 ＋ 规则v11 → rules-evaluation（来源集合、目标集合）
+                                → 派生层derived-v12（档案、克制关系候选）
 ```
 
 读这些数据时要知道：
@@ -39,7 +39,7 @@
 - **`user_feedback`**：抽查的标记和原话。行已不存在的反馈放在`unattached_feedback`，不丢。
 - **`condition_notes`**：AI写的条件说明，只供阅读，不能用于自动推理。`condition_review=none`只表示没有说明，不代表无条件。结构化的只有`condition`（基础、A杖、魔晶、装备）。
 - **克制关系是候选**：`rules-evaluation`和`counter-graph`只算集合，没有逐对核对条件和例外，`semantics`字段写明了这一点。每条边带`relation`和`status`（`candidate`或`pending`）。程序读边要用`data.mechanics_graph_v2.usable_edges`，查英雄之间的关系用`hero_relations`，两者默认不含待定规则，可读当前的`/3`图谱（带条件）和旧的`/2`图谱；`tests/test_mechanics_derived_v10.py`用当前图谱测试这两个接口。旧函数`mechanics_graph.edges_between`不带状态，目前只有旧测试在用，新代码不要用。
-- **按英雄定目标**：规则v11的`target_heroes`（R12）列出例外英雄，`data.mechanics_rules_v8.expand_rules`展开成目标技能，展开结果在`extractions/v20/rules-expanded.json`。有条件的例外（如有A杖时）仍算目标，边上带`exception`。
+- **按英雄定目标**：规则v11的`target_heroes`（R12）列出例外英雄，`data.mechanics_rules_v8.expand_rules`展开成目标技能，展开结果在`extractions/v21/rules-expanded.json`。有条件的例外（如有A杖时）仍算目标，边上带`exception`。
 - **反馈的身份**（U101）：每条反馈有`feedback_id`（由内容算出，重复导入不变），并记下反馈时这行声称什么（`claim`）。纠正记录用`resolves`写明解决哪几条反馈，见`reviews/feedback-resolutions-001.json`。没被写明解决的“错”一直是`disputed_by_user`；事实内容变了，旧的“对”不再算确认。每行的`feedback_status`写明原因。
 - **装备档案的条件**（PR #17复核）：derived-v10起，装备档案每条关联带`target_conditions`（每个目标技能的条件）、`conditional_targets`和装备自己的`own_conditions`，页面列出“有条件的目标”，如林肯的巨浪“有A杖时不成立”（`data.mechanics_profiles_v4`）。
 - **档案**（U101）：`hero-profiles.json`、`item-profiles.json`顶层写明`status=draft`、`relations=candidate`、`relation_verified=false`和来源版本。每条关联在`candidate_relations`里带`rule`、`relation`、`status`、`pending`、`not_evaluated`、对象编号；`own_facts_confirmed`只说事实，不说关联成立。页面标题改为“候选机制关联”，标签由`status`生成，不读中文规则名。
@@ -57,9 +57,9 @@
 
 - **被取代的旧知识**（MK-T6f）：登记在`knowledge/superseded.json`——各版本族里比`current.json`旧的版本自动算被取代，另有英雄特性v1、阵容规则包7.41f-v1、早期档案目录逐项列出（含谁还在读、为什么被取代）。`data.knowledge_superseded.superseded_status(路径)`可查；测试保证当前入口不会指向被取代的文件。旧版本目录的README顶部加了提示，冻结文件本身不改。
 
-MK-T6还要做：文档与学习笔记收尾（并出事实下一版吸收U114）。
+MK-T6已全部完成（T6a–T6g）；事实v21吸收了U114。
 
-**当前入口：`current.json`（U113），即`extractions/v20/`、`vocabulary-v13.json`和`rules-v11.json`；派生层`profiles/derived-v11/`（草稿）。补漏见`reviews/full-audit-001/`、`full-audit-002/`，第1–8轮复查见`full-audit-003/`，控制分类重读见`full-audit-004/`，对照见`reviews/recall-check-002/`。**
+**当前入口：`current.json`（U113），即`extractions/v21/`、`vocabulary-v13.json`和`rules-v11.json`；派生层`profiles/derived-v12/`（草稿）。补漏见`reviews/full-audit-001/`、`full-audit-002/`，第1–8轮复查见`full-audit-003/`，控制分类重读见`full-audit-004/`，对照见`reviews/recall-check-002/`。**
 
 “可被破坏”与游戏文件的对照见[破坏对照](reviews/break-check-001/README.md)（U46，U47已裁定）；其他机制见[排查报告](reviews/game-files-audit-001/README.md)（U48）；退出装备标记见`retired-items-v1.json`（U51）。
 

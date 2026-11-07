@@ -1,5 +1,7 @@
 # 复核后事实 v20（U113，MK-T6c）
 
+> **已被取代**（MK-T6f）：这是旧版本，保留用于复现。当前知识见`knowledge/mechanics/current.json`，被取代清单见`knowledge/superseded.json`。
+
 事实行、规则求值和v19完全相同。`numeric_upgrades`（69组“升级只改数值，不记机制”）每组新增`ruling`，写明是谁裁定的：
 
 | 来源 | `ruling.how` | 决定 | 组数 |

@@ -1,5 +1,9 @@
 # 变更记录
 
+## 2026-11-07 MK-T6g：事实v21、派生层v12、学习笔记
+
+- 事实v21：U114的17行（装备“+N生命恢复”记为治疗）依据由`two_ai`改为`user:U114`，判断不变；清单`reviews/v21-inputs-001.json`。派生层v12（关联边不变），`current.json`改指向v21、derived-v12。学习笔记补MK-T6的要点。MK-T6全部完成。
+
 ## 2026-11-07 MK-T6f：标注被取代的旧知识
 
 - 新增`knowledge/superseded.json`和`data.knowledge_superseded`：版本族（词表、规则、事实包、派生层、退出装备、特性映射）里比`current.json`旧的版本自动算被取代；英雄特性v1、阵容规则包7.41f-v1、`profiles/heroes-v1/`、`profiles/sample-2026-11-07/`逐项登记取代者、仍在读的地方和原因。测试保证当前入口不指向被取代文件、每个旧版本都能查到。v1–v19事实包README、英雄特性和阵容规则包README顶部加了提示；冻结文件不改。

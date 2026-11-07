@@ -2,7 +2,8 @@
 
 全部由脚本生成，不手填，当前版本见下。`?`表示只有AI一致，用户尚未确认。
 
-- `derived-v11/`（当前，草稿，U113）：由`scripts/build_mechanics_derived_v11.py`从事实v20生成；内容和v10相同，只换来源版本。
+- `derived-v12/`（当前，草稿，U114）：由`scripts/build_mechanics_derived_v12.py`从事实v21生成；只有17行治疗事实的依据变为用户确认，关联边不变。
+- `derived-v11/`（已被v12取代，U113）：由`scripts/build_mechanics_derived_v11.py`从事实v20生成；内容和v10相同，只换来源版本。
 - `derived-v10/`（已被v11取代）：由`scripts/build_mechanics_derived_v10.py`生成；在v9基础上，装备档案的每条关联保留逐个技能的生效条件（PR #17复核）。英雄档案、克制关系图、英雄特性和v9相同。
 - `derived-v9/`（已被v10取代，U113）：由`scripts/build_mechanics_derived_v9.py`从事实v19和规则v11生成；内容和v8相同，只换来源版本（规则字段改为严格检查）。
 - `derived-v8/`（已被v9取代）：由`scripts/build_mechanics_derived_v8.py`从事实v18和规则v10生成；英雄特性改为`hero-traits-v3.json`（数量，见`knowledge/hero-traits/README.md`）；R12例外增加后共3,575条关联。
