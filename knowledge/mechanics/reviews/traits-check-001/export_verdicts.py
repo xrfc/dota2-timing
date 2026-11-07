@@ -16,6 +16,7 @@ def main():
     source, target = sys.argv[1], Path(sys.argv[2])
     sample = json.loads((OUT / "sample.json").read_text(encoding="utf-8"))["rows"]
     known = {t["id"] for h in sample for t in h["traits"]} | {h["rel_id"] for h in sample}
+    known |= {a["id"] for h in sample for a in h["abilities"]}
     rows = []
     for path in sorted(glob.glob(os.path.join(source, "*.json"))):
         item = os.path.basename(path).removesuffix(".json")

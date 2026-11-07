@@ -109,6 +109,22 @@ def main():
                     "abilities": _evidence(trait, hero_id),
                 }
             )
+        abilities = [
+            {
+                "id": f"a-{ability['subject']}",
+                "name": ability["name_zh"],
+                "dispellable": ability.get("dispellable"),
+                "mechanisms": [
+                    {
+                        "zh": m["zh"],
+                        "condition": m.get("condition") or "",
+                        "confirmed": m.get("confirmed", False),
+                    }
+                    for m in ability["mechanisms"]
+                ],
+            }
+            for ability in profiles[hero_id]["abilities"]
+        ]
         relations = profiles[hero_id]["candidate_relations"]
         rows.append(
             {
@@ -116,6 +132,7 @@ def main():
                 "name": names[hero_id],
                 "why": why[hero_id],
                 "traits": hero_traits,
+                "abilities": abilities,
                 "rel_id": f"r-{hero_id}",
                 "targeted_by": [
                     {

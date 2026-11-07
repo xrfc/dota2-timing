@@ -70,7 +70,7 @@ details.zero summary{cursor:pointer;color:var(--muted);font-size:.9rem}
   </nav>
   <main>
     <h1>英雄特性抽查</h1>
-    <p class="lede">从127个英雄里抽了32个（约1/4）。每个英雄看两部分：特性数量是否符合你的预期，以及“可能克制它的”候选关联是否合理。每项点“对 / 错 / 不确定”，错和不确定请写一句原因。没点的不算看过。</p>
+    <p class="lede">从127个英雄里抽了32个（约1/4）。每个英雄看三部分：特性数量是否符合你的预期、每个技能记的机制有没有错或漏（如英雄特有的免死），以及“可能克制它的”候选关联是否合理。每项点“对 / 错 / 不确定”，错和不确定请写一句原因。没点的不算看过。</p>
     <p class="help">“基础”只算基础版和装备就有的技能；“含升级”再加上只有A杖或魔晶才有的技能。技能后面的橙字是生效条件，“未确认”表示这条事实目前只有AI一致。</p>
     <div class="status"><span>已标 <b id="done">0</b> / <b id="total">0</b></span><span>错 <b id="nwrong">0</b></span><span>不确定 <b id="nunsure">0</b></span><span id="save">正在连接保存服务…</span></div>
     <div id="list"></div>
@@ -81,7 +81,7 @@ const DATA = __DATA__;
 const $=id=>document.getElementById(id);
 const verdicts=new Map();let db=null,pending=0,writing=Promise.resolve();
 const items=[];
-for(const h of DATA.rows){for(const t of h.traits)items.push({id:t.id,hero:h.hero_id});items.push({id:h.rel_id,hero:h.hero_id})}
+for(const h of DATA.rows){for(const t of h.traits)items.push({id:t.id,hero:h.hero_id});for(const a of h.abilities)items.push({id:a.id,hero:h.hero_id});items.push({id:h.rel_id,hero:h.hero_id})}
 $("total").textContent=items.length;
 function stats(){
   let done=0,w=0,u=0;
@@ -133,6 +133,26 @@ function traitRow(t){
   body.appendChild(acts(t.id,row));
   row.append(name,c,body);return row;
 }
+function abilityRow(a){
+  const row=document.createElement("div");row.className="row";
+  const name=document.createElement("div");name.className="tname";name.textContent=a.name;
+  if(a.dispellable){const s=document.createElement("span");s.className="tsrc";s.textContent=a.dispellable;name.appendChild(s)}
+  const c=document.createElement("div");c.className="count";c.textContent=a.mechanisms.length;
+  const sm=document.createElement("small");sm.textContent="条机制";c.appendChild(sm);
+  const body=document.createElement("div");body.className="body";
+  if(a.mechanisms.length){
+    const ul=document.createElement("ul");ul.className="abil";
+    for(const m of a.mechanisms){
+      const li=document.createElement("li");li.textContent=m.zh;
+      if(!m.confirmed){const q=document.createElement("span");q.className="q";q.textContent="(未确认)";li.appendChild(q)}
+      if(m.condition){const s=document.createElement("span");s.className="cond";s.textContent=m.condition;li.appendChild(s)}
+      ul.appendChild(li);
+    }
+    body.appendChild(ul);
+  }else{const p=document.createElement("p");p.className="none";p.textContent="没有记任何机制";body.appendChild(p)}
+  body.appendChild(acts(a.id,row));
+  row.append(name,c,body);return row;
+}
 function relBlock(h){
   const box=document.createElement("div");box.className="rel";
   const intro=document.createElement("p");intro.className="help";intro.textContent="下面是规则算出的候选：哪些装备或技能可能针对它的哪些技能（不是已验证的关联）。整体看是否合理。";box.appendChild(intro);
@@ -166,6 +186,8 @@ function render(){
     const sum=document.createElement("summary");zero.appendChild(sum);let nz=0;
     for(const t of h.traits){if(t.up>0)sec.appendChild(traitRow(t));else{zero.appendChild(traitRow(t));nz++}}
     sum.textContent="为0的特性 "+nz+" 项（展开看看有没有漏）";if(nz)sec.appendChild(zero);
+    const s3=document.createElement("div");s3.className="sec";s3.textContent="全部技能机制（漏了什么请写在原因里）";sec.appendChild(s3);
+    for(const a of h.abilities)sec.appendChild(abilityRow(a));
     const s2=document.createElement("div");s2.className="sec";s2.textContent="可能克制它的（候选关联）";sec.appendChild(s2);
     sec.appendChild(relBlock(h));
     list.appendChild(sec);
