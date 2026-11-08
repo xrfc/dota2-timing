@@ -280,6 +280,7 @@ SCRIPTS = {
     "build_mechanics_derived_v17": _S,
     "collect_build_survey": _S,
     "check_patch_knowledge": _S,
+    "collect_demos": _S,
     "patch_update": _S,
     "build_mechanics_current": _S,
     "build_mechanics_profiles": _S,
