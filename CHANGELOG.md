@@ -1,5 +1,10 @@
 # 变更记录
 
+## 2026-11-08 U124第③步：当前状态文档、架构统计自动生成
+
+- 新增`docs/current-status.md`：已完成（MK、M2b、路线B定义、demo采集）、正在进行（采集、M2b-T10评审）、接下来按顺序做的事；`docs/README.md`、`README.md`、计划§7、`AGENTS.md`都指向它，旧`project-status.md`标为已被取代。
+- `docs/architecture.md`§2.2线统计表改为由`architecture.track_table()`生成（`scripts/architecture_stats.py --write`），测试保证文档与登记表一致；旧表（11-01的数字）已过时。
+
 ## 2026-11-08 U128、U129：多英雄demo采集
 
 - 采集脚本：每场后打印进度行（`tail -f data/demos-2026-11/log.txt`实时看）；网络错误等待后重试，连续8次才停（此前一次代理断开使旧版本在07:42自行停止，已重启）。试采目录的解析中间文件经用户同意删除，完整解析结果先压缩保留。

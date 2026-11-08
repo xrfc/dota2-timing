@@ -281,6 +281,7 @@ SCRIPTS = {
     "collect_build_survey": _S,
     "check_patch_knowledge": _S,
     "collect_demos": _S,
+    "architecture_stats": _S,
     "patch_update": _S,
     "build_mechanics_current": _S,
     "build_mechanics_profiles": _S,
@@ -377,3 +378,15 @@ def track_of(module):
 
 def modules_in(track):
     return sorted(name for name, (owner, _) in MODULES.items() if owner == track)
+
+
+def track_table():
+    """Markdown rows for docs/architecture.md §2.2, computed from this registry (U124 step 3)."""
+    names = {SHARED: "共享底座", RECOMMEND: "路线A 推荐", AWARENESS: "路线B 意识决策"}
+    lines = ["| 线 | 名称 | 模块数（活跃/仅维护） | 脚本数 |", "|---|---|---|---|"]
+    for track in (SHARED, RECOMMEND, AWARENESS):
+        active = sum(1 for t, s in MODULES.values() if t == track and s == "active")
+        kept = sum(1 for t, s in MODULES.values() if t == track and s == "maintenance")
+        scripts = sum(1 for t in SCRIPTS.values() if t == track)
+        lines.append(f"| `{track}` | {names[track]} | {active} / {kept} | {scripts} |")
+    return "\n".join(lines)

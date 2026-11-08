@@ -1,5 +1,7 @@
 # Dota 2 离线分析与机器学习实践
 
+当前状态：[docs/current-status.md](docs/current-status.md)（做完了什么、正在跑什么、接下来做什么）。
+
 只做**赛前准备**和**赛后复盘**，不做实战实时辅助。这个项目也是用户学习机器学习的实践：数据、标签、划分、模型和指标的关键选择都写在文档里。
 
 **入口**：[开发计划](docs/development-plan-2026-10-30.md)（唯一进度：§7）· [架构](docs/architecture.md) · [决策记录](docs/decisions/README.md) · [文档索引](docs/README.md) · [变更记录](CHANGELOG.md)
