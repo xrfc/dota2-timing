@@ -26,6 +26,10 @@ PYTHONPATH=src .venv/bin/python scripts/collect_demos.py report --root data/demo
 - 续跑：再运行同一条启动命令。已经处理过的比赛有回执（`receipts/`），不会重复；下载了一半的会重新下载，解析了一半的会重新解析。
 - 同一个目录同时只能有一个采集程序；和项目里其他OpenDota采集脚本也不能同时跑（共用额度）。
 
+## 长比赛和失败重试
+
+长比赛解析出的文件会超过解析器“清洗”步骤256MB的输入上限。采集只需要完整的解析结果，所以只在报错正是这个上限时，保留已经生成的完整文件，回执里记`parse_mode: normalized_only_over_256mib`；其他解析错误仍记为`parse_failed`，报错内容含解析器输出。之前解析失败的比赛可以重试（demo不重新下载）：启动命令加`--retry-failed`。
+
 ## 它自己会停的情况
 
 | 情况 | 行为 |

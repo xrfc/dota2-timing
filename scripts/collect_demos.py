@@ -57,6 +57,9 @@ MAX_DEMO_BYTES = 512 * 1024**2
 DISK_RESERVE = 30 * 1024**3
 IDLE_SECONDS = 1800
 OK = "parsed"
+# Long games give a normalized file above the cleaning step's 256 MiB input limit. The full
+# normalized file is already written by then; the collector keeps it and skips cleaning.
+SIZE_LIMIT_ERROR = "Normalized JSON exceeds 256 MiB input limit"
 
 
 def now():
@@ -202,12 +205,23 @@ def parse(demo, workspace, timeout, runner=subprocess.run):
         text=True,
         check=False,
     )
-    if result.returncode != 0:
-        raise ValueError(f"Parser failed: {(result.stderr or '')[-300:]}")
     found = sorted(workspace.glob("cache/matches/*/normalized.json"))
+    output = (result.stdout or "") + (result.stderr or "")
+    if result.returncode != 0:
+        only_size = SIZE_LIMIT_ERROR in output and output.count('"status": "failed"') == 1
+        if not (only_size and len(found) == 1 and _complete_json(found[0])):
+            raise ValueError(f"Parser failed: {output[-400:]}")
+        return found[0], "normalized_only_over_256mib"
     if len(found) != 1:
         raise ValueError(f"Expected one parsed file, found {len(found)}")
-    return found[0]
+    return found[0], "prepared"
+
+
+def _complete_json(path):
+    """Cheap completeness check for a large JSON object: it ends with a closing brace."""
+    with path.open("rb") as stream:
+        stream.seek(max(0, path.stat().st_size - 64))
+        return stream.read().rstrip().endswith(b"}")
 
 
 def compress(source, target):
@@ -260,10 +274,11 @@ def process(root, row, api, valve, patch_start, args, runner=subprocess.run):
         shutil.rmtree(workspace)
     started = time.time()
     try:
-        parsed = parse(demo, workspace, args.parse_timeout, runner)
+        parsed, parse_mode = parse(demo, workspace, args.parse_timeout, runner)
     except (ValueError, subprocess.TimeoutExpired) as error:
         return {**receipt, "status": "parse_failed", "error": str(error)[:300]}
     receipt["parse_seconds"] = round(time.time() - started, 1)
+    receipt["parse_mode"] = parse_mode
     target = root / "parsed" / f"{mid}.normalized.json.gz"
     target.parent.mkdir(parents=True, exist_ok=True)
     receipt["parsed_sha256"] = compress(parsed, target)
@@ -315,6 +330,7 @@ def run(args):
         "max_age_hours": args.max_age_hours,
         "min_age_hours": args.min_age_hours,
         "keep_workspace": args.keep_workspace,
+        "retry_failed": args.retry_failed,
         "training_allowed": False,
         "script_sha256": sha256(__file__),
     }
@@ -335,6 +351,8 @@ def run(args):
     try:
         patch, patch_start = latest_patch_start(plain)
         log(root, f"patch {patch}; target {args.target} parsed matches")
+        if args.retry_failed:
+            retry(root, api, plain, patch_start, args)
         while True:
             done = receipts(root)
             parsed = sum(r["status"] == OK for r in done.values())
@@ -381,6 +399,25 @@ def run(args):
         api.close()
         plain.close()
         write_new(root / "summary.json", summary(root))
+
+
+def retry(root, api, plain, patch_start, args, runner=subprocess.run):
+    """Process parse failures again; their metadata and demo are reused, not downloaded."""
+    for mid, old in sorted(receipts(root).items()):
+        if old["status"] != "parse_failed":
+            continue
+        receipt = process(
+            root,
+            {"match_id": mid, "avg_rank_tier": old.get("avg_rank_tier")},
+            api,
+            plain,
+            patch_start,
+            args,
+            runner,
+        )
+        receipt["retried_from"] = old.get("error", "")[:200]
+        write_new(root / "receipts" / f"{mid}.json", receipt)
+        log(root, f"{mid} retried: {receipt['status']}")
 
 
 def wait_out(root, budget, pause, args):
@@ -433,6 +470,7 @@ def main():
     r.add_argument("--parse-timeout", type=int, default=900)
     r.add_argument("--keep-workspace", action="store_true")
     r.add_argument("--once", action="store_true", help="one discovery round, no waiting")
+    r.add_argument("--retry-failed", action="store_true", help="parse earlier failures again")
     p = sub.add_parser("report", help="print progress")
     p.add_argument("--root", type=Path, required=True)
     args = parser.parse_args()

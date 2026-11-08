@@ -149,3 +149,49 @@ def test_discovery_query_has_no_hero_filter_unless_asked():
     assert "ANY(radiant_team)" not in m.discovery_sql(0, 1, 100, [])
     assert "91=ANY(radiant_team)" in m.discovery_sql(0, 1, 100, [91])
     assert "avg_rank_tier>=60" in m.discovery_sql(0, 1, 100, [])
+
+
+def test_long_game_over_the_cleaning_limit_keeps_the_full_parse(tmp_path):
+    m = module()
+
+    def handler(request):
+        if request.url.host == "api.opendota.com":
+            return httpx.Response(200, json=meta(11))
+        return httpx.Response(200, content=b"demo")
+
+    def over_limit(args, **kwargs):
+        fake_runner(args)
+        out = '{"results": [{"status": "failed", "error": "' + m.SIZE_LIMIT_ERROR + '"}]}'
+        return subprocess.CompletedProcess(args, 1, out, "")
+
+    def other_failure(args, **kwargs):
+        fake_runner(args)
+        return subprocess.CompletedProcess(args, 1, '{"status": "failed", "error": "boom"}', "")
+
+    api, valve = clients(handler)
+    receipt = m.process(tmp_path, {"match_id": 11}, api, valve, 0, ARGS, over_limit)
+    assert receipt["status"] == "parsed"
+    assert receipt["parse_mode"] == "normalized_only_over_256mib"
+    receipt = m.process(tmp_path / "b", {"match_id": 11}, api, valve, 0, ARGS, other_failure)
+    assert receipt["status"] == "parse_failed" and "boom" in receipt["error"]
+
+
+def test_retry_reprocesses_parse_failures_without_downloading(tmp_path):
+    m = module()
+    (tmp_path / "receipts").mkdir()
+    (tmp_path / "receipts/12.json").write_text(
+        json.dumps({"match_id": 12, "status": "parse_failed", "error": "old"})
+    )
+    (tmp_path / "meta").mkdir()
+    (tmp_path / "meta/12.json").write_text(json.dumps(meta(12)))
+    (tmp_path / "demos").mkdir()
+    (tmp_path / "demos/12.dem.bz2").write_bytes(b"demo")
+
+    def handler(request):
+        raise AssertionError("no network request expected")
+
+    api, valve = clients(handler)
+    args = SimpleNamespace(parse_timeout=10, keep_workspace=False)
+    m.retry(tmp_path, api, valve, 0, args, fake_runner)
+    receipt = json.loads((tmp_path / "receipts/12.json").read_text())
+    assert receipt["status"] == "parsed" and receipt["retried_from"] == "old"
