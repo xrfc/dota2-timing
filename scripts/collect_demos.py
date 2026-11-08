@@ -369,6 +369,12 @@ def run(args):
             except BudgetPaused as pause:
                 wait_out(root, budget, pause, args)
                 continue
+            except (httpx.HTTPError, OSError, ValueError) as error:
+                failures += 1
+                log(root, f"discovery error {type(error).__name__}: {error}")
+                if not back_off(root, failures, args):
+                    return
+                continue
             if not rows:
                 if args.once:
                     break
@@ -386,13 +392,13 @@ def run(args):
                 except (httpx.HTTPError, OSError, ValueError) as error:
                     failures += 1
                     log(root, f"{row['match_id']} error {type(error).__name__}: {error}")
-                    if failures >= 3:
-                        log(root, "stopping after 3 errors in a row; check log.txt and rerun")
+                    if not back_off(root, failures, args):
                         return
-                    continue
+                    break  # rediscover after waiting; this match was not marked done
                 failures = 0
                 write_new(root / "receipts" / f"{row['match_id']}.json", receipt)
                 log(root, f"{row['match_id']} {receipt['status']} {receipt.get('reasons', '')}")
+                log(root, progress(root, args.target))
             if args.once:
                 break
     finally:
@@ -420,6 +426,20 @@ def retry(root, api, plain, patch_start, args, runner=subprocess.run):
         log(root, f"{mid} retried: {receipt['status']}")
 
 
+MAX_FAILURES = 8
+
+
+def back_off(root, failures, args, sleep=time.sleep):
+    """Wait 1, 2, 4, 8 ... (at most 30) minutes after network errors; False means stop."""
+    if failures >= MAX_FAILURES or args.once:
+        log(root, f"stopping after {failures} errors in a row; check log.txt and rerun")
+        return False
+    minutes = min(30, 2 ** (failures - 1))
+    log(root, f"network trouble ({failures} in a row); waiting {minutes} minutes, then retrying")
+    sleep(minutes * 60)
+    return True
+
+
 def wait_out(root, budget, pause, args):
     until = budget.state.get("blocked_until", time.time() + 3600)
     if args.once:
@@ -427,6 +447,20 @@ def wait_out(root, budget, pause, args):
     minutes = max(1, int((until - time.time()) / 60))
     log(root, f"OpenDota budget paused ({pause}); sleeping {minutes} minutes")
     time.sleep(max(60, until - time.time()))
+
+
+def progress(root, target):
+    """One line: parsed so far, skips, average time per match and the time still needed."""
+    done = list(receipts(root).values())
+    parsed = [r for r in done if r["status"] == OK]
+    secs = [r.get("download_seconds", 0) + r.get("parse_seconds", 0) for r in parsed[-50:]]
+    each = sum(secs) / len(secs) if secs else 0
+    left = max(0, target - len(parsed)) * each / 3600
+    return (
+        f"进度 {len(parsed)}/{target}（跳过 {sum(r['status'] == 'skipped' for r in done)}，"
+        f"失败 {sum(r['status'] == 'parse_failed' for r in done)}）；"
+        f"每场约 {each:.0f} 秒，预计还要 {left:.1f} 小时"
+    )
 
 
 def summary(root):

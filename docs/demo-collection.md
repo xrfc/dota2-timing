@@ -12,7 +12,17 @@ nohup env -u http_proxy -u https_proxy PYTHONPATH=src .venv/bin/python scripts/c
 
 需要本机代理`127.0.0.1:7890`开着（OpenDota和Valve都走它；不走代理加`--route direct`）。
 
-## 看进度
+## 实时看进度
+
+后台运行时，每处理一场，`log.txt`都会多两行：这场的结果，以及一行进度（已解析/目标、跳过和失败数、每场平均秒数、预计还要多少小时）。实时看：
+
+```bash
+tail -f data/demos-2026-11/log.txt
+```
+
+按`Ctrl+C`退出查看，采集不受影响。也可以不放后台、直接前台运行（同一条命令去掉`nohup`和末尾的`> ... &`），进度直接打在屏幕上，但关掉终端就会停；同一目录同时只能有一个采集程序，前台运行前要先停掉后台那个。
+
+## 看汇总
 
 ```bash
 PYTHONPATH=src .venv/bin/python scripts/collect_demos.py report --root data/demos-2026-11
@@ -36,7 +46,7 @@ PYTHONPATH=src .venv/bin/python scripts/collect_demos.py report --root data/demo
 |---|---|
 | 达到目标（默认1500场解析成功） | 停止 |
 | 磁盘剩余不到30GB | 停止 |
-| 连续3次下载或网络错误 | 停止，看`log.txt`后续跑 |
+| 网络出错（如代理断开） | 等1、2、4、8……分钟（最长30分钟）再试；连续8次仍失败才停止，看`log.txt`后续跑 |
 | OpenDota当天额度用完（自己限1,900次/天，遇到429停24小时） | 等到额度恢复后自动继续 |
 | 暂时没有新对局 | 等30分钟再找 |
 

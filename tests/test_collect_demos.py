@@ -195,3 +195,27 @@ def test_retry_reprocesses_parse_failures_without_downloading(tmp_path):
     m.retry(tmp_path, api, valve, 0, args, fake_runner)
     receipt = json.loads((tmp_path / "receipts/12.json").read_text())
     assert receipt["status"] == "parsed" and receipt["retried_from"] == "old"
+
+
+def test_progress_line(tmp_path):
+    m = module()
+    (tmp_path / "receipts").mkdir()
+    (tmp_path / "receipts/1.json").write_text(
+        json.dumps({"status": "parsed", "download_seconds": 10, "parse_seconds": 110})
+    )
+    (tmp_path / "receipts/2.json").write_text(json.dumps({"status": "skipped"}))
+    line = m.progress(tmp_path, 31)
+    assert "进度 1/31" in line and "跳过 1" in line and "每场约 120 秒" in line
+    assert "预计还要 1.0 小时" in line
+
+
+def test_back_off_waits_longer_then_stops(tmp_path):
+    m = module()
+    waits = []
+    args = SimpleNamespace(once=False)
+    assert m.back_off(tmp_path, 1, args, waits.append)
+    assert m.back_off(tmp_path, 4, args, waits.append)
+    assert m.back_off(tmp_path, 7, args, waits.append)
+    assert waits == [60, 480, 1800]
+    assert not m.back_off(tmp_path, m.MAX_FAILURES, args, waits.append)
+    assert not m.back_off(tmp_path, 1, SimpleNamespace(once=True), waits.append)
