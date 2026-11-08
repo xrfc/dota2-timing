@@ -15,7 +15,7 @@ from dota_items.modeling import situational_triggers as st
 from dota_items.storage import file_hash
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = "knowledge/situational-items/triggers-v2.json"
+SPEC = "knowledge/situational-items/triggers-v3.json"
 IMPLEMENTATION = (
     "scripts/build_m2b_triggers.py",
     "src/dota_items/modeling/situational_triggers.py",

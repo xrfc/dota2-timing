@@ -6,7 +6,7 @@ from pathlib import Path
 from dota_items.modeling import situational_triggers as st
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = json.loads((ROOT / "knowledge/situational-items/triggers-v2.json").read_text("utf-8"))
+SPEC = json.loads((ROOT / "knowledge/situational-items/triggers-v3.json").read_text("utf-8"))
 
 
 def test_spec_covers_the_six_classes_and_known_items():
@@ -79,3 +79,12 @@ def test_basher_lists_name_real_abilities():
     lists = next(i for i in SPEC["items"] if i["id"] == "basher")["pregame"]["abilities_any"]
     assert 33 in kb.heroes_owning(lists["channel_ultimates"])  # Enigma, Black Hole
     assert 54 in kb.heroes_owning(lists["self_debuff_immunity"])  # Lifestealer, Rage
+
+
+def test_u127_drops_radiance_and_force_staff_from_in_game_triggers():
+    items = {i["id"]: i for i in SPEC["items"]}
+    assert "radiance" not in items["monkey_king_bar"]["ingame_items"]
+    assert "force_staff" not in items["nullifier"]["ingame_items"]
+    assert not st.ingame_fires(items["monkey_king_bar"], {"radiance"})
+    assert not st.ingame_fires(items["nullifier"], {"force_staff"})
+    assert st.ingame_fires(items["nullifier"], {"force_staff", "glimmer_cape"})
