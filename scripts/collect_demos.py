@@ -6,8 +6,8 @@ Start it, leave it running, check progress any time:
     PYTHONPATH=src .venv/bin/python scripts/collect_demos.py report --root data/demos-2026-11
 
 What one match goes through:
-1. Discovery: recent ranked All Pick matches on the current patch, lobby average Ancient or
-   higher (rank tier >= 60), at least 15 minutes, no hero filter (OpenDota explorer).
+1. Discovery: recent ranked All Pick matches on the current patch, lobby average Divine or
+   higher (rank tier >= 70), at least 15 minutes, no hero filter (OpenDota explorer).
 2. Metadata: one OpenDota request (`/api/matches/<id>`), anonymous, through the shared
    rolling budget (1,900 requests a day, 1.5 s apart, 24 h pause after a 429).
 3. Demo: downloaded from Valve's replay server (not counted against OpenDota) and kept.
@@ -50,7 +50,7 @@ BUDGETS = {
     "direct": REPO / "reports/collection-runtime/request-budget.json",
 }
 PROXY = "http://127.0.0.1:7890"
-MIN_RANK, MIN_DURATION, LOBBY, MODE = 60, 900, 7, 22
+MIN_RANK, MIN_DURATION, LOBBY, MODE = 70, 900, 7, 22
 ID_SPAN, ID_RATE_PER_HOUR, PAGE = 1_000_000, 52_000, 100
 REPLAY_HOSTS = ("valve.net", "dota2.com.cn", "steamcontent.com", "valveusercontent.com")
 MAX_DEMO_BYTES = 512 * 1024**2
@@ -94,6 +94,15 @@ def receipts(root):
     for path in (root / "receipts").glob("*.json"):
         out[int(path.stem)] = json.loads(path.read_text(encoding="utf-8"))
     return out
+
+
+def meets_rank(record):
+    rank = record.get("avg_rank_tier")
+    return isinstance(rank, (int, float)) and rank >= MIN_RANK
+
+
+def counts_toward_target(receipt):
+    return receipt["status"] == OK and meets_rank(receipt)
 
 
 # Discovery -------------------------------------------------------------------------------
@@ -243,6 +252,8 @@ def compress(source, target):
 def process(root, row, api, valve, patch_start, args, runner=subprocess.run):
     mid = row["match_id"]
     receipt = {"match_id": mid, "avg_rank_tier": row.get("avg_rank_tier"), "started_at": now()}
+    if not meets_rank(receipt):
+        return {**receipt, "status": "skipped", "reasons": ["rank_below_threshold_or_unknown"]}
     meta_path = root / "meta" / f"{mid}.json"
     if meta_path.exists():  # resumed after an interruption: reuse, do not request again
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
@@ -350,12 +361,16 @@ def run(args):
     failures = 0
     try:
         patch, patch_start = latest_patch_start(plain)
-        log(root, f"patch {patch}; target {args.target} parsed matches")
+        log(
+            root,
+            f"patch {patch}; target {args.target} parsed matches with avg_rank_tier >= {MIN_RANK}",
+        )
         if args.retry_failed:
             retry(root, api, plain, patch_start, args)
+        log(root, progress(root, args.target))
         while True:
             done = receipts(root)
-            parsed = sum(r["status"] == OK for r in done.values())
+            parsed = sum(map(counts_toward_target, done.values()))
             if parsed >= args.target:
                 log(root, f"target reached: {parsed} parsed")
                 break
@@ -382,7 +397,7 @@ def run(args):
                 time.sleep(IDLE_SECONDS)
                 continue
             for row in rows:
-                if sum(r["status"] == OK for r in receipts(root).values()) >= args.target:
+                if parsed >= args.target:
                     break
                 try:
                     receipt = process(root, row, api, plain, patch_start, args)
@@ -397,6 +412,7 @@ def run(args):
                     break  # rediscover after waiting; this match was not marked done
                 failures = 0
                 write_new(root / "receipts" / f"{row['match_id']}.json", receipt)
+                parsed += counts_toward_target(receipt)
                 log(root, f"{row['match_id']} {receipt['status']} {receipt.get('reasons', '')}")
                 log(root, progress(root, args.target))
             if args.once:
@@ -409,8 +425,12 @@ def run(args):
 
 def retry(root, api, plain, patch_start, args, runner=subprocess.run):
     """Process parse failures again; their metadata and demo are reused, not downloaded."""
-    for mid, old in sorted(receipts(root).items()):
-        if old["status"] != "parse_failed":
+    done = receipts(root)
+    parsed = sum(map(counts_toward_target, done.values()))
+    for mid, old in sorted(done.items()):
+        if parsed >= args.target:
+            break
+        if old["status"] != "parse_failed" or not meets_rank(old):
             continue
         receipt = process(
             root,
@@ -423,6 +443,7 @@ def retry(root, api, plain, patch_start, args, runner=subprocess.run):
         )
         receipt["retried_from"] = old.get("error", "")[:200]
         write_new(root / "receipts" / f"{mid}.json", receipt)
+        parsed += counts_toward_target(receipt)
         log(root, f"{mid} retried: {receipt['status']}")
 
 
@@ -452,7 +473,7 @@ def wait_out(root, budget, pause, args):
 def progress(root, target):
     """One line: parsed so far, skips, average time per match and the time still needed."""
     done = list(receipts(root).values())
-    parsed = [r for r in done if r["status"] == OK]
+    parsed = [r for r in done if counts_toward_target(r)]
     secs = [r.get("download_seconds", 0) + r.get("parse_seconds", 0) for r in parsed[-50:]]
     each = sum(secs) / len(secs) if secs else 0
     left = max(0, target - len(parsed)) * each / 3600
@@ -465,15 +486,18 @@ def progress(root, target):
 
 def summary(root):
     done = receipts(root)
-    parsed = [r for r in done.values() if r["status"] == OK]
+    saved = [r for r in done.values() if r["status"] == OK]
+    parsed = [r for r in saved if counts_toward_target(r)]
     heroes = Counter(h for r in parsed for h in r.get("heroes", []))
     return {
         "updated_at": now(),
         "parsed": len(parsed),
+        "parsed_total": len(saved),
+        "parsed_outside_rank": len(saved) - len(parsed),
         "statuses": dict(Counter(r["status"] for r in done.values())),
         "skip_reasons": dict(Counter(x for r in done.values() for x in r.get("reasons", []))),
-        "demo_gb": round(sum(r.get("demo_bytes", 0) for r in parsed) / 1024**3, 2),
-        "parsed_gb": round(sum(r.get("parsed_gz_bytes", 0) for r in parsed) / 1024**3, 2),
+        "demo_gb": round(sum(r.get("demo_bytes", 0) for r in saved) / 1024**3, 2),
+        "parsed_gb": round(sum(r.get("parsed_gz_bytes", 0) for r in saved) / 1024**3, 2),
         "mean_parse_seconds": round(sum(r["parse_seconds"] for r in parsed) / len(parsed), 1)
         if parsed
         else None,

@@ -38,7 +38,7 @@
 
 | 事项 | 状态 | 怎么看 |
 |---|---|---|
-| demo采集 | 后台运行，2026-11-08 08:35 UTC时21/1500，每场约2分钟，预计约46小时 | `tail -f data/demos-2026-11/log.txt`；汇总见`docs/demo-collection.md` |
+| demo采集 | 2026-11-09 19:14（北京时间）按平均超凡及以上续跑，启动时116/1500；旧批次另存178场低于门槛的回放 | `tail -f data/demos-2026-11/log.txt`；汇总见`docs/demo-collection.md` |
 | M2b-T10 页面评审 | 用户评审中，已按U127调整一次 | 启动`scripts/coach_app.py`后打开 http://127.0.0.1:8780 |
 
 ## 接下来（按顺序）
