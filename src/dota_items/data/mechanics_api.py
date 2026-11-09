@@ -24,6 +24,7 @@ from dota_items.data.mechanics_current import load_current
 API_VERSION = "mechanics-api/1"
 CONFIRMED_PREFIXES = ("user", "field")
 UPGRADES = ("base", "with_upgrades")
+PASSIVE_BIT = 2  # DOTA_ABILITY_BEHAVIOR_PASSIVE
 
 
 def is_confirmed(basis):
@@ -48,6 +49,9 @@ class Knowledge:
         heroes = json.loads((root / registry).read_text(encoding="utf-8"))["heroes"]
         self._owner = {a["name"]: h["hero_id"] for h in heroes for a in h["abilities"]}
         self._ability_zh = {a["name"]: a["name_zh"] for h in heroes for a in h["abilities"]}
+        self._raw = {
+            a["name"]: a.get("raw_mechanics") or {} for h in heroes for a in h["abilities"]
+        }
         self._hero_names = {h["hero_id"]: h["name_zh"] for h in heroes}
         traits = self._read("hero_traits")["traits"]
         self._traits = {
@@ -58,6 +62,7 @@ class Knowledge:
         self._trait_zh = {trait: spec["zh"] for trait, spec in traits.items()}
         self._rules = {r["id"]: r for r in self._read("rules_evaluation")["rules"]}
         self._facts = self._read("facts")["rows"]
+        self._mechanism_ids = {m["id"] for m in self._read("vocabulary")["mechanisms"]}
 
     def _read(self, name):
         return json.loads(self._entries[name]["file"].read_text(encoding="utf-8"))
@@ -120,6 +125,39 @@ class Knowledge:
             for r in rows
             if r["decision"] == "accept"
         ]
+
+    def subjects_with(self, mechanism):
+        """Abilities and items with an accepted fact for this mechanism (B0 save means)."""
+        if mechanism not in self._mechanism_ids:
+            raise KeyError(f"Unknown mechanism {mechanism}")
+        return [
+            {
+                "subject": r["subject"],
+                "subject_zh": r.get("subject_zh"),
+                "is_ability": r["subject"] in self._owner,
+                "condition": r["condition"]["context"],
+                "confirmed": is_confirmed(r["basis"]),
+                "basis": r["basis"],
+            }
+            for r in self._facts
+            if r["mechanism"] == mechanism and r["decision"] == "accept"
+        ]
+
+    def trait_subject_filter(self, trait):
+        """{mechanism: [subjects]} limits a trait applies (e.g. U121 escape haste skills)."""
+        traits = self._read("trait_mapping")["traits"]
+        if trait not in traits:
+            raise KeyError(f"Unknown trait {trait}")
+        return {m: list(s) for m, s in (traits[trait].get("only_subjects") or {}).items()}
+
+    def ability_targeting(self, ability):
+        """Game-file targeting of a hero ability: passive or not, and target_team
+        (0 none/self, 1 friendly, 2 enemy, 3 both). Unknown abilities raise."""
+        if ability not in self._raw:
+            raise KeyError(f"Unknown ability {ability}")
+        raw = self._raw[ability]
+        behavior = int(raw.get("behavior") or 0)
+        return {"passive": bool(behavior & PASSIVE_BIT), "target_team": raw.get("target_team")}
 
     # Rules --------------------------------------------------------------------------------
     def rule(self, rule_id):

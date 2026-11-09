@@ -1,0 +1,2024 @@
+{
+ "schema": "save-means/1",
+ "decision": "U131",
+ "knowledge": {
+  "api": "mechanics-api/1",
+  "patch": "7.41f",
+  "patch_checked": true,
+  "files": {
+   "counter_graph": {
+    "path": "knowledge/mechanics/profiles/derived-v17/counter-graph.json",
+    "sha256": "f7c57747f9e3db433aadc89130b7ef16758f769f0cc2a48658aab4e8474cb213"
+   },
+   "enums": {
+    "path": "knowledge/mechanics/enums-v2.json",
+    "sha256": "59e9431682eb09ce91c68072f9b3f1ce388e0a0b346d1cda100ed3dd8eb69024"
+   },
+   "extra_abilities": {
+    "path": "knowledge/mechanics/extra-abilities-v1.json",
+    "sha256": "a3ff184a2ca6c81bd8687557464fa5c58b521fc1662c4397ffd2997ac0045ea9"
+   },
+   "facts": {
+    "path": "knowledge/mechanics/extractions/v26/facts-v26.json",
+    "sha256": "391aa4268b6be3714984b48d401c3c966728a750aba0172ab209ca761ce18f95"
+   },
+   "hero_profiles": {
+    "path": "knowledge/mechanics/profiles/derived-v17/hero-profiles.json",
+    "sha256": "09f1b3e2a1923ef77ee619d80a37c1eb0647038955fa36e534c093446995effe"
+   },
+   "hero_traits": {
+    "path": "knowledge/mechanics/profiles/derived-v17/hero-traits-v3.json",
+    "sha256": "73c595ff4f9e1a84f289420eec4aa45071391f888595ca2e0a7bc7158dd69c8c"
+   },
+   "item_profiles": {
+    "path": "knowledge/mechanics/profiles/derived-v17/item-profiles.json",
+    "sha256": "1414f4d5c135e57c75bc00b2b1c83cdc42e32bd80ee784339cac5cf86df3481a"
+   },
+   "retired_items": {
+    "path": "knowledge/mechanics/retired-items-v2.json",
+    "sha256": "bc64164371e6850fe6afa74e004ac98230962b80a5021cb240204d7e2e3874c3"
+   },
+   "rules": {
+    "path": "knowledge/mechanics/rules-v13.json",
+    "sha256": "d993c3297f10086d4acb4bb137e6bf05755afc0fda802588fa1b4b3ef5e92cce"
+   },
+   "rules_evaluation": {
+    "path": "knowledge/mechanics/extractions/v26/rules-evaluation.json",
+    "sha256": "9187299c196ebbd71c32404a80416ab7a5647fac2f49adabcf4054cb04d70f01"
+   },
+   "rules_expanded": {
+    "path": "knowledge/mechanics/extractions/v26/rules-expanded.json",
+    "sha256": "ade083a0dc13eb91a072df4605b67d6d8421cb8401ce70400850c290b60f281e"
+   },
+   "trait_mapping": {
+    "path": "knowledge/hero-traits/trait-mapping-v6.json",
+    "sha256": "182b7480e1994d80f9c74c5e9db79fb73dc4976857fe1ea8605cde93a891feb7"
+   },
+   "vocabulary": {
+    "path": "knowledge/mechanics/vocabulary-v15.json",
+    "sha256": "b34cf18a6daba556996a8056a6e2b9121fd5a9b1449c7c79159174c7ba399802"
+   }
+  }
+ },
+ "mechanisms": {
+  "self_mobility": "A",
+  "invisibility": "A",
+  "invulnerable_untargetable": "A",
+  "cyclone_banish": "A",
+  "debuff_immunity": "A",
+  "death_prevention": "A",
+  "ethereal": "A",
+  "applies_strong_dispel": "A",
+  "haste": "B-a",
+  "applies_basic_dispel": "B-b",
+  "illusions": "B-c",
+  "spell_block": "B-e"
+ },
+ "excluded": {
+  "damage_block": "U131: 护盾/减伤不算"
+ },
+ "active_haste_items": [
+  "ancient_janggo",
+  "boots_of_bearing",
+  "crellas_crozier",
+  "disperser",
+  "glimmer_cape",
+  "invis_sword",
+  "mask_of_madness",
+  "phase_boots",
+  "silver_edge",
+  "smoke_of_deceit",
+  "solar_crest",
+  "swift_blink"
+ ],
+ "teleport_items": [
+  "item_tpscroll",
+  "item_travel_boots",
+  "item_travel_boots_2"
+ ],
+ "rule_zh": "主动施放（战斗日志有施放记录）；技能排除被动和只能指向敌人的；加速技能只算U121的16个；装备的加速只算主动效果带加速的；回城要真的传走才算。",
+ "means": {
+  "abaddon_aphotic_shield": {
+   "name": "abaddon_aphotic_shield",
+   "zh": "亚巴顿·无光之盾",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "abaddon_borrowed_time": {
+   "name": "abaddon_borrowed_time",
+   "zh": "亚巴顿·回光返照",
+   "kind": "ability",
+   "mechanisms": [
+    "death_prevention",
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "abyssal_underlord_dark_portal": {
+   "name": "abyssal_underlord_dark_portal",
+   "zh": "孽主·恶魔之扉",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "alchemist_berserk_potion": {
+   "name": "alchemist_berserk_potion",
+   "zh": "炼金术士·狂暴药剂",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "alchemist_chemical_rage": {
+   "name": "alchemist_chemical_rage",
+   "zh": "炼金术士·化学狂暴",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "antimage_blink": {
+   "name": "antimage_blink",
+   "zh": "敌法师·闪烁",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "antimage_counterspell": {
+   "name": "antimage_counterspell",
+   "zh": "敌法师·法术反制",
+   "kind": "ability",
+   "mechanisms": [
+    "spell_block"
+   ],
+   "groups": [
+    "B-e"
+   ]
+  },
+  "arc_warden_tempest_double": {
+   "name": "arc_warden_tempest_double",
+   "zh": "天穹守望者·风暴双雄",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "bane_nightmare": {
+   "name": "bane_nightmare",
+   "zh": "祸乱之源·噩梦",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "bounty_hunter_wind_walk": {
+   "name": "bounty_hunter_wind_walk",
+   "zh": "赏金猎人·暗影步",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "bounty_hunter_wind_walk_ally": {
+   "name": "bounty_hunter_wind_walk_ally",
+   "zh": "赏金猎人·暗影情谊",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "chaos_knight_phantasm": {
+   "name": "chaos_knight_phantasm",
+   "zh": "混沌骑士·混沌之军",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "applies_basic_dispel",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-b",
+    "B-c"
+   ]
+  },
+  "chen_hand_of_god": {
+   "name": "chen_hand_of_god",
+   "zh": "陈·上帝之手",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "clinkz_wind_walk": {
+   "name": "clinkz_wind_walk",
+   "zh": "克林克兹·骨隐步",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "crystal_maiden_crystal_clone": {
+   "name": "crystal_maiden_crystal_clone",
+   "zh": "水晶室女·冰晶克隆",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "dark_seer_surge": {
+   "name": "dark_seer_surge",
+   "zh": "黑暗贤者·奔腾",
+   "kind": "ability",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "dark_seer_wall_of_replica": {
+   "name": "dark_seer_wall_of_replica",
+   "zh": "黑暗贤者·复制之墙",
+   "kind": "ability",
+   "mechanisms": [
+    "illusions"
+   ],
+   "groups": [
+    "B-c"
+   ]
+  },
+  "dark_willow_shadow_realm": {
+   "name": "dark_willow_shadow_realm",
+   "zh": "邪影芳灵·暗影之境",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "dawnbreaker_celestial_hammer": {
+   "name": "dawnbreaker_celestial_hammer",
+   "zh": "破晓辰星·上界重锤",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "dawnbreaker_solar_guardian": {
+   "name": "dawnbreaker_solar_guardian",
+   "zh": "破晓辰星·天光现世",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "dazzle_nothl_projection": {
+   "name": "dazzle_nothl_projection",
+   "zh": "戴泽·虚无投影",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "dazzle_shallow_grave": {
+   "name": "dazzle_shallow_grave",
+   "zh": "戴泽·薄葬",
+   "kind": "ability",
+   "mechanisms": [
+    "death_prevention"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "doom_bringer_doom": {
+   "name": "doom_bringer_doom",
+   "zh": "末日使者·末日",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "earth_spirit_petrify": {
+   "name": "earth_spirit_petrify",
+   "zh": "大地之灵·残岩魔咒",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "earth_spirit_rolling_boulder": {
+   "name": "earth_spirit_rolling_boulder",
+   "zh": "大地之灵·巨石翻滚",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "earth_spirit_stone_caller": {
+   "name": "earth_spirit_stone_caller",
+   "zh": "大地之灵·残岩",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "elder_titan_ancestral_spirit": {
+   "name": "elder_titan_ancestral_spirit",
+   "zh": "上古巨神·灵体游魂",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "elder_titan_echo_stomp": {
+   "name": "elder_titan_echo_stomp",
+   "zh": "上古巨神·回音重踏",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "ember_spirit_activate_fire_remnant": {
+   "name": "ember_spirit_activate_fire_remnant",
+   "zh": "灰烬之灵·激活残焰",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "ember_spirit_fire_remnant": {
+   "name": "ember_spirit_fire_remnant",
+   "zh": "灰烬之灵·残焰",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "ember_spirit_sleight_of_fist": {
+   "name": "ember_spirit_sleight_of_fist",
+   "zh": "灰烬之灵·无影拳",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "enchantress_bunny_hop": {
+   "name": "enchantress_bunny_hop",
+   "zh": "魅惑魔女·跃动",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "faceless_void_time_walk": {
+   "name": "faceless_void_time_walk",
+   "zh": "虚空假面·时间漫游",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "faceless_void_time_walk_reverse": {
+   "name": "faceless_void_time_walk_reverse",
+   "zh": "虚空假面·反时间漫游",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "furion_teleportation": {
+   "name": "furion_teleportation",
+   "zh": "自然先知·传送",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "grimstroke_spirit_walk": {
+   "name": "grimstroke_spirit_walk",
+   "zh": "天涯墨客·墨涌",
+   "kind": "ability",
+   "mechanisms": [
+    "haste",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-a",
+    "B-b"
+   ]
+  },
+  "hoodwink_decoy": {
+   "name": "hoodwink_decoy",
+   "zh": "森海飞霞·诱敌奇术",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility",
+    "haste",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-a",
+    "B-c"
+   ]
+  },
+  "hoodwink_sharpshooter": {
+   "name": "hoodwink_sharpshooter",
+   "zh": "森海飞霞·一箭穿心",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "invoker_ghost_walk": {
+   "name": "invoker_ghost_walk",
+   "zh": "祈求者·幽灵漫步",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "invoker_tornado": {
+   "name": "invoker_tornado",
+   "zh": "祈求者·强袭飓风",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "cyclone_banish",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "item_aeon_disk": {
+   "name": "item_aeon_disk",
+   "zh": "永恒之盘",
+   "kind": "item",
+   "mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_ancient_janggo": {
+   "name": "item_ancient_janggo",
+   "zh": "韧鼓",
+   "kind": "item",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "item_arcane_blink": {
+   "name": "item_arcane_blink",
+   "zh": "秘奥闪光",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_black_king_bar": {
+   "name": "item_black_king_bar",
+   "zh": "黑皇杖",
+   "kind": "item",
+   "mechanisms": [
+    "debuff_immunity",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "item_blink": {
+   "name": "item_blink",
+   "zh": "闪烁匕首",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_boots_of_bearing": {
+   "name": "item_boots_of_bearing",
+   "zh": "宽容之靴",
+   "kind": "item",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "item_crellas_crozier": {
+   "name": "item_crellas_crozier",
+   "zh": "克莱拉牧杖",
+   "kind": "item",
+   "mechanisms": [
+    "ethereal",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "item_cyclone": {
+   "name": "item_cyclone",
+   "zh": "Eul的神圣法杖",
+   "kind": "item",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "cyclone_banish",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "item_disperser": {
+   "name": "item_disperser",
+   "zh": "散魂剑",
+   "kind": "item",
+   "mechanisms": [
+    "haste",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-a",
+    "B-b"
+   ]
+  },
+  "item_ethereal_blade": {
+   "name": "item_ethereal_blade",
+   "zh": "虚灵之刃",
+   "kind": "item",
+   "mechanisms": [
+    "ethereal"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_force_staff": {
+   "name": "item_force_staff",
+   "zh": "原力法杖",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_ghost": {
+   "name": "item_ghost",
+   "zh": "幽魂权杖",
+   "kind": "item",
+   "mechanisms": [
+    "ethereal"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_glimmer_cape": {
+   "name": "item_glimmer_cape",
+   "zh": "微光披风",
+   "kind": "item",
+   "mechanisms": [
+    "invisibility",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "item_guardian_greaves": {
+   "name": "item_guardian_greaves",
+   "zh": "卫士胫甲",
+   "kind": "item",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "item_harpoon": {
+   "name": "item_harpoon",
+   "zh": "鱼叉",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_hurricane_pike": {
+   "name": "item_hurricane_pike",
+   "zh": "飓风长戟",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_invis_sword": {
+   "name": "item_invis_sword",
+   "zh": "影刃",
+   "kind": "item",
+   "mechanisms": [
+    "invisibility",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "item_lotus_orb": {
+   "name": "item_lotus_orb",
+   "zh": "清莲宝珠",
+   "kind": "item",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "item_manta": {
+   "name": "item_manta",
+   "zh": "幻影斧",
+   "kind": "item",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "applies_basic_dispel",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-b",
+    "B-c"
+   ]
+  },
+  "item_mask_of_madness": {
+   "name": "item_mask_of_madness",
+   "zh": "疯狂面具",
+   "kind": "item",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "item_nullifier": {
+   "name": "item_nullifier",
+   "zh": "否决坠饰",
+   "kind": "item",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "item_overwhelming_blink": {
+   "name": "item_overwhelming_blink",
+   "zh": "盛势闪光",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_phase_boots": {
+   "name": "item_phase_boots",
+   "zh": "相位鞋",
+   "kind": "item",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "item_satanic": {
+   "name": "item_satanic",
+   "zh": "撒旦之邪力",
+   "kind": "item",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "item_shadow_amulet": {
+   "name": "item_shadow_amulet",
+   "zh": "暗影护符",
+   "kind": "item",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_silver_edge": {
+   "name": "item_silver_edge",
+   "zh": "白银之锋",
+   "kind": "item",
+   "mechanisms": [
+    "invisibility",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "item_smoke_of_deceit": {
+   "name": "item_smoke_of_deceit",
+   "zh": "诡计之雾",
+   "kind": "item",
+   "mechanisms": [
+    "invisibility",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "item_solar_crest": {
+   "name": "item_solar_crest",
+   "zh": "炎阳纹章",
+   "kind": "item",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "item_sphere": {
+   "name": "item_sphere",
+   "zh": "林肯法球",
+   "kind": "item",
+   "mechanisms": [
+    "spell_block"
+   ],
+   "groups": [
+    "B-e"
+   ]
+  },
+  "item_swift_blink": {
+   "name": "item_swift_blink",
+   "zh": "迅疾闪光",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "item_tpscroll": {
+   "name": "item_tpscroll",
+   "zh": "回城卷轴",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_travel_boots": {
+   "name": "item_travel_boots",
+   "zh": "远行鞋",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "item_wind_waker": {
+   "name": "item_wind_waker",
+   "zh": "风之杖",
+   "kind": "item",
+   "mechanisms": [
+    "self_mobility",
+    "invulnerable_untargetable",
+    "cyclone_banish",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "juggernaut_blade_fury": {
+   "name": "juggernaut_blade_fury",
+   "zh": "主宰·剑刃风暴",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity",
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "largo_catchy_lick": {
+   "name": "largo_catchy_lick",
+   "zh": "朗戈·动人之舐",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "legion_commander_press_the_attack": {
+   "name": "legion_commander_press_the_attack",
+   "zh": "军团指挥官·强攻",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_strong_dispel",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "life_stealer_infest": {
+   "name": "life_stealer_infest",
+   "zh": "噬魂鬼·感染",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "life_stealer_rage": {
+   "name": "life_stealer_rage",
+   "zh": "噬魂鬼·狂暴",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "lone_druid_savage_roar": {
+   "name": "lone_druid_savage_roar",
+   "zh": "独行德鲁伊·野蛮咆哮",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "lycan_summon_wolves": {
+   "name": "lycan_summon_wolves",
+   "zh": "狼人·召狼",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "magnataur_skewer": {
+   "name": "magnataur_skewer",
+   "zh": "马格纳斯·巨角冲撞",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "marci_companion_run": {
+   "name": "marci_companion_run",
+   "zh": "玛西·回身踢",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "marci_unleash": {
+   "name": "marci_unleash",
+   "zh": "玛西·怒拳破",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "meepo_petrify": {
+   "name": "meepo_petrify",
+   "zh": "米波·掘地",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "meepo_poof": {
+   "name": "meepo_poof",
+   "zh": "米波·忽悠",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "mirana_invis": {
+   "name": "mirana_invis",
+   "zh": "米拉娜·月之暗面",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "mirana_leap": {
+   "name": "mirana_leap",
+   "zh": "米拉娜·跳跃",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "monkey_king_mischief": {
+   "name": "monkey_king_mischief",
+   "zh": "齐天大圣·七十二变",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "monkey_king_transfiguration": {
+   "name": "monkey_king_transfiguration",
+   "zh": "齐天大圣·出神入化",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "morphling_replicate": {
+   "name": "morphling_replicate",
+   "zh": "变体精灵·变形",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-c"
+   ]
+  },
+  "morphling_waveform": {
+   "name": "morphling_waveform",
+   "zh": "变体精灵·波浪形态",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "muerta_pierce_the_veil": {
+   "name": "muerta_pierce_the_veil",
+   "zh": "琼英碧灵·越界",
+   "kind": "ability",
+   "mechanisms": [
+    "ethereal",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "naga_siren_mirror_image": {
+   "name": "naga_siren_mirror_image",
+   "zh": "娜迦海妖·镜像",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "applies_basic_dispel",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-b",
+    "B-c"
+   ]
+  },
+  "naga_siren_song_of_the_siren": {
+   "name": "naga_siren_song_of_the_siren",
+   "zh": "娜迦海妖·海妖之歌",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "necrolyte_death_seeker": {
+   "name": "necrolyte_death_seeker",
+   "zh": "瘟疫法师·死亡搜寻",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "necrolyte_ghost_shroud": {
+   "name": "necrolyte_ghost_shroud",
+   "zh": "瘟疫法师·幽魂护罩",
+   "kind": "ability",
+   "mechanisms": [
+    "ethereal"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "nyx_assassin_burrow": {
+   "name": "nyx_assassin_burrow",
+   "zh": "司夜刺客·钻地",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "nyx_assassin_vendetta": {
+   "name": "nyx_assassin_vendetta",
+   "zh": "司夜刺客·复仇",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "obsidian_destroyer_astral_imprisonment": {
+   "name": "obsidian_destroyer_astral_imprisonment",
+   "zh": "殁境神蚀者·星体禁锢",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "cyclone_banish"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "obsidian_destroyer_objurgation": {
+   "name": "obsidian_destroyer_objurgation",
+   "zh": "殁境神蚀者·责难",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "omniknight_martyr": {
+   "name": "omniknight_martyr",
+   "zh": "全能骑士·驱逐",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "oracle_false_promise": {
+   "name": "oracle_false_promise",
+   "zh": "神谕者·虚妄之诺",
+   "kind": "ability",
+   "mechanisms": [
+    "death_prevention",
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "oracle_fortunes_end": {
+   "name": "oracle_fortunes_end",
+   "zh": "神谕者·气运之末",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "pangolier_gyroshell": {
+   "name": "pangolier_gyroshell",
+   "zh": "石鳞剑士·地雷滚滚",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "debuff_immunity",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "pangolier_rollup": {
+   "name": "pangolier_rollup",
+   "zh": "石鳞剑士·卷土重来",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "debuff_immunity"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "pangolier_shield_crash": {
+   "name": "pangolier_shield_crash",
+   "zh": "石鳞剑士·甲盾冲击",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "pangolier_swashbuckle": {
+   "name": "pangolier_swashbuckle",
+   "zh": "石鳞剑士·虚张声势",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "phantom_assassin_blur": {
+   "name": "phantom_assassin_blur",
+   "zh": "幻影刺客·魅影无形",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "phantom_assassin_phantom_strike": {
+   "name": "phantom_assassin_phantom_strike",
+   "zh": "幻影刺客·幻影突袭",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "phantom_lancer_doppelwalk": {
+   "name": "phantom_lancer_doppelwalk",
+   "zh": "幻影长矛手·神行百变",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "applies_basic_dispel",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-b",
+    "B-c"
+   ]
+  },
+  "phantom_lancer_phantom_edge": {
+   "name": "phantom_lancer_phantom_edge",
+   "zh": "幻影长矛手·幻影冲锋",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "haste",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-a",
+    "B-c"
+   ]
+  },
+  "phoenix_icarus_dive": {
+   "name": "phoenix_icarus_dive",
+   "zh": "凤凰·凤凰冲击",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "phoenix_supernova": {
+   "name": "phoenix_supernova",
+   "zh": "凤凰·超新星",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "puck_illusory_orb": {
+   "name": "puck_illusory_orb",
+   "zh": "帕克·幻象法球",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "puck_phase_shift": {
+   "name": "puck_phase_shift",
+   "zh": "帕克·相位转移",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "puck_waning_rift": {
+   "name": "puck_waning_rift",
+   "zh": "帕克·新月之痕",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "pugna_decrepify": {
+   "name": "pugna_decrepify",
+   "zh": "帕格纳·衰老",
+   "kind": "ability",
+   "mechanisms": [
+    "ethereal"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "queenofpain_blink": {
+   "name": "queenofpain_blink",
+   "zh": "痛苦女王·闪烁",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "rattletrap_hookshot": {
+   "name": "rattletrap_hookshot",
+   "zh": "发条技师·发射钩爪",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "rattletrap_jetpack": {
+   "name": "rattletrap_jetpack",
+   "zh": "发条技师·喷气背包",
+   "kind": "ability",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "riki_blink_strike": {
+   "name": "riki_blink_strike",
+   "zh": "力丸·闪烁突袭",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "riki_tricks_of_the_trade": {
+   "name": "riki_tricks_of_the_trade",
+   "zh": "力丸·绝杀秘技",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "ringmaster_funhouse_mirror": {
+   "name": "ringmaster_funhouse_mirror",
+   "zh": "百戏大王·哈哈镜",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-c"
+   ]
+  },
+  "ringmaster_the_box": {
+   "name": "ringmaster_the_box",
+   "zh": "百戏大王·逃生技",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "ringmaster_whoopee_cushion": {
+   "name": "ringmaster_whoopee_cushion",
+   "zh": "百戏大王·整蛊垫",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "sandking_sand_storm": {
+   "name": "sandking_sand_storm",
+   "zh": "沙王·沙尘暴",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "shadow_demon_demonic_cleanse": {
+   "name": "shadow_demon_demonic_cleanse",
+   "zh": "暗影恶魔·邪恶净愈",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "shadow_demon_disruption": {
+   "name": "shadow_demon_disruption",
+   "zh": "暗影恶魔·崩裂禁锢",
+   "kind": "ability",
+   "mechanisms": [
+    "cyclone_banish",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-c"
+   ]
+  },
+  "shadow_shaman_mass_serpent_ward": {
+   "name": "shadow_shaman_mass_serpent_ward",
+   "zh": "暗影萨满·群蛇守卫",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "shredder_timber_chain": {
+   "name": "shredder_timber_chain",
+   "zh": "伐木机·伐木锯链",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "slardar_sprint": {
+   "name": "slardar_sprint",
+   "zh": "斯拉达·守卫冲刺",
+   "kind": "ability",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "slark_dark_pact": {
+   "name": "slark_dark_pact",
+   "zh": "斯拉克·黑暗契约",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "slark_depth_shroud": {
+   "name": "slark_depth_shroud",
+   "zh": "斯拉克·深海护罩",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "slark_pounce": {
+   "name": "slark_pounce",
+   "zh": "斯拉克·突袭",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "slark_shadow_dance": {
+   "name": "slark_shadow_dance",
+   "zh": "斯拉克·暗影之舞",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "snapfire_firesnap_cookie": {
+   "name": "snapfire_firesnap_cookie",
+   "zh": "电炎绝手·龙炎饼干",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "spectre_haunt": {
+   "name": "spectre_haunt",
+   "zh": "幽鬼·鬼影重重",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-c"
+   ]
+  },
+  "spirit_breaker_bulldoze": {
+   "name": "spirit_breaker_bulldoze",
+   "zh": "裂魂人·威吓",
+   "kind": "ability",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "storm_spirit_ball_lightning": {
+   "name": "storm_spirit_ball_lightning",
+   "zh": "风暴之灵·球状闪电",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "techies_minefield_sign": {
+   "name": "techies_minefield_sign",
+   "zh": "工程师·雷区标识",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "techies_reactive_tazer": {
+   "name": "techies_reactive_tazer",
+   "zh": "工程师·活性电击",
+   "kind": "ability",
+   "mechanisms": [
+    "haste",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-a",
+    "B-b"
+   ]
+  },
+  "templar_assassin_meld": {
+   "name": "templar_assassin_meld",
+   "zh": "圣堂刺客·隐匿",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "templar_assassin_psionic_trap": {
+   "name": "templar_assassin_psionic_trap",
+   "zh": "圣堂刺客·灵能陷阱",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "templar_assassin_trap_teleport": {
+   "name": "templar_assassin_trap_teleport",
+   "zh": "圣堂刺客·灵能投射",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "terrorblade_conjure_image": {
+   "name": "terrorblade_conjure_image",
+   "zh": "恐怖利刃·惑幻",
+   "kind": "ability",
+   "mechanisms": [
+    "illusions"
+   ],
+   "groups": [
+    "B-c"
+   ]
+  },
+  "terrorblade_reflection": {
+   "name": "terrorblade_reflection",
+   "zh": "恐怖利刃·倒影",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable",
+    "illusions"
+   ],
+   "groups": [
+    "A",
+    "B-c"
+   ]
+  },
+  "tidehunter_kraken_shell": {
+   "name": "tidehunter_kraken_shell",
+   "zh": "潮汐猎人·海妖外壳",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "troll_warlord_battle_trance": {
+   "name": "troll_warlord_battle_trance",
+   "zh": "巨魔战将·战斗专注",
+   "kind": "ability",
+   "mechanisms": [
+    "death_prevention",
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "A",
+    "B-b"
+   ]
+  },
+  "troll_warlord_whirling_axes_melee": {
+   "name": "troll_warlord_whirling_axes_melee",
+   "zh": "巨魔战将·旋风飞斧（近战）",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_basic_dispel"
+   ],
+   "groups": [
+    "B-b"
+   ]
+  },
+  "tusk_drinking_buddies": {
+   "name": "tusk_drinking_buddies",
+   "zh": "巨牙海民·酒友",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "haste"
+   ],
+   "groups": [
+    "A",
+    "B-a"
+   ]
+  },
+  "undying_tombstone": {
+   "name": "undying_tombstone",
+   "zh": "不朽尸王·墓碑",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "ursa_earthshock": {
+   "name": "ursa_earthshock",
+   "zh": "熊战士·震撼大地",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "ursa_enrage": {
+   "name": "ursa_enrage",
+   "zh": "熊战士·激怒",
+   "kind": "ability",
+   "mechanisms": [
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "vengefulspirit_nether_swap": {
+   "name": "vengefulspirit_nether_swap",
+   "zh": "复仇之魂·移形换位",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "venomancer_plague_ward": {
+   "name": "venomancer_plague_ward",
+   "zh": "剧毒术士·瘟疫守卫",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "viper_nose_dive": {
+   "name": "viper_nose_dive",
+   "zh": "冥界亚龙·极恶俯冲",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "visage_silent_as_the_grave": {
+   "name": "visage_silent_as_the_grave",
+   "zh": "维萨吉·静如古墓",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "visage_summon_familiars": {
+   "name": "visage_summon_familiars",
+   "zh": "维萨吉·召唤佣兽",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "weaver_shukuchi": {
+   "name": "weaver_shukuchi",
+   "zh": "编织者·缩地",
+   "kind": "ability",
+   "mechanisms": [
+    "invisibility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "weaver_the_swarm": {
+   "name": "weaver_the_swarm",
+   "zh": "编织者·虫群",
+   "kind": "ability",
+   "mechanisms": [
+    "debuff_immunity"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "weaver_time_lapse": {
+   "name": "weaver_time_lapse",
+   "zh": "编织者·时光倒流",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility",
+    "applies_strong_dispel"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "windrunner_windrun": {
+   "name": "windrunner_windrun",
+   "zh": "风行者·风行",
+   "kind": "ability",
+   "mechanisms": [
+    "haste"
+   ],
+   "groups": [
+    "B-a"
+   ]
+  },
+  "wisp_relocate": {
+   "name": "wisp_relocate",
+   "zh": "艾欧·降临",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "wisp_tether": {
+   "name": "wisp_tether",
+   "zh": "艾欧·羁绊",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "witch_doctor_voodoo_switcheroo": {
+   "name": "witch_doctor_voodoo_switcheroo",
+   "zh": "巫医·巫毒变身术",
+   "kind": "ability",
+   "mechanisms": [
+    "invulnerable_untargetable"
+   ],
+   "groups": [
+    "A"
+   ]
+  },
+  "zuus_heavenly_jump": {
+   "name": "zuus_heavenly_jump",
+   "zh": "宙斯·神圣一跳",
+   "kind": "ability",
+   "mechanisms": [
+    "self_mobility"
+   ],
+   "groups": [
+    "A"
+   ]
+  }
+ }
+}

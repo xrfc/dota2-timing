@@ -404,7 +404,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### 下一步（接手从这里开始）
 
-**2026-11-09，B0开始。** “被抓”规则草案见[B0规则草案](b0-gank-rules-draft.md)，待用户确认保命手段（A组、B组）、队友施加的保命算不算、三个阈值和“新的一次”的间隔；确认后记决策、冻结任务契约，再用解析器v3数据筛实例给用户抽查。
+**2026-11-09，B0。** 用户已答四个问题（U131）；规则已实现（`data.gank_events`、`scripts/detect_ganks.py`、保命手段清单`knowledge/awareness/save-means-v1.json`），162场找出1294次被抓，见[B0规则](b0-gank-rules.md)§7。下一步：用户抽查20个被抓、20个差一点的实例，按偏差调阈值后冻结任务契约，再进B1。
 
 **2026-11-09，解析器v3（U130）。** 每秒冷却和状态的第二遍抽取已实现并在5场采集demo上核对（施放后看到冷却96–98%），见[解析器v3设计](parser-v3-design.md)§11；单位状态位解码、野怪营地留待办。批量抽取全部已采demo等用户决定何时跑。
 

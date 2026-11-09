@@ -59,3 +59,18 @@ def test_relation_conditions_are_three_valued(kb):
     assert kb.relation_holds("R13", "tidehunter_gush", set()) is True
     assert kb.relation_holds("R13", "tidehunter_gush", {"scepter"}) is False
     assert 29 in kb.rule_target_heroes("R13")  # Tidehunter
+
+
+def test_b0_readers_subjects_targeting_and_trait_filters(kb):
+    blinks = {r["subject"]: r for r in kb.subjects_with("self_mobility")}
+    assert blinks["antimage_blink"]["is_ability"] and not blinks["blink"]["is_ability"]
+    assert kb.ability_targeting("dazzle_shallow_grave") == {"passive": False, "target_team": 1}
+    assert kb.ability_targeting("antimage_mana_break")["passive"]
+    assert len(kb.trait_subject_filter("dispellable_save")["haste"]) == 16  # U121
+    for bad in (
+        lambda: kb.subjects_with("nope"),
+        lambda: kb.ability_targeting("nope"),
+        lambda: kb.trait_subject_filter("nope"),
+    ):
+        with pytest.raises(KeyError):
+            bad()

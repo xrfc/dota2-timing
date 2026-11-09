@@ -13,6 +13,9 @@ kb.heroes_owning(["life_stealer_rage"])  # {54}
 kb.mechanisms("huskar_life_break")  # 接受的机制、条件、是否确认
 kb.rule_target_heroes("R13")  # 规则目标技能的所属英雄（候选）
 kb.relation_holds("R13", "tidehunter_gush", {"scepter"})  # False
+kb.subjects_with("self_mobility")  # 有这个机制的技能和装备（B0保命手段）
+kb.ability_targeting("dazzle_shallow_grave")  # {'passive': False, 'target_team': 1}
+kb.trait_subject_filter("dispellable_save")  # U121的16个逃跑加速技能等限定
 ```
 
 ## 固定的含义
@@ -30,6 +33,6 @@ kb.relation_holds("R13", "tidehunter_gush", {"scepter"})  # False
 ## 当前使用者
 
 - 路线A：`modeling.situational_triggers`（M2b针对装触发）、`scripts/build_m2b_triggers.py`。
-- 路线B：B0起会用同一个接口读逃生、控制等机制。
+- 路线B：`data.gank_events.build_save_means`（B0保命手段清单，U131）。
 
 需要新的读法时，在接口里加方法并写测试（`tests/test_mechanics_api.py`），不在调用方直接读内部文件。

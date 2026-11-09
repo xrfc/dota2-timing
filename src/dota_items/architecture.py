@@ -146,6 +146,7 @@ MODULES = {
     "data.whole_log_snapshot": (_A, "maintenance"),
     # data: track B (observer-perspective replay evidence and decision points)
     "data.decision_comparison": (_B, "active"),
+    "data.gank_events": (_B, "active"),
     "data.decision_context": (_B, "active"),
     "data.decision_evidence": (_B, "active"),
     "data.decision_mana": (_B, "active"),
@@ -343,6 +344,7 @@ SCRIPTS = {
     "audit_replay_semantics": _B,
     "audit_replay_tracks": _B,
     "build_decision_comparisons": _B,
+    "detect_ganks": _B,
     "build_decision_state_cards": _B,
     "collect_replay_expansion": _B,
     "decision_review": _B,
