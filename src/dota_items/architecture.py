@@ -56,6 +56,7 @@ MODULES = {
     "sources": (_S, "active"),
     "sources.collection_history": (_S, "active"),
     "sources.gem_capture": (_S, "active"),
+    "sources.gem_capture_v3": (_S, "active"),
     "sources.gem_observations": (_S, "active"),
     "sources.gem_replay": (_S, "active"),
     "sources.opendota": (_S, "active"),
@@ -93,6 +94,8 @@ MODULES = {
     "data.mechanics_facts_v18": (_S, "active"),
     "data.mechanics_traits_v3": (_S, "active"),
     "data.mechanics_current": (_S, "active"),
+    "data.mechanics_api": (_S, "active"),
+    "data.position_rule": (_S, "active"),
     "data.knowledge_superseded": (_S, "active"),
     "data.mechanics_rules_v11": (_S, "active"),
     "data.mechanics_facts_v19": (_S, "active"),
@@ -103,6 +106,8 @@ MODULES = {
     "data.mechanics_facts_v23": (_S, "active"),
     "data.mechanics_facts_v24": (_S, "active"),
     "data.mechanics_facts_v25": (_S, "active"),
+    "data.mechanics_facts_v26": (_S, "active"),
+    "data.mechanics_profiles_v5": (_S, "active"),
     "data.mechanics_traits_v4": (_S, "active"),
     "data.mechanics_conditions": (_S, "active"),
     "data.mechanics_profiles_v3": (_S, "active"),
@@ -142,6 +147,8 @@ MODULES = {
     "data.whole_log_snapshot": (_A, "maintenance"),
     # data: track B (observer-perspective replay evidence and decision points)
     "data.decision_comparison": (_B, "active"),
+    "data.gank_events": (_B, "active"),
+    "data.awareness_split": (_B, "active"),
     "data.decision_context": (_B, "active"),
     "data.decision_evidence": (_B, "active"),
     "data.decision_mana": (_B, "active"),
@@ -177,6 +184,7 @@ MODULES = {
     "modeling.sensitivity_report": (_A, "maintenance"),
     "modeling.situational_items": (_A, "active"),
     "modeling.situational_reference": (_A, "active"),
+    "modeling.situational_triggers": (_A, "active"),
     "modeling.specs": (_A, "active"),
     "modeling.synthetic_foundation": (_A, "maintenance"),
     "modeling.training": (_A, "active"),
@@ -272,8 +280,13 @@ SCRIPTS = {
     "build_mechanics_derived_v15": _S,
     "build_mechanics_facts_v25": _S,
     "build_mechanics_derived_v16": _S,
+    "build_mechanics_facts_v26": _S,
+    "build_mechanics_derived_v17": _S,
     "collect_build_survey": _S,
     "check_patch_knowledge": _S,
+    "collect_demos": _S,
+    "extract_state_v3": _S,
+    "architecture_stats": _S,
     "patch_update": _S,
     "build_mechanics_current": _S,
     "build_mechanics_profiles": _S,
@@ -290,6 +303,7 @@ SCRIPTS = {
     "audit_purchase_observations": _A,
     "build_match_table": _A,
     "build_situational_reference": _A,
+    "build_m2b_triggers": _A,
     "coach_app": _A,
     "collect_evaluation_cohort": _A,
     "collect_purchase_additional": _A,
@@ -332,6 +346,7 @@ SCRIPTS = {
     "audit_replay_semantics": _B,
     "audit_replay_tracks": _B,
     "build_decision_comparisons": _B,
+    "detect_ganks": _B,
     "build_decision_state_cards": _B,
     "collect_replay_expansion": _B,
     "decision_review": _B,
@@ -369,3 +384,15 @@ def track_of(module):
 
 def modules_in(track):
     return sorted(name for name, (owner, _) in MODULES.items() if owner == track)
+
+
+def track_table():
+    """Markdown rows for docs/architecture.md §2.2, computed from this registry (U124 step 3)."""
+    names = {SHARED: "共享底座", RECOMMEND: "路线A 推荐", AWARENESS: "路线B 意识决策"}
+    lines = ["| 线 | 名称 | 模块数（活跃/仅维护） | 脚本数 |", "|---|---|---|---|"]
+    for track in (SHARED, RECOMMEND, AWARENESS):
+        active = sum(1 for t, s in MODULES.values() if t == track and s == "active")
+        kept = sum(1 for t, s in MODULES.values() if t == track and s == "maintenance")
+        scripts = sum(1 for t in SCRIPTS.values() if t == track)
+        lines.append(f"| `{track}` | {names[track]} | {active} / {kept} | {scripts} |")
+    return "\n".join(lines)

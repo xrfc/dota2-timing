@@ -24,14 +24,16 @@ function boot(stored){
  const sit={verdict:{passed:false,valid_n:240,improvement:.042,ci95:[-.007,.087],min_improvement:.01},
   juggernaut:{spec:[8,1],name:'主宰',games:1458,games_with_any:840,items:[{item:'monkey_king_bar',name:'金箍棒',first_n:259,first_share:.308,bought_n:324,bought_rate:.222}]},
   supports:[{spec:[30,5],name:'巫医',games:163,items:[{item:'glimmer_cape',name:'微光披风',n:95,rate:.583,small:false,fixed:true},{item:'pipe',name:'洞察烟斗',n:0,rate:0,small:true,fixed:false}]}],
-  notes:['m'],runs:['a','b']};
+  notes:['m'],runs:['a','b'],
+  triggers:{enemy_heroes:[{id:12,name:'幻影长矛手'},{id:33,name:'谜团'}],seen_items:[{id:'butterfly',name:'蝴蝶'}],samples:1458}};
+ const trig={enemies:[{id:12,name:'幻影长矛手'}],samples:1458,items:[{item:'monkey_king_bar',name:'金箍棒',pregame:true,pregame_reason:'敌方自身闪避合计 1（幻影长矛手1），条件≥1',ingame:false,ingame_items:[],rules:['克敌机先克制闪避'],pregame_verdict:{kind:'support',text:'数据支持：触发时高分段更常出这件（+11%，区间 +6%～+16%）'},ingame_verdict:{kind:'unclear',text:'x'},note:null}]};
  const meta={heroes:[{id:8,name:'主宰'},{id:30,name:'巫医'}],my_heroes:[{hero_id:8,position:1,name:'主宰'},{hero_id:30,position:5,name:'巫医'}],
   item_names:{bfury:'狂战斧'},minutes:[10,15],notes:['n'],run:'r'};
  const view=q=>({spec:[Number(q.get('hero')),Number(q.get('position'))],full_lineup:false,items:[{item:'bfury',train_n:Number(q.get('hero'))===8?1458:60,any_model:false,typical_minute:15,
   cells:[{minute:10,probability:0,base_rate:0,display_probability:0,source:'baseline'},{minute:15,probability:.64,base_rate:.64,display_probability:.64,source:'baseline'}]}]});
  const storage=stored===undefined?{getItem(){throw new Error('blocked');},setItem(){throw new Error('blocked');}}:{data:{'coach-app-items-v2':stored},getItem(k){return this.data[k]??null;},setItem(k,v){this.data[k]=v;}};
  const sandbox={document,console,URLSearchParams,localStorage:storage};
- sandbox.fetch=async url=>{requests.push(url);const u=new URL(url,'http://x');return {ok:true,json:async()=>u.pathname==='/api/meta'?meta:u.pathname==='/api/situational'?sit:view(u.searchParams)};};
+ sandbox.fetch=async url=>{requests.push(url);const u=new URL(url,'http://x');return {ok:true,json:async()=>u.pathname==='/api/meta'?meta:u.pathname==='/api/situational'?sit:u.pathname==='/api/triggers'?trig:view(u.searchParams)};};
  vm.createContext(sandbox);vm.runInContext(source,sandbox);
  return {elements,requests,storage,tabs};
 }
@@ -77,7 +79,7 @@ test('situational tab shows baseline shares, the unproven verdict and support fl
  assert.match(e['sit-title'].textContent,/巫医 · 5号位/);assert.equal(e['sit-verdict'].textContent,'');
  const rows=e['sit-body'].children;
  assert.match(text(rows[0]),/固定装/);assert.match(text(rows[1]),/样本少/);
- assert.deepEqual(JSON.parse(s.storage.data['coach-app-items-v2']),{spec:'8:1',view:'situational',sitSpec:'30:5'});
+ assert.deepEqual(JSON.parse(s.storage.data['coach-app-items-v2']),{spec:'8:1',view:'situational',sitSpec:'30:5',enemies:[],seen:[]});
  assert.equal(s.tabs[2].listeners.click,undefined);  // unfinished tabs stay inert
 });
 
@@ -85,4 +87,24 @@ test('stored situational view and hero are restored on load',async()=>{
  const s=boot(JSON.stringify({spec:'8:1',view:'situational',sitSpec:'30:5'}));await flush();
  assert.ok(s.requests.includes('/api/situational'));
  assert.match(s.elements['sit-title'].textContent,/巫医/);
+});
+
+test('juggernaut lineup input asks the trigger route and shows reasons and data verdicts',async()=>{
+ const s=boot(JSON.stringify({spec:'8:1',view:'situational',sitSpec:'8:1',enemies:[12,999],seen:['butterfly','blink']}));await flush();
+ const e=s.elements;
+ assert.equal(e['sit-triggers'].hidden,false);
+ assert.equal(s.requests.filter(r=>r.startsWith('/api/triggers')).at(-1),'/api/triggers?enemies=12&seen=butterfly');  // unknown ids dropped
+ assert.equal(e['enemy-picker'].children.length,5);
+ assert.match(text(e['trigger-list']),/金箍棒/);assert.match(text(e['trigger-list']),/赛前触发/);
+ assert.match(text(e['trigger-list']),/数据支持/);assert.match(text(e['trigger-list']),/克敌机先/);
+ const pick=e['enemy-picker'].children[1];pick.value='33';pick.listeners.change();await flush();
+ assert.equal(s.requests.at(-1),'/api/triggers?enemies=12%2C33&seen=butterfly');
+ e['sit-heroes'].children[1].listeners.click();
+ assert.equal(e['sit-triggers'].hidden,true);
+});
+
+test('no enemy chosen means no trigger request and a prompt',async()=>{
+ const s=boot(JSON.stringify({spec:'8:1',view:'situational',sitSpec:'8:1'}));await flush();
+ assert.ok(!s.requests.some(r=>r.startsWith('/api/triggers')));
+ assert.match(s.elements['trigger-status'].textContent,/至少一个敌方英雄/);
 });

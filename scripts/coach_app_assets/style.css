@@ -6,6 +6,8 @@
   --line: #e2ddd5;
   --accent: #b5452f;
   --accent-ink: #ffffff;
+  --good: #2f7a4d;
+  --bad: #b5452f;
   --cell: 181 69 47;
   --model: #2f6fb5;
   --focus: #2f6fb5;
@@ -20,6 +22,8 @@
     --line: #2c333c;
     --accent: #e0694e;
     --accent-ink: #12151a;
+    --good: #6cc28f;
+    --bad: #e0694e;
     --cell: 224 105 78;
     --model: #6ea8ec;
     --focus: #6ea8ec;
@@ -135,3 +139,23 @@ legend { font-weight: 600; margin-bottom: 8px; }
 .bar span { font-variant-numeric: tabular-nums; min-width: 3.2em; text-align: right; }
 .tag { font-size: 11px; padding: 1px 6px; border: 1px solid var(--line); border-radius: 99px; margin-left: 6px; color: var(--muted); font-weight: 400; }
 @media (max-width: 600px) { .share .opt { display: none; } }
+
+.triggers h2{font-size:1rem;margin:0 0 .5rem}
+.enemy-picker{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.75rem}
+.enemy-picker select{min-width:8rem;max-width:100%;padding:.3rem}
+.seen{border:0;padding:0;margin:0 0 .75rem}
+.checks{display:flex;flex-wrap:wrap;gap:.25rem .9rem}
+.checks label{display:inline-flex;gap:.3rem;align-items:center;font-size:.9rem}
+.trigger-list{list-style:none;padding:0;margin:0 0 .75rem;display:grid;gap:.6rem}
+.trigger{border:1px solid var(--line, #ccd);border-radius:8px;padding:.6rem .8rem}
+.trigger.fired{border-color:var(--accent, #2f6b4f)}
+.trigger .head{display:flex;flex-wrap:wrap;gap:.4rem;align-items:baseline}
+.trigger .name{font-weight:600}
+.chip{font-size:.75rem;padding:.05rem .45rem;border-radius:99px;border:1px solid currentColor}
+.chip.on{color:var(--accent, #2f6b4f)}
+.chip.off{color:var(--muted, #667)}
+.trigger p{margin:.25rem 0;font-size:.9rem}
+.v-support{color:var(--good)}
+.v-against{color:var(--bad)}
+.v-unclear,.v-none{color:var(--muted, #667)}
+.baseline-head{margin-top:1.2rem}

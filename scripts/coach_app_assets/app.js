@@ -1,7 +1,7 @@
 'use strict';
 // High-rank references: item timing (U13) and 针对装 (U20). Talks only to /api/*.
 const $ = id => document.getElementById(id);
-const state = {meta: null, spec: null, request: 0, view: 'items', sit: null, sitSpec: null};
+const state = {meta: null, spec: null, request: 0, view: 'items', sit: null, sitSpec: null, enemies: [], seen: [], trig: 0};
 const STORE = 'coach-app-items-v2';
 const VIEWS = ['items', 'situational'];
 
@@ -13,7 +13,7 @@ function el(tag, text, cls) {
 }
 function save() {
   try {
-    localStorage.setItem(STORE, JSON.stringify({spec: state.spec, view: state.view, sitSpec: state.sitSpec}));
+    localStorage.setItem(STORE, JSON.stringify({spec: state.spec, view: state.view, sitSpec: state.sitSpec, enemies: state.enemies, seen: state.seen}));
   } catch (e) { /* storage unavailable */ }
 }
 function restore() {
@@ -23,6 +23,8 @@ function restore() {
     if (typeof v.spec === 'string') state.spec = v.spec;
     if (VIEWS.includes(v.view)) state.view = v.view;
     if (typeof v.sitSpec === 'string') state.sitSpec = v.sitSpec;
+    if (Array.isArray(v.enemies)) state.enemies = v.enemies.filter(Number.isInteger).slice(0, 5);
+    if (Array.isArray(v.seen)) state.seen = v.seen.filter(x => typeof x === 'string');
   } catch (e) { /* ignore */ }
 }
 const heroName = id => (state.meta.heroes.find(h => h.id === id) || {}).name || `英雄 ${id}`;
@@ -119,6 +121,90 @@ function headRow(labels) {
   for (const [text, cls] of labels) { const th = el('th', text, cls); th.scope = 'col'; head.append(th); }
 }
 
+const ENEMY_SLOTS = 5;
+function renderTriggerInputs() {
+  const t = state.sit.triggers;
+  const known = new Set(t.enemy_heroes.map(h => h.id));
+  state.enemies = state.enemies.filter(id => known.has(id));
+  const okSeen = new Set(t.seen_items.map(i => i.id));
+  state.seen = state.seen.filter(id => okSeen.has(id));
+  const picker = $('enemy-picker'); picker.replaceChildren();
+  const heroes = [...t.enemy_heroes].sort((a, b) => a.name.localeCompare(b.name, 'zh'));
+  for (let slot = 0; slot < ENEMY_SLOTS; slot++) {
+    const sel = el('select'); sel.id = `enemy-${slot}`; sel.setAttribute('aria-label', `敌方英雄 ${slot + 1}`);
+    const none = el('option', '—'); none.value = ''; sel.append(none);
+    for (const h of heroes) {
+      const o = el('option', h.name); o.value = String(h.id);
+      if (state.enemies[slot] === h.id) o.selected = true;
+      sel.append(o);
+    }
+    sel.value = state.enemies[slot] ? String(state.enemies[slot]) : '';
+    sel.addEventListener('change', () => {
+      const picked = []; 
+      for (let i = 0; i < ENEMY_SLOTS; i++) {
+        const v = i === slot ? sel.value : (state.enemies[i] ? String(state.enemies[i]) : '');
+        if (v && !picked.includes(Number(v))) picked[i] = Number(v);
+      }
+      state.enemies = picked.filter(Boolean); save(); renderTriggerInputs(); loadTriggers();
+    });
+    picker.append(sel);
+  }
+  const box = $('seen-items'); box.replaceChildren();
+  for (const it of t.seen_items) {
+    const lab = el('label'); const cb = el('input'); cb.type = 'checkbox'; cb.id = `seen-${it.id}`;
+    cb.checked = state.seen.includes(it.id);
+    cb.addEventListener('change', () => {
+      state.seen = cb.checked ? [...state.seen, it.id] : state.seen.filter(x => x !== it.id);
+      save(); loadTriggers();
+    });
+    lab.append(cb, el('span', it.name)); box.append(lab);
+  }
+}
+
+async function loadTriggers() {
+  const list = $('trigger-list');
+  if (!state.enemies.length) {
+    list.replaceChildren();
+    $('trigger-status').textContent = '选择至少一个敌方英雄后，这里列出每件针对装是否触发、原因、机制和数据结论。';
+    return;
+  }
+  const ticket = ++state.trig;
+  const q = new URLSearchParams({enemies: state.enemies.join(',')});
+  if (state.seen.length) q.set('seen', state.seen.join(','));
+  try {
+    const r = await fetch(`/api/triggers?${q}`, {cache: 'no-store'});
+    if (!r.ok) throw new Error('针对装触发读取失败');
+    const view = await r.json();
+    if (ticket === state.trig) renderTriggers(view);
+  } catch (e) {
+    if (ticket === state.trig) $('trigger-status').textContent = e.message;
+  }
+}
+
+function verdictLine(label, v) {
+  const p = el('p', `${label}：${v.text}`, `v-${v.kind}`);
+  return p;
+}
+
+function renderTriggers(view) {
+  const fired = view.items.filter(i => i.pregame || i.ingame).length;
+  $('trigger-status').textContent = `对 ${view.enemies.map(e => e.name).join('、')}：${fired} 件触发（共 ${view.items.length} 件）。数据来自 ${view.samples} 局高分段一号位主宰。`;
+  const list = $('trigger-list'); list.replaceChildren();
+  for (const it of view.items) {
+    const li = el('li', undefined, 'trigger' + (it.pregame || it.ingame ? ' fired' : ''));
+    const head = el('div', undefined, 'head'); head.append(el('span', it.name, 'name'));
+    head.append(el('span', it.pregame ? '赛前触发' : '赛前未触发', 'chip ' + (it.pregame ? 'on' : 'off')));
+    if (it.ingame_verdict) head.append(el('span', it.ingame ? '比赛中触发' : '比赛中未触发', 'chip ' + (it.ingame ? 'on' : 'off')));
+    li.append(head, el('p', it.pregame_reason));
+    if (it.ingame) li.append(el('p', `已看到：${it.ingame_items.join('、')}`));
+    li.append(el('p', `机制：${it.rules.join('；')}`, 'muted'));
+    li.append(verdictLine('赛前数据', it.pregame_verdict));
+    if (it.ingame_verdict) li.append(verdictLine('比赛中数据', it.ingame_verdict));
+    if (it.note) li.append(el('p', it.note, 'muted'));
+    list.append(li);
+  }
+}
+
 function renderSituational() {
   const heroes = sitHeroes();
   if (!heroes.some(h => h.spec.join(':') === state.sitSpec)) state.sitSpec = heroes[0].spec.join(':');
@@ -134,7 +220,9 @@ function renderSituational() {
   const hero = heroes.find(h => h.spec.join(':') === state.sitSpec);
   const body = $('sit-body'); body.replaceChildren();
   $('sit-title').textContent = `${hero.name} · ${hero.spec[1]}号位 针对装参照`;
+  $('sit-triggers').hidden = hero !== state.sit.juggernaut;
   if (hero === state.sit.juggernaut) {
+    renderTriggerInputs(); loadTriggers();
     const v = state.sit.verdict;
     $('sit-status').textContent = `高分段 ${hero.games} 局；其中 ${hero.games_with_any} 局（${pct(hero.games_with_any / hero.games)}）出过针对装。`;
     $('sit-verdict').textContent = `敌方阵容对第一件针对装的影响未被可靠证实：模型在验证集 ${v.valid_n} 局上平均略好于基线，`

@@ -183,11 +183,19 @@ def test_http_routes(tmp_path):
         assert OPENER.open(base + "/favicon.ico").status == 204
         body = json.loads(OPENER.open(base + "/api/item-timing?hero=8&position=1").read())
         assert body["full_lineup"] is False and len(body["items"]) == 8
+        triggers = json.loads(
+            OPENER.open(base + "/api/triggers?enemies=12,33&seen=butterfly").read()
+        )
+        mkb = next(i for i in triggers["items"] if i["item"] == "monkey_king_bar")
+        assert mkb["pregame"] and mkb["ingame"] and mkb["pregame_verdict"]["kind"] == "support"
+        assert triggers["items"][0]["pregame"] or triggers["items"][0]["ingame"]  # fired first
         for route, code in (
             ("/api/item-timing?hero=8&position=1&enemies=1", 400),
             ("/../knowledge/hero-capabilities/hero-registry.json", 404),
             ("/api/meta?x=1", 404),
             ("/api/situational?hero=8", 404),
+            ("/api/triggers?enemies=8", 400),
+            ("/api/triggers?enemies=1,2&seen=blink", 400),
             ("/model.json", 404),
         ):
             with pytest.raises(urllib.error.HTTPError) as error:
@@ -200,3 +208,29 @@ def test_http_routes(tmp_path):
     finally:
         server.shutdown()
         server.server_close()
+
+
+def test_trigger_query_validation():
+    module = load()
+    ids, items = {1, 2, 3, 4, 5, 6, 8}, {"butterfly", "ghost"}
+    assert module.parse_trigger_query("enemies=1,2", ids, items) == ([1, 2], [])
+    assert module.parse_trigger_query("enemies=1&seen=butterfly,ghost", ids, items) == (
+        [1],
+        ["butterfly", "ghost"],
+    )
+    assert module.parse_trigger_query("enemies=1&seen=", ids, items) == ([1], [])
+    for bad in (
+        "",
+        "seen=butterfly",
+        "enemies=8",  # Juggernaut is the player
+        "enemies=1,1",
+        "enemies=1,2,3,4,5,6",
+        "enemies=99",
+        "enemies=x",
+        "enemies=1&seen=blink",
+        "enemies=1&seen=ghost,ghost",
+        "enemies=1&hero=8",
+        "enemies=1&enemies=2",
+    ):
+        with pytest.raises(ValueError):
+            module.parse_trigger_query(bad, ids, items)

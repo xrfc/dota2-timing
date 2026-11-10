@@ -54,9 +54,9 @@
 
 ## 当前执行计划（2026-10-30 用户确认；2026-11-01改为双线，U37）
 
-- 唯一执行计划：`docs/development-plan-2026-10-30.md`（共享底座MK＋路线A推荐M0–M5＋路线B意识决策B0–B5）。接手先读其§0与§7，只做当前任务的下一个未勾选项；两条线不分主次；先做完共享底座MK，之后两线各自推进（U38）。
+- 一页当前状态：`docs/current-status.md`（先看它）。唯一执行计划：`docs/development-plan-2026-10-30.md`（共享底座MK＋路线A推荐M0–M5＋路线B意识决策B0–B5）。接手先读其§0与§7，只做当前任务的下一个未勾选项；两条线不分主次；先做完共享底座MK，之后两线各自推进（U38）。
 - 架构入口：`docs/architecture.md`。每个模块/脚本须在`src/dota_items/architecture.py`登记线与状态；共享底座不导入任一线，A、B两线互不导入（测试强制）。冻结产物指纹记录源码路径，**不搬迁文件**，物理整理须先登记生产者迁移并单独提出。
-- U67、U73、U113：MK-T3、MK-T4已结束，MK已结束（U122，2026-11-07；R8、R15移到B1）；当前路线B的B0、路线A可做M2b-T6d；知识统一入口`knowledge/mechanics/current.json`；入口`docs/handoff/mk-handoff-2026-11-05.md`，事实`knowledge/mechanics/extractions/v25/`、词表`vocabulary-v14.json`、规则`rules-v12.json`；`basis`不是`user*`的条目不算用户批准。
+- U67、U73、U113：MK-T3、MK-T4已结束，MK已结束（U122，2026-11-07；R8、R15移到B1）；当前多英雄demo采集（U128、U129，`docs/demo-collection.md`）与M2b-T10页面评审，之后U124第③步和B0；知识统一入口`knowledge/mechanics/current.json`；入口`docs/handoff/mk-handoff-2026-11-05.md`，事实`knowledge/mechanics/extractions/v26/`、词表`vocabulary-v15.json`、规则`rules-v13.json`；`basis`不是`user*`的条目不算用户批准。
 - 用户决定记录在`docs/decisions/`；计划§2“待决”项必须先问用户。
 - 账号ID只在未跟踪的`configs/user.local.json`，不得写入跟踪文件或推送。
 
@@ -68,5 +68,10 @@
 ## AI临时分支（2026-10-31用户确认，U25）
 
 - 在临时环境（云端容器等）改动本仓库的任何AI，都在自己的`<ai名>-temp`分支（如`claude-temp`、`codex-temp`）提交，可随时推送该分支防丢失，并开PR到`main`；**合并PR、推送main、删除分支须用户同意**。不碰其他AI的temp分支。
-- 本地OpenClaw工作区仍只用`main`，上文“不自动切分支”“不推送”对本地照旧有效。
+- ~~本地OpenClaw工作区仍只用`main`~~（已被U135取代）。
+
+## 功能分支与PR（2026-11-10用户决定，U135）
+
+- 本地也用功能分支＋PR：一个主题一个分支（如`claude/<主题>-<日期>`），从最新`origin/main`开出，推送该分支并开PR到`main`；PR按主题拆小，不把无关工作堆进同一个PR。
+- **合并PR、推送main、删除分支仍须用户同意**；不改写已推送的历史。上文“唯一分支为main”“不自动切分支”对本地不再适用，其余（单worktree、共享index不并行操作）照旧。
 - 完整流程（开始重置/rebase、PR内容、冲突处理）：`docs/handoff/ai-temp-branch-contract.md`。

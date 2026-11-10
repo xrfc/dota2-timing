@@ -10,10 +10,12 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 from dota_items.data.item_registry import display_name, load_registry
+from dota_items.data.mechanics_api import Knowledge
 from dota_items.data.source_io import parse_source_json, read_source_bytes
 from dota_items.modeling import item_timing
 from dota_items.modeling import situational_items as si
 from dota_items.modeling import situational_reference as sr
+from dota_items.modeling import situational_triggers as st
 from dota_items.storage import file_hash
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +24,9 @@ REGISTRY = "knowledge/hero-capabilities/hero-registry.json"
 DEFAULT_RUN = "reports/m2-item-timing-2026-10-30-r2"
 SITUATIONAL_RUN = "reports/m2b-situational-2026-10-31-v1"
 SITUATIONAL_REFERENCE = "reports/m2b-situational-reference-2026-10-31-v1"
+TRIGGER_SPEC = "knowledge/situational-items/triggers-v3.json"
+TRIGGER_VALIDATION = "knowledge/situational-items/validation-v4.json"
+MAX_ENEMIES = 5
 SMALL_COUNT = 10
 ITEM_REGISTRY = "knowledge/items/item-registry.json"
 NOTES = [
@@ -119,11 +124,57 @@ def situational_view(reference, model, result, items, hero_names):
     }
 
 
+def trigger_state(items, root=ROOT):
+    """Juggernaut trigger page data (M2b-T9, U124 option A): spec, validation, knowledge."""
+    spec = _read(root / TRIGGER_SPEC)
+    validation = _read(root / TRIGGER_VALIDATION)
+    if validation["spec"] != TRIGGER_SPEC:
+        raise ValueError("Validation summary belongs to another trigger spec")
+    kb = Knowledge(root)
+    seen = sorted({i for item in spec["items"] for i in item["ingame_items"]})
+    names = {i: display_name(items, i) for i in seen}
+    return {
+        "spec": spec,
+        "validation": validation,
+        "kb": kb,
+        "item_names": names,
+        "public": {
+            "enemy_heroes": [
+                {"id": h, "name": kb.hero_name(h)} for h in kb.hero_ids() if h != si.HERO[0]
+            ],
+            "seen_items": [{"id": i, "name": names[i]} for i in seen],
+            "samples": validation["samples"],
+        },
+    }
+
+
+def parse_trigger_query(query, hero_ids, allowed_items):
+    """Strict: enemies (1-5 distinct known heroes, not Juggernaut) and optional seen items."""
+    params = parse_qs(query, keep_blank_values=True, strict_parsing=bool(query))
+    if not set(params) <= {"enemies", "seen"} or "enemies" not in params:
+        raise ValueError("Bad parameters")
+    if any(len(v) != 1 for v in params.values()):
+        raise ValueError("Bad parameters")
+    try:
+        enemies = [int(x) for x in params["enemies"][0].split(",")]
+    except ValueError as error:
+        raise ValueError("Bad parameters") from error
+    if not 1 <= len(enemies) <= MAX_ENEMIES or len(set(enemies)) != len(enemies):
+        raise ValueError("Bad parameters")
+    if any(h not in hero_ids or h == si.HERO[0] for h in enemies):
+        raise ValueError("Bad parameters")
+    seen = [x for x in params.get("seen", [""])[0].split(",") if x]
+    if len(set(seen)) != len(seen) or any(x not in allowed_items for x in seen):
+        raise ValueError("Bad parameters")
+    return enemies, seen
+
+
 def load_state(
     run=DEFAULT_RUN,
     repo=ROOT,
     situational_run=SITUATIONAL_RUN,
     situational_reference=SITUATIONAL_REFERENCE,
+    knowledge_root=ROOT,
 ):
     run = repo / run
     manifest = _verified(run)
@@ -161,12 +212,15 @@ def load_state(
         "notes": NOTES,
         "run": str(run.relative_to(repo)),
     }
+    triggers = trigger_state(items, knowledge_root)
+    situational = {**situational, "triggers": triggers["public"]}
     return {
         "meta": meta,
         "model": model,
         "rows": rows,
         "hero_ids": set(hero_names),
         "situational": situational,
+        "triggers": triggers,
     }
 
 
@@ -232,6 +286,21 @@ def make_handler(state):
                 return
             if url.path in static and not url.query:
                 self._send(200, *static[url.path])
+                return
+            if url.path == "/api/triggers":
+                t = state["triggers"]
+                try:
+                    enemies, seen = parse_trigger_query(
+                        url.query, set(t["kb"].hero_ids()), set(t["item_names"])
+                    )
+                except ValueError:
+                    self.send_error(400)
+                    return
+                view = st.trigger_view(
+                    t["spec"], t["validation"], t["kb"], enemies, seen, t["item_names"]
+                )
+                body = json.dumps(view, ensure_ascii=False).encode()
+                self._send(200, "application/json; charset=utf-8", body)
                 return
             if url.path == "/api/item-timing":
                 try:

@@ -2,7 +2,8 @@
 
 全部由脚本生成，不手填，当前版本见下。`?`表示只有AI一致，用户尚未确认。
 
-- `derived-v16/`（当前，草稿，U120、U121）：由`scripts/build_mechanics_derived_v16.py`从事实v25和特性映射v6生成；新增加速，保命特性加上用户确认的逃跑技能。
+- `derived-v17/`（当前，草稿，U126）：由`scripts/build_mechanics_derived_v17.py`从事实v26生成；标签改为“无视减益免疫”（`data.mechanics_profiles_v5`）。
+- `derived-v16/`（已被v17取代，U120、U121）：由`scripts/build_mechanics_derived_v16.py`从事实v25和特性映射v6生成；新增加速，保命特性加上用户确认的逃跑技能。
 - `derived-v15/`（已被v16取代，U119）：由`scripts/build_mechanics_derived_v15.py`从事实v24生成；动能栅栏记了减速。
 - `derived-v14/`（已被v15取代，U118）：由`scripts/build_mechanics_derived_v14.py`从事实v23和特性映射v5生成；神谕者加入魔法爆发，狼人不再算自身闪避。
 - `derived-v13/`（已被v14取代，U117）：由`scripts/build_mechanics_derived_v13.py`从事实v22和规则v12生成；虚妄之诺加了免死，新增R24（淘汰之刃克制免死）。

@@ -1,5 +1,7 @@
 # Dota 2 离线分析与机器学习实践
 
+当前状态：[docs/current-status.md](docs/current-status.md)（做完了什么、正在跑什么、接下来做什么）。
+
 只做**赛前准备**和**赛后复盘**，不做实战实时辅助。这个项目也是用户学习机器学习的实践：数据、标签、划分、模型和指标的关键选择都写在文档里。
 
 **入口**：[开发计划](docs/development-plan-2026-10-30.md)（唯一进度：§7）· [架构](docs/architecture.md) · [决策记录](docs/decisions/README.md) · [文档索引](docs/README.md) · [变更记录](CHANGELOG.md)
@@ -21,7 +23,7 @@
 | `scripts/coach_app.py`（8780） | A | “出装节奏参照”和“赛前·针对装”两页，高分段基线 | 无阵容输入；阵容影响未证实（M2b模型未通过） |
 | `scripts/replay_viewer.py` | B | 13场录像的全知/天辉/夜魇回放 | 证据浏览工具，不给建议 |
 | `scripts/decision_review.py`（8768–8770） | B | R1两个支援/刷钱案例的评审包 | 人工案例，非训练标签 |
-| `knowledge/mechanics/` | 共享 | 机制词表v14、复核后事实v25、规则v12、派生层v16（档案、克制关系候选，草稿），统一入口`current.json`、交叉复核记录 | 规则层（MK-T4）已结束，推导层（MK-T5）进行中 |
+| `knowledge/mechanics/` | 共享 | 机制词表v15、复核后事实v26、规则v13、派生层v17（档案、克制关系候选，草稿），统一入口`current.json`、交叉复核记录 | 规则层（MK-T4）已结束，推导层（MK-T5）进行中 |
 
 模型和冻结数据不随Git分发（`data/`、`reports/`是本地证据），干净克隆不能直接复现真实预测。
 

@@ -89,3 +89,28 @@ def test_outputs_are_never_overwritten(tmp_path):
     flow._write_new(target, {})
     with pytest.raises(SystemExit):
         flow._write_new(target, {})
+
+
+def test_hero_level_changes_expand_to_abilities_and_new_heroes_need_a_person():
+    hero_diff = {
+        "languages": {
+            "english": {
+                "changes": [
+                    {
+                        "hero_id": 111,
+                        "hero": "npc_dota_hero_oracle",
+                        "change": "hero_fields",
+                        "fields": ["facets"],
+                    },
+                    {"hero_id": 999, "hero": "npc_dota_hero_new", "change": "hero_added"},
+                ]
+            }
+        }
+    }
+    result = flow.impact(hero_diff)
+    subjects = {row["subject"] for row in result["fact_rows_to_recheck"]}
+    assert "oracle_false_promise" in subjects
+    assert "hero-level hero_fields" in result["changed_subjects"]["oracle_false_promise"][0]
+    assert result["manual_review"] == [
+        {"hero": "npc_dota_hero_new", "reason": "herodata/english: hero-level hero_added []"}
+    ]

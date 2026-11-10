@@ -1,0 +1,25 @@
+{
+ "schema": "mechanics-v26-inputs/1",
+ "note": "U126：哈斯卡·牺牲的“减益免疫”改为排除，“无视减益免疫”依据改为用户确认；术语改名在词表v15、枚举v2、规则v13。",
+ "condition_exceptions": [],
+ "decision_changes": [
+  {
+   "review_id": "8f1b4dc815b55bd62228",
+   "subject": "huskar_life_break",
+   "mechanism": "debuff_immunity",
+   "from": "accept",
+   "to": "reject",
+   "basis": "user:U126",
+   "note_zh": "用户U126：原文是“减速效果无视减益免疫”，不是哈斯卡自己减益免疫"
+  }
+ ],
+ "basis_updates": [
+  {
+   "review_id": "audit:huskar_life_break:pierces_debuff_immunity:base",
+   "subject": "huskar_life_break",
+   "mechanism": "pierces_debuff_immunity",
+   "from": "two_ai",
+   "to": "user:U126"
+  }
+ ]
+}

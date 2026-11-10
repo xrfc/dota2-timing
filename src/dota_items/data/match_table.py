@@ -8,6 +8,7 @@ import collections
 import hashlib
 from pathlib import Path
 
+from dota_items.data.position_rule import POSITION_MIN_GAP, split_safelane  # noqa: F401
 from dota_items.data.source_io import parse_source_json, read_source_bytes
 
 DEFAULT_ROOTS = (
@@ -101,7 +102,6 @@ def inventory(matches):
 
 LANE_MINUTE = 10
 POSITION_MINUTE = 15
-POSITION_MIN_GAP = 25  # U8: last-hit gap below this -> position unknown
 COLLAPSED_CARRY_LH_10 = 35  # U8: user-chosen threshold
 
 # When each column is knowable. Pre-game products (A/B) may only consume
@@ -210,12 +210,8 @@ def assign_positions(rows):
             teams.setdefault((row["match_id"], row["is_radiant"]), []).append(row)
     positions = {}
     for safelane in teams.values():
-        if len(safelane) != 2 or any(r["lh_15"] is None for r in safelane):
-            continue
-        high, low = sorted(safelane, key=lambda r: -r["lh_15"])
-        if high["lh_15"] - low["lh_15"] >= POSITION_MIN_GAP:
-            positions[(high["match_id"], high["player_slot"])] = 1
-            positions[(low["match_id"], low["player_slot"])] = 5
+        lh = {(r["match_id"], r["player_slot"]): r["lh_15"] for r in safelane}
+        positions.update(split_safelane(lh) if len(safelane) == 2 else {})
     result = []
     for row in rows:
         position = positions.get((row["match_id"], row["player_slot"]))

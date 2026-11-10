@@ -221,3 +221,14 @@ def test_track_of_resolves_most_specific_entry():
     assert track_of("dota_items") == SHARED
     with pytest.raises(KeyError):
         track_of("dota_items.unknown_package.module")
+
+
+def test_architecture_doc_track_table_is_current():
+    """docs/architecture.md §2.2 must match the registry; regenerate with
+    `PYTHONPATH=src python scripts/architecture_stats.py --write`."""
+    from pathlib import Path
+
+    from dota_items.architecture import track_table
+
+    doc = (Path(__file__).resolve().parents[1] / "docs/architecture.md").read_text("utf-8")
+    assert track_table() in doc
