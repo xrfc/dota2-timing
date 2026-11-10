@@ -1,11 +1,12 @@
-"""B0: find "被抓" (gank) episodes in one match (U115, U116, U131).
+"""B0: find "被抓" (gank) episodes in one match (U115, U116, U131, U132).
 
 Definition (user): a player is ganked when at least two enemy heroes catch him outside a
 big fight, coming from out of his team's sight while he is far from teammates, and he dies
 or has to use a save (his own, or a teammate's on him) to get away. Window 20 s, a new
 episode needs 10 s without enemy-hero damage. Thresholds are assistant proposals the user
 accepted for a first pass (U131); they are parameters, and positions are a parameter too
-(U116: evaluate 1 and 5 now, keep 2/3/4 open).
+(U132: evaluate position 1 only; 2/3/4/5 stay open, U116). A gank is labelled `death`
+(the main outcome, U132) or `save_escape` (got away by using a save; kept separately).
 
 Inputs are omniscient replay data: per-second hero state from parser v3, the combat log,
 and per-team hero visibility from the existing parse. Contract: docs/b0-gank-rules.md.
@@ -20,7 +21,7 @@ SCHEMA = "gank-episodes/1"
 SAVE_MEANS_SCHEMA = "save-means/1"
 
 PARAMS = {
-    "positions": (1, 5),  # U115/U116; 2/3/4 are a TODO
+    "positions": (1,),  # U132; 5 (U115) and 2/3/4 (U116) are a TODO
     "window": 20,  # U115
     "quiet_gap": 10,  # U131 q4
     "min_enemies": 2,  # U115
@@ -328,10 +329,15 @@ def _episode(match_id, victim, position, t0, events, deaths, casts, tracks, team
         "nearest_ally": None if ally_gap in (None, math.inf) else round(ally_gap),
         "flags": flags,
         "is_gank": all(flags.values()),
+        "label": None
+        if not all(flags.values())
+        else "death"
+        if died is not None
+        else "save_escape",
     }
 
 
-def summarize(episodes, matches):
+def summarize(episodes, matches, positions=PARAMS["positions"]):
     ganks = [e for e in episodes if e["is_gank"]]
     failing = Counter(k for e in episodes for k, v in e["flags"].items() if not v)
     return {
@@ -339,7 +345,8 @@ def summarize(episodes, matches):
         "matches": matches,
         "episodes": len(episodes),
         "ganks": len(ganks),
-        "ganks_per_player_match": round(len(ganks) / max(1, 2 * 2 * matches), 2),
+        "ganks_per_player_match": round(len(ganks) / max(1, 2 * len(positions) * matches), 2),
+        "by_label": dict(Counter(e["label"] for e in ganks)),
         "by_position": dict(Counter(e["position"] for e in ganks)),
         "by_outcome": dict(Counter(e["outcome"] for e in ganks)),
         "condition_failures": dict(failing),

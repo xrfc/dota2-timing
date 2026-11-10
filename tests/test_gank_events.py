@@ -187,3 +187,15 @@ def test_save_means_follow_u131():
     means = g.build_save_means(FakeKb())["means"]
     assert set(means) == {"antimage_blink", "item_blink", "mirana_leap", "item_phase_boots"}
     assert "damage_block" not in g.SAVE_MECHANISMS
+
+
+def test_u132_position_one_only_and_death_is_the_main_label():
+    assert g.PARAMS["positions"] == (1,)
+    assert run([hit(30, "e1"), hit(31, "e2"), death(35)], positions={"v": 5}) == []
+    [dead] = run([hit(30, "e1"), hit(31, "e2"), death(35)])
+    [escaped] = run([hit(30, "e1"), hit(31, "e2"), cast(33, "v", "item_blink")])
+    [hit_only] = run([hit(30, "e1"), hit(31, "e2")])
+    assert (dead["label"], escaped["label"], hit_only["label"]) == ("death", "save_escape", None)
+    summary = g.summarize([dead, escaped, hit_only], matches=1)
+    assert summary["by_label"] == {"death": 1, "save_escape": 1}
+    assert summary["ganks_per_player_match"] == 1.0

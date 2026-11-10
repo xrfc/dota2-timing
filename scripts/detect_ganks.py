@@ -97,7 +97,8 @@ def run(args):
     with (out / "episodes.jsonl").open("w", encoding="utf-8") as stream:
         for count, mid in enumerate(ids, 1):
             found, positions = match_episodes(root, mid, means)
-            unknown_positions += sum(1 for p in positions.values() if p is None) != 6
+            wanted = 2 * len(PARAMS["positions"])
+            unknown_positions += sum(p in PARAMS["positions"] for p in positions.values()) < wanted
             for e in found:
                 stream.write(json.dumps(e, ensure_ascii=False) + "\n")
             episodes += found
@@ -108,7 +109,7 @@ def run(args):
             )
     summary = {
         **summarize(episodes, len(ids)),
-        "matches_without_four_positions": unknown_positions,
+        "matches_missing_an_evaluated_position": unknown_positions,
         "params": {k: (list(v) if isinstance(v, tuple) else v) for k, v in PARAMS.items()},
         "save_means": str(SAVE_MEANS),
     }
