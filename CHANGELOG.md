@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-11-10 U133–U135：留出集、分层抽查、分支规则
+
+- U133：新增`data.awareness_split`，路线B按比赛ID加盐哈希留出20%比赛作最终评估；`detect_ganks.py run`不读留出集（本轮跳过55场）。
+- U134：抽查改为1号位三层各20个（被抓死、交出保命逃掉、差一个条件），生成`sample.json`和`review.md`。第二轮238场：1030次被抓，死亡654。
+- U135：本地也用功能分支＋PR，一个主题一个PR；`AGENTS.md`、计划§5.5已改。
+- U8位置规则抽到共享的`data.position_rule`，路线A的`match_table`和路线B的`gank_events`都调用它，行为不变。
+
 ## 2026-11-10 U132：B0只评1号位
 
 - 用户决定路线B防被抓先只评1号位，被抓死作为主要结果；“交出保命逃掉”单独标为`save_escape`。5号位写入计划§8待办。`data.gank_events`默认`positions=(1,)`，每次被抓带`label`。

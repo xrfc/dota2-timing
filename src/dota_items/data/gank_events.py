@@ -15,6 +15,7 @@ and per-team hero visibility from the existing parse. Contract: docs/b0-gank-rul
 import math
 from collections import Counter
 
+from dota_items.data.position_rule import split_safelane
 from dota_items.sources.gem_capture_v3 import lane_of
 
 SCHEMA = "gank-episodes/1"
@@ -69,7 +70,6 @@ ACTIVE_HASTE_ITEMS = {
 }
 TELEPORT_ITEMS = {"item_tpscroll", "item_travel_boots", "item_travel_boots_2"}
 TEAM_SAFELANE = {2: "bot", 3: "top"}  # Radiant bottom, Dire top
-POSITION_MIN_GAP = 25  # U8: 15-minute last-hit gap below this -> position unknown
 LANE_SECONDS = (60, 600)
 
 
@@ -168,11 +168,7 @@ def infer_positions(tracks, last_hits_15):
         if lanes and lanes.most_common(1)[0][0] == TEAM_SAFELANE.get(track["team"]):
             by_team.setdefault(track["team"], []).append(hero)
     for heroes in by_team.values():
-        if len(heroes) != 2 or any(last_hits_15.get(h) is None for h in heroes):
-            continue
-        high, low = sorted(heroes, key=lambda h: -last_hits_15[h])
-        if last_hits_15[high] - last_hits_15[low] >= POSITION_MIN_GAP:
-            positions[high], positions[low] = 1, 5
+        positions.update(split_safelane({h: last_hits_15.get(h) for h in heroes}))
     return positions
 
 

@@ -95,6 +95,7 @@ MODULES = {
     "data.mechanics_traits_v3": (_S, "active"),
     "data.mechanics_current": (_S, "active"),
     "data.mechanics_api": (_S, "active"),
+    "data.position_rule": (_S, "active"),
     "data.knowledge_superseded": (_S, "active"),
     "data.mechanics_rules_v11": (_S, "active"),
     "data.mechanics_facts_v19": (_S, "active"),
@@ -147,6 +148,7 @@ MODULES = {
     # data: track B (observer-perspective replay evidence and decision points)
     "data.decision_comparison": (_B, "active"),
     "data.gank_events": (_B, "active"),
+    "data.awareness_split": (_B, "active"),
     "data.decision_context": (_B, "active"),
     "data.decision_evidence": (_B, "active"),
     "data.decision_mana": (_B, "active"),

@@ -40,7 +40,7 @@
 |---|---|---|
 | demo采集 | 2026-11-09 19:14（北京时间）按平均超凡及以上续跑，启动时116/1500；旧批次另存178场低于门槛的回放 | `tail -f data/demos-2026-11/log.txt`；汇总见`docs/demo-collection.md` |
 | 解析器v3批量抽取 | 2026-11-09起后台逐场跑已采demo（约330场，每场约40秒） | `tail -f data/demos-2026-11/state-v3/log.txt` |
-| 路线B的B0 | 规则已实现（U131）；U132改为只评1号位、被抓死为主要结果；待定留出集和分层抽查后重跑 | `docs/b0-gank-rules.md`§7；`reports/gank-episodes-2026-11-09/sample.json` |
+| 路线B的B0 | 只评1号位（U132），留出20%比赛（U133）；238场找出1030次被抓（死亡654）；等用户分层抽查60个（U134） | `reports/gank-episodes-2026-11-10/review.md`；`docs/b0-gank-rules.md`§8 | `docs/b0-gank-rules.md`§7；`reports/gank-episodes-2026-11-09/sample.json` |
 | M2b-T10 页面评审 | 用户评审中，已按U127调整一次 | 启动`scripts/coach_app.py`后打开 http://127.0.0.1:8780 |
 
 ## 接下来（按顺序）

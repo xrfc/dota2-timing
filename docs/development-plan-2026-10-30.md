@@ -367,7 +367,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 - 定义类问题由助手出方案、用户拍板并写决策记录。
 
 ### 5.5 Git
-- 遵守`AGENTS.md`：本地单worktree、`main`分支，不自动切分支或重建worktree；临时环境中的AI按U25在自己的分支提交并推送。
+- 遵守`AGENTS.md`：本地单worktree；按U135用功能分支＋PR，一个主题一个分支，从最新`origin/main`开出；合并PR、推送main、删除分支须用户同意。临时环境中的AI按U25在自己的分支提交并推送。
 - 小步提交；不提交`data/`、`reports/`、`configs/*.local.json`。
 
 ### 5.6 文档
@@ -403,6 +403,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 **U37（2026-11-01）双线重构**：计划改为共享底座＋路线A＋路线B；新增[架构](architecture.md)与`src/dota_items/architecture.py`（全部130个模块（含新增的architecture.py）、77个脚本登记线与状态，测试强制跨线依赖规则，首次扫描0处违规）；原M6改为路线B（[设计](awareness-track.md)）；新增文档链接检查；4份2026-10-10历史设计文档归档。代码行为未改，冻结产物未动。当前任务仍是MK-T3（见下）；Q11–Q16待用户回答。
 
 ### 下一步（接手从这里开始）
+
+**2026-11-10，B0第二轮。** U132只评1号位、U133留出20%比赛（`data.awareness_split`）、U134分层抽查；238场找出1030次被抓（死亡654），抽查表`reports/gank-episodes-2026-11-10/review.md`，见[B0规则](b0-gank-rules.md)§8。U135：本地改用功能分支＋PR。位置规则U8抽到共享的`data.position_rule`，两条线共用。
 
 **2026-11-09，B0。** 用户已答四个问题（U131）；规则已实现（`data.gank_events`、`scripts/detect_ganks.py`、保命手段清单`knowledge/awareness/save-means-v1.json`），162场找出1294次被抓，见[B0规则](b0-gank-rules.md)§7。下一步：用户抽查20个被抓、20个差一点的实例，按偏差调阈值后冻结任务契约，再进B1。
 

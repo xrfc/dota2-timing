@@ -6,9 +6,10 @@
 
 `save-means` writes knowledge/awareness/save-means-v1.json (refuses to overwrite).
 `run` reads every match with both `state-v3/<id>.jsonl.gz` and
-`parsed/<id>.normalized.json.gz`, writes `episodes.jsonl`, `summary.json` and
-`sample.json` (20 ganks and 20 near misses for the user to check in replays). Read-only
-on the data folder; the output folder must not exist yet.
+`parsed/<id>.normalized.json.gz` **except the track B holdout (U133)**, writes
+`episodes.jsonl`, `summary.json` and `sample.json`: three strata of 20 for the user's
+review (U134): deaths, escapes by a save, and episodes one condition short. Read-only on
+the data folder; the output folder must not exist yet.
 """
 
 import argparse
@@ -17,6 +18,8 @@ import json
 import random
 from pathlib import Path
 
+from dota_items.data.awareness_split import describe as holdout_rule
+from dota_items.data.awareness_split import is_holdout
 from dota_items.data.gank_events import (
     PARAMS,
     build_save_means,
@@ -86,11 +89,12 @@ def run(args):
     root = args.root
     out = args.out
     out.mkdir(parents=True, exist_ok=False)
-    ids = sorted(
+    available = sorted(
         int(p.name.split(".")[0])
         for p in (root / "state-v3").glob("*.jsonl.gz")
         if (root / "parsed" / f"{p.name.split('.')[0]}.normalized.json.gz").exists()
     )
+    ids = [m for m in available if not is_holdout(m)]  # U133: never read the holdout here
     if args.limit:
         ids = ids[: args.limit]
     episodes, unknown_positions = [], 0
@@ -110,21 +114,26 @@ def run(args):
     summary = {
         **summarize(episodes, len(ids)),
         "matches_missing_an_evaluated_position": unknown_positions,
+        "holdout": {**holdout_rule(), "skipped_matches": len(available) - len(ids)},
         "params": {k: (list(v) if isinstance(v, tuple) else v) for k, v in PARAMS.items()},
         "save_means": str(SAVE_MEANS),
     }
     write_json(out / "summary.json", summary)
     rng = random.Random(SAMPLE_SEED)
-    ganks = [e for e in episodes if e["is_gank"]]
-    near = [
-        e for e in episodes if not e["is_gank"] and sum(not v for v in e["flags"].values()) == 1
-    ]
+    strata = {
+        "death": [e for e in episodes if e["label"] == "death"],
+        "save_escape": [e for e in episodes if e["label"] == "save_escape"],
+        "near_miss": [
+            e for e in episodes if not e["is_gank"] and sum(not v for v in e["flags"].values()) == 1
+        ],
+    }
     write_json(
         out / "sample.json",
         {
             "seed": SAMPLE_SEED,
-            "ganks": rng.sample(ganks, min(20, len(ganks))),
-            "near_misses": rng.sample(near, min(20, len(near))),
+            "decision": "U134",
+            "population": {k: len(v) for k, v in strata.items()},
+            **{k: rng.sample(v, min(20, len(v))) for k, v in strata.items()},
         },
     )
     print(json.dumps(summary, ensure_ascii=False, indent=1))
