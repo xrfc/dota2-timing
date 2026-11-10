@@ -404,6 +404,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ### 下一步（接手从这里开始）
 
+**2026-11-10，合并与状态。** PR #18已合并进`main`（49a29bb），之后在`claude/b0-review-2026-11-10`上工作（U135）。解析器v3抽完388场（95.4%施放看到冷却）。demo采集在2026-11-09 15:22 UTC停在207/1500，无报错，待用户决定重启。当前状态见[当前状态](current-status.md)。
+
 **2026-11-10，B0第二轮。** U132只评1号位、U133留出20%比赛（`data.awareness_split`）、U134分层抽查；238场找出1030次被抓（死亡654），抽查表`reports/gank-episodes-2026-11-10/review.md`，见[B0规则](b0-gank-rules.md)§8。U135：本地改用功能分支＋PR。位置规则U8抽到共享的`data.position_rule`，两条线共用。
 
 **2026-11-09，B0。** 用户已答四个问题（U131）；规则已实现（`data.gank_events`、`scripts/detect_ganks.py`、保命手段清单`knowledge/awareness/save-means-v1.json`），162场找出1294次被抓，见[B0规则](b0-gank-rules.md)§7。下一步：用户抽查20个被抓、20个差一点的实例，按偏差调阈值后冻结任务契约，再进B1。
