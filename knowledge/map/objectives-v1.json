@@ -1,0 +1,130 @@
+{
+ "schema": "map-objectives/1",
+ "patch": "7.41f",
+ "created": "2026-11-15",
+ "decision": "U154 (gap list item 7, 5 and 6)",
+ "use": "map knowledge for review pages and later features; not a rule",
+ "basis_values": {
+  "replay": "measured on our own 7.41f replays (non-holdout matches); the evidence field says how",
+  "web": "community guides, not checked against our replays or the official patch notes",
+  "unknown": "neither found nor measured"
+ },
+ "objectives": [
+  {
+   "id": "roshan_spawn",
+   "name_zh": "肉山首次出现",
+   "value": "游戏开始（0:00）就在",
+   "seconds": 0,
+   "basis": "replay",
+   "evidence": "887场：830场0秒、57场1秒时肉山已存活"
+  },
+  {
+   "id": "roshan_respawn",
+   "name_zh": "肉山复活时间",
+   "value": "被杀后8到11分钟，具体时刻不公开",
+   "seconds": [480, 663],
+   "basis": "replay",
+   "evidence": "887场里665次被杀后的复活：最短482秒、中位563秒、最长662秒；网上说法“8–11分钟”一致"
+  },
+  {
+   "id": "roshan_pit",
+   "name_zh": "肉山在哪个坑",
+   "value": "前15分钟在上坑；之后白天在上坑、夜晚在下坑（昼夜各5分钟，开局白天）",
+   "basis": "replay",
+   "evidence": "11场逐秒位置：96.5%的存活秒数符合，不符合的是换坑路上；每场第一次到下坑在15:13到15:14"
+  },
+  {
+   "id": "tormentor_spawn",
+   "name_zh": "痛苦魔方首次出现",
+   "value": "约20:00",
+   "seconds": 1200,
+   "basis": "replay",
+   "evidence": "887场里最早一次击杀在20:11（1211秒），首杀中位25:55；网上没有查到明确时间，20:00是由最早击杀推断"
+  },
+  {
+   "id": "tormentor_respawn",
+   "name_zh": "痛苦魔方复活",
+   "value": "被杀后至少约10分钟",
+   "seconds_at_least": 600,
+   "basis": "replay",
+   "evidence": "同一场里相邻两次击杀最短间隔610秒；每场最多3次"
+  },
+  {
+   "id": "power_rune",
+   "name_zh": "强化符",
+   "value": "6:00起，每2分钟一次，两个强化符点",
+   "first": 360,
+   "every": 120,
+   "basis": "replay",
+   "evidence": "12215次强化符拾取（加速、隐身、护盾、双倍、奥术、恢复）：最早都在360秒；6、8分钟时拾取最多，7、9分钟是晚拾的"
+  },
+  {
+   "id": "bounty_rune",
+   "name_zh": "赏金符",
+   "value": "没有核实",
+   "basis": "unknown",
+   "evidence": "战斗日志里没有赏金符拾取的记录"
+  },
+  {
+   "id": "wisdom_shrine",
+   "name_zh": "智慧神符（经验神龛）",
+   "value": "7:00第一次，之后每7分钟；双方都在时计时倒退",
+   "first": 420,
+   "every": 420,
+   "basis": "web",
+   "evidence": "Playnews 7.41e指南、Hawk Live；战斗日志里没有记录，未用录像核对"
+  },
+  {
+   "id": "lotus_pool",
+   "name_zh": "莲花池",
+   "value": "每3分钟产一个治疗莲花，最多存6个",
+   "every": 180,
+   "cap": 6,
+   "basis": "web",
+   "evidence": "Playnews 7.41e指南；录像里只有使用记录（887场共12076次），没有产出时刻，未核对"
+  },
+  {
+   "id": "twin_gate",
+   "name_zh": "传送门",
+   "value": "引导约4秒后传到另一扇门",
+   "channel_seconds": 4,
+   "basis": "replay",
+   "evidence": "887场6615次使用：5483次引导满4秒，其余是被打断"
+  },
+  {
+   "id": "watcher",
+   "name_zh": "观察者",
+   "value": "开局可用；使用后归使用方，直到对方再用（实体字段m_nFoWTeam）",
+   "basis": "replay",
+   "evidence": "887场30341次使用，最早0秒。60场核对：使用后3秒内该观察者的m_nFoWTeam等于使用方的占70%（其余多为被打断或对方立刻抢回），保持时间中位963秒。它给的视野范围和时长没有核实：按“一直给800／450视野”加进视野模拟反而更差"
+  },
+  {
+   "id": "outpost",
+   "name_zh": "前哨",
+   "value": "最早约9:30可占，占领后归占领方",
+   "basis": "replay",
+   "evidence": "887场占领记录：最早568秒一次，其余从约855秒开始；中位2021秒"
+  },
+  {
+   "id": "flooded_camps",
+   "name_zh": "蛙类野点升级",
+   "value": "小蛙点约12–15分钟由蝌蚪升为小蛙；中蛙点约10–15分钟由小蛙升为大蛙；其中赏金符旁边的两个约20–27分钟再升为远古蛙",
+   "basis": "replay",
+   "evidence": "105场野怪击杀按5分钟分段统计；精确升级时刻没定。网上说法：一个营地最多升到大野，赏金符旁的可升两次到远古"
+  },
+  {
+   "id": "day_night",
+   "name_zh": "昼夜",
+   "value": "白天、夜晚各5分钟，开局是白天",
+   "basis": "replay",
+   "evidence": "录像的time_of_day：0秒16383、300秒49097、600秒回到16328"
+  },
+  {
+   "id": "neutral_stack",
+   "name_zh": "屯野、拉野时间",
+   "value": "屯野在每分钟第52–55秒；常见拉野在0:51、1:21",
+   "basis": "web",
+   "evidence": "profilerr、Hotspawn等攻略；未用录像核对"
+  }
+ ]
+}

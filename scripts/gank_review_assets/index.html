@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B0 被抓抽查</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<aside id="list" aria-label="抽查清单"></aside>
+<main>
+  <header>
+    <h1 id="title">读取中…</h1>
+    <p id="question"></p>
+  </header>
+  <div id="stage">
+    <canvas id="map" width="900" height="900"></canvas>
+  </div>
+  <div id="controls">
+    <button id="play" type="button">播放</button>
+    <button id="restart" type="button" title="回到开头">⏮</button>
+    <button id="to-start" type="button" title="跳到起点">起点</button>
+    <input id="time" type="range" min="0" max="1" value="0" aria-label="时间">
+    <span id="clock"></span>
+    <label>速度
+      <select id="speed"><option value="1">1×</option><option value="2" selected>2×</option><option value="4">4×</option></select>
+    </label>
+    <label>范围
+      <select id="zoom"><option value="2500">近</option><option value="4000" selected>中</option><option value="7000">远</option><option value="0">全图</option></select>
+    </label>
+    <label><input id="follow" type="checkbox" checked> 跟随1号位</label>
+    <label><input id="wards" type="checkbox" checked> 眼位</label>
+  </div>
+  <p id="legend">
+    <span class="dot radiant"></span>天辉 <span class="dot dire"></span>夜魇
+    <span class="ring victim"></span>被评价的1号位 <span class="ring attacker"></span>规则认定的参与敌人
+    <span class="ring hidden"></span>对方看不见 <span class="ring smoke"></span>开雾中
+    <span class="square"></span>起点时还在的塔
+    <span class="diamond observer"></span>假眼（淡色圆是1600视野，没算遮挡）<span class="diamond sentry"></span>真眼，边框颜色是所属方
+    · 虚线圈：1500（离队友远的门槛）· 点线圈：1600（大团战范围）· 空格播放，←→逐秒
+  </p>
+</main>
+<section id="side">
+  <h2>这一段的事实</h2>
+  <dl id="facts"></dl>
+  <h2>你认为这次是哪一类</h2>
+  <div id="verdicts">
+    <button type="button" data-verdict="gank">被抓</button>
+    <button type="button" data-verdict="overextended">自己深入</button>
+    <button type="button" data-verdict="high_ground">高地上</button>
+    <button type="button" data-verdict="laning">对线期</button>
+    <button type="button" data-verdict="after_fight">团战后留人</button>
+    <button type="button" data-verdict="teamfight">团战中</button>
+    <button type="button" data-verdict="other">其他</button>
+    <button type="button" data-verdict="unsure">不确定</button>
+  </div>
+  <input id="note" type="text" maxlength="500" placeholder="一句原因（选填；选“其他”或和规则不同时请写）">
+  <div id="save-row"><button id="save" type="button">保存并看下一个</button><span id="saved"></span></div>
+  <h2>事件 <label class="inline"><input id="all-casts" type="checkbox"> 显示所有英雄的施放</label></h2>
+  <ol id="events"></ol>
+</section>
+<script src="/app.js"></script>
+</body>
+</html>
