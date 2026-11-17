@@ -1,9 +1,11 @@
 """Per-match tables for the death-risk model and the win-state model (track B, U160).
 
 For every non-holdout match with parser-v3 state this writes
-`<root>/death-risk-v1/<match>.pkl` (local, untracked) with
+`<root>/death-risk-v2/<match>.pkl` (local, untracked; v1 of 2026-11-17 is kept) with
 
-* `risk`:   death_risk.samples for each position 1 hero (U132; --positions to change);
+* `risk`:   death_risk.samples for each position 1 hero (U132; --positions to change),
+            with the version 2 features (own save means, own creep wave, own observer
+            wards, missing initiators);
 * `win`:    the public team state every 5 seconds (net worth, levels, towers, heroes
             alive) with the match result, for the win-state model that ranks deaths;
 * `deaths`: every hero death (hero, team, second, position).
@@ -23,23 +25,41 @@ from pathlib import Path
 from detect_ganks import ZONES, match_inputs
 
 from dota_items.data.awareness_split import is_holdout
-from dota_items.data.death_risk import PARAMS, death_times, samples, vitals_row
+from dota_items.data.death_risk import PARAMS, death_times, samples, save_state, vitals_row
 from dota_items.data.gank_depth import standing_towers, tower_deaths
+from dota_items.data.gank_review import ward_spans
 
-SCHEMA = "death-risk-table/1"
+SCHEMA = "death-risk-table/2"  # 2: version 2 features
+FOLDER = "death-risk-v2"
+ROOT = Path(__file__).resolve().parents[1]
+SAVE_MEANS = ROOT / "knowledge/awareness/save-means-v2.json"
+REGISTRY = ROOT / "knowledge/hero-capabilities/hero-registry.json"
+
+
+def initiators():
+    """Heroes with Valve's published "Initiator" role label (hero registry)."""
+    registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
+    return {
+        hero["npc_name"]
+        for hero in registry["heroes"]
+        if "Initiator" in (hero.get("published_role_labels") or ())
+    }
+
+
 WIN_STEP = 5
 
 
-def read_vitals(path):
-    """{hero: {t: vitals_row}} from a parser-v3 state file."""
-    vitals = {}
+def read_vitals(path, means):
+    """({hero: {t: vitals_row}}, {hero: {t: (saves owned, ready)}}) from parser-v3 state."""
+    vitals, kit = {}, {}
     with gzip.open(path, "rt", encoding="utf-8") as stream:
         stream.readline()  # header
         for line in stream:
             row = json.loads(line)
             for hero in row["heroes"]:
                 vitals.setdefault(hero["hero"], {})[row["t"]] = vitals_row(hero)
-    return vitals
+                kit.setdefault(hero["hero"], {})[row["t"]] = save_state(hero, means)
+    return vitals, kit
 
 
 def net_worth(parsed):
@@ -90,7 +110,7 @@ def win_rows(match_id, tracks, vitals, worth, zones, fallen, last, radiant_win):
 
 def build(job):
     root, mid, positions = job
-    target = root / "death-risk-v1" / f"{mid}.pkl"
+    target = root / FOLDER / f"{mid}.pkl"
     if target.exists():
         return mid, "kept"
     meta = json.loads((root / "meta" / f"{mid}.json").read_text(encoding="utf-8"))
@@ -99,14 +119,30 @@ def build(job):
     zones = json.loads(ZONES.read_text(encoding="utf-8"))
     m = match_inputs(root, mid, root / "gank-inputs-v2")
     tracks, combat = m["tracks"], m["combat"]
-    vitals = read_vitals(root / "state-v3" / f"{mid}.jsonl.gz")
+    means = json.loads(SAVE_MEANS.read_text(encoding="utf-8"))["means"]
+    vitals, kit = read_vitals(root / "state-v3" / f"{mid}.jsonl.gz", means)
     with gzip.open(root / "parsed" / f"{mid}.normalized.json.gz", "rt", encoding="utf-8") as s:
-        worth = net_worth(json.load(s))
+        parsed = json.load(s)
+    worth = net_worth(parsed)
+    wards = ward_spans(parsed["context"]["channels"].get("wards") or ())
+    starters = initiators()
     fallen = tower_deaths(combat)
     risk = []
     for hero, position in m["positions"].items():
         if position in positions:
-            rows = samples(mid, hero, tracks, vitals, m["seen"], combat, zones, fallen, m["last"])
+            context = {
+                "kit": kit.get(hero, {}),
+                "fronts": m["fronts"],
+                "wards": [
+                    w for w in wards
+                    if w["type"] == "observer" and w["team"] == tracks[hero]["team"]
+                ],
+                "initiators": starters,
+            }  # fmt: skip
+            rows = samples(
+                mid, hero, tracks, vitals, m["seen"], combat, zones, fallen, m["last"],
+                context=context,
+            )  # fmt: skip
             risk += [{**row, "position": position, "team": tracks[hero]["team"]} for row in rows]
     deaths = [
         {"match_id": mid, "hero": hero, "team": track["team"], "t": t,

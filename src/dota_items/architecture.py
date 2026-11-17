@@ -300,6 +300,7 @@ SCRIPTS = {
     "build_death_risk_table": _B,
     "train_death_risk": _B,
     "death_importance": _B,
+    "death_risk_by_reason": _B,
     "demo_data_card": _B,  # reads positions with the track B replay reader
     "extract_creeps": _S,
     "extract_state_v3": _S,

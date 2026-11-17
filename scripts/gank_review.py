@@ -394,6 +394,8 @@ def match(args):
         episode["tags"] = [list(t) for t in death_tags(episode, came, region)]
         episode["primary_reason"] = list(primary_reason(episode["tags"]))  # U156 draft
         episode["teleported_attackers"] = came
+    if args.risk:
+        attach_risk(deaths, args.risk, args.match_id, cached["combat"])
     items = [
         {"id": f"M{number:02d}", "stratum": "match", "episode": episode}
         for number, episode in enumerate(deaths, 1)
@@ -402,6 +404,7 @@ def match(args):
         args.out / "sample.json",
         {
             "decision": "U139 draft",
+            "risk": str(args.risk) if args.risk else None,
             "blind": False,
             "frozen_round": str(args.episodes),
             "match_id": args.match_id,
@@ -409,6 +412,41 @@ def match(args):
         },
     )
     print(f"wrote {args.out / 'sample.json'}: {len(items)} deaths of match {args.match_id}")
+
+
+def attach_risk(deaths, folder, match_id, combat, before=30, after=5):
+    """Add the death-risk curve (U160) of the victim around each death episode.
+
+    The scores are out-of-fold: the model that scored this match never trained on it.
+    They come from what the player could know (data.death_risk), unlike everything else on
+    the page, which is omniscient.
+    """
+    import numpy as np
+
+    from dota_items.data.death_risk import death_times
+
+    report = read_json(folder / "report.json")
+    oof = np.load(folder / "out-of-fold.npz")
+    here = oof["match_id"] == match_id
+    if not here.any():
+        raise SystemExit(f"match {match_id} has no out-of-fold risk in {folder}")
+    times, heroes = oof["t"][here], oof["hero"][here]
+    scores, hits = oof["boosting"][here], oof["hit_recent"][here]
+    for episode in deaths:
+        mine = (heroes == episode["victim"]) & (times >= episode["t0"] - before)
+        mine &= times <= episode["end"] + after
+        died = [s for s in death_times(combat, episode["victim"])
+                if episode["t0"] <= s <= episode["end"] + 2]  # fmt: skip
+        episode["risk"] = {
+            "death": died[0] if died else None,
+            "horizon": report.get("main_horizon", 20),
+            "threshold": report["alerts"]["threshold"],
+            "false_alarm_rate": report["alerts"]["false_alarm_rate_on_early_samples"],
+            "points": [
+                [int(s), round(float(v), 4), int(h)]
+                for s, v, h in sorted(zip(times[mine], scores[mine], hits[mine], strict=True))
+            ],
+        }
 
 
 def score(args):
@@ -647,6 +685,7 @@ def main():
     m.add_argument("--match-id", type=int, required=True)
     m.add_argument("--root", type=Path, default=ROOT / "data/demos-2026-11")
     m.add_argument("--out", type=Path, required=True)
+    m.add_argument("--risk", type=Path, default=None, help="train_death_risk.py output folder")
     g = sub.add_parser("score")
     g.add_argument("--episodes", type=Path, required=True)
     r = sub.add_parser("rejudge")

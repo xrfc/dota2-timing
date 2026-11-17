@@ -64,4 +64,51 @@ def test_labels_and_samples_follow_the_real_deaths():
     assert [row["t"] for row in rows] == list(range(60, 118, 5))  # none while dead
     assert [row["dies_10"] for row in rows][-3:] == [0, 1, 1]
     assert rows[-1]["hit_recent"] == 0 and rows[-2]["hit_recent"] == 1
-    assert set(r.FEATURES) <= set(rows[0])
+    assert set(r.FEATURES_V1) <= set(rows[0])  # no context: version 1 features only
+
+
+def test_save_state_counts_own_ready_save_means():
+    means = {"item_black_king_bar": {}, "item_blink": {}, "jugg_spin": {}, "ember_remnant": {}}
+    hero = {
+        "mana": 40,
+        "abilities": [
+            {"name": "jugg_spin", "level": 1, "cd": 0.0, "mana_cost": 50},  # no mana
+            {"name": "ember_remnant", "level": 2, "cd": 9.0, "charges": 1, "mana_cost": 0},
+            {"name": "jugg_spin", "level": 0, "cd": 0.0},  # not learned
+            {"name": "other", "level": 3, "cd": 0.0},
+        ],
+        "items": {
+            "0": {"name": "item_black_king_bar", "cd": 0.0},
+            "1": {"name": "item_blink", "cd": 3.0},
+            "7": {"name": "item_black_king_bar", "cd": 0.0},  # backpack: not usable
+        },
+    }
+    assert r.save_state(hero, means) == (4, 2)  # owned: spin, remnant, BKB, blink
+
+
+def test_version_2_features_use_only_own_team_knowledge():
+    seconds = range(80, 131)
+    tracks = {
+        "v": track(2, {t: (15000, 15000) for t in seconds}),
+        "init": track(3, {t: (15200, 15000) for t in seconds}),  # unseen initiator
+        "seen": track(3, {t: (16000, 15000) for t in seconds}),
+    }
+    vitals = {h: {t: (400, 1000, 50, 100, 7) for t in seconds} for h in tracks}
+    seen_sorted = {("seen", 2): list(seconds), ("init", 2): [90]}
+    fronts = {100: {"radiant_mid": {"count": 4, "front": (14000, 14000)},
+                    "dire_mid": {"count": 4, "front": (15100, 15000)}}}  # fmt: skip
+    wards = [
+        {"type": "observer", "team": 2, "x": 15500, "y": 15000, "start": 50, "end": 200},
+        {"type": "observer", "team": 2, "x": 19000, "y": 15000, "start": 50, "end": 200},
+    ]
+    context = {"kit": {100: (3, 1)}, "fronts": fronts, "wards": wards,
+               "initiators": {"init", "seen"}}  # fmt: skip
+    row = r.features("v", 100, tracks, vitals, seen_sorted, ZONES, {}, set(), context=context)
+    assert (row["saves_owned"], row["saves_ready"]) == (3, 1)
+    assert round(row["own_creeps_distance"]) == 1414  # the radiant wave, not the dire one
+    assert row["ahead_of_own_creeps"] > 0
+    assert row["own_observers_covering"] == 1
+    assert row["missing_initiators"] == 1 and row["visible_initiators_mid"] == 1
+    assert set(r.FEATURES) <= set(row)
+    assert set(r.FEATURES_V1) == set(r.features("v", 100, tracks, vitals, seen_sorted, ZONES,
+                                                {}, set()))  # fmt: skip

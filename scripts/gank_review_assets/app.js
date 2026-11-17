@@ -73,6 +73,14 @@ function open(id) {
   $('facts').replaceChildren();
   if (e.primary_reason) fact('主要原因（草稿）', e.primary_reason[1], 'head');
   if (e.tags) fact('这次死亡的特征', e.tags.map(t => t[1]).join('；'), 'head');
+  $('risk').hidden = !e.risk;
+  if (e.risk) {
+    const r = e.risk, death = r.death ?? e.end;
+    const early = r.points.filter(p => p[0] < death && p[0] >= death - r.horizon && !p[2] && p[1] >= r.threshold);
+    const peak = Math.max(0, ...r.points.filter(p => p[0] < death).map(p => p[1]));
+    fact('死亡风险（模型）', (early.length ? `死前${death - early[0][0]}秒、还没挨打时超过提醒线` : '死前20秒内、挨打前没有超过提醒线') + `；死前最高${Math.round(peak * 100)}%`, early.length ? 'warn' : '');
+    $('risk-note').textContent = `模型估计的“${r.horizon}秒内死亡”的概率，每5秒一个点，只用他当时能知道的信息；没训练过这场比赛。虚线是提醒线（还没挨打时误报约${Math.round(r.false_alarm_rate * 100)}%），空心点表示前3秒已经挨打。点图可跳到那一秒。`;
+  }
   fact('结果', OUTCOMES[e.outcome] || e.outcome);
   fact('参与的敌人', e.attackers.map(short).join('、') || '—');
   fact('视野外出现', e.unseen_attackers.map(short).join('、') || '没有', e.unseen_attackers.length ? '' : 'no');
@@ -237,7 +245,40 @@ function draw() {
   }
 }
 
-function seek(i) { index = Math.max(0, Math.min(clip.frames.length - 1, i)); $('time').value = index; draw(); }
+const RISK_PAD = {l: 34, r: 8, t: 8, b: 18};
+function riskX(t, w) { const f = clip.frames; return RISK_PAD.l + (t - f[0].t) / Math.max(1, f[f.length - 1].t - f[0].t) * (w - RISK_PAD.l - RISK_PAD.r); }
+function drawRisk(now) {
+  const r = clip.episode.risk; if (!r) return;
+  const c = $('risk-chart'), g = c.getContext('2d'), w = c.width, h = c.height;
+  const top = Math.max(r.threshold * 1.5, ...r.points.map(p => p[1]), 0.05);
+  const y = v => h - RISK_PAD.b - v / top * (h - RISK_PAD.t - RISK_PAD.b);
+  g.fillStyle = '#0b0e11'; g.fillRect(0, 0, w, h);
+  g.font = '11px system-ui, sans-serif'; g.fillStyle = COLORS.dim;
+  g.fillText('0', 4, y(0) + 4); g.fillText(`${Math.round(top * 100)}%`, 4, y(top) + 8);
+  g.strokeStyle = '#2c353d'; g.beginPath(); g.moveTo(RISK_PAD.l, y(0)); g.lineTo(w - RISK_PAD.r, y(0)); g.stroke();
+  g.setLineDash([6, 5]); g.strokeStyle = '#e0b040'; g.beginPath(); g.moveTo(RISK_PAD.l, y(r.threshold)); g.lineTo(w - RISK_PAD.r, y(r.threshold)); g.stroke(); g.setLineDash([]);
+  const e = clip.episode;
+  for (const [t, label] of [[e.t0, '起点'], [r.death, '死亡']]) {
+    if (t == null) continue; const x = riskX(t, w);
+    g.strokeStyle = '#2c353d'; g.beginPath(); g.moveTo(x, RISK_PAD.t); g.lineTo(x, h - RISK_PAD.b); g.stroke();
+    g.fillStyle = COLORS.dim; g.fillText(label, x + 3, h - 5);
+  }
+  g.strokeStyle = COLORS.victim; g.lineWidth = 1.5; g.beginPath();
+  r.points.forEach(([t, v], i) => { const x = riskX(t, w); i ? g.lineTo(x, y(v)) : g.moveTo(x, y(v)); }); g.stroke(); g.lineWidth = 1;
+  for (const [t, v, hit] of r.points) {
+    g.beginPath(); g.arc(riskX(t, w), y(v), 3.5, 0, 7);
+    if (hit) { g.strokeStyle = COLORS.victim; g.stroke(); } else { g.fillStyle = v >= r.threshold ? '#e0b040' : COLORS.victim; g.fill(); }
+  }
+  const x = riskX(now, w); g.strokeStyle = '#4aa3ff'; g.beginPath(); g.moveTo(x, RISK_PAD.t); g.lineTo(x, h - RISK_PAD.b); g.stroke();
+}
+$('risk-chart').addEventListener('click', ev => {
+  if (!clip || !clip.episode.risk) return;
+  const c = $('risk-chart'), box = c.getBoundingClientRect(), px = (ev.clientX - box.left) * c.width / box.width;
+  const f = clip.frames, t = f[0].t + (px - RISK_PAD.l) / (c.width - RISK_PAD.l - RISK_PAD.r) * (f[f.length - 1].t - f[0].t);
+  let best = 0; f.forEach((fr, i) => { if (Math.abs(fr.t - t) < Math.abs(f[best].t - t)) best = i; }); stop(); seek(best);
+});
+
+function seek(i) { index = Math.max(0, Math.min(clip.frames.length - 1, i)); $('time').value = index; draw(); drawRisk(clip.frames[index].t); }
 function stop() { playing = false; clearTimeout(timer); $('play').textContent = '播放'; }
 function tick() {
   if (!playing) return;

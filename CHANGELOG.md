@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-11-17 U164：游戏文件核对；死亡风险第2版、按原因报告、复盘页风险曲线
+
+- 抓取最新游戏文件（版本6976），与11-02快照逐字节相同（`knowledge/game-files/snapshots/2026-11-17/`）；Valve官方GitHub只有问题追踪，没有数据。
+- `data.death_risk`第2版特征（保命手段、己方兵线、己方假眼、敌方先手英雄）；`build_death_risk_table.py`写`death-risk-v2`；`train_death_risk.py`加`--table`和同样本的第1版对照。还没挨打口径平均精度0.1437→0.1462（+0.0025，区间0.0011–0.0039）。
+- 新脚本`death_risk_by_reason.py`：被抓死只有28%能在挨打前报警（团战中54%）。
+- `gank_review.py match --risk`：单场复盘页画风险曲线（点图跳到那一秒）；第5版`reports/death-report-9081598038-v5`，v4标记取代。
+
 ## 2026-11-17 文档整理：路线变更总览
 
 - 新增`docs/route-changes.md`：方向改过哪几次、原因、被替代的内容，每行指向决策记录。

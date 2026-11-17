@@ -14,6 +14,10 @@ samples where no enemy hero has hit him in the last seconds ("early"), because p
 a death that is already under way is no warning.
 
     train_death_risk.py --root data/demos-2026-11 --out reports/death-risk-baseline-<date>
+
+`--table death-risk-v2` (default) trains on the version 2 features and also reports the
+boosting model on the version 1 features of the same rows, so the gain of the new
+features is measured on identical samples. `--table death-risk-v1` repeats the first run.
 """
 
 import argparse
@@ -37,18 +41,18 @@ from sklearn.model_selection import GroupKFold
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-from dota_items.data.death_risk import FEATURES
+from dota_items.data.death_risk import FEATURES, FEATURES_V1
 
-SCHEMA = "death-risk-baseline/1"
+SCHEMA = "death-risk-baseline/2"  # 2: --table, version 2 features, v1 ablation
 FOLDS = 5
 SEED = 20261117
 MAIN_HORIZON = 20  # U115's provisional window
 ALERT_FALSE_ALARM = 0.05
 
 
-def load(root):
+def load(root, table="death-risk-v2"):
     risk, deaths = [], []
-    for path in sorted((root / "death-risk-v1").glob("*.pkl")):
+    for path in sorted((root / table).glob("*.pkl")):
         with path.open("rb") as stream:
             value = pickle.load(stream)  # written by build_death_risk_table.py, local only
         risk += value["risk"]
@@ -178,18 +182,21 @@ def main(argv=None):
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--bootstrap", type=int, default=100)
+    parser.add_argument("--table", default="death-risk-v2")
     args = parser.parse_args(argv)
     args.out.mkdir(parents=True, exist_ok=False)
-    frame, deaths = load(args.root)
+    frame, deaths = load(args.root, args.table)
     rng = np.random.default_rng(SEED)
     early = frame["hit_recent"].to_numpy() == 0
-    features = [name for name in FEATURES]
+    version_2 = set(FEATURES) <= set(frame.columns)
+    features = list(FEATURES if version_2 else FEATURES_V1)
     report = {
         "schema": SCHEMA,
         "use": "track B baseline on non-holdout matches; holdout untouched (U133)",
         "matches": int(frame["match_id"].nunique()),
         "hero_games": int(frame[["match_id", "hero"]].drop_duplicates().shape[0]),
         "samples": len(frame),
+        "table": args.table,
         "features": features,
         "folds": FOLDS,
         "main_horizon": MAIN_HORIZON,
@@ -220,6 +227,17 @@ def main(argv=None):
     report["boosting_minus_rule_early"] = bootstrap_gap(
         early_frame, target, boosting[early], rule_score(frame)[early], args.bootstrap, rng
     )
+    if version_2:
+        old, _ = out_of_fold(frame, target, FEATURES_V1, models()["boosting"])
+        report["boosting_v1_features_same_rows"] = {
+            "all": measure(y, old, False),
+            "early": measure(y[early], old[early], False),
+        }
+        report["boosting_v2_minus_v1_early"] = bootstrap_gap(
+            early_frame, target, boosting[early], old[early], args.bootstrap, rng
+        )
+        print("v1 features early", report["boosting_v1_features_same_rows"]["early"]
+              ["average_precision"], flush=True)  # fmt: skip
     _, threshold = at_false_alarm(y[early], boosting[early], ALERT_FALSE_ALARM)
     report["alerts"] = {
         "threshold": round(threshold, 4),
