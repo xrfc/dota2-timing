@@ -111,7 +111,8 @@ def test_carry_who_walks_into_the_enemy_jungle_alone_is_overextended():
     assert d.classify(result) == "overextended"
     unseen = d.depth_signals(EPISODE, tracks, combat, fronts, ZONES, {}, {})
     assert unseen["signals"]["saw_attackers"] is False
-    assert d.classify(unseen) is None  # nobody could see them: a gank however deep he was
+    assert d.classify(unseen, d.ROUND6) is None  # round 6: unseen is a gank however deep
+    assert d.classify(unseen) == "overextended"  # U158: he went in, nobody was accounted for
 
 
 def test_carry_jumped_in_his_own_area_stays_a_gank():
@@ -145,7 +146,7 @@ def test_overextended_needs_sight_and_either_approach_or_enemy_area():
         ({"saw_attackers", "victim_approached"}, "overextended"),
     ):
         result = {**base, "signals": {**off, **dict.fromkeys(on, True)}}
-        assert d.classify(result) == expected, on
+        assert d.classify(result, d.ROUND6) == expected, on
 
 
 def test_high_ground_is_the_quarter_circle_around_each_fountain():
@@ -205,7 +206,7 @@ def test_annotate_relabels_only_ganks_and_keeps_the_rule_label():
     gank = {**EPISODE, "is_gank": True, "label": "death"}
     other = {**EPISODE, "is_gank": False, "label": None}
     seen = {("e1", 2): set(range(80, 121))}
-    late = {**d.PARAMS, "laning_end": 0}  # the synthetic episode starts at 1:40
+    late = {**d.ROUND6, "laning_end": 0}  # the synthetic episode starts at 1:40
     d.annotate([gank, other], tracks, [], {}, ZONES, {"e1": [(80, 95)]}, seen, late)
     assert (gank["rule_label"], gank["label"]) == ("death", "overextended")
     assert (other["rule_label"], other["label"]) == (None, None)
@@ -253,7 +254,7 @@ def test_chase_after_a_skirmish_is_keeping_not_a_gank():
     fight = d.recent_fight("v", 1000, tracks, traded, d.PARAMS)
     assert fight == {"first_trade": 980, "deaths": [], "most_heroes": 4}
     quiet = dict.fromkeys(d.SIGNALS, False)
-    assert d.classify({"after_fight": fight, "signals": quiet}) == "after_fight"
+    assert d.classify({"after_fight": fight, "signals": quiet}, d.ROUND6) == "after_fight"
     assert d.recent_fight("v", 1000, tracks, [hit(960, "e1", "v")], d.PARAMS) is None  # too old
     far = {**tracks, "a": track(2, 1, {t: (9000, 9000) for t in seconds})}
     assert d.recent_fight("v", 1000, far, traded, d.PARAMS) is None  # nobody else around
@@ -265,11 +266,77 @@ def test_chase_after_a_skirmish_is_keeping_not_a_gank():
 def test_after_a_fight_team_fights_and_pressing_on_get_their_own_class():
     quiet = dict.fromkeys(d.SIGNALS, False)
     small = {"first_trade": 980, "deaths": [], "most_heroes": 5}
-    assert d.classify({"after_fight": small, "signals": quiet}) == "after_fight"
-    big = {**small, "most_heroes": 6}
-    assert d.classify({"after_fight": big, "signals": quiet}) == "teamfight"
-    pressed = {**quiet, "victim_approached": True, "enemy_jungle": True}
-    assert d.classify({"after_fight": small, "signals": pressed}) == "overextended"
-    assert d.classify({"after_fight": small, "signals": {**quiet, "enemy_jungle": True}}) == (
-        "after_fight"
+    for params in (d.ROUND6, d.PARAMS):
+        base = {"after_fight": small, "t0": 1000, "attackers": 2, "attackers_accounted": []}
+        assert d.classify({**base, "signals": quiet}, params) == "after_fight"
+        big = {**small, "most_heroes": 6}
+        assert d.classify({**base, "after_fight": big, "signals": quiet}, params) == "teamfight"
+        pressed = {**quiet, "victim_approached": True, "enemy_jungle": True}
+        assert d.classify({**base, "signals": pressed}, params) == "overextended"
+        assert d.classify({**base, "signals": {**quiet, "enemy_jungle": True}}, params) == (
+            "after_fight"
+        )
+
+
+def test_round_7_a_skirmish_must_be_earlier_and_real():
+    quiet = dict.fromkeys(d.SIGNALS, False)
+    base = {"t0": 1000, "attackers": 2, "attackers_accounted": ["e1", "e2"], "signals": quiet}
+    just_now = {"first_trade": 996, "deaths": [{"t": 998, "hero": "a"}], "most_heroes": 4}
+    assert d.classify({**base, "after_fight": just_now}) is None  # the gank's own opening
+    thin = {"first_trade": 975, "deaths": [], "most_heroes": 4}
+    assert d.classify({**base, "after_fight": thin}) is None  # traded hits, no fight
+    assert d.classify({**base, "after_fight": thin}, d.ROUND6) == "after_fight"
+    real = {"first_trade": 975, "deaths": [{"t": 980, "hero": "a"}], "most_heroes": 4}
+    assert d.classify({**base, "after_fight": real}) == "after_fight"
+
+
+def test_round_7_going_in_is_overextension_unless_attackers_were_accounted_for():
+    off = dict.fromkeys(d.SIGNALS, False)
+    deep = {**off, "enemy_tower_area": True}
+    base = {"attackers": 2, "t0": 1000}
+    assert d.classify({**base, "signals": deep, "attackers_accounted": ["e1"]}) == "overextended"
+    assert d.classify({**base, "signals": deep, "attackers_accounted": ["e1", "e2"]}) is None
+    seen = {**deep, "saw_attackers": True}  # he watched them come and stayed
+    assert d.classify({**base, "signals": seen, "attackers_accounted": ["e1", "e2"]}) == (
+        "overextended"
+    )
+    assert d.classify({**base, "signals": off, "attackers_accounted": []}) is None  # at home
+
+    seconds = range(930, 1001)
+    tracks = {
+        "v": track(2, 0, {t: (16000, 16000) for t in seconds}),
+        "e1": track(3, 5, {t: (22000, 16000) for t in seconds}),  # seen far away
+        "e2": track(3, 6, {t: (17000, 16000) for t in seconds if not 940 < t < 971}),  # dead
+        "e3": track(3, 7, {t: (19000, 16000) for t in seconds}),  # seen, but close
+        "e4": track(3, 8, {t: (23000, 16000) for t in seconds}),  # far, never seen
+    }
+    visible = {("e1", 2): {950}, ("e3", 2): {950}}
+    episode = {"victim": "v", "t0": 1000, "attackers": ["e1", "e2", "e3", "e4"]}
+    assert d.accounted_attackers(episode, tracks, visible) == ["e1", "e2"]
+
+
+def test_laning_ends_per_lane_at_the_first_tower_or_when_the_heroes_leave():
+    def lane_then(spot, leave, away=(16384, 16384)):
+        return {t: (spot if t < leave else away) for t in range(60, 900)}
+
+    top, bot = (11000, 21500), (21500, 11000)
+    tracks = {
+        "t1": track(2, 0, lane_then(top, 10**6)),
+        "t2": track(3, 5, lane_then(top, 10**6)),
+        "b1": track(2, 1, lane_then(bot, 480)),
+        "b2": track(3, 6, lane_then(bot, 10**6)),
+        "m1": track(2, 2, lane_then((16384, 16384), 10**6)),
+    }
+    lanes = d.hero_lanes(tracks)
+    assert lanes == {"t1": "top", "t2": "top", "b1": "bot", "b2": "bot", "m1": "mid"}
+    falls = {"npc_dota_badguys_tower1_top": [700], "npc_dota_goodguys_tower1_mid": [200]}
+    ends = d.laning_ends(tracks, falls, lanes)
+    # top: the tower fell at 11:40 but nobody left, so it is not a reason by itself (U159);
+    # mid: a tower lost at 3:20 does not end laning; bot: half of its heroes left at 8:00.
+    assert ends == {"top": 840, "mid": 840, "bot": 480}
+    tracks["t2"] = track(3, 5, lane_then(top, 660))  # one of three left, then the tower
+    tracks["t3"] = track(3, 7, lane_then(top, 10**6))
+    assert d.laning_ends(tracks, falls, d.hero_lanes(tracks))["top"] == 700
+    assert d.laning_ends(tracks, falls, lanes, d.ROUND6) == dict.fromkeys(
+        ("top", "mid", "bot"), 600
     )

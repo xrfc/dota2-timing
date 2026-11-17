@@ -280,3 +280,14 @@ def test_ward_spans_and_wards_in_a_clip():
     episode = {"victim": "v", "t0": 100, "end": 110, "attackers": []}
     clip = r.build_clip("D1", "death", episode, rows, [], {}, wards=spans)
     assert [w["start"] for w in clip["wards"]] == [10, 50, 60]  # the last is placed later
+
+
+def test_kappa_takes_out_agreement_by_chance():
+    from dota_items.data.gank_review import agreement, cohen_kappa
+
+    assert cohen_kappa([("a", "a"), ("b", "b")]) == 1.0
+    assert cohen_kappa([("a", "a"), ("a", "b"), ("b", "a"), ("b", "b")]) == 0.0
+    assert cohen_kappa([]) is None and cohen_kappa([("a", "a")]) is None
+    result = agreement([("gank", "gank"), ("laning", "teamfight"), ("gank", "unsure"), (None, "x")])
+    assert result["pairs"] == 2 and result["class_agreement"] == 0.5
+    assert result["gank_or_not_agreement"] == 1.0 and result["gank_or_not_kappa"] == 1.0

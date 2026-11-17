@@ -88,16 +88,18 @@ function open(id) {
   fact('附近英雄', `最多${e.most_heroes_near}个，我方${e.most_allies_near}个（门槛：合计≤6、我方≤2）`);
   if (!blind) for (const [key, label] of Object.entries(FLAGS)) fact(label, e.flags[key] ? '✓ 满足' : '✗ 不满足', e.flags[key] ? 'yes' : 'no');
   if (e.depth) {
-    const d = e.depth, final = e.is_gank ? e.label : null;
+    const d = e.depth, final = e.is_gank ? e.label : null, laneEnd = d.laning_end ?? 600;
     const where = d.high_ground ? ` · 在${d.high_ground === 2 ? '天辉' : '夜魇'}高地范围内` : '';
-    const lane = d.laning ? ' · 对线期且来的都是本路对手' : (d.attackers_from_other_lanes || []).length && e.t0 < 600 ? ` · 别路来人：${d.attackers_from_other_lanes.map(short).join('、')}` : '';
+    const lane = d.laning ? ' · 对线期且来的都是本路对手' : (d.attackers_from_other_lanes || []).length && e.t0 < laneEnd ? ` · 别路来人：${d.attackers_from_other_lanes.map(short).join('、')}` : '';
     if (!blind) $('facts').append(el('dt', '信号', 'head'), el('dd', `越过中线${d.depth}${where}${lane}`, 'head'));
     if (d.attackers_from_other_lanes) {
       const other = d.attackers_from_other_lanes, same = e.attackers.filter(a => !other.includes(a));
-      fact('来的人对线时', `本路：${same.map(short).join('、') || '—'}；别路：${other.map(short).join('、') || '—'}${e.t0 >= 600 ? '（已过10分钟，仅供参考）' : ''}`);
+      fact('来的人对线时', `本路：${same.map(short).join('、') || '—'}；别路：${other.map(short).join('、') || '—'}${e.t0 >= laneEnd ? '（对线期已过，仅供参考）' : ''}`);
+      if (!blind && d.laning_end != null) fact('这一路对线期到', `${clock(d.laning_end)}（一塔倒或一半英雄离线，草稿）`);
     }
+    if (!blind && d.attackers_accounted) fact('来的人此前有着落', `${d.attackers_accounted.length}/${e.attackers.length}（60秒内死过，或在5000以外露过面${d.attackers_accounted.length ? '：' + d.attackers_accounted.map(short).join('、') : ''}）`);
     const f = d.after_fight;
-    if (!blind) fact('之前30秒打过架', f ? `✓ 是（${f.deaths.length ? `附近阵亡：${f.deaths.map(x => short(x.hero)).join('、')}` : `身边最多${f.most_heroes}个英雄`}）` : '✗ 否', f ? 'warn' : '');
+    if (!blind) fact('之前30秒打过架', f ? `✓ 是（起点前${e.t0 - f.first_trade}秒开始交手；${f.deaths.length ? `附近阵亡：${f.deaths.map(x => short(x.hero)).join('、')}` : `身边最多${f.most_heroes}个英雄`}）` : '✗ 否', f ? 'warn' : '');
     for (const [key, describe] of blind ? [] : Object.entries(SIGNALS)) {
       const [label, detail] = describe(d), on = d.signals[key];
       fact(label, (on == null ? '？' : on ? '✓ 是' : '✗ 否') + (detail ? `（${detail}）` : ''), on ? 'warn' : '');

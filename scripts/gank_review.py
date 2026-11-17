@@ -45,10 +45,12 @@ from dota_items.data.gank_review import (
     ACCEPTANCE_QUOTA,
     ANSWERS,
     acceptance_score,
+    agreement,
     build_clip,
     clip_text,
     draw_acceptance,
     review_list,
+    rule_category,
     validate_judgment,
     ward_spans,
 )
@@ -427,6 +429,89 @@ def score(args):
     print(json.dumps(result, ensure_ascii=False, indent=1))
 
 
+def judged_items(folder):
+    """[(id, episode, verdict)] of a reviewed folder, either sample layout."""
+    sample = read_json(folder / "sample.json")
+    judgments = read_json(folder / "judgments.json")["judgments"]
+    if "items" in sample:
+        items = [(i["id"], i["episode"]) for i in sample["items"]]
+    else:
+        items = [
+            (f"{prefix}{number}", episode)
+            for stratum, prefix in STRATA
+            for number, episode in enumerate(sample[stratum], 1)
+        ]
+    return [(i, e, (judgments.get(i) or {}).get("verdict")) for i, e in items]
+
+
+def rejudge(args):
+    """A blind folder of episodes the user already judged, to measure self-agreement.
+
+    How often the user agrees with an earlier self is the ceiling for any rule or model
+    scored against these labels. Ids are new and shuffled; the earlier verdicts stay in
+    `earlier.json`, which the page never reads.
+    """
+    import random
+
+    args.out.mkdir(parents=True, exist_ok=False)
+    pool = [
+        (str(folder), i, episode, verdict)
+        for folder in args.judged
+        for i, episode, verdict in judged_items(folder)
+        if verdict and verdict != "unsure"
+    ]
+    rng = random.Random(args.seed)
+    by_verdict = {}
+    for row in pool:
+        by_verdict.setdefault(row[3], []).append(row)
+    picked = []
+    while len(picked) < min(args.count, len(pool)):  # round-robin over the verdicts
+        for verdict in sorted(by_verdict):
+            rows = by_verdict[verdict]
+            if rows and len(picked) < args.count:
+                picked.append(rows.pop(rng.randrange(len(rows))))
+    rng.shuffle(picked)
+    items, earlier = [], {}
+    for number, (folder, old_id, episode, verdict) in enumerate(picked, 1):
+        new_id = f"R{number:02d}"
+        items.append({"id": new_id, "stratum": "rejudge", "episode": episode})
+        earlier[new_id] = {"folder": folder, "id": old_id, "verdict": verdict}
+    write_json(args.out / "sample.json", {"decision": "label reliability", "blind": True,
+                                          "seed": args.seed, "items": items})  # fmt: skip
+    write_json(args.out / "earlier.json", earlier)
+    print(f"wrote {args.out / 'sample.json'}: {len(items)} episodes to judge again")
+
+
+def reliability(args):
+    """Agreement and kappa: user now vs user earlier (--rejudged), rule and Codex vs user."""
+    result = {}
+    if args.rejudged:
+        earlier = read_json(args.rejudged / "earlier.json")
+        now = read_json(args.rejudged / "judgments.json")["judgments"]
+        result["user_now_vs_user_earlier"] = agreement(
+            (earlier[i]["verdict"], (now.get(i) or {}).get("verdict")) for i in earlier
+        )
+    for folder in args.judged:
+        rows = judged_items(folder)
+        entry = {"rule_vs_user": agreement((rule_category(e), v) for _, e, v in rows)}
+        compare_path = folder / "codex-compare.json"
+        if compare_path.exists():
+            second = {r["id"]: r["second"] for r in read_json(compare_path)["rows"]}
+            by_id = {i: (e, v) for i, e, v in rows}
+            entry["codex_vs_user"] = agreement((second.get(i), v) for i, (_, v) in by_id.items())
+            entry["codex_vs_rule"] = agreement(
+                (second.get(i), rule_category(e)) for i, (e, _) in by_id.items()
+            )
+            entry["note"] = (
+                "the user saw every rule/Codex disagreement but only a few agreements, so "
+                "the pairs with the user under-represent easy cases"
+            )
+        result[str(folder)] = entry
+    print(json.dumps(result, ensure_ascii=False, indent=1))
+    if args.out:
+        write_json(args.out, result)
+
+
 def make_handler(folder, clips_doc, display_names, map_bytes):
     listed = folder / "review-list.json"
     if listed.exists():  # U143: the user reviews only the listed clips
@@ -564,9 +649,20 @@ def main():
     m.add_argument("--out", type=Path, required=True)
     g = sub.add_parser("score")
     g.add_argument("--episodes", type=Path, required=True)
+    r = sub.add_parser("rejudge")
+    r.add_argument("--judged", type=Path, nargs="+", required=True)
+    r.add_argument("--out", type=Path, required=True)
+    r.add_argument("--count", type=int, default=30)
+    r.add_argument("--seed", type=int, default=20261117)
+    y = sub.add_parser("reliability")
+    y.add_argument("--judged", type=Path, nargs="+", required=True)
+    y.add_argument("--rejudged", type=Path, default=None)
+    y.add_argument("--out", type=Path, default=None)
     args = parser.parse_args()
     {
         "score": score,
+        "rejudge": rejudge,
+        "reliability": reliability,
         "match": match,
         "build": build,
         "serve": serve,

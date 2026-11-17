@@ -16,6 +16,12 @@ classes are taken out of "ganked", in this order:
                 it is "teamfight" (he died in a team fight, not considered); and if he
                 closed the distance himself inside the enemy's area it is overextended
                 whether or not he could see them (the fight was over and he pressed on).
+Round 7 draft (U158, after the failed acceptance; values are the assistant's, `ROUND6`
+turns it off): going in is overextension unless every attacker was dead or seen far away
+(`accounted_attackers`); an earlier skirmish must have begun `fight_min_gap` seconds
+before t0 and either a hero died or `fight_heroes_no_death` heroes were around; laning
+ends per lane (`laning_ends`).
+
 * overextended  he could see them and went anyway (U137, rule revised after 23 judgments):
                 at least one attacker was visible to his team for `visible_share` of the
                 `lookback` seconds, and he either closed most of the distance himself or
@@ -67,7 +73,19 @@ PARAMS = {
     "fight_death_radius": 2500,
     "fight_heroes": 4,  # victim included, with at least two enemies
     "teamfight_heroes": 6,  # U142: this many around him before t0 make it a team fight
+    # Round 7 draft (U158), values are the assistant's:
+    "elsewhere_lookback": 60,  # seconds before t0 an attacker must be accounted for
+    "elsewhere_distance": 5000,  # seen at least this far from the victim = "elsewhere"
+    "fight_min_gap": 8,  # the earlier skirmish began at least this long before t0
+    "fight_heroes_no_death": 5,  # heroes around him when nobody died in that skirmish
+    "laning_rule": "lane",  # "fixed" = laning_end for every lane; "lane" = laning_ends()
+    "laning_tower_from": 600,  # U159: a tier-1 tower lost before this does not end laning
+    "laning_floor": 360,  # per-lane laning never ends before this
+    "laning_cap": 840,  # nor after this
+    "lane_away_share": 0.5,  # a hero left when under this share of a minute is in lane
 }
+# The frozen round 6 rule (U143), kept reproducible: the round 7 switches turned off.
+ROUND6 = {**PARAMS, "elsewhere_lookback": None, "fight_min_gap": None, "laning_rule": "fixed"}
 TERRITORY_SIGNALS = ("enemy_tower_area", "enemy_jungle")
 TOWER_PREFIXES = ("npc_dota_goodguys_tower", "npc_dota_badguys_tower")
 LANE_TEAM = {2: "radiant", 3: "dire"}
@@ -116,6 +134,75 @@ def hero_lanes(tracks):
         )
         lanes[hero] = seen.most_common(1)[0][0] if seen else None
     return lanes
+
+
+def laning_ends(tracks, deaths, lanes, params=PARAMS):
+    """{lane: second its laning ends} (U158: laning length differs by match).
+
+    A lane's laning ends when at least half of the heroes assigned to it have left (two
+    minutes in a row mostly outside the lane). A fallen tier-1 tower ends it earlier only
+    from `laning_tower_from` on and only once one of the lane's heroes has also left: a
+    tower lost before ten minutes does not end laning, and the tower is never the single
+    reason (U159). Kept between `laning_floor` and `laning_cap`. "fixed" gives `laning_end`
+    for every lane. The combination is the assistant's draft.
+    """
+    from dota_items.data.gank_events import lane_of
+
+    result = {}
+    for lane in ("top", "mid", "bot"):
+        if params["laning_rule"] == "fixed":
+            result[lane] = params["laning_end"]
+            continue
+        end = params["laning_cap"]
+        falls = [min(t) for name, t in deaths.items() if name.endswith(f"tower1_{lane}")]
+        heroes = [hero for hero, own in lanes.items() if own == lane]
+        left = []
+        for hero in heroes:
+            pos = tracks[hero]["pos"]
+            away = []
+            for minute in range(params["laning_floor"] // 60, params["laning_cap"] // 60 + 1):
+                span = [t for t in range(minute * 60, minute * 60 + 60) if t in pos]
+                share = sum(lane_of(*pos[t]) == lane for t in span) / len(span) if span else 1
+                away.append(share < params["lane_away_share"])
+                if len(away) >= 2 and away[-1] and away[-2]:
+                    left.append((minute - 1) * 60)
+                    break
+        if heroes and len(left) * 2 >= len(heroes):
+            end = min(end, sorted(left)[(len(heroes) + 1) // 2 - 1])
+        if falls and left:
+            end = min(end, max(min(falls), params["laning_tower_from"], min(left)))
+        result[lane] = max(params["laning_floor"], end)
+    return result
+
+
+def accounted_attackers(episode, tracks, seen, params=PARAMS):
+    """Attackers the victim had reason to think were not near him (U158).
+
+    In the `elsewhere_lookback` seconds before t0 the attacker was dead at some point, or
+    the victim's team saw him at least `elsewhere_distance` from where the victim then was.
+    """
+    victim, t0 = episode["victim"], episode["t0"]
+    own = tracks[victim]["team"]
+    mine = tracks[victim]["pos"]
+    found = []
+    for attacker in episode["attackers"]:
+        theirs = tracks[attacker]["pos"]
+        spawned = min(theirs, default=t0)
+        visible = seen.get((attacker, own), ())
+        for t in range(t0 - params["elsewhere_lookback"], t0):
+            if t not in theirs:
+                if spawned <= t:  # he had spawned, so he was dead
+                    found.append(attacker)
+                    break
+                continue
+            if (
+                t in visible
+                and t in mine
+                and _distance(mine[t], theirs[t]) >= params["elsewhere_distance"]
+            ):
+                found.append(attacker)
+                break
+    return sorted(found)
 
 
 def tower_deaths(combat):
@@ -227,7 +314,7 @@ def recent_fight(victim, t0, tracks, combat, params=PARAMS):
 
 
 def depth_signals(
-    episode, tracks, combat, fronts, zones, deaths, seen=None, lanes=None, params=PARAMS
+    episode, tracks, combat, fronts, zones, deaths, seen=None, lanes=None, params=PARAMS, ends=None
 ):
     """The signals and the numbers behind them for one episode.
 
@@ -247,16 +334,18 @@ def depth_signals(
             "laning": None,
             "after_fight": None,
         }
-    numbers = {"depth": round(depth(here, own))}
+    numbers = {"depth": round(depth(here, own)), "t0": t0, "attackers": len(episode["attackers"])}
     numbers["after_fight"] = recent_fight(victim, t0, tracks, combat, params)
     numbers["high_ground"] = high_ground_side(here, zones, params)
+    laning_end = (ends or {}).get((lanes or {}).get(victim), params["laning_end"])
+    numbers["laning_end"] = laning_end
     if lanes is None or lanes.get(victim) is None:
         numbers["laning"] = None
     else:
         numbers["attackers_from_other_lanes"] = sorted(
             a for a in episode["attackers"] if lanes.get(a) != lanes[victim]
         )
-        numbers["laning"] = t0 < params["laning_end"] and not numbers["attackers_from_other_lanes"]
+        numbers["laning"] = t0 < laning_end and not numbers["attackers_from_other_lanes"]
     signals = {}
 
     if seen is None:
@@ -271,10 +360,12 @@ def depth_signals(
             a for a, share in visible.items() if share >= params["visible_share"]
         )
         counted = numbers["attackers_visible"]
-        if t0 < params["laning_end"] and numbers.get("attackers_from_other_lanes"):
+        if t0 < laning_end and numbers.get("attackers_from_other_lanes"):
             # U141: in lane the opponent is always in sight; what matters is the rotation.
             counted = [a for a in counted if a in numbers["attackers_from_other_lanes"]]
         signals["saw_attackers"] = bool(counted)
+        if params.get("elsewhere_lookback") is not None:
+            numbers["attackers_accounted"] = accounted_attackers(episode, tracks, seen, params)
 
     towers = standing_towers(zones, deaths, t0)
     nearest = min(towers, key=lambda tw: _distance(here, (tw["x"], tw["y"])), default=None)
@@ -358,14 +449,24 @@ def classify(result, params=PARAMS):
         return "laning"
     signals = result["signals"]
     fight = result.get("after_fight")
+    if fight and fight["most_heroes"] >= params["teamfight_heroes"]:
+        return "teamfight"  # U142: he died in or right out of a team fight
+    if fight and params.get("fight_min_gap") is not None:
+        # Round 7 draft: the skirmish must be an earlier one, and a real one.
+        earlier = result["t0"] - fight["first_trade"] >= params["fight_min_gap"]
+        real = fight["deaths"] or fight["most_heroes"] >= params["fight_heroes_no_death"]
+        fight = fight if earlier and real else None
     if fight:
-        if fight["most_heroes"] >= params["teamfight_heroes"]:
-            return "teamfight"  # U142: he died in or right out of a team fight
         if signals["victim_approached"] and any(signals[name] for name in TERRITORY_SIGNALS):
             return "overextended"  # U142: the fight was over and he pressed on (D19)
         return "after_fight"
-    if signals["saw_attackers"] and (
-        signals["victim_approached"] or any(signals[name] for name in TERRITORY_SIGNALS)
+    went_in = signals["victim_approached"] or any(signals[name] for name in TERRITORY_SIGNALS)
+    if params.get("elsewhere_lookback") is None:
+        return "overextended" if signals["saw_attackers"] and went_in else None  # rounds 4-6
+    # U158: going in is overextension unless every attacker was dead or seen elsewhere.
+    accounted = result.get("attackers_accounted")
+    if went_in and (
+        signals["saw_attackers"] or (accounted is not None and len(accounted) < result["attackers"])
     ):
         return "overextended"
     return None
@@ -384,6 +485,7 @@ def annotate(
 
     deaths = tower_deaths(combat)
     lanes = hero_lanes(tracks)
+    ends = laning_ends(tracks, deaths, lanes, params)
     # The signals only read the seconds before t0; slicing once per episode instead of
     # scanning the whole log keeps a rule change cheap to rerun.
     timed = sorted((e for e in combat if e.get("time") is not None), key=lambda e: e["time"])
@@ -393,7 +495,9 @@ def annotate(
         t0 = episode["t0"]
         fronts = fronts_by_second.get(t0)
         window = timed[bisect_left(times, t0 - reach) : bisect_right(times, t0)]
-        result = depth_signals(episode, tracks, window, fronts, zones, deaths, seen, lanes, params)
+        result = depth_signals(
+            episode, tracks, window, fronts, zones, deaths, seen, lanes, params, ends
+        )
         episode["depth"] = result
         episode["rule_label"] = episode["label"]
         if episode["is_gank"]:

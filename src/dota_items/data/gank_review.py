@@ -466,3 +466,37 @@ def acceptance_score(rows, judgments):
             "estimated_share_rule_right_on_gank_or_not": estimate,
         }
     return result
+
+
+def cohen_kappa(pairs):
+    """Chance-corrected agreement of two raters on [(label_a, label_b)]; None when undefined.
+
+    Plain agreement flatters raters who mostly use one label; kappa takes out what two
+    raters with these label frequencies would agree on by chance.
+    """
+    pairs = list(pairs)
+    if not pairs:
+        return None
+    total = len(pairs)
+    observed = sum(a == b for a, b in pairs) / total
+    labels = {label for pair in pairs for label in pair}
+    expected = sum(
+        (sum(a == label for a, _ in pairs) / total) * (sum(b == label for _, b in pairs) / total)
+        for label in labels
+    )
+    return None if expected == 1 else round((observed - expected) / (1 - expected), 3)
+
+
+def agreement(pairs):
+    """{pairs, agreement, kappa} on the full labels and on gank-or-not."""
+    pairs = [(a, b) for a, b in pairs if a and b and "unsure" not in (a, b)]
+    binary = [(a == "gank", b == "gank") for a, b in pairs]
+    return {
+        "pairs": len(pairs),
+        "class_agreement": round(sum(a == b for a, b in pairs) / len(pairs), 3) if pairs else None,
+        "class_kappa": cohen_kappa(pairs),
+        "gank_or_not_agreement": round(sum(a == b for a, b in binary) / len(binary), 3)
+        if binary
+        else None,
+        "gank_or_not_kappa": cohen_kappa(binary),
+    }

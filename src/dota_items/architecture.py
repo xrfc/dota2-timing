@@ -157,6 +157,7 @@ MODULES = {
     "data.gank_events": (_B, "active"),
     "data.gank_depth": (_B, "active"),
     "data.death_tags": (_B, "active"),
+    "data.death_risk": (_B, "active"),
     "data.gank_foresight": (_B, "active"),
     "data.gank_review": (_B, "active"),
     "data.awareness_split": (_B, "active"),
@@ -296,6 +297,9 @@ SCRIPTS = {
     "collect_build_survey": _S,
     "check_patch_knowledge": _S,
     "collect_demos": _S,
+    "build_death_risk_table": _B,
+    "train_death_risk": _B,
+    "death_importance": _B,
     "demo_data_card": _B,  # reads positions with the track B replay reader
     "extract_creeps": _S,
     "extract_state_v3": _S,

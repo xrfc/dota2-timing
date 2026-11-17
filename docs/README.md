@@ -1,6 +1,6 @@
 # 文档索引
 
-**先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-08）。
+**先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-17）。
 
 **从这里开始**：[开发计划](development-plan-2026-10-30.md)（唯一进度：§7）· [架构](architecture.md) · [决策记录](decisions/README.md) · [变更记录](../CHANGELOG.md)
 
@@ -22,6 +22,7 @@
 | [架构](architecture.md) | **当前架构入口**：层×线、模块归属、依赖规则、迁移策略 |
 | [路线B设计](awareness-track.md) | 差异化分析、三类判断、四层设计、B0–B5、数据工程难点 |
 | [决策记录](decisions/README.md) | U1起每条用户决定 |
+| [路线变更总览](route-changes.md) | 一页看清方向改过哪几次、为什么改、被替代的是什么（每行指向决策记录） |
 | [长期产品目标](long-term-coach-goals.md) | 只做赛前/赛后、不做实时辅助；复盘信息边界原则（历史依据，仍有效） |
 | [单模块维护](modular-maintenance.md) | 各层API细节、10/17–10/28结构整理记录（入口职责已移到架构页） |
 | [技术选型与优化路线](long-term-roadmap.md) | 历史技术参考 |
@@ -69,6 +70,11 @@
 ### 3.1 当前里程碑产物（M1–M2b）
 
 - [M1数据卡：多英雄比赛级数据表](m1-data-card.md)
+- [模型卡：死亡风险基线和死亡代价（路线B第一批模型）](b2-death-risk-baseline.md)
+- [计划§7的历史记录（2026-11-16之前）](plan-history.md)
+- [外部评估（2026-11-17）与处理](external-review-2026-11-17.md)
+- [7.42补丁预案](patch-7.42-plan.md)
+- [路线B任务契约草稿：预测“接下来会不会死”（U160）](b2-death-risk-contract.md)
 - [demo数据卡：多英雄demo采集的覆盖（段位、时长、1/5号位英雄）](demo-data-card.md)
 - [M2设计](m2-design.md) · [M2结果](m2-results.md) · [M2模型卡](m2-model-card.md)（出装时间预测，已结案U13）
 - [M2b设计](m2b-design.md) · [M2b结果](m2b-results.md) · [M2b模型卡](m2b-model-card.md)（赛前针对装，暂停于T6c）

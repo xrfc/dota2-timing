@@ -40,10 +40,10 @@ def death_tags(episode, teleported=(), region=None, params=None):
     flags, depth = episode["flags"], episode.get("depth") or {}
     signals = depth.get("signals") or {}
     fight = depth.get("after_fight")
+    laning = episode["t0"] < depth.get("laning_end", params["laning_end"])  # per lane (U158)
     on = {
-        "laning": episode["t0"] < params["laning_end"],
-        "other_lane": episode["t0"] < params["laning_end"]
-        and bool(depth.get("attackers_from_other_lanes")),
+        "laning": laning,
+        "other_lane": laning and bool(depth.get("attackers_from_other_lanes")),
         "teleported": bool(teleported),
         "smoked": bool(episode.get("smoked_attackers")),
         "from_unseen": flags.get("from_unseen", False),
