@@ -50,6 +50,7 @@ MODULES = {
     "contracts.numeric": (_S, "active"),
     "contracts.replay_context": (_S, "active"),
     "contracts.tasks": (_S, "active"),
+    "contracts.death_risk": (_B, "active"),
     "handoff": (_S, "active"),
     "handoff.bundle": (_S, "active"),
     # sources
@@ -177,6 +178,8 @@ MODULES = {
     "modeling": (_S, "active"),
     "modeling._validation": (_S, "active"),
     "modeling.evaluation": (_S, "active"),
+    "modeling.awareness": (_B, "active"),
+    "modeling.awareness.death_risk_eval": (_B, "active"),
     # modeling: track A
     "modeling.artifacts": (_A, "active"),
     "modeling.batch": (_A, "active"),
@@ -204,6 +207,8 @@ MODULES = {
     "modeling.whole_log_diagnostics": (_A, "maintenance"),
     # experiments: track A historical whole-log experiment
     "experiments": (_S, "active"),
+    "experiments.awareness": (_B, "active"),
+    "experiments.awareness.death_risk_tables": (_B, "active"),
     "experiments.whole_log": (_A, "maintenance"),
     "experiments.whole_log.baseline": (_A, "maintenance"),
     "experiments.whole_log.diagnostics": (_A, "maintenance"),
@@ -301,6 +306,7 @@ SCRIPTS = {
     "train_death_risk": _B,
     "death_importance": _B,
     "death_risk_by_reason": _B,
+    "death_risk_ceiling": _B,  # U165: diagnostic only, omniscient inputs
     "demo_data_card": _B,  # reads positions with the track B replay reader
     "extract_creeps": _S,
     "extract_state_v3": _S,

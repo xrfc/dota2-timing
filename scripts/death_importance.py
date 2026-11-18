@@ -9,12 +9,17 @@ seconds after the death minus the one `before` seconds before it, from the fold 
 that did not see that match. The swing is what happened around the death (the whole
 fight, not only this hero), so it ranks deaths; it is not the causal cost of one death.
 
-    death_importance.py --root data/demos-2026-11 --out reports/death-importance-<date>
+    death_importance.py --root data/demos-2026-11 --table death-risk-v4 \
+        --out reports/death-importance-<date>
+
+The input folder is given explicitly and checked (experiments.awareness.death_risk_tables).
+Until 2026-11-17 this script always read `death-risk-v1`; the first report
+(reports/death-importance-2026-11-17) came from that folder and is reproduced with
+`--table death-risk-v1 --allow-legacy`.
 """
 
 import argparse
 import json
-import pickle
 from pathlib import Path
 
 import numpy as np
@@ -26,7 +31,9 @@ from sklearn.model_selection import GroupKFold
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-SCHEMA = "death-importance/1"
+from dota_items.experiments.awareness.death_risk_tables import load_tables
+
+SCHEMA = "death-importance/2"  # 2: explicit, checked input folder
 FEATURES = ("minute", "net_worth_diff", "net_worth_share", "level_diff", "alive_diff", "tower_diff")
 FOLDS = 5
 SEED = 20261117
@@ -35,16 +42,13 @@ BEFORE, AFTER = 5, 30
 BANDS = ((0, 10), (10, 20), (20, 30), (30, 45), (45, 999))
 
 
-def load(root):
-    win, deaths = [], []
-    for path in sorted((root / "death-risk-v1").glob("*.pkl")):
-        with path.open("rb") as stream:
-            value = pickle.load(stream)  # written by build_death_risk_table.py, local only
-        win += value["win"]
-        deaths += value["deaths"]
+def load(folder, allow_legacy=False):
+    _, win, deaths, info = load_tables(folder, allow_legacy)
+    if not win:
+        raise SystemExit(f"{folder} has no win-state rows")
     frame = pd.DataFrame(win)
     frame["net_worth_share"] = frame["net_worth_diff"] / frame["net_worth_total"].clip(lower=1)
-    return frame, pd.DataFrame(deaths)
+    return frame, pd.DataFrame(deaths), info
 
 
 def calibration(y, scores, bins=10):
@@ -68,10 +72,12 @@ def spread(values):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", type=Path, required=True)
+    parser.add_argument("--table", required=True)
+    parser.add_argument("--allow-legacy", action="store_true")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
+    frame, deaths, info = load(args.root / args.table, args.allow_legacy)
     args.out.mkdir(parents=True, exist_ok=False)
-    frame, deaths = load(args.root)
     x, y = frame[list(FEATURES)].to_numpy(), frame["radiant_win"].to_numpy()
     train_rows = (frame["t"] % TRAIN_STEP == 0).to_numpy()
     makers = {
@@ -86,6 +92,7 @@ def main(argv=None):
     report = {
         "schema": SCHEMA,
         "use": "ranking deaths in a review; uses the full public state, not a model input",
+        "input": info,
         "matches": int(frame["match_id"].nunique()),
         "features": list(FEATURES),
         "win_model": {},

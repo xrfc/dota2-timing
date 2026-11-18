@@ -55,7 +55,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 87 / 23 | 72 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 20 / 3 | 34 |
+| `awareness` | 路线B 意识决策 | 25 / 3 | 35 |
 <!-- /track-table -->
 
 依赖规则：
@@ -82,9 +82,9 @@
 |---|---|---|---|
 | sources | OpenDota、采集预算、采集历史、Gem解析（`gem_*`） | — | 决策时点状态抓取（`decision_state_capture`、`decision_mana`）、坐标身份 |
 | data | `source_io`、校验/清洗/上下文/observer、pipeline、`patch_time`、生产者迁移、装备登记、**MK机制**（`mechanics*`） | 比赛级表`match_table`/`match_snapshot`、购买队列与快照、可行性审计、英雄特性v1 | `decision_*`证据与状态、`replay_*`可知性与回放投影、`tick_alignment` |
-| contracts/handoff | 全部 | — | — |
-| modeling | `_validation`、`evaluation` | 规格、批处理、训练、估计器、制品、推理、`item_timing`、`situational_*`、阵容分析、购买实验 | （尚无，D2起新增） |
-| experiments | 包本身 | `whole_log`（仅维护） | — |
+| contracts/handoff | 其余全部 | — | `contracts/death_risk`（死亡风险表的特征名和契约） |
+| modeling | `_validation`、`evaluation` | 规格、批处理、训练、估计器、制品、推理、`item_timing`、`situational_*`、阵容分析、购买实验 | `awareness/death_risk_eval`（死亡风险的交叉验证、指标、报警统计；2026-11-18） |
+| experiments | 包本身 | `whole_log`（仅维护） | `awareness/death_risk_tables`（死亡风险表的生成条件和读取检查） |
 | recommendation | — | 7.41f规则原型（仅维护） | — |
 | workflow | coach工作区（prepare/observe/doctor） | — | — |
 | scripts | 环境、检查、录像入库、MK构建与复核 | 8780 coach_app、训练/快照/采集 | 回放器、决策评审页（8768–8770）、状态探针、tick对齐 |

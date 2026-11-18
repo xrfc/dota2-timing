@@ -22,6 +22,14 @@ Version 2 (2026-11-17) adds, through the optional `context` of `features`:
 
 Enemy wards, enemy creep waves in the fog and enemy cooldowns stay out.
 
+Version 3 (2026-11-17) adds
+
+* "could he already be here": for each missing enemy, his last-seen spot, how long he has
+  been gone and his base move speed (public, hero registry) give the seconds he still
+  needs to come within `engage` of the hero (straight line, walls ignored);
+* trends: the change of a few features over the last 5, 10 and 15 seconds of the same
+  hero (`add_trends`, applied to the rows of one hero in time order).
+
 `hit_recent` marks samples where an enemy hero already damaged him in the last
 `hit_window` seconds: predicting a death then is easy and is no early warning, so the
 evaluation reports those samples apart (docs/b2-death-risk-contract.md).
@@ -30,6 +38,16 @@ evaluation reports those samples apart (docs/b2-death-risk-contract.md).
 import math
 from bisect import bisect_right
 
+from dota_items.contracts.death_risk import (  # noqa: F401  (re-exported names)
+    FEATURES,
+    FEATURES_V1,
+    FEATURES_V2,
+    FEATURES_V2_EXTRA,
+    FEATURES_V3_REACH,
+    FEATURES_V3_TREND,
+    TREND_LAGS,
+    TREND_OF,
+)
 from dota_items.data.gank_depth import depth, standing_towers
 
 PARAMS = {
@@ -42,42 +60,10 @@ PARAMS = {
     "far": 20000,  # stands in for "nobody" in distance features
     "age_cap": 120,  # seconds since an enemy was last seen, capped
     "hp_lookback": 5,
+    "engage": 600,  # an enemy this close can start hurting him
+    "boots": 45,  # added to base move speed: boots most heroes own after the first minutes
+    "default_speed": 300,
 }
-FEATURES_V1 = (
-    "minute",
-    "hp",
-    "hp_frac",
-    "hp_frac_change",
-    "mana_frac",
-    "level",
-    "level_vs_enemies",
-    "depth",
-    "own_tower_distance",
-    "enemy_tower_distance",
-    "allies_alive",
-    "allies_near",
-    "nearest_ally_distance",
-    "enemies_alive",
-    "enemies_visible",
-    "enemies_visible_near",
-    "enemies_visible_mid",
-    "nearest_visible_enemy_distance",
-    "enemies_missing",
-    "missing_shortest_age",
-    "missing_longest_age",
-    "nearest_missing_last_seen_distance",
-    "hit_recent",
-)
-FEATURES_V2_EXTRA = (
-    "saves_owned",
-    "saves_ready",
-    "own_creeps_distance",
-    "ahead_of_own_creeps",
-    "own_observers_covering",
-    "missing_initiators",
-    "visible_initiators_mid",
-)
-FEATURES = FEATURES_V1 + FEATURES_V2_EXTRA
 INVENTORY_SLOTS = {str(slot) for slot in range(6)} | {"15"}  # main inventory and TP slot
 LANE_TEAM = {2: "radiant", 3: "dire"}
 OBSERVER_VISION = 1600  # item_ward_observer vision_range_tooltip (game files 2026-11-17)
@@ -141,16 +127,67 @@ def death_times(combat, hero):
 
 
 def hero_hit_seconds(combat, hero, team):
-    """Seconds at which an enemy hero damaged `hero`."""
+    """Seconds at which an enemy hero damaged the real `hero`.
+
+    Damage to his illusions carries the same target name and is left out by the
+    `target_is_illusion` flag (fixed 2026-11-18 after a review; tables built before that
+    counted illusion damage as hits on him).
+    """
     return {
         e["time"]
         for e in combat
         if e["payload"].get("log_type") == "DAMAGE"
         and e["payload"].get("target_name") == hero
+        and not e["payload"].get("target_is_illusion")
         and team.get(e["payload"].get("attacker_name")) not in (None, team[hero])
         and not e["payload"].get("attacker_is_illusion")
         and e.get("time") is not None
     }
+
+
+TEAM_TAG = {"goodguys": 2, "badguys": 3}
+
+
+def damage_source(payload, team):
+    """Kind of the unit that dealt one damage event: hero, illusion, tower, creep,
+    neutral or other, and its team when known (None for neutrals and unknown units)."""
+    name = payload.get("attacker_name") or ""
+    if name in team:
+        return ("illusion" if payload.get("attacker_is_illusion") else "hero"), team[name]
+    side = next((t for tag, t in TEAM_TAG.items() if f"_{tag}_" in f"_{name}_"), None)
+    if "tower" in name or "_fort" in name:
+        return "tower", side
+    if "neutral" in name or "roshan" in name:
+        return "neutral", None
+    if side is not None:
+        return "creep", side  # lane creeps, siege units
+    return "other", None
+
+
+def damage_taken(combat, hero, team):
+    """Every second the real `hero` took damage from the enemy or the neutrals, by source.
+
+    One row per (second, source kind) with the summed damage. Kept in the table (2026-11-18)
+    so that a fight-level measure ("alert before the first hit of the fight", contract §4)
+    or another hit definition (creeps and towers included or not) can be computed later
+    without rebuilding. Damage from his own team (denies, self damage) is left out.
+    """
+    total = {}
+    for e in combat:
+        p = e["payload"]
+        if (
+            p.get("log_type") != "DAMAGE"
+            or p.get("target_name") != hero
+            or p.get("target_is_illusion")
+            or e.get("time") is None
+        ):
+            continue
+        kind, side = damage_source(p, team)
+        if side == team[hero]:
+            continue
+        key = (e["time"], kind)
+        total[key] = total.get(key, 0) + (p.get("value") or 0)
+    return [{"t": t, "source": kind, "value": value} for (t, kind), value in sorted(total.items())]
 
 
 def labels(t, deaths, horizons):
@@ -186,6 +223,8 @@ def features(
     }
     allies, visible, missing_age, missing_distance, enemy_levels = [], [], [], [], []
     initiators = (context or {}).get("initiators", ())
+    speeds = (context or {}).get("speeds", {})
+    needed = []  # seconds each missing enemy still needs to reach him
     missing_initiators = visible_initiators_mid = 0
     for other, track in tracks.items():
         if other == hero:
@@ -212,6 +251,11 @@ def features(
         spot = track["pos"].get(last) if last is not None else None
         if spot is not None and t - last <= params["age_cap"]:
             missing_distance.append(_distance(here, spot))
+            speed = speeds.get(other, params["default_speed"]) + params["boots"]
+            gap = (_distance(here, spot) - params["engage"]) / speed - (t - last)
+            needed.append(max(-30.0, gap))
+        else:
+            needed.append(float(params["age_cap"]))
     row = {
         "minute": t / 60,
         "hp": hp,
@@ -239,6 +283,15 @@ def features(
     }
     if context is None:
         return row
+    needed.sort()
+    cap = float(params["age_cap"])
+    if "speeds" in context:
+        row |= {
+            "reach_now": sum(n <= 0 for n in needed),
+            "reach_10": sum(n <= 10 for n in needed),
+            "reach_min": needed[0] if needed else cap,
+            "reach_second": needed[1] if len(needed) > 1 else cap,
+        }
     owned, ready = context["kit"].get(t, (0, 0))
     waves = own_waves(context["fronts"].get(t), own)
     wave = min(waves, key=lambda w: _distance(here, w)) if waves else None
@@ -254,6 +307,25 @@ def features(
         "missing_initiators": missing_initiators,
         "visible_initiators_mid": visible_initiators_mid,
     }
+
+
+def add_trends(rows, params=PARAMS):
+    """Add the version 3 trend features to the rows of one hero, in time order, in place.
+
+    A lag counts only when the earlier row is exactly lag * step seconds before (no gap
+    from a death or missing data); otherwise the change is 0.
+    """
+    by_time = {row["t"]: row for row in rows}
+    for row in rows:
+        for lag in TREND_LAGS:
+            earlier = by_time.get(row["t"] - lag * params["step"])
+            for name in TREND_OF:
+                row[f"{name}_d{lag}"] = row[name] - earlier[name] if earlier else 0.0
+        before = by_time.get(row["t"] - 2 * params["step"])
+        row["vanished_10"] = (
+            max(0, before["enemies_visible"] - row["enemies_visible"]) if before else 0
+        )
+    return rows
 
 
 def samples(
@@ -280,4 +352,6 @@ def samples(
             {"match_id": match_id, "hero": hero, "t": t, **row}
             | {f"dies_{h}": value for h, value in found.items()}
         )
+    if context is not None and "speeds" in context:
+        add_trends(rows, params)
     return rows

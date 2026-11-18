@@ -5,35 +5,31 @@ position 1 death that falls inside a death episode gets that episode's main reas
 (data.death_tags.primary_reason; the order of the reasons is the assistant's draft, U156).
 The reasons are omniscient labels used to explain the model, never model input (U55).
 
-For each reason it reports how many deaths the alert (the threshold of the risk report:
-5% false alarms on not-yet-hit samples) caught before he was first hit, the median lead,
-and the median of the highest risk in the 20 seconds before the death.
+For each reason it reports the share of deaths with an alert on a sample not hit in the
+last 3 seconds within the 20 seconds before the death (threshold of the risk report: 5%
+false alarms on such samples; modeling.awareness.death_risk_eval.death_alerts), the
+median lead and the median of the highest risk in those 20 seconds. The share is not a
+"before the first hit of the fight" recall.
 
-    death_risk_by_reason.py --root data/demos-2026-11 \
-        --risk reports/death-risk-v2-2026-11-17 \
+    death_risk_by_reason.py --root data/demos-2026-11 --table death-risk-v4 \
+        --risk reports/<risk report> \
         --episodes reports/gank-episodes-2026-11-17-r7-draft2 --out reports/<folder>
 """
 
 import argparse
 import json
-import pickle
 from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 from dota_items.data.death_tags import death_tags, primary_reason
+from dota_items.experiments.awareness.death_risk_tables import load_tables
+from dota_items.modeling.awareness.death_risk_eval import death_alerts, summarize_alerts
 
-SCHEMA = "death-risk-by-reason/1"
+SCHEMA = "death-risk-by-reason/2"  # 2: shared alert measure, renamed (not hit in 3 s)
 HORIZON = 20
-
-
-def load_deaths(root, table):
-    deaths = []
-    for path in sorted((root / table).glob("*.pkl")):
-        with path.open("rb") as stream:
-            deaths += pickle.load(stream)["deaths"]  # build_death_risk_table.py, local only
-    return deaths
 
 
 def episode_index(folder):
@@ -58,62 +54,50 @@ def reason_of(index, match_id, hero, t, slack=2):
     return "no_episode", "没有对应片段"
 
 
+def by_reason(found, index):
+    """[{reason, reason_zh, summary...}] from death_alerts output, largest group first."""
+    groups = defaultdict(list)
+    for row in found:
+        groups[reason_of(index, row["match_id"], row["hero"], row["t"])].append(row)
+    return [
+        {"reason": key, "reason_zh": name, **summarize_alerts(rows)}
+        for (key, name), rows in sorted(groups.items(), key=lambda kv: -len(kv[1]))
+    ]
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", type=Path, required=True)
+    parser.add_argument("--table", required=True)
+    parser.add_argument("--allow-legacy", action="store_true")
     parser.add_argument("--risk", type=Path, required=True)
     parser.add_argument("--episodes", type=Path, required=True)
-    parser.add_argument("--table", default="death-risk-v2")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
+    _, _, deaths, info = load_tables(args.root / args.table, args.allow_legacy)
     args.out.mkdir(parents=True, exist_ok=False)
     report = json.loads((args.risk / "report.json").read_text(encoding="utf-8"))
     threshold = report["alerts"]["threshold"]
     oof = np.load(args.risk / "out-of-fold.npz")
-    series = defaultdict(list)
-    for mid, hero, t, score, hit in zip(
-        oof["match_id"], oof["hero"], oof["t"], oof["boosting"], oof["hit_recent"], strict=True
-    ):
-        series[(int(mid), str(hero))].append((int(t), float(score), int(hit)))
-    index = episode_index(args.episodes)
-    groups = defaultdict(list)
-    for death in load_deaths(args.root, args.table):
-        key = (int(death["match_id"]), death["hero"])
-        if key not in series:
-            continue  # not a tracked position 1 hero
-        t = death["t"]
-        before = [(s, score, hit) for s, score, hit in series[key] if t - HORIZON <= s < t]
-        if not before:
-            continue
-        alerts = [s for s, score, hit in before if not hit and score >= threshold]
-        reason = reason_of(index, *key, t)
-        groups[reason].append(
-            {
-                "alerted": bool(alerts),
-                "lead": t - min(alerts) if alerts else None,
-                "peak": max(score for _, score, _ in before),
-            }
-        )
-    rows = []
-    for (key, name), items in sorted(groups.items(), key=lambda kv: -len(kv[1])):
-        leads = [i["lead"] for i in items if i["alerted"]]
-        rows.append(
-            {
-                "reason": key,
-                "reason_zh": name,
-                "deaths": len(items),
-                "alerted_before_being_hit": round(sum(i["alerted"] for i in items) / len(items), 3),
-                "median_lead_seconds": float(np.median(leads)) if leads else None,
-                "median_peak_risk": round(float(np.median([i["peak"] for i in items])), 3),
-            }
-        )
+    frame = pd.DataFrame(
+        {
+            "match_id": oof["match_id"],
+            "hero": oof["hero"].astype(str),
+            "t": oof["t"],
+            "hit_recent": oof["hit_recent"],
+        }
+    )
+    found = death_alerts(frame, pd.DataFrame(deaths), oof["boosting"], threshold, HORIZON)
+    rows = by_reason(found, episode_index(args.episodes))
     result = {
         "schema": SCHEMA,
         "use": "explains the risk model by omniscient death reasons; review only (U55)",
+        "input": info,
         "risk_report": str(args.risk),
         "episodes": str(args.episodes),
         "threshold": threshold,
         "horizon": HORIZON,
+        "alert_measure": "alert on a sample not hit in the last 3 s; not 'before the first hit'",
         "reasons": rows,
     }
     (args.out / "report.json").write_text(

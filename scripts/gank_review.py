@@ -441,7 +441,10 @@ def attach_risk(deaths, folder, match_id, combat, before=30, after=5):
             "death": died[0] if died else None,
             "horizon": report.get("main_horizon", 20),
             "threshold": report["alerts"]["threshold"],
-            "false_alarm_rate": report["alerts"]["false_alarm_rate_on_early_samples"],
+            "false_alarm_rate": report["alerts"].get(
+                "false_alarm_rate_on_samples_not_hit_last_3s",
+                report["alerts"].get("false_alarm_rate_on_early_samples"),  # reports of 11-17
+            ),
             "points": [
                 [int(s), round(float(v), 4), int(h)]
                 for s, v, h in sorted(zip(times[mine], scores[mine], hits[mine], strict=True))

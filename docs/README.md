@@ -73,8 +73,10 @@
 - [模型卡：死亡风险基线和死亡代价（路线B第一批模型）](b2-death-risk-baseline.md)
 - [计划§7的历史记录（2026-11-16之前）](plan-history.md)
 - [外部评估（2026-11-17）与处理](external-review-2026-11-17.md)
+- [审查与修复：死亡风险模型（2026-11-18）](review-2026-11-18-death-risk.md)
 - [7.42补丁预案](patch-7.42-plan.md)
 - [路线B任务契约草稿：预测“接下来会不会死”（U160）](b2-death-risk-contract.md)
+- [重训前清单：死亡风险模型（U170，会改表／只改评估／只改解释）](b2-retrain-checklist.md)
 - [demo数据卡：多英雄demo采集的覆盖（段位、时长、1/5号位英雄）](demo-data-card.md)
 - [M2设计](m2-design.md) · [M2结果](m2-results.md) · [M2模型卡](m2-model-card.md)（出装时间预测，已结案U13）
 - [M2b设计](m2b-design.md) · [M2b结果](m2b-results.md) · [M2b模型卡](m2b-model-card.md)（赛前针对装，暂停于T6c）

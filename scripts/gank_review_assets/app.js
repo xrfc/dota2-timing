@@ -78,8 +78,8 @@ function open(id) {
     const r = e.risk, death = r.death ?? e.end;
     const early = r.points.filter(p => p[0] < death && p[0] >= death - r.horizon && !p[2] && p[1] >= r.threshold);
     const peak = Math.max(0, ...r.points.filter(p => p[0] < death).map(p => p[1]));
-    fact('死亡风险（模型）', (early.length ? `死前${death - early[0][0]}秒、还没挨打时超过提醒线` : '死前20秒内、挨打前没有超过提醒线') + `；死前最高${Math.round(peak * 100)}%`, early.length ? 'warn' : '');
-    $('risk-note').textContent = `模型估计的“${r.horizon}秒内死亡”的概率，每5秒一个点，只用他当时能知道的信息；没训练过这场比赛。虚线是提醒线（还没挨打时误报约${Math.round(r.false_alarm_rate * 100)}%），空心点表示前3秒已经挨打。点图可跳到那一秒。`;
+    fact('死亡风险（模型）', (early.length ? `死前${death - early[0][0]}秒超过提醒线（那时最近3秒没挨打）` : '死前20秒内，最近3秒没挨打的时刻都没超过提醒线') + `；死前最高${Math.round(peak * 100)}%`, early.length ? 'warn' : '');
+    $('risk-note').textContent = `模型估计的“${r.horizon}秒内死亡”的概率，每5秒一个点，只用他当时能知道的信息；没训练过这场比赛。虚线是提醒线（在最近3秒没挨打的时刻里误报约${Math.round(r.false_alarm_rate * 100)}%），空心点表示前3秒挨过打。“最近3秒没挨打”不等于这一波还没挨过打。点图可跳到那一秒。`;
   }
   fact('结果', OUTCOMES[e.outcome] || e.outcome);
   fact('参与的敌人', e.attackers.map(short).join('、') || '—');
