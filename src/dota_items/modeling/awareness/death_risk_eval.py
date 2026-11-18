@@ -315,3 +315,35 @@ def summarize_fight_alerts(found):
         "median_lead_to_death_seconds": median([r["lead_to_death"] for r in alerted]),
         "median_fight_seconds": median([r["fight_seconds"] for r in found]),
     }
+
+
+def false_alarm_rate(frame, scores, y, mask, threshold, step):
+    """(false-alarm onsets per hour, share of time in false alarm) on the masked samples.
+
+    A false alarm is a sample at or above `threshold` with no death in the horizon
+    (y == 0); an onset is one whose previous sample of the same hero was not. Per hour,
+    not per sample: a finer step checks more often, so a per-sample rate of 5% means more
+    alarms per hour (found when comparing 3 s and 5 s sampling, 2026-11-18).
+    """
+    order = np.lexsort((frame["t"].to_numpy(), frame["hero"].to_numpy(),
+                        frame["match_id"].to_numpy()))  # fmt: skip
+    match, hero = frame["match_id"].to_numpy()[order], frame["hero"].to_numpy()[order]
+    same = np.r_[False, (match[1:] == match[:-1]) & (hero[1:] == hero[:-1])]
+    alarm = ((scores >= threshold) & mask & (y == 0))[order]
+    previous = np.r_[False, alarm[:-1]]
+    hours = mask.sum() * step / 3600
+    if not hours:
+        return 0.0, 0.0
+    return float((alarm & ~(previous & same)).sum() / hours), float(alarm.sum() / mask.sum())
+
+
+def threshold_for_rate(frame, scores, y, mask, step, onsets_per_hour, rounds=40):
+    """The lowest threshold whose false-alarm onsets per hour do not exceed the target."""
+    low, high = 0.0, 1.0
+    for _ in range(rounds):
+        middle = (low + high) / 2
+        if false_alarm_rate(frame, scores, y, mask, middle, step)[0] > onsets_per_hour:
+            low = middle
+        else:
+            high = middle
+    return high

@@ -200,3 +200,28 @@ def test_fight_level_alert_must_come_before_the_fight_started():
     assert not long[0]["could_alert"]  # fight longer than the 20 s horizon: no sample before
     tight = death_risk_eval.fight_spans(hits, contact)  # the proposal: gap 5, distance 900
     assert tight[(7, "v")] == [(93, 93), (100, 100), (110, 115)]  # 96: 1000 away, not contact
+
+
+def test_risk_frame_keeps_one_row_every_n_seconds(tmp_path):
+    folder = tmp_path / "table"
+    digest = tables.prepare_folder(folder, conditions(tmp_path, params={**PARAMS, "step": 1}))
+    rows = [{"match_id": KEPT, "hero": "h", "t": t, "hit_recent": 0} for t in range(60, 76)]
+    write_match(folder, KEPT, digest, risk=rows, params={"start": 60, "step": 1})
+    frame, _, info = tables.load_risk_frame(folder, every=5)
+    assert frame["t"].tolist() == [60, 65, 70, 75] and info["every_seconds"] == 5
+    assert tables.load_risk_frame(folder, every=3)[0]["t"].tolist() == [60, 63, 66, 69, 72, 75]
+    write_match(folder, KEPT, digest, risk=rows, params={"start": 60, "step": 2})
+    with pytest.raises(TableError, match="not a multiple"):
+        tables.load_risk_frame(folder, every=3)
+
+
+def test_false_alarms_are_counted_per_hour_not_per_sample():
+    """A finer step checks more often: the same scores give more alarms per hour."""
+    frame = pd.DataFrame({"match_id": [7] * 12, "hero": ["v"] * 12, "t": range(60, 120, 5)})
+    scores = np.array([0.0, 0.5, 0.5, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5])
+    y = np.array([0] * 10 + [1, 1])  # the last two precede a death: not false alarms
+    mask = np.ones(12, dtype=bool)
+    onsets, share = death_risk_eval.false_alarm_rate(frame, scores, y, mask, 0.2, 5)
+    assert onsets == 2 / (60 / 3600) and share == 3 / 12  # two runs in one minute
+    threshold = death_risk_eval.threshold_for_rate(frame, scores, y, mask, 5, 0.0)
+    assert threshold > 0.5  # no false alarm at all

@@ -39,7 +39,7 @@ import pandas as pd
 from sklearn.inspection import permutation_importance
 
 from dota_items.contracts.death_risk import FEATURES, FEATURES_V1, FEATURES_V2
-from dota_items.experiments.awareness.death_risk_tables import load_parts, load_tables
+from dota_items.experiments.awareness.death_risk_tables import load_parts, load_risk_frame
 from dota_items.modeling.awareness.death_risk_eval import (
     ALERT_FALSE_ALARM,
     FIGHT,
@@ -48,6 +48,7 @@ from dota_items.modeling.awareness.death_risk_eval import (
     at_false_alarm,
     bootstrap_gap,
     death_alerts,
+    false_alarm_rate,
     fight_alerts,
     fight_spans,
     in_fight,
@@ -74,15 +75,10 @@ def main(argv=None):
     parser.add_argument("--every", type=int, default=0, help="seconds between kept rows")
     args = parser.parse_args(argv)
     folder = args.root / args.table
-    risk, _, deaths, info = load_tables(folder, args.allow_legacy)
+    frame, deaths, info = load_risk_frame(folder, args.every, args.allow_legacy)
     params = info["params"] or {"start": 60, "step": 5}  # legacy folders: the v1-v3 values
-    if args.every and args.every % params["step"]:
-        parser.error(f"--every must be a multiple of the table step {params['step']}")
     args.out.mkdir(parents=True, exist_ok=False)
-    frame, deaths = pd.DataFrame(risk), pd.DataFrame(deaths)
-    del risk
-    if args.every:
-        frame = frame[(frame["t"] - params["start"]) % args.every == 0].reset_index(drop=True)
+    deaths = pd.DataFrame(deaths)
     spans = None
     if info["verified"]:
         parts, _ = load_parts(folder)
@@ -110,7 +106,7 @@ def main(argv=None):
         "folds": FOLDS,
         "main_horizon": MAIN_HORIZON,
         "subset_not_hit_last_3s": "samples with hit_recent == 0; not 'before the first hit'",
-        "every_seconds": args.every or params["step"],
+        "every_seconds": info["every_seconds"],
         "fight": FIGHT if spans is not None else None,
         "subset_outside_fight": None
         if spans is None
@@ -169,8 +165,13 @@ def main(argv=None):
     if outside is not None:
         _, fight_threshold = at_false_alarm(y[outside], boosting[outside], ALERT_FALSE_ALARM)
         found = fight_alerts(frame, deaths, boosting, fight_threshold, MAIN_HORIZON, spans)
+        onsets, share = false_alarm_rate(
+            frame, boosting, y, outside, fight_threshold, info["every_seconds"]
+        )
         report["fight_alerts"] = {
             "threshold": round(fight_threshold, 4),
+            "false_alarm_onsets_per_hour_outside_fight": round(onsets, 2),
+            "share_of_time_outside_fight_in_false_alarm": round(share, 4),
             "false_alarm_rate_on_samples_outside_fight": ALERT_FALSE_ALARM,
             "horizon": MAIN_HORIZON,
             **summarize_fight_alerts(found),

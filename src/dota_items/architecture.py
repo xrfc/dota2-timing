@@ -307,6 +307,7 @@ SCRIPTS = {
     "death_importance": _B,
     "death_risk_by_reason": _B,
     "death_risk_ceiling": _B,  # U165: diagnostic only, omniscient inputs
+    "compare_death_risk_steps": _B,  # U174, U176: equal false alarms per hour
     "demo_data_card": _B,  # reads positions with the track B replay reader
     "extract_creeps": _S,
     "extract_state_v3": _S,

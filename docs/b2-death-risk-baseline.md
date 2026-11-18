@@ -7,6 +7,11 @@
 ```bash
 # 新建一张表（需要授权重建时才跑；目录名换新，旧目录不会被覆盖）
 PYTHONPATH=src:scripts .venv/bin/python scripts/build_death_risk_table.py --root data/demos-2026-11 --table death-risk-v4 --workers 6
+# 2026-11-18：第4版表（每1秒）和5秒、3秒两次训练（§1e）
+PYTHONPATH=src:scripts .venv/bin/python scripts/build_death_risk_table.py --root data/demos-2026-11 --table death-risk-v4-1s --step 1 --workers 6
+PYTHONPATH=src:scripts .venv/bin/python scripts/train_death_risk.py --root data/demos-2026-11 --table death-risk-v4-1s --every 5 --out reports/death-risk-v4-every5-2026-11-18
+PYTHONPATH=src:scripts .venv/bin/python scripts/train_death_risk.py --root data/demos-2026-11 --table death-risk-v4-1s --every 3 --out reports/death-risk-v4-every3-2026-11-18
+PYTHONPATH=src:scripts .venv/bin/python scripts/compare_death_risk_steps.py --root data/demos-2026-11 --table death-risk-v4-1s --reports reports/death-risk-v4-every5-2026-11-18 reports/death-risk-v4-every3-2026-11-18 --out reports/death-risk-step-comparison-2026-11-18
 # 2026-11-17各报告的输入目录
 PYTHONPATH=src:scripts .venv/bin/python scripts/train_death_risk.py --root data/demos-2026-11 --table death-risk-v1 --allow-legacy --out reports/<新目录>   # §1：v1
 PYTHONPATH=src:scripts .venv/bin/python scripts/train_death_risk.py --root data/demos-2026-11 --table death-risk-v3 --allow-legacy --out reports/<新目录>   # §1c：v3
@@ -151,6 +156,34 @@ PYTHONPATH=src:scripts .venv/bin/python scripts/death_importance.py --root data/
 1. 只靠屏幕上的信息，对被抓的提前预警可能上限不高；但这一点没有被证明，继续改进可知特征仍可能有收益。
 2. 复盘里也许值得讲“当时缺了什么信息”：比如这次被抓，如果那条路上有眼，敌人会提前多少秒被看到。这可以用真实位置在复盘里做（复盘本来就允许用全知数据作解释，U55），不需要把全知数据放进模型。
 3. 这个方向是否要做、怎么做，等用户定；当前任务不因此改变（U165）。
+
+> 2026-11-18：用户定了第2点的边界（U168）：复盘1号位时只说“当时看不见谁、看不见多久”，不说“这里该有眼”；做眼的判断留给以后5号位的复盘。
+
+## 1e. 第4版表：每1秒建表，比较3秒和5秒采样（2026-11-18，U174、U176）
+
+**表**：`data/demos-2026-11/death-risk-v4-1s`（1341场，4.6GB，带生成条件，校验通过）。和v3相比：幻象挨打不再算本体；趋势按秒算；多存每秒挨打`hits`和接触事实`contact`（只用于评估）。建表约十几分钟（时间主要花在读数据上）。
+
+**训练**：同一张表抽成每5秒和每3秒，各训练一次（`reports/death-risk-v4-every5-2026-11-18`、`-every3-`）。耗时9分钟和15分钟，内存峰值4.1GB和5.0GB（机器约6GB）。
+
+| | 每5秒 | 每3秒 |
+|---|---|---|
+| 样本数 | 112万 | 187万 |
+| 平均精度：最近3秒没挨打（旧口径） | 0.1537 | 0.1538 |
+| 平均精度：不在任何一波里（新口径） | 0.0997 | 0.1002 |
+| 同上，只算两者共有的15秒网格 | **0.1012** | **0.1013** |
+| 这一波之前报警：按报告的提醒线（每个样本误报5%） | 30.1% | 37.6% |
+| 同上，误报次数相同（每小时25次） | **30.1%** | **30.6%** |
+| 报警到这一波开始的提前量（中位） | 4秒 | 4秒 |
+
+**结论**：
+
+- **3秒没有更好。**在同样的样本上，模型的区分能力一样（0.1012对0.1013）。报告里37.6%对30.1%的差别，来自3秒检查得更频繁：提醒线按“每个样本误报5%”定，3秒每分钟样本多，误报也多（每小时约35次对25次）。把每小时误报次数调成一样，两者几乎相同（30.6%对30.1%；`scripts/compare_death_risk_steps.py`，`reports/death-risk-step-comparison-2026-11-18`）。以后的训练报告直接给每小时误报次数（`false_alarm_onsets_per_hour_outside_fight`）。
+- 所以1秒也不太可能有帮助：模型能力不随采样变密而变，变密只是“多检查几次”。**助手建议继续用每5秒**（训练快、内存够），待用户确认。表是每1秒的，以后要改不用重建。
+- **新口径的数字明显更低**：“不在任何一波里”的平均精度约0.10（旧口径0.15）；只有约三成的死亡能在这一波开始之前报警，中位只提前4秒。这是诚实的预警能力：危险开始之前，现有信息能看出的不多。
+- 每小时约25次误报（不在交战时），对实时提醒太多；对复盘（事后看曲线）可以接受。
+- 这些数字用的是“一波”的暂定值（D＝900、G＝5），用户还没定；改了只需重算评估。
+- 和v3比（幻象修复之前）：旧口径平均精度0.1529→0.1537，影响很小。
+- 留出集没用；都是交叉验证结果。
 
 ## 2. 死亡代价：胜率模型给死亡排序
 

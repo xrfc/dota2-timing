@@ -171,6 +171,29 @@ def load_tables(folder, allow_legacy=False, holdout=is_holdout):
     return risk, win, deaths, info
 
 
+def load_risk_frame(folder, every=0, allow_legacy=False, holdout=is_holdout):
+    """(risk DataFrame, deaths, info), keeping one row every `every` seconds.
+
+    Built file by file, so a table sampled every second (2026-11-18, U174: about five
+    times the rows of the 5 s table) never sits in memory as row dicts. `every` must be a
+    multiple of the table's step; 0 keeps every row. Same checks as `load_tables`.
+    """
+    import pandas as pd  # only this reader needs it
+
+    info, frames, deaths = {}, [], []
+    for value in _checked_files(folder, allow_legacy, holdout, info):
+        params = value.get("params") or {"start": 60, "step": 5}
+        if every and every % params["step"]:
+            raise TableError(f"every={every} is not a multiple of the step {params['step']}")
+        part = pd.DataFrame(value["risk"])
+        if every and len(part):
+            part = part[(part["t"] - params["start"]) % every == 0]
+        frames.append(part)
+        deaths += value["deaths"]
+    info["every_seconds"] = every or (info["params"] or {"step": 5})["step"]
+    return pd.concat(frames, ignore_index=True), deaths, info
+
+
 def load_parts(folder, parts=("hits", "contact"), holdout=is_holdout):
     """({part: rows}, info) for the evaluation-only parts of a table: `hits` (damage taken
     by second and source) and `contact` (per-second sight and distances).
