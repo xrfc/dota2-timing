@@ -121,8 +121,9 @@ def _checked_files(folder, allow_legacy, holdout, info):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         check_manifest(manifest)
         expected, verified = manifest["conditions_digest"], True
+        params = manifest["conditions"]["params"]
     elif allow_legacy:
-        expected, verified = None, False
+        expected, verified, params = None, False, None
     else:
         raise TableError(f"{folder} has no {MANIFEST}; pass allow_legacy for an old folder")
     schemas = set()
@@ -149,6 +150,7 @@ def _checked_files(folder, allow_legacy, holdout, info):
         "schema": schemas.pop(),
         "conditions_digest": expected,
         "verified": verified,
+        "params": params,
         "matches": len(paths),
         "note": None
         if verified
@@ -169,12 +171,15 @@ def load_tables(folder, allow_legacy=False, holdout=is_holdout):
     return risk, win, deaths, info
 
 
-def load_hits(folder, holdout=is_holdout):
-    """(damage-taken rows, info): every second a sampled hero took damage, by source.
+def load_parts(folder, parts=("hits", "contact"), holdout=is_holdout):
+    """({part: rows}, info) for the evaluation-only parts of a table: `hits` (damage taken
+    by second and source) and `contact` (per-second sight and distances).
 
     Only folders built with generation conditions carry them (from 2026-11-18 on); the
     legacy folders death-risk-v1 to v3 do not, so they are refused.
     """
-    info = {}
-    hits = [row for value in _checked_files(folder, False, holdout, info) for row in value["hits"]]
-    return hits, info
+    info, out = {}, {part: [] for part in parts}
+    for value in _checked_files(folder, False, holdout, info):
+        for part in parts:
+            out[part] += value[part]
+    return out, info

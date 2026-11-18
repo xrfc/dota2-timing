@@ -9,6 +9,14 @@ seconds before it, some sample with `hit_recent == 0` scored at or above the thr
 `hit_recent == 0` means "not hit by an enemy hero in the last 3 seconds" (contracts.
 death_risk), so an alert 5 seconds after a first hit and 13 seconds before the death
 counts. It is NOT a "before the first hit of the fight" recall.
+
+The fight-level measure (`fight_spans`, `fight_alerts`; user decision U171, 2026-11-18)
+replaces it as the main one: a fight is a run of "contact" seconds, where contact is a
+hit by an enemy hero (towers and creeps do not count, U173) or a second in which the
+enemy team saw him while an enemy hero his team could see was within `contact_distance`
+(he was seen and could know it, U172). Contact seconds at most `gap` apart belong to one
+fight. An alert counts only on a sample outside every fight, before the start of the
+fight he died in. The numbers in FIGHT are the assistant's proposal, not yet confirmed.
 """
 
 import numpy as np
@@ -29,6 +37,11 @@ from sklearn.preprocessing import StandardScaler
 FOLDS = 5
 SEED = 20261117
 ALERT_FALSE_ALARM = 0.05
+# Assistant's proposal (2026-11-18), pending the user (U172): seconds between contacts
+# within one fight, distance of a visible enemy hero that counts as contact, hit sources.
+# On 100 matches, gap 10 / distance 1200 made 59% of the laning deaths' fights longer
+# than the 20 s horizon (docs/b2-retrain-checklist.md §2), hence the tighter proposal.
+FIGHT = {"gap": 5, "contact_distance": 900, "hit_sources": ("hero",)}
 
 
 def rule_score(frame):
@@ -177,4 +190,128 @@ def summarize_alerts(found):
         "median_peak_risk": round(float(np.median([r["peak"] for r in found])), 4)
         if found
         else None,
+    }
+
+
+def fight_spans(hits, contact, fight=FIGHT):
+    """{(match_id, hero): sorted [(start, end)]} of fights, from the `hits` and `contact`
+    parts of a table (see the module docstring)."""
+    seconds = {}
+    for row in hits:
+        if row["source"] in fight["hit_sources"]:
+            seconds.setdefault((row["match_id"], row["hero"]), set()).add(int(row["t"]))
+    for track in contact:
+        key = (track["match_id"], track["hero"])
+        found = seconds.setdefault(key, set())
+        for t, seen, distance in zip(
+            track["t"], track["seen_by_enemy"], track["visible_enemy_distance"], strict=True
+        ):
+            if seen and distance <= fight["contact_distance"]:
+                found.add(int(t))
+    spans = {}
+    for key, found in seconds.items():
+        runs = []
+        for t in sorted(found):
+            if runs and t - runs[-1][1] <= fight["gap"]:
+                runs[-1][1] = t
+            else:
+                runs.append([t, t])
+        spans[key] = [tuple(run) for run in runs]
+    return spans
+
+
+def fight_start(spans, death, gap):
+    """Start of the fight he died in: the span ending at most `gap` before the death and
+    starting no later than it; the death second itself when there was none."""
+    for start, end in reversed(spans):
+        if start <= death and death - end <= gap:
+            return start
+        if end < death - gap:
+            break
+    return death
+
+
+def in_fight(frame, spans):
+    """Boolean array: is the sample (match_id, hero, t) inside one of his fights."""
+    out = np.zeros(len(frame), dtype=bool)
+    positions = {}
+    for index, key in enumerate(zip(frame["match_id"], frame["hero"], strict=True)):
+        positions.setdefault(key, []).append(index)
+    times = frame["t"].to_numpy()
+    for key, rows in positions.items():
+        rows = np.array(rows)
+        for start, end in spans.get(key, ()):
+            inside = (times[rows] >= start) & (times[rows] <= end)
+            out[rows[inside]] = True
+    return out
+
+
+def fight_alerts(frame, deaths, scores, threshold, horizon, spans, fight=FIGHT):
+    """One dict per death with samples in the `horizon` before it (fight-level measure).
+
+    `alerted`: a sample outside every fight, in [death - horizon, fight start), scored at
+    or above `threshold`. `lead_to_fight` and `lead_to_death` count from the first such
+    sample. `fight_seconds` is death minus fight start; `could_alert` says whether any
+    sample lay outside fights before the fight start within the horizon (a fight longer
+    than the horizon leaves none).
+    """
+    fighting = in_fight(frame, spans)
+    series = {}
+    for key, part in frame.assign(_score=scores, _fight=fighting).groupby(
+        ["match_id", "hero"], sort=False
+    ):
+        part = part.sort_values("t")
+        series[key] = (part["t"].to_numpy(), part["_score"].to_numpy(), part["_fight"].to_numpy())
+    found = []
+    for death in deaths.itertuples(index=False):
+        key = (death.match_id, death.hero)
+        if key not in series:
+            continue
+        times, values, fights = series[key]
+        window = (times >= death.t - horizon) & (times < death.t)
+        if not window.any():
+            continue
+        start = fight_start(spans.get(key, ()), int(death.t), fight["gap"])
+        before = window & (times < start) & ~fights
+        alert = before & (values >= threshold)
+        first = times[alert].min() if alert.any() else None
+        found.append(
+            {
+                "match_id": death.match_id,
+                "hero": death.hero,
+                "t": int(death.t),
+                "fight_start": int(start),
+                "fight_seconds": int(death.t - start),
+                "could_alert": bool(before.any()),
+                "alerted": bool(alert.any()),
+                "lead_to_fight": int(start - first) if first is not None else None,
+                "lead_to_death": int(death.t - first) if first is not None else None,
+                "peak": float(values[window].max()),
+            }
+        )
+    return found
+
+
+def summarize_fight_alerts(found):
+    """Shares of deaths alerted before the fight started, over all deaths and over those
+    that left a sample before the fight; median leads and fight lengths."""
+    count = len(found)
+    could = [row for row in found if row["could_alert"]]
+    alerted = [row for row in found if row["alerted"]]
+
+    def share(part, whole):
+        return round(len(part) / len(whole), 4) if whole else None
+
+    def median(values):
+        return float(np.median(values)) if values else None
+
+    return {
+        "deaths": count,
+        "could_alert": len(could),
+        "alerted_before_fight": len(alerted),
+        "share_of_all_deaths": share(alerted, found),
+        "share_of_deaths_that_could_alert": share(alerted, could),
+        "median_lead_to_fight_seconds": median([r["lead_to_fight"] for r in alerted]),
+        "median_lead_to_death_seconds": median([r["lead_to_death"] for r in alerted]),
+        "median_fight_seconds": median([r["fight_seconds"] for r in found]),
     }

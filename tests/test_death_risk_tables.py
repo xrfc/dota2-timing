@@ -10,6 +10,7 @@ import pytest
 from dota_items.contracts.death_risk import MANIFEST, TABLE_SCHEMA, TableError
 from dota_items.data.awareness_split import is_holdout
 from dota_items.experiments.awareness import death_risk_tables as tables
+from dota_items.modeling.awareness import death_risk_eval
 from dota_items.modeling.awareness.death_risk_eval import death_alerts, summarize_alerts
 
 PARAMS = {"horizons": (10, 20), "step": 5}
@@ -37,6 +38,16 @@ def write_match(folder, match_id, digest, source=("s", 1), **change):
         "win": [{"match_id": match_id, "t": 0}],
         "deaths": [],
         "hits": [{"match_id": match_id, "hero": "h", "t": 55, "source": "hero", "value": 40}],
+        "contact": [
+            {
+                "match_id": match_id,
+                "hero": "h",
+                "t": [60],
+                "seen_by_enemy": [0],
+                "visible_enemy_distance": [20000],
+                "enemy_distance": [3000],
+            }
+        ],
     } | change
     with (folder / f"{match_id}.pkl").open("wb") as stream:
         pickle.dump(value, stream)
@@ -98,9 +109,14 @@ def test_loader_checks_every_file(tmp_path):
     write_match(folder, OTHER, digest, hits=None)
     with pytest.raises(TableError, match="no `hits` list"):
         tables.load_tables(folder)
+    write_match(folder, OTHER, digest, contact=[{"match_id": KEPT, "t": []}])
+    with pytest.raises(TableError, match="belongs to"):
+        tables.load_tables(folder)
     write_match(folder, OTHER, digest)
-    hits, info = tables.load_hits(folder)
-    assert [h["match_id"] for h in hits] == [KEPT, OTHER] and info["verified"]
+    parts, info = tables.load_parts(folder)
+    assert [h["match_id"] for h in parts["hits"]] == [KEPT, OTHER] and info["verified"]
+    assert [c["match_id"] for c in parts["contact"]] == [KEPT, OTHER]
+    assert info["params"]["step"] == 5
     write_match(folder, HELD, digest)
     with pytest.raises(TableError, match="holdout"):
         tables.load_tables(folder)
@@ -116,7 +132,7 @@ def test_legacy_folder_needs_explicit_flag_and_stays_unverified(tmp_path):
     *_, info = tables.load_tables(folder, allow_legacy=True)
     assert info["verified"] is False and info["conditions_digest"] is None
     with pytest.raises(TableError, match="no manifest"):
-        tables.load_hits(folder)  # old tables kept no damage-taken rows
+        tables.load_parts(folder)  # old tables kept no damage-taken or contact rows
     write_match(folder, OTHER, "x")  # a new-schema file dropped into an old folder
     with pytest.raises(TableError, match="legacy folder"):
         tables.load_tables(folder, allow_legacy=True)
@@ -145,3 +161,42 @@ def test_alert_after_a_pause_in_the_hits_counts_as_not_hit_last_3s():
     assert "alerted_before_being_hit" not in summary  # the old, overstated name
     scores[2] = 0.1  # only samples with hit_recent == 1 are high: no alert
     assert not death_alerts(frame, deaths, scores, 0.2, 20)[0]["alerted"]
+
+
+def test_fight_level_alert_must_come_before_the_fight_started():
+    """U171–U173: hits by enemy heroes (not towers or creeps) and close, mutual sight make
+    one fight; the alert must come before it, outside every fight."""
+    hits = [{"match_id": 7, "hero": "v", "t": t, "source": "hero"} for t in (100, 110, 115)]
+    hits.append({"match_id": 7, "hero": "v", "t": 80, "source": "tower"})  # not contact
+    contact = [{
+        "match_id": 7, "hero": "v", "t": [93, 94, 95, 96],
+        "seen_by_enemy": [1, 1, 0, 1], "visible_enemy_distance": [900, 2000, 500, 1000],
+        "enemy_distance": [900, 900, 500, 500],
+    }]  # fmt: skip
+    fight = {"gap": 10, "contact_distance": 1200, "hit_sources": ("hero",)}
+    spans = death_risk_eval.fight_spans(hits, contact, fight)
+    assert spans[(7, "v")] == [(93, 115)]  # 93 and 96 seen and close; 96 to 100 within 10 s
+    frame = pd.DataFrame(
+        {
+            "match_id": [7] * 6,
+            "hero": ["v"] * 6,
+            "t": [85, 90, 95, 100, 105, 110],
+            "hit_recent": [0, 0, 0, 1, 0, 1],
+        }
+    )
+    deaths = pd.DataFrame({"match_id": [7], "hero": ["v"], "t": [118]})
+    scores = np.array([0.1, 0.1, 0.1, 0.5, 0.3, 0.6])  # high only inside the fight
+    found = death_risk_eval.fight_alerts(frame, deaths, scores, 0.2, 30, spans, fight)
+    assert found[0]["fight_start"] == 93 and found[0]["fight_seconds"] == 25
+    assert found[0]["could_alert"] and not found[0]["alerted"]
+    assert death_alerts(frame, deaths, scores, 0.2, 30)[0]["alerted"]  # the old measure: yes
+    scores[1] = 0.25  # 90 s: before the fight
+    found = death_risk_eval.fight_alerts(frame, deaths, scores, 0.2, 30, spans, fight)
+    assert found[0]["alerted"] and found[0]["lead_to_fight"] == 3
+    assert found[0]["lead_to_death"] == 28
+    summary = death_risk_eval.summarize_fight_alerts(found)
+    assert summary["share_of_all_deaths"] == 1.0 and summary["median_fight_seconds"] == 25
+    long = death_risk_eval.fight_alerts(frame, deaths, scores, 0.2, 20, spans, fight)
+    assert not long[0]["could_alert"]  # fight longer than the 20 s horizon: no sample before
+    tight = death_risk_eval.fight_spans(hits, contact)  # the proposal: gap 5, distance 900
+    assert tight[(7, "v")] == [(93, 93), (100, 100), (110, 115)]  # 96: 1000 away, not contact

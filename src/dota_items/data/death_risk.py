@@ -28,7 +28,8 @@ Version 3 (2026-11-17) adds
   been gone and his base move speed (public, hero registry) give the seconds he still
   needs to come within `engage` of the hero (straight line, walls ignored);
 * trends: the change of a few features over the last 5, 10 and 15 seconds of the same
-  hero (`add_trends`, applied to the rows of one hero in time order).
+  hero (`add_trends`, applied to the rows of one hero in time order; lags in seconds
+  since 2026-11-18, so a step of 3 seconds gives the same features).
 
 `hit_recent` marks samples where an enemy hero already damaged him in the last
 `hit_window` seconds: predicting a death then is easy and is no early warning, so the
@@ -45,8 +46,9 @@ from dota_items.contracts.death_risk import (  # noqa: F401  (re-exported names)
     FEATURES_V2_EXTRA,
     FEATURES_V3_REACH,
     FEATURES_V3_TREND,
-    TREND_LAGS,
     TREND_OF,
+    TREND_SECONDS,
+    VANISHED_SECONDS,
 )
 from dota_items.data.gank_depth import depth, standing_towers
 
@@ -309,23 +311,68 @@ def features(
     }
 
 
-def add_trends(rows, params=PARAMS):
+def add_trends(rows, params=PARAMS, earlier_features=None):
     """Add the version 3 trend features to the rows of one hero, in time order, in place.
 
-    A lag counts only when the earlier row is exactly lag * step seconds before (no gap
-    from a death or missing data); otherwise the change is 0.
+    Lags are in seconds (TREND_SECONDS), so the features mean the same at any sampling
+    step. `earlier_features(second)` gives the features at a second that is not a row
+    (or None); without it only rows count. A lag before `params["start"]`, or at a second
+    without data (dead, missing), gives a change of 0.
     """
     by_time = {row["t"]: row for row in rows}
+
+    def at(second):
+        if second < params["start"]:
+            return None
+        if second in by_time:
+            return by_time[second]
+        return earlier_features(second) if earlier_features else None
+
     for row in rows:
-        for lag in TREND_LAGS:
-            earlier = by_time.get(row["t"] - lag * params["step"])
+        for index, lag in enumerate(TREND_SECONDS, 1):
+            earlier = at(row["t"] - lag)
             for name in TREND_OF:
-                row[f"{name}_d{lag}"] = row[name] - earlier[name] if earlier else 0.0
-        before = by_time.get(row["t"] - 2 * params["step"])
+                row[f"{name}_d{index}"] = row[name] - earlier[name] if earlier else 0.0
+        before = at(row["t"] - VANISHED_SECONDS)
         row["vanished_10"] = (
             max(0, before["enemies_visible"] - row["enemies_visible"]) if before else 0
         )
     return rows
+
+
+def contact_track(hero, tracks, seen, start, last):
+    """Per living second from `start`: was he seen by the enemy team, how far was the
+    nearest enemy hero his team could see, and how far the nearest one really was.
+
+    Kept in the table (2026-11-18) for the fight boundaries of the evaluation (U171–U174):
+    a fight is a run of seconds with hits or close, mutual sight. These are facts for
+    labels and evaluation only; the real distance of an unseen enemy is never a feature.
+    """
+    own = tracks[hero]["team"]
+    enemies = [name for name, track in tracks.items() if track["team"] != own]
+    seen_by_enemy = seen.get((hero, 3 if own == 2 else 2), set())
+    sight = {name: seen.get((name, own), set()) for name in enemies}
+    far = PARAMS["far"]
+    out = {column: [] for column in ("t", "seen_by_enemy", "visible_enemy_distance",
+                                     "enemy_distance")}  # fmt: skip
+    for t in range(start, last + 1):
+        here = tracks[hero]["pos"].get(t)
+        if here is None:
+            continue
+        real, visible = far, far
+        for name in enemies:
+            there = tracks[name]["pos"].get(t)
+            if there is None:
+                continue
+            gap = _distance(here, there)
+            real = min(real, gap)
+            if t in sight[name]:
+                visible = min(visible, gap)
+        out["t"].append(t)
+        out["seen_by_enemy"].append(int(t in seen_by_enemy))
+        out["visible_enemy_distance"].append(round(visible))
+        out["enemy_distance"].append(round(real))
+    return out
 
 
 def samples(
@@ -340,11 +387,15 @@ def samples(
     }
     deaths = death_times(combat, hero)
     hits = hero_hit_seconds(combat, hero, team)
-    rows = []
-    for t in range(params["start"], last + 1, params["step"]):
-        row = features(
+
+    def at(t):
+        return features(
             hero, t, tracks, vitals, seen_sorted, zones, tower_deaths, hits, params, context
         )
+
+    rows = []
+    for t in range(params["start"], last + 1, params["step"]):
+        row = at(t)
         if row is None:
             continue
         found = labels(t, deaths, params["horizons"])
@@ -353,5 +404,5 @@ def samples(
             | {f"dies_{h}": value for h, value in found.items()}
         )
     if context is not None and "speeds" in context:
-        add_trends(rows, params)
+        add_trends(rows, params, at)  # lag seconds that are not rows are computed
     return rows

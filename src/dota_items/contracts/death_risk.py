@@ -13,9 +13,11 @@ Semantics that consumers must not reinterpret:
 * An alert counted by `modeling.awareness.death_risk_eval.alert_leads` is an alert on such
   a sample within the horizon before the death. Reports dated 2026-11-17 call it
   `alerted_before_being_hit`; that name overstated it and is replaced by
-  `alerted_not_hit_last_3s` (see docs/b2-death-risk-contract.md). An event-level
-  "before the first hit of the fight" measure is a separate proposal, not implemented;
-  the `hits` part of a table (damage taken by second and source) holds what it needs.
+  `alerted_not_hit_last_3s` (see docs/b2-death-risk-contract.md). It is kept only for
+  comparison: the main measure is fight-level, "before the fight began" (U171,
+  `death_risk_eval.fight_alerts`), computed from the `hits` and `contact` parts.
+* `contact` holds facts for fight boundaries, including the real distance of unseen
+  enemies: evaluation only, never a feature.
 """
 
 TABLE_SCHEMA = "death-risk-table/4"  # 4: manifest and per-match generation digest
@@ -23,7 +25,10 @@ MANIFEST_SCHEMA = "death-risk-manifest/1"
 MANIFEST = "manifest.json"
 LEGACY_SCHEMAS = ("death-risk-table/1", "death-risk-table/2", "death-risk-table/3")
 CONDITION_KEYS = ("positions", "params", "win_step", "producer", "knowledge")
-TABLE_PARTS = ("risk", "win", "deaths", "hits")  # hits: damage taken by second and source
+# hits: damage taken by second and source; contact: per second, whether the enemy team
+# saw him and how far the nearest visible / real enemy hero was (for fight boundaries)
+TABLE_PARTS = ("risk", "win", "deaths", "hits", "contact")
+CONTACT_COLUMNS = ("t", "seen_by_enemy", "visible_enemy_distance", "enemy_distance")
 
 FEATURES_V1 = (
     "minute",
@@ -70,10 +75,13 @@ TREND_OF = (
     "allies_near",
     "reach_min",
 )
-TREND_LAGS = (1, 2, 3)  # in samples, i.e. 5, 10 and 15 seconds at the default step
-FEATURES_V3_TREND = tuple(f"{name}_d{lag}" for name in TREND_OF for lag in TREND_LAGS) + (
-    "vanished_10",
-)
+# Trend lags in seconds, whatever the sampling step (since 2026-11-18; before, the lags
+# were 1, 2 and 3 samples, the same seconds at the step of 5). `_d1` is the 5 s change.
+TREND_SECONDS = (5, 10, 15)
+VANISHED_SECONDS = 10  # `vanished_10`: enemies that left sight over this many seconds
+FEATURES_V3_TREND = tuple(
+    f"{name}_d{index}" for name in TREND_OF for index in range(1, len(TREND_SECONDS) + 1)
+) + ("vanished_10",)
 FEATURES = FEATURES_V2 + FEATURES_V3_REACH + FEATURES_V3_TREND
 ID_COLUMNS = ("match_id", "hero", "t", "position", "team")
 
@@ -106,8 +114,9 @@ def check_table(value, match_id, conditions_digest):
         raise TableError(f"{match_id}: built under other conditions than the folder manifest")
     if value.get("match_id") != match_id:
         raise TableError(f"{match_id}: file holds match {value.get('match_id')}")
-    if not isinstance(value.get("hits"), list):
-        raise TableError(f"{match_id}: no `hits` list (every {TABLE_SCHEMA} file carries one)")
+    for part in ("hits", "contact"):
+        if not isinstance(value.get(part), list):
+            raise TableError(f"{match_id}: no `{part}` list (every {TABLE_SCHEMA} file has one)")
     for key in TABLE_PARTS:
         for row in value.get(key, ()):
             if row.get("match_id") != match_id:

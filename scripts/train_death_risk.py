@@ -13,6 +13,13 @@ recall at a fixed false-alarm rate and calibration. Everything is given on all s
 and on the samples not hit by an enemy hero in the last 3 seconds (`hit_recent == 0`).
 That subset is NOT "before the first hit of the fight" (contracts.death_risk).
 
+Tables built from 2026-11-18 on also carry `hits` and `contact`; the report then adds the
+fight-level measure (U171–U173, modeling.awareness.death_risk_eval.FIGHT): metrics on the
+samples outside every fight, the alert threshold at 5% false alarms there, and the share
+of deaths alerted before the fight began. `--every` keeps one row every that many seconds
+(a multiple of the table's step), for the sampling-step trial (U174); the pointwise
+metrics are then also given on the 15-second grid that every step 1, 3 and 5 shares.
+
 The boosting model is also refitted on the older feature sets the table holds, on the
 same rows, so the gain of new features is measured on identical samples.
 
@@ -32,22 +39,28 @@ import pandas as pd
 from sklearn.inspection import permutation_importance
 
 from dota_items.contracts.death_risk import FEATURES, FEATURES_V1, FEATURES_V2
-from dota_items.experiments.awareness.death_risk_tables import load_tables
+from dota_items.experiments.awareness.death_risk_tables import load_parts, load_tables
 from dota_items.modeling.awareness.death_risk_eval import (
     ALERT_FALSE_ALARM,
+    FIGHT,
     FOLDS,
     SEED,
     at_false_alarm,
     bootstrap_gap,
     death_alerts,
+    fight_alerts,
+    fight_spans,
+    in_fight,
     measure,
     models,
     out_of_fold,
     rule_score,
     summarize_alerts,
+    summarize_fight_alerts,
 )
 
-SCHEMA = "death-risk-baseline/4"  # 4: checked input, alert measure renamed (not hit in 3 s)
+SCHEMA = "death-risk-baseline/5"  # 5: fight-level measure, --every; 4: checked input
+COMMON_GRID = 15  # seconds; rows every 15 s exist at steps 1, 3 and 5
 MAIN_HORIZON = 20  # U115's provisional window
 
 
@@ -58,11 +71,25 @@ def main(argv=None):
     parser.add_argument("--allow-legacy", action="store_true")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--bootstrap", type=int, default=100)
+    parser.add_argument("--every", type=int, default=0, help="seconds between kept rows")
     args = parser.parse_args(argv)
-    risk, _, deaths, info = load_tables(args.root / args.table, args.allow_legacy)
+    folder = args.root / args.table
+    risk, _, deaths, info = load_tables(folder, args.allow_legacy)
+    params = info["params"] or {"start": 60, "step": 5}  # legacy folders: the v1-v3 values
+    if args.every and args.every % params["step"]:
+        parser.error(f"--every must be a multiple of the table step {params['step']}")
     args.out.mkdir(parents=True, exist_ok=False)
     frame, deaths = pd.DataFrame(risk), pd.DataFrame(deaths)
     del risk
+    if args.every:
+        frame = frame[(frame["t"] - params["start"]) % args.every == 0].reset_index(drop=True)
+    spans = None
+    if info["verified"]:
+        parts, _ = load_parts(folder)
+        spans = fight_spans(parts["hits"], parts["contact"])
+        del parts
+    outside = ~in_fight(frame, spans) if spans is not None else None
+    grid = ((frame["t"] - params["start"]) % COMMON_GRID == 0).to_numpy()
     rng = np.random.default_rng(SEED)
     early = frame["hit_recent"].to_numpy() == 0
     sets = [v for v in (FEATURES, FEATURES_V2, FEATURES_V1) if set(v) <= set(frame.columns)]
@@ -83,6 +110,11 @@ def main(argv=None):
         "folds": FOLDS,
         "main_horizon": MAIN_HORIZON,
         "subset_not_hit_last_3s": "samples with hit_recent == 0; not 'before the first hit'",
+        "every_seconds": args.every or params["step"],
+        "fight": FIGHT if spans is not None else None,
+        "subset_outside_fight": None
+        if spans is None
+        else "samples outside every fight (hits by enemy heroes, close mutual sight)",
         "horizons": {},
     }
     kept = {}
@@ -100,6 +132,10 @@ def main(argv=None):
                 "all": measure(y, scores),
                 "not_hit_last_3s": measure(y[early], scores[early]),
             }
+            if outside is not None:
+                entry[name]["outside_fight"] = measure(y[outside], scores[outside])
+                both = outside & grid
+                entry[name]["outside_fight_15s_grid"] = measure(y[both], scores[both], False)
             if horizon == MAIN_HORIZON:
                 kept[name] = (scores, fitted)
             print(horizon, name, entry[name]["not_hit_last_3s"]["average_precision"], flush=True)
@@ -130,6 +166,16 @@ def main(argv=None):
         "horizon": MAIN_HORIZON,
         **summarize_alerts(death_alerts(frame, deaths, boosting, threshold, MAIN_HORIZON)),
     }
+    if outside is not None:
+        _, fight_threshold = at_false_alarm(y[outside], boosting[outside], ALERT_FALSE_ALARM)
+        found = fight_alerts(frame, deaths, boosting, fight_threshold, MAIN_HORIZON, spans)
+        report["fight_alerts"] = {
+            "threshold": round(fight_threshold, 4),
+            "false_alarm_rate_on_samples_outside_fight": ALERT_FALSE_ALARM,
+            "horizon": MAIN_HORIZON,
+            **summarize_fight_alerts(found),
+        }
+        pd.DataFrame(found).to_csv(args.out / "fight-alerts.csv", index=False)
     model, test = fitted[0]
     pick = rng.choice(test, min(len(test), 100_000), replace=False)
     importance = permutation_importance(

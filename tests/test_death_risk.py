@@ -177,3 +177,42 @@ def test_damage_taken_keeps_every_enemy_source_by_second():
     ]  # fmt: skip
     hero_seconds = {x["t"] for x in rows if x["source"] == "hero"}
     assert hero_seconds == r.hero_hit_seconds(combat, "v", team)  # same rule as hit_recent
+
+
+def test_rows_at_a_second_do_not_depend_on_the_sampling_step():
+    """Trend lags are in seconds (2026-11-18), so a 3 s table equals a 5 s one where
+    both have a row (the step trial of U174)."""
+    seconds = range(0, 200)
+    tracks = {
+        "v": track(2, {t: (15000 + 20 * t, 15000) for t in seconds if t != 100}),
+        "e": track(3, {t: (19000 - 10 * t, 15000) for t in seconds}),
+    }
+    vitals = {h: {t: (500 + t, 1000, 0, 0, 5) for t in seconds} for h in tracks}
+    seen = {("e", 2): set(range(60, 200, 2))}
+    context = {"kit": {}, "fronts": {}, "wards": [], "initiators": {"e"}, "speeds": {"e": 300}}
+    rows = {
+        step: {row["t"]: row for row in r.samples(
+            7, "v", tracks, vitals, seen, [], ZONES, {}, 190,
+            params={**r.PARAMS, "step": step}, context=context)}
+        for step in (3, 5)
+    }  # fmt: skip
+    common = sorted(set(rows[3]) & set(rows[5]))
+    assert common == [60, 75, 90, 105, 120, 135, 150, 165, 180]
+    for t in common:
+        assert rows[3][t] == rows[5][t]
+    assert rows[3][105]["depth_d1"] == 0.0  # no data at 100: no change counted
+
+
+def test_contact_track_records_sight_both_ways_and_real_distance():
+    seconds = range(60, 64)
+    tracks = {
+        "v": track(2, {t: (15000, 15000) for t in seconds}),
+        "near": track(3, {t: (15500, 15000) for t in seconds}),  # 500 away
+        "far": track(3, {t: (17000, 15000) for t in seconds if t != 63}),  # 2000, dead at 63
+    }
+    seen = {("v", 3): {61, 62}, ("near", 2): {62, 63}, ("far", 2): {60, 61, 62}}
+    out = r.contact_track("v", tracks, seen, 60, 63)
+    assert out["t"] == [60, 61, 62, 63]
+    assert out["seen_by_enemy"] == [0, 1, 1, 0]
+    assert out["visible_enemy_distance"] == [2000, 2000, 500, 500]
+    assert out["enemy_distance"] == [500] * 4  # the real distance, for evaluation only

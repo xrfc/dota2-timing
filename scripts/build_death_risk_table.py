@@ -12,7 +12,13 @@ For every non-holdout match with parser-v3 state this writes
 * `deaths`: every hero death (hero, team, second, position);
 * `hits`:   for the same heroes as `risk`, every second they took damage, by source
             (enemy hero, illusion, tower, creep, neutral, other; death_risk.damage_taken),
-            so that a fight-level alert measure can be computed without a rebuild.
+            so that a fight-level alert measure can be computed without a rebuild;
+* `contact`: for the same heroes, per living second: seen by the enemy team, nearest
+            enemy hero his team could see, nearest real enemy hero (fight boundaries of
+            the evaluation only, never features).
+
+`--step` sets the sampling step (default 5; the 2026-11-18 trial compares 3, U174). The
+trend features use lags in seconds, so rows at a given second are the same at any step.
 
 The holdout matches (U133) are never read here.
 
@@ -39,6 +45,7 @@ from dota_items.contracts.death_risk import TABLE_SCHEMA
 from dota_items.data.awareness_split import is_holdout
 from dota_items.data.death_risk import (
     PARAMS,
+    contact_track,
     damage_taken,
     death_times,
     samples,
@@ -155,7 +162,7 @@ def match_source_key(root, mid):
 
 
 def build(job):
-    root, folder, mid, positions, conditions_digest = job
+    root, folder, mid, positions, conditions_digest, params = job
     target = folder / f"{mid}.pkl"
     key = match_source_key(root, mid)
     if reusable(target, conditions_digest, key):
@@ -175,13 +182,17 @@ def build(job):
     starters = initiators()
     speeds = move_speeds()
     fallen = tower_deaths(combat)
-    risk, hits = [], []
+    risk, hits, contact = [], [], []
     team = {name: track["team"] for name, track in tracks.items()}
     for hero, position in m["positions"].items():
         if position in positions:
             hits += [
                 {"match_id": mid, "hero": hero, **row} for row in damage_taken(combat, hero, team)
             ]
+            contact.append(
+                {"match_id": mid, "hero": hero,
+                 **contact_track(hero, tracks, m["seen"], params["start"], m["last"])}
+            )  # fmt: skip
             context = {
                 "kit": kit.get(hero, {}),
                 "fronts": m["fronts"],
@@ -194,7 +205,7 @@ def build(job):
             }  # fmt: skip
             rows = samples(
                 mid, hero, tracks, vitals, m["seen"], combat, zones, fallen, m["last"],
-                context=context,
+                params=params, context=context,
             )  # fmt: skip
             risk += [{**row, "position": position, "team": tracks[hero]["team"]} for row in rows]
     deaths = [
@@ -208,11 +219,12 @@ def build(job):
         "match_id": mid,
         "conditions_digest": conditions_digest,
         "source_key": key,
-        "params": PARAMS,
+        "params": params,
         "risk": risk,
         "win": win_rows(mid, tracks, vitals, worth, zones, fallen, m["last"], meta["radiant_win"]),
         "deaths": deaths,
         "hits": hits,
+        "contact": contact,
     }
     temporary = target.with_suffix(".tmp")
     with temporary.open("wb") as stream:
@@ -228,6 +240,7 @@ def main(argv=None):
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--positions", type=int, nargs="+", default=[1])
+    parser.add_argument("--step", type=int, default=PARAMS["step"], help="seconds per sample")
     args = parser.parse_args(argv)
     ids = sorted(
         int(p.name.split(".")[0])
@@ -237,13 +250,14 @@ def main(argv=None):
     ids = [m for m in ids if not is_holdout(m)]  # U133
     if args.limit:
         ids = ids[: args.limit]
+    params = {**PARAMS, "step": args.step}
     conditions = describe_conditions(
-        args.positions, PARAMS, WIN_STEP, PRODUCER_FILES, KNOWLEDGE_FILES, ROOT
+        args.positions, params, WIN_STEP, PRODUCER_FILES, KNOWLEDGE_FILES, ROOT
     )
     folder = args.root / args.table
     conditions_digest = prepare_folder(folder, conditions)
     positions = tuple(args.positions)
-    jobs = [(args.root, folder, mid, positions, conditions_digest) for mid in ids]
+    jobs = [(args.root, folder, mid, positions, conditions_digest, params) for mid in ids]
     with ProcessPoolExecutor(args.workers) as pool:
         for number, (mid, note) in enumerate(pool.map(build, jobs), 1):
             if number % 50 == 0 or number == len(jobs):
