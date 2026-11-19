@@ -478,6 +478,10 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 8. 待办池（不在当前里程碑执行）
 
+- **TODO 7.42地图坐标改用上游（U178，2026-11-19）**：7.42地图先从demo反推门、塔、野点坐标（方案B，demo工作恢复后做）；`leamare/dota-map-coordinates`出7.42版本后改用上游数据，与反推结果对照。查法：`gh api repos/leamare/dota-map-coordinates/commits`（2026-11-19最新仍是`f793787e`“7.41”）。
+
+- **TODO 7.42 demo解析与处理（U178，2026-11-19暂缓）**：恢复后按[7.42预案](patch-7.42-plan.md)先试解析5场，再做地图反推、旧模型在新补丁上的检验。
+
 - **TODO 单位状态位解码（U130，2026-11-09）**：解析器v3每秒只保留英雄的原始状态掩码`m_nUnitState64`。以后用战斗日志的控制事件（眩晕、沉默、妖术、开黑皇杖等`MODIFIER_ADD/REMOVE`）逐位对照，确认每一位的含义后再输出“被眩晕：是/否”这类字段；未确认的位不使用。设计见`docs/parser-v3-design.md`§3、§6。
 
 - **TODO 5号位（U132，2026-11-10）**：路线B防被抓先只评1号位（用户：5号位被抓不重要，1号位被抓死影响节奏）；5号位以后按下面2、3、4号位的同样约定加回，位置是参数。

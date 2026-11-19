@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-11-19 U177–U180：7.42补丁开始；事实共享构建器
+
+- 官方7.42（2026-11-18）。按补丁流程抓新快照：Valve英雄数据`knowledge/hero-capabilities/snapshots/2026-11-19/`、英文装备`knowledge/items/sources/itemdata-english-2026-11-19/`、游戏脚本固定提交`7bf93721`（`knowledge/game-files/snapshots/2026-11-19{,-items,-neutral}/`）；官方补丁说明、差异、影响范围和变化分类在`knowledge/mechanics/reviews/patch-update-2026-11-19/`。要复核2299/3295行事实；地图有改动（双生之门、野点、中路塔位和河道）。知识库尚未改动，`current.json`仍是7.41f。
+- U177：新模块`data.mechanics_facts_overlay`和脚本`scripts/build_mechanics_facts_overlay.py`，v27起所有新事实版本都用它（输入＝上一版冻结事实＋一个按顺序的操作文件，构建参数写在spec里）。测试`tests/test_mechanics_facts_overlay.py`：从旧输入重建v21–v26事实都相同，完整重建v26的三个输出文件逐字节一致。旧v2–v26模块不动。
+- U178：7.42地图坐标从demo反推、上游更新后改用上游；新版本demo解析暂缓（计划§8两条待办）。
+- U179、U180：复核分类按助手建议（用户裁定第4、6、7、8、9类和第5类的新机制归类）；AI处理的部分由Codex `gpt-6.2-astra`辅助判断。
+
 ## 2026-11-18 U176：第4版每1秒表；3秒采样没有更好
 
 - 建`data/demos-2026-11/death-risk-v4-1s`（1341场，带生成条件）；训练报告`reports/death-risk-v4-every5-2026-11-18`、`-every3-`（第5版）。

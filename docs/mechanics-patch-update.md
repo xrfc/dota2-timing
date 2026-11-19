@@ -48,7 +48,7 @@ PYTHONPATH=src python scripts/patch_update.py impact --hero-diff <英雄差异.j
 
 ## 5. 出新版本
 
-1. 新事实版本：在上一版冻结包上叠加（像v14以后那样），复核结果放`reviews/`里的新输入文件；词表或规则要改就先出新版本。
+1. 新事实版本：v27起用共享构建器（U177）——复核结果写成一个操作文件`reviews/v<N>-inputs-001.json`（`mechanics-overlay-inputs/1`，操作见`data.mechanics_facts_overlay`的说明），构建参数（上一版事实、词表、规则、枚举、注册表、游戏脚本快照）写成spec，运行`PYTHONPATH=src python scripts/build_mechanics_facts_overlay.py --spec <spec> --output knowledge/mechanics/extractions/v<N>`。不再复制`mechanics_facts_vN.py`；词表或规则要改就先出新版本。
 2. 重新求值规则，重建派生层（新`derived-v*`）。
 3. 改`scripts/build_mechanics_current.py`里的列表，把`PATCH`改成新补丁并设`verified=false`，运行生成`current.json`。
 4. 跑版本核对：`scripts/check_patch_knowledge.py check`，逐条看标记，写`review.json`和`README.md`；都核对完再把`PATCH.verified`设为`true`。
