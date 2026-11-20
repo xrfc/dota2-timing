@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-11-20 7.42逐行复核与影响清单
+
+- `knowledge/mechanics/reviews/recheck-742-001/`：Codex `gpt-6.2-astra`（high）逐行复核1826行（23批约80万tokens），Claude独立规则筛查并判断非“成立”行；结果1530行保留、13行两个AI都同意改、213行按7.42字段重建、24行加新机制和新技能交用户。
+- `knowledge/mechanics/reviews/new-abilities-742-001/`：7.42新增9个技能和4个以前没有机制行的技能的完整抽取。
+- [7.42影响清单](docs/patch-7.42-impact.md)：需要用户裁定的部分（全局机制、行为变化、证据冲突、改了用户裁定的行、AI分歧、新技能和命石、地图）和AI已定的部分。知识库尚未改动。
+
 ## 2026-11-19 U177–U180：7.42补丁开始；事实共享构建器
 
 - 官方7.42（2026-11-18）。按补丁流程抓新快照：Valve英雄数据`knowledge/hero-capabilities/snapshots/2026-11-19/`、英文装备`knowledge/items/sources/itemdata-english-2026-11-19/`、游戏脚本固定提交`7bf93721`（`knowledge/game-files/snapshots/2026-11-19{,-items,-neutral}/`）；官方补丁说明、差异、影响范围和变化分类在`knowledge/mechanics/reviews/patch-update-2026-11-19/`。要复核2299/3295行事实；地图有改动（双生之门、野点、中路塔位和河道）。知识库尚未改动，`current.json`仍是7.41f。

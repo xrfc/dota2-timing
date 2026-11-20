@@ -1,0 +1,539 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6ec-0973-70b2-821f-3bb0776021a6
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "lion_mana_drain", "name_zh": "莱恩·法力吸取", "category": "2_纯数值", "text_741f": {"desc_loc": "CHANNELED - Channels magical energy, taking mana and slowing enemies over time. If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%. Can target allies to give them mana and movement speed at a %ally_pct%%% rate.", "notes_loc": ["Prevents heroes from going invisible."], "shard_loc": "Causes Mana Drain to affect up to %shard_bonus_targets% additional enemies and increases break distance. Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.", "facets_loc": ["Mana Drain deals damage equal to %damage_pct%%% of mana stolen."]}, "text_742": {"desc_loc": "CHANNELED - Channels magical energy, taking mana and slowing enemies over time. If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%. Can target allies to give them mana and movement speed at a %ally_pct%%% rate.", "notes_loc": ["Prevents heroes from going invisible."], "shard_loc": "Causes Mana Drain to affect up to %shard_bonus_targets% additional enemies and increases break distance. Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.", "facets_loc": ["Mana Drain deals damage equal to %damage_pct%%% of mana stolen."]}, "changed_fields": [], "rows": [{"review_id": "0211dd6f7223f9b027da", "mechanism": "channeled", "mechanism_zh": "持续施法", "definition": "施法者自身需要持续引导，被打断即停止", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "529a113893b89069d98e", "mechanism": "channeled", "mechanism_zh": "持续施法", "definition": "施法者自身需要持续引导，被打断即停止", "condition": "base", "decision": "accept"}, {"review_id": "8b221478b0c9a42c2663", "mechanism": "debuff_immunity", "mechanism_zh": "减益免疫/技能免疫", "definition": "处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "c2f6e97972610dd77a9c", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "226b4ac7dcdd51fcffeb", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "reject"}, {"review_id": "003553bae9be6f4d48d0", "mechanism": "mana_burn", "mechanism_zh": "烧蓝/法力削减", "definition": "减少目标的法力值", "condition": "base", "decision": "accept"}, {"review_id": "e09f616d2e6ba68133cf", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "base", "decision": "accept"}, {"review_id": "b507c721221c5c8bce17", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "c52e69fad921b57630fc", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "lion_to_hell_and_back", "name_zh": "莱恩·下地狱再上来", "category": "2_纯数值", "text_741f": {"desc_loc": "Lion gains %debuff_amp%%% debuff duration after killing or assisting in a Hero kill while that Hero is dead. Lion gains %spell_amp%%% spell amplification for %duration%s after respawning or resurrecting or until he gets a kill or assist."}, "text_742": {"desc_loc": "Lion gains %debuff_amp%%% debuff duration after killing or assisting in a Hero kill while that Hero is dead. Lion gains %spell_amp%%% spell amplification for %duration%s after respawning or resurrecting or until he gets a kill or assist."}, "changed_fields": [{"field": "spell_amp", "old": {"base": [20], "scepter": null, "shard": null}, "new": {"base": [15], "scepter": null, "shard": null}}], "rows": [{"review_id": "e69ca90cbb340a84fe4f", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}, {"review_id": "71bde1bc2270af04a332", "mechanism": "respawn", "mechanism_zh": "重生", "definition": "死亡后复活，或影响复活", "condition": "base", "decision": "reject"}, {"review_id": "a5933756a651555e2172", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "base", "decision": "accept"}]}, {"subject": "lone_druid_spirit_bear", "name_zh": "独行德鲁伊·熊灵伙伴", "category": "3_说明文字", "text_741f": {"desc_loc": "Summons a powerful Spirit Bear companion that can equip items. If the bear moves %bear_attack_leash_range% distance away from the Lone Druid, it cannot attack. Lone Druid suffers %backlash_damage%%% of his max health as backlash damage if the Spirit Bear dies. Spirit Bear has Demolish, Return, Entangling Claws, Savage Roar, and Spirit Link abilities.", "notes_loc": ["Most spells interact with the Spirit Bear in the same way as they do with heroes.", "Spirit Bear has 0 base attributes, 0 base armor, and %base_magic_resistance%%% base magic resistance. Attributes from buffs or items fully affect the bear as they would for Universal heroes.", "Spirit Bear cannot gain experience. The Spirit Bear levels up when Lone Druid levels up.", "Spirit Bear has its own Aghanim's Scepter and Shard upgrades.", "Spirit Bear receives a copy of Lone Druid's Neutral Item that has an independent cooldown."], "facets_loc": ["Increases the distance from Lone Druid at which the Spirit Bear can attack."]}, "text_742": {"desc_loc": "Summons a powerful Spirit Bear companion that can equip items. If the bear moves too far away from the Lone Druid, it cannot attack. Lone Druid suffers %backlash_damage%%% of his max health as backlash damage if the Spirit Bear dies. Spirit Bear has Demolish, Return, Entangling Claws, Savage Roar, and Spirit Link abilities.", "notes_loc": ["Most spells interact with the Spirit Bear in the same way as they do with heroes.", "Spirit Bear has 0 base attributes, 0 base armor, and %base_magic_resistance%%% base magic resistance. Attributes from buffs or items fully affect the bear as they would for Universal heroes.", "Spirit Bear cannot gain experience. The Spirit Bear levels up when Lone Druid levels up.", "Spirit Bear has its own Aghanim's Scepter and Shard upgrades.", "Spirit Bear receives a copy of Lone Druid's Neutral Item that has an independent cooldown."], "facets_loc": ["Increases the distance from Lone Druid at which the Spirit Bear can attack."]}, "changed_fields": [{"field": "bear_attack_leash_range_tooltip", "old": null, "new": {"base": [0], "scepter": null, "shard": null}}], "rows": [{"review_id": "d63dc94e008e9ab7a6b7", "mechanism": "economy", "mechanism_zh": "经济经验", "definition": "提供额外金钱或经验；只是正常赏金不算", "condition": "base", "decision": "reject"}, {"review_id": "328f5e84809c536b3965", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "base", "decision": "reject"}, {"review_id": "05927dbef062d90d3614", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "accept"}]}, {"subject": "lone_druid_spirit_link", "name_zh": "独行德鲁伊·灵魂链接", "category": "2_纯数值", "text_741f": {"desc_loc": "Links Lone Druid and the Spirit Bear, increasing their movement speed as well as sharing a percentage of their lifesteal with each other.", "notes_loc": ["Break disables the shared lifesteal."], "scepter_loc": "Lone Druid severs his link to his Spirit Bear, and connects to the target allied hero, sharing the Spirit Link bonuses with them for %duration%s. Armor sharing and attack speed are increased by %active_bonus%%%. Damage done by the ally heals Lone Druid, as well as the other way around. The Spirit Bear is feared for the duration of the transformation, unless he has his own Aghanim's Scepter.", "facets_loc": ["Shared Armor increased. Damage dealt by either the Spirit Bear or Lone Druid will heal the other.", "Only damage dealt by Spirit Bear heals Lone Druid."]}, "text_742": {"desc_loc": "Links Lone Druid and the Spirit Bear, increasing their movement speed as well as sharing a percentage of their lifesteal with each other.", "notes_loc": ["Break disables the shared lifesteal."], "scepter_loc": "Lone Druid severs his link to his Spirit Bear, and connects to the target allied hero, sharing the Spirit Link bonuses with them for %duration%s. Armor sharing and attack speed are increased by %active_bonus%%%. Damage done by the ally heals Lone Druid, as well as the other way around. The Spirit Bear is feared for the duration of the transformation, unless he has his own Aghanim's Scepter.", "facets_loc": ["Shared Armor increased. Damage dealt by either the Spirit Bear or Lone Druid will heal the other.", "Only damage dealt by Spirit Bear heals Lone Druid."]}, "changed_fields": [{"field": "bonus_movement_speed_druid", "old": {"base": [10, 20, 30, 40], "scepter": null, "shard": null}, "new": {"base": [15, 30, 45, 60], "scepter": null, "shard": null}}], "rows": [{"review_id": "ef78e74c04ed02de3882", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "be8bdccf10fea0d5cdaa", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "5c1f9fb6b68349a5b491", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "base", "decision": "accept"}]}, {"subject": "luna_lucent_beam", "name_zh": "露娜·月光", "category": "2_纯数值", "text_741f": {"desc_loc": "Calls a beam of lunar energy down upon an enemy, damaging and briefly stunning them.", "shard_loc": "Grants Luna an attack damage bonus buff every time an enemy hero is hit by Lucent Beam. Lucent Beams created by Eclipse grant %damage_buff_from_eclipse_pct%%% of the damage amount."}, "text_742": {"desc_loc": "Calls a beam of lunar energy down upon an enemy, damaging and briefly stunning them.", "shard_loc": "Grants Luna an attack damage bonus buff every time an enemy hero is hit by Lucent Beam. Lucent Beams created by Eclipse grant %damage_buff_from_eclipse_pct%%% of the damage amount."}, "changed_fields": [{"field": "lucent_beam_additional_targets", "old": null, "new": {"base": [], "scepter": null, "shard": null}}], "rows": [{"review_id": "4670320d9206e698c01f", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "7a9ef5696e58570f9476", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "7e8235d873944929715b", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "luna_moon_glaive", "name_zh": "露娜·月刃", "category": "3_说明文字", "text_741f": {"desc_loc": "Empowers Luna's glaives, causing her attacks to bounce between enemy units. Deals less damage with each bounce.", "notes_loc": ["Moon Glaives do not proc any attack modifier except Critical Strikes."]}, "text_742": {"desc_loc": "Empowers Luna's glaives, causing her attacks to bounce between enemy units. Damage and Item Potency decrease with each bounce.", "notes_loc": ["Additional bounces do not benefit from lifesteal or critical strike."]}, "changed_fields": [{"field": "effectiveness_reduction_percent", "old": null, "new": {"base": [40], "scepter": null, "shard": null}}], "rows": [{"review_id": "10b2860c06fc8333cba9", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "262f9b6d30020b76d453", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "reject"}, {"review_id": "cafbda9c266ab316eaa8", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}]}, {"subject": "lycan_feral_impulse", "name_zh": "狼人·野性驱使", "category": "3_说明文字", "text_741f": {"desc_loc": "Increases the HP regeneration and damage of Lycan and all units under his control.", "facets_loc": ["Max level decreased to %max_level%."]}, "text_742": {"desc_loc": "Increases the HP regeneration and damage for Lycan and all units under his control.", "notes_loc": ["Does not increase damage from items."]}, "changed_fields": [], "rows": [{"review_id": "65d203178937d00126d4", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "3896eb6a185ea5d94dc2", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}]}, {"subject": "lycan_summon_wolves", "name_zh": "狼人·召狼", "category": "2_纯数值", "text_741f": {"desc_loc": "Summons %wolf_count% wolves to aid Lycan in battle. At level 3, wolves gain Permanent Invisibility, and at level 4 wolves gain Cripple that gives 20% chance to cripple the target, causing 8 damage per second and lose 60 attack speed for 4 seconds.", "notes_loc": ["Using this spell will replace currently active summoned Wolves."], "shard_loc": "Increases the number of wolves summoned. Grants all summoned wolves the ability Hightail, an active ability that gives them phased movement, evasion, movespeed, and attack speed.", "facets_loc": ["Summoned Wolves are invulnerable and uncontrollable spirits that do not attack, but provide health and damage bonuses to Lycan.", "Max Level increased to %max_level%. Level 5 wolves gain Hamstring, which empowers their attacks to root enemies and cause them to take more physical damage on attacks. Level 6 wolves have Hightail, an active ability that gives wolves phased movement, evasion, movespeed, and attack speed."]}, "text_742": {"desc_loc": "Summons %wolf_count% wolves to aid Lycan in battle. At level 3, wolves gain Permanent Invisibility, and at level 4 wolves gain Cripple that gives 20% chance to cripple the target, causing 8 damage per second and lose 60 attack speed for 4 seconds.", "notes_loc": ["Using this spell will replace currently active summoned Wolves."], "shard_loc": "Increases the number of wolves summoned. Grants all summoned wolves the ability Hightail, an active ability that gives them phased movement, evasion, movespeed, and attack speed.", "facets_loc": ["Summoned Wolves are invulnerable and uncontrollable spirits that do not attack, but provide health and damage bonuses to Lycan.", "Max Level increased to %max_level%. Level 5 wolves gain Hamstring, which empowers their attacks to root enemies and cause them to take more physical damage on attacks. Level 6 wolves have Hightail, an active ability that gives wolves phased movement, evasion, movespeed, and attack speed."]}, "changed_fields": [{"field": "wolf_damage", "old": {"base": [22, 28, 34, 40, 46, 52], "scepter": null, "shard": null}, "new": {"base": [22, 32, 42, 52, 62, 72], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:lycan_summon_wolves:slow:base", "mechanism": "attack_slow", "mechanism_zh": "减攻速", "definition": "降低敌方单位的攻击速度", "condition": "base", "decision": "accept"}, {"review_id": "81e7362f05f06af5fbc8", "mechanism": "bash", "mechanism_zh": "重击", "definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算", "condition": "base", "decision": "reject"}, {"review_id": "9274b5b6f0756916db62", "mechanism": "evasion", "mechanism_zh": "闪避", "definition": "自身有概率使敌方攻击落空", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "87e541fc3dd166f881a9", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "5f58acf585f6f55a16a9", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "accept"}, {"review_id": "72d30194c36af6c151fb", "mechanism": "phased", "mechanism_zh": "相位移动", "definition": "移动不受单位碰撞阻挡", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "b11950c40e8204fd5992", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "accept"}]}, {"subject": "lycan_wolf_bite", "name_zh": "狼人·饿狼撕咬", "category": "3_说明文字", "text_741f": {"desc_loc": "Lycan bites an allied hero or creep-hero, granting them Shapeshift properties. Lycan and the bitten target gain %lifesteal_percent%%% Lifesteal and share the healing effect of Lifesteal with each other as long as they are within %lifesteal_range% range of each other.", "notes_loc": ["Wolf Bite cooldown matches the cooldown of the current level of Shapeshift."]}, "text_742": {"desc_loc": "Lycan bites an allied hero or creep-hero, granting them Shapeshift properties. While shapeshifted this way, the target counts as a unit under Lycan's control for Pack Hunter.", "notes_loc": ["Wolf Bite cooldown matches the cooldown of the current level of Shapeshift."]}, "changed_fields": [{"field": "lifesteal_percent", "old": {"base": [40], "scepter": null, "shard": null}, "new": null}, {"field": "lifesteal_range", "old": {"base": [1200], "scepter": null, "shard": null}, "new": null}], "rows": [{"review_id": "522b75b460a924a0a717", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "f5b35ac237a40b44974b", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "base", "decision": "accept"}]}, {"subject": "maelstrom", "name_zh": "漩涡", "category": "3_说明文字", "text_741f": {"desc_loc": "Passive: Chain Lightning Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between %chain_strikes% targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion."}, "text_742": {"desc_loc": "Passive: Chain Lightning Grants a %chain_chance%%% chance on attack to release a bolt of electricity that leaps between %chain_strikes% targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each. Lightning proc pierces evasion.", "notes_loc": ["Chain Lightning does not trigger off of attacks from illusions."]}, "changed_fields": [], "rows": [{"review_id": "516d9641c012e865b787", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "item", "decision": "accept"}, {"review_id": "audit:maelstrom:attack_modifier:item", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "item", "decision": "accept"}, {"review_id": "audit:maelstrom:pierce_evasion:item", "mechanism": "pierce_evasion", "mechanism_zh": "克敌机先", "definition": "攻击无视闪避（必中）", "condition": "item", "decision": "accept"}]}, {"subject": "mage_slayer", "name_zh": "法师克星", "category": "2_纯数值", "text_741f": {"desc_loc": "Passive: Mage Slayer Places a debuff when you attack enemies, dealing %dps% physical damage per second and causing them to do %spell_amp_debuff%%% less spell damage for %duration% seconds."}, "text_742": {"desc_loc": "Passive: Mage Slayer Places a debuff when you attack enemies, dealing %dps% physical damage per second and causing them to do %spell_amp_debuff%%% less spell damage for %duration% seconds."}, "changed_fields": [], "rows": [{"review_id": "0587fff248c312e52535", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "item", "decision": "reject"}, {"review_id": "audit:mage_slayer:attack_modifier:item", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "item", "decision": "accept"}, {"review_id": "audit:mage_slayer:healing:item", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "item", "decision": "accept"}, {"review_id": "4e59191ba5764f291d48", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "item", "decision": "accept"}, {"review_id": "50cc2f9fc1b45fddc3ab", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "item", "decision": "reject"}]}, {"subject": "magnataur_shockwave", "name_zh": "马格纳斯·震荡波", "category": "2_纯数值", "text_741f": {"desc_loc": "Magnus sends out a wave of force, damaging enemy units in a line, pulling them towards him, and slowing them for a brief period.", "facets_loc": ["Increases the max level of Shockwave. Level %max_level% Shockwave causes it to return towards Magnus's current location after reaching max length. The return Shockwave travels %return_shockwave_bonus_distance% distance further and hits enemies a second time for %return_damage_pct_tooltip%%% of the damage."]}, "text_742": {"desc_loc": "Magnus sends out a wave of force, damaging enemy units in a line, pulling them towards him, and slowing them for a brief period.", "facets_loc": ["Increases the max level of Shockwave. Level %max_level% Shockwave causes it to return towards Magnus's current location after reaching max length. The return Shockwave travels %return_shockwave_bonus_distance% distance further and hits enemies a second time for %return_damage_pct_tooltip%%% of the damage."]}, "changed_fields": [{"field": "shock_damage", "old": {"base": [75, 150, 225, 300], "scepter": null, "shard": null}, "new": {"base": [90, 160, 230, 300], "scepter": null, "shard": null}}], "rows": [{"review_id": "7d8f72c2aaa8b87a5e1c", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "d47713d67cfed86d04c0", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "a09cf05288920c91fc1f", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "c6c7905d0721107e63be", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "reject"}]}, {"subject": "manta", "name_zh": "幻影斧", "category": "3_说明文字", "text_741f": {"desc_loc": "Active: Mirror Image Creates %images_count% images of your hero that last %illusion_duration% seconds. Melee images deal %tooltip_damage_outgoing_melee%%% damage, while Ranged images deal %tooltip_damage_outgoing_ranged%%%. Illusions take %tooltip_damage_incoming_total_pct%%% damage. Dispel Type: Basic Dispel", "notes_loc": ["Has a %invuln_duration% second cast time during which you are invulnerable.", "Many effects are removed upon using Manta.", "Yasha based movement speed bonuses from multiple items do not stack."]}, "text_742": {"desc_loc": "Active: Mirror Image Creates %images_count% images of your hero that last %illusion_duration% seconds. Melee images deal %tooltip_damage_outgoing_melee%%% damage, while Ranged images deal %tooltip_damage_outgoing_ranged%%%. Illusions take %tooltip_damage_incoming_total_pct%%% damage and have %illusion_effectiveness%%% Item Potency. Dispel Type: Basic Dispel", "notes_loc": ["Has a %invuln_duration% second cast time during which you are invulnerable.", "Many effects are removed upon using Manta.", "Yasha based movement speed bonuses from multiple items do not stack."]}, "changed_fields": [{"field": "item_cost", "old": 4650, "new": 4550}, {"field": "bonus_movement_speed", "old": {"base": [10], "scepter": null, "shard": null}, "new": {"base": [6], "scepter": null, "shard": null}}, {"field": "illusion_effectiveness", "old": null, "new": {"base": [35], "scepter": null, "shard": null}}], "rows": [{"review_id": "17cfe619cfab1a60b4a3", "mechanism": "applies_basic_dispel", "mechanism_zh": "施加弱驱散", "definition": "移除目标身上可被弱驱散的效果", "condition": "item", "decision": "accept"}, {"review_id": "1a4e89e1035a3954e748", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}, {"review_id": "t5:manta:illusions", "mechanism": "illusions", "mechanism_zh": "幻象", "definition": "制造自身或他人的幻象", "condition": "item", "decision": "accept"}, {"review_id": "fb92aa9261305f161b15", "mechanism": "invulnerable_untargetable", "mechanism_zh": "无敌/不可选取", "definition": "暂时无法被伤害或无法被指向", "condition": "item", "decision": "accept"}]}, {"subject": "marci_bodyguard", "name_zh": "玛西·护卫术", "category": "2_纯数值", "text_741f": {"desc_loc": "Passively grants Marci lifesteal and bonus attack damage. When cast on an ally, she provides them with %max_partner_penalty%%% of her passive lifesteal and attack damage bonus. Additionally Marci creates a shared all damage barrier for herself and her partner. As Marci attacks heroes, %shared_barrier_replenish_amount%%% of the damage dealt restores the barrier.", "notes_loc": ["Marci cannot cast Bodyguard on herself.", "Lifesteal effectiveness gets a %creep_lifesteal_reduction_pct%%% penalty against creeps.", "The shared barrier is reduced by damage on either Marci or her partner."], "facets_loc": ["While bodyguarded, Marci and her partner share %shared_healing_percent%%% of health healed by this ability with each other."]}, "text_742": {"desc_loc": "Passively grants Marci lifesteal and bonus attack damage. When cast on an ally, she provides them with %max_partner_penalty%%% of her passive lifesteal and attack damage bonus. Additionally Marci creates a shared all damage barrier for herself and her partner. As Marci attacks heroes, %shared_barrier_replenish_amount%%% of the damage dealt restores the barrier.", "notes_loc": ["Marci cannot cast Bodyguard on herself.", "Lifesteal effectiveness gets a %creep_lifesteal_reduction_pct%%% penalty against creeps.", "The shared barrier is reduced by damage on either Marci or her partner."], "facets_loc": ["While bodyguarded, Marci and her partner share %shared_healing_percent%%% of health healed by this ability with each other."]}, "changed_fields": [{"field": "cooldowns", "old": [20], "new": [21, 20, 19, 18]}, {"field": "AbilityCooldown", "old": {"base": [20], "scepter": null, "shard": null}, "new": {"base": [21, 20, 19, 18], "scepter": null, "shard": null}}, {"field": "shared_barrier", "old": {"base": [90, 160, 230, 300], "scepter": null, "shard": null}, "new": {"base": [120, 180, 240, 300], "scepter": null, "shard": null}}], "rows": [{"review_id": "e1925c21fa9dbe8aa332", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "base", "decision": "accept"}, {"review_id": "2212c32e1a24e753f164", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "base", "decision": "accept"}]}, {"subject": "marci_special_delivery", "name_zh": "玛西·特快专递", "category": "3_说明文字", "text_741f": {"desc_loc": "Marci whistles to instantly summon her courier to her. If the courier started in the fountain, it will take items from Marci's stash. After teleporting it will transfer these items to Marci and head back to the fountain. Passively grants all allied couriers %bonus_levels% bonus levels and %bonus_hp_tooltip% bonus health.", "notes_loc": ["Special Delivery whistle has a cast point of %abilitycastpoint% second.", "If the courier didn't transfer any items or still has items after casting, it will remain next to Marci."]}, "text_742": {"desc_loc": "Marci whistles to instantly summon her courier to her. If the courier started in the fountain, it will take items from Marci's stash. After teleporting it will transfer these items to Marci and head back to the fountain. Passively grants all allied couriers %bonus_levels% bonus levels and %bonus_hp_tooltip% extra pip.", "notes_loc": ["Special Delivery whistle has a cast point of %abilitycastpoint% second.", "If the courier didn't transfer any items or still has items after casting, it will remain next to Marci."]}, "changed_fields": [{"field": "cooldowns", "old": [215], "new": [200]}, {"field": "AbilityCooldown", "old": {"base": [215], "scepter": null, "shard": null}, "new": {"base": [200], "scepter": null, "shard": null}}, {"field": "bonus_hp", "old": {"base": [3], "scepter": null, "shard": null}, "new": {"base": [4], "scepter": null, "shard": null}}], "rows": [{"review_id": "75bc3ddc1af6270ac2e1", "mechanism": "cyclone_banish", "mechanism_zh": "吹风/放逐", "definition": "使目标短暂离开战场，期间无敌或不可被选取", "condition": "base", "decision": "reject"}, {"review_id": "a0ecc3e81bafb3b9256e", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "reject"}]}, {"subject": "mars_arena_of_blood", "name_zh": "玛尔斯·热血竞技场", "category": "3_说明文字", "text_741f": {"desc_loc": "After a short formation time, Mars summons an arena lined with the undead warriors of the Ash Legion, who block enemy attacks and movement. Enemy heroes near the inside edge of the arena will be attacked by spears, dealing damage and knocking them back.", "scepter_loc": "Lowers cooldown by %bonus_AbilityCooldown%s and increases duration. If an enemy is killed in the Arena, Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%% of their max health and mana and get a %arena_kill_buff_damage_pct%% attack damage buff for %arena_kill_buff_duration%s. This effect stacks.", "facets_loc": ["If Mars is in the Arena when an enemy dies inside of it, he restores %arena_kill_buff_heal_pct%%% of his max health and mana and gets a %arena_kill_buff_damage_pct%%% attack damage buff for %arena_kill_buff_duration%s. Allies inside the Arena receive %allied_reduction_pct%%% of the bonuses.", "Arena of Blood obscures vision and enemies within the arena do not share vision with their allies."]}, "text_742": {"desc_loc": "After a short formation time, Mars summons an arena lined with the undead warriors of the Ash Legion, who block enemy attacks and movement. Enemy heroes near the inside edge of the arena will be attacked by spears, dealing damage and knocking them back.", "scepter_loc": "Lowers cooldown by %bonus_AbilityCooldown%s and increases duration. If an enemy is killed in the Arena, Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%%% of their max health and mana and get a %arena_kill_buff_damage_pct%%% attack damage buff for %arena_kill_buff_duration%s. This effect stacks.", "facets_loc": ["If Mars is in the Arena when an enemy dies inside of it, he restores %arena_kill_buff_heal_pct%%% of his max health and mana and gets a %arena_kill_buff_damage_pct%%% attack damage buff for %arena_kill_buff_duration%s. Allies inside the Arena receive %allied_reduction_pct%%% of the bonuses.", "Arena of Blood obscures vision and enemies within the arena do not share vision with their allies."]}, "changed_fields": [{"field": "cooldowns", "old": [100, 95, 90], "new": [105, 95, 85]}, {"field": "AbilityCooldown", "old": {"base": [100, 95, 90], "scepter": [10], "shard": null}, "new": {"base": [105, 95, 85], "scepter": [10], "shard": null}}, {"field": "arena_kill_buff_damage_pct", "old": {"base": [0], "scepter": [35], "shard": null}, "new": {"base": [0], "scepter": [45], "shard": null}}], "rows": [{"review_id": "d8ffe6f10fa967a098c7", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "9a4820fac7d975b94fe6", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "audit:mars_arena_of_blood:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "audit:mars_arena_of_blood:healing:scepter", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "audit:mars_arena_of_blood:mana_gain:scepter", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "audit:mars_arena_of_blood:slow:base", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "2d6653cd04c45621db20", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "reject"}, {"review_id": "audit:mars_arena_of_blood:mobility_lock:base", "mechanism": "terrain", "mechanism_zh": "创造地形", "definition": "在地上造出单位不能穿过的地形，无视地形的单位能越过", "condition": "base", "decision": "reject"}]}, {"subject": "mars_gods_rebuke", "name_zh": "玛尔斯·神之谴戒", "category": "2_纯数值", "text_741f": {"desc_loc": "Mars smashes enemies in front of him with his shield, knocking them back and damaging them with a critical hit based on his attack. Bonus damage is added when hitting heroes. Has True Strike.", "notes_loc": ["Attack modifiers have a chance to proc on God's Rebuke attacks."]}, "text_742": {"desc_loc": "Mars smashes enemies in front of him with his shield, knocking them back and damaging them with a critical hit based on his attack. Bonus damage is added when hitting heroes. Has True Strike.", "notes_loc": ["Attack modifiers have a chance to proc on God's Rebuke attacks."]}, "changed_fields": [{"field": "cooldowns", "old": [16, 14, 12, 10], "new": [14, 12, 10, 8]}, {"field": "AbilityCooldown", "old": {"base": [16, 14, 12, 10], "scepter": null, "shard": null}, "new": {"base": [14, 12, 10, 8], "scepter": null, "shard": null}}, {"field": "crit_mult", "old": {"base": [150, 200, 250, 300], "scepter": null, "shard": null}, "new": {"base": [160, 200, 240, 280], "scepter": null, "shard": null}}, {"field": "radius", "old": {"base": [500], "scepter": null, "shard": null}, "new": {"base": [500, 525, 550, 575], "scepter": null, "shard": null}}], "rows": [{"review_id": "b28779d01f009be9da28", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "9fbc294bc1d8bca5de73", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "reject"}, {"review_id": "8ee59892f6942775f9c0", "mechanism": "critical", "mechanism_zh": "暴击", "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算", "condition": "base", "decision": "accept"}, {"review_id": "758f74c07814f2b065c9", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "d782a41fdadee83bf5e2", "mechanism": "pierce_evasion", "mechanism_zh": "克敌机先", "definition": "攻击无视闪避（必中）", "condition": "base", "decision": "accept"}, {"review_id": "e377b5dda099824e718d", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "mask_of_madness", "name_zh": "疯狂面具", "category": "2_纯数值", "text_741f": {"desc_loc": "Active: Berserk Gives %berserk_bonus_attack_speed% attack speed, %berserk_bonus_movement_speed%%% / %berserk_bonus_movement_speed_melee%%% movement speed (ranged/melee), and %berserk_slow_resist%%%/%berserk_slow_resist_melee%%% slow resistance (ranged/melee), but reduces your armor by %berserk_armor_reduction% and silences you. Lasts %berserk_duration% seconds. Passive: Lifesteal Heals the attacker for a percentage of physical damage dealt."}, "text_742": {"desc_loc": "Active: Berserk Gives %berserk_bonus_attack_speed% attack speed, %berserk_bonus_movement_speed%%% / %berserk_bonus_movement_speed_melee%%% movement speed (ranged/melee), and %berserk_slow_resist%%%/%berserk_slow_resist_melee%%% slow resistance (ranged/melee), but reduces your armor by %berserk_armor_reduction% and silences you. Lasts %berserk_duration% seconds. Passive: Lifesteal Heals the attacker for a percentage of physical damage dealt."}, "changed_fields": [{"field": "item_cost", "old": 1900, "new": 1800}, {"field": "bonus_attack_speed", "old": null, "new": {"base": [10], "scepter": null, "shard": null}}, {"field": "bonus_damage", "old": {"base": [20], "scepter": null, "shard": null}, "new": {"base": [15], "scepter": null, "shard": null}}], "rows": [{"review_id": "fb7b569aca30052b1c1f", "mechanism": "armor_reduction", "mechanism_zh": "减护甲", "definition": "降低目标护甲", "condition": "item", "decision": "reject"}, {"review_id": "03dbba4d6e66d47d1267", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}, {"review_id": "0a5127ce075162242110", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "item", "decision": "accept"}, {"review_id": "audit:mask_of_madness:lifesteal:item", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "item", "decision": "accept"}, {"review_id": "604d4ce677253d1d9492", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "item", "decision": "reject"}, {"review_id": "91e7478648ee97e75a78", "mechanism": "slow_resistance", "mechanism_zh": "减速抗性", "definition": "降低自身受到的减速效果（如散夜对剑+30%）", "condition": "item", "decision": "accept"}]}, {"subject": "medusa_gorgon_grasp", "name_zh": "美杜莎·罗网箭阵", "category": "3_说明文字", "text_741f": {"desc_loc": "Medusa fires arrows in a line that land in %volley_count% groups, with each grouping larger than the previous. Enemies struck by a volley of arrows take an initial burst of damage and then are rooted, cannot turn, are revealed to the enemy, and take damage per second."}, "text_742": {"desc_loc": "Medusa fires arrows in a line that land in %volley_count% groups, with each grouping larger than the previous. Enemies struck by a volley of arrows take an initial burst of magic damage and then are rooted, cannot turn, are revealed to the enemy, and take damage per second. An enemy can only be hit once per cast."}, "changed_fields": [{"field": "damage", "old": 1, "new": 2}, {"field": "cast_points", "old": [0.4], "new": [0.2]}, {"field": "cooldowns", "old": [30, 26, 22, 18], "new": [30, 25, 20, 15]}, {"field": "AbilityCastPoint", "old": {"base": [0.4], "scepter": null, "shard": null}, "new": {"base": [0.2], "scepter": null, "shard": null}}, {"field": "AbilityCooldown", "old": {"base": [30, 26, 22, 18], "scepter": null, "shard": null}, "new": {"base": [30, 25, 20, 15], "scepter": null, "shard": null}}, {"field": "damage", "old": {"base": [30, 70, 110, 150], "scepter": null, "shard": null}, "new": {"base": [60, 120, 180, 240], "scepter": null, "shard": null}}, {"field": "damage_pers", "old": {"base": [100], "scepter": null, "shard": null}, "new": {"base": [12, 24, 36, 48], "scepter": null, "shard": null}}, {"field": "delay", "old": {"base": [1], "scepter": null, "shard": null}, "new": {"base": [0.8], "scepter": null, "shard": null}}], "rows": [{"review_id": "b42c8235bd1275dd57d9", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "4a32ea6adc2cb64b6b7f", "mechanism": "reveal", "mechanism_zh": "显形", "definition": "使隐身单位显形，不等于持续真视", "condition": "base", "decision": "accept"}, {"review_id": "audit:medusa_gorgon_grasp:root:base", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "base", "decision": "accept"}]}, {"subject": "medusa_mystic_snake", "name_zh": "美杜莎·秘术异蛇", "category": "2_纯数值", "text_741f": {"desc_loc": "A mystic snake made of energy jumps from target to target dealing damage. Damage and speed increases with each jump. After it reaches its last target, it returns to Medusa to replenish her with mana. The snake returns a percentage of the targets' total mana.", "notes_loc": ["Mystic Snake cannot be disjointed."], "facets_loc": ["Mystic Snakes returning to Medusa empower her next %max_attacks% attacks with +1 additional damage for each %mana_per_damage% mana restored. Lasts up to %attack_buff_duration%s."]}, "text_742": {"desc_loc": "A mystic snake made of energy jumps from target to target dealing damage. Damage and speed increases with each jump. After it reaches its last target, it returns to Medusa to replenish her with mana. The snake returns a percentage of the targets' total mana.", "notes_loc": ["Mystic Snake cannot be disjointed."], "facets_loc": ["Mystic Snakes returning to Medusa empower her next %max_attacks% attacks with +1 additional damage for each %mana_per_damage% mana restored. Lasts up to %attack_buff_duration%s."]}, "changed_fields": [{"field": "mana_costs", "old": [80, 100, 120, 140], "new": [80, 95, 110, 125]}, {"field": "AbilityManaCost", "old": {"base": [80, 100, 120, 140], "scepter": null, "shard": null}, "new": {"base": [80, 95, 110, 125], "scepter": null, "shard": null}}], "rows": [{"review_id": "e863fe8042328560ff9c", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "a572a2bab20cb3744ac5", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "base", "decision": "accept"}, {"review_id": "fc4e051e2b76347969d0", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "reject"}, {"review_id": "5deff0ab5ab91ec860c6", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "reject"}, {"review_id": "9d4d30a763a32904ed8e", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "lion_mana_drain",
+      "rows": [
+        {"review_id":"0211dd6f7223f9b027da","verdict":"holds","quote":"Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.","reason_zh":"魔晶效果在莱恩引导期间生效，升级后仍需持续施法。"},
+        {"review_id":"529a113893b89069d98e","verdict":"holds","quote":"CHANNELED - Channels magical energy","reason_zh":"基础技能明确标为持续施法。"},
+        {"review_id":"8b221478b0c9a42c2663","verdict":"holds","quote":"Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.","reason_zh":"持有魔晶时，莱恩在引导期间获得减益免疫。"},
+        {"review_id":"c2f6e97972610dd77a9c","verdict":"holds","quote":"Can target allies to give them mana and movement speed at a %ally_pct%%% rate.","reason_zh":"对友军施放会提高其移动速度。"},
+        {"review_id":"226b4ac7dcdd51fcffeb","verdict":"holds","quote":"Prevents heroes from going invisible.","reason_zh":"技能会阻止英雄进入隐身，没有赋予隐身的效果。"},
+        {"review_id":"003553bae9be6f4d48d0","verdict":"holds","quote":"taking mana and slowing enemies over time","reason_zh":"持续抽取法力会减少敌方目标的法力值。"},
+        {"review_id":"e09f616d2e6ba68133cf","verdict":"holds","quote":"Mana Drain deals damage equal to %damage_pct%%% of mana stolen.","reason_zh":"说明明确将被抽取的法力称为窃取的法力，符合吸蓝定义。"},
+        {"review_id":"b507c721221c5c8bce17","verdict":"holds","quote":"If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%.","reason_zh":"技能会降低敌人移速，目标法力耗尽时减速还会增强。"},
+        {"review_id":"c52e69fad921b57630fc","verdict":"holds","quote":"If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%. Can target allies to give them mana and movement speed at a %ally_pct%%% rate.","reason_zh":"基础技能能选取敌人抽蓝，也允许选取友军供蓝。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lion_to_hell_and_back",
+      "rows": [
+        {"review_id":"e69ca90cbb340a84fe4f","verdict":"unclear","quote":"spell_amp.base: [20]→[15]","reason_zh":"唯一的字段变化是法术放大数值，材料未给出 IsBreakable 的取值，无法独立核实原否定判断。"},
+        {"review_id":"71bde1bc2270af04a332","verdict":"holds","quote":"after respawning or resurrecting or until he gets a kill or assist","reason_zh":"复活是获得法术放大的触发条件，技能本身没有提供复活或改变复活过程。"},
+        {"review_id":"a5933756a651555e2172","verdict":"holds","quote":"spell_amp.base: [20]→[15]","reason_zh":"法术放大由20%降至15%，触发后仍有效。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lone_druid_spirit_bear",
+      "rows": [
+        {"review_id":"d63dc94e008e9ab7a6b7","verdict":"holds","quote":"Spirit Bear cannot gain experience. The Spirit Bear levels up when Lone Druid levels up.","reason_zh":"熊灵随德鲁伊升级，技能没有提供额外金钱或经验。"},
+        {"review_id":"328f5e84809c536b3965","verdict":"holds","quote":"Spirit Bear has Demolish, Return, Entangling Claws, Savage Roar, and Spirit Link abilities.","reason_zh":"缠绕之爪列为熊灵自己的技能，施放熊灵伙伴本身不会缠绕目标。"},
+        {"review_id":"05927dbef062d90d3614","verdict":"holds","quote":"Summons a powerful Spirit Bear companion that can equip items.","reason_zh":"基础技能仍会召唤可装备物品的熊灵。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lone_druid_spirit_link",
+      "rows": [
+        {"review_id":"ef78e74c04ed02de3882","verdict":"holds","quote":"Break disables the shared lifesteal.","reason_zh":"说明明确写明破坏会使共享吸血失效，本次仅调整德鲁伊的移速加成。"},
+        {"review_id":"be8bdccf10fea0d5cdaa","verdict":"holds","quote":"bonus_movement_speed_druid.base: [10,20,30,40]→[15,30,45,60]","reason_zh":"德鲁伊各级移动速度加成均提高，加速机制仍成立。"},
+        {"review_id":"5c1f9fb6b68349a5b491","verdict":"holds","quote":"sharing a percentage of their lifesteal with each other","reason_zh":"基础链接仍使德鲁伊和熊灵按比例共享吸血。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "luna_lucent_beam",
+      "rows": [
+        {"review_id":"4670320d9206e698c01f","verdict":"holds","quote":"Calls a beam of lunar energy down upon an enemy, damaging and briefly stunning them.","reason_zh":"基础说明仍只描述伤害一名敌人，新增的额外目标字段也没有给出任何额外目标数。"},
+        {"review_id":"7a9ef5696e58570f9476","verdict":"holds","quote":"damaging and briefly stunning them","reason_zh":"月光命中后仍会造成短暂眩晕。"},
+        {"review_id":"7e8235d873944929715b","verdict":"holds","quote":"Calls a beam of lunar energy down upon an enemy","reason_zh":"基础月光以一名敌方单位为施放目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "luna_moon_glaive",
+      "rows": [
+        {"review_id":"10b2860c06fc8333cba9","verdict":"holds","quote":"causing her attacks to bounce between enemy units. Damage and Item Potency decrease with each bounce.","reason_zh":"一次攻击仍可弹射并伤害多个敌人，逐跳衰减没有移除多目标伤害。"},
+        {"review_id":"262f9b6d30020b76d453","verdict":"holds","quote":"Damage and Item Potency decrease with each bounce.","reason_zh":"新说明规定了弹射时的物品效力衰减，月刃自身赋予普攻的效果仍是定义中单列的弹射。"},
+        {"review_id":"cafbda9c266ab316eaa8","verdict":"unclear","quote":"effectiveness_reduction_percent.base: null→[40]","reason_zh":"新增字段描述弹射衰减，材料未给出 IsBreakable 的取值以核实可破坏性。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lycan_feral_impulse",
+      "rows": [
+        {"review_id":"65d203178937d00126d4","verdict":"unclear","quote":"Increases the HP regeneration and damage for Lycan and all units under his control.","reason_zh":"说明只描述回复与伤害加成，材料未给出 IsBreakable 的取值以核实可破坏性。"},
+        {"review_id":"3896eb6a185ea5d94dc2","verdict":"holds","quote":"Increases the HP regeneration and damage for Lycan and all units under his control.","reason_zh":"技能仍提高狼人及其控制单位的生命恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lycan_summon_wolves",
+      "rows": [
+        {"review_id":"audit:lycan_summon_wolves:slow:base","verdict":"holds","quote":"lose 60 attack speed for 4 seconds","reason_zh":"四级狼的致残可使目标降低60点攻击速度，持续4秒。"},
+        {"review_id":"81e7362f05f06af5fbc8","verdict":"holds","quote":"20% chance to cripple the target, causing 8 damage per second and lose 60 attack speed for 4 seconds","reason_zh":"致残的概率触发效果为持续伤害和减攻速，说明没有赋予造成眩晕的重击。"},
+        {"review_id":"9274b5b6f0756916db62","verdict":"now_wrong","quote":"Grants all summoned wolves the ability Hightail, an active ability that gives them phased movement, evasion, movespeed, and attack speed.","reason_zh":"魔晶赋予的 Hightail 明确使召唤狼获得闪避，两版均有此效果，原否定判断在7.42下错误。"},
+        {"review_id":"87e541fc3dd166f881a9","verdict":"holds","quote":"an active ability that gives them phased movement, evasion, movespeed, and attack speed","reason_zh":"魔晶赋予的 Hightail 可提高召唤狼的移动速度。"},
+        {"review_id":"5f58acf585f6f55a16a9","verdict":"holds","quote":"At level 3, wolves gain Permanent Invisibility","reason_zh":"三级狼仍获得永久隐身。"},
+        {"review_id":"72d30194c36af6c151fb","verdict":"holds","quote":"an active ability that gives them phased movement","reason_zh":"持有魔晶时，召唤狼可通过 Hightail 获得相位移动。"},
+        {"review_id":"b11950c40e8204fd5992","verdict":"holds","quote":"Summons %wolf_count% wolves to aid Lycan in battle.","reason_zh":"基础技能仍会召唤狼协助战斗。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lycan_wolf_bite",
+      "rows": [
+        {"review_id":"522b75b460a924a0a717","verdict":"now_wrong","quote":"lifesteal_range.base: [1200]→null","reason_zh":"两者在范围内共享吸血治疗的说明和范围字段均已删除，原治疗判断失效。"},
+        {"review_id":"f5b35ac237a40b44974b","verdict":"now_wrong","quote":"lifesteal_percent.base: [40]→null","reason_zh":"原有40%吸血字段及赋予双方吸血的说明均已删除。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "maelstrom",
+      "rows": [
+        {"review_id":"516d9641c012e865b787","verdict":"holds","quote":"leaps between %chain_strikes% targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each","reason_zh":"一次攻击触发的连锁闪电仍能跳跃并伤害多个目标。"},
+        {"review_id":"audit:maelstrom:attack_modifier:item","verdict":"holds","quote":"Grants a %chain_chance%%% chance on attack to release a bolt of electricity","reason_zh":"装备使攻击有概率附带闪电伤害，新增注释仅排除幻象攻击触发。"},
+        {"review_id":"audit:maelstrom:pierce_evasion:item","verdict":"holds","quote":"Lightning proc pierces evasion.","reason_zh":"触发闪电的攻击仍可无视闪避。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mage_slayer",
+      "rows": [
+        {"review_id":"0587fff248c312e52535","verdict":"holds","quote":"Places a debuff when you attack enemies, dealing %dps% physical damage per second","reason_zh":"每次攻击给受击目标附加持续伤害，说明没有一次攻击伤害多个单位的效果。"},
+        {"review_id":"audit:mage_slayer:attack_modifier:item","verdict":"holds","quote":"Places a debuff when you attack enemies","reason_zh":"普通攻击仍会给敌人附加减益。"},
+        {"review_id":"audit:mage_slayer:healing:item","verdict":"unclear","quote":"Places a debuff when you attack enemies, dealing %dps% physical damage per second","reason_zh":"所给说明只描述攻击减益，也没有列出装备的生命恢复属性，无法核实治疗判断。"},
+        {"review_id":"4e59191ba5764f291d48","verdict":"unclear","quote":"causing them to do %spell_amp_debuff%%% less spell damage for %duration% seconds","reason_zh":"所给说明只描述敌人的法术伤害降低，也没有列出装备的法力恢复属性，无法核实回蓝判断。"},
+        {"review_id":"50cc2f9fc1b45fddc3ab","verdict":"holds","quote":"causing them to do %spell_amp_debuff%%% less spell damage","reason_zh":"装备降低受击敌人的法术伤害，没有提高持有者技能伤害的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "magnataur_shockwave",
+      "rows": [
+        {"review_id":"7d8f72c2aaa8b87a5e1c","verdict":"holds","quote":"damaging enemy units in a line","reason_zh":"一次震荡波仍能伤害直线上的多个敌人。"},
+        {"review_id":"d47713d67cfed86d04c0","verdict":"holds","quote":"pulling them towards him","reason_zh":"震荡波仍会将命中的敌人拉向马格纳斯。"},
+        {"review_id":"a09cf05288920c91fc1f","verdict":"holds","quote":"slowing them for a brief period","reason_zh":"命中的敌人仍会受到短暂减速。"},
+        {"review_id":"c6c7905d0721107e63be","verdict":"holds","quote":"Magnus sends out a wave of force, damaging enemy units in a line","reason_zh":"技能按震荡波的直线轨迹命中敌人，说明没有选取敌方单位施放的方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "manta",
+      "rows": [
+        {"review_id":"17cfe619cfab1a60b4a3","verdict":"holds","quote":"Dispel Type: Basic Dispel","reason_zh":"开启幻影斧仍会施加弱驱散。"},
+        {"review_id":"1a4e89e1035a3954e748","verdict":"holds","quote":"bonus_movement_speed.base: [10]→[6]","reason_zh":"装备的移速加成从10降至6，仍提供加速。"},
+        {"review_id":"t5:manta:illusions","verdict":"holds","quote":"Creates %images_count% images of your hero that last %illusion_duration% seconds.","reason_zh":"主动效果仍会制造持有者的幻象。"},
+        {"review_id":"fb92aa9261305f161b15","verdict":"holds","quote":"Has a %invuln_duration% second cast time during which you are invulnerable.","reason_zh":"使用者在施放期间仍处于无敌状态。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "marci_bodyguard",
+      "rows": [
+        {"review_id":"e1925c21fa9dbe8aa332","verdict":"holds","quote":"shared_barrier.base: [90,160,230,300]→[120,180,240,300]","reason_zh":"共享护盾各级容量都大于零，仍能为玛西和搭档吸收伤害。"},
+        {"review_id":"2212c32e1a24e753f164","verdict":"holds","quote":"Passively grants Marci lifesteal and bonus attack damage.","reason_zh":"护卫术仍被动赋予玛西吸血。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "marci_special_delivery",
+      "rows": [
+        {"review_id":"75bc3ddc1af6270ac2e1","verdict":"holds","quote":"Marci whistles to instantly summon her courier to her.","reason_zh":"信使被立即传送至玛西身旁，说明没有使其暂时离场并无敌或不可选取的效果。"},
+        {"review_id":"a0ecc3e81bafb3b9256e","verdict":"holds","quote":"After teleporting it will transfer these items to Marci and head back to the fountain.","reason_zh":"传送并交付物品的是信使，玛西自身没有发生位移。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mars_arena_of_blood",
+      "rows": [
+        {"review_id":"d8ffe6f10fa967a098c7","verdict":"holds","quote":"Enemy heroes near the inside edge of the arena will be attacked by spears, dealing damage and knocking them back.","reason_zh":"一次施放形成的竞技场可用长矛伤害靠近内缘的多个敌方英雄。"},
+        {"review_id":"9a4820fac7d975b94fe6","verdict":"holds","quote":"dealing damage and knocking them back","reason_zh":"长矛仍会击退靠近竞技场内缘的敌方英雄。"},
+        {"review_id":"audit:mars_arena_of_blood:ground_zone:base","verdict":"holds","quote":"Enemy heroes near the inside edge of the arena will be attacked by spears","reason_zh":"竞技场形成后持续占据一片区域，敌方英雄靠近其内缘就会受到长矛攻击。"},
+        {"review_id":"audit:mars_arena_of_blood:healing:scepter","verdict":"holds","quote":"If an enemy is killed in the Arena, Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%%% of their max health and mana","reason_zh":"A杖说明仍明确写明场内敌人被击杀时，玛尔斯及场内友军恢复生命。"},
+        {"review_id":"audit:mars_arena_of_blood:mana_gain:scepter","verdict":"holds","quote":"Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%%% of their max health and mana","reason_zh":"A杖的场内击杀效果仍可为玛尔斯及场内友军恢复法力。"},
+        {"review_id":"audit:mars_arena_of_blood:slow:base","verdict":"unclear","quote":"who block enemy attacks and movement","reason_zh":"阻挡移动和击退均不能证明敌人移速降低，材料未提供可核实该判断的减速说明或字段。"},
+        {"review_id":"2d6653cd04c45621db20","verdict":"holds","quote":"Mars summons an arena lined with the undead warriors of the Ash Legion, who block enemy attacks and movement.","reason_zh":"说明将战士描述为竞技场的边界效果，没有将其描述为具有血量的召唤单位。"},
+        {"review_id":"audit:mars_arena_of_blood:mobility_lock:base","verdict":"holds","quote":"the undead warriors of the Ash Legion, who block enemy attacks and movement","reason_zh":"材料将阻挡归于场边战士，并描述了长矛击退，没有说明会生成可由无视地形移动越过的地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mars_gods_rebuke",
+      "rows": [
+        {"review_id":"b28779d01f009be9da28","verdict":"holds","quote":"Mars smashes enemies in front of him with his shield","reason_zh":"一次盾击仍可伤害前方多个敌人。"},
+        {"review_id":"9fbc294bc1d8bca5de73","verdict":"holds","quote":"Attack modifiers have a chance to proc on God's Rebuke attacks.","reason_zh":"技能攻击能触发已有的攻击特效，说明没有赋予普通攻击新的附加效果。"},
+        {"review_id":"8ee59892f6942775f9c0","verdict":"holds","quote":"crit_mult.base: [150,200,250,300]→[160,200,240,280]","reason_zh":"调整后的各级暴击倍率仍高于100%，盾击继续造成暴击。"},
+        {"review_id":"758f74c07814f2b065c9","verdict":"holds","quote":"knocking them back","reason_zh":"盾击仍会击退命中的敌人。"},
+        {"review_id":"d782a41fdadee83bf5e2","verdict":"holds","quote":"Has True Strike.","reason_zh":"技能攻击明确具有克敌机先。"},
+        {"review_id":"e377b5dda099824e718d","verdict":"unclear","quote":"knocking them back and damaging them with a critical hit based on his attack","reason_zh":"说明只明确击退和暴击，所列字段也没有给出移速降低效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mask_of_madness",
+      "rows": [
+        {"review_id":"fb7b569aca30052b1c1f","verdict":"holds","quote":"reduces your armor by %berserk_armor_reduction%","reason_zh":"狂热的护甲惩罚由使用者自身承受，没有对敌方目标施加减甲。"},
+        {"review_id":"03dbba4d6e66d47d1267","verdict":"holds","quote":"%berserk_bonus_movement_speed%%% / %berserk_bonus_movement_speed_melee%%% movement speed (ranged/melee)","reason_zh":"狂热仍提高使用者的移动速度。"},
+        {"review_id":"0a5127ce075162242110","verdict":"holds","quote":"Heals the attacker for a percentage of physical damage dealt.","reason_zh":"被动效果仍能为攻击者恢复生命。"},
+        {"review_id":"audit:mask_of_madness:lifesteal:item","verdict":"holds","quote":"Passive: Lifesteal Heals the attacker for a percentage of physical damage dealt.","reason_zh":"攻击者按造成的物理伤害比例恢复生命，符合吸血定义。"},
+        {"review_id":"604d4ce677253d1d9492","verdict":"holds","quote":"and silences you","reason_zh":"狂热会沉默使用者自身，没有赋予对敌方目标施加沉默的能力。"},
+        {"review_id":"91e7478648ee97e75a78","verdict":"holds","quote":"%berserk_slow_resist%%%/%berserk_slow_resist_melee%%% slow resistance (ranged/melee)","reason_zh":"狂热仍为远程和近战使用者提供减速抗性。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "medusa_gorgon_grasp",
+      "rows": [
+        {"review_id":"b42c8235bd1275dd57d9","verdict":"holds","quote":"Enemies struck by a volley of arrows take an initial burst of magic damage","reason_zh":"每名敌人每次施放最多被命中一次，但同一次箭阵仍可伤害多个敌人。"},
+        {"review_id":"4a32ea6adc2cb64b6b7f","verdict":"holds","quote":"are revealed to the enemy","reason_zh":"被箭阵命中的敌人仍会显形。"},
+        {"review_id":"audit:medusa_gorgon_grasp:root:base","verdict":"holds","quote":"and then are rooted, cannot turn","reason_zh":"箭阵命中后仍会缠绕敌人。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"magical_damage","condition":"base","quote":"damage: 1→2；Enemies struck by a volley of arrows take an initial burst of magic damage","reason_zh":"伤害类型字段发生变化，7.42说明明确将基础箭阵的初始伤害列为魔法伤害。"}
+      ]
+    },
+    {
+      "subject": "medusa_mystic_snake",
+      "rows": [
+        {"review_id":"e863fe8042328560ff9c","verdict":"holds","quote":"jumps from target to target dealing damage","reason_zh":"一次施放的秘术异蛇仍可在多个目标间跳跃并造成伤害。"},
+        {"review_id":"a572a2bab20cb3744ac5","verdict":"holds","quote":"it returns to Medusa to replenish her with mana","reason_zh":"异蛇返回时仍为美杜莎恢复法力，施法耗蓝调整不影响此效果。"},
+        {"review_id":"fc4e051e2b76347969d0","verdict":"holds","quote":"After it reaches its last target, it returns to Medusa","reason_zh":"在目标间移动并返回的是异蛇，技能没有移动美杜莎自身。"},
+        {"review_id":"5deff0ab5ab91ec860c6","verdict":"holds","quote":"Damage and speed increases with each jump.","reason_zh":"随跳跃提高的是异蛇自身的速度，技能没有降低敌人的移动速度。"},
+        {"review_id":"9d4d30a763a32904ed8e","verdict":"holds","quote":"A mystic snake made of energy jumps from target to target dealing damage.","reason_zh":"异蛇以敌方单位为起始目标，后续跳跃仍允许一次施放命中多个单位。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+40,102
+{
+  "objects": [
+    {
+      "subject": "lion_mana_drain",
+      "rows": [
+        {"review_id":"0211dd6f7223f9b027da","verdict":"holds","quote":"Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.","reason_zh":"魔晶效果在莱恩引导期间生效，升级后仍需持续施法。"},
+        {"review_id":"529a113893b89069d98e","verdict":"holds","quote":"CHANNELED - Channels magical energy","reason_zh":"基础技能明确标为持续施法。"},
+        {"review_id":"8b221478b0c9a42c2663","verdict":"holds","quote":"Lion becomes Debuff Immune with %magic_resist%%% magic resistance while channeling.","reason_zh":"持有魔晶时，莱恩在引导期间获得减益免疫。"},
+        {"review_id":"c2f6e97972610dd77a9c","verdict":"holds","quote":"Can target allies to give them mana and movement speed at a %ally_pct%%% rate.","reason_zh":"对友军施放会提高其移动速度。"},
+        {"review_id":"226b4ac7dcdd51fcffeb","verdict":"holds","quote":"Prevents heroes from going invisible.","reason_zh":"技能会阻止英雄进入隐身，没有赋予隐身的效果。"},
+        {"review_id":"003553bae9be6f4d48d0","verdict":"holds","quote":"taking mana and slowing enemies over time","reason_zh":"持续抽取法力会减少敌方目标的法力值。"},
+        {"review_id":"e09f616d2e6ba68133cf","verdict":"holds","quote":"Mana Drain deals damage equal to %damage_pct%%% of mana stolen.","reason_zh":"说明明确将被抽取的法力称为窃取的法力，符合吸蓝定义。"},
+        {"review_id":"b507c721221c5c8bce17","verdict":"holds","quote":"If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%.","reason_zh":"技能会降低敌人移速，目标法力耗尽时减速还会增强。"},
+        {"review_id":"c52e69fad921b57630fc","verdict":"holds","quote":"If the enemy has no mana remaining, the slow is increased by %movespeed_bonus_when_empty_pct%%%. Can target allies to give them mana and movement speed at a %ally_pct%%% rate.","reason_zh":"基础技能能选取敌人抽蓝，也允许选取友军供蓝。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lion_to_hell_and_back",
+      "rows": [
+        {"review_id":"e69ca90cbb340a84fe4f","verdict":"unclear","quote":"spell_amp.base: [20]→[15]","reason_zh":"唯一的字段变化是法术放大数值，材料未给出 IsBreakable 的取值，无法独立核实原否定判断。"},
+        {"review_id":"71bde1bc2270af04a332","verdict":"holds","quote":"after respawning or resurrecting or until he gets a kill or assist","reason_zh":"复活是获得法术放大的触发条件，技能本身没有提供复活或改变复活过程。"},
+        {"review_id":"a5933756a651555e2172","verdict":"holds","quote":"spell_amp.base: [20]→[15]","reason_zh":"法术放大由20%降至15%，触发后仍有效。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lone_druid_spirit_bear",
+      "rows": [
+        {"review_id":"d63dc94e008e9ab7a6b7","verdict":"holds","quote":"Spirit Bear cannot gain experience. The Spirit Bear levels up when Lone Druid levels up.","reason_zh":"熊灵随德鲁伊升级，技能没有提供额外金钱或经验。"},
+        {"review_id":"328f5e84809c536b3965","verdict":"holds","quote":"Spirit Bear has Demolish, Return, Entangling Claws, Savage Roar, and Spirit Link abilities.","reason_zh":"缠绕之爪列为熊灵自己的技能，施放熊灵伙伴本身不会缠绕目标。"},
+        {"review_id":"05927dbef062d90d3614","verdict":"holds","quote":"Summons a powerful Spirit Bear companion that can equip items.","reason_zh":"基础技能仍会召唤可装备物品的熊灵。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lone_druid_spirit_link",
+      "rows": [
+        {"review_id":"ef78e74c04ed02de3882","verdict":"holds","quote":"Break disables the shared lifesteal.","reason_zh":"说明明确写明破坏会使共享吸血失效，本次仅调整德鲁伊的移速加成。"},
+        {"review_id":"be8bdccf10fea0d5cdaa","verdict":"holds","quote":"bonus_movement_speed_druid.base: [10,20,30,40]→[15,30,45,60]","reason_zh":"德鲁伊各级移动速度加成均提高，加速机制仍成立。"},
+        {"review_id":"5c1f9fb6b68349a5b491","verdict":"holds","quote":"sharing a percentage of their lifesteal with each other","reason_zh":"基础链接仍使德鲁伊和熊灵按比例共享吸血。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "luna_lucent_beam",
+      "rows": [
+        {"review_id":"4670320d9206e698c01f","verdict":"holds","quote":"Calls a beam of lunar energy down upon an enemy, damaging and briefly stunning them.","reason_zh":"基础说明仍只描述伤害一名敌人，新增的额外目标字段也没有给出任何额外目标数。"},
+        {"review_id":"7a9ef5696e58570f9476","verdict":"holds","quote":"damaging and briefly stunning them","reason_zh":"月光命中后仍会造成短暂眩晕。"},
+        {"review_id":"7e8235d873944929715b","verdict":"holds","quote":"Calls a beam of lunar energy down upon an enemy","reason_zh":"基础月光以一名敌方单位为施放目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "luna_moon_glaive",
+      "rows": [
+        {"review_id":"10b2860c06fc8333cba9","verdict":"holds","quote":"causing her attacks to bounce between enemy units. Damage and Item Potency decrease with each bounce.","reason_zh":"一次攻击仍可弹射并伤害多个敌人，逐跳衰减没有移除多目标伤害。"},
+        {"review_id":"262f9b6d30020b76d453","verdict":"holds","quote":"Damage and Item Potency decrease with each bounce.","reason_zh":"新说明规定了弹射时的物品效力衰减，月刃自身赋予普攻的效果仍是定义中单列的弹射。"},
+        {"review_id":"cafbda9c266ab316eaa8","verdict":"unclear","quote":"effectiveness_reduction_percent.base: null→[40]","reason_zh":"新增字段描述弹射衰减，材料未给出 IsBreakable 的取值以核实可破坏性。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lycan_feral_impulse",
+      "rows": [
+        {"review_id":"65d203178937d00126d4","verdict":"unclear","quote":"Increases the HP regeneration and damage for Lycan and all units under his control.","reason_zh":"说明只描述回复与伤害加成，材料未给出 IsBreakable 的取值以核实可破坏性。"},
+        {"review_id":"3896eb6a185ea5d94dc2","verdict":"holds","quote":"Increases the HP regeneration and damage for Lycan and all units under his control.","reason_zh":"技能仍提高狼人及其控制单位的生命恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lycan_summon_wolves",
+      "rows": [
+        {"review_id":"audit:lycan_summon_wolves:slow:base","verdict":"holds","quote":"lose 60 attack speed for 4 seconds","reason_zh":"四级狼的致残可使目标降低60点攻击速度，持续4秒。"},
+        {"review_id":"81e7362f05f06af5fbc8","verdict":"holds","quote":"20% chance to cripple the target, causing 8 damage per second and lose 60 attack speed for 4 seconds","reason_zh":"致残的概率触发效果为持续伤害和减攻速，说明没有赋予造成眩晕的重击。"},
+        {"review_id":"9274b5b6f0756916db62","verdict":"now_wrong","quote":"Grants all summoned wolves the ability Hightail, an active ability that gives them phased movement, evasion, movespeed, and attack speed.","reason_zh":"魔晶赋予的 Hightail 明确使召唤狼获得闪避，两版均有此效果，原否定判断在7.42下错误。"},
+        {"review_id":"87e541fc3dd166f881a9","verdict":"holds","quote":"an active ability that gives them phased movement, evasion, movespeed, and attack speed","reason_zh":"魔晶赋予的 Hightail 可提高召唤狼的移动速度。"},
+        {"review_id":"5f58acf585f6f55a16a9","verdict":"holds","quote":"At level 3, wolves gain Permanent Invisibility","reason_zh":"三级狼仍获得永久隐身。"},
+        {"review_id":"72d30194c36af6c151fb","verdict":"holds","quote":"an active ability that gives them phased movement","reason_zh":"持有魔晶时，召唤狼可通过 Hightail 获得相位移动。"},
+        {"review_id":"b11950c40e8204fd5992","verdict":"holds","quote":"Summons %wolf_count% wolves to aid Lycan in battle.","reason_zh":"基础技能仍会召唤狼协助战斗。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lycan_wolf_bite",
+      "rows": [
+        {"review_id":"522b75b460a924a0a717","verdict":"now_wrong","quote":"lifesteal_range.base: [1200]→null","reason_zh":"两者在范围内共享吸血治疗的说明和范围字段均已删除，原治疗判断失效。"},
+        {"review_id":"f5b35ac237a40b44974b","verdict":"now_wrong","quote":"lifesteal_percent.base: [40]→null","reason_zh":"原有40%吸血字段及赋予双方吸血的说明均已删除。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "maelstrom",
+      "rows": [
+        {"review_id":"516d9641c012e865b787","verdict":"holds","quote":"leaps between %chain_strikes% targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each","reason_zh":"一次攻击触发的连锁闪电仍能跳跃并伤害多个目标。"},
+        {"review_id":"audit:maelstrom:attack_modifier:item","verdict":"holds","quote":"Grants a %chain_chance%%% chance on attack to release a bolt of electricity","reason_zh":"装备使攻击有概率附带闪电伤害，新增注释仅排除幻象攻击触发。"},
+        {"review_id":"audit:maelstrom:pierce_evasion:item","verdict":"holds","quote":"Lightning proc pierces evasion.","reason_zh":"触发闪电的攻击仍可无视闪避。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mage_slayer",
+      "rows": [
+        {"review_id":"0587fff248c312e52535","verdict":"holds","quote":"Places a debuff when you attack enemies, dealing %dps% physical damage per second","reason_zh":"每次攻击给受击目标附加持续伤害，说明没有一次攻击伤害多个单位的效果。"},
+        {"review_id":"audit:mage_slayer:attack_modifier:item","verdict":"holds","quote":"Places a debuff when you attack enemies","reason_zh":"普通攻击仍会给敌人附加减益。"},
+        {"review_id":"audit:mage_slayer:healing:item","verdict":"unclear","quote":"Places a debuff when you attack enemies, dealing %dps% physical damage per second","reason_zh":"所给说明只描述攻击减益，也没有列出装备的生命恢复属性，无法核实治疗判断。"},
+        {"review_id":"4e59191ba5764f291d48","verdict":"unclear","quote":"causing them to do %spell_amp_debuff%%% less spell damage for %duration% seconds","reason_zh":"所给说明只描述敌人的法术伤害降低，也没有列出装备的法力恢复属性，无法核实回蓝判断。"},
+        {"review_id":"50cc2f9fc1b45fddc3ab","verdict":"holds","quote":"causing them to do %spell_amp_debuff%%% less spell damage","reason_zh":"装备降低受击敌人的法术伤害，没有提高持有者技能伤害的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "magnataur_shockwave",
+      "rows": [
+        {"review_id":"7d8f72c2aaa8b87a5e1c","verdict":"holds","quote":"damaging enemy units in a line","reason_zh":"一次震荡波仍能伤害直线上的多个敌人。"},
+        {"review_id":"d47713d67cfed86d04c0","verdict":"holds","quote":"pulling them towards him","reason_zh":"震荡波仍会将命中的敌人拉向马格纳斯。"},
+        {"review_id":"a09cf05288920c91fc1f","verdict":"holds","quote":"slowing them for a brief period","reason_zh":"命中的敌人仍会受到短暂减速。"},
+        {"review_id":"c6c7905d0721107e63be","verdict":"holds","quote":"Magnus sends out a wave of force, damaging enemy units in a line","reason_zh":"技能按震荡波的直线轨迹命中敌人，说明没有选取敌方单位施放的方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "manta",
+      "rows": [
+        {"review_id":"17cfe619cfab1a60b4a3","verdict":"holds","quote":"Dispel Type: Basic Dispel","reason_zh":"开启幻影斧仍会施加弱驱散。"},
+        {"review_id":"1a4e89e1035a3954e748","verdict":"holds","quote":"bonus_movement_speed.base: [10]→[6]","reason_zh":"装备的移速加成从10降至6，仍提供加速。"},
+        {"review_id":"t5:manta:illusions","verdict":"holds","quote":"Creates %images_count% images of your hero that last %illusion_duration% seconds.","reason_zh":"主动效果仍会制造持有者的幻象。"},
+        {"review_id":"fb92aa9261305f161b15","verdict":"holds","quote":"Has a %invuln_duration% second cast time during which you are invulnerable.","reason_zh":"使用者在施放期间仍处于无敌状态。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "marci_bodyguard",
+      "rows": [
+        {"review_id":"e1925c21fa9dbe8aa332","verdict":"holds","quote":"shared_barrier.base: [90,160,230,300]→[120,180,240,300]","reason_zh":"共享护盾各级容量都大于零，仍能为玛西和搭档吸收伤害。"},
+        {"review_id":"2212c32e1a24e753f164","verdict":"holds","quote":"Passively grants Marci lifesteal and bonus attack damage.","reason_zh":"护卫术仍被动赋予玛西吸血。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "marci_special_delivery",
+      "rows": [
+        {"review_id":"75bc3ddc1af6270ac2e1","verdict":"holds","quote":"Marci whistles to instantly summon her courier to her.","reason_zh":"信使被立即传送至玛西身旁，说明没有使其暂时离场并无敌或不可选取的效果。"},
+        {"review_id":"a0ecc3e81bafb3b9256e","verdict":"holds","quote":"After teleporting it will transfer these items to Marci and head back to the fountain.","reason_zh":"传送并交付物品的是信使，玛西自身没有发生位移。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mars_arena_of_blood",
+      "rows": [
+        {"review_id":"d8ffe6f10fa967a098c7","verdict":"holds","quote":"Enemy heroes near the inside edge of the arena will be attacked by spears, dealing damage and knocking them back.","reason_zh":"一次施放形成的竞技场可用长矛伤害靠近内缘的多个敌方英雄。"},
+        {"review_id":"9a4820fac7d975b94fe6","verdict":"holds","quote":"dealing damage and knocking them back","reason_zh":"长矛仍会击退靠近竞技场内缘的敌方英雄。"},
+        {"review_id":"audit:mars_arena_of_blood:ground_zone:base","verdict":"holds","quote":"Enemy heroes near the inside edge of the arena will be attacked by spears","reason_zh":"竞技场形成后持续占据一片区域，敌方英雄靠近其内缘就会受到长矛攻击。"},
+        {"review_id":"audit:mars_arena_of_blood:healing:scepter","verdict":"holds","quote":"If an enemy is killed in the Arena, Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%%% of their max health and mana","reason_zh":"A杖说明仍明确写明场内敌人被击杀时，玛尔斯及场内友军恢复生命。"},
+        {"review_id":"audit:mars_arena_of_blood:mana_gain:scepter","verdict":"holds","quote":"Mars and all of his allies inside the Arena restore %arena_kill_buff_heal_pct%%% of their max health and mana","reason_zh":"A杖的场内击杀效果仍可为玛尔斯及场内友军恢复法力。"},
+        {"review_id":"audit:mars_arena_of_blood:slow:base","verdict":"unclear","quote":"who block enemy attacks and movement","reason_zh":"阻挡移动和击退均不能证明敌人移速降低，材料未提供可核实该判断的减速说明或字段。"},
+        {"review_id":"2d6653cd04c45621db20","verdict":"holds","quote":"Mars summons an arena lined with the undead warriors of the Ash Legion, who block enemy attacks and movement.","reason_zh":"说明将战士描述为竞技场的边界效果，没有将其描述为具有血量的召唤单位。"},
+        {"review_id":"audit:mars_arena_of_blood:mobility_lock:base","verdict":"holds","quote":"the undead warriors of the Ash Legion, who block enemy attacks and movement","reason_zh":"材料将阻挡归于场边战士，并描述了长矛击退，没有说明会生成可由无视地形移动越过的地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mars_gods_rebuke",
+      "rows": [
+        {"review_id":"b28779d01f009be9da28","verdict":"holds","quote":"Mars smashes enemies in front of him with his shield","reason_zh":"一次盾击仍可伤害前方多个敌人。"},
+        {"review_id":"9fbc294bc1d8bca5de73","verdict":"holds","quote":"Attack modifiers have a chance to proc on God's Rebuke attacks.","reason_zh":"技能攻击能触发已有的攻击特效，说明没有赋予普通攻击新的附加效果。"},
+        {"review_id":"8ee59892f6942775f9c0","verdict":"holds","quote":"crit_mult.base: [150,200,250,300]→[160,200,240,280]","reason_zh":"调整后的各级暴击倍率仍高于100%，盾击继续造成暴击。"},
+        {"review_id":"758f74c07814f2b065c9","verdict":"holds","quote":"knocking them back","reason_zh":"盾击仍会击退命中的敌人。"},
+        {"review_id":"d782a41fdadee83bf5e2","verdict":"holds","quote":"Has True Strike.","reason_zh":"技能攻击明确具有克敌机先。"},
+        {"review_id":"e377b5dda099824e718d","verdict":"unclear","quote":"knocking them back and damaging them with a critical hit based on his attack","reason_zh":"说明只明确击退和暴击，所列字段也没有给出移速降低效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mask_of_madness",
+      "rows": [
+        {"review_id":"fb7b569aca30052b1c1f","verdict":"holds","quote":"reduces your armor by %berserk_armor_reduction%","reason_zh":"狂热的护甲惩罚由使用者自身承受，没有对敌方目标施加减甲。"},
+        {"review_id":"03dbba4d6e66d47d1267","verdict":"holds","quote":"%berserk_bonus_movement_speed%%% / %berserk_bonus_movement_speed_melee%%% movement speed (ranged/melee)","reason_zh":"狂热仍提高使用者的移动速度。"},
+        {"review_id":"0a5127ce075162242110","verdict":"holds","quote":"Heals the attacker for a percentage of physical damage dealt.","reason_zh":"被动效果仍能为攻击者恢复生命。"},
+        {"review_id":"audit:mask_of_madness:lifesteal:item","verdict":"holds","quote":"Passive: Lifesteal Heals the attacker for a percentage of physical damage dealt.","reason_zh":"攻击者按造成的物理伤害比例恢复生命，符合吸血定义。"},
+        {"review_id":"604d4ce677253d1d9492","verdict":"holds","quote":"and silences you","reason_zh":"狂热会沉默使用者自身，没有赋予对敌方目标施加沉默的能力。"},
+        {"review_id":"91e7478648ee97e75a78","verdict":"holds","quote":"%berserk_slow_resist%%%/%berserk_slow_resist_melee%%% slow resistance (ranged/melee)","reason_zh":"狂热仍为远程和近战使用者提供减速抗性。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "medusa_gorgon_grasp",
+      "rows": [
+        {"review_id":"b42c8235bd1275dd57d9","verdict":"holds","quote":"Enemies struck by a volley of arrows take an initial burst of magic damage","reason_zh":"每名敌人每次施放最多被命中一次，但同一次箭阵仍可伤害多个敌人。"},
+        {"review_id":"4a32ea6adc2cb64b6b7f","verdict":"holds","quote":"are revealed to the enemy","reason_zh":"被箭阵命中的敌人仍会显形。"},
+        {"review_id":"audit:medusa_gorgon_grasp:root:base","verdict":"holds","quote":"and then are rooted, cannot turn","reason_zh":"箭阵命中后仍会缠绕敌人。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"magical_damage","condition":"base","quote":"damage: 1→2；Enemies struck by a volley of arrows take an initial burst of magic damage","reason_zh":"伤害类型字段发生变化，7.42说明明确将基础箭阵的初始伤害列为魔法伤害。"}
+      ]
+    },
+    {
+      "subject": "medusa_mystic_snake",
+      "rows": [
+        {"review_id":"e863fe8042328560ff9c","verdict":"holds","quote":"jumps from target to target dealing damage","reason_zh":"一次施放的秘术异蛇仍可在多个目标间跳跃并造成伤害。"},
+        {"review_id":"a572a2bab20cb3744ac5","verdict":"holds","quote":"it returns to Medusa to replenish her with mana","reason_zh":"异蛇返回时仍为美杜莎恢复法力，施法耗蓝调整不影响此效果。"},
+        {"review_id":"fc4e051e2b76347969d0","verdict":"holds","quote":"After it reaches its last target, it returns to Medusa","reason_zh":"在目标间移动并返回的是异蛇，技能没有移动美杜莎自身。"},
+        {"review_id":"5deff0ab5ab91ec860c6","verdict":"holds","quote":"Damage and speed increases with each jump.","reason_zh":"随跳跃提高的是异蛇自身的速度，技能没有降低敌人的移动速度。"},
+        {"review_id":"9d4d30a763a32904ed8e","verdict":"holds","quote":"A mystic snake made of energy jumps from target to target dealing damage.","reason_zh":"异蛇以敌方单位为起始目标，后续跳跃仍允许一次施放命中多个单位。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

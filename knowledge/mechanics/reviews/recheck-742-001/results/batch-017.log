@@ -1,0 +1,1235 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6f0-3d68-7292-98d7-bb65a054be40
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "rattletrap_armor_power", "name_zh": "发条技师·装甲力量", "category": "3_说明文字", "text_741f": {"desc_loc": "Clockwerk's outgoing damage increases by %damage_per_armor%%% per point of armor. Clockwerk can consume Chainmails to permanently gain +%armor_per_chainmail% armor per Chainmail consumed. Can stack. Self-cast to consume.", "facets_loc": ["Clockwerk can consume Chainmails to permanently gain +%armor_per_chainmail% armor per Chainmail consumed. Can stack. Self-cast to consume."]}, "text_742": {"desc_loc": "Clockwerk's outgoing damage increases by %damage_per_armor%%% per point of armor. Clockwerk can consume Chainmails to permanently gain +%armor_per_chainmail% armor per Chainmail consumed. Can stack. Self-cast to consume.", "notes_loc": ["Exact Armor Power bonus is 0.55845% ."]}, "changed_fields": [{"field": "damage_per_armor", "old": {"base": [0.25], "scepter": null, "shard": null}, "new": {"base": [0.55845], "scepter": null, "shard": null}}], "rows": [{"review_id": "594be201eeccfcd41e0a", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}]}, {"subject": "rattletrap_battery_assault", "name_zh": "发条技师·弹幕冲击", "category": "2_纯数值", "text_741f": {"desc_loc": "Discharges high-powered shrapnel at random nearby enemy units, dealing minor magical damage and ministun.", "notes_loc": ["Remains active if Clockwerk is disabled."]}, "text_742": {"desc_loc": "Discharges high-powered shrapnel at random nearby enemy units, dealing minor magical damage and ministun.", "notes_loc": ["Remains active if Clockwerk is disabled."]}, "changed_fields": [{"field": "mana_costs", "old": [75, 80, 85, 90], "new": [70, 75, 80, 85]}, {"field": "AbilityManaCost", "old": {"base": [75, 80, 85, 90], "scepter": null, "shard": null}, "new": {"base": [70, 75, 80, 85], "scepter": null, "shard": null}}], "rows": [{"review_id": "b17c730956669c56085a", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "341773a16cff3b7cbe83", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}]}, {"subject": "rattletrap_overclocking", "name_zh": "发条技师·超速运转", "category": "3_说明文字", "text_741f": {"desc_loc": "Supercharges Clockwerks abilities: Battery Assault : Increased radius and affects all enemies in its range. Power Cogs : Radius increased, and Clockwerk's armor while near Power Cogs is increased. Rocket Flares : Increased damage, vision and slow duration, and fire additional rockets to either side of the target. Hookshot : Stun radius and duration increased. Jetpack : Moves faster. Clockwerk's movement and attack speed becomes slowed to a crawl after the duration runs out."}, "text_742": {"desc_loc": "Supercharges Clockwerk's abilities: Battery Assault : Increased radius and affects all enemies in its range. Power Cogs : Radius increased, and Clockwerk's armor while near Power Cogs is increased. Rocket Flares : Increased damage, vision and slow duration, and fire additional rockets to either side of the target. Hookshot : Stun radius and duration increased. Jetpack : Moves faster. Clockwerk's movement and attack speed become slowed to a crawl after the duration runs out."}, "changed_fields": [{"field": "cooldowns", "old": [50], "new": [45]}, {"field": "mana_costs", "old": [90], "new": [0]}, {"field": "AbilityCooldown", "old": {"base": [50], "scepter": null, "shard": null}, "new": {"base": [45], "scepter": null, "shard": null}}, {"field": "AbilityManaCost", "old": {"base": [90], "scepter": null, "shard": null}, "new": null}], "rows": [{"review_id": "audit:rattletrap_overclocking:aoe_damage:scepter", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "b747c5de67cf4707feba", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "ac764508298f18ea04e5", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "reject"}, {"review_id": "75976751231547b6ea35", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "reject"}]}, {"subject": "rattletrap_power_cogs", "name_zh": "发条技师·能量齿轮", "category": "2_纯数值", "text_741f": {"desc_loc": "Forms a ring of energized cogs around Clockwerk, trapping any units that are near. Enemies outside the trap that touch a cog are knocked back, losing health and mana. Once a cog has delivered a shock, it will power down. Damage is increased by %mana_burn_as_damage_pct%%% of the mana burned. Cogs can be destroyed by enemy attacks, but Clockwerk can push them up to %projectile_distance% distance away with one hit. Clockwerk can move through the cogs freely, disabling them as he passes over.", "notes_loc": ["Cogs can shock invisible units."]}, "text_742": {"desc_loc": "Forms a ring of energized cogs around Clockwerk, trapping any units that are near. Enemies outside the trap that touch a cog are knocked back, losing health and mana. Once a cog has delivered a shock, it will power down. Damage is increased by %mana_burn_as_damage_pct%%% of the mana burned. Cogs can be destroyed by enemy attacks, but Clockwerk can push them up to %projectile_distance% distance away with one hit. Clockwerk can move through the cogs freely, disabling them as he passes over.", "notes_loc": ["Cogs can shock invisible units."]}, "changed_fields": [], "rows": [{"review_id": "86d7f82a79721f7124bc", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "539ab89ad0ae8730141b", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "8d5e9a44dcbc14e06cbf", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "reject"}, {"review_id": "c69d5bd7631a65f570d5", "mechanism": "mana_burn", "mechanism_zh": "烧蓝/法力削减", "definition": "减少目标的法力值", "condition": "base", "decision": "accept"}, {"review_id": "audit:rattletrap_power_cogs:terrain:base", "mechanism": "terrain", "mechanism_zh": "创造地形", "definition": "在地上造出单位不能穿过的地形，无视地形的单位能越过", "condition": "base", "decision": "accept"}]}, {"subject": "razor_static_link", "name_zh": "雷泽·静电连接", "category": "2_纯数值", "text_741f": {"desc_loc": "Creates a charged link between Razor and an enemy Hero, stealing damage from the target and giving it to Razor. Allows Razor to attack while moving with the link active.", "notes_loc": ["The link is broken when either unit dies or the distance between them becomes %drain_range_buffer% units greater than Static Link's cast range."], "shard_loc": "Increases Cast Range. Slows Razor's target by %move_speed_factor%x the amount of damage stolen while the link is active."}, "text_742": {"desc_loc": "Creates a charged link between Razor and an enemy Hero, stealing damage from the target and giving it to Razor. Allows Razor to attack while moving with the link active.", "notes_loc": ["The link is broken when either unit dies or the distance between them becomes %drain_range_buffer% units greater than Static Link's cast range."], "shard_loc": "Increases Cast Range. Slows Razor's target by %move_speed_factor%x the amount of damage stolen while the link is active."}, "changed_fields": [{"field": "mana_costs", "old": [65], "new": [45, 50, 55, 60]}, {"field": "AbilityManaCost", "old": {"base": [65], "scepter": null, "shard": null}, "new": {"base": [45, 50, 55, 60], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:razor_static_link:attack_damage_reduction:base", "mechanism": "attack_damage_reduction", "mechanism_zh": "减攻击力", "definition": "降低目标的攻击力", "condition": "base", "decision": "accept"}, {"review_id": "016539c7f2702ba7c539", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "razor_storm_surge", "name_zh": "雷泽·风暴涌动", "category": "2_纯数值", "text_741f": {"desc_loc": "There's a chance when attacked, and always when targeted with a spell, to release a forked lightning that strikes the target and other nearby enemies, prioritizing the unit type of the attacker, dealing damage and slowing movement speed.", "notes_loc": ["Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."], "shard_loc": "While Eye of the Storm is active, strike chance is %eye_of_the_storm_chance_multiplier%x as high, strike cooldown is reduced by %strike_cd_reduction_during_storm%s, and Lightning strikes all enemies within Eye of the Storm's radius. Does not apply to the same enemy twice from a single instance."}, "text_742": {"desc_loc": "There's a chance when attacked, and always when targeted with a spell, to release a forked lightning that strikes the target and other nearby enemies, prioritizing the unit type of the attacker, dealing damage and slowing movement speed.", "notes_loc": ["Damage done by this ability is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."], "shard_loc": "While Eye of the Storm is active, strike chance is %eye_of_the_storm_chance_multiplier%x as high, strike cooldown is reduced by %strike_cd_reduction_during_storm%s, and Lightning strikes all enemies within Eye of the Storm's radius. Does not apply to the same enemy twice from a single instance."}, "changed_fields": [{"field": "strike_damage", "old": {"base": [50, 90, 130, 170], "scepter": null, "shard": null}, "new": {"base": [65, 100, 135, 170], "scepter": null, "shard": null}}], "rows": [{"review_id": "54e2ac9a9a51955a1d58", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "d664ac635b1dc3630fd5", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "1172797398284f1241a9", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "cb9703c982ff6e75b46f", "mechanism": "damage_return", "mechanism_zh": "反伤", "definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件", "condition": "base", "decision": "accept"}, {"review_id": "4a7958777189926b82dc", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "9bb35f5f5ac67b440478", "mechanism": "spell_reflect", "mechanism_zh": "反弹指向技能", "definition": "把指向技能反弹给施法者", "condition": "base", "decision": "reject"}]}, {"subject": "revenants_brooch", "name_zh": "英灵胸针", "category": "5_增删或退出", "text_741f": {"desc_loc": "Passive: Phantom Critical Grants each attack a %crit_chance%%% chance to deal an additional %crit_multiplier%%% of the attack's damage as bonus magic damage.", "notes_loc": ["Counts as a Critical Strike for purposes of stacking with other sources of Critical Strike.", "Phantom Critical does not work against buildings."]}, "text_742": {"desc_loc": "Passive: Ghastly Strike Grants each attack a %crit_chance%%% chance to deal an additional %crit_multiplier%%% of the attack's damage as bonus magical damage.", "notes_loc": ["Counts as a critical strike, and so does not stack with other critical strikes.", "Does not work against buildings."]}, "changed_fields": [{"field": "damage", "old": 0, "new": 2}, {"field": "immunity", "old": 4, "new": 0}, {"field": "item_cost", "old": 3300, "new": 0}, {"field": "bonus_damage", "old": {"base": [35], "scepter": null, "shard": null}, "new": null}, {"field": "crit_chance", "old": {"base": [30], "scepter": null, "shard": null}, "new": {"base": [15], "scepter": null, "shard": null}}, {"field": "crit_multiplier", "old": {"base": [80], "scepter": null, "shard": null}, "new": {"base": [50], "scepter": null, "shard": null}}, {"field": "spell_lifesteal", "old": {"base": [15], "scepter": null, "shard": null}, "new": null}], "rows": [{"review_id": "373bad5e1b62a0fa41d0", "mechanism": "critical", "mechanism_zh": "暴击", "definition": "攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算", "condition": "item", "decision": "accept"}, {"review_id": "audit:revenants_brooch:lifesteal:item", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "item", "decision": "accept"}, {"review_id": "f800d32316a011659b31", "mechanism": "magic_resist_reduction", "mechanism_zh": "减魔抗/魔法易伤", "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害", "condition": "item", "decision": "reject"}]}, {"subject": "riki_innate_backstab", "name_zh": "力丸·背刺", "category": "3_说明文字", "text_741f": {"desc_loc": "Every time Riki strikes his enemy from behind, he deals additional bonus damage equal to a multiple of his Agility.", "notes_loc": ["Works when denying friendly units at %ally_multiplier%%% effectiveness.", "Illusions of Riki will play Backstab animations, but not deal any bonus damage."], "facets_loc": ["Riki receives bonus experience for assists and kills."]}, "text_742": {"desc_loc": "Every time Riki strikes his enemy from behind, he deals additional bonus damage equal to a multiple of his Agility and his attack has increased Item Potency.", "notes_loc": ["Works when denying friendly units at %ally_multiplier%%% effectiveness.", "Illusions of Riki will play Backstab animations, but not deal any bonus damage."], "facets_loc": ["Riki receives bonus experience for assists and kills."]}, "changed_fields": [{"field": "bonus_potency", "old": null, "new": {"base": [10], "scepter": null, "shard": null}}], "rows": [{"review_id": "8d242fe0365e9542324f", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:riki_innate_backstab:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "41d24c9ce976581e3ff3", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}]}, {"subject": "riki_smoke_screen", "name_zh": "力丸·烟幕", "category": "2_纯数值", "text_741f": {"desc_loc": "Throws down a smoke bomb, silencing enemies and causing them to miss attacks.", "notes_loc": ["Can be cast during Tricks of the Trade.", "Doesn't prevent the use of active items."], "shard_loc": "Enemies caught in the smoke screen have their armor reduced by %armor_reduction% and cannot be targeted by their allies."}, "text_742": {"desc_loc": "Throws down a smoke bomb, silencing enemies and causing them to miss attacks.", "notes_loc": ["Can be cast during Tricks of the Trade.", "Doesn't prevent the use of active items."], "shard_loc": "Enemies caught in the smoke screen have their armor reduced by %armor_reduction% and cannot be targeted by their allies."}, "changed_fields": [{"field": "durations", "old": [6], "new": [4.5, 5, 5.5, 6]}, {"field": "AbilityDuration", "old": {"base": [6], "scepter": null, "shard": null}, "new": {"base": [4.5, 5, 5.5, 6], "scepter": null, "shard": null}}, {"field": "miss_rate", "old": {"base": [40, 50, 60, 70], "scepter": null, "shard": null}, "new": {"base": [55, 60, 65, 70], "scepter": null, "shard": null}}, {"field": "radius", "old": {"base": [425], "scepter": null, "shard": null}, "new": {"base": [400], "scepter": null, "shard": null}}], "rows": [{"review_id": "a53442cc42301fcba649", "mechanism": "armor_reduction", "mechanism_zh": "减护甲", "definition": "降低目标护甲", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "0dd492cfa75e6b123b4f", "mechanism": "blind", "mechanism_zh": "致盲", "definition": "使敌方单位的攻击有概率落空", "condition": "base", "decision": "accept"}, {"review_id": "audit:riki_smoke_screen:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "eceba00df5609ea59f76", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "base", "decision": "accept"}]}, {"subject": "ringmaster_funhouse_mirror", "name_zh": "百戏大王·哈哈镜", "category": "2_纯数值", "text_741f": {"desc_loc": "Use: Proportion Distortion Creates %images_count% imperfect image of your hero that lasts %illusion_duration% seconds. Your illusion deals %tooltip_damage_outgoing_ranged%%% and takes %tooltip_damage_incoming_total_pct%%% damage.", "notes_loc": ["Has a %invuln_duration% second cast time during which you are invulnerable."]}, "text_742": {"desc_loc": "Use: Proportion Distortion Creates %images_count% imperfect image of your hero that lasts %illusion_duration% seconds. Your illusion deals %tooltip_damage_outgoing_ranged%%% and takes %tooltip_damage_incoming_total_pct%%% damage.", "notes_loc": ["Has a %invuln_duration% second cast time during which you are invulnerable."]}, "changed_fields": [{"field": "illusion_effectiveness", "old": null, "new": {"base": [25], "scepter": null, "shard": null}}], "rows": [{"review_id": "5f21849dccfb8ef3c076", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "base", "decision": "accept"}, {"review_id": "t5:ringmaster_funhouse_mirror:illusions", "mechanism": "illusions", "mechanism_zh": "幻象", "definition": "制造自身或他人的幻象", "condition": "base", "decision": "accept"}, {"review_id": "d79ed5e415c0a80d3e82", "mechanism": "invulnerable_untargetable", "mechanism_zh": "无敌/不可选取", "definition": "暂时无法被伤害或无法被指向", "condition": "base", "decision": "accept"}]}, {"subject": "ringmaster_impalement", "name_zh": "百戏大王·尖刀戏", "category": "2_纯数值", "text_741f": {"desc_loc": "Ringmaster throws one of his daggers to a precise point of his choosing. If he strikes an enemy, the dagger deals impact damage, briefly slows the unit hit, and causes them to bleed. The bleeding deals a percentage of the victim's maximum health in damage every second to heroes and flat damage per second to creeps."}, "text_742": {"desc_loc": "Ringmaster throws one of his daggers to a precise point of his choosing. If he strikes an enemy, the dagger deals impact damage, briefly slows the unit hit, and causes them to bleed. The bleeding deals a percentage of the victim's maximum health in damage every second to heroes and flat damage per second to creeps."}, "changed_fields": [{"field": "damage_impact", "old": {"base": [20, 35, 50, 65], "scepter": null, "shard": null}, "new": {"base": [20, 40, 60, 80], "scepter": null, "shard": null}}], "rows": [{"review_id": "3b561db282f26e340ce0", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "490457eb1fc261bedc5d", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "ringmaster_spotlight", "name_zh": "百戏大王·聚光灯", "category": "2_纯数值", "text_741f": {"desc_loc": "Ringmaster shines %spotlight_count% spotlights that sweep over an area. Enemies in the light have a chance to miss their attacks and are revealed if invisible. Illusions hit by the beam fade away, losing a percentage of their maximum health each second. These effects linger for %linger_duration% seconds after leaving the light."}, "text_742": {"desc_loc": "Ringmaster shines %spotlight_count% spotlights that sweep over an area. Enemies in the light have a chance to miss their attacks and are revealed if invisible. Illusions hit by the beam fade away, losing a percentage of their maximum health each second. These effects linger for %linger_duration% seconds after leaving the light."}, "changed_fields": [{"field": "miss_chance", "old": {"base": [30], "scepter": null, "shard": null}, "new": {"base": [45], "scepter": null, "shard": null}}], "rows": [{"review_id": "1e87b69386a7102b1359", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "031f6a1e7ed9b7a29b18", "mechanism": "blind", "mechanism_zh": "致盲", "definition": "使敌方单位的攻击有概率落空", "condition": "base", "decision": "accept"}, {"review_id": "audit:ringmaster_spotlight:ground_zone:shard", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "5460640e23f83695d76e", "mechanism": "reveal", "mechanism_zh": "显形", "definition": "使隐身单位显形，不等于持续真视", "condition": "base", "decision": "accept"}, {"review_id": "d0745c9f52aeb96aa35c", "mechanism": "true_sight", "mechanism_zh": "真视", "definition": "可看见隐身单位", "condition": "base", "decision": "reject"}]}, {"subject": "ringmaster_summon_unicycle", "name_zh": "百戏大王·独轮车", "category": "2_纯数值", "text_741f": {"desc_loc": "Use: Saddle Up Summons a speedy unicycle to ride around on for %mount_duration% seconds. %damage_grace_period%s after mounting the unicycle, taking damage from enemy hero sources greater than %damage_threshold% dismounts the rider. Crashing into trees destroys them and slows the unicycle. Attacking, using channeled abilities, or crashing into units and other obstacles also dismounts the rider."}, "text_742": {"desc_loc": "Use: Saddle Up Summons a speedy unicycle to ride around on for %mount_duration% seconds. %damage_grace_period%s after mounting the unicycle, taking damage from enemy hero sources greater than %damage_threshold% dismounts the rider. Crashing into trees destroys them and slows the unicycle. Attacking, using channeled abilities, or crashing into units and other obstacles also dismounts the rider."}, "changed_fields": [{"field": "mount_duration", "old": {"base": [10], "scepter": null, "shard": null}, "new": {"base": [15], "scepter": null, "shard": null}}], "rows": [{"review_id": "5ae0730190884bb76ab5", "mechanism": "channeled", "mechanism_zh": "持续施法", "definition": "施法者自身需要持续引导，被打断即停止", "condition": "base", "decision": "reject"}, {"review_id": "83012038adc359f5d0e7", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "base", "decision": "accept"}, {"review_id": "b30b9b26586f76e49cd9", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "reject"}, {"review_id": "838155108ca7892c1cf9", "mechanism": "tree_destroy", "mechanism_zh": "砍树", "definition": "能摧毁树木", "condition": "base", "decision": "accept"}]}, {"subject": "ringmaster_wheel", "name_zh": "百戏大王·奇观轮", "category": "2_纯数值", "text_741f": {"desc_loc": "Ringmaster rolls the Wheel of Wonder to the targeted location, knocking aside enemies along the way. After it reaches its target, enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%. Enemy heroes who face the wheel for more than %face_duration% seconds are mesmerized and drawn towards it. The first enemy to be mesmerized triggers a timer for the wheel to explode. If the timer is not triggered, it will automatically explode after %trap_duration% seconds."}, "text_742": {"desc_loc": "Ringmaster rolls the Wheel of Wonder to the targeted location, knocking aside enemies along the way. After it reaches its target, enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%. Enemy heroes who face the wheel for more than %face_duration% seconds are mesmerized and drawn towards it. The first enemy to be mesmerized triggers a timer for the wheel to explode. If the timer is not triggered, it will automatically explode after %trap_duration% seconds."}, "changed_fields": [{"field": "aura_damage", "old": {"base": [50, 75, 100], "scepter": null, "shard": null}, "new": {"base": [50, 70, 90], "scepter": null, "shard": null}}, {"field": "explosion_damage", "old": {"base": [300, 450, 600], "scepter": null, "shard": null}, "new": {"base": [275, 425, 575], "scepter": null, "shard": null}}], "rows": [{"review_id": "cf814e51ed0dd9ba9568", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "bc2dcdcfc8e115255bb5", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "audit:ringmaster_wheel:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "audit:ringmaster_wheel:forced_action:base", "mechanism": "hypnotize", "mechanism_zh": "蛊惑", "definition": "目标被迫走向施法者、某个单位或指定方向", "condition": "base", "decision": "accept"}, {"review_id": "44739104493e74fadbd4", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "6ea984cca940e5fce603", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "reject"}]}, {"subject": "ringmaster_whoopee_cushion", "name_zh": "百戏大王·整蛊垫", "category": "2_纯数值", "text_741f": {"desc_loc": "Use: Whoopsie Propels your hero forward %leap_distance% units. Leaves a %fart_cloud_radius% radius stink cloud behind for %fart_cloud_duration% seconds that slows enemies by %fart_cloud_slow%%%."}, "text_742": {"desc_loc": "Use: Whoopsie Propels your hero forward %leap_distance% units. Leaves a %fart_cloud_radius% radius stink cloud behind for %fart_cloud_duration% seconds that slows enemies by %fart_cloud_slow%%%."}, "changed_fields": [{"field": "fart_cloud_radius", "old": {"base": [250], "scepter": null, "shard": null}, "new": {"base": [300], "scepter": null, "shard": null}}, {"field": "fart_cloud_slow", "old": {"base": [-30], "scepter": null, "shard": null}, "new": {"base": [-35], "scepter": null, "shard": null}}], "rows": [{"review_id": "876a6e6d15c1fe96df6e", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "base", "decision": "accept"}, {"review_id": "audit:ringmaster_whoopee_cushion:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "audit:ringmaster_whoopee_cushion:self_mobility:base", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "accept"}, {"review_id": "7be0c0f2fce81ca90cdb", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "audit:ringmaster_whoopee_cushion:terrain_walk:base", "mechanism": "terrain_walk", "mechanism_zh": "无视地形", "definition": "移动时不受悬崖等不可通行地形阻挡，也能穿过树木", "condition": "base", "decision": "accept"}]}, {"subject": "rod_of_atos", "name_zh": "阿托斯之棍", "category": "2_纯数值", "text_741f": {"desc_loc": "Active: Cripple Roots the target for %duration% seconds."}, "text_742": {"desc_loc": "Active: Cripple Roots the target for %duration% seconds."}, "changed_fields": [{"field": "bonus_intellect", "old": {"base": [12], "scepter": null, "shard": null}, "new": {"base": [15], "scepter": null, "shard": null}}], "rows": [{"review_id": "c624ae47d921ec61394a", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "item", "decision": "accept"}]}, {"subject": "rubick_arcane_supremacy", "name_zh": "拉比克·奥术至尊", "category": "2_纯数值", "text_741f": {"desc_loc": "Rubick's mastery of the arcane allows him to have a larger cast range and bonus spell amplification.", "facets_loc": ["Casting a spell temporarily increases the area of effect for all subsequent spells."]}, "text_742": {"desc_loc": "Rubick's mastery of the arcane allows him to have a larger cast range and bonus spell amplification.", "facets_loc": ["Casting a spell temporarily increases the area of effect for all subsequent spells."]}, "changed_fields": [{"field": "cast_range", "old": {"base": [60, 120, 180, 240], "scepter": null, "shard": null}, "new": {"base": [50, 100, 150, 200], "scepter": null, "shard": null}}, {"field": "spell_amp", "old": {"base": [11, 16, 21, 26], "scepter": null, "shard": null}, "new": {"base": [9, 13, 17, 21], "scepter": null, "shard": null}}], "rows": [{"review_id": "bab9f49f76d94427aa84", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "9ff34802f41ac5c79c1a", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "base", "decision": "accept"}]}, {"subject": "rubick_spell_steal", "name_zh": "拉比克·技能窃取", "category": "2_纯数值", "text_741f": {"desc_loc": "Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own for several minutes or until he dies.", "notes_loc": ["Cannot steal item abilities.", "Rubick will steal the Aghanim's Shard version of the ability, if he himself has an Aghanim's Shard.", "Does not trigger spell reflect."], "scepter_loc": "Increases the number of spells that can be stolen to 2. Increases cast range, and upgrades stolen spells to their Scepter version.", "shard_loc": "Upgrades stolen spells to their Shard version.", "facets_loc": ["Stolen spells also have lower mana cost."]}, "text_742": {"desc_loc": "Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own for several minutes or until he dies.", "notes_loc": ["Cannot steal item abilities.", "Rubick will steal the Aghanim's Shard version of the ability, if he himself has an Aghanim's Shard.", "Does not trigger spell reflect."], "scepter_loc": "Increases the number of spells that can be stolen to 2. Increases cast range, and upgrades stolen spells to their Scepter version.", "shard_loc": "Upgrades stolen spells to their Shard version.", "facets_loc": ["Stolen spells also have lower mana cost."]}, "changed_fields": [], "rows": [{"review_id": "9d6f7bf4c0d7699b56cf", "mechanism": "spell_reflect", "mechanism_zh": "反弹指向技能", "definition": "把指向技能反弹给施法者", "condition": "base", "decision": "reject"}, {"review_id": "0982fbb52be4b2a03a29", "mechanism": "spell_steal", "mechanism_zh": "偷技能", "definition": "获得其他单位的技能", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "e02f6971dc13cc2e66a0", "mechanism": "spell_steal", "mechanism_zh": "偷技能", "definition": "获得其他单位的技能", "condition": "base", "decision": "accept"}, {"review_id": "ceb011733654ee6ef76d", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "sandking_burrowstrike", "name_zh": "沙王·掘地穿刺", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Adds Caustic Finale poison to heroes hit Can be put on alt-cast to immediately cast in the desired direction, without walking towards the targeted location.", "notes_loc": ["Does not trigger spell block or spell reflect."]}, "text_742": {"desc_loc": "Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Adds Caustic Finale poison to heroes hit Can be put on alt-cast to immediately cast in the desired direction, without walking towards the targeted location.", "notes_loc": ["Does not trigger spell block or spell reflect."], "scepter_loc": "Increases Cast Range. Sand King leaves behind a trail of spines, that, after a %spine_duration%s delay, create Stinger attack areas along the path, that apply %spine_damage_pct%%% of Stinger damage to enemies hit."}, "changed_fields": [{"field": "ability_has_scepter", "old": false, "new": true}, {"field": "AbilityCastRange", "old": {"base": [550, 625, 700, 775], "scepter": null, "shard": null}, "new": {"base": [550, 625, 700, 775], "scepter": [425], "shard": null}}, {"field": "burrow_speed", "old": {"base": [2000], "scepter": null, "shard": null}, "new": {"base": [2000], "scepter": [1000], "shard": null}}, {"field": "spine_damage_pct", "old": null, "new": {"base": [0], "scepter": [75], "shard": null}}, {"field": "spine_duration", "old": null, "new": {"base": [0], "scepter": [0.8], "shard": null}}, {"field": "spine_radius", "old": null, "new": {"base": [0], "scepter": [175], "shard": null}}], "rows": [{"review_id": "057a3f88306fae3d7596", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:sandking_burrowstrike:self_mobility:base", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "accept"}, {"review_id": "4c990c888e52ba79202a", "mechanism": "spell_block", "mechanism_zh": "格挡指向技能", "definition": "使指向自身或队友的技能失效", "condition": "base", "decision": "reject"}, {"review_id": "ce73af68fd533abb3f9c", "mechanism": "spell_reflect", "mechanism_zh": "反弹指向技能", "definition": "把指向技能反弹给施法者", "condition": "base", "decision": "reject"}, {"review_id": "cf8bb550912e8074637c", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "audit:sandking_burrowstrike:terrain_walk:base", "mechanism": "terrain_walk", "mechanism_zh": "无视地形", "definition": "移动时不受悬崖等不可通行地形阻挡，也能穿过树木", "condition": "base", "decision": "accept"}]}, {"subject": "sandking_epicenter", "name_zh": "沙王·地震", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "After a cast point of %abilitycastpoint% seconds, Sand King sends a disturbance into the earth, causing it to shudder violently. All enemies caught within range will take damage and become slowed. Each subsequent pulse increases the radius of damage dealt.", "notes_loc": ["The pulses are centered on Sand King, not where he first cast the spell."], "scepter_loc": "When the pulses start, %scepter_explosions_per_pulse% Stinger attack areas are created every %spine_tick_rate%s at random locations, each measuring %scepter_explosion_radius_pct%%% of the Epicenter's current radius, that apply %spine_damage_pct%%% of Stinger damage to enemies hit. Shard pulses cause %shard_explosions_per_pulse% attack(s).", "shard_loc": "Every %shard_interval%s causes a small single Epicenter Pulse around Sand King."}, "text_742": {"desc_loc": "After a cast point of %abilitycastpoint% seconds, Sand King sends a disturbance into the earth, causing it to shudder violently. All enemies caught within range will take damage and become slowed. Each subsequent pulse increases the radius of damage dealt.", "notes_loc": ["The pulses are centered on Sand King, not where he first cast the spell."], "scepter_loc": "When the pulses start, %scepter_explosions_per_pulse% Stinger attack areas are created every %spine_tick_rate%s at random locations, each measuring %scepter_explosion_radius_pct%%% of the Epicenter's current radius, that apply %spine_damage_pct%%% of Stinger damage to enemies hit. Shard pulses cause %shard_explosions_per_pulse% attack(s).", "shard_loc": "Every %shard_interval%s causes a small single Epicenter Pulse around Sand King."}, "changed_fields": [{"field": "ability_has_scepter", "old": true, "new": false}, {"field": "scepter_explosion_min_dist", "old": {"base": [0], "scepter": [120], "shard": null}, "new": null}, {"field": "scepter_explosion_radius_pct", "old": {"base": [0], "scepter": [35], "shard": null}, "new": null}, {"field": "scepter_explosions_per_pulse", "old": {"base": [0], "scepter": [3], "shard": null}, "new": null}, {"field": "shard_explosions_per_pulse", "old": {"base": [0], "scepter": [1], "shard": null}, "new": null}, {"field": "spine_damage_pct", "old": {"base": [0], "scepter": [40], "shard": null}, "new": null}, {"field": "spine_tick_rate", "old": {"base": [0], "scepter": [0.5], "shard": null}, "new": null}], "rows": [{"review_id": "48a7f0b307b18016e002", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "87e2f2e1f2880d1ac1d8", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "5f586102f32d34df3a81", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "rattletrap_armor_power",
+      "rows": [
+        {
+          "review_id": "594be201eeccfcd41e0a",
+          "verdict": "unclear",
+          "quote": "damage_per_armor.base: [0.25]→[0.55845]",
+          "reason_zh": "该字段只说明每点护甲的伤害加成提高，材料未给出判定可破坏性所需的 IsBreakable 值。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rattletrap_battery_assault",
+      "rows": [
+        {
+          "review_id": "b17c730956669c56085a",
+          "verdict": "holds",
+          "quote": "Discharges high-powered shrapnel at random nearby enemy units, dealing minor magical damage and ministun.",
+          "reason_zh": "一次施放的弹片仍可击中附近多个敌人，本次调整只降低了魔耗。"
+        },
+        {
+          "review_id": "341773a16cff3b7cbe83",
+          "verdict": "holds",
+          "quote": "dealing minor magical damage and ministun.",
+          "reason_zh": "弹片命中仍会造成小眩晕。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rattletrap_overclocking",
+      "rows": [
+        {
+          "review_id": "audit:rattletrap_overclocking:aoe_damage:scepter",
+          "verdict": "holds",
+          "quote": "Battery Assault : Increased radius and affects all enemies in its range.",
+          "reason_zh": "原行所记的强化仍使弹幕冲击命中范围内所有敌人。"
+        },
+        {
+          "review_id": "b747c5de67cf4707feba",
+          "verdict": "holds",
+          "quote": "Jetpack : Moves faster.",
+          "reason_zh": "超速运转仍提高发条技师使用喷气背包时的移动速度。"
+        },
+        {
+          "review_id": "ac764508298f18ea04e5",
+          "verdict": "holds",
+          "quote": "Clockwerk's movement and attack speed become slowed to a crawl after the duration runs out.",
+          "reason_zh": "效果结束时减速的是发条技师自己，对敌减速只出现在照明火箭的强化说明中。"
+        },
+        {
+          "review_id": "75976751231547b6ea35",
+          "verdict": "holds",
+          "quote": "Hookshot : Stun radius and duration increased.",
+          "reason_zh": "眩晕由发射钩爪施加，超速运转本身只扩大其范围并延长持续时间。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rattletrap_power_cogs",
+      "rows": [
+        {
+          "review_id": "86d7f82a79721f7124bc",
+          "verdict": "holds",
+          "quote": "Enemies outside the trap that touch a cog are knocked back, losing health and mana. Once a cog has delivered a shock, it will power down.",
+          "reason_zh": "一次施放产生多个齿轮，每个齿轮都可电击接触它的敌人，因此一次施放可伤害多个目标。"
+        },
+        {
+          "review_id": "539ab89ad0ae8730141b",
+          "verdict": "holds",
+          "quote": "Enemies outside the trap that touch a cog are knocked back",
+          "reason_zh": "从圈外碰到齿轮的敌人仍会被击退。"
+        },
+        {
+          "review_id": "8d5e9a44dcbc14e06cbf",
+          "verdict": "holds",
+          "quote": "Cogs can shock invisible units.",
+          "reason_zh": "齿轮能电击已经隐身的单位，说明中没有赋予任何单位隐身的效果。"
+        },
+        {
+          "review_id": "c69d5bd7631a65f570d5",
+          "verdict": "holds",
+          "quote": "Damage is increased by %mana_burn_as_damage_pct%%% of the mana burned.",
+          "reason_zh": "齿轮仍会削减敌方法力，并按烧掉的法力增加伤害。"
+        },
+        {
+          "review_id": "audit:rattletrap_power_cogs:terrain:base",
+          "verdict": "holds",
+          "quote": "Forms a ring of energized cogs around Clockwerk, trapping any units that are near.",
+          "reason_zh": "齿轮仍在地面围成可阻挡单位通行的环，发条技师自身可穿过。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "razor_static_link",
+      "rows": [
+        {
+          "review_id": "audit:razor_static_link:attack_damage_reduction:base",
+          "verdict": "holds",
+          "quote": "stealing damage from the target and giving it to Razor.",
+          "reason_zh": "连接仍会夺取目标的攻击力并转给雷泽。"
+        },
+        {
+          "review_id": "016539c7f2702ba7c539",
+          "verdict": "holds",
+          "quote": "Creates a charged link between Razor and an enemy Hero",
+          "reason_zh": "基础技能仍以一个敌方英雄为连接目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "razor_storm_surge",
+      "rows": [
+        {
+          "review_id": "54e2ac9a9a51955a1d58",
+          "verdict": "holds",
+          "quote": "a forked lightning that strikes the target and other nearby enemies",
+          "reason_zh": "一次触发的闪电仍可同时伤害目标及附近其他敌人。"
+        },
+        {
+          "review_id": "d664ac635b1dc3630fd5",
+          "verdict": "holds",
+          "quote": "Lightning strikes all enemies within Eye of the Storm's radius.",
+          "reason_zh": "持有魔晶且风暴之眼生效时，闪电仍会击中其范围内所有敌人。"
+        },
+        {
+          "review_id": "1172797398284f1241a9",
+          "verdict": "unclear",
+          "quote": "strike_damage.base: [50,90,130,170]→[65,100,135,170]",
+          "reason_zh": "伤害字段只给出闪电伤害，材料未给出 IsBreakable 值。"
+        },
+        {
+          "review_id": "cb9703c982ff6e75b46f",
+          "verdict": "holds",
+          "quote": "There's a chance when attacked, and always when targeted with a spell, to release a forked lightning",
+          "reason_zh": "遭受攻击时仍有概率释放反击闪电，被技能选为目标时必定触发。"
+        },
+        {
+          "review_id": "4a7958777189926b82dc",
+          "verdict": "holds",
+          "quote": "dealing damage and slowing movement speed.",
+          "reason_zh": "闪电仍会降低被击中敌人的移动速度。"
+        },
+        {
+          "review_id": "9bb35f5f5ac67b440478",
+          "verdict": "holds",
+          "quote": "when targeted with a spell, to release a forked lightning",
+          "reason_zh": "被技能选为目标时释放的是风暴涌动自身的闪电，原技能没有被反弹给施法者。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "revenants_brooch",
+      "rows": [
+        {
+          "review_id": "373bad5e1b62a0fa41d0",
+          "verdict": "holds",
+          "quote": "Counts as a critical strike, and so does not stack with other critical strikes.",
+          "reason_zh": "装备被动仍明确计为暴击，触发概率和额外伤害比例虽下调但都大于零。"
+        },
+        {
+          "review_id": "audit:revenants_brooch:lifesteal:item",
+          "verdict": "now_wrong",
+          "quote": "spell_lifesteal.base: [15]→null",
+          "reason_zh": "7.42 删除了装备原有的技能吸血数值，现行说明也没有其他吸血效果。"
+        },
+        {
+          "review_id": "f800d32316a011659b31",
+          "verdict": "holds",
+          "quote": "deal an additional %crit_multiplier%%% of the attack's damage as bonus magical damage.",
+          "reason_zh": "触发时直接附加魔法伤害，没有降低目标魔抗或提高目标所受魔法伤害的效果。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "riki_innate_backstab",
+      "rows": [
+        {
+          "review_id": "8d242fe0365e9542324f",
+          "verdict": "holds",
+          "quote": "Every time Riki strikes his enemy from behind, he deals additional bonus damage equal to a multiple of his Agility and his attack has increased Item Potency.",
+          "reason_zh": "背刺仍作用于这次攻击的目标，新增物品效能没有使攻击波及其他单位。"
+        },
+        {
+          "review_id": "audit:riki_innate_backstab:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "he deals additional bonus damage equal to a multiple of his Agility and his attack has increased Item Potency.",
+          "reason_zh": "背后攻击仍附带按敏捷计算的额外伤害，7.42 又提高了该次攻击的物品效能。"
+        },
+        {
+          "review_id": "41d24c9ce976581e3ff3",
+          "verdict": "unclear",
+          "quote": "bonus_potency.base: null→[10]",
+          "reason_zh": "新增字段说明物品效能提高，材料未给出 IsBreakable 值以核实原先的否定判断。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "riki_smoke_screen",
+      "rows": [
+        {
+          "review_id": "a53442cc42301fcba649",
+          "verdict": "holds",
+          "quote": "Enemies caught in the smoke screen have their armor reduced by %armor_reduction%",
+          "reason_zh": "魔晶说明仍明确降低烟幕内敌人的护甲。"
+        },
+        {
+          "review_id": "0dd492cfa75e6b123b4f",
+          "verdict": "holds",
+          "quote": "miss_rate.base: [40,50,60,70]→[55,60,65,70]",
+          "reason_zh": "各级烟幕仍使敌方攻击有概率落空，前三等级的落空率提高。"
+        },
+        {
+          "review_id": "audit:riki_smoke_screen:ground_zone:base",
+          "verdict": "holds",
+          "quote": "Throws down a smoke bomb, silencing enemies and causing them to miss attacks.",
+          "reason_zh": "烟幕仍在投放处持续影响区域内的敌人，调整后的半径为 400，持续时间为 4.5 至 6 秒。"
+        },
+        {
+          "review_id": "eceba00df5609ea59f76",
+          "verdict": "holds",
+          "quote": "silencing enemies and causing them to miss attacks.",
+          "reason_zh": "烟幕仍对敌人施加沉默。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_funhouse_mirror",
+      "rows": [
+        {
+          "review_id": "5f21849dccfb8ef3c076",
+          "verdict": "unclear",
+          "quote": "illusion_effectiveness.base: null→[25]",
+          "reason_zh": "新增字段描述幻象效能，使用说明和字段均未说明每次使用是否消耗一点充能。"
+        },
+        {
+          "review_id": "t5:ringmaster_funhouse_mirror:illusions",
+          "verdict": "holds",
+          "quote": "Creates %images_count% imperfect image of your hero that lasts %illusion_duration% seconds.",
+          "reason_zh": "使用哈哈镜仍会制造持续一段时间的自身幻象。"
+        },
+        {
+          "review_id": "d79ed5e415c0a80d3e82",
+          "verdict": "holds",
+          "quote": "Has a %invuln_duration% second cast time during which you are invulnerable.",
+          "reason_zh": "施法者在哈哈镜的施法动作期间仍处于无敌状态。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_impalement",
+      "rows": [
+        {
+          "review_id": "3b561db282f26e340ce0",
+          "verdict": "holds",
+          "quote": "If he strikes an enemy, the dagger deals impact damage, briefly slows the unit hit, and causes them to bleed.",
+          "reason_zh": "冲击和流血均作用于尖刀命中的单个敌人，本次仅调整冲击伤害数值。"
+        },
+        {
+          "review_id": "490457eb1fc261bedc5d",
+          "verdict": "holds",
+          "quote": "briefly slows the unit hit",
+          "reason_zh": "尖刀仍会短暂降低命中目标的移动速度。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_spotlight",
+      "rows": [
+        {
+          "review_id": "1e87b69386a7102b1359",
+          "verdict": "holds",
+          "quote": "Illusions hit by the beam fade away, losing a percentage of their maximum health each second.",
+          "reason_zh": "说明写明受照幻象逐秒损失生命，本次只调整攻击落空率，没有加入对区域内敌人造成伤害的效果。"
+        },
+        {
+          "review_id": "031f6a1e7ed9b7a29b18",
+          "verdict": "holds",
+          "quote": "miss_chance.base: [30]→[45]",
+          "reason_zh": "受照敌人的攻击落空概率从 30% 提高到 45%，致盲仍然生效。"
+        },
+        {
+          "review_id": "audit:ringmaster_spotlight:ground_zone:shard",
+          "verdict": "holds",
+          "quote": "Ringmaster shines %spotlight_count% spotlights that sweep over an area. Enemies in the light have a chance to miss their attacks and are revealed if invisible.",
+          "reason_zh": "聚光灯仍扫过指定区域并持续影响处于光照中的敌人，本次仅提高落空概率。"
+        },
+        {
+          "review_id": "5460640e23f83695d76e",
+          "verdict": "holds",
+          "quote": "are revealed if invisible.",
+          "reason_zh": "隐身敌人受光照时仍会显形。"
+        },
+        {
+          "review_id": "d0745c9f52aeb96aa35c",
+          "verdict": "holds",
+          "quote": "Enemies in the light have a chance to miss their attacks and are revealed if invisible.",
+          "reason_zh": "说明将显形施加于受照的隐身目标，没有赋予持续真视。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_summon_unicycle",
+      "rows": [
+        {
+          "review_id": "5ae0730190884bb76ab5",
+          "verdict": "holds",
+          "quote": "Attacking, using channeled abilities, or crashing into units and other obstacles also dismounts the rider.",
+          "reason_zh": "使用持续施法技能是下车条件，骑行本身没有持续引导要求。"
+        },
+        {
+          "review_id": "83012038adc359f5d0e7",
+          "verdict": "unclear",
+          "quote": "mount_duration.base: [10]→[15]",
+          "reason_zh": "字段只说明骑行时间延长，材料未说明每次使用是否消耗一点充能。"
+        },
+        {
+          "review_id": "b30b9b26586f76e49cd9",
+          "verdict": "holds",
+          "quote": "Crashing into trees destroys them and slows the unicycle.",
+          "reason_zh": "撞树后减速的是独轮车自身，没有对敌方单位施加减速。"
+        },
+        {
+          "review_id": "838155108ca7892c1cf9",
+          "verdict": "holds",
+          "quote": "Crashing into trees destroys them",
+          "reason_zh": "独轮车撞到树木时仍会摧毁树木。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_wheel",
+      "rows": [
+        {
+          "review_id": "cf814e51ed0dd9ba9568",
+          "verdict": "holds",
+          "quote": "enemies in range of the wheel take damage over time",
+          "reason_zh": "奇观轮仍可持续伤害范围内多个敌人，各级伤害调整后均大于零。"
+        },
+        {
+          "review_id": "bc2dcdcfc8e115255bb5",
+          "verdict": "holds",
+          "quote": "knocking aside enemies along the way.",
+          "reason_zh": "奇观轮滚向目标位置时仍会将沿途敌人推开。"
+        },
+        {
+          "review_id": "audit:ringmaster_wheel:ground_zone:base",
+          "verdict": "holds",
+          "quote": "After it reaches its target, enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%.",
+          "reason_zh": "奇观轮抵达目标地点后仍在该处形成持续伤害并减速敌人的区域。"
+        },
+        {
+          "review_id": "audit:ringmaster_wheel:forced_action:base",
+          "verdict": "holds",
+          "quote": "Enemy heroes who face the wheel for more than %face_duration% seconds are mesmerized and drawn towards it.",
+          "reason_zh": "敌方英雄面朝奇观轮达到指定时长后，仍会被迫向它移动。"
+        },
+        {
+          "review_id": "44739104493e74fadbd4",
+          "verdict": "holds",
+          "quote": "enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%.",
+          "reason_zh": "奇观轮抵达目标位置后仍会降低范围内敌人的移动速度。"
+        },
+        {
+          "review_id": "6ea984cca940e5fce603",
+          "verdict": "holds",
+          "quote": "are mesmerized and drawn towards it.",
+          "reason_zh": "面朝奇观轮触发的控制是强制走向轮子，说明没有赋予眩晕效果。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_whoopee_cushion",
+      "rows": [
+        {
+          "review_id": "876a6e6d15c1fe96df6e",
+          "verdict": "unclear",
+          "quote": "Use: Whoopsie Propels your hero forward %leap_distance% units.",
+          "reason_zh": "说明给出使用时的位移效果，但没有充能字段或每次使用消耗一点的说明。"
+        },
+        {
+          "review_id": "audit:ringmaster_whoopee_cushion:ground_zone:base",
+          "verdict": "holds",
+          "quote": "Leaves a %fart_cloud_radius% radius stink cloud behind for %fart_cloud_duration% seconds that slows enemies by %fart_cloud_slow%%%.",
+          "reason_zh": "前跃后仍在身后留下持续减速敌人的臭云，作用半径从 250 增至 300。"
+        },
+        {
+          "review_id": "audit:ringmaster_whoopee_cushion:self_mobility:base",
+          "verdict": "holds",
+          "quote": "Propels your hero forward %leap_distance% units.",
+          "reason_zh": "使用整蛊垫仍会将自身向前推进一段距离。"
+        },
+        {
+          "review_id": "7be0c0f2fce81ca90cdb",
+          "verdict": "holds",
+          "quote": "fart_cloud_slow.base: [-30]→[-35]",
+          "reason_zh": "臭云对敌人的移动减速幅度从 30% 提高到 35%。"
+        },
+        {
+          "review_id": "audit:ringmaster_whoopee_cushion:terrain_walk:base",
+          "verdict": "unclear",
+          "quote": "Propels your hero forward %leap_distance% units.",
+          "reason_zh": "说明只确认向前位移，未交代途中是否能越过悬崖或穿过树木。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rod_of_atos",
+      "rows": [
+        {
+          "review_id": "c624ae47d921ec61394a",
+          "verdict": "holds",
+          "quote": "Active: Cripple Roots the target for %duration% seconds.",
+          "reason_zh": "主动效果仍会缠绕目标，本次仅提高装备的智力加成。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rubick_arcane_supremacy",
+      "rows": [
+        {
+          "review_id": "bab9f49f76d94427aa84",
+          "verdict": "unclear",
+          "quote": "spell_amp.base: [11,16,21,26]→[9,13,17,21]",
+          "reason_zh": "材料给出了法术放大和施法距离的变化，但未给出判定可破坏性所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "9ff34802f41ac5c79c1a",
+          "verdict": "holds",
+          "quote": "spell_amp.base: [11,16,21,26]→[9,13,17,21]",
+          "reason_zh": "各级法术放大均有下调，但仍提供正值加成。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rubick_spell_steal",
+      "rows": [
+        {
+          "review_id": "9d6f7bf4c0d7699b56cf",
+          "verdict": "holds",
+          "quote": "Rubick can use this spell as his own for several minutes or until he dies.",
+          "reason_zh": "技能让拉比克学会并自行施放目标的技能，没有将来袭技能反弹给施法者的效果。"
+        },
+        {
+          "review_id": "0982fbb52be4b2a03a29",
+          "verdict": "holds",
+          "quote": "Upgrades stolen spells to their Shard version.",
+          "reason_zh": "魔晶只升级已窃取技能的版本，窃取能力由基础技能提供。"
+        },
+        {
+          "review_id": "e02f6971dc13cc2e66a0",
+          "verdict": "holds",
+          "quote": "learning the secrets of the last spell the hero cast. Rubick can use this spell as his own",
+          "reason_zh": "基础技能仍允许拉比克获得并使用敌方英雄最近施放的技能。"
+        },
+        {
+          "review_id": "ceb011733654ee6ef76d",
+          "verdict": "holds",
+          "quote": "Rubick studies the trace magical essence of one enemy hero",
+          "reason_zh": "施法时仍选择一个敌方英雄作为窃取目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sandking_burrowstrike",
+      "rows": [
+        {
+          "review_id": "057a3f88306fae3d7596",
+          "verdict": "holds",
+          "quote": "damaging and stunning enemy units above him as he resurfaces.",
+          "reason_zh": "基础穿刺仍能在钻出地面时伤害上方多个敌方单位。"
+        },
+        {
+          "review_id": "audit:sandking_burrowstrike:self_mobility:base",
+          "verdict": "holds",
+          "quote": "Sand King burrows into the ground and tunnels forward",
+          "reason_zh": "基础技能仍使沙王钻入地下并向前位移。"
+        },
+        {
+          "review_id": "4c990c888e52ba79202a",
+          "verdict": "holds",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "该注释描述掘地穿刺与技能格挡的交互，技能效果中也没有为沙王或队友格挡来袭技能的能力。"
+        },
+        {
+          "review_id": "ce73af68fd533abb3f9c",
+          "verdict": "holds",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "该注释描述掘地穿刺与技能反弹的交互，技能效果中也没有将来袭技能反弹给施法者的能力。"
+        },
+        {
+          "review_id": "cf8bb550912e8074637c",
+          "verdict": "holds",
+          "quote": "damaging and stunning enemy units above him as he resurfaces.",
+          "reason_zh": "沙王钻出地面时仍会眩晕命中的敌方单位。"
+        },
+        {
+          "review_id": "audit:sandking_burrowstrike:terrain_walk:base",
+          "verdict": "unclear",
+          "quote": "Sand King burrows into the ground and tunnels forward",
+          "reason_zh": "地下前移的说明没有交代技能能否穿过树木或越过不可通行地形。"
+        }
+      ],
+      "new_mechanisms": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter_upgrade",
+          "quote": "create Stinger attack areas along the path, that apply %spine_damage_pct%%% of Stinger damage to enemies hit.",
+          "reason_zh": "新增 A 杖升级使路径上的尖刺在 0.8 秒后造成 75% 的 Stinger 范围伤害，现有行仅记录基础穿刺的范围伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "sandking_epicenter",
+      "rows": [
+        {
+          "review_id": "48a7f0b307b18016e002",
+          "verdict": "now_wrong",
+          "quote": "ability_has_scepter: true→false",
+          "reason_zh": "虽然仍保留旧版 A 杖说明，但升级标记已关闭，额外攻击区域的数量和伤害字段也已删除。"
+        },
+        {
+          "review_id": "87e2f2e1f2880d1ac1d8",
+          "verdict": "holds",
+          "quote": "All enemies caught within range will take damage and become slowed.",
+          "reason_zh": "基础地震仍对范围内所有敌人造成伤害。"
+        },
+        {
+          "review_id": "5f586102f32d34df3a81",
+          "verdict": "holds",
+          "quote": "All enemies caught within range will take damage and become slowed.",
+          "reason_zh": "基础脉冲仍会使范围内敌人减速。"
+        }
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+22,883
+{
+  "objects": [
+    {
+      "subject": "rattletrap_armor_power",
+      "rows": [
+        {
+          "review_id": "594be201eeccfcd41e0a",
+          "verdict": "unclear",
+          "quote": "damage_per_armor.base: [0.25]→[0.55845]",
+          "reason_zh": "该字段只说明每点护甲的伤害加成提高，材料未给出判定可破坏性所需的 IsBreakable 值。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rattletrap_battery_assault",
+      "rows": [
+        {
+          "review_id": "b17c730956669c56085a",
+          "verdict": "holds",
+          "quote": "Discharges high-powered shrapnel at random nearby enemy units, dealing minor magical damage and ministun.",
+          "reason_zh": "一次施放的弹片仍可击中附近多个敌人，本次调整只降低了魔耗。"
+        },
+        {
+          "review_id": "341773a16cff3b7cbe83",
+          "verdict": "holds",
+          "quote": "dealing minor magical damage and ministun.",
+          "reason_zh": "弹片命中仍会造成小眩晕。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rattletrap_overclocking",
+      "rows": [
+        {
+          "review_id": "audit:rattletrap_overclocking:aoe_damage:scepter",
+          "verdict": "holds",
+          "quote": "Battery Assault : Increased radius and affects all enemies in its range.",
+          "reason_zh": "原行所记的强化仍使弹幕冲击命中范围内所有敌人。"
+        },
+        {
+          "review_id": "b747c5de67cf4707feba",
+          "verdict": "holds",
+          "quote": "Jetpack : Moves faster.",
+          "reason_zh": "超速运转仍提高发条技师使用喷气背包时的移动速度。"
+        },
+        {
+          "review_id": "ac764508298f18ea04e5",
+          "verdict": "holds",
+          "quote": "Clockwerk's movement and attack speed become slowed to a crawl after the duration runs out.",
+          "reason_zh": "效果结束时减速的是发条技师自己，对敌减速只出现在照明火箭的强化说明中。"
+        },
+        {
+          "review_id": "75976751231547b6ea35",
+          "verdict": "holds",
+          "quote": "Hookshot : Stun radius and duration increased.",
+          "reason_zh": "眩晕由发射钩爪施加，超速运转本身只扩大其范围并延长持续时间。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rattletrap_power_cogs",
+      "rows": [
+        {
+          "review_id": "86d7f82a79721f7124bc",
+          "verdict": "holds",
+          "quote": "Enemies outside the trap that touch a cog are knocked back, losing health and mana. Once a cog has delivered a shock, it will power down.",
+          "reason_zh": "一次施放产生多个齿轮，每个齿轮都可电击接触它的敌人，因此一次施放可伤害多个目标。"
+        },
+        {
+          "review_id": "539ab89ad0ae8730141b",
+          "verdict": "holds",
+          "quote": "Enemies outside the trap that touch a cog are knocked back",
+          "reason_zh": "从圈外碰到齿轮的敌人仍会被击退。"
+        },
+        {
+          "review_id": "8d5e9a44dcbc14e06cbf",
+          "verdict": "holds",
+          "quote": "Cogs can shock invisible units.",
+          "reason_zh": "齿轮能电击已经隐身的单位，说明中没有赋予任何单位隐身的效果。"
+        },
+        {
+          "review_id": "c69d5bd7631a65f570d5",
+          "verdict": "holds",
+          "quote": "Damage is increased by %mana_burn_as_damage_pct%%% of the mana burned.",
+          "reason_zh": "齿轮仍会削减敌方法力，并按烧掉的法力增加伤害。"
+        },
+        {
+          "review_id": "audit:rattletrap_power_cogs:terrain:base",
+          "verdict": "holds",
+          "quote": "Forms a ring of energized cogs around Clockwerk, trapping any units that are near.",
+          "reason_zh": "齿轮仍在地面围成可阻挡单位通行的环，发条技师自身可穿过。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "razor_static_link",
+      "rows": [
+        {
+          "review_id": "audit:razor_static_link:attack_damage_reduction:base",
+          "verdict": "holds",
+          "quote": "stealing damage from the target and giving it to Razor.",
+          "reason_zh": "连接仍会夺取目标的攻击力并转给雷泽。"
+        },
+        {
+          "review_id": "016539c7f2702ba7c539",
+          "verdict": "holds",
+          "quote": "Creates a charged link between Razor and an enemy Hero",
+          "reason_zh": "基础技能仍以一个敌方英雄为连接目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "razor_storm_surge",
+      "rows": [
+        {
+          "review_id": "54e2ac9a9a51955a1d58",
+          "verdict": "holds",
+          "quote": "a forked lightning that strikes the target and other nearby enemies",
+          "reason_zh": "一次触发的闪电仍可同时伤害目标及附近其他敌人。"
+        },
+        {
+          "review_id": "d664ac635b1dc3630fd5",
+          "verdict": "holds",
+          "quote": "Lightning strikes all enemies within Eye of the Storm's radius.",
+          "reason_zh": "持有魔晶且风暴之眼生效时，闪电仍会击中其范围内所有敌人。"
+        },
+        {
+          "review_id": "1172797398284f1241a9",
+          "verdict": "unclear",
+          "quote": "strike_damage.base: [50,90,130,170]→[65,100,135,170]",
+          "reason_zh": "伤害字段只给出闪电伤害，材料未给出 IsBreakable 值。"
+        },
+        {
+          "review_id": "cb9703c982ff6e75b46f",
+          "verdict": "holds",
+          "quote": "There's a chance when attacked, and always when targeted with a spell, to release a forked lightning",
+          "reason_zh": "遭受攻击时仍有概率释放反击闪电，被技能选为目标时必定触发。"
+        },
+        {
+          "review_id": "4a7958777189926b82dc",
+          "verdict": "holds",
+          "quote": "dealing damage and slowing movement speed.",
+          "reason_zh": "闪电仍会降低被击中敌人的移动速度。"
+        },
+        {
+          "review_id": "9bb35f5f5ac67b440478",
+          "verdict": "holds",
+          "quote": "when targeted with a spell, to release a forked lightning",
+          "reason_zh": "被技能选为目标时释放的是风暴涌动自身的闪电，原技能没有被反弹给施法者。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "revenants_brooch",
+      "rows": [
+        {
+          "review_id": "373bad5e1b62a0fa41d0",
+          "verdict": "holds",
+          "quote": "Counts as a critical strike, and so does not stack with other critical strikes.",
+          "reason_zh": "装备被动仍明确计为暴击，触发概率和额外伤害比例虽下调但都大于零。"
+        },
+        {
+          "review_id": "audit:revenants_brooch:lifesteal:item",
+          "verdict": "now_wrong",
+          "quote": "spell_lifesteal.base: [15]→null",
+          "reason_zh": "7.42 删除了装备原有的技能吸血数值，现行说明也没有其他吸血效果。"
+        },
+        {
+          "review_id": "f800d32316a011659b31",
+          "verdict": "holds",
+          "quote": "deal an additional %crit_multiplier%%% of the attack's damage as bonus magical damage.",
+          "reason_zh": "触发时直接附加魔法伤害，没有降低目标魔抗或提高目标所受魔法伤害的效果。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "riki_innate_backstab",
+      "rows": [
+        {
+          "review_id": "8d242fe0365e9542324f",
+          "verdict": "holds",
+          "quote": "Every time Riki strikes his enemy from behind, he deals additional bonus damage equal to a multiple of his Agility and his attack has increased Item Potency.",
+          "reason_zh": "背刺仍作用于这次攻击的目标，新增物品效能没有使攻击波及其他单位。"
+        },
+        {
+          "review_id": "audit:riki_innate_backstab:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "he deals additional bonus damage equal to a multiple of his Agility and his attack has increased Item Potency.",
+          "reason_zh": "背后攻击仍附带按敏捷计算的额外伤害，7.42 又提高了该次攻击的物品效能。"
+        },
+        {
+          "review_id": "41d24c9ce976581e3ff3",
+          "verdict": "unclear",
+          "quote": "bonus_potency.base: null→[10]",
+          "reason_zh": "新增字段说明物品效能提高，材料未给出 IsBreakable 值以核实原先的否定判断。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "riki_smoke_screen",
+      "rows": [
+        {
+          "review_id": "a53442cc42301fcba649",
+          "verdict": "holds",
+          "quote": "Enemies caught in the smoke screen have their armor reduced by %armor_reduction%",
+          "reason_zh": "魔晶说明仍明确降低烟幕内敌人的护甲。"
+        },
+        {
+          "review_id": "0dd492cfa75e6b123b4f",
+          "verdict": "holds",
+          "quote": "miss_rate.base: [40,50,60,70]→[55,60,65,70]",
+          "reason_zh": "各级烟幕仍使敌方攻击有概率落空，前三等级的落空率提高。"
+        },
+        {
+          "review_id": "audit:riki_smoke_screen:ground_zone:base",
+          "verdict": "holds",
+          "quote": "Throws down a smoke bomb, silencing enemies and causing them to miss attacks.",
+          "reason_zh": "烟幕仍在投放处持续影响区域内的敌人，调整后的半径为 400，持续时间为 4.5 至 6 秒。"
+        },
+        {
+          "review_id": "eceba00df5609ea59f76",
+          "verdict": "holds",
+          "quote": "silencing enemies and causing them to miss attacks.",
+          "reason_zh": "烟幕仍对敌人施加沉默。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_funhouse_mirror",
+      "rows": [
+        {
+          "review_id": "5f21849dccfb8ef3c076",
+          "verdict": "unclear",
+          "quote": "illusion_effectiveness.base: null→[25]",
+          "reason_zh": "新增字段描述幻象效能，使用说明和字段均未说明每次使用是否消耗一点充能。"
+        },
+        {
+          "review_id": "t5:ringmaster_funhouse_mirror:illusions",
+          "verdict": "holds",
+          "quote": "Creates %images_count% imperfect image of your hero that lasts %illusion_duration% seconds.",
+          "reason_zh": "使用哈哈镜仍会制造持续一段时间的自身幻象。"
+        },
+        {
+          "review_id": "d79ed5e415c0a80d3e82",
+          "verdict": "holds",
+          "quote": "Has a %invuln_duration% second cast time during which you are invulnerable.",
+          "reason_zh": "施法者在哈哈镜的施法动作期间仍处于无敌状态。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_impalement",
+      "rows": [
+        {
+          "review_id": "3b561db282f26e340ce0",
+          "verdict": "holds",
+          "quote": "If he strikes an enemy, the dagger deals impact damage, briefly slows the unit hit, and causes them to bleed.",
+          "reason_zh": "冲击和流血均作用于尖刀命中的单个敌人，本次仅调整冲击伤害数值。"
+        },
+        {
+          "review_id": "490457eb1fc261bedc5d",
+          "verdict": "holds",
+          "quote": "briefly slows the unit hit",
+          "reason_zh": "尖刀仍会短暂降低命中目标的移动速度。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_spotlight",
+      "rows": [
+        {
+          "review_id": "1e87b69386a7102b1359",
+          "verdict": "holds",
+          "quote": "Illusions hit by the beam fade away, losing a percentage of their maximum health each second.",
+          "reason_zh": "说明写明受照幻象逐秒损失生命，本次只调整攻击落空率，没有加入对区域内敌人造成伤害的效果。"
+        },
+        {
+          "review_id": "031f6a1e7ed9b7a29b18",
+          "verdict": "holds",
+          "quote": "miss_chance.base: [30]→[45]",
+          "reason_zh": "受照敌人的攻击落空概率从 30% 提高到 45%，致盲仍然生效。"
+        },
+        {
+          "review_id": "audit:ringmaster_spotlight:ground_zone:shard",
+          "verdict": "holds",
+          "quote": "Ringmaster shines %spotlight_count% spotlights that sweep over an area. Enemies in the light have a chance to miss their attacks and are revealed if invisible.",
+          "reason_zh": "聚光灯仍扫过指定区域并持续影响处于光照中的敌人，本次仅提高落空概率。"
+        },
+        {
+          "review_id": "5460640e23f83695d76e",
+          "verdict": "holds",
+          "quote": "are revealed if invisible.",
+          "reason_zh": "隐身敌人受光照时仍会显形。"
+        },
+        {
+          "review_id": "d0745c9f52aeb96aa35c",
+          "verdict": "holds",
+          "quote": "Enemies in the light have a chance to miss their attacks and are revealed if invisible.",
+          "reason_zh": "说明将显形施加于受照的隐身目标，没有赋予持续真视。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_summon_unicycle",
+      "rows": [
+        {
+          "review_id": "5ae0730190884bb76ab5",
+          "verdict": "holds",
+          "quote": "Attacking, using channeled abilities, or crashing into units and other obstacles also dismounts the rider.",
+          "reason_zh": "使用持续施法技能是下车条件，骑行本身没有持续引导要求。"
+        },
+        {
+          "review_id": "83012038adc359f5d0e7",
+          "verdict": "unclear",
+          "quote": "mount_duration.base: [10]→[15]",
+          "reason_zh": "字段只说明骑行时间延长，材料未说明每次使用是否消耗一点充能。"
+        },
+        {
+          "review_id": "b30b9b26586f76e49cd9",
+          "verdict": "holds",
+          "quote": "Crashing into trees destroys them and slows the unicycle.",
+          "reason_zh": "撞树后减速的是独轮车自身，没有对敌方单位施加减速。"
+        },
+        {
+          "review_id": "838155108ca7892c1cf9",
+          "verdict": "holds",
+          "quote": "Crashing into trees destroys them",
+          "reason_zh": "独轮车撞到树木时仍会摧毁树木。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_wheel",
+      "rows": [
+        {
+          "review_id": "cf814e51ed0dd9ba9568",
+          "verdict": "holds",
+          "quote": "enemies in range of the wheel take damage over time",
+          "reason_zh": "奇观轮仍可持续伤害范围内多个敌人，各级伤害调整后均大于零。"
+        },
+        {
+          "review_id": "bc2dcdcfc8e115255bb5",
+          "verdict": "holds",
+          "quote": "knocking aside enemies along the way.",
+          "reason_zh": "奇观轮滚向目标位置时仍会将沿途敌人推开。"
+        },
+        {
+          "review_id": "audit:ringmaster_wheel:ground_zone:base",
+          "verdict": "holds",
+          "quote": "After it reaches its target, enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%.",
+          "reason_zh": "奇观轮抵达目标地点后仍在该处形成持续伤害并减速敌人的区域。"
+        },
+        {
+          "review_id": "audit:ringmaster_wheel:forced_action:base",
+          "verdict": "holds",
+          "quote": "Enemy heroes who face the wheel for more than %face_duration% seconds are mesmerized and drawn towards it.",
+          "reason_zh": "敌方英雄面朝奇观轮达到指定时长后，仍会被迫向它移动。"
+        },
+        {
+          "review_id": "44739104493e74fadbd4",
+          "verdict": "holds",
+          "quote": "enemies in range of the wheel take damage over time and are slowed by %aura_slow%%%.",
+          "reason_zh": "奇观轮抵达目标位置后仍会降低范围内敌人的移动速度。"
+        },
+        {
+          "review_id": "6ea984cca940e5fce603",
+          "verdict": "holds",
+          "quote": "are mesmerized and drawn towards it.",
+          "reason_zh": "面朝奇观轮触发的控制是强制走向轮子，说明没有赋予眩晕效果。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ringmaster_whoopee_cushion",
+      "rows": [
+        {
+          "review_id": "876a6e6d15c1fe96df6e",
+          "verdict": "unclear",
+          "quote": "Use: Whoopsie Propels your hero forward %leap_distance% units.",
+          "reason_zh": "说明给出使用时的位移效果，但没有充能字段或每次使用消耗一点的说明。"
+        },
+        {
+          "review_id": "audit:ringmaster_whoopee_cushion:ground_zone:base",
+          "verdict": "holds",
+          "quote": "Leaves a %fart_cloud_radius% radius stink cloud behind for %fart_cloud_duration% seconds that slows enemies by %fart_cloud_slow%%%.",
+          "reason_zh": "前跃后仍在身后留下持续减速敌人的臭云，作用半径从 250 增至 300。"
+        },
+        {
+          "review_id": "audit:ringmaster_whoopee_cushion:self_mobility:base",
+          "verdict": "holds",
+          "quote": "Propels your hero forward %leap_distance% units.",
+          "reason_zh": "使用整蛊垫仍会将自身向前推进一段距离。"
+        },
+        {
+          "review_id": "7be0c0f2fce81ca90cdb",
+          "verdict": "holds",
+          "quote": "fart_cloud_slow.base: [-30]→[-35]",
+          "reason_zh": "臭云对敌人的移动减速幅度从 30% 提高到 35%。"
+        },
+        {
+          "review_id": "audit:ringmaster_whoopee_cushion:terrain_walk:base",
+          "verdict": "unclear",
+          "quote": "Propels your hero forward %leap_distance% units.",
+          "reason_zh": "说明只确认向前位移，未交代途中是否能越过悬崖或穿过树木。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rod_of_atos",
+      "rows": [
+        {
+          "review_id": "c624ae47d921ec61394a",
+          "verdict": "holds",
+          "quote": "Active: Cripple Roots the target for %duration% seconds.",
+          "reason_zh": "主动效果仍会缠绕目标，本次仅提高装备的智力加成。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rubick_arcane_supremacy",
+      "rows": [
+        {
+          "review_id": "bab9f49f76d94427aa84",
+          "verdict": "unclear",
+          "quote": "spell_amp.base: [11,16,21,26]→[9,13,17,21]",
+          "reason_zh": "材料给出了法术放大和施法距离的变化，但未给出判定可破坏性所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "9ff34802f41ac5c79c1a",
+          "verdict": "holds",
+          "quote": "spell_amp.base: [11,16,21,26]→[9,13,17,21]",
+          "reason_zh": "各级法术放大均有下调，但仍提供正值加成。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "rubick_spell_steal",
+      "rows": [
+        {
+          "review_id": "9d6f7bf4c0d7699b56cf",
+          "verdict": "holds",
+          "quote": "Rubick can use this spell as his own for several minutes or until he dies.",
+          "reason_zh": "技能让拉比克学会并自行施放目标的技能，没有将来袭技能反弹给施法者的效果。"
+        },
+        {
+          "review_id": "0982fbb52be4b2a03a29",
+          "verdict": "holds",
+          "quote": "Upgrades stolen spells to their Shard version.",
+          "reason_zh": "魔晶只升级已窃取技能的版本，窃取能力由基础技能提供。"
+        },
+        {
+          "review_id": "e02f6971dc13cc2e66a0",
+          "verdict": "holds",
+          "quote": "learning the secrets of the last spell the hero cast. Rubick can use this spell as his own",
+          "reason_zh": "基础技能仍允许拉比克获得并使用敌方英雄最近施放的技能。"
+        },
+        {
+          "review_id": "ceb011733654ee6ef76d",
+          "verdict": "holds",
+          "quote": "Rubick studies the trace magical essence of one enemy hero",
+          "reason_zh": "施法时仍选择一个敌方英雄作为窃取目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sandking_burrowstrike",
+      "rows": [
+        {
+          "review_id": "057a3f88306fae3d7596",
+          "verdict": "holds",
+          "quote": "damaging and stunning enemy units above him as he resurfaces.",
+          "reason_zh": "基础穿刺仍能在钻出地面时伤害上方多个敌方单位。"
+        },
+        {
+          "review_id": "audit:sandking_burrowstrike:self_mobility:base",
+          "verdict": "holds",
+          "quote": "Sand King burrows into the ground and tunnels forward",
+          "reason_zh": "基础技能仍使沙王钻入地下并向前位移。"
+        },
+        {
+          "review_id": "4c990c888e52ba79202a",
+          "verdict": "holds",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "该注释描述掘地穿刺与技能格挡的交互，技能效果中也没有为沙王或队友格挡来袭技能的能力。"
+        },
+        {
+          "review_id": "ce73af68fd533abb3f9c",
+          "verdict": "holds",
+          "quote": "Does not trigger spell block or spell reflect.",
+          "reason_zh": "该注释描述掘地穿刺与技能反弹的交互，技能效果中也没有将来袭技能反弹给施法者的能力。"
+        },
+        {
+          "review_id": "cf8bb550912e8074637c",
+          "verdict": "holds",
+          "quote": "damaging and stunning enemy units above him as he resurfaces.",
+          "reason_zh": "沙王钻出地面时仍会眩晕命中的敌方单位。"
+        },
+        {
+          "review_id": "audit:sandking_burrowstrike:terrain_walk:base",
+          "verdict": "unclear",
+          "quote": "Sand King burrows into the ground and tunnels forward",
+          "reason_zh": "地下前移的说明没有交代技能能否穿过树木或越过不可通行地形。"
+        }
+      ],
+      "new_mechanisms": [
+        {
+          "mechanism": "aoe_damage",
+          "condition": "scepter_upgrade",
+          "quote": "create Stinger attack areas along the path, that apply %spine_damage_pct%%% of Stinger damage to enemies hit.",
+          "reason_zh": "新增 A 杖升级使路径上的尖刺在 0.8 秒后造成 75% 的 Stinger 范围伤害，现有行仅记录基础穿刺的范围伤害。"
+        }
+      ]
+    },
+    {
+      "subject": "sandking_epicenter",
+      "rows": [
+        {
+          "review_id": "48a7f0b307b18016e002",
+          "verdict": "now_wrong",
+          "quote": "ability_has_scepter: true→false",
+          "reason_zh": "虽然仍保留旧版 A 杖说明，但升级标记已关闭，额外攻击区域的数量和伤害字段也已删除。"
+        },
+        {
+          "review_id": "87e2f2e1f2880d1ac1d8",
+          "verdict": "holds",
+          "quote": "All enemies caught within range will take damage and become slowed.",
+          "reason_zh": "基础地震仍对范围内所有敌人造成伤害。"
+        },
+        {
+          "review_id": "5f586102f32d34df3a81",
+          "verdict": "holds",
+          "quote": "All enemies caught within range will take damage and become slowed.",
+          "reason_zh": "基础脉冲仍会使范围内敌人减速。"
+        }
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
