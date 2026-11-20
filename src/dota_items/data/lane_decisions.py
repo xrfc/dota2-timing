@@ -188,7 +188,32 @@ def _context(match, mid, hero, t, visibility, state, means):
     }
 
 
-def make_cases(match, mid, hero, hits, visibility, states, means, deaths):
+def wave_opportunities(match, hero, hits, extras, can_see):
+    """Sample before a last hit; test proximity and reconstructed sight at this second only."""
+    own = match["tracks"][hero]
+    next_time = START_SECOND
+    candidates = {}
+    for t, point in sorted(own["pos"].items()):
+        if t < next_time or bisect_right(hits, t) != bisect_left(hits, t - 6):
+            continue
+        wave = lane_at(match["fronts"].get(t) or {}, own["team"], point)
+        if wave is None:
+            continue
+        enemies = [
+            (x, y)
+            for side, x, y in extras.get(t, {}).get("creeps", ())
+            if side == 5 - own["team"]
+            and dist(point, (x, y)) <= 800
+            and dist(wave[1], (x, y)) <= 1000
+            and can_see(point, (x, y), t)
+        ]
+        if enemies:
+            candidates[t] = len(enemies)
+            next_time = t + REPEAT_SECONDS
+    return candidates
+
+
+def make_cases(match, mid, hero, hits, visibility, states, means, deaths, *, opportunities=None):
     team = match["tracks"][hero]["team"]
     track = match["tracks"][hero]["pos"]
     recent_hits = {
@@ -200,10 +225,10 @@ def make_cases(match, mid, hero, hits, visibility, states, means, deaths):
         and not e["payload"].get("target_is_illusion")
     }
     next_time = START_SECOND
-    for t in hits:
+    for t in hits if opportunities is None else opportunities:
         if t < next_time or t not in track or t not in states:
             continue
-        if any(s in recent_hits for s in range(t - 4, t + 1)):
+        if opportunities is None and any(s in recent_hits for s in range(t - 4, t + 1)):
             continue
         wave = lane_at(match["fronts"].get(t) or {}, team, track[t])
         if wave is None:
@@ -211,6 +236,8 @@ def make_cases(match, mid, hero, hits, visibility, states, means, deaths):
         next_time = t + REPEAT_SECONDS
         lane, front = wave
         evidence = _context(match, mid, hero, t, visibility, states[t], means)
+        if opportunities is not None:
+            evidence.update(kind="wave", nearby_creeps=opportunities[t])
         evidence.update(lane=lane, front=front, front_distance=round(dist(track[t], front)))
         for frame in evidence["history"]:
             waves = match["fronts"].get(frame["t"]) or {}
@@ -218,6 +245,17 @@ def make_cases(match, mid, hero, hits, visibility, states, means, deaths):
             frame["wave"] = own_wave.get("front")
         lean, reason = assess(evidence["history"][-1], states[t])
         action, detail = observe_action(track, hits, team, t, front)
+        if opportunities is not None:
+            # Crossing the wave laterally can also forgo the last hit.
+            path = [track.get(sec) for sec in range(t, t + ACTION_SECONDS + 1)]
+            if (
+                action == "unknown"
+                and all(path)
+                and all(dist(a, b) <= 700 for a, b in pairwise(path))
+            ):
+                no_hit = bisect_right(hits, t + ACTION_SECONDS) == bisect_right(hits, t)
+                if no_hit and dist(path[-1], front) - dist(path[0], front) >= 350:
+                    action, detail = "retreat", "随后六秒没有线上补刀，并与原兵线前沿拉开至少 350。"
         later = {
             "lane_last_hits": bisect_right(hits, t + OUTCOME_SECONDS) - bisect_right(hits, t),
             "death_seconds": [s for s in deaths if t < s <= t + OUTCOME_SECONDS],
