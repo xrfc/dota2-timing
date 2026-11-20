@@ -478,6 +478,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 8. 待办池（不在当前里程碑执行）
 
+- **7.42地图也可由用户用Workshop Tools导出**（2026-11-20，步骤`docs/map-workshop-export.md`）；导出后替代demo反推。
 - **TODO 7.42地图坐标改用上游（U178，2026-11-19）**：7.42地图先从demo反推门、塔、野点坐标（方案B，demo工作恢复后做）；`leamare/dota-map-coordinates`出7.42版本后改用上游数据，与反推结果对照。查法：`gh api repos/leamare/dota-map-coordinates/commits`（2026-11-19最新仍是`f793787e`“7.41”）。
 
 - **TODO 7.42 demo解析与处理（U178，2026-11-19暂缓）**：恢复后按[7.42预案](patch-7.42-plan.md)先试解析5场，再做地图反推、旧模型在新补丁上的检验。
