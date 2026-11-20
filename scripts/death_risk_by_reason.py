@@ -1,5 +1,8 @@
 """Death-risk alerts split by the main reason of each death (track B, U160).
 
+For current reports before_fight groups the saved U171 fight-level evaluations by exact
+death key; the older not-hit measure remains separately available.
+
 Joins the out-of-fold scores of train_death_risk.py with the B0 episodes: every
 position 1 death that falls inside a death episode gets that episode's main reason
 (data.death_tags.primary_reason; the order of the reasons is the assistant's draft, U156).
@@ -24,43 +27,43 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from dota_items.data.death_tags import death_tags, primary_reason
-from dota_items.experiments.awareness.death_risk_tables import load_tables
-from dota_items.modeling.awareness.death_risk_eval import death_alerts, summarize_alerts
+from dota_items.data.death_tags import (
+    coverage_reason,
+    death_episode_index,
+    death_tags,
+    primary_reason,
+)
+from dota_items.experiments.awareness.death_risk_tables import load_risk_frame
+from dota_items.modeling.awareness.death_risk_eval import (
+    death_alerts,
+    summarize_alerts,
+    summarize_fight_alerts,
+)
 
-SCHEMA = "death-risk-by-reason/2"  # 2: shared alert measure, renamed (not hit in 3 s)
+SCHEMA = "death-risk-by-reason/3"  # One row per match, hero and death second.
 HORIZON = 20
 
 
 def episode_index(folder):
-    """{(match, hero): [(t0, end, reason id, reason zh)]} for the episodes ending in death."""
-    index = defaultdict(list)
     with (folder / "episodes.jsonl").open(encoding="utf-8") as stream:
-        for line in stream:
-            episode = json.loads(line)
-            if episode["outcome"] != "death":
-                continue
-            key, name = primary_reason(death_tags(episode))
-            index[(episode["match_id"], episode["victim"])].append(
-                (episode["t0"], episode["end"], key, name)
-            )
-    return index
+        groups = death_episode_index(map(json.loads, stream))
+    return {
+        key: coverage_reason(group) or primary_reason(death_tags(group[0]))
+        for key, group in groups.items()
+    }
 
 
-def reason_of(index, match_id, hero, t, slack=2):
-    for t0, end, key, name in index.get((match_id, hero), ()):
-        if t0 <= t <= end + slack:
-            return key, name
-    return "no_episode", "没有对应片段"
+def reason_of(index, match_id, hero, t):
+    return index.get((match_id, hero, t), coverage_reason([]))
 
 
-def by_reason(found, index):
+def by_reason(found, index, summary=summarize_alerts):
     """[{reason, reason_zh, summary...}] from death_alerts output, largest group first."""
     groups = defaultdict(list)
     for row in found:
         groups[reason_of(index, row["match_id"], row["hero"], row["t"])].append(row)
     return [
-        {"reason": key, "reason_zh": name, **summarize_alerts(rows)}
+        {"reason": key, "reason_zh": name, **summary(rows)}
         for (key, name), rows in sorted(groups.items(), key=lambda kv: -len(kv[1]))
     ]
 
@@ -74,8 +77,11 @@ def main(argv=None):
     parser.add_argument("--episodes", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
-    _, _, deaths, info = load_tables(args.root / args.table, args.allow_legacy)
-    args.out.mkdir(parents=True, exist_ok=False)
+    _, deaths, info = load_risk_frame(
+        args.root / args.table, allow_legacy=args.allow_legacy, columns=["t"]
+    )
+    if args.out.exists():
+        raise SystemExit(f"{args.out} already exists")
     report = json.loads((args.risk / "report.json").read_text(encoding="utf-8"))
     threshold = report["alerts"]["threshold"]
     oof = np.load(args.risk / "out-of-fold.npz")
@@ -87,8 +93,11 @@ def main(argv=None):
             "hit_recent": oof["hit_recent"],
         }
     )
-    found = death_alerts(frame, pd.DataFrame(deaths), oof["boosting"], threshold, HORIZON)
-    rows = by_reason(found, episode_index(args.episodes))
+    keys = ["match_id", "hero", "t"]
+    unique_deaths = pd.DataFrame(deaths).drop_duplicates(keys)
+    found = death_alerts(frame, unique_deaths, oof["boosting"], threshold, HORIZON)
+    index = episode_index(args.episodes)
+    rows = by_reason(found, index)
     result = {
         "schema": SCHEMA,
         "use": "explains the risk model by omniscient death reasons; review only (U55)",
@@ -100,6 +109,18 @@ def main(argv=None):
         "alert_measure": "alert on a sample not hit in the last 3 s; not 'before the first hit'",
         "reasons": rows,
     }
+    if "fight_alerts" in report:
+        if report["input"]["conditions_digest"] != info["conditions_digest"]:
+            raise ValueError("Risk report and death table conditions differ")
+        raw = pd.read_csv(args.risk / "fight-alerts.csv")
+        fights = raw.drop_duplicates()
+        result["duplicate_fight_evaluations"] = len(raw) - len(fights)
+        scored = {(r["match_id"], r["hero"], r["t"]) for r in found}
+        fight_keys = list(zip(fights.match_id, fights.hero, fights.t, strict=True))
+        if len(fight_keys) != len(set(fight_keys)) or set(fight_keys) != scored:
+            raise ValueError("Fight evaluation and death samples differ")
+        result["before_fight"] = by_reason(fights.to_dict("records"), index, summarize_fight_alerts)
+    args.out.mkdir(parents=True, exist_ok=False)
     (args.out / "report.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
     )

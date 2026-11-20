@@ -5,7 +5,8 @@ const COLORS = {2: '#5fd08a', 3: '#f0685c', victim: '#ffd54a', smoke: '#c58bff',
 const STRATA = {match: '这场比赛里1号位的每次死亡', acceptance: '验收样本（不显示规则的结论）', death: '抽样层：死亡', save_escape: '抽样层：交保命逃掉', near_miss: '抽样层：差一个条件'};
 const CATEGORIES = {gank: '被抓', overextended: '自己深入', high_ground: '高地上', laning: '对线期', after_fight: '团战后留人', teamfight: '团战中', other: '其他（不算被抓）', unsure: '不确定'};
 // The rule's answer in the same categories the user picks from.
-const ruleCategory = e => !e.is_gank ? 'other' : ['death', 'save_escape'].includes(e.label) ? 'gank' : e.label;
+const unclassified = e => e.episode_matches != null && e.episode_matches !== 1;
+const ruleCategory = e => unclassified(e) ? null : !e.is_gank ? 'other' : ['death', 'save_escape'].includes(e.label) ? 'gank' : e.label;
 const FLAGS = {
   enough_enemies: '敌方≥2个英雄', not_big_fight: '不在大团战', from_unseen: '从视野外出现',
   far_from_allies: '离队友远', paid: '死亡或交了保命',
@@ -38,7 +39,7 @@ function buildList() {
   list.firstChild.id = 'progress';
   for (const key of Object.keys(STRATA)) {
     const group = clips.filter(c => c.stratum === key);
-    const decided = group.filter(c => judgments[c.id]?.verdict && judgments[c.id].verdict !== 'unsure');
+    const decided = group.filter(c => !unclassified(c.episode) && judgments[c.id]?.verdict && judgments[c.id].verdict !== 'unsure');
     const agree = decided.filter(c => judgments[c.id].verdict === ruleCategory(c.episode)).length;
     const head = el('h3', STRATA[key] + ' ');
     head.append(el('small', decided.length && !blind ? `与规则一致 ${agree}/${decided.length}` : ''));
@@ -48,8 +49,8 @@ function buildList() {
       const a = el('a'); a.tabIndex = 0; a.dataset.id = c.id;
       if (clip && c.id === clip.id) a.className = 'current';
       const v = judgments[c.id]?.verdict;
-      const mark = !v ? '' : v === 'unsure' ? 'unsure' : blind ? 'done' : v === ruleCategory(c.episode) ? 'right' : 'wrong';
-      a.title = !v ? '' : blind ? `你选的：${CATEGORIES[v] || v}` : `你选的：${CATEGORIES[v] || v}；规则：${CATEGORIES[ruleCategory(c.episode)]}`;
+      const mark = !v ? '' : v === 'unsure' ? 'unsure' : blind || unclassified(c.episode) ? 'done' : v === ruleCategory(c.episode) ? 'right' : 'wrong';
+      a.title = !v ? '' : blind || unclassified(c.episode) ? `你选的：${CATEGORIES[v] || v}` : `你选的：${CATEGORIES[v] || v}；规则：${CATEGORIES[ruleCategory(c.episode)]}`;
       a.append(el('b', c.id), el('span', short(c.episode.victim) + (c.episode.primary_reason ? ' · ' + c.episode.primary_reason[1] : ''), 'hero'), el('i', {right: '＝', wrong: '≠', unsure: '?', done: '✓'}[mark] || '', mark));
       a.addEventListener('click', () => open(c.id));
       a.addEventListener('keydown', e => { if (e.key === 'Enter') open(c.id); });
@@ -66,35 +67,49 @@ function open(id) {
   const e = clip.episode;
   history.replaceState(null, '', '#' + clip.id);
   $('title').textContent = `${clip.id} · ${zh(e.victim)} · 比赛 ${e.match_id} · ${clock(e.t0)}`;
-  const failed = Object.entries(FLAGS).filter(([key]) => !e.flags[key]).map(([, label]) => label);
+  const failed = Object.entries(FLAGS).filter(([key]) => !e.flags?.[key]).map(([, label]) => label);
   const ruled = e.is_gank ? LABELS[e.label] : `不算被抓（不满足：${failed.join('、')}）`;
   if (blind) $('question').replaceChildren(el('span', '验收：规则已冻结，这里不显示规则的结论。你认为这次是哪一类？在右边选。'));
+  else if (unclassified(e)) $('question').textContent = e.primary_reason[1] + '，可查看死亡前后的录像。';
   else $('question').replaceChildren(el('span', '规则判定：'), el('strong', ruled, ruleCategory(e)), el('span', ' 　你认为这次是哪一类？在右边选。'));
   $('facts').replaceChildren();
   if (e.primary_reason) fact('主要原因（草稿）', e.primary_reason[1], 'head');
   if (e.tags) fact('这次死亡的特征', e.tags.map(t => t[1]).join('；'), 'head');
   $('risk').hidden = !e.risk;
+  if (e.risk_unavailable) fact('死亡风险', e.risk_unavailable);
   if (e.risk) {
     const r = e.risk, death = r.death ?? e.end;
-    const early = r.points.filter(p => p[0] < death && p[0] >= death - r.horizon && !p[2] && p[1] >= r.threshold);
-    const peak = Math.max(0, ...r.points.filter(p => p[0] < death).map(p => p[1]));
-    fact('死亡风险（模型）', (early.length ? `死前${death - early[0][0]}秒超过提醒线（那时最近3秒没挨打）` : '死前20秒内，最近3秒没挨打的时刻都没超过提醒线') + `；死前最高${Math.round(peak * 100)}%`, early.length ? 'warn' : '');
-    $('risk-note').textContent = `模型估计的“${r.horizon}秒内死亡”的概率，每5秒一个点，只用他当时能知道的信息；没训练过这场比赛。虚线是提醒线（在最近3秒没挨打的时刻里误报约${Math.round(r.false_alarm_rate * 100)}%），空心点表示前3秒挨过打。“最近3秒没挨打”不等于这一波还没挨过打。点图可跳到那一秒。`;
+    if (r.fight_measure) {
+      const verdict = r.fight_start == null ? '此死亡缺少评估样本'
+        : r.alert_second != null ? `在 ${clock(r.alert_second)} 提醒，距交战开始 ${r.fight_start - r.alert_second} 秒`
+        : r.could_alert ? '交战前有评估样本，未触发提醒' : '预测窗口内没有合适的交战前样本';
+      fact('交战前提醒', verdict, r.alert_second != null ? 'warn' : '');
+      $('risk-note').textContent = `每 ${r.step} 秒估计未来 ${r.horizon} 秒的死亡概率。虚线为交战外提醒阈值，点图可跳到对应时刻。`;
+    } else {
+      const early = r.points.filter(p => p[0] < death && p[0] >= death - r.horizon && !p[2] && p[1] >= r.threshold);
+      const peak = Math.max(0, ...r.points.filter(p => p[0] < death).map(p => p[1]));
+      fact('死亡风险（模型）', (early.length ? `死前${death - early[0][0]}秒超过提醒线（那时最近3秒没挨打）` : '死前20秒内，最近3秒没挨打的时刻都没超过提醒线') + `；死前最高${Math.round(peak * 100)}%`, early.length ? 'warn' : '');
+      $('risk-note').textContent = `模型估计的“${r.horizon}秒内死亡”的概率，每${r.step || 5}秒一个点，只用他当时能知道的信息；没训练过这场比赛。虚线是提醒线（在最近3秒没挨打的时刻里误报约${Math.round(r.false_alarm_rate * 100)}%），空心点表示前3秒挨过打。“最近3秒没挨打”不等于这一波还没挨过打。点图可跳到那一秒。`;
+    }
   }
   fact('结果', OUTCOMES[e.outcome] || e.outcome);
-  fact('参与的敌人', e.attackers.map(short).join('、') || '—');
-  fact('视野外出现', e.unseen_attackers.map(short).join('、') || '没有', e.unseen_attackers.length ? '' : 'no');
-  fact('开雾的敌人', clip.smoked_attackers.length ? clip.smoked_attackers.map(short).join('、') + `（起点前${clip.smoke_lookback}秒内）` : '没有', clip.smoked_attackers.length ? 'smoke' : '');
+  if (!unclassified(e)) {
+    fact('参与的敌人', e.attackers.map(short).join('、') || '—');
+    fact('视野外出现', e.unseen_attackers.map(short).join('、') || '没有', e.unseen_attackers.length ? '' : 'no');
+    fact('开雾的敌人', clip.smoked_attackers.length ? clip.smoked_attackers.map(short).join('、') + `（起点前${clip.smoke_lookback}秒内）` : '没有', clip.smoked_attackers.length ? 'smoke' : '');
+  }
   if (clip.wards) {
     const vi0 = clip.heroes.findIndex(h => h.hero === e.victim), f0 = clip.frames.find(f => f.t === e.t0), me = f0 && f0.h[vi0];
     const team = clip.heroes[vi0].team;
     const near = me ? clip.wards.filter(w => w.type === 'observer' && w.team !== team && w.start <= e.t0 && w.end >= e.t0 && Math.hypot(w.x - me[0], w.y - me[1]) <= 1600).length : 0;
     fact('起点时敌方假眼', me ? (near ? `${near}个在1600以内（没算地形和树的遮挡）` : '1600以内没有') : '算不出', near ? 'warn' : '');
   }
-  fact('用掉的保命', [...e.self_saves, ...e.ally_saves].map(s => short(s.name)).join('、') || '—');
-  fact('最近队友', e.nearest_ally == null ? '无存活队友' : `${Math.round(e.nearest_ally)}（门槛1500）`);
-  fact('附近英雄', `最多${e.most_heroes_near}个，我方${e.most_allies_near}个（门槛：合计≤6、我方≤2）`);
-  if (!blind) for (const [key, label] of Object.entries(FLAGS)) fact(label, e.flags[key] ? '✓ 满足' : '✗ 不满足', e.flags[key] ? 'yes' : 'no');
+  if (!unclassified(e)) {
+    fact('用掉的保命', [...e.self_saves, ...e.ally_saves].map(s => short(s.name)).join('、') || '—');
+    fact('最近队友', e.nearest_ally == null ? '无存活队友' : `${Math.round(e.nearest_ally)}（门槛1500）`);
+    fact('附近英雄', `最多${e.most_heroes_near}个，我方${e.most_allies_near}个（门槛：合计≤6、我方≤2）`);
+    if (!blind) for (const [key, label] of Object.entries(FLAGS)) fact(label, e.flags[key] ? '✓ 满足' : '✗ 不满足', e.flags[key] ? 'yes' : 'no');
+  }
   if (e.depth) {
     const d = e.depth, final = e.is_gank ? e.label : null, laneEnd = d.laning_end ?? 600;
     const where = d.high_ground ? ` · 在${d.high_ground === 2 ? '天辉' : '夜魇'}高地范围内` : '';
@@ -119,7 +134,8 @@ function open(id) {
   showVerdict();
   $('time').max = clip.frames.length - 1;
   buildEvents(); buildList();
-  seek(0);
+  const alert = e.risk?.alert_second;
+  seek(alert == null ? 0 : Math.max(0, clip.frames.findIndex(f => f.t >= alert)));
   document.querySelector('#list a.current')?.scrollIntoView({block: 'nearest'});
 }
 
@@ -237,6 +253,18 @@ function draw() {
     const label = short(h.hero) + (alive ? '' : '（死亡）');
     ctx.strokeText(label, x, y - r - 6); ctx.fillText(label, x, y - r - 6);
   });
+  const evidence = $('team-evidence');
+  evidence.hidden = e.death_second == null;
+  if (!evidence.hidden) {
+    const team = clip.heroes[vi].team;
+    const visible = clip.heroes.filter((hero, i) => hero.team !== team && frame.h[i]?.[4] && frame.h[i][5]);
+    const allies = clip.heroes.flatMap((hero, i) => {
+      const state = frame.h[i];
+      return hero.team === team && i !== vi && vs?.[4] && state?.[4]
+        ? [Math.hypot(state[0] - vs[0], state[1] - vs[1])] : [];
+    });
+    evidence.textContent = `${clock(frame.t)} 己方视野记录：${visible.map(h => short(h.hero)).join('、') || '未记录到可见敌方英雄'}。最近存活队友距离：${allies.length ? Math.round(Math.min(...allies)) : '无可用距离'}。`;
+  }
   const rel = frame.t - e.t0;
   $('clock').textContent = `起点${rel >= 0 ? '后' : '前'} ${Math.abs(rel)} 秒 · 游戏时间 ${clock(frame.t)}`;
   for (const li of $('events').children) {
@@ -267,7 +295,8 @@ function drawRisk(now) {
   r.points.forEach(([t, v], i) => { const x = riskX(t, w); i ? g.lineTo(x, y(v)) : g.moveTo(x, y(v)); }); g.stroke(); g.lineWidth = 1;
   for (const [t, v, hit] of r.points) {
     g.beginPath(); g.arc(riskX(t, w), y(v), 3.5, 0, 7);
-    if (hit) { g.strokeStyle = COLORS.victim; g.stroke(); } else { g.fillStyle = v >= r.threshold ? '#e0b040' : COLORS.victim; g.fill(); }
+    if (r.fight_measure) { g.fillStyle = t === r.alert_second ? '#e0b040' : COLORS.victim; g.fill(); }
+    else if (hit) { g.strokeStyle = COLORS.victim; g.stroke(); } else { g.fillStyle = v >= r.threshold ? '#e0b040' : COLORS.victim; g.fill(); }
   }
   const x = riskX(now, w); g.strokeStyle = '#4aa3ff'; g.beginPath(); g.moveTo(x, RISK_PAD.t); g.lineTo(x, h - RISK_PAD.b); g.stroke();
 }
@@ -325,6 +354,7 @@ map.addEventListener('load', draw);
     const [c, j] = await Promise.all([fetch('/api/clips').then(r => r.json()), fetch('/api/judgments').then(r => r.json())]);
     clips = c.clips; names = c.names; blind = !!c.blind; judgments = j.judgments || {};
     map.src = '/map.jpg';
+    if (!clips.length) { $('title').textContent = '本次复盘没有可播放的死亡片段'; return; }
     open(location.hash.slice(1) || (clips.find(x => !judgments[x.id]?.verdict) || clips[0]).id);
   } catch (err) { $('title').textContent = '读取失败：请确认页面服务还在运行'; }
 })();
