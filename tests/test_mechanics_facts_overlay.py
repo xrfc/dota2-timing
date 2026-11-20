@@ -152,3 +152,22 @@ def test_full_build_matches_frozen_v26(tmp_path):
         assert (tmp_path / "out" / name).read_bytes() == (
             MECH / "extractions/v26" / name
         ).read_bytes(), name
+
+
+def test_patch_candidate_pins_registry_and_meepo_grant(tmp_path):
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import build_mechanics_facts_overlay as script
+
+    doc, _ = script.run("knowledge/mechanics/reviews/v27-build-draft-001.json", tmp_path / "out")
+    meepo = [r for r in doc["rows"] if r["subject"] == "meepo_petrify"]
+    assert len(meepo) == 3
+    assert all(
+        r["condition"]["requires_scepter"] and not r["condition"]["requires_shard"] for r in meepo
+    )
+    assert not any(r["subject"] == "juggernaut_swift_slash" for r in doc["rows"])
+    fields = {(r["subject"], r["evidence_kind"]): r for r in doc["field_observations"]}
+    assert fields["kez_raptor_dance", "enum:damage"]["value"] == 1
+    assert ("witch_doctor_voodoo_restoration", "enum:damage") not in fields
+    assert doc["counts"]["rows_with_condition_note"] == sum(
+        bool(r["condition_notes"]) for r in doc["rows"]
+    )

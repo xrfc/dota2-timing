@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import html
 import json
+import os
 import re
 from collections import Counter
 from pathlib import Path
@@ -110,9 +111,8 @@ def main():
         "result"
     ]["data"]["heroes"]
     od = json.loads((ROOT / "sources/opendota-heroes.json").read_text(encoding="utf-8"))
-    source_prefix = (
-        str(snapshot.resolve().relative_to(ROOT.resolve())) + "/" if args.snapshot else ""
-    )
+    source_prefix = Path(os.path.relpath(snapshot, ROOT)).as_posix() + "/" if args.snapshot else ""
+    source_links = Path(os.path.relpath(snapshot / "sources", output / "heroes")).as_posix()
     dossiers, coverage = [], []
     if args.snapshot:
         required = {
@@ -290,8 +290,8 @@ def main():
                 "",
                 s["description_zh"] or s["description_en"],
                 "",
-                f"来源：[中文原文](../sources/hero-{hid}-schinese.json)；"
-                f"[英文原文](../sources/hero-{hid}-english.json) `{s['source_pointer']}`。",
+                f"来源：[中文原文]({source_links}/hero-{hid}-schinese.json)；"
+                f"[英文原文]({source_links}/hero-{hid}-english.json) `{s['source_pointer']}`。",
                 "",
                 f"先天标记：{s['innate']}；神杖授予：{s['granted_by_scepter']}；魔晶授予：{s['granted_by_shard']}。",
                 "",
