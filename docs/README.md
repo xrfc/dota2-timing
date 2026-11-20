@@ -76,6 +76,7 @@
 - [审查与修复：死亡风险模型（2026-11-18）](review-2026-11-18-death-risk.md)
 - [7.42补丁预案](patch-7.42-plan.md)
 - [用Workshop Tools导出7.42地图数据](map-workshop-export.md)：用户自己导出地图数据的步骤（上游未更新时用）
+- [交接：7.42知识库更新与视野检验（2026-11-20）](handoff/patch-7.42-and-vision-2026-11-20.md)：交给Codex继续开发的入口
 - [7.42影响清单](patch-7.42-impact.md)：7.42对机制知识库的影响，需要用户裁定的部分和AI已定的部分（2026-11-20）
 - [路线B任务契约草稿：预测“接下来会不会死”（U160）](b2-death-risk-contract.md)
 - [重训前清单：死亡风险模型（U170，会改表／只改评估／只改解释）](b2-retrain-checklist.md)
