@@ -41,6 +41,7 @@ PYTHONPATH=src python scripts/patch_update.py impact --hero-diff <英雄差异.j
 
 ## 4. 复核
 
+- 证据优先级（U182）：官方补丁说明＞游戏脚本＞数据接口的标记和数值＞数据接口的说明文字；数据接口里常留着没更新的说明（A杖/魔晶文字等）。命石文字一律不用（U184，游戏里已没有命石）。
 - 只复核`impact`列出的行，用和MK-T3一样的方式：AI审查＋用户裁定；数值变化只影响`numeric_upgrades`时，看是否仍是“只改数值”。
 - 新技能、新装备：按词表抽取候选，再审查。
 - 删除的技能、装备：事实行移到`retired_rows`，装备在`retired-items`里标`obsolete`。
