@@ -1,6 +1,6 @@
 """Exploratory position-one lane review. Keep decision evidence separate from later observations."""
 
-from bisect import bisect_right
+from bisect import bisect_left, bisect_right
 from itertools import pairwise
 from math import dist
 
@@ -79,6 +79,18 @@ def evidence_at(tracks, visibility, hero, t):
     return {"t": t, "markers": markers, "enemies": enemies, "ally": min(allies) if allies else None}
 
 
+def visible_trail(track, times, last):
+    """Last uninterrupted visible segment, ending at the last sighting."""
+    end = bisect_right(times, last)
+    points = []
+    for second in reversed(times[max(0, end - 12) : end]):
+        pos = track.get(second)
+        if pos is None or (points and points[-1][0] != second + 1):
+            break
+        points.append([second, *pos])
+    return points[::-1]
+
+
 def assess(frame, state):
     """Provisional rubric for staying at the wave; returns reasons available at decision time."""
     states = decode(state.get("unit_state_raw"))
@@ -136,6 +148,46 @@ def observe_action(track, hits, team, t, front):
     return "unknown", "未观察到再次补刀或足够明确的后撤位移。"
 
 
+def _context(match, mid, hero, t, visibility, state, means):
+    team = match["tracks"][hero]["team"]
+    history = [
+        frame
+        for sec in (t - 10, t - 5, t)
+        if (frame := evidence_at(match["tracks"], visibility, hero, sec)) is not None
+    ]
+    for frame in history:
+        frame["wards"] = [
+            {"type": w["type"], "pos": [w["x"], w["y"]]}
+            for w in match.get("wards", ())
+            if w["team"] == team and w["start"] <= frame["t"] <= w["end"]
+        ]
+        for enemy in frame["enemies"]:
+            name, last = enemy["hero"], enemy["last_seen"]
+            enemy["trail"] = (
+                visible_trail(match["tracks"][name]["pos"], visibility[name, team], last)
+                if last is not None
+                else []
+            )
+    owned, ready = save_state(state, means)
+    abilities = (a["name"] for a in state.get("abilities") or [] if a.get("name"))
+    items = (i["name"] for i in (state.get("items") or {}).values() if i.get("name"))
+    ready_names = [
+        name
+        for name in sorted(set(abilities) | set(items))
+        if name in means and save_state(state, {name})[1]
+    ]
+    return {
+        "match": mid,
+        "hero": hero,
+        "t": t,
+        "history": history,
+        "hp": [state.get("hp"), state.get("max_hp")],
+        "ready_names": ready_names,
+        "mana": state.get("mana"),
+        "saves": [owned, ready],
+    }
+
+
 def make_cases(match, mid, hero, hits, visibility, states, means, deaths):
     team = match["tracks"][hero]["team"]
     track = match["tracks"][hero]["pos"]
@@ -158,38 +210,13 @@ def make_cases(match, mid, hero, hits, visibility, states, means, deaths):
             continue
         next_time = t + REPEAT_SECONDS
         lane, front = wave
-        history = [
-            frame
-            for sec in (t - 10, t - 5, t)
-            if (frame := evidence_at(match["tracks"], visibility, hero, sec)) is not None
-        ]
-        for frame in history:
+        evidence = _context(match, mid, hero, t, visibility, states[t], means)
+        evidence.update(lane=lane, front=front, front_distance=round(dist(track[t], front)))
+        for frame in evidence["history"]:
             waves = match["fronts"].get(frame["t"]) or {}
             own_wave = waves.get(f"{LANE_TEAM[team]}_{lane}") or {}
             frame["wave"] = own_wave.get("front")
-        state = states[t]
-        owned, ready = save_state(state, means)
-        abilities = (a["name"] for a in state.get("abilities") or [] if a.get("name"))
-        items = (i["name"] for i in (state.get("items") or {}).values() if i.get("name"))
-        ready_names = [
-            name
-            for name in sorted(set(abilities) | set(items))
-            if name in means and save_state(state, {name})[1]
-        ]
-        lean, reason = assess(history[-1], state)
-        evidence = {
-            "match": mid,
-            "hero": hero,
-            "t": t,
-            "lane": lane,
-            "history": history,
-            "hp": [state.get("hp"), state.get("max_hp")],
-            "ready_names": ready_names,
-            "front": front,
-            "mana": state.get("mana"),
-            "saves": [owned, ready],
-            "front_distance": round(dist(track[t], front)),
-        }
+        lean, reason = assess(evidence["history"][-1], states[t])
         action, detail = observe_action(track, hits, team, t, front)
         later = {
             "lane_last_hits": bisect_right(hits, t + OUTCOME_SECONDS) - bisect_right(hits, t),
@@ -197,3 +224,100 @@ def make_cases(match, mid, hero, hits, visibility, states, means, deaths):
             "complete": match["last"] >= t + OUTCOME_SECONDS,
         }
         yield evidence, {"action": action, "detail": detail, "lean": lean, "reason": reason}, later
+
+
+def jungle_seconds(events, hero):
+    """Own non-illusion last hits on neutral-prefixed units, including duplicate seconds."""
+    return sorted(
+        e["time"]
+        for e in events
+        if e["payload"].get("log_type") == "DEATH"
+        and e["payload"].get("attacker_name") == hero
+        and not e["payload"].get("attacker_is_illusion")
+        and (e["payload"].get("target_name") or "").startswith("npc_dota_neutral_")
+    )
+
+
+def _jungle_reason(frame):
+    missing = sum(e["distance"] is None for e in frame["enemies"])
+    ally = frame["ally"]
+    support = f"最近队友相距 {ally[0]}。" if ally else "当前没有存活队友的位置记录。"
+    markers = frame["markers"]
+    contact = min(
+        (
+            dist(a["pos"], b["pos"])
+            for a in markers
+            if a["side"] == "ally"
+            for b in markers
+            if b["side"] == "enemy"
+        ),
+        default=None,
+    )
+    if contact is None:
+        help_text = "缺少队友与可见敌人的相对位置，支援需求待定。"
+    else:
+        help_text = f"队友与可见敌人的最短距离为 {round(contact)}，支援还取决于自己能否及时到场。"
+    return (
+        f"留区可继续获取野区资源；{missing} 名敌人当前没有可见位置。"
+        + support
+        + "若来路已暴露，可考虑换区；对方是否获知下一站尚不确定。"
+        + help_text
+    )
+
+
+def route_from_lane(track, lane_hits, t, camps):
+    """Straight-line alternatives from the last lane hit in [t-45,t), using only own track.
+
+    lane_hits is sorted. The count includes the nearest camp to the hero at t and all
+    camp centres as close or closer to the lane anchor. It measures geometric choice,
+    without estimating pathing, camp occupancy or whether opponents saw the lane hit.
+    """
+    previous = bisect_left(lane_hits, t) - 1
+    if previous < 0 or t - lane_hits[previous] > 45 or not camps:
+        return None
+    lane_t = lane_hits[previous]
+    origin, here = track.get(lane_t), track.get(t)
+    if origin is None or here is None:
+        return None
+    camp = min(camps, key=lambda c: dist(here, (c["x"], c["y"])))
+    centre = [camp["x"], camp["y"]]
+    radius = dist(origin, centre)
+    return {
+        "lane_t": lane_t,
+        "lane_pos": list(origin),
+        "camp_id": camp["id"],
+        "camp_pos": centre,
+        "radius": round(radius),
+        "candidate_count": sum(dist(origin, (c["x"], c["y"])) <= radius for c in camps),
+    }
+
+
+def make_jungle_cases(match, mid, hero, hits, visibility, states, means, deaths, camps):
+    track = match["tracks"][hero]["pos"]
+    next_time = START_SECOND
+    for t in hits:
+        if t < next_time or t not in track or t not in states:
+            continue
+        next_time = t + REPEAT_SECONDS
+        evidence = _context(match, mid, hero, t, visibility, states[t], means)
+        here = track[t]
+        camp = min(camps, key=lambda c: dist(here, (c["x"], c["y"])))
+        point = [camp["x"], camp["y"]]
+        evidence.update(kind="jungle", camp_id=camp["id"], camp_distance=round(dist(here, point)))
+        evidence["history"][-1]["camp"] = point
+        count = bisect_right(hits, t + ACTION_SECONDS) - bisect_right(hits, t)
+        detail = f"随后六秒内记录到 {count} 次野怪补刀。"
+        if match["last"] < t + ACTION_SECONDS:
+            detail = "录像结束，六秒动作窗不完整。"
+        action = {
+            "action": "unknown",
+            "lean": "unknown",
+            "detail": detail,
+            "reason": _jungle_reason(evidence["history"][-1]),
+        }
+        outcome = {
+            "jungle_last_hits": bisect_right(hits, t + OUTCOME_SECONDS) - bisect_right(hits, t),
+            "death_seconds": [s for s in deaths if t < s <= t + OUTCOME_SECONDS],
+            "complete": match["last"] >= t + OUTCOME_SECONDS,
+        }
+        yield evidence, action, outcome

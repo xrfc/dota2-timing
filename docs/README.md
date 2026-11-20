@@ -1,5 +1,8 @@
 # 文档索引
 
+[行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
+
+
 [一号位兵线意识复盘与取样口径](lane-decision-review.md)
 
 **先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-17）。
