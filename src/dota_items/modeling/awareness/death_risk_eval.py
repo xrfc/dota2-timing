@@ -328,7 +328,10 @@ def false_alarm_rate(frame, scores, y, mask, threshold, step):
     order = np.lexsort((frame["t"].to_numpy(), frame["hero"].to_numpy(),
                         frame["match_id"].to_numpy()))  # fmt: skip
     match, hero = frame["match_id"].to_numpy()[order], frame["hero"].to_numpy()[order]
-    same = np.r_[False, (match[1:] == match[:-1]) & (hero[1:] == hero[:-1])]
+    times = frame["t"].to_numpy()[order]
+    same = np.r_[
+        False, (match[1:] == match[:-1]) & (hero[1:] == hero[:-1]) & (np.diff(times) == step)
+    ]
     alarm = ((scores >= threshold) & mask & (y == 0))[order]
     previous = np.r_[False, alarm[:-1]]
     hours = mask.sum() * step / 3600
@@ -337,13 +340,30 @@ def false_alarm_rate(frame, scores, y, mask, threshold, step):
     return float((alarm & ~(previous & same)).sum() / hours), float(alarm.sum() / mask.sum())
 
 
-def threshold_for_rate(frame, scores, y, mask, step, onsets_per_hour, rounds=40):
-    """The lowest threshold whose false-alarm onsets per hour do not exceed the target."""
-    low, high = 0.0, 1.0
-    for _ in range(rounds):
-        middle = (low + high) / 2
-        if false_alarm_rate(frame, scores, y, mask, middle, step)[0] > onsets_per_hour:
-            low = middle
-        else:
-            high = middle
-    return high
+def threshold_for_rate(frame, scores, y, mask, step, onsets_per_hour):
+    """Count alarm runs at every score boundary, including thresholds that split runs."""
+    eligible = np.asarray(mask) & (np.asarray(y) == 0)
+    if not eligible.any():
+        return 0.0
+    ordered = frame.assign(score=np.asarray(scores), eligible=eligible).sort_values(
+        ["match_id", "hero", "t"]
+    )
+    # Each active sample adds one run. Each adjacent active pair joins two runs.
+    adjacent = (
+        ordered["eligible"]
+        & ordered["eligible"].shift(fill_value=False)
+        & ordered["match_id"].eq(ordered["match_id"].shift())
+        & ordered["hero"].eq(ordered["hero"].shift())
+        & ordered["t"].diff().eq(step)
+    )
+    starts = np.sort(ordered.loc[ordered["eligible"], "score"].to_numpy())
+    joins = np.sort(np.minimum(ordered["score"], ordered["score"].shift())[adjacent])
+    thresholds = np.r_[0.0, np.nextafter(np.unique(starts), np.inf)]
+    runs = (
+        len(starts)
+        - np.searchsorted(starts, thresholds)
+        - len(joins)
+        + np.searchsorted(joins, thresholds)
+    )
+    hours = np.asarray(mask).sum() * step / 3600
+    return float(thresholds[np.flatnonzero(runs / hours <= onsets_per_hour)[0]])

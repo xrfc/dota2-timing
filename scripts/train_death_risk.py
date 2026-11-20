@@ -157,7 +157,7 @@ def main(argv=None):
         )
     _, threshold = at_false_alarm(y[early], boosting[early], ALERT_FALSE_ALARM)
     report["alerts"] = {
-        "threshold": round(threshold, 4),
+        "threshold": float(threshold),
         "false_alarm_rate_on_samples_not_hit_last_3s": ALERT_FALSE_ALARM,
         "horizon": MAIN_HORIZON,
         **summarize_alerts(death_alerts(frame, deaths, boosting, threshold, MAIN_HORIZON)),
@@ -169,7 +169,7 @@ def main(argv=None):
             frame, boosting, y, outside, fight_threshold, info["every_seconds"]
         )
         report["fight_alerts"] = {
-            "threshold": round(fight_threshold, 4),
+            "threshold": float(fight_threshold),
             "false_alarm_onsets_per_hour_outside_fight": round(onsets, 2),
             "share_of_time_outside_fight_in_false_alarm": round(share, 4),
             "false_alarm_rate_on_samples_outside_fight": ALERT_FALSE_ALARM,

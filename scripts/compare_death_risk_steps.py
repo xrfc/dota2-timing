@@ -36,20 +36,28 @@ def main(argv=None):
     parser.add_argument("--out", type=Path)
     args = parser.parse_args(argv)
     folder = args.root / args.table
-    parts, _ = load_parts(folder)
+    parts, info = load_parts(folder)
     spans = fight_spans(parts["hits"], parts["contact"])
     del parts
-    _, deaths, _ = load_risk_frame(folder, every=15)
+    keys = ["match_id", "hero", "t"]
+    base, deaths, _ = load_risk_frame(folder, columns=[*keys, "dies_20"])
+    base = base.set_index(keys)["dies_20"].sort_index()
     deaths = pd.DataFrame(deaths)
     rows, target = [], None
     for path in args.reports:
         report = json.loads((path / "report.json").read_text(encoding="utf-8"))
-        if report["input"]["conditions_digest"] is None:
-            parser.error(f"{path}: input not verified")
+        if report["input"]["conditions_digest"] != info["conditions_digest"]:
+            parser.error(f"{path}: input differs from comparison table")
         step = report["every_seconds"]
+        if step <= 0 or step % info["params"]["step"]:
+            parser.error(f"{path}: incompatible sampling step")
         scores = np.load(path / "out-of-fold.npz", allow_pickle=False)
         frame = pd.DataFrame({k: scores[k] for k in ("match_id", "hero", "t")})
         y, boosting = scores["y"], scores["boosting"]
+        expected = base[(base.index.get_level_values("t") - info["params"]["start"]) % step == 0]
+        actual = frame.assign(label=y).set_index(keys)["label"].sort_index()
+        if not actual.index.equals(expected.index) or not np.array_equal(actual, expected):
+            parser.error(f"{path}: prediction rows or death labels differ from the table")
         outside = ~in_fight(frame, spans)
         if target is None:
             target = false_alarm_rate(
@@ -61,7 +69,7 @@ def main(argv=None):
         rows.append({
             "report": str(path),
             "every_seconds": step,
-            "threshold": round(threshold, 4),
+            "threshold": threshold,
             "false_alarm_onsets_per_hour": round(onsets, 2),
             "share_of_time_in_false_alarm": round(share, 4),
             **summarize_fight_alerts(found),
