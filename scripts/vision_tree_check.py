@@ -48,12 +48,23 @@ class TreeTerrain(Terrain):
             px, py = x + OFFSET, y + OFFSET
             self.points.setdefault((px // BUCKET, py // BUCKET), []).append((px, py))
 
-    def _tree_near(self, x, y):
-        bx, by = x // BUCKET, y // BUCKET
-        for i in (bx - 1, bx, bx + 1):
-            for j in (by - 1, by, by + 1):
+    def intersects_tree(self, source, target):
+        """Test the closed segment against tree disks, including the endpoint cells."""
+        x, y = source
+        tx, ty = target
+        dx, dy = tx - x, ty - y
+        length2 = dx * dx + dy * dy
+        radius = self.radius
+        left = math.floor((min(x, tx) - radius) / BUCKET)
+        right = math.floor((max(x, tx) + radius) / BUCKET)
+        bottom = math.floor((min(y, ty) - radius) / BUCKET)
+        top = math.floor((max(y, ty) + radius) / BUCKET)
+        for i in range(left, right + 1):
+            for j in range(bottom, top + 1):
                 for px, py in self.points.get((i, j), ()):
-                    if (px - x) ** 2 + (py - y) ** 2 <= self.radius**2:
+                    projection = ((px - x) * dx + (py - y) * dy) / length2 if length2 else 0
+                    share = max(0, min(1, projection))
+                    if (px - x - share * dx) ** 2 + (py - y - share * dy) ** 2 <= radius**2:
                         return True
         return False
 
@@ -68,9 +79,9 @@ class TreeTerrain(Terrain):
             cell = cell_of(x, y)
             if cell in (first, last):
                 continue
-            if self.elevation[cell[0]][cell[1]] > height or self._tree_near(x, y):
+            if self.level(x, y) > height:
                 return False
-        return True
+        return not self.intersects_tree(source, target)
 
 
 def sees(source, target, kind, second, terrain):
@@ -153,7 +164,13 @@ def main():
                     )
                     counts[(half, r)][2 * truth + said] += 1
         print(f"{mid} [{used}/{len(ids)}]", flush=True)
-    result = {"use": "exploration_only", "matches": used, "step": args.step, "halves": {}}
+    result = {
+        "tree_geometry": "segment_circle",
+        "use": "exploration_only",
+        "matches": used,
+        "step": args.step,
+        "halves": {},
+    }
     for (half, r), (hid_no, hid_yes, vis_no, vis_yes) in counts.items():
         total = hid_no + hid_yes + vis_no + vis_yes
         result["halves"].setdefault(f"half_{half}", {})[str(r)] = {

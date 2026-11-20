@@ -112,3 +112,15 @@ def test_extra_sources_are_held_watchers_summons_and_illusions():
         ("summon", (2, 2)),
     ]
     assert v.RANGE["watcher"] == (800, 450)
+
+
+def test_tree_disk_intersects_short_ray_between_clear_endpoints():
+    import runpy
+    from pathlib import Path
+
+    tree_terrain = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "scripts/vision_tree_check.py")
+    )["TreeTerrain"]
+    terrain = tree_terrain(flat(), [(16, 31)], 32)
+    assert not terrain.clear((ORIGIN - 15, ORIGIN), (ORIGIN + 46, ORIGIN), 1)
+    assert terrain.clear((ORIGIN - 15, ORIGIN - 2), (ORIGIN + 46, ORIGIN - 2), 1)
