@@ -66,6 +66,7 @@ def build_reviewed(base, inputs, *, version, vocabulary, terms, known_subjects=f
             "decisions": _tally(row["decision"] for row in rows),
             "basis": _tally(row["basis"].split(":")[0] for row in rows),
             "retired_rows": len(doc["retired_rows"]),
+            "rows_with_condition_note": sum(bool(r["condition_notes"]) for r in rows),
         },
     }
 
@@ -114,6 +115,28 @@ def _decision_change(doc, operation, **_):
     doc["rows"][index] = {
         **row,
         "decision": operation["to"],
+        "basis": operation["basis"],
+        "notes_zh": [*row["notes_zh"], operation["note_zh"]],
+    }
+
+
+def _condition_change(doc, operation, **_):
+    index, row = _find(doc, operation)
+    if row["condition"] != operation["from"] or operation["to"] not in CONDITIONS:
+        raise ValueError(f"{row['review_id']}: unexpected condition")
+    if any(
+        other is not row
+        and other["subject"] == row["subject"]
+        and other["mechanism"] == row["mechanism"]
+        and other["condition"] == operation["to"]
+        for other in doc["rows"]
+    ):
+        raise ValueError("Duplicate condition after change")
+    _check_basis(operation["basis"])
+    doc["rows"][index] = {
+        **row,
+        "condition": dict(operation["to"]),
+        "condition_notes": operation["condition_notes"],
         "basis": operation["basis"],
         "notes_zh": [*row["notes_zh"], operation["note_zh"]],
     }
@@ -207,6 +230,7 @@ def _reword_notes(doc, operation, **_):
 OPERATIONS = {
     "basis_update": _basis_update,
     "decision_change": _decision_change,
+    "condition_change": _condition_change,
     "add_row": _add_row,
     "retire": _retire,
     "note": _note,

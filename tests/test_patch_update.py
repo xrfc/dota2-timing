@@ -114,3 +114,19 @@ def test_hero_level_changes_expand_to_abilities_and_new_heroes_need_a_person():
     assert result["manual_review"] == [
         {"hero": "npc_dota_hero_new", "reason": "herodata/english: hero-level hero_added []"}
     ]
+
+
+def test_game_diff_preserves_each_heroes_ability_definitions(tmp_path):
+    for label, value in (("old", "1"), ("new", "2")):
+        folder = tmp_path / label / "sources/scripts/npc/heroes"
+        folder.mkdir(parents=True)
+        for hero in ("a", "b"):
+            (folder / f"{hero}.txt").write_text(
+                f'"DOTAHeroes" {{ "npc_dota_hero_{hero}" {{ "AbilityDefinitions" '
+                f'{{ "spell_{hero}" {{ "IsBreakable" "{value}" }} }} }} }}'
+            )
+    diff = flow.game_diff(tmp_path / "old", tmp_path / "new")
+    assert [row["block"] for row in diff["changes"]] == [
+        "npc_dota_hero_a/spell_a",
+        "npc_dota_hero_b/spell_b",
+    ]

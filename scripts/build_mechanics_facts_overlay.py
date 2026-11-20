@@ -43,6 +43,7 @@ IMPLEMENTATION = (
     "src/dota_items/data/mechanics.py",
     "src/dota_items/data/mechanics_conditions.py",
     "src/dota_items/data/mechanics_facts_overlay.py",
+    "src/dota_items/data/mechanics_facts_v12.py",
     "src/dota_items/data/mechanics_facts_v19.py",
     "src/dota_items/data/mechanics_graph_v2.py",
     "src/dota_items/data/mechanics_interactions.py",
@@ -67,6 +68,8 @@ def declared_inputs(repo, spec):
     heroes = sorted(p.relative_to(repo).as_posix() for p in (npc / "heroes").glob("*.txt"))
     names = [spec[k] for k in ("base", "inputs", "vocabulary", "rules", "enums", "registry")]
     names += [spec[k] for k in ("item_registry", "extra_abilities") if spec.get(k)]
+    if spec.get("hero_field_corrections"):
+        names.append(spec["hero_field_corrections"])
     names += [f"{spec['game_npc']}/npc_abilities.txt", spec["items_txt"], *heroes]
     return tuple(dict.fromkeys(names))
 
@@ -111,6 +114,54 @@ def known_subjects(repo, spec, registry):
     return known
 
 
+def rebuild_hero_observations(repo, spec, registry, doc):
+    """Replace hero enum/mana observations and honor recorded field exclusions (U79)."""
+    corrections = (repo / spec["hero_field_corrections"]).read_text(encoding="utf-8")
+    excluded = {
+        (r["subject"], r["evidence_kind"])
+        for r in map(json.loads, corrections.splitlines())
+        if r["kind"] == "field_fix"
+    }
+    observations = [
+        r for r in doc["field_observations"] if r["evidence_kind"].startswith("item_attr:")
+    ]
+    damage = {1: "physical_damage", 2: "magical_damage", 4: "pure_damage"}
+    for hi, hero in enumerate(registry["heroes"]):
+        for ai, ability in enumerate(hero["abilities"]):
+            raw = ability["raw_mechanics"]
+            fields = [
+                (
+                    "effect_dispellability",
+                    "enum:dispellable",
+                    "raw_mechanics/dispellable",
+                    raw["dispellable"],
+                ),
+                ("mana_cost", "field:mana_costs", "mana_costs", ability["mana_costs"]),
+            ]
+            if raw["damage"] in damage:
+                fields.append(
+                    (damage[raw["damage"]], "enum:damage", "raw_mechanics/damage", raw["damage"])
+                )
+            if raw["immunity"] == 3:
+                fields.append(
+                    ("pierces_debuff_immunity", "enum:immunity", "raw_mechanics/immunity", 3)
+                )
+            for mechanism, kind, field, value in fields:
+                if (ability["name"], kind) in excluded:
+                    continue
+                pointer = f"{spec['registry']}#/heroes/{hi}/abilities/{ai}/{field}"
+                observations.append(
+                    {
+                        "subject": ability["name"],
+                        "mechanism": mechanism,
+                        "evidence_kind": kind,
+                        "value": value,
+                        "fact_id": pointer,
+                    }
+                )
+    doc["field_observations"] = observations
+
+
 def run(spec_path, output, repo=ROOT):
     repo, output = Path(repo), Path(output)
     spec = (
@@ -137,6 +188,8 @@ def run(spec_path, output, repo=ROOT):
         terms=terms,
         known_subjects=known_subjects(repo, spec, registry),
     )
+    if spec.get("hero_field_corrections"):
+        rebuild_hero_observations(repo, spec, registry, doc)
     rules = expand_rules(
         load_rules_v11(load_json(repo, spec["rules"]), terms), registry["heroes"], doc
     )

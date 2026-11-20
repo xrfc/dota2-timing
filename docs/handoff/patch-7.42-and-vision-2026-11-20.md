@@ -44,7 +44,7 @@ origin/main
 
 - 崖边检验（U186）：`scripts/vision_cliff_check.py`，结论在`docs/map-knowledge-design.md`§10.5——崖边细化高度不值得做（最多约0.5个百分点）；被树挡掉的占漏判24%。
 - 树按真实半径遮挡：`scripts/vision_tree_check.py`，结果`reports/vision-tree-check-2026-11-20/`（本地，未跟踪），结论写在视野分支的`docs/map-knowledge-design.md`§10.6。
-- **被砍的树**：用户同意改解析器，但2026-11-20查过，这批demo里**没有直接的砍树记录**：战斗日志没有`TREE_CUT`（类型35）条目，没有树实体，字符串表里也没有树的状态。可能的间接来源是树倒下的特效（`UM_ParticleManager`）或音效（`GE_SosStartSoundEvent`），要先研究怎么从哈希找到树的特效名，再决定做不做。详见视野分支的§10.6。
+- **被砍的树**：用户同意改解析器，但2026-11-20查过，已检查的一场7.41f录像里**没有直接的砍树记录**：战斗日志没有`TREE_CUT`（类型35）条目，没有树实体，字符串表里也没有树的状态。可能的间接来源是树倒下的特效（`UM_ParticleManager`）或音效（`GE_SosStartSoundEvent`），要先研究怎么从哈希找到树的特效名，再决定做不做。详见视野分支的§10.6。
 
 ## 4. 容易踩的坑
 
@@ -53,3 +53,5 @@ origin/main
 - 新脚本、新模块要在`src/dota_items/architecture.py`登记，并更新`docs/architecture.md`的统计表（`PYTHONPATH=src .venv/bin/python scripts/architecture_stats.py`）。
 - Codex复核脚本用`~/.local/bin/codex-prefer`，模型`gpt-6.2-astra`，推理强度high（U180）；只读、空目录、不存会话。
 - 账号ID只在未跟踪的`configs/user.local.json`。
+
+2026-11-20 更新：候选 v27 的已完成项与剩余裁定见[执行顺序](../patch-7.42-plan.md)。旧差异计数由 revision-2 取代。
