@@ -400,6 +400,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+路线 B 当前推进[一号位兵线决策复盘](lane-decision-review.md)。首批 47 个决策时刻已可盲评，下一步人工核对 13 个继续收线与撤退提示有分歧的片段，梳理草案漏掉的证据。
+
 2026-11-20：死亡预警步长比较修正误报分段、阈值搜索与样本一致性检查，见 docs/b2-death-risk-contract.md。
 
 | 线 | 里程碑 | 状态 | 开始 | 完成 |

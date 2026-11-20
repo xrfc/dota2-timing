@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>带线决策复盘</title><link rel="stylesheet" href="style.css">
+<main><header><h1>带线决策复盘</h1><p>7.41f · 一号位 · 己方视角</p></header>
+<label>选择片段 <select id="cases"></select></label>
+<div class="layout"><section><h2 id="title">加载片段中…</h2><p id="wave"></p>
+<canvas width="600" height="565" id="map" aria-label="己方英雄和当时可见敌人的位置"></canvas>
+<p class="legend">黄：自己　绿：队友　红：可见敌人　白方块：己方兵线前沿</p>
+<label>查看时刻 <select id="frames"></select></label><p id="ally"></p><ul id="enemies"></ul></section>
+<section><h2>继续收线，还是先拉开？</h2><p id="kit"></p>
+<p>继续收线可争取下一次补刀；向己方拉开可以缩短在线上暴露的时间，但可能放掉补刀。请结合当前视野和自己的状态判断。</p>
+<fieldset id="choices"><legend>你的判断</legend><button data-choice="farm">继续收线</button><button data-choice="retreat">先拉开</button><button data-choice="unknown">证据不足</button></fieldset>
+<p id="first-choice" hidden></p><label for="notes">判断依据或异议（仅此浏览器保存）</label><textarea id="notes" rows="2"></textarea>
+<div id="review" hidden><h3>决策点评</h3><p id="advice"></p><p id="action"></p><p id="assessment"></p>
+<button id="reveal">揭示之后 20 秒的结果</button><p id="outcome"></p></div>
+<p id="error" role="status"></p></section></div></main><script src="app.js"></script></html>
