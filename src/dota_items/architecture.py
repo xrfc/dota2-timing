@@ -379,6 +379,7 @@ SCRIPTS = {
     "gank_review": _B,
     "vision_check": _B,
     "vision_cliff_check": _B,
+    "vision_tree_check": _B,
     "build_decision_state_cards": _B,
     "collect_replay_expansion": _B,
     "decision_review": _B,

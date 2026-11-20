@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-11-20 U186：树的半径；被砍的树查不到
+
+- `scripts/vision_tree_check.py`（探索）：树按真实半径遮挡，半径48两半都最好，但只比整格多约0.2个百分点，不改默认做法。
+- 用户同意改解析器补被砍的树，但录像里没有直接的砍树记录（战斗日志没有TREE_CUT、没有树实体、字符串表没有），只可能从特效或音效消息间接推断，暂不做。见`docs/map-knowledge-design.md`§10.6。
+- 解析demo要用兼容版解析库（`PYTHONPATH=data/replay-pilot-2026-10-22/compat-v1:src`），原版会报`BufferReadError`。
+
 ## 2026-11-20 U186：崖边检验
 
 - `scripts/vision_cliff_check.py`（探索）：视野模拟的错按离崖边的距离分组。崖边的总正确率不比别处差，崖边细化高度最多多约0.5个百分点，不值得做；被树挡掉的占漏判的24%（上限约1.6个百分点）。结果见`docs/map-knowledge-design.md`§10.5。
