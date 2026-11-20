@@ -76,6 +76,7 @@ def test_only_authenticated_report_assets_are_readable(service):
     with listening(service) as port:
         for path in ("/lane/", "/jungle/cases.json", "/reviews"):
             assert request(port, path)[0] == 401
+        assert request(port, "/")[1]["Referrer-Policy"] == "same-origin"
         cookie, _ = login(port, code)
         headers = {"Cookie": cookie}
         assert request(port, "/lane/", headers=headers)[2] == b"review-lane"
