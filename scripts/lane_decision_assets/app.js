@@ -8,8 +8,53 @@ let cases = [], names = {}, current, revision = 0;
 const zh = hero => names[hero] || hero;
 const map = new Image();
 const storageKey = () => (jungle ? 'jungle-review-v1:' : 'lane-review-v1:') + location.pathname + ':' + current.id;
-const saved = () => JSON.parse(localStorage.getItem(storageKey()) || '{}');
-const save = value => localStorage.setItem(storageKey(), JSON.stringify({...saved(), ...value}));
+const portal = /^\/(lane|jungle|wave)\/(?:index\.html)?$/.test(location.pathname);
+const drafts = new Map(), committed = new Map(), sending = new Set(), errors = new Map();
+let reviewer;
+const exposureKey = () => 'review-exposure:'+reviewer+':'+current.id;
+function saved() {
+  if (!portal) return JSON.parse(localStorage.getItem(storageKey()) || '{}');
+  const record = drafts.get(current.id) || committed.get(current.id) || {};
+  if (!record.first && !record.previewed && localStorage.getItem(exposureKey()) === '1') {
+    return {...record, previewed:true};
+  }
+  return record;
+}
+function save(value) {
+  if (!current) return;
+  const record = {...saved(), ...value};
+  if (portal) {
+    if (record.previewed) localStorage.setItem(exposureKey(), '1');
+    drafts.set(current.id, record);
+    errors.delete(current.id);
+    submissionStatus();
+  } else localStorage.setItem(storageKey(), JSON.stringify(record));
+}
+function submissionStatus() {
+  if (!portal || !current) return;
+  const id = current.id, row = saved();
+  const hasOpinion = Boolean(row.choice || row.note?.trim() || committed.has(id));
+  const dirty = drafts.has(id) && JSON.stringify(drafts.get(id)) !== JSON.stringify(committed.get(id));
+  el('submit-review').disabled = sending.has(id) || !dirty || !hasOpinion;
+  el('submit-status').textContent = errors.get(id) || (sending.has(id) ? '提交中…' :
+    dirty && hasOpinion ? '有未提交的修改' : committed.has(id) ? '已提交' : '尚未提交');
+}
+async function submitReview() {
+  const id = current.id, row = saved();
+  if (sending.has(id)) return;
+  const record = {case_id:id, choice:row.choice || null, first:row.first || null,
+    previewed:Boolean(row.previewed), note:row.note || ''};
+  sending.add(id); errors.delete(id); submissionStatus();
+  try {
+    const r = await fetch('/reviews', {method:'POST', headers:{
+      'Content-Type':'application/json', 'X-Review-Reviewer':reviewer}, body:JSON.stringify(record)});
+    if (r.status === 401 || r.status === 409) throw Error('登录状态已变更，请重新进入评审页。');
+    if (!r.ok || !(await r.json()).ok) throw Error('提交未成功，请重试。');
+    committed.set(id, record);
+    if (drafts.get(id) === row) drafts.delete(id);
+  } catch (err) { errors.set(id, err.message); }
+  finally { sending.delete(id); submissionStatus(); }
+}
 async function read(path) {
   const r = await fetch(path);
   if (!r.ok) throw Error('读取失败：' + path);
@@ -177,7 +222,7 @@ function openCase() {
   el('kit').textContent = '决策时生命 ' + current.hp.map(v => v ?? '未知').join('/') + '，魔法 ' + (current.mana ?? '未知') + '。保命手段就绪估计：' + (current.ready_names.map(zh).join('、') || '未检出') + '。距离、控制和施法条件仍会影响能否脱身。';
   el('review').hidden = true; el('notes').value = saved().note || ''; el('error').textContent = '';
   for (const b of el('choices').querySelectorAll('button')) b.setAttribute('aria-pressed', false);
-  draw(); if (saved().choice) judge(saved().choice).catch(fail);
+  submissionStatus(); draw(); if (saved().choice) judge(saved().choice).catch(fail);
 }
 function fail(err) { el('error').textContent = err.message; }
 el('cases').onchange = openCase; el('frames').onchange = draw; el('vision').onchange = draw;
@@ -185,7 +230,21 @@ el('notes').oninput = () => save({note: el('notes').value});
 el('choices').onclick = e => { if(e.target.dataset.choice) judge(e.target.dataset.choice).catch(fail); };
 el('preview').onclick = () => showAnalysis().catch(fail);
 el('reveal').onclick = () => reveal().catch(fail);
-read('cases.json').then(doc => {
+async function loadPage() {
+  if (portal) {
+    const r = await fetch('/reviews', {cache:'no-store'});
+    if (!r.ok) throw Error('无法读取个人评审，请返回邀请入口重新登录。');
+    const snapshot = await r.json();
+    reviewer = snapshot.reviewer;
+    if (!reviewer || !Array.isArray(snapshot.reviews)) throw Error('个人评审响应不完整，请刷新。');
+    for (const row of snapshot.reviews) committed.set(row.case_id, row);
+    el('online-review').hidden = false;
+    el('submit-review').onclick = submitReview;
+    document.querySelector('label[for=notes]').textContent = '判断依据或异议（点提交后交给组织者）';
+  }
+  return read('cases.json');
+}
+loadPage().then(doc => {
   if (doc.mode==='wave') {
     document.title = '兵线取舍复盘';
     document.querySelector('h1').textContent = document.title;

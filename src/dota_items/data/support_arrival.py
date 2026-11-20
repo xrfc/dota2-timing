@@ -83,3 +83,46 @@ def support_followup(hits_by_second, ally, t, last):
         "complete": end == t + 20,
         "summary": text + "交战结束时刻仍未知。",
     }
+
+
+def observed_approach(track, t, last, target):
+    """Check recorded seconds within 400 units of the ally's fixed decision-time spot."""
+    radius = 400
+    end = min(t + 20, last)
+    offsets = range(end - t + 1)
+    missing = [s for s in offsets if track.get(t + s) is None]
+    first = next(
+        (
+            s
+            for s in offsets
+            if track.get(t + s) is not None and dist(track[t + s], target) <= radius
+        ),
+        None,
+    )
+    first_entry = first if first is not None and not any(s < first for s in missing) else None
+    window_complete = end == t + 20
+    if first == 0:
+        status, text = "already_near", "决策当秒已在范围内。"
+    elif first is not None:
+        status = "observed_near"
+        text = f"+{first} 秒首次记录到进入范围。"
+        if first_entry is None:
+            text += "此前缺少位置采样，可能更早进入。"
+    elif missing:
+        status, text = "missing", "已有位置采样均在范围外，缺失秒点的行踪未知。"
+    elif not window_complete:
+        status, text = "truncated", "录像结束前的采样均在范围外。"
+    else:
+        status, text = "outside", "随后二十秒的逐秒位置均在范围外。"
+    if not window_complete:
+        text += f"可回看的后续时长为 {end - t} 秒。"
+    return {
+        "radius": radius,
+        "window_complete": window_complete,
+        "observed_seconds": end - t,
+        "missing_samples": len(missing),
+        "status": status,
+        "first_seen_offset": first,
+        "first_entry_offset": first_entry,
+        "summary": f"队友决策位置周围 {radius} 单位：{text}实际施救情况需核对交战记录。",
+    }
