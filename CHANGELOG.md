@@ -1,5 +1,7 @@
 # 变更记录
 
+已核验三场录像的步行耗时误差，细分结果见 docs/lane-decision-review.md。
+
 朋友可用独立邀请码在线提交评审。移动耗时核验与邀请门户命令见 docs/lane-decision-review.md。
 
 新增行动比较与补刀前取样，分开呈现事前行动情景及实际后续事件。

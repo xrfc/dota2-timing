@@ -73,3 +73,5 @@ PYTHONPATH=src .venv/bin/python scripts/lane_decision_review.py --mode jungle --
 ```
 
 步行耗时核验可运行 PYTHONPATH=src .venv/bin/python scripts/check_support_travel.py。固定八秒终点的 119 段中，39 段落入直线与多绕三成之间。按每段实际终点回看，只校验移动尺度。结果阶段另列玩家是否靠近决策秒的队友位置。
+
+119 段连续移动中，以起点移速换算，每秒坐标连线比首尾直线多出的耗时中位数为 1.46 秒。实际八秒减去连线估时的有符号差值中位数为 +0.07 秒；正负偏差可抵消。直线与绕行三成的平均绝对误差分别为 2.55 和 2.94 秒。 逐秒连线会漏掉秒内转向；残差还包含移速变化。终点取自事后录像，只用于核验。

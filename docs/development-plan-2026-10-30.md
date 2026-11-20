@@ -400,6 +400,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+已完成三场录像的步行耗时误差分解，详见 docs/lane-decision-review.md。下一项核对支援对象的实际受击窗口。
+
 朋友可用独立邀请码在线提交评审。移动耗时核验与邀请门户命令见 docs/lane-decision-review.md。
 
 到场、接触威胁、发育与补刀前兵线取舍四项已接入，下一步用可核验的真实移动片段校准条件耗时。

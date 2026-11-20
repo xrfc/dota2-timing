@@ -12,7 +12,7 @@ from collections import Counter
 from itertools import pairwise
 from math import dist
 from pathlib import Path
-from statistics import mean
+from statistics import mean, median
 
 from detect_ganks import match_inputs
 
@@ -61,13 +61,21 @@ def audit_match(root, mid):
                 continue
             pos, speed = segment[0]
             walk = support_comparison({"pos": pos, "move_speed": speed}, segment[-1][0], [], {})
-            scenarios.append(walk["routes"]["walk"]["now"])
+            direct = dist(pos, segment[-1][0])
+            sampled_path = sum(step for step, _ in steps)
+            scenarios.append((walk["routes"]["walk"]["now"], direct, sampled_path, speed))
     return reasons, scenarios
 
 
-def metrics(scenarios):
+def metrics(segments):
+    scenarios = [scenario for scenario, *_ in segments]
+    # Signed, unrounded components sum to observed time minus the direct estimate.
+    turns = [(path - direct) / speed for _, direct, path, speed in segments]
+    residuals = [WINDOW - path / speed for _, _, path, speed in segments]
     return {
         "evaluated": len(scenarios),
+        "median_sampled_detour_seconds": round(median(turns), 2) if turns else None,
+        "median_motion_residual_seconds": round(median(residuals), 2) if residuals else None,
         "within_scenarios": sum(low <= WINDOW <= high for low, high in scenarios),
         "faster_than_direct": sum(WINDOW < low for low, _ in scenarios),
         "slower_than_detour": sum(WINDOW > high for _, high in scenarios),
