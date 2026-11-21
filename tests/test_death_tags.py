@@ -44,3 +44,12 @@ def test_primary_reason_takes_the_first_row_that_holds():
     assert reason("from_unseen", "far_from_allies", "single") == "solo"
     assert reason("far_from_allies") == "other"
     assert reason() == "skirmish"  # allies within 1500
+
+
+def test_death_matching_preserves_ambiguity_and_uses_exact_end():
+    death = {"match_id": 1, "victim": "h", "t0": 8, "end": 20, "outcome": "death"}
+    other = {**death, "t0": 15}
+    index = d.death_episode_index([death, other, {**death, "outcome": "none"}])
+    assert d.coverage_reason(index[1, "h", 20]) == d.AMBIGUOUS
+    assert d.coverage_reason(index[1, "h", 21]) == d.MISSING
+    assert d.coverage_reason([death]) is None

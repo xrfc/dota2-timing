@@ -29,6 +29,7 @@ the same folder. Loopback only; the clips are omniscient review material, not mo
 """
 
 import argparse
+import csv
 import gzip
 import hashlib
 import json
@@ -37,7 +38,13 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from dota_items.data.awareness_split import is_holdout
-from dota_items.data.death_tags import death_tags, primary_reason
+from dota_items.data.death_risk import death_times
+from dota_items.data.death_tags import (
+    coverage_reason,
+    death_episode_index,
+    death_tags,
+    primary_reason,
+)
 from dota_items.data.gank_depth import PARAMS as DEPTH_PARAMS
 from dota_items.data.gank_depth import _distance, standing_towers, tower_deaths
 from dota_items.data.gank_events import visibility_table
@@ -359,31 +366,47 @@ def compare(args):
 
 
 def match(args):
-    """Every death of the position 1 players in one match, as a non-blind review folder.
-
-    A first look at a per-match death report (U139): each death with the class the frozen
-    rule gives it, or the conditions it failed. Deaths in fights longer than the episode
-    window are not inside an episode and are missing.
-    """
+    """Build one playable clip per real position-one death, including unclassified deaths."""
     if is_holdout(args.match_id):
         raise SystemExit(f"{args.match_id} is in the track B holdout (U133)")
-    args.out.mkdir(parents=True, exist_ok=False)
-    deaths = []
     with (args.episodes / "episodes.jsonl").open(encoding="utf-8") as stream:
-        for line in stream:
-            episode = json.loads(line)
-            if episode["match_id"] == args.match_id and episode["outcome"] == "death":
-                deaths.append(episode)
-    if not deaths:
-        raise SystemExit(f"no position 1 death episodes for match {args.match_id}")
-    deaths.sort(key=lambda e: (e["victim"], e["t0"]))
+        index = death_episode_index(
+            e for e in map(json.loads, stream) if e["match_id"] == args.match_id
+        )
     # U155: every feature that holds, as tags, for every death (not only ganks).
     with (args.root / "gank-inputs-v2" / f"{args.match_id}.pkl").open("rb") as stream:
         cached = pickle.load(stream)  # written by detect_ganks.py, local only
+    victims = sorted(hero for hero, pos in cached["positions"].items() if pos == 1)
+    if not victims:
+        raise SystemExit("No position-one hero identified in this match")
+    deaths = []
+    for hero in victims:
+        for second in sorted(set(death_times(cached["combat"], hero))):
+            candidates = index.get((args.match_id, hero, second), [])
+            reason = coverage_reason(candidates)
+            if reason:
+                episode = {
+                    "match_id": args.match_id,
+                    "victim": hero,
+                    "outcome": "death",
+                    "position": 1,
+                    "t0": second,
+                    "end": second,
+                    "attackers": [],
+                    "self_saves": [],
+                    "ally_saves": [],
+                    "primary_reason": list(reason),
+                }
+            else:
+                episode = dict(candidates[0])
+            deaths.append({**episode, "death_second": second, "episode_matches": len(candidates)})
+    deaths.sort(key=lambda e: (e["death_second"], e["victim"]))
     tracks = cached["tracks"]
     tps = teleports(tracks, cached["combat"])
     regions = MapKnowledge(MAP_DRAFT) if MAP_DRAFT.exists() else None
     for episode in deaths:
+        if episode["episode_matches"] != 1:
+            continue
         place = tracks[episode["victim"]]["pos"].get(episode["t0"])
         came = [
             a
@@ -395,15 +418,17 @@ def match(args):
         episode["primary_reason"] = list(primary_reason(episode["tags"]))  # U156 draft
         episode["teleported_attackers"] = came
     if args.risk:
-        attach_risk(deaths, args.risk, args.match_id, cached["combat"])
+        attach_risk(deaths, args.risk, args.match_id)
     items = [
         {"id": f"M{number:02d}", "stratum": "match", "episode": episode}
         for number, episode in enumerate(deaths, 1)
     ]
+    args.out.mkdir(parents=True, exist_ok=False)
     write_json(
         args.out / "sample.json",
         {
             "decision": "U139 draft",
+            "position_one_heroes": victims,
             "risk": str(args.risk) if args.risk else None,
             "blind": False,
             "frozen_round": str(args.episodes),
@@ -414,7 +439,7 @@ def match(args):
     print(f"wrote {args.out / 'sample.json'}: {len(items)} deaths of match {args.match_id}")
 
 
-def attach_risk(deaths, folder, match_id, combat, before=30, after=5):
+def attach_risk(deaths, folder, match_id, before=30, after=5):
     """Add the death-risk curve (U160) of the victim around each death episode.
 
     The scores are out-of-fold: the model that scored this match never trained on it.
@@ -423,22 +448,29 @@ def attach_risk(deaths, folder, match_id, combat, before=30, after=5):
     """
     import numpy as np
 
-    from dota_items.data.death_risk import death_times
-
     report = read_json(folder / "report.json")
     oof = np.load(folder / "out-of-fold.npz")
     here = oof["match_id"] == match_id
     if not here.any():
-        raise SystemExit(f"match {match_id} has no out-of-fold risk in {folder}")
+        for episode in deaths:
+            episode["risk_unavailable"] = "这场比赛缺少折外预测"
+        return
     times, heroes = oof["t"][here], oof["hero"][here]
     scores, hits = oof["boosting"][here], oof["hit_recent"][here]
+    fights = {}
+    if "fight_alerts" in report:
+        with (folder / "fight-alerts.csv").open(encoding="utf-8") as stream:
+            for row in csv.DictReader(stream):
+                if int(row["match_id"]) == match_id:
+                    key = row["hero"], int(row["t"])
+                    if key in fights and fights[key] != row:
+                        raise ValueError(f"Conflicting fight evaluations for {key}")
+                    fights[key] = row
     for episode in deaths:
         mine = (heroes == episode["victim"]) & (times >= episode["t0"] - before)
         mine &= times <= episode["end"] + after
-        died = [s for s in death_times(combat, episode["victim"])
-                if episode["t0"] <= s <= episode["end"] + 2]  # fmt: skip
         episode["risk"] = {
-            "death": died[0] if died else None,
+            "death": episode["end"],
             "horizon": report.get("main_horizon", 20),
             "threshold": report["alerts"]["threshold"],
             "false_alarm_rate": report["alerts"].get(
@@ -450,6 +482,21 @@ def attach_risk(deaths, folder, match_id, combat, before=30, after=5):
                 for s, v, h in sorted(zip(times[mine], scores[mine], hits[mine], strict=True))
             ],
         }
+
+        risk = episode["risk"]
+        risk["step"] = report.get("every_seconds", 5)
+        if "fight_alerts" in report:
+            risk["fight_measure"] = True
+            risk["threshold"] = report["fight_alerts"]["threshold"]
+            row = fights.get((episode["victim"], episode["end"]))
+            if row and row.get("has_sample") != "False":
+                risk["fight_start"] = int(row["fight_start"])
+                risk["could_alert"] = row["could_alert"] == "True"
+                risk["alert_second"] = (
+                    episode["end"] - int(float(row["lead_to_death"]))
+                    if row["alerted"] == "True"
+                    else None
+                )
 
 
 def score(args):

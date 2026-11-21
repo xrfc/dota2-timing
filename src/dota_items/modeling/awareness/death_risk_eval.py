@@ -315,7 +315,9 @@ def summarize_fight_alerts(found):
         "share_of_deaths_that_could_alert": share(alerted, could),
         "median_lead_to_fight_seconds": median([r["lead_to_fight"] for r in alerted]),
         "median_lead_to_death_seconds": median([r["lead_to_death"] for r in alerted]),
-        "median_fight_seconds": median([r["fight_seconds"] for r in found]),
+        "median_fight_seconds": median(
+            [r["fight_seconds"] for r in found if r["fight_seconds"] is not None]
+        ),
     }
 
 

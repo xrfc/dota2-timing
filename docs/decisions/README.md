@@ -4,6 +4,7 @@
 
 | 编号 | 文件 |
 |---|---|
+| U189 | [项目产品目标](2026-11-20-project-goal.md) |
 | U1 | [取消10/31前瞻采集](2026-10-30-cancel-collection-window.md) |
 | U2 | [状态面板方案A](2026-10-30-team-state-option-a.md) |
 | U3 | [三个产品目标](2026-10-30-product-goals.md) |

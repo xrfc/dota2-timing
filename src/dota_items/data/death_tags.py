@@ -8,6 +8,29 @@ teleports, smoke and map region worked out elsewhere. They describe; they are no
 frozen rule and do not change it.
 """
 
+from collections import defaultdict
+
+MISSING = ("no_episode", "未匹配到交战片段")
+AMBIGUOUS = ("multiple_episodes", "同一死亡匹配多个交战起点")
+
+
+def death_episode_index(episodes):
+    """Frozen B0 death episodes end on the exact combat-log death second."""
+    index = defaultdict(list)
+    for episode in episodes:
+        if episode["outcome"] == "death":
+            index[(episode["match_id"], episode["victim"], episode["end"])].append(episode)
+    return index
+
+
+def coverage_reason(candidates):
+    if not candidates:
+        return MISSING
+    if len(candidates) > 1:
+        return AMBIGUOUS
+    return None
+
+
 TAGS = {
     "laning": "对线期（10分钟前）",
     "other_lane": "别路来人",

@@ -2,6 +2,7 @@
 
 import json
 import pickle
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -267,3 +268,85 @@ def test_time_budget_rejects_a_continuous_hour_of_false_alarms():
     y, mask = np.zeros(3600), np.ones(3600, dtype=bool)
     threshold = death_risk_eval.threshold_for_rate(frame, scores, y, mask, 1, 2, max_share=2 / 3600)
     assert death_risk_eval.false_alarm_rate(frame, scores, y, mask, threshold, 1) == (2, 2 / 3600)
+
+
+def test_legacy_reason_report_checks_digest_and_sample_identity(tmp_path):
+    import runpy
+
+    run = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "scripts/death_risk_by_reason.py")
+    )["main"]
+    folder = tmp_path / "table"
+    identity = tables.prepare_folder(folder, conditions(tmp_path))
+    write_match(folder, KEPT, identity)
+    path = tmp_path / "report.json"
+    args = [
+        "--root",
+        str(tmp_path),
+        "--table",
+        "table",
+        "--episodes",
+        str(tmp_path),
+        "--risk",
+        str(tmp_path),
+        "--out",
+        str(tmp_path / "out"),
+    ]
+    path.write_text(
+        json.dumps({"input": {"conditions_digest": "other"}, "alerts": {"threshold": 0.2}})
+    )
+    with pytest.raises(ValueError, match="conditions differ"):
+        run(args)
+    path.write_text(json.dumps({"alerts": {"threshold": 0.2}}))
+    np.savez(tmp_path / "out-of-fold.npz", match_id=[OTHER], hero=["h"], t=[60], hit_recent=[0])
+    with pytest.raises(ValueError, match="keys differ"):
+        run(args)
+
+
+def test_reason_report_restores_unsampled_deaths_for_old_fight_files(tmp_path):
+    import runpy
+
+    run = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "scripts/death_risk_by_reason.py")
+    )["main"]
+    folder = tmp_path / "table"
+    identity = tables.prepare_folder(folder, conditions(tmp_path))
+    write_match(
+        folder, KEPT, identity, deaths=[{"match_id": KEPT, "hero": "h", "t": 40, "position": 1}]
+    )
+    (tmp_path / "episodes.jsonl").write_text("")
+    (tmp_path / "fight-alerts.csv").write_text("\n")
+    (tmp_path / "report.json").write_text(
+        json.dumps(
+            {
+                "input": {"conditions_digest": identity},
+                "fight_alerts": {},
+                "alerts": {"threshold": 0.1},
+            }
+        )
+    )
+    np.savez(
+        tmp_path / "out-of-fold.npz",
+        match_id=[KEPT],
+        hero=["h"],
+        t=[60],
+        hit_recent=[0],
+        y=[0],
+        boosting=[0.2],
+    )
+    run(
+        [
+            "--root",
+            str(tmp_path),
+            "--table",
+            "table",
+            "--episodes",
+            str(tmp_path),
+            "--risk",
+            str(tmp_path),
+            "--out",
+            str(tmp_path / "out"),
+        ]
+    )
+    [row] = json.loads((tmp_path / "out/report.json").read_text())["before_fight"]
+    assert (row["deaths"], row["deaths_with_samples"], row["share_of_all_deaths"]) == (1, 0, 0.0)
