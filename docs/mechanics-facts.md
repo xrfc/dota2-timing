@@ -81,3 +81,5 @@ python scripts/check.py --scope all
 ## 独立语义复核
 
 首批24组助手判定与原抽样中的8组用户抽查见[语义复核说明](mechanics-review.md)，机器记录在`knowledge/mechanics/reviews/batch-001.json`。评审建议独立保存，接受建议不等于用户批准，不修改v1事实或抽查CSV。
+
+2026-11-20 更新：候选 v27 的已完成项与剩余裁定见[执行顺序](patch-7.42-plan.md)。旧差异计数由 revision-2 取代。

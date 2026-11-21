@@ -1,0 +1,220 @@
+{
+  "objects": [
+    {
+      "subject": "spectre_spectral_dagger",
+      "rows": [
+        {"review_id":"511279260664c2d783db","verdict":"holds","quote":"dealing damage and slowing the movement speed of any enemies along the trail","reason_zh":"一次投刃仍能对路径上的多个敌人造成伤害。"},
+        {"review_id":"audit:spectre_spectral_dagger:ground_zone:base","verdict":"holds","quote":"While treading the path, Spectre moves faster and phases through otherwise impassable terrain.","reason_zh":"暗影路径会留在地面，幽鬼在路径上行走期间持续获得效果。"},
+        {"review_id":"1c727873827527cd9cf6","verdict":"holds","quote":"While treading the path, Spectre moves faster","reason_zh":"幽鬼在暗影路径上仍会提高自身移速。"},
+        {"review_id":"audit:spectre_spectral_dagger:phased:base","verdict":"holds","quote":"There is a %dagger_grace_period% second grace period after leaving the path where no collision is preserved.","reason_zh":"离开路径后仍会短暂保留无碰撞状态，路径上的相位移动仍成立。"},
+        {"review_id":"4853c9169a72c7b2ac5f","verdict":"holds","quote":"slowing the movement speed of any enemies along the trail","reason_zh":"路径仍会降低沿途敌人的移动速度。"},
+        {"review_id":"153cf38df6ec88a41903","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"说明描述的是投刃与技能格挡的交互，投刃本身没有使来袭指向技能失效的效果。"},
+        {"review_id":"1f24ea57d167cd05749f","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"说明描述的是投刃与技能反弹的交互，投刃本身没有把来袭技能反弹给施法者的效果。"},
+        {"review_id":"audit:spectre_spectral_dagger:terrain_walk:base","verdict":"holds","quote":"phases through otherwise impassable terrain","reason_zh":"幽鬼沿暗影路径移动时仍可穿过通常无法通行的地形。"},
+        {"review_id":"540d852620e1d7030f32","verdict":"holds","quote":"Units hit by the dagger also trail a Shadow Path.","reason_zh":"两版说明相同，也没有施法目标字段变化，沿用原有的敌方单位指向判定。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sphere",
+      "rows": [
+        {"review_id":"audit:sphere:healing:item","verdict":"holds","quote":"bonus_all_stats: 16→17","reason_zh":"唯一字段调整是全属性由16增至17，原有装备生命回复判定没有受到这项改动影响。"},
+        {"review_id":"4011456838a07d27e426","verdict":"holds","quote":"bonus_all_stats: 16→17","reason_zh":"本次只调整全属性，没有移除或归零原有装备回蓝的字段变化。"},
+        {"review_id":"f01cc84822761f3c50e5","verdict":"holds","quote":"Blocks most targeted spells once every %block_cooldown% seconds.","reason_zh":"法球仍能周期性格挡大多数指向技能。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spirit_breaker_bull_rush",
+      "rows": [
+        {"review_id":"eb54fda43a9d1d590670","verdict":"unclear","quote":"Break disables the gaining of new stacks.","reason_zh":"新增说明明确破坏会阻止获得新层数，与原拒绝判断冲突，但材料未给出本词条以之为准的 IsBreakable 值。"},
+        {"review_id":"f223b2e72e1b4cfffc8f","verdict":"holds","quote":"Effects from multiple stuns stack and have independent durations.","reason_zh":"每次眩晕产生一层独立计时的加速，施放技能时没有逐次扣除的使用次数。"},
+        {"review_id":"a71372d3f82d809899ec","verdict":"holds","quote":"Spirit Breaker gains bonus Movement Speed for a duration whenever he stuns an enemy.","reason_zh":"裂魂人眩晕敌人后仍会获得移动速度加成。"},
+        {"review_id":"263020dd0ddb1e9eaf70","verdict":"holds","quote":"Duration pauses during Charge of Darkness.","reason_zh":"暗影冲刺期间会暂停加速计时，神行太保本身没有提供主动位移。"},
+        {"review_id":"e9d1016c93a32a54a043","verdict":"holds","quote":"whenever he stuns an enemy","reason_zh":"眩晕敌人是获得加速的触发条件，神行太保本身没有施加眩晕。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spirit_breaker_bulldoze",
+      "rows": [
+        {"review_id":"220b06e3add7a79e78d0","verdict":"holds","quote":"Spirit Breaker gains movement speed and status resistance to ram through enemies.","reason_zh":"持续时间从8秒缩至7秒，移速加成仍然生效。"},
+        {"review_id":"c6fa9034e24a619873bc","verdict":"holds","quote":"Can be used while charging.","reason_zh":"威吓可在冲刺途中使用，本身没有发起冲刺或其他位移。"},
+        {"review_id":"928b16ea938d83ac02d2","verdict":"holds","quote":"Spirit Breaker gains movement speed and status resistance to ram through enemies.","reason_zh":"裂魂人仍获得状态抗性，调整的只是持续时间。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spirit_breaker_charge_of_darkness",
+      "rows": [
+        {"review_id":"audit:spirit_breaker_charge_of_darkness:aoe_damage:base","verdict":"holds","quote":"All enemy units passed through and the targeted unit will be hit by a Greater Bash.","reason_zh":"重击半径从300缩至275，一次冲刺仍可对沿途敌人和目标造成重击伤害。"},
+        {"review_id":"f84c099e556df0aee8dc","verdict":"holds","quote":"All enemy units passed through and the targeted unit will be hit by a Greater Bash.","reason_zh":"冲刺仍会对沿途敌人和目标施加巨力重击。"},
+        {"review_id":"649384b168e117c18736","verdict":"holds","quote":"starts charging through all objects","reason_zh":"这里的 charging 指冲向目标，说明中没有按施放次数消耗的充能。"},
+        {"review_id":"6f69668e79f2304f998a","verdict":"holds","quote":"Spirit Breaker gains shared vision of the target.","reason_zh":"裂魂人仍会获得目标的共享视野。"},
+        {"review_id":"e0d6acb10bbfe51b045a","verdict":"holds","quote":"starting at %min_movespeed_bonus_pct%%% of the bonus speed and reaching his max speed after %windup_time%s","reason_zh":"基础冲刺仍提供移速加成，并会加速至最高速度。"},
+        {"review_id":"audit:spirit_breaker_charge_of_darkness:phased:base","verdict":"holds","quote":"Spirit Breaker passes through trees, cliffs, and units.","reason_zh":"冲刺期间裂魂人仍能穿过单位。"},
+        {"review_id":"0ea999f9519205bbbf82","verdict":"holds","quote":"Spirit Breaker fixes his sight on an enemy unit and starts charging through all objects","reason_zh":"施放技能仍会使裂魂人主动冲向选定敌人。"},
+        {"review_id":"f65b62e8e2f835eb3313","verdict":"holds","quote":"All enemy units passed through and the targeted unit will be hit by a Greater Bash.","reason_zh":"冲刺仍会施加巨力重击，巨力重击的说明明确包含眩晕。"},
+        {"review_id":"audit:spirit_breaker_charge_of_darkness:terrain_walk:base","verdict":"holds","quote":"Spirit Breaker passes through trees, cliffs, and units.","reason_zh":"裂魂人冲刺时仍可穿过树木、越过悬崖。"},
+        {"review_id":"79d8ec22e8493d9024ee","verdict":"holds","quote":"Spirit Breaker passes through trees, cliffs, and units.","reason_zh":"冲刺也能越过悬崖，超出了穿树词条限定的通行范围。"},
+        {"review_id":"281194b7594f6745f9f3","verdict":"holds","quote":"Spirit Breaker fixes his sight on an enemy unit and starts charging","reason_zh":"施放冲刺时仍会选定一个敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spirit_breaker_greater_bash",
+      "rows": [
+        {"review_id":"78516525145627e3d135","verdict":"holds","quote":"Gives a chance to stun and knockback an enemy unit on an attack.","reason_zh":"基础重击仍作用于一个攻击目标，碰撞波及第二个敌人的效果列在A杖说明中。"},
+        {"review_id":"de015b6e277f2cb048c1","verdict":"holds","quote":"the second enemy is bashed (creeps only receive %cascading_bashes_creep_penalty%%% damage), and the original target takes %cascading_bashes_damage_multiplier%%% of Greater Bash's damage again.","reason_zh":"有A杖时，被击退的敌人撞上另一敌人仍能使两者都受到伤害。"},
+        {"review_id":"60a99ae539a64ab120c9","verdict":"holds","quote":"If a knocked-back enemy collides with another enemy, the second enemy is bashed","reason_zh":"A杖碰撞仍会对第二个敌人施加重击。"},
+        {"review_id":"dfbe6bc76b82823c356e","verdict":"holds","quote":"Break disables the passive percent Chance to Bash.","reason_zh":"基础攻击仍有概率触发重击，本次只下调了伤害系数。"},
+        {"review_id":"2fb99ff4f444ca8f6c35","verdict":"holds","quote":"Break disables the passive percent Chance to Bash. Does not disable Greater Bash application from Charge of Darkness or Nether Strike.","reason_zh":"仅伤害字段有变，原有可被破坏判定仍限于被动重击概率。"},
+        {"review_id":"75e661773bf64e5c4a35","verdict":"holds","quote":"Gives a chance to stun and knockback an enemy unit on an attack.","reason_zh":"基础重击由攻击按概率触发，没有按次消耗的技能充能。"},
+        {"review_id":"4a72bbbb2385347aa0fe","verdict":"holds","quote":"knockback an enemy unit on an attack","reason_zh":"重击仍会击退敌方单位。"},
+        {"review_id":"6bd5f2a55789ae9a5b0d","verdict":"holds","quote":"knockback an enemy unit on an attack","reason_zh":"位移发生在被击退的敌人身上，施法者没有获得位移。"},
+        {"review_id":"c3c67c6208c62e71d4ae","verdict":"holds","quote":"Gives a chance to stun and knockback an enemy unit on an attack.","reason_zh":"基础攻击触发重击时仍能眩晕敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spirit_breaker_planar_pocket",
+      "rows": [
+        {"review_id":"audit:spirit_breaker_planar_pocket:spell_block:shard","verdict":"holds","quote":"making any unit-targeted spells cast by enemy heroes get redirected towards Spirit Breaker","reason_zh":"敌方指向技能仍会转向裂魂人并继续生效，本次魔抗调整没有加入技能格挡。"},
+        {"review_id":"704bf8f05db03f967670","verdict":"holds","quote":"Can be cast on both allied and enemy heroes","reason_zh":"施放时仍可直接选择敌方英雄。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "storm_spirit_galvanized",
+      "rows": [
+        {"review_id":"d6944247f78dd70bf44f","verdict":"holds","quote":"Break disables the gaining of new stacks from kills.","reason_zh":"本次只提高每层回蓝，破坏仍会阻止通过击杀获得新层数。"},
+        {"review_id":"5e3d417d4c0856f6ef9d","verdict":"holds","quote":"Loses %charges_per_death% charges per death.","reason_zh":"层数决定回蓝量并随死亡扣减，没有逐次施放消耗的使用次数。"},
+        {"review_id":"df91fcf3bcd3ba2cb998","verdict":"holds","quote":"mp_per_kill: 0.2→0.25","reason_zh":"每层提供的法力恢复从0.2提高至0.25，自身回蓝仍成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "storm_spirit_overload",
+      "rows": [
+        {"review_id":"bca8ed44da80e728e0ee","verdict":"holds","quote":"released in a burst on Storm's next attack, dealing damage and slowing nearby enemies","reason_zh":"强化攻击仍会爆发并对附近多个敌人造成伤害。"},
+        {"review_id":"audit:storm_spirit_overload:attack_modifier:base","verdict":"holds","quote":"released in a burst on Storm's next attack, dealing damage and slowing nearby enemies","reason_zh":"施法后的下一次普攻仍附带伤害与减速。"},
+        {"review_id":"cb0a6d9d0183f2f1674c","verdict":"holds","quote":"Casting a spell creates an electrical charge","reason_zh":"两版触发说明相同且没有 IsBreakable 字段变化，沿用原有的可被破坏判定。"},
+        {"review_id":"1304d228fd116ec2cb5b","verdict":"holds","quote":"Casting a spell creates an electrical charge, which is released in a burst on Storm's next attack","reason_zh":"电荷随下一次普攻释放，基础技能没有逐次施放消耗的充能。"},
+        {"review_id":"4dcce04ae8a8e32262cf","verdict":"holds","quote":"Can be activated to grant Storm Spirit and nearby allied heroes %shard_activation_charges% Overload charges.","reason_zh":"魔晶主动施放会赋予若干次强化攻击，电荷记录的是剩余强化攻击次数。"},
+        {"review_id":"2f36682cf1ffd792a1fa","verdict":"holds","quote":"dealing damage and slowing nearby enemies","reason_zh":"超负荷爆发仍会减速附近敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sven_storm_bolt",
+      "rows": [
+        {"review_id":"06ac483ed200d6b74c3a","verdict":"holds","quote":"deals damage and stuns enemy units in a small area around the target","reason_zh":"风暴之拳仍能伤害目标周围小范围内的多个敌人。"},
+        {"review_id":"2e90d6568e9b7abbcb0a","verdict":"holds","quote":"applies a basic dispel on the target","reason_zh":"A杖升级仍会对目标施加弱驱散。"},
+        {"review_id":"8c083629c3db5bd44b95","verdict":"holds","quote":"Affects invulnerable units.","reason_zh":"A杖允许技能影响已处于无敌状态的单位，说明没有赋予任何单位无敌或不可选取状态。"},
+        {"review_id":"audit:sven_storm_bolt:self_mobility:scepter","verdict":"holds","quote":"If alt-cast, it deals an additional %scepter_bonus_damage% damage and Sven travels with the Storm Hammer.","reason_zh":"装备A杖并使用切换施法时，斯温仍会随锤移动。"},
+        {"review_id":"9e54cbf9bcb99ff678d4","verdict":"holds","quote":"stuns enemy units in a small area around the target","reason_zh":"基础技能仍能眩晕目标周围的敌方单位。"},
+        {"review_id":"audit:sven_storm_bolt:terrain_walk:scepter","verdict":"holds","quote":"Sven travels with the Storm Hammer.","reason_zh":"A杖切换施法的随锤移动方式保留，本次射程和弹速调整没有改变原行的地形通行判定。"},
+        {"review_id":"4e4efbc17e9a42799000","verdict":"holds","quote":"deals damage and stuns enemy units in a small area around the target","reason_zh":"技能仍围绕所选目标结算范围效果，本次没有施法目标变更。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sven_warcry",
+      "rows": [
+        {"review_id":"d19e821220939d65e59a","verdict":"holds","quote":"AbilityManaCost: [30,35,40,45]→[45]","reason_zh":"改动涉及魔耗与魔晶护盾量，没有 IsBreakable 字段变化，基础条件下沿用原拒绝判断。"},
+        {"review_id":"287d0bfe2c98176493f0","verdict":"holds","quote":"base_barrier_amount.shard: 300→350","reason_zh":"魔晶提供的物理伤害护盾从300提高至350。"},
+        {"review_id":"4551c19450ea7cefae81","verdict":"holds","quote":"increasing their armor and movement speed","reason_zh":"基础战吼仍能提高友方英雄的移速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "techies_land_mines",
+      "rows": [
+        {"review_id":"a5e7656ab5a917f115c8","verdict":"holds","quote":"The explosion deals full damage if the target is within %min_distance% radius and decreases down to %outer_damage%%% on the edge.","reason_zh":"地雷爆炸仍会在范围内造成伤害，伤害量随目标距爆心的距离变化。"},
+        {"review_id":"fa99e427702a4c46dd6b","verdict":"holds","quote":"AbilityChargeRestoreTime: [15]→[14,13,12]","reason_zh":"充能恢复时间改为随等级变化，各级仍有充能恢复时间。"},
+        {"review_id":"3ea1265204540be69b41","verdict":"holds","quote":"Grants 30 gold if destroyed by an enemy hero.","reason_zh":"30金是敌方英雄摧毁地雷取得的赏金，不属于额外经济收益。"},
+        {"review_id":"e9b15acc67a40fb95cf4","verdict":"holds","quote":"Plant an invisible mine that cannot be detected by True Sight","reason_zh":"隐身的是布下的地雷，技能没有向英雄、队友、召唤物或复制体赋予隐身。"},
+        {"review_id":"92ada6901f6cc5a6ab72","verdict":"holds","quote":"mres_reduction: [15,20,25]→[12,16,20]","reason_zh":"各级魔抗削减量均下降，但仍大于零。"},
+        {"review_id":"740d2e5e9da25a90337b","verdict":"holds","quote":"Mines are triggered by invisible units.","reason_zh":"隐身单位能够触发地雷，说明没有使该单位显形的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "techies_mutually_assured_destruction",
+      "rows": [
+        {"review_id":"557ede12f295eab63b68","verdict":"holds","quote":"damaging enemies in an area around it","reason_zh":"基础技能留下的爆桶仍会伤害周围多个敌人。"},
+        {"review_id":"978d8b9683010b6cff8e","verdict":"unclear","quote":"Break disables the bonus mana regeneration.","reason_zh":"新增说明明确破坏会禁用额外回蓝，与原拒绝判断冲突，但材料未给出本词条以之为准的 IsBreakable 值。"},
+        {"review_id":"a423e7ed6315548d992b","verdict":"holds","quote":"Techies gain a percentage of their mana pool as bonus mana regeneration.","reason_zh":"工程师仍按自身法力池的一定比例获得额外法力恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "techies_reactive_tazer",
+      "rows": [
+        {"review_id":"0a0c7c83751c9be8e81e","verdict":"holds","quote":"the charge explodes, disarming all enemies within the radius and dealing damage","reason_zh":"电荷爆炸仍会伤害半径内的多个敌人。"},
+        {"review_id":"1b288746f8887ac9abee","verdict":"holds","quote":"Enemies attacking the target take damage and are temporarily disarmed and get a Basic Dispel.","reason_zh":"攻击受电击保护目标的敌人仍会受到弱驱散。"},
+        {"review_id":"ba28fdb96d5dad492dd0","verdict":"holds","quote":"Techies trigger an electric charge on the target ally","reason_zh":"电荷是施加给友方的定时爆炸效果，说明没有按施放次数消耗的充能。"},
+        {"review_id":"audit:techies_reactive_tazer:damage_return:base","verdict":"holds","quote":"Enemies attacking the target take damage","reason_zh":"受保护目标遭到攻击时，攻击者仍会受到反击伤害。"},
+        {"review_id":"a3fd87611e1428721a98","verdict":"holds","quote":"disarming all enemies within the radius","reason_zh":"电荷爆炸仍会缴械半径内所有敌人。"},
+        {"review_id":"26996d10e942b81b1f8d","verdict":"holds","quote":"giving them bonus movement speed for a short period of time","reason_zh":"被选中的友方单位仍会暂时获得移速加成。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "techies_sticky_bomb",
+      "rows": [
+        {"review_id":"82109c0e227f6cf4f064","verdict":"holds","quote":"dealing damage in an area around the detonation","reason_zh":"引爆倒计时从2秒缩至1.5秒，爆炸仍会造成范围伤害。"},
+        {"review_id":"cf84000385639fc599d9","verdict":"holds","quote":"applying a secondary slow for %secondary_slow_duration% seconds","reason_zh":"炸弹附着时的移速减缓和爆炸后的第二段减速均保留，新增的眩晕字段没有给出生效值。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "templar_assassin_psionic_trap",
+      "rows": [
+        {"review_id":"990732b2712bfe40eafe","verdict":"holds","quote":"in a %trap_radius% radius. Trap movement slow charges up to %movement_speed_max%%% after %trap_max_charge_duration% seconds. Deals damage after %trap_max_charge_duration%s.","reason_zh":"陷阱蓄满后仍能在触发半径内造成伤害。"},
+        {"review_id":"41165de79d9050e20f8c","verdict":"holds","quote":"Trap movement slow charges up to %movement_speed_max%%% after %trap_max_charge_duration% seconds.","reason_zh":"蓄力时间决定减速强度，不涉及每次施放扣除一点使用次数。"},
+        {"review_id":"a1407ab1ee626e155030","verdict":"holds","quote":"They have invisibility that fades in over %trap_fade_time% seconds and spell immunity.","reason_zh":"陷阱自身仍具有技能免疫。"},
+        {"review_id":"6c7e8e38672e2ebe8307","verdict":"holds","quote":"They have invisibility that fades in over %trap_fade_time% seconds and spell immunity.","reason_zh":"逐渐隐身的是按攻击扣除生命格的陷阱，技能没有向词条所列单位赋予隐身。"},
+        {"review_id":"89d29295a011fa35c18a","verdict":"holds","quote":"When activated, traps now silence affected enemies.","reason_zh":"两版A杖说明都保留了陷阱触发时沉默敌人的效果。"},
+        {"review_id":"b1b308e00a2da3b05d3e","verdict":"holds","quote":"they exert a slowing influence of %movement_speed_min%%% in a %trap_radius% radius","reason_zh":"基础陷阱触发后仍会降低范围内敌人的移速。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"damage_block","condition":"base","quote":"Creeps and illusions deal 25% damage to them.","reason_zh":"7.42明确把幻象与小兵列入只对陷阱造成25%伤害的来源，旧说明仅列小兵及近远程英雄的摧毁次数。"}
+      ]
+    },
+    {
+      "subject": "terrorblade_demon_zeal",
+      "rows": [
+        {"review_id":"13a77e080e9a89a6bf0b","verdict":"holds","quote":"providing Terrorblade and nearby illusions bonus movement, HP Regen and attack speed","reason_zh":"本次只下调攻速加成，原魔晶条件下的移速加成仍保留。"},
+        {"review_id":"da9c8172497100231a4b","verdict":"holds","quote":"providing Terrorblade and nearby illusions bonus movement, HP Regen and attack speed","reason_zh":"技能仍为恐怖利刃和符合条件的附近幻象提供生命恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "terrorblade_reflection",
+      "rows": [
+        {"review_id":"audit:terrorblade_reflection:attack_slow:base","verdict":"holds","quote":"Affected enemy heroes have movement and attack speeds slowed","reason_zh":"受影响敌方英雄的攻击速度仍会降低。"},
+        {"review_id":"t5:terrorblade_reflection:illusions","verdict":"holds","quote":"Reflections are untargetable, invulnerable illusions","reason_zh":"技能制造的倒影仍明确属于幻象。"},
+        {"review_id":"808f0e1c1398bd7cb181","verdict":"holds","quote":"Reflections are untargetable, invulnerable illusions","reason_zh":"倒影仍处于不可选取且无敌的状态。"},
+        {"review_id":"38004f41acd3b768cc64","verdict":"holds","quote":"Affected enemy heroes have movement and attack speeds slowed","reason_zh":"受影响敌方英雄的移动速度仍会降低。"},
+        {"review_id":"2956214e56437ef127dd","verdict":"holds","quote":"Reflections can only attack their source.","reason_zh":"倒影会攻击其对应的敌方英雄，技能没有把指向技能反弹给施法者的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "terrorblade_terror_wave",
+      "rows": [
+        {"review_id":"audit:terrorblade_terror_wave:aoe_damage:scepter","verdict":"holds","quote":"a wave to travel outwards in all directions forcing enemy heroes to become Feared upon impact and dealing damage","reason_zh":"向四周扩散的波仍能伤害多个敌方英雄，本次提高伤害并缩短冷却，原A杖行仍成立。"},
+        {"review_id":"e1ec21f38d2fe9c92939","verdict":"holds","quote":"forcing enemy heroes to become Feared upon impact","reason_zh":"波命中敌方英雄时仍会施加恐惧。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tiara_of_selemene",
+      "rows": [
+        {"review_id":"20d53aab22b647120bf3","verdict":"holds","quote":"bonus_mana_regen: 6→5","reason_zh":"装备的法力恢复加成从6降至5，仍提供自身回蓝。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

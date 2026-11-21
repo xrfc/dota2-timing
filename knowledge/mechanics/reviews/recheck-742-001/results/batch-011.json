@@ -1,0 +1,205 @@
+{
+  "objects": [
+    {
+      "subject": "legion_commander_moment_of_courage",
+      "rows": [
+        {"review_id":"87ec5a5ba8ee71fe08fb","verdict":"holds","quote":"crit_mult: null→{\"base\":[],\"scepter\":null,\"shard\":null}","reason_zh":"唯一变动是新增空的暴击倍率字段，判定可被破坏的 IsBreakable 未变，沿用原判。"},
+        {"review_id":"6ea86d32f6871871b0d5","verdict":"holds","quote":"When attacked a number of times, Legion Commander will counter-attack her target","reason_zh":"军团指挥官受到一定次数的攻击后会反击自己的目标，符合受击触发反伤的定义。"},
+        {"review_id":"3d5535ce228f6923096b","verdict":"holds","quote":"counter-attack her target with bonus lifesteal","reason_zh":"受击触发的反击仍附带吸血。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "legion_commander_overwhelming_odds",
+      "rows": [
+        {"review_id":"31bc5cdda64a9f815900","verdict":"holds","quote":"damage to all enemies in the area","reason_zh":"一次施放仍会伤害区域内所有敌人。"},
+        {"review_id":"d7ed05993029d123aa15","verdict":"holds","quote":"grants an all damage barrier based on the damage it deals to enemy heroes","reason_zh":"魔晶仍按技能对敌方英雄造成的伤害提供全伤害护盾。"},
+        {"review_id":"5407680f2afe691ec704","verdict":"holds","quote":"a %movement_slow%%% impact slow for %slow_duration%s","reason_zh":"基础技能命中时仍会短暂降低敌人的移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "leshrac_defilement",
+      "rows": [
+        {"review_id":"0ba9204c59e82c4a4f61","verdict":"holds","quote":"aoe_per_int.base: [0.7]→[0.6]","reason_zh":"补丁只降低每点智力提供的作用范围加成，IsBreakable 未变，维持原有的否定判断。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "leshrac_diabolic_edict",
+      "rows": [
+        {"review_id":"e039882ef340cd0d10e7","verdict":"holds","quote":"explosions that deal pure damage to enemy units and buildings","reason_zh":"一次施放产生的多次爆炸可以伤害多个敌方单位。"},
+        {"review_id":"audit:leshrac_diabolic_edict:ground_zone:base","verdict":"unclear","quote":"Saturates the area around Leshrac with magical explosions","reason_zh":"两版都只说明爆炸发生在拉席克周围，未说明他移动后爆炸是否留在原地，无法确认固定场地这一条件。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "leshrac_greater_lightning_storm",
+      "rows": [
+        {"review_id":"2fd2c887cebd9156f6ed","verdict":"holds","quote":"an aura that disarms and constantly dispels nearby enemy units","reason_zh":"新版光环对周围敌人施加缴械与驱散，没有造成范围伤害。"},
+        {"review_id":"09192929b9ff1be1c99d","verdict":"now_wrong","quote":"Leshrac emits an aura that disarms and constantly dispels nearby enemy units.","reason_zh":"新版保留了让敌人无法攻击的效果，但已删除使拉席克和敌人进入虚无状态的效果。"},
+        {"review_id":"e08e2b451fe9773cfd64","verdict":"now_wrong","quote":"Leshrac also constantly dispels himself.","reason_zh":"重做后的自身效果是持续驱散，旧版的自身移速加成已删除，材料中也没有保留该加成的A杖说明。"},
+        {"review_id":"1efbe18c7fe3d18bedbd","verdict":"holds","quote":"an aura that disarms and constantly dispels nearby enemy units","reason_zh":"新版对敌效果仍不包含物理伤害或全部伤害加深。"},
+        {"review_id":"2d59c5a069b17fad1602","verdict":"now_wrong","quote":"magic_amp: {\"base\":[30],\"scepter\":null,\"shard\":null}→null","reason_zh":"魔法易伤字段及对应说明均已删除。"},
+        {"review_id":"5fa7df90ed38e15060e2","verdict":"now_wrong","quote":"slow: {\"base\":[40],\"scepter\":null,\"shard\":null}→null","reason_zh":"原有减速字段已删除，新版光环也没有降低敌人移速的效果。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"aura","condition":"base","quote":"Leshrac emits an aura that disarms and constantly dispels nearby enemy units.","reason_zh":"新版明确由拉席克发出光环，持续影响他周围的敌方单位。"},
+        {"mechanism":"applies_basic_dispel","condition":"base","quote":"constantly dispels nearby enemy units. Leshrac also constantly dispels himself. DISPEL TYPE: Basic Dispel","reason_zh":"重做后会持续对附近敌人和拉席克自身施加弱驱散。"}
+      ]
+    },
+    {
+      "subject": "leshrac_pulse_nova",
+      "rows": [
+        {"review_id":"0c65c30ed965c48f1ac9","verdict":"holds","quote":"one per second, to damage nearby enemy units","reason_zh":"每次脉冲仍可伤害周围多个敌人，二级伤害下调不影响范围伤害机制。"},
+        {"review_id":"audit:leshrac_pulse_nova:aura:base","verdict":"holds","quote":"Creates waves of damaging energy around Leshrac, one per second, to damage nearby enemy units.","reason_zh":"脉冲以拉席克为中心，每秒影响他周围的敌方单位，符合题给的光环定义。"},
+        {"review_id":"aedbf4c26fc8f6b33b22","verdict":"holds","quote":"Drains Leshrac's mana with each pulse.","reason_zh":"每次脉冲消耗拉席克自己的法力，没有削减敌方目标的法力。"},
+        {"review_id":"2f74a6c42e0901b67a6f","verdict":"holds","quote":"Drains Leshrac's mana with each pulse.","reason_zh":"每次脉冲都会消耗自身法力，技能没有提供回蓝或吸蓝。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lich_chain_frost",
+      "rows": [
+        {"review_id":"b4535016cefa201edbf5","verdict":"holds","quote":"bounces between nearby enemy units up to %jumps% times, slowing and damaging each time it hits","reason_zh":"同一次施放仍能通过弹跳伤害多个敌方单位。"},
+        {"review_id":"252377b025cd8b4bc923","verdict":"holds","quote":"slowing and damaging each time it hits","reason_zh":"冰球每次命中仍会使敌人减速。"},
+        {"review_id":"61a3018927dd8c4e61c6","verdict":"holds","quote":"damage.base: [250,400,550]→[250,375,500]","reason_zh":"本次仅调整基础伤害和后续弹跳的伤害增量，原有敌方单位指向判定继续成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lich_death_charge",
+      "rows": [
+        {"review_id":"e5f085f17367dc19dc5f","verdict":"holds","quote":"AbilityCharges.base: [2]→[3]","reason_zh":"充能上限从两次增至三次，技能仍使用充能。"},
+        {"review_id":"f4ba8bac27eec3648b86","verdict":"holds","quote":"Lich's experience bounty and enemy heroes' deny experience are independent.","reason_zh":"献祭友方小兵会单独给巫妖经验，这份经验独立于敌方英雄获得的反补经验。"},
+        {"review_id":"b88f2a84aca49f906e33","verdict":"holds","quote":"convert its current health into mana for Lich","reason_zh":"献祭仍会把友方小兵的当前生命值转化为巫妖自身的法力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lich_frost_nova",
+      "rows": [
+        {"review_id":"093a1fd1779cc6582701","verdict":"holds","quote":"dealing area damage","reason_zh":"寒霜爆发仍对目标区域造成伤害。"},
+        {"review_id":"audit:lich_frost_nova:attack_slow:base","verdict":"holds","quote":"slowing movement and attack rates for %abilityduration% seconds","reason_zh":"技能仍会在持续时间内降低敌人的攻击速度。"},
+        {"review_id":"a47cb9c109c45ae1d2dd","verdict":"holds","quote":"slowing movement and attack rates for %abilityduration% seconds","reason_zh":"技能仍会在持续时间内降低敌人的移动速度。"},
+        {"review_id":"b482d1009ac1faec6bcf","verdict":"holds","quote":"Blasts the target enemy unit with damaging frost","reason_zh":"施放时仍可选定一个敌方单位为主目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lich_frost_shield",
+      "rows": [
+        {"review_id":"ac6348c7c84c52545fe1","verdict":"holds","quote":"ice magic will affect nearby enemy units every %interval% seconds, dealing minor damage","reason_zh":"护盾生效期间仍会周期性伤害周围多个敌方单位。"},
+        {"review_id":"audit:lich_frost_shield:aura:base","verdict":"holds","quote":"While the shield is active, ice magic will affect nearby enemy units every %interval% seconds","reason_zh":"护盾附着在目标身上，持续影响该目标周围的敌人。"},
+        {"review_id":"audit:lich_frost_shield:damage_block:base","verdict":"holds","quote":"reducing damage from attacks against it","reason_zh":"护盾仍会降低受护目标受到的攻击伤害。"},
+        {"review_id":"e70280591ee791c99e25","verdict":"holds","quote":"movement_slow.base: [20,25,30,35]→[21,24,27,30]","reason_zh":"调整后各等级的移速降低值均大于零。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lich_ice_spire",
+      "rows": [
+        {"review_id":"2fc7933b0f45461014f0","verdict":"holds","quote":"When destroyed it will create a Frost Blast around it.","reason_zh":"尖柱被摧毁时仍会在周围触发寒霜爆发，造成范围伤害。"},
+        {"review_id":"audit:lich_ice_spire:ground_zone:shard","verdict":"holds","quote":"Creates an Ice Spire at the target spot, slowing enemies around it.","reason_zh":"尖柱仍在指定地点持续减速周围敌人，本次耐久调整未改变原记录的魔晶条件。"},
+        {"review_id":"5bd57d05a91336a3a658","verdict":"holds","quote":"Each Frost Shield tick will heal the spire by 1 pip.","reason_zh":"恢复的是尖柱的一格受击耐久，且由冰霜魔盾触发，尖柱技能本身没有提供生命值治疗。"},
+        {"review_id":"a3e35747df00ad143a04","verdict":"holds","quote":"slowing enemies around it","reason_zh":"尖柱仍会降低周围敌人的移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "life_stealer_feast",
+      "rows": [
+        {"review_id":"audit:life_stealer_feast:attack_modifier:base","verdict":"holds","quote":"Lifestealer's attacks deal damage and provide heal for a percentage of his target's max health.","reason_zh":"普通攻击仍附带按目标最大生命值计算的伤害，符合攻击特效定义。"},
+        {"review_id":"0d70687c66fd9e1422ca","verdict":"holds","quote":"Break disables the gaining of new stacks.","reason_zh":"可被破坏的判定字段未变，说明也明确破坏会阻止获得新层数。"},
+        {"review_id":"02d8e202a2237dc6f898","verdict":"holds","quote":"The heal is independent of the damage.","reason_zh":"攻击仍会为噬魂鬼恢复生命，治疗量独立于实际造成的伤害。"},
+        {"review_id":"d75a019ffb8517ce13ce","verdict":"holds","quote":"provide heal for a percentage of his target's max health","reason_zh":"攻击按目标最大生命值的一定比例为自身回血，符合题给的吸血定义。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "life_stealer_infest",
+      "rows": [
+        {"review_id":"ce62b9b47e1de40bb5b8","verdict":"holds","quote":"Consuming a creep with Infest drenches enemies in blood which deals damage over time based on the host's remaining health.","reason_zh":"魔晶仍可在吞噬小兵时对多个敌人造成基于宿主剩余生命值的持续伤害。"},
+        {"review_id":"f3f0e08c16c8ef070b22","verdict":"holds","quote":"explode from the host body, dealing damage to nearby enemies","reason_zh":"基础爆炸仍可伤害附近多个敌人，半径缩小不改变这一点。"},
+        {"review_id":"9a4cbd6de85300219de1","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"基础技能仍明确标注施加弱驱散。"},
+        {"review_id":"06769b54a5b2194031ea","verdict":"holds","quote":"Lifestealer gains experience while under the effects of Infest.","reason_zh":"说明只确认感染期间仍能获得经验，没有赋予额外经验或金钱。"},
+        {"review_id":"17db8bbd8e9307c003e5","verdict":"holds","quote":"Creeps that are controlled while Infested gain Infest's movement speed bonus.","reason_zh":"受感染控制的小兵仍获得移动速度加成。"},
+        {"review_id":"bbb16bbd8ee85bd314c7","verdict":"holds","quote":"healing for a portion of his max hitpoints every second while inside","reason_zh":"噬魂鬼在宿主体内仍会每秒按自身最大生命值回血，基础回复比例下调后仍大于零。"},
+        {"review_id":"audit:life_stealer_infest:invulnerable_untargetable:base","verdict":"holds","quote":"Lifestealer infests the body of a target unit, becoming undetectable","reason_zh":"噬魂鬼进入宿主体内后仍无法被敌方发现，原行所记的不可直接选取状态继续成立。"},
+        {"review_id":"9a45a4b5622ed6d01a0a","verdict":"holds","quote":"Lifestealer infests the body of a target unit","reason_zh":"删去的是感染能否触发目标反弹的说明，感染本身仍没有把来袭指向技能反弹给施法者的效果。"},
+        {"review_id":"ea405d449c65ac7ff287","verdict":"holds","quote":"he can take control of the unit's ability to move and attack","reason_zh":"感染仍可夺取敌方或中立小兵的移动与攻击控制权，符合题给的召唤物定义。"},
+        {"review_id":"8804d4b34b90572aa12b","verdict":"holds","quote":"If the infested unit is an enemy creep or a neutral creep","reason_zh":"基础感染即可选定敌方小兵，满足可指向敌方单位的条件。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"slow","condition":"shard_upgrade","quote":"Infest explosion applies a %dot_duration%s duration Open Wounds to enemies in the damage radius.","reason_zh":"魔晶爆炸新增撕裂伤口，按该技能的说明会降低受影响敌人的移动速度。"},
+        {"mechanism":"lifesteal","condition":"shard_upgrade","quote":"Infest explosion applies a %dot_duration%s duration Open Wounds to enemies in the damage radius.","reason_zh":"魔晶爆炸新增的撕裂伤口使友军对这些敌人造成伤害时按伤害比例吸血。"},
+        {"mechanism":"healing","condition":"shard_upgrade","quote":"Infest explosion applies a %dot_duration%s duration Open Wounds to enemies in the damage radius.","reason_zh":"现有治疗行记录的是基础感染在宿主体内的自身回复，魔晶新增的撕裂伤口还可为伤害受影响敌人的友军恢复生命。"}
+      ]
+    },
+    {
+      "subject": "life_stealer_open_wounds",
+      "rows": [
+        {"review_id":"113239b4eeb78ff7aeb9","verdict":"holds","quote":"Lifestealer rends an enemy unit, slowing the victim's movement speed and allowing all allies to regain health","reason_zh":"基础技能对单个敌人施加减速和受击回血效果，自身不造成范围伤害。"},
+        {"review_id":"9b7ca0d9a87f4c7b0802","verdict":"holds","quote":"allowing all allies to regain health for a percentage of the damage they deal to that unit","reason_zh":"友军对受影响目标造成伤害时仍可恢复生命。"},
+        {"review_id":"9dbe8465133b02be92f1","verdict":"holds","quote":"regain health for a percentage of the damage they deal to that unit","reason_zh":"友军仍按自己对目标造成的伤害比例回血，符合吸血定义。"},
+        {"review_id":"d9b589e36dbd7a0c5c02","verdict":"holds","quote":"slowing the victim's movement speed","reason_zh":"撕裂伤口仍会降低目标的移动速度。"},
+        {"review_id":"608ad7bf91d64d26f0bd","verdict":"holds","quote":"Lifestealer rends an enemy unit","reason_zh":"施放时仍可选定一个敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lina_fiery_soul",
+      "rows": [
+        {"review_id":"11147bbb88e19fa33bfd","verdict":"holds","quote":"fiery_soul_magic_resist: {\"base\":[],\"scepter\":null,\"shard\":null}→null","reason_zh":"本次只删除空的魔抗字段，IsBreakable 未变，沿用原有的可被破坏判定。"},
+        {"review_id":"badd66edf937df62d485","verdict":"holds","quote":"Grants bonus attack and movement speed each time Lina hits an enemy with a spell.","reason_zh":"莉娜用技能命中敌人时仍会获得移动速度加成。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lina_flame_cloak",
+      "rows": [
+        {"review_id":"audit:lina_flame_cloak:phased:scepter","verdict":"holds","quote":"Grants Lina unobstructed movement","reason_zh":"原A杖行对应的无阻碍移动仍在，莉娜移动时可通过单位碰撞阻挡。"},
+        {"review_id":"cf0bbd8cb0c25ec1a766","verdict":"holds","quote":"spell_amp.base: [35]→[30]","reason_zh":"法术放大从35降至30，技能伤害加成仍然存在。"},
+        {"review_id":"audit:lina_flame_cloak:terrain_walk:scepter","verdict":"holds","quote":"Grants Lina unobstructed movement","reason_zh":"A杖行所依据的无阻碍移动说明保留，删除启动时获得炽魂层数的文字不影响越过地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lina_laguna_blade",
+      "rows": [
+        {"review_id":"eefeddd635384e735aac","verdict":"holds","quote":"at a single enemy unit, dealing massive damage","reason_zh":"基础神灭斩仍只伤害一个敌方单位。"},
+        {"review_id":"71504dd06681ca04c1fc","verdict":"holds","quote":"allowing certain abilities to avoid the damage","reason_zh":"伤害延迟给目标使用其他技能规避伤害的机会，神灭斩本身没有主动躲避弹道的效果。"},
+        {"review_id":"1dfaf50342974337f410","verdict":"holds","quote":"Fires off a bolt of lightning at a single enemy unit","reason_zh":"神灭斩仍以单个敌方单位为施法目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lina_light_strike_array",
+      "rows": [
+        {"review_id":"dc839d2ee81cc1e65faa","verdict":"holds","quote":"Summons a column of flames that damages and stuns enemies.","reason_zh":"火柱仍可伤害作用范围内的多个敌人。"},
+        {"review_id":"02424320a1d2b74bf02d","verdict":"holds","quote":"damages and stuns enemies","reason_zh":"火柱命中时仍会眩晕敌人。"},
+        {"review_id":"432e679a53604a702dbd","verdict":"holds","quote":"Light Strike Array will destroy trees in its area of effect.","reason_zh":"光击阵仍会摧毁作用范围内的树木。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lina_slow_burn",
+      "rows": [
+        {"review_id":"2db64ee54959e8e67cff","verdict":"holds","quote":"behavior: 13194139533378→567347999932483","reason_zh":"变化的是 behavior，判定可被破坏的 IsBreakable 未变，维持原有的否定判断。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "lion_finger_of_death",
+      "rows": [
+        {"review_id":"1bc7bd70e95fb6f9e27c","verdict":"holds","quote":"After using Finger of Death, Lion's hand becomes empowered, allowing him to use a cleaving melee attack","reason_zh":"基础施法后的近战攻击仍带分裂，一次攻击可以伤害多个敌人。"},
+        {"review_id":"da2817deeb2093103347","verdict":"holds","quote":"Finger of Death gains area of effect damage on the initial cast","reason_zh":"有A杖时，死亡之指的初次施法仍可直接造成范围伤害。"},
+        {"review_id":"ba3574881c419cb72fd1","verdict":"holds","quote":"allowing him to use a cleaving melee attack","reason_zh":"基础技能仍赋予莱恩可造成分裂伤害的近战攻击。"},
+        {"review_id":"779b7fefd4a7408ecd7b","verdict":"holds","quote":"with %punch_attack_range% range with bonus movement speed","reason_zh":"莱恩施法后获得近战强化时仍有额外移动速度。"},
+        {"review_id":"aaeeeed45344d2f6e8d3","verdict":"holds","quote":"allowing certain abilities to avoid the damage","reason_zh":"这句说明其他技能可以利用延迟规避伤害，死亡之指本身没有主动躲避弹道的效果。"},
+        {"review_id":"be0150820051eeb85444","verdict":"holds","quote":"Rips at an enemy unit, trying to turn it inside-out, dealing massive damage to the target.","reason_zh":"初次施法仍可直接选定敌方单位为目标。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

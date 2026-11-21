@@ -1,0 +1,531 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6f0-41fe-7542-acac-a016901c339a
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "sandking_scorpion_strike", "name_zh": "沙王·尾刺", "category": "3_说明文字", "text_741f": {"desc_loc": "Sand King strikes an area, performing an attack on all enemies in the area of effect, dealing extra damage to each. Enemies within an innermost radius of %inner_radius% take %inner_radius_bonus_damage_pct%%% extra damage. Applies Caustic Finale and a slow to all enemies hit.", "shard_loc": "A Caustic Finale explosion that deals %caustic_damage_pct%%% damage is created around every enemy hero hit in Stinger's innermost radius. Does not apply to strikes created by Aghanim's Scepter upgrade."}, "text_742": {"desc_loc": "Sand King strikes an area, performing an attack on all enemies in the area of effect, dealing extra damage to each. Attacks have decreased Item Potency. Enemies within an innermost radius of %inner_radius% take %inner_radius_bonus_damage_pct%%% extra damage. Applies Caustic Finale and a slow to all enemies hit.", "shard_loc": "A Caustic Finale explosion that deals %caustic_damage_pct%%% damage is created around every enemy hero hit in Stinger's innermost radius. Does not apply to strikes created by Aghanim's Scepter upgrade."}, "changed_fields": [{"field": "attack_damage", "old": {"base": [50, 75, 100, 125], "scepter": null, "shard": null}, "new": {"base": [50, 80, 110, 140], "scepter": null, "shard": null}}, {"field": "inner_radius", "old": {"base": [125], "scepter": null, "shard": null}, "new": {"base": [120, 140, 160, 180], "scepter": null, "shard": null}}, {"field": "potency", "old": null, "new": {"base": [60], "scepter": null, "shard": null}}], "rows": [{"review_id": "c53f43601db2a31c6ea9", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "bf85b79610674ec85b3c", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "sange", "name_zh": "散华", "category": "2_纯数值", "text_741f": {}, "text_742": {}, "changed_fields": [{"field": "item_cost", "old": 2100, "new": 2000}, {"field": "hp_regen_amp", "old": {"base": [12], "scepter": null, "shard": null}, "new": {"base": [16], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:sange:slow_resistance:item", "mechanism": "slow_resistance", "mechanism_zh": "减速抗性", "definition": "降低自身受到的减速效果（如散夜对剑+30%）", "condition": "item", "decision": "accept"}]}, {"subject": "sange_and_yasha", "name_zh": "散夜对剑", "category": "2_纯数值", "text_741f": {"notes_loc": ["Yasha-based movement speed bonuses from multiple items do not stack."]}, "text_742": {"notes_loc": ["Yasha-based movement speed bonuses from multiple items do not stack."]}, "changed_fields": [{"field": "item_cost", "old": 4200, "new": 4000}, {"field": "hp_regen_amp", "old": {"base": [16], "scepter": null, "shard": null}, "new": {"base": [20], "scepter": null, "shard": null}}, {"field": "movement_speed_percent_bonus", "old": {"base": [12], "scepter": null, "shard": null}, "new": {"base": [10], "scepter": null, "shard": null}}, {"field": "movement_speed_percent_bonus_melee", "old": {"base": [12], "scepter": null, "shard": null}, "new": {"base": [10], "scepter": null, "shard": null}}], "rows": [{"review_id": "32f7e9f3eb06fc4864d0", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}, {"review_id": "audit:sange_and_yasha:slow_resistance:item", "mechanism": "slow_resistance", "mechanism_zh": "减速抗性", "definition": "降低自身受到的减速效果（如散夜对剑+30%）", "condition": "item", "decision": "accept"}, {"review_id": "audit:sange_and_yasha:status_resistance:item", "mechanism": "status_resistance", "mechanism_zh": "状态抗性", "definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）", "condition": "item", "decision": "accept"}]}, {"subject": "shadow_demon_demonic_cleanse", "name_zh": "暗影恶魔·邪恶净愈", "category": "2_纯数值", "text_741f": {"desc_loc": "Cleanses the target allied unit, removing negative buffs for the duration. At the end of the duration, the unit is healed. Units under the effect of Disruption can still be affected by Demonic Cleanse. DISPEL TYPE: Basic Dispel", "notes_loc": ["Negative buffs are continously removed from the target for the duration of the Cleanse."]}, "text_742": {"desc_loc": "Cleanses the target allied unit, removing negative buffs for the duration. At the end of the duration, the unit is healed. Units under the effect of Disruption can still be affected by Demonic Cleanse. DISPEL TYPE: Basic Dispel", "notes_loc": ["Negative buffs are continously removed from the target for the duration of the Cleanse."]}, "changed_fields": [{"field": "cooldowns", "old": [60], "new": [40]}, {"field": "AbilityCooldown", "old": {"base": [60], "scepter": null, "shard": null}, "new": {"base": [40], "scepter": null, "shard": null}}, {"field": "purge_damage", "old": {"base": [450], "scepter": null, "shard": null}, "new": {"base": [425], "scepter": null, "shard": null}}], "rows": [{"review_id": "58138da51240f888cf75", "mechanism": "applies_basic_dispel", "mechanism_zh": "施加弱驱散", "definition": "移除目标身上可被弱驱散的效果", "condition": "base", "decision": "accept"}, {"review_id": "f3eb3feeda51824f539b", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}]}, {"subject": "shadow_demon_demonic_purge", "name_zh": "暗影恶魔·邪恶净化", "category": "2_纯数值", "text_741f": {"desc_loc": "Purges the target enemy unit, removing positive buffs, and slowing the target for the duration. The unit slowly regains its speed until the end of the duration, upon which damage is dealt. Units under the effect of Disruption can still be affected by Demonic Purge. DISPEL TYPE: Basic Dispel", "notes_loc": ["The slow starts at %max_slow%%% and decreases over time to %min_slow%%%.", "Positive buffs are continously removed from the target for the duration of the Purge."], "scepter_loc": "Causes Demonic Purge to break and gain %max_charges% charges."}, "text_742": {"desc_loc": "Purges the target enemy unit, removing positive buffs, and slowing the target for the duration. The unit slowly regains its speed until the end of the duration, upon which damage is dealt. Units under the effect of Disruption can still be affected by Demonic Purge. DISPEL TYPE: Basic Dispel", "notes_loc": ["The slow starts at %max_slow%%% and decreases over time to %min_slow%%%.", "Positive buffs are continously removed from the target for the duration of the Purge."], "scepter_loc": "Causes Demonic Purge to break and gain %max_charges% charges."}, "changed_fields": [{"field": "purge_damage", "old": {"base": [300, 450, 600], "scepter": null, "shard": null}, "new": {"base": [300, 425, 550], "scepter": null, "shard": null}}], "rows": [{"review_id": "da5250d628d7ce2a7b95", "mechanism": "applies_basic_dispel", "mechanism_zh": "施加弱驱散", "definition": "移除目标身上可被弱驱散的效果", "condition": "base", "decision": "accept"}, {"review_id": "4b15dde7096f8532f25d", "mechanism": "applies_break", "mechanism_zh": "施加破坏", "definition": "使目标的被动技能暂时失效", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "2720bb4f3bca0a31c0cc", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "883cefab73fe49e0e1ac", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "255bc488f55cb6334fca", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "shadow_shaman_fowl_play", "name_zh": "暗影萨满·禽戏", "category": "2_纯数值", "text_741f": {"desc_loc": "When taking lethal damage, Shadow Shaman receives a strong dispel and survives as a 1 HP chicken with increased movement speed. Incoming damage is reduced to zero for a short duration and additional chickens are created to confuse the enemy. Cooldown resets when Shadow Shaman respawns. DISPEL TYPE: Strong Dispel", "notes_loc": ["Lethal Damage from Axe's Culling Blade and Necrophos's Reaper's Scythe will not be prevented.", "Incoming damage reduction buff will prevent certain sources of HP removal from killing Shadow Shaman."], "shard_loc": "Increases the amount of time incoming damage is reduced to %damage_reduction_duration% seconds. When Fowl Play is triggered, Shadow Shaman becomes invulnerable for %invuln_duration% seconds. %chicken_illusions% additional uncontrollable chickens are created that last for %ally_voodoo_duration% seconds. While Shadow Shaman is transformed, he can now use items."}, "text_742": {"desc_loc": "When taking lethal damage, Shadow Shaman receives a strong dispel and survives as a 1 HP chicken with increased movement speed. Incoming damage is reduced to zero for a short duration and additional chickens are created to confuse the enemy. Cooldown resets when Shadow Shaman respawns. DISPEL TYPE: Strong Dispel", "notes_loc": ["Lethal Damage from Axe's Culling Blade and Necrophos's Reaper's Scythe will not be prevented.", "Incoming damage reduction buff will prevent certain sources of HP removal from killing Shadow Shaman."], "shard_loc": "Increases the amount of time incoming damage is reduced to %damage_reduction_duration% seconds. When Fowl Play is triggered, Shadow Shaman becomes invulnerable for %invuln_duration% seconds. %chicken_illusions% additional uncontrollable chickens are created that last for %ally_voodoo_duration% seconds. While Shadow Shaman is transformed, he can now use items."}, "changed_fields": [{"field": "total_chickens", "old": {"base": [1], "scepter": null, "shard": null}, "new": {"base": [3], "scepter": null, "shard": null}}], "rows": [{"review_id": "87645fc3557f3f41e03a", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "be94dcee83197e6b9c39", "mechanism": "applies_strong_dispel", "mechanism_zh": "施加强驱散", "definition": "移除目标身上可被强驱散的效果（含多数眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "a41282b88d3d1fd5911b", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "audit:shadow_shaman_fowl_play:cooldown_reset:base", "mechanism": "cooldown_reset", "mechanism_zh": "刷新冷却", "definition": "立刻重置冷却", "condition": "base", "decision": "accept"}, {"review_id": "86107472b869ac2c47ec", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "base", "decision": "accept"}, {"review_id": "audit:shadow_shaman_fowl_play:death_prevention:base", "mechanism": "death_prevention", "mechanism_zh": "免死", "definition": "在一段时间内不会被打死（如薄葬、回光返照）", "condition": "base", "decision": "accept"}, {"review_id": "c755a2c02f064a102785", "mechanism": "execute", "mechanism_zh": "斩杀", "definition": "目标低于生命阈值时直接杀死", "condition": "base", "decision": "reject"}, {"review_id": "31581fac66407dd57fbb", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "2d33583d5e348fbdfdb6", "mechanism": "hex", "mechanism_zh": "妖术", "definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品", "condition": "base", "decision": "reject"}, {"review_id": "3e875ccc5cadd4b47408", "mechanism": "hp_removal", "mechanism_zh": "生命移除", "definition": "直接移除生命，不算伤害", "condition": "base", "decision": "reject"}, {"review_id": "f49a2778932c034dc275", "mechanism": "invulnerable_untargetable", "mechanism_zh": "无敌/不可选取", "definition": "暂时无法被伤害或无法被指向", "condition": "base", "decision": "accept"}, {"review_id": "a4bdf83b8f11d943a8ad", "mechanism": "respawn", "mechanism_zh": "重生", "definition": "死亡后复活，或影响复活", "condition": "base", "decision": "reject"}]}, {"subject": "shadow_shaman_mass_serpent_ward", "name_zh": "暗影萨满·群蛇守卫", "category": "3_说明文字", "text_741f": {"desc_loc": "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. Creeps deal half damage to the Serpent Ward.", "shard_loc": "Allows to create a Mega Ward using the Urnaconda ability.", "facets_loc": ["Summons a single massive Serpent Ward with %mega_ward_multiplier_damage%x damage and %mega_ward_multiplier_health%x health and bounty values."]}, "text_742": {"desc_loc": "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. Creeps and illusions deal 25% damage to the Serpent Ward.", "shard_loc": "Allows to create a Mega Ward using the Urnaconda ability.", "facets_loc": ["Summons a single massive Serpent Ward with %mega_ward_multiplier_damage%x damage and %mega_ward_multiplier_health%x health and bounty values."]}, "changed_fields": [{"field": "cooldowns", "old": [110, 105, 100], "new": [110]}, {"field": "AbilityCooldown", "old": {"base": [110, 105, 100], "scepter": null, "shard": null}, "new": {"base": [110], "scepter": null, "shard": null}}, {"field": "ward_health", "old": {"base": [4], "scepter": null, "shard": null}, "new": {"base": [2], "scepter": null, "shard": null}}], "rows": [{"review_id": "096b36ae8f678064bdc4", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:shadow_shaman_mass_serpent_ward:debuff_immunity:base", "mechanism": "debuff_immunity", "mechanism_zh": "减益免疫/技能免疫", "definition": "处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）", "condition": "base", "decision": "accept"}, {"review_id": "15f348bdf92ded494a2b", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "reject"}]}, {"subject": "shadow_shaman_urnaconda", "name_zh": "暗影萨满·巨蟒之瓮", "category": "3_说明文字", "text_741f": {"desc_loc": "Throw a snake jar at the target location, damaging all enemies in the AoE and creating a Massive Serpent Ward that has %megaward_multiplier_tooltip%x the base Serpent Ward damage and health there that lasts %ward_duration%s."}, "text_742": {"desc_loc": "Throw a snake jar at the target location, damaging all enemies in the AoE and creating a Massive Serpent Ward that has %megaward_multiplier_tooltip%x the base Serpent Ward damage and pip health there that lasts %ward_duration%s."}, "changed_fields": [], "rows": [{"review_id": "f203e4f2844cd48e8ebf", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}]}, {"subject": "shadow_shaman_voodoo", "name_zh": "暗影萨满·妖术", "category": "2_纯数值", "text_741f": {"desc_loc": "Transforms an enemy unit into a harmless creature, disabling their attacks and abilities.", "notes_loc": ["Instantly destroys illusions.", "The target will have a base movement speed of %movespeed%, but buffs granting maximum movement speed won't be disabled."]}, "text_742": {"desc_loc": "Transforms an enemy unit into a harmless creature, disabling their attacks and abilities.", "notes_loc": ["Instantly destroys illusions.", "The target will have a base movement speed of %movespeed%, but buffs granting maximum movement speed won't be disabled."]}, "changed_fields": [{"field": "mana_costs", "old": [130, 150, 170, 190], "new": [120, 140, 160, 180]}, {"field": "AbilityManaCost", "old": {"base": [130, 150, 170, 190], "scepter": null, "shard": null}, "new": {"base": [120, 140, 160, 180], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:shadow_shaman_voodoo:hex:base", "mechanism": "hex", "mechanism_zh": "妖术", "definition": "把目标变成无害小动物，期间无法攻击、施法和使用物品", "condition": "base", "decision": "accept"}, {"review_id": "c5d98b893f93ed0bf715", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "shivas_guard", "name_zh": "希瓦的守护", "category": "2_纯数值", "text_741f": {"desc_loc": "Active: Arctic Blast Emits a freezing wave that deals %blast_damage% magical damage to enemies and slows their movement by %blast_movement_speed%%% for %blast_debuff_duration% seconds. Radius: %blast_radius% Passive: Freezing Aura Reduces the attack speed of all enemies by %aura_attack_speed%. Radius: %aura_radius%", "notes_loc": ["The wave extends at a speed of %blast_speed% to a max size of %blast_radius%.", "The Arctic Blast follows its caster.", "Multiple instances of Freezing Aura do not stack.", "AoE bonuses from multiple Chasm Stones or its upgrades do not stack."]}, "text_742": {"desc_loc": "Active: Arctic Blast Emits a freezing wave that deals %blast_damage% magical damage to enemies and slows their movement by %blast_movement_speed%%% for %blast_debuff_duration% seconds. Radius: %blast_radius% Passive: Freezing Aura Reduces the attack speed of all enemies by %aura_attack_speed%. Radius: %aura_radius%", "notes_loc": ["The wave extends at a speed of %blast_speed% to a max size of %blast_radius%.", "The Arctic Blast follows its caster.", "Multiple instances of Freezing Aura do not stack.", "AoE bonuses from multiple Chasm Stones or its upgrades do not stack."]}, "changed_fields": [{"field": "blast_movement_speed", "old": {"base": [-40], "scepter": null, "shard": null}, "new": {"base": [-30], "scepter": null, "shard": null}}, {"field": "blast_radius", "old": {"base": [825], "scepter": null, "shard": null}, "new": {"base": [840], "scepter": null, "shard": null}}, {"field": "bonus_aoe", "old": {"base": [75], "scepter": null, "shard": null}, "new": {"base": [60], "scepter": null, "shard": null}}], "rows": [{"review_id": "d2f1225e5720447d6c13", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "item", "decision": "accept"}, {"review_id": "audit:shivas_guard:attack_slow:item", "mechanism": "attack_slow", "mechanism_zh": "减攻速", "definition": "降低敌方单位的攻击速度", "condition": "item", "decision": "accept"}, {"review_id": "bd5e7f685a37cce778af", "mechanism": "aura", "mechanism_zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法", "condition": "item", "decision": "accept"}, {"review_id": "03afee5ba76ad62c8516", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "item", "decision": "accept"}, {"review_id": "2a683c07e48aa391cde1", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "item", "decision": "accept"}]}, {"subject": "shredder_chakram", "name_zh": "伐木机·锯齿飞轮", "category": "2_纯数值", "text_741f": {"desc_loc": "Fires Timbersaw's main saw blade at the target location where it will spin in place, dealing damage in an area around it. Enemies caught in the saw blade will move more slowly for every %slow_health_percentage%%% of health missing. The blade deals damage and cuts down trees in its path when fired and retracted. While active the ability costs mana, and Timbersaw loses the ability to attack.", "notes_loc": ["The Chakram will return if Timbersaw runs out of mana or moves over %break_distance% distance away."]}, "text_742": {"desc_loc": "Fires Timbersaw's main saw blade at the target location where it will spin in place, dealing damage in an area around it. Enemies caught in the saw blade will move more slowly for every %slow_health_percentage%%% of health missing. The blade deals damage and cuts down trees in its path when fired and retracted. While active the ability costs mana, and Timbersaw loses the ability to attack.", "notes_loc": ["The Chakram will return if Timbersaw runs out of mana or moves over %break_distance% distance away."]}, "changed_fields": [{"field": "damage_per_second", "old": {"base": [50, 75, 100], "scepter": null, "shard": null}, "new": {"base": [50, 70, 90], "scepter": null, "shard": null}}, {"field": "pass_damage", "old": {"base": [75, 150, 225], "scepter": null, "shard": null}, "new": {"base": [70, 140, 210], "scepter": null, "shard": null}}], "rows": [{"review_id": "c8b92d47570408bbaf1f", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:shredder_chakram:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "c28be5be630ea02530f5", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "79c49751d5a13002f9e5", "mechanism": "tree_destroy", "mechanism_zh": "砍树", "definition": "能摧毁树木", "condition": "base", "decision": "accept"}]}, {"subject": "shredder_exposure_therapy", "name_zh": "伐木机·暴露疗法", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Whenever Timbersaw destroys a tree, he gains mana."}, "text_742": {"desc_loc": "Whenever Timbersaw destroys a tree, he gains mana."}, "changed_fields": [{"field": "behavior", "old": "8796093022274", "new": "562949953421379"}], "rows": [{"review_id": "4838c3ce00b15dceaaec", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "de5d04076add77f8f92a", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "base", "decision": "accept"}, {"review_id": "0093a2a0f4957670c27e", "mechanism": "tree_destroy", "mechanism_zh": "砍树", "definition": "能摧毁树木", "condition": "base", "decision": "reject"}]}, {"subject": "shredder_whirling_death", "name_zh": "伐木机·死亡旋风", "category": "2_纯数值", "text_741f": {"desc_loc": "Timbersaw whirls extremely sharp edges, damaging enemies and destroying trees around him in an area. If an enemy hero is affected, it loses some of its primary attribute for a short duration. Whirling Death will deal bonus damage per tree destroyed."}, "text_742": {"desc_loc": "Timbersaw whirls extremely sharp edges, damaging enemies and destroying trees around him in an area. If an enemy hero is affected, it loses some of its primary attribute for a short duration. Whirling Death will deal bonus damage per tree destroyed."}, "changed_fields": [{"field": "tree_damage_scale", "old": {"base": [9, 16, 23, 30], "scepter": null, "shard": null}, "new": {"base": [7, 14, 21, 28], "scepter": null, "shard": null}}], "rows": [{"review_id": "b451395e3385a60c88fb", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "5b55a6c0c7d2abf882d3", "mechanism": "tree_destroy", "mechanism_zh": "砍树", "definition": "能摧毁树木", "condition": "base", "decision": "accept"}]}, {"subject": "silencer_brain_drain", "name_zh": "沉默术士·默默受苦", "category": "3_说明文字", "text_741f": {"desc_loc": "Silencer takes less damage from and deals more damage to silenced targets. If an enemy Hero dies within %permanent_int_steal_range% range of Silencer or was debuffed by Silencer at the time of death, Silencer permanently steals %permanent_int_steal_amount% Intelligence from them. If the victim was silenced, steal an extra %silenced_bonus_int_steal_amount% Intelligence.", "shard_loc": "Increases the Intelligence stolen per kill."}, "text_742": {"desc_loc": "Silencer takes less damage from and deals more damage to silenced targets. If an enemy Hero dies within %permanent_int_steal_range% range of Silencer or was debuffed by Silencer at the time of death, Silencer permanently steals %permanent_int_steal_amount% Intelligence from them. If the victim was silenced, steal an extra %silenced_bonus_int_steal_amount% Intelligence.", "notes_loc": ["Intelligence Steal is not disabled by Break."], "shard_loc": "Increases the Intelligence stolen per kill."}, "changed_fields": [], "rows": [{"review_id": "485737df55fab252c432", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}, {"review_id": "audit:silencer_brain_drain:damage_block:base", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "base", "decision": "accept"}, {"review_id": "audit:silencer_brain_drain:incoming_damage_amp:base", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "accept"}, {"review_id": "f36afe926360415660b0", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "base", "decision": "reject"}, {"review_id": "d7fe0dfebc9d66897d2d", "mechanism": "stat_steal", "mechanism_zh": "偷属性", "definition": "夺取目标的属性", "condition": "base", "decision": "accept"}]}, {"subject": "silencer_glaives_of_wisdom", "name_zh": "沉默术士·智慧之刃", "category": "2_纯数值", "text_741f": {"desc_loc": "Silencer enchants his glaives with his wisdom, stealing his target's Intelligence with each hit and dealing additional damage based on his Intelligence.", "shard_loc": "Causes Glaives of Wisdom to bounce %bounce_count% time to a random enemy within %bounce_range% range and increases intelligence steal.", "facets_loc": ["Increases the max level of Glaives of Wisdom. Level %max_level_tooltip% Glaives of Wisdom bounce %bounce_count_tooltip% time to a random target within %bounce_range_tooltip% range. The bounce costs mana upon hit and prioritizes heroes."]}, "text_742": {"desc_loc": "Silencer enchants his glaives with his wisdom, stealing his target's Intelligence with each hit and dealing additional damage based on his Intelligence.", "shard_loc": "Causes Glaives of Wisdom to bounce %bounce_count% time to a random enemy within %bounce_range% range and increases intelligence steal.", "facets_loc": ["Increases the max level of Glaives of Wisdom. Level %max_level_tooltip% Glaives of Wisdom bounce %bounce_count_tooltip% time to a random target within %bounce_range_tooltip% range. The bounce costs mana upon hit and prioritizes heroes."]}, "changed_fields": [{"field": "int_steal", "old": {"base": [2, 3, 4, 5], "scepter": null, "shard": [1]}, "new": {"base": [2, 3, 4, 5], "scepter": null, "shard": [2]}}], "rows": [{"review_id": "audit:silencer_glaives_of_wisdom:aoe_damage:shard", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "06e572d4bf492c0e9b74", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "b9fd537ed85efcc267aa", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "base", "decision": "reject"}, {"review_id": "ac5a42db12da5bece3ff", "mechanism": "stat_steal", "mechanism_zh": "偷属性", "definition": "夺取目标的属性", "condition": "base", "decision": "accept"}, {"review_id": "a8c7c810bda951f613a7", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "silver_edge", "name_zh": "白银之锋", "category": "2_纯数值", "text_741f": {"desc_loc": "Active: Shadow Walk Makes you invisible for %windwalk_duration% seconds, or until you attack or cast a spell. While invisible, you move %windwalk_movement_speed%%% faster and can move through units. Attacking to end the invisibility will deal %windwalk_bonus_damage% bonus physical damage, disable their passive abilities for %backstab_duration% seconds, and cap their movement speed to %max_movement_speed%."}, "text_742": {"desc_loc": "Active: Shadow Walk Makes you invisible for %windwalk_duration% seconds, or until you attack or cast a spell. While invisible, you move %windwalk_movement_speed%%% faster and can move through units. Attacking to end the invisibility will deal %windwalk_bonus_damage% bonus physical damage, disable their passive abilities for %backstab_duration% seconds, and cap their movement speed to %max_movement_speed%."}, "changed_fields": [{"field": "windwalk_movement_speed", "old": {"base": [20], "scepter": null, "shard": null}, "new": {"base": [18], "scepter": null, "shard": null}}], "rows": [{"review_id": "5749ab853da56d2c0dcb", "mechanism": "applies_break", "mechanism_zh": "施加破坏", "definition": "使目标的被动技能暂时失效", "condition": "item", "decision": "accept"}, {"review_id": "audit:silver_edge:attack_modifier:item", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "item", "decision": "accept"}, {"review_id": "040550da413f32214b69", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}, {"review_id": "83b72c363a023078f0c2", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "item", "decision": "accept"}, {"review_id": "audit:silver_edge:phased:item", "mechanism": "phased", "mechanism_zh": "相位移动", "definition": "移动不受单位碰撞阻挡", "condition": "item", "decision": "accept"}, {"review_id": "audit:silver_edge:slow:item", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "item", "decision": "accept"}]}, {"subject": "skadi", "name_zh": "斯嘉蒂之眼", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Passive: Cold Attack Attacks lower enemy movement by %cold_slow_melee%%% if they are melee and %cold_slow_ranged%%% if they are ranged. Attacks also lower enemy attack speed by %cold_attack_slow_melee%%% and Health Restoration by %restoration_reduction%%%. Lasts for %cold_duration% seconds."}, "text_742": {"desc_loc": "Passive: Cold Attack Attacks lower enemy movement by %cold_slow_melee%%% if they are melee and %cold_slow_ranged%%% if they are ranged. Attacks also lower enemy attack speed by %cold_attack_slow_melee%%% and Health Restoration by %restoration_reduction%%%. Lasts for %cold_duration% seconds."}, "changed_fields": [{"field": "flags", "old": 0, "new": 16}, {"field": "cold_slow_melee", "old": {"base": [-25], "scepter": null, "shard": null}, "new": {"base": [-20], "scepter": null, "shard": null}}, {"field": "cold_slow_ranged", "old": {"base": [-50], "scepter": null, "shard": null}, "new": {"base": [-40], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:skadi:attack_modifier:item", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "item", "decision": "accept"}, {"review_id": "audit:skadi:attack_slow:item", "mechanism": "attack_slow", "mechanism_zh": "减攻速", "definition": "降低敌方单位的攻击速度", "condition": "item", "decision": "accept"}, {"review_id": "b3fb210d5160471afc78", "mechanism": "heal_reduction", "mechanism_zh": "治疗削减", "definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响", "condition": "item", "decision": "accept"}, {"review_id": "70c1ed32fadd612d1c9d", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "item", "decision": "accept"}]}, {"subject": "skeleton_king_bone_guard", "name_zh": "冥魂大帝·白骨护卫", "category": "2_纯数值", "text_741f": {"desc_loc": "Gains a Charge for every 2 creeps killed and 2 charges per hero killed. Activate to spend all charges, summoning skeletons that respawn once when killed. Skeletons benefit from Vampiric Spirit's lifesteal.", "notes_loc": ["Break disables the gaining of new stacks.", "Casting Wraithfire Blast on an enemy causes the skeletons to attack that enemy."]}, "text_742": {"desc_loc": "Gains a Charge for every 2 creeps killed and 2 charges per hero killed. Activate to spend all charges, summoning skeletons that respawn once when killed. Skeletons benefit from Vampiric Spirit's lifesteal.", "notes_loc": ["Break disables the gaining of new stacks.", "Casting Wraithfire Blast on an enemy causes the skeletons to attack that enemy."]}, "changed_fields": [{"field": "cooldowns", "old": [42], "new": [45]}, {"field": "AbilityCooldown", "old": {"base": [42], "scepter": null, "shard": null}, "new": {"base": [45], "scepter": null, "shard": null}}, {"field": "max_skeleton_charges", "old": {"base": [2, 4, 6, 8], "scepter": null, "shard": null}, "new": {"base": [3, 4, 5, 6], "scepter": null, "shard": null}}, {"field": "skeleton_bonus_hero_damage", "old": {"base": [25], "scepter": null, "shard": null}, "new": {"base": [24, 28, 32, 36], "scepter": null, "shard": null}}], "rows": [{"review_id": "5246ea65479887e0078a", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "a8e0158da70d65a2dcd5", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "ae3568b9d901513a8f9c", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "base", "decision": "reject"}, {"review_id": "df56f04a8a8da59bb1f5", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "base", "decision": "reject"}, {"review_id": "3f766387df29867f96c6", "mechanism": "respawn", "mechanism_zh": "重生", "definition": "死亡后复活，或影响复活", "condition": "base", "decision": "accept"}, {"review_id": "e9e16237ad7a7955cf4d", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "accept"}]}, {"subject": "skeleton_king_hellfire_blast", "name_zh": "冥魂大帝·冥火爆击", "category": "2_纯数值", "text_741f": {"desc_loc": "Wraith King sears an enemy unit with spectral fire, dealing damage and stunning, then dealing damage over time and slowing the target."}, "text_742": {"desc_loc": "Wraith King sears an enemy unit with spectral fire, dealing damage and stunning, then dealing damage over time and slowing the target."}, "changed_fields": [{"field": "blast_stun_duration", "old": {"base": [1, 1.2, 1.4, 1.6], "scepter": null, "shard": null}, "new": {"base": [1.2, 1.4, 1.6, 1.8], "scepter": null, "shard": null}}], "rows": [{"review_id": "bc20515a5035e8a733f7", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "972aac35756cd90267d2", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "9f4bb59cdb550482e25b", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "65dc0f5c5bd928813839", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "skywrath_mage_ancient_seal", "name_zh": "天怒法师·上古封印", "category": "2_纯数值", "text_741f": {"desc_loc": "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.", "notes_loc": ["The magic damage resistance reduction doesn't affect creeps."], "scepter_loc": "Anytime Skywrath Mage casts Ancient Seal, a different random target within %scepter_radius% range of the original target will be affected by the same ability. Heroes will take priority."}, "text_742": {"desc_loc": "Skywrath Mage seals the targeted unit with an ancient rune, silencing it and causing it to take additional damage from spells.", "notes_loc": ["The magic damage resistance reduction doesn't affect creeps."], "scepter_loc": "Anytime Skywrath Mage casts Ancient Seal, a different random target within %scepter_radius% range of the original target will be affected by the same ability. Heroes will take priority."}, "changed_fields": [{"field": "resist_debuff", "old": {"base": [-20, -25, -30, -35], "scepter": null, "shard": null}, "new": {"base": [-16, -20, -24, -28], "scepter": null, "shard": null}}], "rows": [{"review_id": "23bba52e2772a3668ad3", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "reject"}, {"review_id": "558acb56d3b26b18a0fc", "mechanism": "magic_resist_reduction", "mechanism_zh": "减魔抗/魔法易伤", "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害", "condition": "base", "decision": "accept"}, {"review_id": "f1a68e0d102215fe0a40", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "base", "decision": "accept"}, {"review_id": "28febb11fd7c60faa841", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "sandking_scorpion_strike",
+      "rows": [
+        {"review_id":"c53f43601db2a31c6ea9","verdict":"holds","quote":"performing an attack on all enemies in the area of effect, dealing extra damage to each.","reason_zh":"一次施放仍会攻击范围内的所有敌人，并分别造成额外伤害。"},
+        {"review_id":"bf85b79610674ec85b3c","verdict":"holds","quote":"Applies Caustic Finale and a slow to all enemies hit.","reason_zh":"所有被击中的敌人仍会受到减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sange",
+      "rows": [
+        {"review_id":"audit:sange:slow_resistance:item","verdict":"holds","quote":"item_cost: 2100→2000；hp_regen_amp: 12→16","reason_zh":"本次只调整价格和生命回复增幅，原有的装备减速抗性判断仍成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sange_and_yasha",
+      "rows": [
+        {"review_id":"32f7e9f3eb06fc4864d0","verdict":"holds","quote":"movement_speed_percent_bonus: 12→10；movement_speed_percent_bonus_melee: 12→10","reason_zh":"两项移速加成都降至10%，装备仍提供加速。"},
+        {"review_id":"audit:sange_and_yasha:slow_resistance:item","verdict":"holds","quote":"movement_speed_percent_bonus: 12→10；movement_speed_percent_bonus_melee: 12→10","reason_zh":"下调的是自身移速加成，变更字段中没有减速抗性调整。"},
+        {"review_id":"audit:sange_and_yasha:status_resistance:item","verdict":"holds","quote":"item_cost: 4200→4000；hp_regen_amp: 16→20；movement_speed_percent_bonus: 12→10；movement_speed_percent_bonus_melee: 12→10","reason_zh":"价格、生命回复增幅和移速加成的调整均未改变原有的状态抗性判断。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_demon_demonic_cleanse",
+      "rows": [
+        {"review_id":"58138da51240f888cf75","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"技能仍以弱驱散移除友方目标身上的负面效果。"},
+        {"review_id":"f3eb3feeda51824f539b","verdict":"holds","quote":"At the end of the duration, the unit is healed.","reason_zh":"效果结束时仍会治疗目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_demon_demonic_purge",
+      "rows": [
+        {"review_id":"da5250d628d7ce2a7b95","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"基础技能仍以弱驱散移除敌方目标身上的正面效果。"},
+        {"review_id":"4b15dde7096f8532f25d","verdict":"holds","quote":"Causes Demonic Purge to break and gain %max_charges% charges.","reason_zh":"A杖升级仍使邪恶净化对目标施加破坏。"},
+        {"review_id":"2720bb4f3bca0a31c0cc","verdict":"holds","quote":"gain %max_charges% charges.","reason_zh":"A杖升级仍赋予技能充能。"},
+        {"review_id":"883cefab73fe49e0e1ac","verdict":"holds","quote":"The slow starts at %max_slow%%% and decreases over time to %min_slow%%%.","reason_zh":"基础技能仍施加减速，且减速幅度随时间降低。"},
+        {"review_id":"255bc488f55cb6334fca","verdict":"holds","quote":"Purges the target enemy unit","reason_zh":"施放时仍可选择一个敌方单位为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_shaman_fowl_play",
+      "rows": [
+        {"review_id":"87645fc3557f3f41e03a","verdict":"holds","quote":"total_chickens: 1→3","reason_zh":"本次增加了鸡的数量，没有加入对多个敌人造成伤害的效果。"},
+        {"review_id":"be94dcee83197e6b9c39","verdict":"holds","quote":"When taking lethal damage, Shadow Shaman receives a strong dispel","reason_zh":"受到致命伤害并触发禽戏时，暗影萨满仍会获得强驱散。"},
+        {"review_id":"a41282b88d3d1fd5911b","verdict":"holds","quote":"total_chickens: 1→3","reason_zh":"唯一变更是鸡的数量，决定可破坏性的 IsBreakable 字段没有变更，沿用原判。"},
+        {"review_id":"audit:shadow_shaman_fowl_play:cooldown_reset:base","verdict":"holds","quote":"Cooldown resets when Shadow Shaman respawns.","reason_zh":"暗影萨满复活时仍会立即刷新禽戏的冷却。"},
+        {"review_id":"86107472b869ac2c47ec","verdict":"holds","quote":"Incoming damage is reduced to zero for a short duration","reason_zh":"基础效果仍会在短时间内将受到的伤害降至零。"},
+        {"review_id":"audit:shadow_shaman_fowl_play:death_prevention:base","verdict":"holds","quote":"When taking lethal damage, Shadow Shaman receives a strong dispel and survives as a 1 HP chicken","reason_zh":"符合触发条件的致命伤害仍会让暗影萨满以1点生命存活，说明列出的致命伤害例外仍适用。"},
+        {"review_id":"c755a2c02f064a102785","verdict":"holds","quote":"Lethal Damage from Axe's Culling Blade and Necrophos's Reaper's Scythe will not be prevented.","reason_zh":"这条说明列出禽戏无法阻止的致命伤害，禽戏自身没有按生命阈值击杀目标的效果。"},
+        {"review_id":"31581fac66407dd57fbb","verdict":"holds","quote":"survives as a 1 HP chicken with increased movement speed.","reason_zh":"暗影萨满变鸡后仍获得移动速度加成。"},
+        {"review_id":"2d33583d5e348fbdfdb6","verdict":"holds","quote":"Shadow Shaman receives a strong dispel and survives as a 1 HP chicken with increased movement speed.","reason_zh":"这里描述的是暗影萨满触发保命后的自身形态，没有加入对目标施加妖术的效果。"},
+        {"review_id":"3e875ccc5cadd4b47408","verdict":"holds","quote":"Incoming damage reduction buff will prevent certain sources of HP removal from killing Shadow Shaman.","reason_zh":"禽戏能阻止部分生命移除来源致死，技能本身没有直接移除生命的效果。"},
+        {"review_id":"f49a2778932c034dc275","verdict":"condition_changed","quote":"When Fowl Play is triggered, Shadow Shaman becomes invulnerable for %invuln_duration% seconds.","reason_zh":"无敌的适用条件应校正为魔晶（shard_upgrade），两版都将无敌写在魔晶说明中，基础说明只写短暂减伤至零。"},
+        {"review_id":"a4bdf83b8f11d943a8ad","verdict":"holds","quote":"Cooldown resets when Shadow Shaman respawns.","reason_zh":"复活只负责触发冷却刷新，禽戏本身没有使暗影萨满复活或改变复活过程的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_shaman_mass_serpent_ward",
+      "rows": [
+        {"review_id":"096b36ae8f678064bdc4","verdict":"holds","quote":"Summons %ward_count% Serpent Wards to attack enemy units and structures.","reason_zh":"技能仍通过蛇棒分别攻击敌方单位或建筑，变更没有赋予施放或单次攻击范围伤害。"},
+        {"review_id":"audit:shadow_shaman_mass_serpent_ward:debuff_immunity:base","verdict":"holds","quote":"The Wards are immune to magic.","reason_zh":"基础说明仍明确赋予蛇棒技能免疫。"},
+        {"review_id":"15f348bdf92ded494a2b","verdict":"holds","quote":"ward_health: 4→2","reason_zh":"蛇棒的生命格数下调，巨蟒之瓮的新版说明也明确基础蛇棒使用格数生命，仍符合召唤物词条的排除条件。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"damage_block","condition":"base","quote":"Creeps and illusions deal 25% damage to the Serpent Ward.","reason_zh":"7.42新增了蛇棒对幻象来源的减伤，幻象只造成25%伤害，小兵来源的减伤在旧版已经存在。"}
+      ]
+    },
+    {
+      "subject": "shadow_shaman_urnaconda",
+      "rows": [
+        {"review_id":"f203e4f2844cd48e8ebf","verdict":"holds","quote":"Throw a snake jar at the target location, damaging all enemies in the AoE","reason_zh":"投瓮仍对落点范围内的所有敌人造成伤害。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_shaman_voodoo",
+      "rows": [
+        {"review_id":"audit:shadow_shaman_voodoo:hex:base","verdict":"holds","quote":"Transforms an enemy unit into a harmless creature, disabling their attacks and abilities.","reason_zh":"技能仍将敌方单位变成无害生物并封住攻击和技能，本次只降低了魔耗。"},
+        {"review_id":"c5d98b893f93ed0bf715","verdict":"holds","quote":"Transforms an enemy unit into a harmless creature","reason_zh":"妖术仍以一个敌方单位为施放目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shivas_guard",
+      "rows": [
+        {"review_id":"d2f1225e5720447d6c13","verdict":"holds","quote":"Emits a freezing wave that deals %blast_damage% magical damage to enemies","reason_zh":"主动释放的冰波仍能对范围内多个敌人造成魔法伤害。"},
+        {"review_id":"audit:shivas_guard:attack_slow:item","verdict":"holds","quote":"Reduces the attack speed of all enemies by %aura_attack_speed%.","reason_zh":"被动光环仍降低范围内所有敌人的攻击速度。"},
+        {"review_id":"bd5e7f685a37cce778af","verdict":"holds","quote":"Passive: Freezing Aura Reduces the attack speed of all enemies by %aura_attack_speed%. Radius: %aura_radius%","reason_zh":"装备仍通过被动光环持续影响持有者周围的敌人。"},
+        {"review_id":"03afee5ba76ad62c8516","verdict":"holds","quote":"blast_movement_speed: -40→-30","reason_zh":"冰波的移速减幅由40%降至30%，仍会使敌人减速。"},
+        {"review_id":"2a683c07e48aa391cde1","verdict":"holds","quote":"blast_movement_speed: -40→-30","reason_zh":"新版冰波仍降低敌人30%的移速，这条减速判断也成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shredder_chakram",
+      "rows": [
+        {"review_id":"c8b92d47570408bbaf1f","verdict":"holds","quote":"it will spin in place, dealing damage in an area around it.","reason_zh":"飞轮仍对周围区域造成伤害，各级调整后的伤害均大于零。"},
+        {"review_id":"audit:shredder_chakram:ground_zone:base","verdict":"holds","quote":"at the target location where it will spin in place, dealing damage in an area around it.","reason_zh":"飞轮仍在指定地点持续旋转，对留在区域内的敌人生效。"},
+        {"review_id":"c28be5be630ea02530f5","verdict":"holds","quote":"Enemies caught in the saw blade will move more slowly for every %slow_health_percentage%%% of health missing.","reason_zh":"处于飞轮中的敌人仍会按已损失生命比例受到减速。"},
+        {"review_id":"79c49751d5a13002f9e5","verdict":"holds","quote":"cuts down trees in its path when fired and retracted.","reason_zh":"飞轮在发射和收回时仍会摧毁沿途树木。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shredder_exposure_therapy",
+      "rows": [
+        {"review_id":"4838c3ce00b15dceaaec","verdict":"holds","quote":"behavior: 8796093022274→562949953421379","reason_zh":"本次只变更了 behavior，决定可破坏性的 IsBreakable 字段没有变更，沿用原判。"},
+        {"review_id":"de5d04076add77f8f92a","verdict":"holds","quote":"Whenever Timbersaw destroys a tree, he gains mana.","reason_zh":"伐木机摧毁树木时仍会为自身恢复法力。"},
+        {"review_id":"0093a2a0f4957670c27e","verdict":"holds","quote":"Whenever Timbersaw destroys a tree, he gains mana.","reason_zh":"摧毁树木是触发回蓝的条件，技能自身没有获得砍树效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shredder_whirling_death",
+      "rows": [
+        {"review_id":"b451395e3385a60c88fb","verdict":"holds","quote":"damaging enemies and destroying trees around him in an area.","reason_zh":"技能仍可伤害伐木机周围的多个敌人，每棵树的额外伤害下调不影响范围伤害判断。"},
+        {"review_id":"5b55a6c0c7d2abf882d3","verdict":"holds","quote":"destroying trees around him in an area.","reason_zh":"技能仍会摧毁伐木机周围的树木。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "silencer_brain_drain",
+      "rows": [
+        {"review_id":"485737df55fab252c432","verdict":"unclear","quote":"Intelligence Steal is not disabled by Break.","reason_zh":"新增说明只确认偷取智力不受破坏，材料未给出 IsBreakable 的值，也未说明破坏对伤害增减部分的影响，无法独立确认整项技能均不受破坏。"},
+        {"review_id":"audit:silencer_brain_drain:damage_block:base","verdict":"holds","quote":"Silencer takes less damage from and deals more damage to silenced targets.","reason_zh":"沉默术士受到来自已沉默目标的伤害仍会降低。"},
+        {"review_id":"audit:silencer_brain_drain:incoming_damage_amp:base","verdict":"holds","quote":"Silencer takes less damage from and deals more damage to silenced targets.","reason_zh":"已沉默目标承受来自沉默术士的伤害仍会增加，说明没有限定伤害类型。"},
+        {"review_id":"f36afe926360415660b0","verdict":"holds","quote":"If the victim was silenced, steal an extra %silenced_bonus_int_steal_amount% Intelligence.","reason_zh":"目标已被沉默是额外偷智的条件，技能自身没有施加沉默的效果。"},
+        {"review_id":"d7fe0dfebc9d66897d2d","verdict":"holds","quote":"Silencer permanently steals %permanent_int_steal_amount% Intelligence from them.","reason_zh":"敌方英雄满足死亡条件时，沉默术士仍会永久偷取其智力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "silencer_glaives_of_wisdom",
+      "rows": [
+        {"review_id":"audit:silencer_glaives_of_wisdom:aoe_damage:shard","verdict":"holds","quote":"Causes Glaives of Wisdom to bounce %bounce_count% time to a random enemy within %bounce_range% range","reason_zh":"魔晶仍使智慧之刃弹射至其他敌人，一次攻击可以伤害多个目标。"},
+        {"review_id":"06e572d4bf492c0e9b74","verdict":"holds","quote":"stealing his target's Intelligence with each hit and dealing additional damage based on his Intelligence.","reason_zh":"每次命中仍附带偷取智力和基于自身智力的额外伤害。"},
+        {"review_id":"b9fd537ed85efcc267aa","verdict":"holds","quote":"stealing his target's Intelligence with each hit and dealing additional damage based on his Intelligence.","reason_zh":"命中效果仍为偷智和额外伤害，此次调整没有加入沉默。"},
+        {"review_id":"ac5a42db12da5bece3ff","verdict":"holds","quote":"stealing his target's Intelligence with each hit","reason_zh":"基础攻击命中时仍偷取目标智力，本次提高的是魔晶提供的偷取量。"},
+        {"review_id":"a8c7c810bda951f613a7","verdict":"holds","quote":"int_steal.shard: 1→2","reason_zh":"唯一变更是魔晶偷智数值，基础技能原有的敌方单位指向判断仍成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "silver_edge",
+      "rows": [
+        {"review_id":"5749ab853da56d2c0dcb","verdict":"holds","quote":"disable their passive abilities for %backstab_duration% seconds","reason_zh":"以攻击结束隐身时仍会暂时禁用目标的被动技能。"},
+        {"review_id":"audit:silver_edge:attack_modifier:item","verdict":"holds","quote":"Attacking to end the invisibility will deal %windwalk_bonus_damage% bonus physical damage","reason_zh":"结束隐身的那次攻击仍附带额外物理伤害。"},
+        {"review_id":"040550da413f32214b69","verdict":"holds","quote":"windwalk_movement_speed: 20→18","reason_zh":"隐身期间的移速加成降至18%，持有者仍获得加速。"},
+        {"review_id":"83b72c363a023078f0c2","verdict":"holds","quote":"Makes you invisible for %windwalk_duration% seconds, or until you attack or cast a spell.","reason_zh":"主动使用装备仍使持有者进入隐身。"},
+        {"review_id":"audit:silver_edge:phased:item","verdict":"holds","quote":"While invisible, you move %windwalk_movement_speed%%% faster and can move through units.","reason_zh":"持有者在隐身期间仍能穿过其他单位。"},
+        {"review_id":"audit:silver_edge:slow:item","verdict":"holds","quote":"cap their movement speed to %max_movement_speed%.","reason_zh":"破隐攻击仍会限制目标的移速上限，目标原先超过上限时就会被减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skadi",
+      "rows": [
+        {"review_id":"audit:skadi:attack_modifier:item","verdict":"holds","quote":"Passive: Cold Attack Attacks lower enemy movement","reason_zh":"装备仍使普通攻击附带降低敌人移速的效果。"},
+        {"review_id":"audit:skadi:attack_slow:item","verdict":"holds","quote":"Attacks also lower enemy attack speed by %cold_attack_slow_melee%%%","reason_zh":"寒冷攻击仍会降低敌人的攻击速度。"},
+        {"review_id":"b3fb210d5160471afc78","verdict":"holds","quote":"Attacks also lower enemy attack speed by %cold_attack_slow_melee%%% and Health Restoration by %restoration_reduction%%%.","reason_zh":"攻击命中后仍会削减敌人的生命恢复。"},
+        {"review_id":"70c1ed32fadd612d1c9d","verdict":"holds","quote":"cold_slow_melee: -25→-20；cold_slow_ranged: -50→-40","reason_zh":"对近战和远程敌人的移速减幅分别降至20%和40%，两类目标仍会被减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skeleton_king_bone_guard",
+      "rows": [
+        {"review_id":"5246ea65479887e0078a","verdict":"holds","quote":"Activate to spend all charges, summoning skeletons that respawn once when killed.","reason_zh":"主动施放仍用于召唤骷髅，变更没有赋予施放或骷髅单次攻击范围伤害。"},
+        {"review_id":"a8e0158da70d65a2dcd5","verdict":"holds","quote":"Break disables the gaining of new stacks.","reason_zh":"破坏仍会阻止获得新层数，符合技能部分效果可被破坏的定义。"},
+        {"review_id":"ae3568b9d901513a8f9c","verdict":"holds","quote":"Activate to spend all charges, summoning skeletons","reason_zh":"施放一次会耗尽积累的层数以召唤骷髅，不符合每次使用消耗一点的充能定义。"},
+        {"review_id":"df56f04a8a8da59bb1f5","verdict":"holds","quote":"Skeletons benefit from Vampiric Spirit's lifesteal.","reason_zh":"骷髅享受的吸血来自吸血之魂，白骨护卫自身没有提供吸血。"},
+        {"review_id":"3f766387df29867f96c6","verdict":"holds","quote":"skeletons that respawn once when killed.","reason_zh":"召出的骷髅被击杀后仍能复活一次。"},
+        {"review_id":"e9e16237ad7a7955cf4d","verdict":"holds","quote":"summoning skeletons that respawn once when killed.","reason_zh":"技能仍会召出可被击杀和复活的骷髅单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skeleton_king_hellfire_blast",
+      "rows": [
+        {"review_id":"bc20515a5035e8a733f7","verdict":"holds","quote":"Wraith King sears an enemy unit with spectral fire, dealing damage and stunning, then dealing damage over time and slowing the target.","reason_zh":"初始伤害和后续持续伤害都作用于同一个目标，此次只延长了眩晕。"},
+        {"review_id":"972aac35756cd90267d2","verdict":"holds","quote":"then dealing damage over time and slowing the target.","reason_zh":"初始眩晕后仍会减速目标。"},
+        {"review_id":"9f4bb59cdb550482e25b","verdict":"holds","quote":"blast_stun_duration: [1, 1.2, 1.4, 1.6]→[1.2, 1.4, 1.6, 1.8]","reason_zh":"各级眩晕持续时间均延长了0.2秒，眩晕机制仍成立。"},
+        {"review_id":"65dc0f5c5bd928813839","verdict":"holds","quote":"Wraith King sears an enemy unit with spectral fire","reason_zh":"冥火爆击仍可选择一个敌方单位为施放目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skywrath_mage_ancient_seal",
+      "rows": [
+        {"review_id":"23bba52e2772a3668ad3","verdict":"holds","quote":"causing it to take additional damage from spells.","reason_zh":"说明将增伤限定为技能伤害，未赋予针对物理伤害或全部伤害的加深效果。"},
+        {"review_id":"558acb56d3b26b18a0fc","verdict":"holds","quote":"resist_debuff: [-20, -25, -30, -35]→[-16, -20, -24, -28]","reason_zh":"各级魔抗削减幅度均下调，但仍能降低适用目标的魔抗。"},
+        {"review_id":"f1a68e0d102215fe0a40","verdict":"holds","quote":"silencing it and causing it to take additional damage from spells.","reason_zh":"上古封印仍会沉默目标。"},
+        {"review_id":"28febb11fd7c60faa841","verdict":"holds","quote":"Skywrath Mage seals the targeted unit with an ancient rune, silencing it","reason_zh":"基础技能仍可选择一个敌方单位施加封印。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+38,090
+{
+  "objects": [
+    {
+      "subject": "sandking_scorpion_strike",
+      "rows": [
+        {"review_id":"c53f43601db2a31c6ea9","verdict":"holds","quote":"performing an attack on all enemies in the area of effect, dealing extra damage to each.","reason_zh":"一次施放仍会攻击范围内的所有敌人，并分别造成额外伤害。"},
+        {"review_id":"bf85b79610674ec85b3c","verdict":"holds","quote":"Applies Caustic Finale and a slow to all enemies hit.","reason_zh":"所有被击中的敌人仍会受到减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sange",
+      "rows": [
+        {"review_id":"audit:sange:slow_resistance:item","verdict":"holds","quote":"item_cost: 2100→2000；hp_regen_amp: 12→16","reason_zh":"本次只调整价格和生命回复增幅，原有的装备减速抗性判断仍成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sange_and_yasha",
+      "rows": [
+        {"review_id":"32f7e9f3eb06fc4864d0","verdict":"holds","quote":"movement_speed_percent_bonus: 12→10；movement_speed_percent_bonus_melee: 12→10","reason_zh":"两项移速加成都降至10%，装备仍提供加速。"},
+        {"review_id":"audit:sange_and_yasha:slow_resistance:item","verdict":"holds","quote":"movement_speed_percent_bonus: 12→10；movement_speed_percent_bonus_melee: 12→10","reason_zh":"下调的是自身移速加成，变更字段中没有减速抗性调整。"},
+        {"review_id":"audit:sange_and_yasha:status_resistance:item","verdict":"holds","quote":"item_cost: 4200→4000；hp_regen_amp: 16→20；movement_speed_percent_bonus: 12→10；movement_speed_percent_bonus_melee: 12→10","reason_zh":"价格、生命回复增幅和移速加成的调整均未改变原有的状态抗性判断。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_demon_demonic_cleanse",
+      "rows": [
+        {"review_id":"58138da51240f888cf75","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"技能仍以弱驱散移除友方目标身上的负面效果。"},
+        {"review_id":"f3eb3feeda51824f539b","verdict":"holds","quote":"At the end of the duration, the unit is healed.","reason_zh":"效果结束时仍会治疗目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_demon_demonic_purge",
+      "rows": [
+        {"review_id":"da5250d628d7ce2a7b95","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"基础技能仍以弱驱散移除敌方目标身上的正面效果。"},
+        {"review_id":"4b15dde7096f8532f25d","verdict":"holds","quote":"Causes Demonic Purge to break and gain %max_charges% charges.","reason_zh":"A杖升级仍使邪恶净化对目标施加破坏。"},
+        {"review_id":"2720bb4f3bca0a31c0cc","verdict":"holds","quote":"gain %max_charges% charges.","reason_zh":"A杖升级仍赋予技能充能。"},
+        {"review_id":"883cefab73fe49e0e1ac","verdict":"holds","quote":"The slow starts at %max_slow%%% and decreases over time to %min_slow%%%.","reason_zh":"基础技能仍施加减速，且减速幅度随时间降低。"},
+        {"review_id":"255bc488f55cb6334fca","verdict":"holds","quote":"Purges the target enemy unit","reason_zh":"施放时仍可选择一个敌方单位为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_shaman_fowl_play",
+      "rows": [
+        {"review_id":"87645fc3557f3f41e03a","verdict":"holds","quote":"total_chickens: 1→3","reason_zh":"本次增加了鸡的数量，没有加入对多个敌人造成伤害的效果。"},
+        {"review_id":"be94dcee83197e6b9c39","verdict":"holds","quote":"When taking lethal damage, Shadow Shaman receives a strong dispel","reason_zh":"受到致命伤害并触发禽戏时，暗影萨满仍会获得强驱散。"},
+        {"review_id":"a41282b88d3d1fd5911b","verdict":"holds","quote":"total_chickens: 1→3","reason_zh":"唯一变更是鸡的数量，决定可破坏性的 IsBreakable 字段没有变更，沿用原判。"},
+        {"review_id":"audit:shadow_shaman_fowl_play:cooldown_reset:base","verdict":"holds","quote":"Cooldown resets when Shadow Shaman respawns.","reason_zh":"暗影萨满复活时仍会立即刷新禽戏的冷却。"},
+        {"review_id":"86107472b869ac2c47ec","verdict":"holds","quote":"Incoming damage is reduced to zero for a short duration","reason_zh":"基础效果仍会在短时间内将受到的伤害降至零。"},
+        {"review_id":"audit:shadow_shaman_fowl_play:death_prevention:base","verdict":"holds","quote":"When taking lethal damage, Shadow Shaman receives a strong dispel and survives as a 1 HP chicken","reason_zh":"符合触发条件的致命伤害仍会让暗影萨满以1点生命存活，说明列出的致命伤害例外仍适用。"},
+        {"review_id":"c755a2c02f064a102785","verdict":"holds","quote":"Lethal Damage from Axe's Culling Blade and Necrophos's Reaper's Scythe will not be prevented.","reason_zh":"这条说明列出禽戏无法阻止的致命伤害，禽戏自身没有按生命阈值击杀目标的效果。"},
+        {"review_id":"31581fac66407dd57fbb","verdict":"holds","quote":"survives as a 1 HP chicken with increased movement speed.","reason_zh":"暗影萨满变鸡后仍获得移动速度加成。"},
+        {"review_id":"2d33583d5e348fbdfdb6","verdict":"holds","quote":"Shadow Shaman receives a strong dispel and survives as a 1 HP chicken with increased movement speed.","reason_zh":"这里描述的是暗影萨满触发保命后的自身形态，没有加入对目标施加妖术的效果。"},
+        {"review_id":"3e875ccc5cadd4b47408","verdict":"holds","quote":"Incoming damage reduction buff will prevent certain sources of HP removal from killing Shadow Shaman.","reason_zh":"禽戏能阻止部分生命移除来源致死，技能本身没有直接移除生命的效果。"},
+        {"review_id":"f49a2778932c034dc275","verdict":"condition_changed","quote":"When Fowl Play is triggered, Shadow Shaman becomes invulnerable for %invuln_duration% seconds.","reason_zh":"无敌的适用条件应校正为魔晶（shard_upgrade），两版都将无敌写在魔晶说明中，基础说明只写短暂减伤至零。"},
+        {"review_id":"a4bdf83b8f11d943a8ad","verdict":"holds","quote":"Cooldown resets when Shadow Shaman respawns.","reason_zh":"复活只负责触发冷却刷新，禽戏本身没有使暗影萨满复活或改变复活过程的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_shaman_mass_serpent_ward",
+      "rows": [
+        {"review_id":"096b36ae8f678064bdc4","verdict":"holds","quote":"Summons %ward_count% Serpent Wards to attack enemy units and structures.","reason_zh":"技能仍通过蛇棒分别攻击敌方单位或建筑，变更没有赋予施放或单次攻击范围伤害。"},
+        {"review_id":"audit:shadow_shaman_mass_serpent_ward:debuff_immunity:base","verdict":"holds","quote":"The Wards are immune to magic.","reason_zh":"基础说明仍明确赋予蛇棒技能免疫。"},
+        {"review_id":"15f348bdf92ded494a2b","verdict":"holds","quote":"ward_health: 4→2","reason_zh":"蛇棒的生命格数下调，巨蟒之瓮的新版说明也明确基础蛇棒使用格数生命，仍符合召唤物词条的排除条件。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"damage_block","condition":"base","quote":"Creeps and illusions deal 25% damage to the Serpent Ward.","reason_zh":"7.42新增了蛇棒对幻象来源的减伤，幻象只造成25%伤害，小兵来源的减伤在旧版已经存在。"}
+      ]
+    },
+    {
+      "subject": "shadow_shaman_urnaconda",
+      "rows": [
+        {"review_id":"f203e4f2844cd48e8ebf","verdict":"holds","quote":"Throw a snake jar at the target location, damaging all enemies in the AoE","reason_zh":"投瓮仍对落点范围内的所有敌人造成伤害。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shadow_shaman_voodoo",
+      "rows": [
+        {"review_id":"audit:shadow_shaman_voodoo:hex:base","verdict":"holds","quote":"Transforms an enemy unit into a harmless creature, disabling their attacks and abilities.","reason_zh":"技能仍将敌方单位变成无害生物并封住攻击和技能，本次只降低了魔耗。"},
+        {"review_id":"c5d98b893f93ed0bf715","verdict":"holds","quote":"Transforms an enemy unit into a harmless creature","reason_zh":"妖术仍以一个敌方单位为施放目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shivas_guard",
+      "rows": [
+        {"review_id":"d2f1225e5720447d6c13","verdict":"holds","quote":"Emits a freezing wave that deals %blast_damage% magical damage to enemies","reason_zh":"主动释放的冰波仍能对范围内多个敌人造成魔法伤害。"},
+        {"review_id":"audit:shivas_guard:attack_slow:item","verdict":"holds","quote":"Reduces the attack speed of all enemies by %aura_attack_speed%.","reason_zh":"被动光环仍降低范围内所有敌人的攻击速度。"},
+        {"review_id":"bd5e7f685a37cce778af","verdict":"holds","quote":"Passive: Freezing Aura Reduces the attack speed of all enemies by %aura_attack_speed%. Radius: %aura_radius%","reason_zh":"装备仍通过被动光环持续影响持有者周围的敌人。"},
+        {"review_id":"03afee5ba76ad62c8516","verdict":"holds","quote":"blast_movement_speed: -40→-30","reason_zh":"冰波的移速减幅由40%降至30%，仍会使敌人减速。"},
+        {"review_id":"2a683c07e48aa391cde1","verdict":"holds","quote":"blast_movement_speed: -40→-30","reason_zh":"新版冰波仍降低敌人30%的移速，这条减速判断也成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shredder_chakram",
+      "rows": [
+        {"review_id":"c8b92d47570408bbaf1f","verdict":"holds","quote":"it will spin in place, dealing damage in an area around it.","reason_zh":"飞轮仍对周围区域造成伤害，各级调整后的伤害均大于零。"},
+        {"review_id":"audit:shredder_chakram:ground_zone:base","verdict":"holds","quote":"at the target location where it will spin in place, dealing damage in an area around it.","reason_zh":"飞轮仍在指定地点持续旋转，对留在区域内的敌人生效。"},
+        {"review_id":"c28be5be630ea02530f5","verdict":"holds","quote":"Enemies caught in the saw blade will move more slowly for every %slow_health_percentage%%% of health missing.","reason_zh":"处于飞轮中的敌人仍会按已损失生命比例受到减速。"},
+        {"review_id":"79c49751d5a13002f9e5","verdict":"holds","quote":"cuts down trees in its path when fired and retracted.","reason_zh":"飞轮在发射和收回时仍会摧毁沿途树木。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shredder_exposure_therapy",
+      "rows": [
+        {"review_id":"4838c3ce00b15dceaaec","verdict":"holds","quote":"behavior: 8796093022274→562949953421379","reason_zh":"本次只变更了 behavior，决定可破坏性的 IsBreakable 字段没有变更，沿用原判。"},
+        {"review_id":"de5d04076add77f8f92a","verdict":"holds","quote":"Whenever Timbersaw destroys a tree, he gains mana.","reason_zh":"伐木机摧毁树木时仍会为自身恢复法力。"},
+        {"review_id":"0093a2a0f4957670c27e","verdict":"holds","quote":"Whenever Timbersaw destroys a tree, he gains mana.","reason_zh":"摧毁树木是触发回蓝的条件，技能自身没有获得砍树效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "shredder_whirling_death",
+      "rows": [
+        {"review_id":"b451395e3385a60c88fb","verdict":"holds","quote":"damaging enemies and destroying trees around him in an area.","reason_zh":"技能仍可伤害伐木机周围的多个敌人，每棵树的额外伤害下调不影响范围伤害判断。"},
+        {"review_id":"5b55a6c0c7d2abf882d3","verdict":"holds","quote":"destroying trees around him in an area.","reason_zh":"技能仍会摧毁伐木机周围的树木。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "silencer_brain_drain",
+      "rows": [
+        {"review_id":"485737df55fab252c432","verdict":"unclear","quote":"Intelligence Steal is not disabled by Break.","reason_zh":"新增说明只确认偷取智力不受破坏，材料未给出 IsBreakable 的值，也未说明破坏对伤害增减部分的影响，无法独立确认整项技能均不受破坏。"},
+        {"review_id":"audit:silencer_brain_drain:damage_block:base","verdict":"holds","quote":"Silencer takes less damage from and deals more damage to silenced targets.","reason_zh":"沉默术士受到来自已沉默目标的伤害仍会降低。"},
+        {"review_id":"audit:silencer_brain_drain:incoming_damage_amp:base","verdict":"holds","quote":"Silencer takes less damage from and deals more damage to silenced targets.","reason_zh":"已沉默目标承受来自沉默术士的伤害仍会增加，说明没有限定伤害类型。"},
+        {"review_id":"f36afe926360415660b0","verdict":"holds","quote":"If the victim was silenced, steal an extra %silenced_bonus_int_steal_amount% Intelligence.","reason_zh":"目标已被沉默是额外偷智的条件，技能自身没有施加沉默的效果。"},
+        {"review_id":"d7fe0dfebc9d66897d2d","verdict":"holds","quote":"Silencer permanently steals %permanent_int_steal_amount% Intelligence from them.","reason_zh":"敌方英雄满足死亡条件时，沉默术士仍会永久偷取其智力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "silencer_glaives_of_wisdom",
+      "rows": [
+        {"review_id":"audit:silencer_glaives_of_wisdom:aoe_damage:shard","verdict":"holds","quote":"Causes Glaives of Wisdom to bounce %bounce_count% time to a random enemy within %bounce_range% range","reason_zh":"魔晶仍使智慧之刃弹射至其他敌人，一次攻击可以伤害多个目标。"},
+        {"review_id":"06e572d4bf492c0e9b74","verdict":"holds","quote":"stealing his target's Intelligence with each hit and dealing additional damage based on his Intelligence.","reason_zh":"每次命中仍附带偷取智力和基于自身智力的额外伤害。"},
+        {"review_id":"b9fd537ed85efcc267aa","verdict":"holds","quote":"stealing his target's Intelligence with each hit and dealing additional damage based on his Intelligence.","reason_zh":"命中效果仍为偷智和额外伤害，此次调整没有加入沉默。"},
+        {"review_id":"ac5a42db12da5bece3ff","verdict":"holds","quote":"stealing his target's Intelligence with each hit","reason_zh":"基础攻击命中时仍偷取目标智力，本次提高的是魔晶提供的偷取量。"},
+        {"review_id":"a8c7c810bda951f613a7","verdict":"holds","quote":"int_steal.shard: 1→2","reason_zh":"唯一变更是魔晶偷智数值，基础技能原有的敌方单位指向判断仍成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "silver_edge",
+      "rows": [
+        {"review_id":"5749ab853da56d2c0dcb","verdict":"holds","quote":"disable their passive abilities for %backstab_duration% seconds","reason_zh":"以攻击结束隐身时仍会暂时禁用目标的被动技能。"},
+        {"review_id":"audit:silver_edge:attack_modifier:item","verdict":"holds","quote":"Attacking to end the invisibility will deal %windwalk_bonus_damage% bonus physical damage","reason_zh":"结束隐身的那次攻击仍附带额外物理伤害。"},
+        {"review_id":"040550da413f32214b69","verdict":"holds","quote":"windwalk_movement_speed: 20→18","reason_zh":"隐身期间的移速加成降至18%，持有者仍获得加速。"},
+        {"review_id":"83b72c363a023078f0c2","verdict":"holds","quote":"Makes you invisible for %windwalk_duration% seconds, or until you attack or cast a spell.","reason_zh":"主动使用装备仍使持有者进入隐身。"},
+        {"review_id":"audit:silver_edge:phased:item","verdict":"holds","quote":"While invisible, you move %windwalk_movement_speed%%% faster and can move through units.","reason_zh":"持有者在隐身期间仍能穿过其他单位。"},
+        {"review_id":"audit:silver_edge:slow:item","verdict":"holds","quote":"cap their movement speed to %max_movement_speed%.","reason_zh":"破隐攻击仍会限制目标的移速上限，目标原先超过上限时就会被减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skadi",
+      "rows": [
+        {"review_id":"audit:skadi:attack_modifier:item","verdict":"holds","quote":"Passive: Cold Attack Attacks lower enemy movement","reason_zh":"装备仍使普通攻击附带降低敌人移速的效果。"},
+        {"review_id":"audit:skadi:attack_slow:item","verdict":"holds","quote":"Attacks also lower enemy attack speed by %cold_attack_slow_melee%%%","reason_zh":"寒冷攻击仍会降低敌人的攻击速度。"},
+        {"review_id":"b3fb210d5160471afc78","verdict":"holds","quote":"Attacks also lower enemy attack speed by %cold_attack_slow_melee%%% and Health Restoration by %restoration_reduction%%%.","reason_zh":"攻击命中后仍会削减敌人的生命恢复。"},
+        {"review_id":"70c1ed32fadd612d1c9d","verdict":"holds","quote":"cold_slow_melee: -25→-20；cold_slow_ranged: -50→-40","reason_zh":"对近战和远程敌人的移速减幅分别降至20%和40%，两类目标仍会被减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skeleton_king_bone_guard",
+      "rows": [
+        {"review_id":"5246ea65479887e0078a","verdict":"holds","quote":"Activate to spend all charges, summoning skeletons that respawn once when killed.","reason_zh":"主动施放仍用于召唤骷髅，变更没有赋予施放或骷髅单次攻击范围伤害。"},
+        {"review_id":"a8e0158da70d65a2dcd5","verdict":"holds","quote":"Break disables the gaining of new stacks.","reason_zh":"破坏仍会阻止获得新层数，符合技能部分效果可被破坏的定义。"},
+        {"review_id":"ae3568b9d901513a8f9c","verdict":"holds","quote":"Activate to spend all charges, summoning skeletons","reason_zh":"施放一次会耗尽积累的层数以召唤骷髅，不符合每次使用消耗一点的充能定义。"},
+        {"review_id":"df56f04a8a8da59bb1f5","verdict":"holds","quote":"Skeletons benefit from Vampiric Spirit's lifesteal.","reason_zh":"骷髅享受的吸血来自吸血之魂，白骨护卫自身没有提供吸血。"},
+        {"review_id":"3f766387df29867f96c6","verdict":"holds","quote":"skeletons that respawn once when killed.","reason_zh":"召出的骷髅被击杀后仍能复活一次。"},
+        {"review_id":"e9e16237ad7a7955cf4d","verdict":"holds","quote":"summoning skeletons that respawn once when killed.","reason_zh":"技能仍会召出可被击杀和复活的骷髅单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skeleton_king_hellfire_blast",
+      "rows": [
+        {"review_id":"bc20515a5035e8a733f7","verdict":"holds","quote":"Wraith King sears an enemy unit with spectral fire, dealing damage and stunning, then dealing damage over time and slowing the target.","reason_zh":"初始伤害和后续持续伤害都作用于同一个目标，此次只延长了眩晕。"},
+        {"review_id":"972aac35756cd90267d2","verdict":"holds","quote":"then dealing damage over time and slowing the target.","reason_zh":"初始眩晕后仍会减速目标。"},
+        {"review_id":"9f4bb59cdb550482e25b","verdict":"holds","quote":"blast_stun_duration: [1, 1.2, 1.4, 1.6]→[1.2, 1.4, 1.6, 1.8]","reason_zh":"各级眩晕持续时间均延长了0.2秒，眩晕机制仍成立。"},
+        {"review_id":"65dc0f5c5bd928813839","verdict":"holds","quote":"Wraith King sears an enemy unit with spectral fire","reason_zh":"冥火爆击仍可选择一个敌方单位为施放目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skywrath_mage_ancient_seal",
+      "rows": [
+        {"review_id":"23bba52e2772a3668ad3","verdict":"holds","quote":"causing it to take additional damage from spells.","reason_zh":"说明将增伤限定为技能伤害，未赋予针对物理伤害或全部伤害的加深效果。"},
+        {"review_id":"558acb56d3b26b18a0fc","verdict":"holds","quote":"resist_debuff: [-20, -25, -30, -35]→[-16, -20, -24, -28]","reason_zh":"各级魔抗削减幅度均下调，但仍能降低适用目标的魔抗。"},
+        {"review_id":"f1a68e0d102215fe0a40","verdict":"holds","quote":"silencing it and causing it to take additional damage from spells.","reason_zh":"上古封印仍会沉默目标。"},
+        {"review_id":"28febb11fd7c60faa841","verdict":"holds","quote":"Skywrath Mage seals the targeted unit with an ancient rune, silencing it","reason_zh":"基础技能仍可选择一个敌方单位施加封印。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
