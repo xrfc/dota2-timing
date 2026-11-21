@@ -104,6 +104,20 @@ def test_route_from_lane_uses_latest_strictly_prior_hit_and_exact_circle():
     assert lane.route_from_lane(track, [955], 999, camps) is None
 
 
+def test_wave_anchor_can_precede_any_last_hit_and_uses_only_current_sight():
+    hero = "carry"
+    team = 2
+    pos = (100, 200)
+    match = {
+        "tracks": {hero: {"team": team, "pos": {900: pos, 901: pos}}},
+        "fronts": {t: {"radiant_mid": {"count": 1, "front": pos}} for t in (900, 901)},
+    }
+    extras = {t: {"creeps": [[3, 120, 200], [2, 120, 200]]} for t in (900, 901)}
+    for hits in ([], [902]):
+        assert lane.wave_opportunities(match, hero, hits, extras, lambda *args: True) == {900: 1}
+    assert lane.wave_opportunities(match, hero, [], extras, lambda *args: False) == {}
+
+
 def test_public_death_state_excludes_dead_enemies_until_respawn():
     tracks = {"carry": position(2, {900: (0, 0)}), "a": position(3, {}), "b": position(3, {})}
     dead = lane.evidence_at(tracks, {}, "carry", 900, {"a", "b"})

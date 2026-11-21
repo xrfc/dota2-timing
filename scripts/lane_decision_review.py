@@ -19,7 +19,9 @@ from detect_ganks import match_inputs
 from gank_review import MAP, names
 
 from dota_items.data.awareness_split import is_holdout
+from dota_items.data.catch_threat import catch_comparison
 from dota_items.data.death_risk import death_times
+from dota_items.data.farm_value import farm_comparison
 from dota_items.data.gank_depth import standing_towers, tower_deaths
 from dota_items.data.gank_review import ward_spans
 from dota_items.data.lane_decisions import (
@@ -28,7 +30,9 @@ from dota_items.data.lane_decisions import (
     make_cases,
     make_jungle_cases,
     route_from_lane,
+    wave_opportunities,
 )
+from dota_items.data.support_arrival import support_comparison, support_followup
 from dota_items.data.vision_sim import RANGE, Terrain, extra_sources, is_day, sees, team_sources
 from dota_items.storage import read_json, write_json
 
@@ -118,7 +122,7 @@ def build_match(root, mid, means, mode="lane"):
     if meta.get("match_id") != mid or meta.get("patch") != 60:
         raise ValueError(f"{mid}: expected the patch-60 cohort used for the 7.41f analysis")
     match = match_inputs(root, mid, root / "gank-inputs-v2")
-    damage = hero_hits_by_second(match) if mode == "jungle" else {}
+    damage = hero_hits_by_second(match)
     heroes = sorted(h for h, pos in match["positions"].items() if pos == 1)
     visibility = {key: sorted(times) for key, times in match["seen"].items()}
     with gzip.open(root / "parsed" / f"{mid}.normalized.json.gz", "rt") as stream:
@@ -127,13 +131,31 @@ def build_match(root, mid, means, mode="lane"):
         match["wards"] = ward_spans(channels["wards"])
         del channels
     lane_hits = {h: farm_seconds(events, h, match["tracks"][h]["team"]) for h in heroes}
-    hits = {h: jungle_seconds(events, h) for h in heroes} if mode == "jungle" else lane_hits
+    jungle_hits = {h: jungle_seconds(events, h) for h in heroes}
+    hits = jungle_hits if mode == "jungle" else lane_hits
     del events
+    extras = {}
+    path = root / "extras-v1" / f"{mid}.jsonl.gz"
+    if path.exists():
+        with gzip.open(path, "rt") as stream:
+            next(stream)
+            extras = {row["t"]: row for row in map(json.loads, stream)}
+    opportunities = {}
+    if mode == "wave":
+
+        def can_see(origin, target, sec):
+            return sees(origin, target, "hero", sec, terrain_map(), "sight")
+
+        opportunities = {
+            h: wave_opportunities(match, h, lane_hits[h], extras, can_see) for h in heroes
+        }
     inventories = {}
     summons = {}
     match["dead_at"] = {}
     states = {h: {} for h in heroes}
     wanted = {h: set(times) for h, times in hits.items()}
+    if mode == "wave":
+        wanted = opportunities
     with gzip.open(root / "state-v3" / f"{mid}.jsonl.gz", "rt") as stream:
         header = json.loads(next(stream))
         if header.get("match_id") != mid or header.get("schema") != "gem-state-capture/3":
@@ -153,13 +175,9 @@ def build_match(root, mid, means, mode="lane"):
                 if h in wanted and row["t"] in wanted[h]:
                     states[h][row["t"]] = state
     zones = read_json(ROOT / "knowledge/awareness/map-zones-v1.json")
+    mobility = read_json(ROOT / "knowledge/awareness/hero-mobility-v1.json")
+    display_names = names()
     deaths = tower_deaths(match["combat"])
-    extras = {}
-    path = root / "extras-v1" / f"{mid}.jsonl.gz"
-    if path.exists():
-        with gzip.open(path, "rt") as stream:
-            next(stream)
-            extras = {row["t"]: row for row in map(json.loads, stream)}
     for h in heroes:
         team = match["tracks"][h]["team"]
         inputs = (
@@ -173,16 +191,28 @@ def build_match(root, mid, means, mode="lane"):
             death_times(match["combat"], h),
         )
         cases = (
-            make_jungle_cases(*inputs, zones["camps"]) if mode == "jungle" else make_cases(*inputs)
+            make_jungle_cases(*inputs, zones["camps"])
+            if mode == "jungle"
+            else make_cases(*inputs, opportunities=opportunities.get(h))
         )
         for evidence, action, outcome in cases:
             if mode == "jungle":
                 evidence["route_from_lane"] = route_from_lane(
                     match["tracks"][h]["pos"], lane_hits[h], evidence["t"], zones["camps"]
                 )
-                evidence["support_opportunity"] = support_opportunity(
-                    match["tracks"], damage, h, evidence["t"]
+            t = evidence["t"]
+            signal = support_opportunity(match["tracks"], damage, h, t)
+            evidence["support_opportunity"] = signal
+            if signal:
+                ally = signal["hero"]
+                buildings = standing_towers(zones, deaths, t)
+                evidence["arrival"] = support_comparison(
+                    states[h][t], match["tracks"][ally]["pos"][t], buildings, mobility
                 )
+                outcome["support_followup"] = support_followup(damage, ally, t, match["last"])
+            evidence["farm_value"], outcome["farm_value"] = farm_comparison(
+                match, h, t, lane_hits[h], jungle_hits[h], zones["camps"]
+            )
             for frame in evidence["history"]:
                 sec = frame["t"]
                 last_seen = {e["hero"]: e["last_seen"] for e in frame["enemies"]}
@@ -212,6 +242,7 @@ def build_match(root, mid, means, mode="lane"):
                 )
                 sources += extra_sources(team, row.get("watchers", ()), summons.get(sec, ()))
                 frame["vision"] = vision_grid(sources, sec)
+            evidence["catch"] = catch_comparison(evidence, display_names)
             yield evidence, action, outcome
 
 
@@ -220,7 +251,7 @@ def main():
     parser.add_argument("--root", type=Path, default=ROOT / "data/demos-2026-11")
     parser.add_argument("--matches", nargs="+", required=True, type=int)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--mode", choices=("lane", "jungle"), default="lane")
+    parser.add_argument("--mode", choices=("lane", "jungle", "wave"), default="lane")
     args = parser.parse_args()
     if args.out.exists():
         parser.error("choose a new output directory")
@@ -238,8 +269,8 @@ def main():
         for mid in sorted(set(args.matches)):
             for evidence, action, outcome in build_match(args.root, mid, means, args.mode):
                 key = f"{mid}-{evidence['hero']}-{evidence['t']}"
-                if args.mode == "jungle":
-                    key = "jungle-" + key
+                if args.mode != "lane":
+                    key = args.mode + "-" + key
                 cases.append({**evidence, "id": key})
                 write_json(folder / "actions" / f"{key}.json", action)
                 write_json(folder / "outcomes" / f"{key}.json", outcome)

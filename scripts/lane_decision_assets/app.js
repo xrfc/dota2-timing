@@ -144,6 +144,7 @@ async function reveal() {
   el('outcome').textContent = o.death_seconds.length ? '死亡时间：' + o.death_seconds.map(time).join('、')
     : o.complete ? '随后 20 秒内没有死亡记录。' : '录像结束，后续观察窗口不完整。';
   el('outcome').textContent += jungle ? ' 观察窗内亲自击杀野怪 '+o.jungle_last_hits+' 个。' : ' 观察窗内记录到 ' + o.lane_last_hits + ' 个敌方线上小兵补刀。';
+  for (const data of [o.support_followup,o.farm_value]) if (data?.summary) el('outcome').textContent += ' '+data.summary;
   el('reveal').disabled = true;
 }
 function openCase() {
@@ -152,6 +153,11 @@ function openCase() {
   el('first-choice').hidden = true;
   el('title').textContent = zh(current.hero) + ' · ' + (jungle ? '野区' : lanes[current.lane]) + ' · ' + time(current.t);
   el('wave').textContent = jungle ? '此刻亲自击杀野怪，英雄距最近的营地中心（'+current.camp_id+'号）'+current.camp_distance+'。' : '在此时刻补到敌方线上小兵，距己方兵线前沿 ' + current.front_distance + '。';
+  el('comparison').replaceChildren(...[['支援到场',current.arrival],['抓人威胁',current.catch],['发育收益',current.farm_value]].map(([label,data]) => {
+    const p = document.createElement('p');
+    p.textContent = label+'：'+(data?.summary || '没有相应线索'); return p;
+  }));
+  if (current.kind==='wave') el('wave').textContent = '近六秒尚无线补，己方兵线附近有 '+current.nearby_creeps+' 个推算可见的敌方小兵。';
   el('route-signal').hidden = !jungle;
   if (jungle) {
     const route = current.route_from_lane;
@@ -180,6 +186,11 @@ el('choices').onclick = e => { if(e.target.dataset.choice) judge(e.target.datase
 el('preview').onclick = () => showAnalysis().catch(fail);
 el('reveal').onclick = () => reveal().catch(fail);
 read('cases.json').then(doc => {
+  if (doc.mode==='wave') {
+    document.title = '兵线取舍复盘';
+    document.querySelector('h1').textContent = document.title;
+    el('question').textContent = '上前收线，还是提前离开？';
+  }
   jungle = doc.mode === 'jungle';
   if (jungle) {
     document.title = '打野决策复盘';
