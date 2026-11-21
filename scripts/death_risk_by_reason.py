@@ -77,12 +77,19 @@ def main(argv=None):
     parser.add_argument("--episodes", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
-    _, deaths, info = load_risk_frame(
-        args.root / args.table, allow_legacy=args.allow_legacy, columns=["t"]
-    )
     if args.out.exists():
         raise SystemExit(f"{args.out} already exists")
     report = json.loads((args.risk / "report.json").read_text(encoding="utf-8"))
+    keys = ["match_id", "hero", "t"]
+    expected, deaths, info = load_risk_frame(
+        args.root / args.table,
+        every=report.get("every_seconds", 0),
+        allow_legacy=args.allow_legacy,
+        columns=[*keys, "hit_recent", "dies_20"],
+    )
+    reported = (report.get("input") or {}).get("conditions_digest")
+    if reported is not None and reported != info["conditions_digest"]:
+        raise ValueError("Risk report and death table conditions differ")
     threshold = report["alerts"]["threshold"]
     oof = np.load(args.risk / "out-of-fold.npz")
     frame = pd.DataFrame(
@@ -93,7 +100,16 @@ def main(argv=None):
             "hit_recent": oof["hit_recent"],
         }
     )
-    keys = ["match_id", "hero", "t"]
+    actual = frame.set_index(keys).sort_index()
+    reference = expected.set_index(keys).sort_index()
+    if not actual.index.is_unique or not actual.index.equals(reference.index):
+        raise ValueError("Risk report and table prediction keys differ")
+    if not np.array_equal(actual.hit_recent, reference.hit_recent):
+        raise ValueError("Recent damage labels differ")
+    if "y" in oof and not np.array_equal(
+        frame.assign(y=oof["y"]).set_index(keys).sort_index().y, reference.dies_20
+    ):
+        raise ValueError("Death labels differ")
     unique_deaths = pd.DataFrame(deaths).drop_duplicates(keys)
     found = death_alerts(frame, unique_deaths, oof["boosting"], threshold, HORIZON)
     index = episode_index(args.episodes)
@@ -110,14 +126,25 @@ def main(argv=None):
         "reasons": rows,
     }
     if "fight_alerts" in report:
-        if report["input"]["conditions_digest"] != info["conditions_digest"]:
-            raise ValueError("Risk report and death table conditions differ")
         raw = pd.read_csv(args.risk / "fight-alerts.csv")
         fights = raw.drop_duplicates()
         result["duplicate_fight_evaluations"] = len(raw) - len(fights)
         scored = {(r["match_id"], r["hero"], r["t"]) for r in found}
         fight_keys = list(zip(fights.match_id, fights.hero, fights.t, strict=True))
-        if len(fight_keys) != len(set(fight_keys)) or set(fight_keys) != scored:
+        expected_keys = scored
+        if "has_sample" in fights:
+            positions = info["positions"]
+            expected_keys = set(
+                unique_deaths.loc[unique_deaths.position.isin(positions), keys].itertuples(
+                    index=False, name=None
+                )
+            )
+            sampled_keys = set(
+                fights.loc[fights.has_sample, keys].itertuples(index=False, name=None)
+            )
+            if sampled_keys != scored:
+                raise ValueError("Fight sample coverage differs from the table")
+        if len(fight_keys) != len(set(fight_keys)) or set(fight_keys) != expected_keys:
             raise ValueError("Fight evaluation and death samples differ")
         result["before_fight"] = by_reason(fights.to_dict("records"), index, summarize_fight_alerts)
     args.out.mkdir(parents=True, exist_ok=False)
