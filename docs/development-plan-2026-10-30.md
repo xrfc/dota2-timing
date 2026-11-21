@@ -402,6 +402,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 2026-11-20：死亡预警步长比较修正误报分段、阈值搜索与样本一致性检查，见 docs/b2-death-risk-contract.md。
 
+2026-11-20：7.42 修复、候选构建、待决项与发布次序见[补丁执行清单](patch-7.42-plan.md)。
+
 | 线 | 里程碑 | 状态 | 开始 | 完成 |
 |---|---|---|---|---|
 | 共享 | MK 机制知识底座 | 已完成（U122；R8、R15移到B1采齐数据后再做，U113） | 2026-10-31 | 2026-11-07 |
@@ -417,6 +419,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 ### 下一步（接手从这里开始）
 
 本节只保留最近的记录；更早的在[计划历史记录](plan-history.md)（2026-11-17移出，U163）。新记录加在最上面，超过约两周的移到历史页。
+
+**2026-11-20，7.42知识库更新和视野检验交接给Codex。** 入口[交接文档](handoff/patch-7.42-and-vision-2026-11-20.md)：7.42逐行复核、双盲复核已完成，用户已定U177–U188，剩余裁定和下一步（v27操作文件、字段重建、派生层v18、`current.json`切到7.42）都在交接文档；视野检验在分支`claude/vision-sources-2026-11-20`。
 
 **当前任务（2026-11-17）：**
 
@@ -479,6 +483,11 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 ---
 
 ## 8. 待办池（不在当前里程碑执行）
+
+- **7.42地图也可由用户用Workshop Tools导出**（2026-11-20，步骤`docs/map-workshop-export.md`）；导出后替代demo反推。
+- **TODO 7.42地图坐标改用上游（U178，2026-11-19）**：7.42地图先从demo反推门、塔、野点坐标（方案B，demo工作恢复后做）；`leamare/dota-map-coordinates`出7.42版本后改用上游数据，与反推结果对照。查法：`gh api repos/leamare/dota-map-coordinates/commits`（2026-11-19最新仍是`f793787e`“7.41”）。
+
+- **TODO 7.42 demo解析与处理（U178，2026-11-19暂缓）**：恢复后按[7.42预案](patch-7.42-plan.md)先试解析5场，再做地图反推、旧模型在新补丁上的检验。
 
 - **TODO 单位状态位解码（U130，2026-11-09）**：解析器v3每秒只保留英雄的原始状态掩码`m_nUnitState64`。以后用战斗日志的控制事件（眩晕、沉默、妖术、开黑皇杖等`MODIFIER_ADD/REMOVE`）逐位对照，确认每一位的含义后再输出“被眩晕：是/否”这类字段；未确认的位不使用。设计见`docs/parser-v3-design.md`§3、§6。
 

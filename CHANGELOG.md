@@ -1,5 +1,29 @@
 # 变更记录
 
+## 2026-11-20 7.42适配候选
+
+修复英雄定义差异，重新计算影响；另存7.42注册表，构建器支持条件迁移与新版英雄字段重建。候选含 3,292 行，纳入 R09 的 U181 说明。详见[执行清单](docs/patch-7.42-plan.md)。
+
+## 2026-11-20 交接给Codex
+
+- 用户回复：U187（吸魂巫术记伤害和治疗）、U188（变形A杖不算范围伤害；噬咬魔晶记自身位移）。
+- 新增[交接文档](docs/handoff/patch-7.42-and-vision-2026-11-20.md)：分支关系、已完成和待用户的事项、v27的下一步、解析demo要用兼容版解析库等注意事项。
+
+## 2026-11-20 7.42逐行复核与影响清单
+
+- 用户回复（U181–U184）：R09说法更正；证据优先级（补丁说明＞游戏脚本＞数据接口文字），第8类四条据此解决；巨魔·战斗专注删减速抗性、加状态抗性；命石内容一律不用。影响清单已更新。
+
+- `knowledge/mechanics/reviews/recheck-742-001/`：Codex `gpt-6.2-astra`（high）逐行复核1826行（23批约80万tokens），Claude独立规则筛查并判断非“成立”行；结果1530行保留、13行两个AI都同意改、213行按7.42字段重建、24行加新机制和新技能交用户。
+- `knowledge/mechanics/reviews/new-abilities-742-001/`：7.42新增9个技能和4个以前没有机制行的技能的完整抽取。
+- [7.42影响清单](docs/patch-7.42-impact.md)：需要用户裁定的部分（全局机制、行为变化、证据冲突、改了用户裁定的行、AI分歧、新技能和命石、地图）和AI已定的部分。知识库尚未改动。
+
+## 2026-11-19 U177–U180：7.42补丁开始；事实共享构建器
+
+- 官方7.42（2026-11-18）。按补丁流程抓新快照：Valve英雄数据`knowledge/hero-capabilities/snapshots/2026-11-19/`、英文装备`knowledge/items/sources/itemdata-english-2026-11-19/`、游戏脚本固定提交`7bf93721`（`knowledge/game-files/snapshots/2026-11-19{,-items,-neutral}/`）；官方补丁说明、差异、影响范围和变化分类在`knowledge/mechanics/reviews/patch-update-2026-11-19/`。要复核2299/3295行事实；地图有改动（双生之门、野点、中路塔位和河道）。知识库尚未改动，`current.json`仍是7.41f。
+- U177：新模块`data.mechanics_facts_overlay`和脚本`scripts/build_mechanics_facts_overlay.py`，v27起所有新事实版本都用它（输入＝上一版冻结事实＋一个按顺序的操作文件，构建参数写在spec里）。测试`tests/test_mechanics_facts_overlay.py`：从旧输入重建v21–v26事实都相同，完整重建v26的三个输出文件逐字节一致。旧v2–v26模块不动。
+- U178：7.42地图坐标从demo反推、上游更新后改用上游；新版本demo解析暂缓（计划§8两条待办）。
+- U179、U180：复核分类按助手建议（用户裁定第4、6、7、8、9类和第5类的新机制归类）；AI处理的部分由Codex `gpt-6.2-astra`辅助判断。
+
 ## 2026-11-18 U176：第4版每1秒表；3秒采样没有更好
 
 - 建`data/demos-2026-11/death-risk-v4-1s`（1341场，带生成条件）；训练报告`reports/death-risk-v4-every5-2026-11-18`、`-every3-`（第5版）。

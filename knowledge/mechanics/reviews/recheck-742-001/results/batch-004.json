@@ -1,0 +1,214 @@
+{
+  "objects": [
+    {
+      "subject": "centaur_double_edge",
+      "rows": [
+        {"review_id":"292a5803f00afca8da7a","verdict":"holds","quote":"damaging both himself and a small area around the target","reason_zh":"伤害数值调整后，一次施放仍能伤害目标周围的多个敌人。"},
+        {"review_id":"2a31797819b92a2af23a","verdict":"holds","quote":"Centaur cannot die from Double Edge.","reason_zh":"双刃剑的自伤无法致死，这项限制没有提供抵御其他致命伤害的免死时段。"},
+        {"review_id":"aa97023c54df92f848e5","verdict":"holds","quote":"Causes Double Edge to slow enemy heroes","reason_zh":"魔晶升级仍使双刃剑降低敌方英雄的移动速度。"},
+        {"review_id":"64bb52dc098d75e92c8c","verdict":"holds","quote":"Centaur strikes a mighty blow at melee range, damaging both himself and a small area around the target.","reason_zh":"双刃剑仍以选定的近战目标为中心造成范围伤害。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "centaur_stampede",
+      "rows": [
+        {"review_id":"26df5198974ad12a68b9","verdict":"holds","quote":"Trampled enemies take damage based on Centaur Warrunner's strength. Each enemy can be trampled once.","reason_zh":"每个敌人各自可被践踏一次，因此一次奔袭仍能伤害多个敌人。"},
+        {"review_id":"b44e9f5fc31aa2b4631a","verdict":"holds","quote":"Each enemy can be trampled once.","reason_zh":"一次的限制针对每个敌人可被践踏的次数，施法没有消耗充能点数。"},
+        {"review_id":"bc2a129aef06935c1d99","verdict":"holds","quote":"causing them to move through units at max speed","reason_zh":"奔袭仍使友军以最高移动速度移动。"},
+        {"review_id":"audit:centaur_stampede:phased:base","verdict":"holds","quote":"move through units at max speed","reason_zh":"奔袭中的友军仍能穿过其他单位。"},
+        {"review_id":"25b09b7a39d726f71ab5","verdict":"holds","quote":"slow any enemy units they trample","reason_zh":"被践踏的敌方单位仍会减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "chaos_knight_chaos_bolt",
+      "rows": [
+        {"review_id":"de1f815dc8b7fbc51d70","verdict":"holds","quote":"Throws a mysterious bolt of energy at the target unit.","reason_zh":"投出的是能量弹，基础技能没有移动目标单位的效果。"},
+        {"review_id":"d2756730852aca8f8e91","verdict":"holds","quote":"Causes Chaos Bolt to create a Phantasm illusion to attack the target.","reason_zh":"魔晶仍会生成攻击目标的幻象，归零的是幻象的伤害折减。"},
+        {"review_id":"17d2dcde8d686dc3f8ab","verdict":"holds","quote":"It stuns for a random duration and deals random damage.","reason_zh":"基础技能仍会使目标眩晕，眩晕时长随机。"},
+        {"review_id":"35b70b70bba73a3dd09b","verdict":"holds","quote":"Throws a mysterious bolt of energy at the target unit.","reason_zh":"混乱之箭仍直接选取单位作为投射目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "chaos_knight_chaos_strike",
+      "rows": [
+        {"review_id":"0d47421d0cf0e5642699","verdict":"unclear","quote":"attacks have a chance to deal a critical strike of varying strength with bonus lifesteal","reason_zh":"说明确认了攻击触发效果，但材料未给出独立核实可破坏性所需的 IsBreakable 值。"},
+        {"review_id":"7785a9c89a34d1d92f0a","verdict":"holds","quote":"attacks have a chance to deal a critical strike of varying strength","reason_zh":"混沌骑士及其幻象的攻击仍有概率造成倍率不定的暴击。"},
+        {"review_id":"201e7968e97ada982f4f","verdict":"holds","quote":"with bonus lifesteal","reason_zh":"新版保留了攻击吸血，删除的是关于攻击小兵时吸血折减的说明。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "chaos_knight_phantasm",
+      "rows": [
+        {"review_id":"e44c64c9bf47c900d723","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"基础技能仍对混沌骑士施加弱驱散。"},
+        {"review_id":"acd236f8c445f46590ba","verdict":"holds","quote":"Summons several phantasmal copies of the Chaos Knight from alternate dimensions. The phantasms are illusions","reason_zh":"基础技能仍会制造多个混沌骑士自身的幻象。"},
+        {"review_id":"ef844c73cf4f01b4a226","verdict":"holds","quote":"When Phantasm is activated, also creates an illusion of allied heroes globally.","reason_zh":"A杖升级仍会在施放时额外制造友方英雄的幻象。"},
+        {"review_id":"fee22ca7c44ce05ef406","verdict":"holds","quote":"Chaos Knight is invulnerable for %invuln_duration% seconds when casting","reason_zh":"混沌骑士在施放技能时仍会短暂无敌。"},
+        {"review_id":"6e9db32dc629aa0fe2d4","verdict":"holds","quote":"Chaos Knight is invulnerable for %invuln_duration% seconds when casting, allowing him to dodge stuns and damage.","reason_zh":"说明将避开眩晕和伤害归因于施法时的无敌，没有写使在途弹道丢失目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "chen_holy_persuasion",
+      "rows": [
+        {"review_id":"38dc97f791c2affc7fb8","verdict":"holds","quote":"Casting Holy Persuasion on Chen teleports all creeps under his control to him after a delay.","reason_zh":"新增的群体效果是传送受控小兵，没有给神圣劝化加入范围伤害。"},
+        {"review_id":"2a62e2195b704870fc49","verdict":"holds","quote":"Chen takes control of an enemy or neutral creep and receives a percentage of its bounty.","reason_zh":"陈在取得控制权时仍可获得该小兵的部分赏金。"},
+        {"review_id":"2ace5e3a23b337b49341","verdict":"now_wrong","quote":"movement_speed_bonus: [5,10,20,30]→null","reason_zh":"神圣劝化已移除对受控小兵的移速加成。"},
+        {"review_id":"5b156f6dba252c8eb730","verdict":"holds","quote":"Fully restores the creep's mana upon converting.","reason_zh":"劝化时回满法力的是小兵，陈自身没有获得法力。"},
+        {"review_id":"604721f64673de1acc42","verdict":"holds","quote":"Chen takes control of an enemy or neutral creep","reason_zh":"技能仍能夺取已有小兵的控制权，符合召唤物词条的定义。"},
+        {"review_id":"b4dd067193a945a44cc9","verdict":"holds","quote":"Chen takes control of an enemy or neutral creep","reason_zh":"陈仍能选择一只敌方小兵施放神圣劝化。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"displace_other","condition":"base","quote":"Casting Holy Persuasion on Chen teleports all creeps under his control to him after a delay.","reason_zh":"基础技能新增对自己施放的用法，可在延迟后将所有受控小兵传送到陈身边。"}
+      ]
+    },
+    {
+      "subject": "chen_penitence",
+      "rows": [
+        {"review_id":"90ae578301c48dca1224","verdict":"holds","quote":"Damages enemy unit, forces it to move slower and lets allies attack it more quickly.","reason_zh":"调高后的伤害仍作用于一个敌方目标。"},
+        {"review_id":"audit:chen_penitence:slow:base","verdict":"holds","quote":"forces it to move slower","reason_zh":"赎罪仍会降低目标的移动速度。"},
+        {"review_id":"0e5e50ffbfdcff4f71c8","verdict":"holds","quote":"Damages enemy unit, forces it to move slower and lets allies attack it more quickly.","reason_zh":"赎罪仍对选定的单个敌方单位生效。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "chen_zealot",
+      "rows": [
+        {"review_id":"bc42a514832f30f18839","verdict":"holds","quote":"Activating this ability will respawn his current Anointed Zealot.","reason_zh":"狂热者的主动效果是复活当前的受膏狂热者，未加入对多个敌人造成伤害的效果。"},
+        {"review_id":"audit:chen_zealot:displace_other:base","verdict":"now_wrong","quote":"teleport_delay: [6]→null","reason_zh":"狂热者已移除传送受控单位的效果，该效果转到了神圣劝化。"},
+        {"review_id":"6c70df57fa809cc68e1b","verdict":"unclear","quote":"giving it bonus base damage and the Martyrdom ability","reason_zh":"新版仅给出 Martyrdom 的名称，删除了牺牲单位进行治疗的说明，无法确认治疗是否保留。"},
+        {"review_id":"2708bb0bbfdc5acfb72e","verdict":"holds","quote":"Activating this ability will respawn his current Anointed Zealot.","reason_zh":"基础技能仍能使狂热者重生，新版明确由主动施放触发。"},
+        {"review_id":"1ab539145ea734fcdd15","verdict":"holds","quote":"Activating this ability will respawn his current Anointed Zealot.","reason_zh":"主动施放影响狂热者的复活，没有移动陈自身。"},
+        {"review_id":"audit:chen_zealot:summons:base","verdict":"holds","quote":"He begins the game with a melee lane creep as an Anointed Zealot.","reason_zh":"陈开局仍获得一只受控的近战小兵作为狂热者。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"haste","condition":"base","quote":"Passively provides bonus health, damage and move speed to non-hero units under Chen's control.","reason_zh":"狂热者现在被动提升陈所控制的非英雄单位的移动速度。"}
+      ]
+    },
+    {
+      "subject": "clinkz_burning_barrage",
+      "rows": [
+        {"review_id":"71168d7410f892a02e31","verdict":"holds","quote":"multiple piercing arrows in the target direction that hit all enemy units dealing a percentage of Clinkz' attack damage","reason_zh":"一次引导射出的贯穿箭仍可伤害路径上的多个敌人。"},
+        {"review_id":"bd31e382d86c9d80267d","verdict":"holds","quote":"dealing a percentage of Clinkz' attack damage and applying attack modifiers","reason_zh":"技能箭可以触发现有攻击特效，技能本身没有给普通攻击附加新效果。"},
+        {"review_id":"2007ef73cfe1b7786cb0","verdict":"holds","quote":"CHANNELED - Clinkz channels and shoots multiple piercing arrows","reason_zh":"魔耗提高后，射击仍需克林克兹持续引导。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "clinkz_death_pact",
+      "rows": [
+        {"review_id":"3e3bba7e6555bd3ce2d8","verdict":"holds","quote":"If the target is an enemy, Clinkz will gain the correct experience and gold.","reason_zh":"吞噬敌人给予正常的经验和金钱，说明没有列出额外收益。"},
+        {"review_id":"8bb1ddd6ecbc2d06d72c","verdict":"holds","quote":"healing and gaining max health","reason_zh":"吞噬目标仍会治疗克林克兹，新加的不叠加说明没有移除治疗。"},
+        {"review_id":"ebbbbe178b11c4ce1cbd","verdict":"holds","quote":"Clinkz consumes the target enemy creep or friendly Skeleton Archer","reason_zh":"死亡契约仍可选取一只敌方小兵作为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "clinkz_infernal_shred",
+      "rows": [
+        {"review_id":"9c5b97d7c50276314106","verdict":"holds","quote":"does not reduce their armor","reason_zh":"攻击可以穿透部分护甲，目标自身的护甲值保持不变。"},
+        {"review_id":"audit:clinkz_infernal_shred:attack_modifier:base","verdict":"holds","quote":"Clinkz applies %hero_stacks%%% per attack, and skeletons apply %skeleton_stacks%%%.","reason_zh":"克林克兹及其骷髅的普通攻击仍会给目标叠加穿甲减益。"},
+        {"review_id":"5a1dda821e121187b461","verdict":"unclear","quote":"Break disables the applying of new stacks.","reason_zh":"新增说明明确破坏会阻止叠加新层数，但材料未给出核定该字段行所需的 IsBreakable 值。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "clinkz_wind_walk",
+      "rows": [
+        {"review_id":"cfae8cc03fcac5a12dba","verdict":"now_wrong","quote":"Creeps and illusions deal 25% damage to them.","reason_zh":"新版明确骷髅弓箭手受到小兵和幻象造成的伤害时只承受 25%，符合限定来源的比例减伤。"},
+        {"review_id":"ab4cfaf9677ff7dae081","verdict":"holds","quote":"Clinkz moves invisibly through units until the moment he attacks or uses items.","reason_zh":"骨隐步仍可使克林克兹隐身。"},
+        {"review_id":"audit:clinkz_wind_walk:phased:base","verdict":"holds","quote":"Clinkz moves invisibly through units","reason_zh":"克林克兹在骨隐步期间仍可穿过其他单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "crimson_guard",
+      "rows": [
+        {"review_id":"7b06ae0230b2b7376e4f","verdict":"holds","quote":"Passive: Buckler Aura Grants %bonus_aoe_armor% armor to allied player units.","reason_zh":"新增的范围效果给友方单位提供护甲，没有造成范围伤害。"},
+        {"review_id":"a66f10aab173f53f255e","verdict":"holds","quote":"grant nearby allied heroes and buildings a %block_chance_active%%% chance to block damage","reason_zh":"主动效果仍能为范围内的友方英雄和建筑格挡攻击伤害。"},
+        {"review_id":"audit:crimson_guard:healing:item","verdict":"holds","quote":"bonus_health_regen: [12]→[9]","reason_zh":"装备提供的生命恢复从 12 降至 9，仍为正值。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"aura","condition":"item","quote":"Passive: Buckler Aura Grants %bonus_aoe_armor% armor to allied player units. Radius: %aura_radius%","reason_zh":"赤红甲新增玄冥盾牌光环，为持有者周围 1200 范围内的友方玩家单位提供 2 点护甲。"}
+      ]
+    },
+    {
+      "subject": "crystal_maiden_crystal_clone",
+      "rows": [
+        {"review_id":"78707994fe71760e42b8","verdict":"unclear","quote":"it shatters, Frostbiting enemies in a %frostbite_radius% AoE around its place","reason_zh":"说明确认碎裂会对范围内的敌人施加 Frostbite，但未说明该效果是否造成伤害。"},
+        {"review_id":"audit:crystal_maiden_crystal_clone:root:shard","verdict":"unclear","quote":"Frostbiting enemies in a %frostbite_radius% AoE around its place","reason_zh":"材料没有列出 Frostbite 对移动、攻击和施法的限制，无法独立确认捆缚。"},
+        {"review_id":"audit:crystal_maiden_crystal_clone:disarm:shard","verdict":"unclear","quote":"Frostbiting enemies in a %frostbite_radius% AoE around its place","reason_zh":"说明只给出 Frostbite 的名称，没有写明受影响的敌人无法普通攻击。"},
+        {"review_id":"0714f1b571dd53d8040e","verdict":"holds","quote":"disjointing incoming projectiles","reason_zh":"施放技能仍能使已飞来的弹道丢失目标。"},
+        {"review_id":"audit:crystal_maiden_crystal_clone:self_mobility:shard","verdict":"holds","quote":"Slides in a direction, creating a crystal clone of herself in her place","reason_zh":"原行所列魔晶条件下，水晶室女仍会向指定方向滑行并将克隆体留在原处。"},
+        {"review_id":"audit:crystal_maiden_crystal_clone:terrain_walk:shard","verdict":"unclear","quote":"Slides in a direction","reason_zh":"滑行说明没有交代能否穿过树木及悬崖等不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "crystal_maiden_freezing_field",
+      "rows": [
+        {"review_id":"2a3f0447732d6b51a0e9","verdict":"holds","quote":"Surrounds Crystal Maiden with %num_explosions% random icy explosions that slow enemies and deal massive damage.","reason_zh":"一次施放产生的多次冰爆仍可伤害周围多个敌人。"},
+        {"review_id":"audit:crystal_maiden_freezing_field:aura:base","verdict":"holds","quote":"The slow is applied on all enemies in the radius, even if they aren't hit by an explosion","reason_zh":"技能持续期间，水晶室女周围范围内的所有敌人都会受到减速。"},
+        {"review_id":"audit:crystal_maiden_freezing_field:root:scepter","verdict":"unclear","quote":"Applies Frostbite to any unit that has been standing in the Freezing Field for over %frostbite_delay%s.","reason_zh":"A杖仍会对停留足够久的单位施加 Frostbite，但材料未列出确认捆缚所需的行动限制。"},
+        {"review_id":"37369ba7b1dfe86898d8","verdict":"holds","quote":"Can still be interrupted by enemies.","reason_zh":"这句说明敌人能打断水晶室女的极寒领域，没有赋予极寒领域打断敌方引导的效果。"},
+        {"review_id":"c58b008786e3107054ef","verdict":"holds","quote":"CHANNELED - Surrounds Crystal Maiden with %num_explosions% random icy explosions","reason_zh":"基础技能仍明确标为持续施法。"},
+        {"review_id":"audit:crystal_maiden_freezing_field:disarm:scepter","verdict":"unclear","quote":"Applies Frostbite to any unit that has been standing in the Freezing Field for over %frostbite_delay%s.","reason_zh":"A杖说明写明会施加 Frostbite，但未说明目标是否无法普通攻击。"},
+        {"review_id":"7f05470ecf2b5db51fd0","verdict":"holds","quote":"The slow is applied on all enemies in the radius","reason_zh":"基础技能仍会降低半径内所有敌人的移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dark_seer_aggrandize",
+      "rows": [
+        {"review_id":"b8a68c7029c03fb80376","verdict":"unclear","quote":"behavior: 4406636445698→567356589867011","reason_zh":"给出的变化属于 behavior 字段，缺少判定可破坏性所需的 IsBreakable 值。"},
+        {"review_id":"3ce6f9c00c953fd713ff","verdict":"holds","quote":"When Dark Seer levels up, he restores a percentage of his max health and mana.","reason_zh":"黑暗贤者升级时仍会按自身最大生命值的比例回血。"},
+        {"review_id":"7f1020ce6cced07e59fb","verdict":"holds","quote":"When Dark Seer levels up, he restores a percentage of his max health and mana.","reason_zh":"黑暗贤者升级时仍会按自身最大法力值的比例回蓝。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dark_seer_ion_shell",
+      "rows": [
+        {"review_id":"e6517dc80ede558a1f11","verdict":"holds","quote":"damages enemy units in an area around it","reason_zh":"一个离子外壳仍能伤害携带者周围的多个敌方单位。"},
+        {"review_id":"audit:dark_seer_ion_shell:aura:base","verdict":"holds","quote":"Surrounds the target unit with a bristling shield that damages enemy units in an area around it.","reason_zh":"伤害区域以携带外壳的单位为中心，持续影响其周围的敌人。"},
+        {"review_id":"7b643b7688c34c9092b6","verdict":"holds","quote":"Surrounds the target unit with a bristling shield","reason_zh":"技能仍以选定的单位为施放目标，材料未显示原行所记的敌方目标资格发生变化。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dark_seer_normal_punch",
+      "rows": [
+        {"review_id":"audit:dark_seer_normal_punch:attack_modifier:scepter","verdict":"holds","quote":"Causes Dark Seer's next attack on a hero to have True Strike, knock a replica out of the victim, damaging and stunning them","reason_zh":"原行所列A杖条件下，对英雄的下一次攻击仍附带伤害和眩晕。"},
+        {"review_id":"audit:dark_seer_normal_punch:bash:scepter","verdict":"holds","quote":"knock a replica out of the victim, damaging and stunning them","reason_zh":"原行所列A杖条件下，强化攻击仍会击晕受击英雄，符合攻击触发重击的定义。"},
+        {"review_id":"6140fc614bd42e596d88","verdict":"unclear","quote":"Passive ability.","reason_zh":"被动技能这一描述无法确定其可破坏性，材料也未给出 IsBreakable 值。"},
+        {"review_id":"t5:dark_seer_normal_punch:illusions","verdict":"holds","quote":"knock a replica out of the victim","reason_zh":"普通一拳仍会制造受击英雄的复制体。"},
+        {"review_id":"a84925e5f172e0232531","verdict":"holds","quote":"Causes Dark Seer's next attack on a hero to have True Strike","reason_zh":"对英雄的下一次强化攻击仍具备必中效果。"},
+        {"review_id":"c1e2df2bf69bb63eeeb1","verdict":"holds","quote":"damaging and stunning them based on how far Dark Seer has moved","reason_zh":"命中英雄时仍会造成眩晕，效果取决于黑暗贤者此前移动的距离。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dark_seer_vacuum",
+      "rows": [
+        {"review_id":"5a1f27e5c8c7d1932b81","verdict":"holds","quote":"a vacuum over the target area that sucks in enemy units, disrupting them and dealing damage","reason_zh":"冷却缩短后，一次真空仍能伤害目标区域内的多个敌人。"},
+        {"review_id":"955383b5f050a1c1a869","verdict":"holds","quote":"This ability interrupts channeling.","reason_zh":"技能说明明确保留了打断持续施法的效果。"},
+        {"review_id":"a55e8e25fc3aeafbf48d","verdict":"holds","quote":"Pulls units over %duration% seconds before dealing damage.","reason_zh":"真空仍会在造成伤害前牵引敌方单位。"},
+        {"review_id":"audit:dark_seer_vacuum:tree_destroy:base","verdict":"holds","quote":"Trees near the center of the vacuum will be destroyed.","reason_zh":"真空中心附近的树木仍会被摧毁。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dark_seer_wall_of_replica",
+      "rows": [
+        {"review_id":"7a2020df81fa71c48c8e","verdict":"holds","quote":"slows, damages, and creates replicas of any enemy hero who crosses it","reason_zh":"同一面墙仍能对穿过它的多个敌方英雄分别造成伤害。"},
+        {"review_id":"audit:dark_seer_wall_of_replica:ground_zone:base","verdict":"holds","quote":"Raises a wall of warping light that slows, damages, and creates replicas of any enemy hero who crosses it.","reason_zh":"施放后，光墙在持续期间留在原处，对经过该位置的敌方英雄生效。"},
+        {"review_id":"e8a8be80dbb326f72a46","verdict":"holds","quote":"There cannot be more than one illusion per player per wall.","reason_zh":"光墙仍会制造幻象，每面墙对每名玩家最多保有一个幻象。"},
+        {"review_id":"09b75ed569add591fd4c","verdict":"holds","quote":"slows, damages, and creates replicas of any enemy hero who crosses it","reason_zh":"穿过光墙的敌方英雄仍会减速。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

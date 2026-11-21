@@ -53,6 +53,8 @@
 
 - **版本核对**（MK-T6d，U99、U113）：2026-11-06核对当前知识与7.41f一致，结论和局限见`reviews/patch-check-001/README.md`；`current.json`的`patch.verified=true`。冻结事实包里的`patch_verified=false`不改。
 
+- **共享构建器**（U177，2026-11-19）：v27起新事实版本用`data.mechanics_facts_overlay`＋`scripts/build_mechanics_facts_overlay.py`（操作文件＋构建spec），不再每版复制模块；能逐字节重建v26。
+- **7.42更新**（进行中）：`reviews/patch-update-2026-11-19/`。
 - **补丁更新流程**（MK-T6e）：见`docs/mechanics-patch-update.md`；脚本`scripts/patch_update.py`（`status`、`item-diff`、`game-diff`、`impact`），试跑见`reviews/patch-update-dryrun-001/`。
 
 - **被取代的旧知识**（MK-T6f）：登记在`knowledge/superseded.json`——各版本族里比`current.json`旧的版本自动算被取代，另有英雄特性v1、阵容规则包7.41f-v1、早期档案目录逐项列出（含谁还在读、为什么被取代）。`data.knowledge_superseded.superseded_status(路径)`可查；测试保证当前入口不会指向被取代的文件。旧版本目录的README顶部加了提示，冻结文件本身不改。

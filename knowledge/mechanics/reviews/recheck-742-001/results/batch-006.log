@@ -1,0 +1,541 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6e7-7bcc-7a83-8210-d481f163abdd
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "disruptor_kinetic_field", "name_zh": "干扰者·动能力场", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "After a short formation time, creates a circular barrier of kinetic energy that enemies can't pass.", "notes_loc": ["Debuff Immune units can travel through the field."], "shard_loc": "Both shapes have an independent cooldown."}, "text_742": {"desc_loc": "After a short formation time, creates a circular barrier of kinetic energy that enemies can't pass.", "notes_loc": ["Debuff Immune units can travel through the field."], "shard_loc": "Causes enemies that touch the field to be struck by Electromagnetic Repulsion with %strike_knockback_pct_tooltip_only%%% reduced knockback."}, "changed_fields": [{"field": "ability_has_shard", "old": false, "new": true}, {"field": "strike_knockback_pct_tooltip_only", "old": null, "new": {"base": [0], "scepter": null, "shard": [50]}}, {"field": "strike_on_touch", "old": {"base": [0], "scepter": null, "shard": [0]}, "new": {"base": [0], "scepter": null, "shard": [1]}}], "rows": [{"review_id": "75c0644a8ecfee7b1e3c", "mechanism": "debuff_immunity", "mechanism_zh": "减益免疫/技能免疫", "definition": "处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）", "condition": "base", "decision": "reject"}, {"review_id": "audit:disruptor_kinetic_field:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "audit:disruptor_kinetic_field:slow:base", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "audit:disruptor_kinetic_field:mobility_lock:base", "mechanism": "terrain", "mechanism_zh": "创造地形", "definition": "在地上造出单位不能穿过的地形，无视地形的单位能越过", "condition": "base", "decision": "reject"}]}, {"subject": "doom_bringer_devour", "name_zh": "末日使者·吞噬", "category": "2_纯数值", "text_741f": {"desc_loc": "Consumes an enemy or neutral creep, acquiring any special abilities that it possessed. If alt-cast is activated, Doom will not acquire the creep's abilities. Duration is equal to the cooldown.", "notes_loc": ["Gives Doom the original bounty of the creep, along with the bonus gold.", "If you devour a creep without abilities, you'll keep the abilities you had previously."], "shard_loc": "Devour has %AbilityCharges% charges and can target Ancients. Stolen creep abilities have %bonus_aoe_pct%%% increased AoE and %bonus_spell_amp_pct%%% increased spell amplification."}, "text_742": {"desc_loc": "Consumes an enemy or neutral creep, acquiring any special abilities that it possessed. If alt-cast is activated, Doom will not acquire the creep's abilities. Duration is equal to the cooldown.", "notes_loc": ["Gives Doom the original bounty of the creep, along with the bonus gold.", "If you devour a creep without abilities, you'll keep the abilities you had previously."], "shard_loc": "Devour has %AbilityCharges% charges and can target Ancients. Stolen creep abilities have %bonus_aoe_pct%%% increased AoE and %bonus_spell_amp_pct%%% increased spell amplification."}, "changed_fields": [{"field": "mana_costs", "old": [40, 50, 60, 70], "new": [66]}, {"field": "AbilityManaCost", "old": {"base": [40, 50, 60, 70], "scepter": null, "shard": null}, "new": {"base": [66], "scepter": null, "shard": null}}], "rows": [{"review_id": "1c8fe53e61ae3054770b", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "d23e834c84d5d998ed63", "mechanism": "economy", "mechanism_zh": "经济经验", "definition": "提供额外金钱或经验；只是正常赏金不算", "condition": "base", "decision": "accept"}, {"review_id": "5f4b9f6778a26d56c606", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "audit:doom_bringer_devour:spell_steal:base", "mechanism": "spell_steal", "mechanism_zh": "偷技能", "definition": "获得其他单位的技能", "condition": "base", "decision": "accept"}, {"review_id": "0e234c07bae2d264c62c", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "doom_bringer_scorched_earth", "name_zh": "末日使者·焦土", "category": "2_纯数值", "text_741f": {"desc_loc": "Carpets the nearby earth in flames which damage enemies, while also granting Doom increased movement speed and health regeneration.", "notes_loc": ["Scorched Earth follows Doom, centered on his location."]}, "text_742": {"desc_loc": "Carpets the nearby earth in flames which damage enemies, while also granting Doom increased movement speed and health regeneration.", "notes_loc": ["Scorched Earth follows Doom, centered on his location."]}, "changed_fields": [{"field": "cooldowns", "old": [41, 39, 37, 35], "new": [45, 42, 39, 36]}, {"field": "AbilityCooldown", "old": {"base": [41, 39, 37, 35], "scepter": null, "shard": null}, "new": {"base": [45, 42, 39, 36], "scepter": null, "shard": null}}, {"field": "damage_per_second_talent_tooltip", "old": null, "new": {"base": [], "scepter": null, "shard": null}}], "rows": [{"review_id": "36e5cb0de0822b37c2b2", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:doom_bringer_scorched_earth:aura:base", "mechanism": "aura", "mechanism_zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法", "condition": "base", "decision": "accept"}, {"review_id": "bd88535e95d6b211c27a", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "941a2aa7b329800adf22", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}]}, {"subject": "dragon_knight_breathe_fire", "name_zh": "龙骑士·火焰气息", "category": "2_纯数值", "text_741f": {"desc_loc": "Unleashes a breath of fire in front of Dragon Knight that burns enemies and reduces the damage their attacks deal.", "notes_loc": ["Does not trigger spell block or spell reflect."], "facets_loc": ["Damage type changed to Physical."]}, "text_742": {"desc_loc": "Unleashes a breath of fire in front of Dragon Knight that burns enemies and reduces the damage their attacks deal.", "notes_loc": ["Does not trigger spell block or spell reflect."], "facets_loc": ["Damage type changed to Physical."]}, "changed_fields": [{"field": "duration", "old": {"base": [11], "scepter": null, "shard": null}, "new": {"base": [8, 9, 10, 11], "scepter": null, "shard": null}}], "rows": [{"review_id": "c02c8170dcb729d3d584", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:dragon_knight_breathe_fire:attack_damage_reduction:base", "mechanism": "attack_damage_reduction", "mechanism_zh": "减攻击力", "definition": "降低目标的攻击力", "condition": "base", "decision": "accept"}, {"review_id": "3fc4a148fde9bd9cb9ba", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "base", "decision": "reject"}, {"review_id": "bc50fe6daaac5c3a02d8", "mechanism": "spell_block", "mechanism_zh": "格挡指向技能", "definition": "使指向自身或队友的技能失效", "condition": "base", "decision": "reject"}, {"review_id": "34bf284edbf459bc26b7", "mechanism": "spell_reflect", "mechanism_zh": "反弹指向技能", "definition": "把指向技能反弹给施法者", "condition": "base", "decision": "reject"}, {"review_id": "251ad1b82ca0a8518e34", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "reject"}]}, {"subject": "dragon_knight_dragon_tail", "name_zh": "龙骑士·神龙摆尾", "category": "2_纯数值", "text_741f": {"desc_loc": "Dragon Knight smites an enemy unit with his shield, stunning and damaging it and units close to it.", "facets_loc": ["Damage type changed to Physical."]}, "text_742": {"desc_loc": "Dragon Knight smites an enemy unit with his shield, stunning and damaging it and units close to it.", "facets_loc": ["Damage type changed to Physical."]}, "changed_fields": [], "rows": [{"review_id": "60c9c5647b492ce8f805", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "3b8fcf83c4712f63d2bb", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "3c76d81c1ee61eadd866", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "dragon_knight_elder_dragon_form", "name_zh": "龙骑士·古龙形态", "category": "2_纯数值", "text_741f": {"desc_loc": "Dragon Knight assumes the form of the Elder Dragon, increasing the range of his abilities, gaining bonus movement speed, and a ranged attack with various properties. The Dragon evolves per level. The bonuses are cumulative. Level 1 Green : Grants a corrosive damage over time that can also damage buildings. Level 2 Red : Grants splash damage to the dragon's attacks. Level 3 Blue : Grants a debuff immunity piercing movement and attack frost slow on attack.", "scepter_loc": "Increases the current level of Dragon Form by one. Adds a Level 4 Black Dragon that has free pathing, bonus magic resistance, and increased other bonuses."}, "text_742": {"desc_loc": "Dragon Knight assumes the form of the Elder Dragon, increasing the range of his abilities, gaining bonus movement speed, and a ranged attack with various properties. The Dragon evolves per level. The bonuses are cumulative. Level 1 Green : Grants a corrosive damage over time that can also damage buildings. Level 2 Red : Grants splash damage to the dragon's attacks. Level 3 Blue : Grants a debuff immunity piercing movement and attack frost slow on attack.", "scepter_loc": "Increases the current level of Dragon Form by one. Adds a Level 4 Black Dragon that has free pathing, bonus magic resistance, and increased other bonuses."}, "changed_fields": [], "rows": [{"review_id": "6e6a64d618f4d36a4609", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:dragon_knight_elder_dragon_form:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "audit:dragon_knight_elder_dragon_form:attack_slow:base", "mechanism": "attack_slow", "mechanism_zh": "减攻速", "definition": "降低敌方单位的攻击速度", "condition": "base", "decision": "accept"}, {"review_id": "cb5bb3a2643bdd4bf2b7", "mechanism": "cleave", "mechanism_zh": "分裂溅射", "definition": "攻击伤害波及周围单位", "condition": "base", "decision": "accept"}, {"review_id": "be712c59471918e24e3c", "mechanism": "debuff_immunity", "mechanism_zh": "减益免疫/技能免疫", "definition": "处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）", "condition": "base", "decision": "reject"}, {"review_id": "89bb7abdaa5801717a6b", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "audit:dragon_knight_elder_dragon_form:pierces_debuff_immunity:base", "mechanism": "pierces_debuff_immunity", "mechanism_zh": "无视减益免疫", "definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）", "condition": "base", "decision": "accept"}, {"review_id": "e6c313e5e1fb7a71811b", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "audit:dragon_knight_elder_dragon_form:terrain_walk:scepter", "mechanism": "terrain_walk", "mechanism_zh": "无视地形", "definition": "移动时不受悬崖等不可通行地形阻挡，也能穿过树木", "condition": "scepter_upgrade", "decision": "accept"}]}, {"subject": "dragon_knight_wyrms_wrath", "name_zh": "龙骑士·飞龙之怒", "category": "2_纯数值", "text_741f": {"desc_loc": "The life blood of the Dragon improves Dragon Knight's abilities and items to have increased AoE and causes his attacks to deal additional magic damage to enemy units."}, "text_742": {"desc_loc": "The life blood of the Dragon improves Dragon Knight's abilities and items to have increased AoE and causes his attacks to deal additional magic damage to enemy units."}, "changed_fields": [{"field": "bonus_aoe", "old": {"base": [30, 60, 90, 120], "scepter": null, "shard": null}, "new": {"base": [40, 60, 80, 100], "scepter": null, "shard": null}}], "rows": [{"review_id": "3a142489218dfc0c5358", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:dragon_knight_wyrms_wrath:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "3e8f1af570bf9be7696d", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "2d41eccbb5b247802970", "mechanism": "magic_resist_reduction", "mechanism_zh": "减魔抗/魔法易伤", "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害", "condition": "base", "decision": "reject"}]}, {"subject": "drow_ranger_frost_arrows", "name_zh": "卓尔游侠·霜冻之箭", "category": "2_纯数值", "text_741f": {"desc_loc": "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage. Slow lasts %abilityduration% seconds.", "notes_loc": ["The slow duration is refreshed on successive casts."], "scepter_loc": "Frost Arrows now apply a Hypothermia stack to enemies, increasing damage from Frost Arrows and reducing their Health Restoration per stack. If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it."}, "text_742": {"desc_loc": "Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage. Slow lasts %abilityduration% seconds.", "notes_loc": ["The slow duration is refreshed on successive casts."], "scepter_loc": "Frost Arrows now apply a Hypothermia stack to enemies, increasing damage from Frost Arrows and reducing their Health Restoration per stack. If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it."}, "changed_fields": [{"field": "shard_bonus_damage_per_stack", "old": {"base": [0], "scepter": [18], "shard": null}, "new": {"base": [0], "scepter": [22], "shard": null}}, {"field": "shard_burst_damage_per_stack", "old": {"base": [0], "scepter": [60], "shard": null}, "new": {"base": [0], "scepter": [70], "shard": null}}, {"field": "shard_max_stacks", "old": {"base": [0], "scepter": [9], "shard": null}, "new": {"base": [0], "scepter": [7], "shard": null}}, {"field": "shard_regen_reduction_pct_per_stack", "old": {"base": [0], "scepter": [10], "shard": null}, "new": {"base": [0], "scepter": [13], "shard": null}}], "rows": [{"review_id": "6a8edc92616f80fb6bf5", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "d727d9ad797136859ada", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "06f55aebda28adee0544", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "audit:drow_ranger_frost_arrows:attack_modifier:scepter", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "6be4e658b103b050ae67", "mechanism": "heal_reduction", "mechanism_zh": "治疗削减", "definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "364196fb532d1d8ea50f", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "99f1f8721d7cb7a33a43", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "bee5da1b1ff84d191931", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "drow_ranger_marksmanship", "name_zh": "卓尔游侠·射手天赋", "category": "2_纯数值", "text_741f": {"desc_loc": "Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, ignoring their base armor. This ability is disabled if there is an enemy hero within %disable_range% range.", "notes_loc": ["Marksmanship procs have true strike."]}, "text_742": {"desc_loc": "Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness. Pierces through the enemy's defenses, ignoring their base armor. This ability is disabled if there is an enemy hero within %disable_range% range.", "notes_loc": ["Marksmanship procs have true strike."]}, "changed_fields": [{"field": "bonus_damage", "old": {"base": [50, 70, 90], "scepter": null, "shard": null}, "new": {"base": [60, 75, 90], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:drow_ranger_marksmanship:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "2511252c86193016cc7f", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "655e436cc731512cf2f5", "mechanism": "economy", "mechanism_zh": "经济经验", "definition": "提供额外金钱或经验；只是正常赏金不算", "condition": "base", "decision": "reject"}, {"review_id": "b66bc1ee209d0ed5431b", "mechanism": "pierce_evasion", "mechanism_zh": "克敌机先", "definition": "攻击无视闪避（必中）", "condition": "base", "decision": "accept"}]}, {"subject": "drow_ranger_wave_of_silence", "name_zh": "卓尔游侠·狂风", "category": "2_纯数值", "text_741f": {"desc_loc": "Releases a wave that silences and knocks back and reveals invisible enemy units. Knockback distance is relative to how close they are to Drow."}, "text_742": {"desc_loc": "Releases a wave that silences and knocks back and reveals invisible enemy units. Knockback distance is relative to how close they are to Drow."}, "changed_fields": [{"field": "cooldowns", "old": [19, 17, 15, 13], "new": [18, 16, 14, 12]}, {"field": "AbilityCooldown", "old": {"base": [19, 17, 15, 13], "scepter": null, "shard": null}, "new": {"base": [18, 16, 14, 12], "scepter": null, "shard": null}}], "rows": [{"review_id": "43b337c5ee02e95f2e5c", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "09c1d4fa5717c67484ac", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "reject"}, {"review_id": "043a8932d0a3c333e6f8", "mechanism": "reveal", "mechanism_zh": "显形", "definition": "使隐身单位显形，不等于持续真视", "condition": "base", "decision": "accept"}, {"review_id": "bde5fca96c6e325f6001", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "base", "decision": "accept"}, {"review_id": "74d194627da4b9ab6609", "mechanism": "true_sight", "mechanism_zh": "真视", "definition": "可看见隐身单位", "condition": "base", "decision": "reject"}]}, {"subject": "earth_spirit_boulder_smash", "name_zh": "大地之灵·巨石冲击", "category": "2_纯数值", "text_741f": {"desc_loc": "Earth Spirit smashes the target enemy or ally, sending them in the direction he is facing. If Earth Spirit targets an area, he will smash the nearest unit in a %remnant_smash_radius_tooltip% radius, prioritizing Stone Remnants. The travelling unit or Remnant damages all enemy units it hits. If an enemy is hit by a Stone Remnant, they are also slowed. Stone Remnants travel further than other units."}, "text_742": {"desc_loc": "Earth Spirit smashes the target enemy or ally, sending them in the direction he is facing. If Earth Spirit targets an area, he will smash the nearest unit in a %remnant_smash_radius_tooltip% radius, prioritizing Stone Remnants. The travelling unit or Remnant damages all enemy units it hits. If an enemy is hit by a Stone Remnant, they are also slowed. Stone Remnants travel further than other units."}, "changed_fields": [{"field": "move_slow", "old": {"base": [50], "scepter": null, "shard": null}, "new": {"base": [40], "scepter": null, "shard": null}}], "rows": [{"review_id": "4247f048ada1fb46640f", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:earth_spirit_boulder_smash:displace_other:base", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "8603dd22ec8f2ad10087", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "1fe0945420ea91e4bcef", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "earth_spirit_geomagnetic_grip", "name_zh": "大地之灵·地磁之握", "category": "2_纯数值", "text_741f": {"desc_loc": "Earth Spirit pulls the target Stone Remnant or Allied Unit. Enemies struck by the gripped target will be silenced. Pulled Remnants also deal damage to struck enemies. Cast range is reduced when targeting an ally.", "notes_loc": ["Will not work on a unit inside Chronosphere, Duel, or Black Hole.", "Geomagnetic Grip can also target allied creeps."], "shard_loc": "Decreases cooldown to %AbilityCooldown%s and increases allied unit cast range and pull speed."}, "text_742": {"desc_loc": "Earth Spirit pulls the target Stone Remnant or Allied Unit. Enemies struck by the gripped target will be silenced. Pulled Remnants also deal damage to struck enemies. Cast range is reduced when targeting an ally.", "notes_loc": ["Will not work on a unit inside Chronosphere, Duel, or Black Hole.", "Geomagnetic Grip can also target allied creeps."], "shard_loc": "Decreases cooldown to %AbilityCooldown%s and increases allied unit cast range and pull speed."}, "changed_fields": [], "rows": [{"review_id": "0b7c301eed42f6a6e4a2", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "6c02d8a73b7b7821d9dd", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "0178dd52ce9cbd0700d9", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "base", "decision": "accept"}]}, {"subject": "earth_spirit_magnetize", "name_zh": "大地之灵·磁化", "category": "2_纯数值", "text_741f": {"desc_loc": "Magnetizes units in a small nearby area, causing them to take damage for a short duration. Magnetized heroes cause nearby Stone Remnants to explode, destroying the remnant and refreshing Magnetize's duration on all nearby enemies. This process can repeat multiple times. If an enemy hero is affected by Geomagnetic Grip or Boulder Smash, all magnetized heroes share the effects.", "facets_loc": ["Magnetizing a Stone Remnant gives Earth Spirit bonus attack damage for %magnetized_rocks_buff_self_duration% seconds. Does not stack."]}, "text_742": {"desc_loc": "Magnetizes units in a small nearby area, causing them to take damage for a short duration. Magnetized heroes cause nearby Stone Remnants to explode, destroying the remnant and refreshing Magnetize's duration on all nearby enemies. This process can repeat multiple times. If an enemy hero is affected by Geomagnetic Grip or Boulder Smash, all magnetized heroes share the effects.", "facets_loc": ["Magnetizing a Stone Remnant gives Earth Spirit bonus attack damage for %magnetized_rocks_buff_self_duration% seconds. Does not stack."]}, "changed_fields": [{"field": "damage_per_second", "old": {"base": [45, 90, 135], "scepter": null, "shard": null}, "new": {"base": [40, 80, 120], "scepter": null, "shard": null}}], "rows": [{"review_id": "10ec9c5154106e14895f", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "1c99543ccd74dd5c5a5f", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "base", "decision": "reject"}, {"review_id": "7f93a26752faa5b16afa", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "reject"}]}, {"subject": "earth_spirit_rolling_boulder", "name_zh": "大地之灵·巨石翻滚", "category": "2_纯数值", "text_741f": {"desc_loc": "Earth Spirit gathers himself into a boulder and, after a %delay%s delay, rolls toward the target location, dealing %damage% + %damage_str%%% STR damage and stunning enemy units. He will stop if he collides with an enemy hero or is stunned. If he rolls over a Stone Remnant, he will travel further and faster, and stun enemies for longer.", "notes_loc": ["Rolling over a Stone Remnant will destroy the Remnant.", "The boulder has a radius of %radius%.", "Earth Spirit is untargetable and invulnerable while rolling."], "facets_loc": ["Stone Remnants are not destroyed when rolled over, and the cooldown of Stone Remnant is refreshed when the roll is done.", "Rolling over an allied hero grants the allied hero and Earth Spirit %allied_bonus_movespeed%%% bonus movespeed for %allied_bonus_movespeed_duration%s. If he rolls over an allied hero, Earth Spirit will travel further and faster, and stun enemies for longer,"]}, "text_742": {"desc_loc": "Earth Spirit gathers himself into a boulder and, after a %delay%s delay, rolls toward the target location, dealing %damage% + %damage_str%%% STR damage and stunning enemy units. He will stop if he collides with an enemy hero or is stunned. If he rolls over a Stone Remnant, he will travel further and faster, and stun enemies for longer.", "notes_loc": ["Rolling over a Stone Remnant will destroy the Remnant.", "The boulder has a radius of %radius%.", "Earth Spirit is untargetable and invulnerable while rolling."], "facets_loc": ["Stone Remnants are not destroyed when rolled over, and the cooldown of Stone Remnant is refreshed when the roll is done.", "Rolling over an allied hero grants the allied hero and Earth Spirit %allied_bonus_movespeed%%% bonus movespeed for %allied_bonus_movespeed_duration%s. If he rolls over an allied hero, Earth Spirit will travel further and faster, and stun enemies for longer,"]}, "changed_fields": [], "rows": [{"review_id": "8936f216ef34d2956070", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "1abdd5c435a577eb104b", "mechanism": "invulnerable_untargetable", "mechanism_zh": "无敌/不可选取", "definition": "暂时无法被伤害或无法被指向", "condition": "base", "decision": "accept"}, {"review_id": "audit:earth_spirit_rolling_boulder:self_mobility:base", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "accept"}, {"review_id": "1fb8b55a1b0d41c02e6d", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "audit:earth_spirit_rolling_boulder:terrain_walk:base", "mechanism": "terrain_walk", "mechanism_zh": "无视地形", "definition": "移动时不受悬崖等不可通行地形阻挡，也能穿过树木", "condition": "base", "decision": "accept"}]}, {"subject": "earth_spirit_stone_caller", "name_zh": "大地之灵·残岩", "category": "3_说明文字", "text_741f": {"desc_loc": "Call a Stone Remnant to the target location. Stone Remnants have no vision and are invulnerable, and can be used with Earth Spirit's abilities. Calling a Stone Remnant consumes a charge, which recharge over time. Stone Remnant has %AbilityCharges% charges. Earth Spirit passively gains %attack_damage_per_stone%%% bonus damage per unused Stone Remnant charge, and gains an additional %attack_damage_per_stone_used%%% bonus damage for %buff_duration%s when a Stone Remnant is targeted with an ability (does not stack).", "facets_loc": ["Has a fixed cooldown instead of charges."]}, "text_742": {"desc_loc": "Call a Stone Remnant to the target location. Stone Remnants have no vision and are invulnerable, and can be used with Earth Spirit's abilities. Calling a Stone Remnant consumes a charge, which recharge over time. Stone Remnant has %AbilityCharges% charges. Earth Spirit passively gains %attack_damage_per_stone%%% bonus damage per unused Stone Remnant charge, and gains an additional %attack_damage_per_stone_used%%% bonus damage for %buff_duration%s when a Stone Remnant is targeted with an ability (does not stack).", "notes_loc": ["Break disables the bonus damage."], "facets_loc": ["Has a fixed cooldown instead of charges."]}, "changed_fields": [], "rows": [{"review_id": "fcf44279ab944ef44d37", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "base", "decision": "accept"}, {"review_id": "e7296373113786c745d3", "mechanism": "invulnerable_untargetable", "mechanism_zh": "无敌/不可选取", "definition": "暂时无法被伤害或无法被指向", "condition": "base", "decision": "accept"}]}, {"subject": "earthshaker_echo_slam", "name_zh": "撼地者·回音击", "category": "2_纯数值", "text_741f": {"desc_loc": "Shockwaves travel through the ground, damaging enemy units. Each enemy hit causes an echo to damage nearby units. Real heroes cause two echoes."}, "text_742": {"desc_loc": "Shockwaves travel through the ground, damaging enemy units. Each enemy hit causes an echo to damage nearby units. Real heroes cause two echoes."}, "changed_fields": [{"field": "cooldowns", "old": [130, 120, 110], "new": [125, 115, 105]}, {"field": "AbilityCooldown", "old": {"base": [130, 120, 110], "scepter": null, "shard": null}, "new": {"base": [125, 115, 105], "scepter": null, "shard": null}}, {"field": "echo_slam_echo_damage", "old": {"base": [70, 90, 110], "scepter": null, "shard": null}, "new": {"base": [60, 80, 100], "scepter": null, "shard": null}}], "rows": [{"review_id": "ef9051ea93f657552597", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}]}, {"subject": "earthshaker_enchant_totem", "name_zh": "撼地者·强化图腾", "category": "2_纯数值", "text_741f": {"desc_loc": "Empowers Earthshaker's totem, causing it to deal extra damage and have %bonus_attack_range% bonus attack range on the next attack.", "notes_loc": ["Bonus damage is based on base damage and that given by primary attribute."], "scepter_loc": "Enchant Totem becomes a ground target ability, causing Earthshaker to jump in the air and land at the target spot, casting Enchant Totem there. Self-casting the ability will behave in the original form, without jumping. Grants Enchant Totem a cleaving attack."}, "text_742": {"desc_loc": "Empowers Earthshaker's totem, causing it to deal extra damage and have %bonus_attack_range% bonus attack range on the next attack.", "notes_loc": ["Bonus damage is based on base damage and that given by primary attribute."], "scepter_loc": "Enchant Totem becomes a ground target ability, causing Earthshaker to jump in the air and land at the target spot, casting Enchant Totem there. Self-casting the ability will behave in the original form, without jumping. Grants Enchant Totem a cleaving attack."}, "changed_fields": [{"field": "scepter_cleave_pct", "old": {"base": [0], "scepter": [40], "shard": null}, "new": {"base": [0], "scepter": [50], "shard": null}}], "rows": [{"review_id": "audit:earthshaker_enchant_totem:aoe_damage:scepter", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "6d614cb713be19a24053", "mechanism": "cleave", "mechanism_zh": "分裂溅射", "definition": "攻击伤害波及周围单位", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "audit:earthshaker_enchant_totem:self_mobility:scepter", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "audit:earthshaker_enchant_totem:terrain_walk:scepter", "mechanism": "terrain_walk", "mechanism_zh": "无视地形", "definition": "移动时不受悬崖等不可通行地形阻挡，也能穿过树木", "condition": "scepter_upgrade", "decision": "accept"}]}, {"subject": "elder_titan_ancestral_spirit", "name_zh": "上古巨神·灵体游魂", "category": "2_纯数值", "text_741f": {"desc_loc": "Elder Titan sends forth his Astral Spirit, damaging any units it passes through. When the spirit rejoins the Titan, it grants bonus damage and movement speed for each unit it passed through. The Astral Spirit possesses the Echo Stomp, Return Spirit, and Natural Order abilities.", "scepter_loc": "Causes Elder Titan to become debuff immune and gain %immunity_resist%%% magic resistance for %scepter_magic_immune_per_hero% seconds per affected enemy Hero when the spirit returns."}, "text_742": {"desc_loc": "Elder Titan sends forth his Astral Spirit, damaging any units it passes through. When the spirit rejoins the Titan, it grants bonus damage and movement speed for each unit it passed through. The Astral Spirit possesses the Echo Stomp, Return Spirit, and Natural Order abilities.", "scepter_loc": "Causes Elder Titan to become debuff immune and gain %immunity_resist%%% magic resistance for %scepter_magic_immune_per_hero% seconds per affected enemy Hero when the spirit returns."}, "changed_fields": [], "rows": [{"review_id": "audit:elder_titan_ancestral_spirit:aoe_damage:base", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "2a767241f1ea1b41212c", "mechanism": "debuff_immunity", "mechanism_zh": "减益免疫/技能免疫", "definition": "处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "d20578bf07b75a0be924", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}]}, {"subject": "elder_titan_echo_stomp", "name_zh": "上古巨神·回音重踏", "category": "2_纯数值", "text_741f": {"desc_loc": "CHANNELED - Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations. The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.", "notes_loc": ["If a unit is hit by Astral Spirit and Elder Titan, they will take both instances of damage."], "shard_loc": "Lowers Cooldown. Echo Stomp may be placed on alt-cast to allow Elder Titan to take the place of the Astral Spirit as it completes its stomp."}, "text_742": {"desc_loc": "CHANNELED - Elder Titan and his Astral Spirit both stomp the ground, damaging and knocking nearby enemy units unconscious around their locations. The Elder Titan stomp deals physical damage, while the Spirit stomp deals magical damage.", "notes_loc": ["If a unit is hit by Astral Spirit and Elder Titan, they will take both instances of damage."], "shard_loc": "Lowers Cooldown. Echo Stomp may be placed on alt-cast to allow Elder Titan to take the place of the Astral Spirit as it completes its stomp."}, "changed_fields": [], "rows": [{"review_id": "ad328570f0f382a9fd44", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "d1dd070eb4befbce3826", "mechanism": "channeled", "mechanism_zh": "持续施法", "definition": "施法者自身需要持续引导，被打断即停止", "condition": "base", "decision": "accept"}, {"review_id": "audit:elder_titan_echo_stomp:self_mobility:shard", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "6b59ccbaa0827a7c21b5", "mechanism": "sleep", "mechanism_zh": "睡眠", "definition": "无法行动，受伤害后醒来", "condition": "base", "decision": "accept"}, {"review_id": "a6938e5efa558f2fa8dd", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "reject"}]}, {"subject": "elder_titan_momentum", "name_zh": "上古巨神·动量", "category": "2_纯数值", "text_741f": {"desc_loc": "Elder Titan gains armor equal to a percentage of his bonus movement speed.", "notes_loc": ["Bonus movement speed is any movement speed above his base movement speed.", "Momentum does not reduce Elder Titan's Armor if he is slowed below his base movement speed."]}, "text_742": {"desc_loc": "Elder Titan gains armor equal to a percentage of his bonus movement speed.", "notes_loc": ["Bonus movement speed is any movement speed above his base movement speed.", "Momentum does not reduce Elder Titan's Armor if he is slowed below his base movement speed."]}, "changed_fields": [], "rows": [{"review_id": "427a30ddda61213a46bb", "mechanism": "armor_reduction", "mechanism_zh": "减护甲", "definition": "降低目标护甲", "condition": "base", "decision": "reject"}, {"review_id": "f912683de1445e6dd9aa", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "disruptor_kinetic_field",
+      "rows": [
+        {"review_id":"75c0644a8ecfee7b1e3c","verdict":"holds","quote":"Debuff Immune units can travel through the field.","reason_zh":"说明描述的是已有减益免疫的单位可以穿过力场，力场本身没有授予免疫的效果。"},
+        {"review_id":"audit:disruptor_kinetic_field:ground_zone:base","verdict":"holds","quote":"After a short formation time, creates a circular barrier of kinetic energy that enemies can't pass.","reason_zh":"力场成形后在施放处形成圆形屏障，持续限制敌人穿越其边界。"},
+        {"review_id":"audit:disruptor_kinetic_field:slow:base","verdict":"unclear","quote":"creates a circular barrier of kinetic energy that enemies can't pass.","reason_zh":"说明确认敌人无法穿过屏障，但没有写明基础力场是否通过降低移动速度来阻止穿越。"},
+        {"review_id":"audit:disruptor_kinetic_field:mobility_lock:base","verdict":"holds","quote":"Debuff Immune units can travel through the field.","reason_zh":"说明将通行限制归于能量屏障，并明确减益免疫单位可以穿过，没有将屏障描述为不可通行地形。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"displace_other","condition":"shard_upgrade","quote":"Causes enemies that touch the field to be struck by Electromagnetic Repulsion with %strike_knockback_pct_tooltip_only%%% reduced knockback.","reason_zh":"魔晶的触碰触发值由0变为1，敌人接触力场时会受到击退，击退距离缩短50%。"}
+      ]
+    },
+    {
+      "subject": "doom_bringer_devour",
+      "rows": [
+        {"review_id":"1c8fe53e61ae3054770b","verdict":"holds","quote":"Devour has %AbilityCharges% charges and can target Ancients.","reason_zh":"魔晶仍赋予吞噬充能，本次魔耗调整不影响充能机制。"},
+        {"review_id":"d23e834c84d5d998ed63","verdict":"holds","quote":"Gives Doom the original bounty of the creep, along with the bonus gold.","reason_zh":"吞噬仍在原有赏金之外提供额外金钱。"},
+        {"review_id":"5f4b9f6778a26d56c606","verdict":"now_wrong","quote":"Stolen creep abilities have %bonus_aoe_pct%%% increased AoE and %bonus_spell_amp_pct%%% increased spell amplification.","reason_zh":"魔晶明确提高所偷技能的法术放大，因此7.42下应判有，且原拒绝判断在7.41f就已与说明冲突。"},
+        {"review_id":"audit:doom_bringer_devour:spell_steal:base","verdict":"holds","quote":"Consumes an enemy or neutral creep, acquiring any special abilities that it possessed.","reason_zh":"基础吞噬在未开启替代施法时仍可获得被吞单位的技能。"},
+        {"review_id":"0e234c07bae2d264c62c","verdict":"holds","quote":"Consumes an enemy or neutral creep","reason_zh":"吞噬可以选取一个敌方小兵为施法目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "doom_bringer_scorched_earth",
+      "rows": [
+        {"review_id":"36e5cb0de0822b37c2b2","verdict":"holds","quote":"Carpets the nearby earth in flames which damage enemies","reason_zh":"一次施放产生的火焰仍可伤害周围多个敌人。"},
+        {"review_id":"audit:doom_bringer_scorched_earth:aura:base","verdict":"holds","quote":"Scorched Earth follows Doom, centered on his location.","reason_zh":"焦土以末日使者为中心随他移动，持续伤害周围敌人，符合敌方光环的定义。"},
+        {"review_id":"bd88535e95d6b211c27a","verdict":"holds","quote":"granting Doom increased movement speed and health regeneration.","reason_zh":"焦土仍提高末日使者自身的移动速度。"},
+        {"review_id":"941a2aa7b329800adf22","verdict":"holds","quote":"granting Doom increased movement speed and health regeneration.","reason_zh":"焦土仍为末日使者提供生命恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dragon_knight_breathe_fire",
+      "rows": [
+        {"review_id":"c02c8170dcb729d3d584","verdict":"holds","quote":"Unleashes a breath of fire in front of Dragon Knight that burns enemies","reason_zh":"一次喷吐仍可灼烧龙骑士前方的多个敌人。"},
+        {"review_id":"audit:dragon_knight_breathe_fire:attack_damage_reduction:base","verdict":"holds","quote":"reduces the damage their attacks deal.","reason_zh":"命中敌人的攻击伤害仍会降低，调整后的持续时间在各级均大于零。"},
+        {"review_id":"3fc4a148fde9bd9cb9ba","verdict":"holds","quote":"reduces the damage their attacks deal.","reason_zh":"技能降低被命中敌人的攻击输出，没有赋予受击者护盾或承伤减免。"},
+        {"review_id":"bc50fe6daaac5c3a02d8","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"格挡在说明中只作为火焰气息不会触发的交互出现，技能本身没有提供指向技能格挡。"},
+        {"review_id":"34bf284edbf459bc26b7","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"反弹在说明中只作为火焰气息不会触发的交互出现，技能本身没有提供指向技能反弹。"},
+        {"review_id":"251ad1b82ca0a8518e34","verdict":"unclear","quote":"Unleashes a breath of fire in front of Dragon Knight that burns enemies","reason_zh":"喷吐方向和作用范围不能确定施放时能否选取敌方单位，格挡与反弹说明也不能确定指向方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dragon_knight_dragon_tail",
+      "rows": [
+        {"review_id":"60c9c5647b492ce8f805","verdict":"holds","quote":"stunning and damaging it and units close to it.","reason_zh":"神龙摆尾可同时伤害主目标及其附近单位。"},
+        {"review_id":"3b8fcf83c4712f63d2bb","verdict":"holds","quote":"stunning and damaging it and units close to it.","reason_zh":"说明明确保留了对目标及其附近单位的眩晕效果。"},
+        {"review_id":"3c76d81c1ee61eadd866","verdict":"holds","quote":"Dragon Knight smites an enemy unit with his shield","reason_zh":"技能以一个敌方单位为主目标，随后波及其附近单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dragon_knight_elder_dragon_form",
+      "rows": [
+        {"review_id":"6e6a64d618f4d36a4609","verdict":"holds","quote":"Level 2 Red : Grants splash damage to the dragon's attacks.","reason_zh":"基础技能达到二级后，一次龙形态攻击可以通过溅射伤害多个敌人。"},
+        {"review_id":"audit:dragon_knight_elder_dragon_form:attack_modifier:base","verdict":"holds","quote":"Level 3 Blue : Grants a debuff immunity piercing movement and attack frost slow on attack.","reason_zh":"三级蓝龙的普通攻击仍附带冰霜减速，符合攻击特效定义。"},
+        {"review_id":"audit:dragon_knight_elder_dragon_form:attack_slow:base","verdict":"holds","quote":"movement and attack frost slow on attack.","reason_zh":"三级蓝龙的冰霜攻击仍会降低目标的攻击速度。"},
+        {"review_id":"cb5bb3a2643bdd4bf2b7","verdict":"holds","quote":"Level 2 Red : Grants splash damage to the dragon's attacks.","reason_zh":"二级红龙仍赋予普通攻击溅射伤害。"},
+        {"review_id":"be712c59471918e24e3c","verdict":"holds","quote":"a debuff immunity piercing movement and attack frost slow on attack.","reason_zh":"无视减益免疫是冰霜攻击的性质，基础变身没有赋予龙骑士自身减益免疫。"},
+        {"review_id":"89bb7abdaa5801717a6b","verdict":"holds","quote":"gaining bonus movement speed","reason_zh":"变身仍为龙骑士自身提供额外移动速度。"},
+        {"review_id":"audit:dragon_knight_elder_dragon_form:pierces_debuff_immunity:base","verdict":"holds","quote":"Level 3 Blue : Grants a debuff immunity piercing movement and attack frost slow on attack.","reason_zh":"说明明确三级蓝龙攻击附带的移速和攻速减慢均能无视减益免疫。"},
+        {"review_id":"e6c313e5e1fb7a71811b","verdict":"holds","quote":"movement and attack frost slow on attack.","reason_zh":"三级蓝龙的冰霜攻击仍会降低目标的移动速度。"},
+        {"review_id":"audit:dragon_knight_elder_dragon_form:terrain_walk:scepter","verdict":"holds","quote":"Adds a Level 4 Black Dragon that has free pathing","reason_zh":"A杖提供的四级黑龙仍具有自由通行能力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dragon_knight_wyrms_wrath",
+      "rows": [
+        {"review_id":"3a142489218dfc0c5358","verdict":"holds","quote":"improves Dragon Knight's abilities and items to have increased AoE and causes his attacks to deal additional magic damage to enemy units.","reason_zh":"范围加成作用于技能和物品，说明没有赋予普攻附加伤害同时波及多个目标的效果。"},
+        {"review_id":"audit:dragon_knight_wyrms_wrath:attack_modifier:base","verdict":"holds","quote":"causes his attacks to deal additional magic damage to enemy units.","reason_zh":"普通攻击仍对敌方单位附加魔法伤害。"},
+        {"review_id":"3e8f1af570bf9be7696d","verdict":"unclear","quote":"bonus_aoe.base: [30,60,90,120]→[40,60,80,100]","reason_zh":"所列变更只给出了作用范围加成，没有提供可独立核实破坏判定的IsBreakable字段值。"},
+        {"review_id":"2d41eccbb5b247802970","verdict":"holds","quote":"causes his attacks to deal additional magic damage to enemy units.","reason_zh":"攻击附加魔法伤害，说明没有降低目标魔抗或提高其所受魔法伤害的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "drow_ranger_frost_arrows",
+      "rows": [
+        {"review_id":"6a8edc92616f80fb6bf5","verdict":"holds","quote":"Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.","reason_zh":"基础箭矢对攻击目标附加伤害，死亡时造成范围爆发的效果列在A杖升级中。"},
+        {"review_id":"d727d9ad797136859ada","verdict":"holds","quote":"If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it.","reason_zh":"A杖仍使带层数的敌人死亡时对周围造成范围伤害，每层爆发伤害由60升至70。"},
+        {"review_id":"06f55aebda28adee0544","verdict":"holds","quote":"Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.","reason_zh":"基础攻击仍附带移速减慢和额外伤害。"},
+        {"review_id":"audit:drow_ranger_frost_arrows:attack_modifier:scepter","verdict":"holds","quote":"Frost Arrows now apply a Hypothermia stack to enemies","reason_zh":"A杖霜冻之箭仍可在命中敌人时施加低温层数，新上限为7层。"},
+        {"review_id":"6be4e658b103b050ae67","verdict":"holds","quote":"shard_regen_reduction_pct_per_stack.scepter: [10]→[13]","reason_zh":"A杖每层削减的生命恢复由10%升至13%，减疗仍然生效。"},
+        {"review_id":"364196fb532d1d8ea50f","verdict":"holds","quote":"slowing enemy movement and dealing bonus damage.","reason_zh":"基础霜冻之箭仍降低敌人的移动速度。"},
+        {"review_id":"99f1f8721d7cb7a33a43","verdict":"holds","quote":"they burst and deal damage per stack and slow in an area around it.","reason_zh":"A杖仍使带低温层数的敌人死亡时减速其周围敌人。"},
+        {"review_id":"bee5da1b1ff84d191931","verdict":"unclear","quote":"The slow duration is refreshed on successive casts.","reason_zh":"说明提到连续施放并描述了普攻目标受到的效果，但没有明确施放时能否直接选取敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "drow_ranger_marksmanship",
+      "rows": [
+        {"review_id":"audit:drow_ranger_marksmanship:attack_modifier:base","verdict":"holds","quote":"bonus_damage.base: [50,70,90]→[60,75,90]","reason_zh":"射手天赋仍有概率强化箭矢，触发时的额外伤害在各级均大于零。"},
+        {"review_id":"2511252c86193016cc7f","verdict":"unclear","quote":"This ability is disabled if there is an enemy hero within %disable_range% range.","reason_zh":"敌方英雄靠近会禁用技能，但这一条件不能证明技能可被破坏，材料也未给出IsBreakable值。"},
+        {"review_id":"655e436cc731512cf2f5","verdict":"holds","quote":"Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness.","reason_zh":"这里的战斗经验是技能背景描述，实际效果是概率强化箭矢，没有额外金钱或经验收益。"},
+        {"review_id":"b66bc1ee209d0ed5431b","verdict":"holds","quote":"Marksmanship procs have true strike.","reason_zh":"射手天赋触发时的攻击仍然必中。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "drow_ranger_wave_of_silence",
+      "rows": [
+        {"review_id":"43b337c5ee02e95f2e5c","verdict":"holds","quote":"Knockback distance is relative to how close they are to Drow.","reason_zh":"狂风仍会击退敌人，位移距离与敌人距卓尔游侠的远近有关。"},
+        {"review_id":"09c1d4fa5717c67484ac","verdict":"holds","quote":"reveals invisible enemy units.","reason_zh":"狂风使隐身敌人显形，没有赋予单位隐身的效果。"},
+        {"review_id":"043a8932d0a3c333e6f8","verdict":"holds","quote":"reveals invisible enemy units.","reason_zh":"狂风仍可使命中的隐身敌方单位显形。"},
+        {"review_id":"bde5fca96c6e325f6001","verdict":"holds","quote":"Releases a wave that silences and knocks back and reveals invisible enemy units.","reason_zh":"狂风仍会沉默敌人，本次只缩短了技能冷却。"},
+        {"review_id":"74d194627da4b9ab6609","verdict":"holds","quote":"reveals invisible enemy units.","reason_zh":"说明只赋予波及敌人的显形效果，没有赋予持续侦测隐身单位的真视。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_boulder_smash",
+      "rows": [
+        {"review_id":"4247f048ada1fb46640f","verdict":"holds","quote":"The travelling unit or Remnant damages all enemy units it hits.","reason_zh":"被击出的单位或残岩仍可伤害沿途命中的所有敌人。"},
+        {"review_id":"audit:earth_spirit_boulder_smash:displace_other:base","verdict":"holds","quote":"Earth Spirit smashes the target enemy or ally, sending them in the direction he is facing.","reason_zh":"巨石冲击仍可把目标敌人或友军沿大地之灵的面朝方向击出。"},
+        {"review_id":"8603dd22ec8f2ad10087","verdict":"holds","quote":"move_slow.base: [50]→[40]","reason_zh":"残岩命中敌人时的移速减慢由50%降至40%，效果仍然存在。"},
+        {"review_id":"1fe0945420ea91e4bcef","verdict":"holds","quote":"Earth Spirit smashes the target enemy or ally","reason_zh":"巨石冲击可以直接选取敌方单位为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_geomagnetic_grip",
+      "rows": [
+        {"review_id":"0b7c301eed42f6a6e4a2","verdict":"holds","quote":"Pulled Remnants also deal damage to struck enemies.","reason_zh":"一次牵引的残岩仍能伤害途中命中的多个敌人。"},
+        {"review_id":"6c02d8a73b7b7821d9dd","verdict":"holds","quote":"Earth Spirit pulls the target Stone Remnant or Allied Unit.","reason_zh":"基础地磁之握仍可拉动目标友方单位。"},
+        {"review_id":"0178dd52ce9cbd0700d9","verdict":"holds","quote":"Enemies struck by the gripped target will be silenced.","reason_zh":"被牵引目标撞到的敌人仍会受到沉默。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_magnetize",
+      "rows": [
+        {"review_id":"10ec9c5154106e14895f","verdict":"holds","quote":"Magnetizes units in a small nearby area, causing them to take damage for a short duration.","reason_zh":"磁化仍对附近区域内多个单位持续造成伤害，调整后的每秒伤害在各级均大于零。"},
+        {"review_id":"1c99543ccd74dd5c5a5f","verdict":"holds","quote":"If an enemy hero is affected by Geomagnetic Grip or Boulder Smash, all magnetized heroes share the effects.","reason_zh":"磁化本身不直接施加沉默，磁化英雄共享的是地磁之握命中后施加的沉默。"},
+        {"review_id":"7f93a26752faa5b16afa","verdict":"holds","quote":"If an enemy hero is affected by Geomagnetic Grip or Boulder Smash, all magnetized heroes share the effects.","reason_zh":"磁化本身不直接减速，磁化英雄可以共享巨石冲击以残岩命中敌人时施加的减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_rolling_boulder",
+      "rows": [
+        {"review_id":"8936f216ef34d2956070","verdict":"holds","quote":"rolls toward the target location, dealing %damage% + %damage_str%%% STR damage and stunning enemy units.","reason_zh":"一次翻滚仍能伤害其碰撞范围内的多个敌方单位。"},
+        {"review_id":"1abdd5c435a577eb104b","verdict":"holds","quote":"Earth Spirit is untargetable and invulnerable while rolling.","reason_zh":"大地之灵在翻滚期间仍不可被选取且处于无敌状态。"},
+        {"review_id":"audit:earth_spirit_rolling_boulder:self_mobility:base","verdict":"holds","quote":"rolls toward the target location","reason_zh":"大地之灵会主动滚向目标位置，改变自身位置。"},
+        {"review_id":"1fb8b55a1b0d41c02e6d","verdict":"holds","quote":"stunning enemy units.","reason_zh":"翻滚命中敌方单位仍会造成眩晕。"},
+        {"review_id":"audit:earth_spirit_rolling_boulder:terrain_walk:base","verdict":"unclear","quote":"He will stop if he collides with an enemy hero or is stunned.","reason_zh":"说明列出了撞到敌方英雄或受眩晕时会停止，但没有说明能否穿过树木和悬崖等不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_stone_caller",
+      "rows": [
+        {"review_id":"fcf44279ab944ef44d37","verdict":"holds","quote":"Calling a Stone Remnant consumes a charge, which recharge over time.","reason_zh":"基础施放仍消耗一点可恢复的充能，采用固定冷却的是另列的命石效果。"},
+        {"review_id":"e7296373113786c745d3","verdict":"holds","quote":"Stone Remnants have no vision and are invulnerable","reason_zh":"说明仍明确残岩本身处于无敌状态。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earthshaker_echo_slam",
+      "rows": [
+        {"review_id":"ef9051ea93f657552597","verdict":"holds","quote":"Each enemy hit causes an echo to damage nearby units.","reason_zh":"每个被命中的敌人仍产生伤害周围单位的回音，各级回音伤害虽降低但均大于零。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earthshaker_enchant_totem",
+      "rows": [
+        {"review_id":"audit:earthshaker_enchant_totem:aoe_damage:scepter","verdict":"holds","quote":"Grants Enchant Totem a cleaving attack.","reason_zh":"A杖仍使一次图腾攻击通过分裂伤害多个敌人。"},
+        {"review_id":"6d614cb713be19a24053","verdict":"holds","quote":"scepter_cleave_pct.scepter: [40]→[50]","reason_zh":"A杖分裂比例由40%升至50%，分裂攻击仍然存在。"},
+        {"review_id":"audit:earthshaker_enchant_totem:self_mobility:scepter","verdict":"holds","quote":"causing Earthshaker to jump in the air and land at the target spot","reason_zh":"持有A杖时对地施放仍会使撼地者跳至所选位置。"},
+        {"review_id":"audit:earthshaker_enchant_totem:terrain_walk:scepter","verdict":"unclear","quote":"causing Earthshaker to jump in the air and land at the target spot","reason_zh":"说明确认了跳跃位移，但未交代跳跃能否越过悬崖、树木等不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "elder_titan_ancestral_spirit",
+      "rows": [
+        {"review_id":"audit:elder_titan_ancestral_spirit:aoe_damage:base","verdict":"holds","quote":"damaging any units it passes through.","reason_zh":"同一次施放的游魂可以伤害沿途穿过的多个单位。"},
+        {"review_id":"2a767241f1ea1b41212c","verdict":"holds","quote":"Causes Elder Titan to become debuff immune and gain %immunity_resist%%% magic resistance for %scepter_magic_immune_per_hero% seconds per affected enemy Hero when the spirit returns.","reason_zh":"持有A杖时游魂回归仍会赋予上古巨神减益免疫，时长按受影响的敌方英雄数计算。"},
+        {"review_id":"d20578bf07b75a0be924","verdict":"holds","quote":"When the spirit rejoins the Titan, it grants bonus damage and movement speed for each unit it passed through.","reason_zh":"基础游魂回归时仍按穿过的单位数提高上古巨神的移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "elder_titan_echo_stomp",
+      "rows": [
+        {"review_id":"ad328570f0f382a9fd44","verdict":"holds","quote":"damaging and knocking nearby enemy units unconscious around their locations.","reason_zh":"本体和游魂的践踏都能伤害各自周围的多个敌人。"},
+        {"review_id":"d1dd070eb4befbce3826","verdict":"holds","quote":"CHANNELED - Elder Titan and his Astral Spirit both stomp the ground","reason_zh":"技能说明明确标记回音重踏需要持续施法。"},
+        {"review_id":"audit:elder_titan_echo_stomp:self_mobility:shard","verdict":"holds","quote":"Echo Stomp may be placed on alt-cast to allow Elder Titan to take the place of the Astral Spirit as it completes its stomp.","reason_zh":"持有魔晶并启用替代施法后，上古巨神仍可在践踏完成时移动到游魂的位置。"},
+        {"review_id":"6b59ccbaa0827a7c21b5","verdict":"unclear","quote":"knocking nearby enemy units unconscious","reason_zh":"说明确认敌人会失去意识，但未写明受伤后会醒来，无法完整核实所给睡眠定义。"},
+        {"review_id":"a6938e5efa558f2fa8dd","verdict":"holds","quote":"knocking nearby enemy units unconscious","reason_zh":"重踏的控制描述为使敌人失去意识，材料没有列出另行施加的眩晕效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "elder_titan_momentum",
+      "rows": [
+        {"review_id":"427a30ddda61213a46bb","verdict":"holds","quote":"Elder Titan gains armor equal to a percentage of his bonus movement speed.","reason_zh":"动量根据额外移动速度增加自身护甲，没有削减目标护甲的效果。"},
+        {"review_id":"f912683de1445e6dd9aa","verdict":"unclear","quote":"Momentum does not reduce Elder Titan's Armor if he is slowed below his base movement speed.","reason_zh":"该说明只涉及减速时的护甲计算，材料未提供IsBreakable值，无法独立确认不可被破坏的判断。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+38,860
+{
+  "objects": [
+    {
+      "subject": "disruptor_kinetic_field",
+      "rows": [
+        {"review_id":"75c0644a8ecfee7b1e3c","verdict":"holds","quote":"Debuff Immune units can travel through the field.","reason_zh":"说明描述的是已有减益免疫的单位可以穿过力场，力场本身没有授予免疫的效果。"},
+        {"review_id":"audit:disruptor_kinetic_field:ground_zone:base","verdict":"holds","quote":"After a short formation time, creates a circular barrier of kinetic energy that enemies can't pass.","reason_zh":"力场成形后在施放处形成圆形屏障，持续限制敌人穿越其边界。"},
+        {"review_id":"audit:disruptor_kinetic_field:slow:base","verdict":"unclear","quote":"creates a circular barrier of kinetic energy that enemies can't pass.","reason_zh":"说明确认敌人无法穿过屏障，但没有写明基础力场是否通过降低移动速度来阻止穿越。"},
+        {"review_id":"audit:disruptor_kinetic_field:mobility_lock:base","verdict":"holds","quote":"Debuff Immune units can travel through the field.","reason_zh":"说明将通行限制归于能量屏障，并明确减益免疫单位可以穿过，没有将屏障描述为不可通行地形。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"displace_other","condition":"shard_upgrade","quote":"Causes enemies that touch the field to be struck by Electromagnetic Repulsion with %strike_knockback_pct_tooltip_only%%% reduced knockback.","reason_zh":"魔晶的触碰触发值由0变为1，敌人接触力场时会受到击退，击退距离缩短50%。"}
+      ]
+    },
+    {
+      "subject": "doom_bringer_devour",
+      "rows": [
+        {"review_id":"1c8fe53e61ae3054770b","verdict":"holds","quote":"Devour has %AbilityCharges% charges and can target Ancients.","reason_zh":"魔晶仍赋予吞噬充能，本次魔耗调整不影响充能机制。"},
+        {"review_id":"d23e834c84d5d998ed63","verdict":"holds","quote":"Gives Doom the original bounty of the creep, along with the bonus gold.","reason_zh":"吞噬仍在原有赏金之外提供额外金钱。"},
+        {"review_id":"5f4b9f6778a26d56c606","verdict":"now_wrong","quote":"Stolen creep abilities have %bonus_aoe_pct%%% increased AoE and %bonus_spell_amp_pct%%% increased spell amplification.","reason_zh":"魔晶明确提高所偷技能的法术放大，因此7.42下应判有，且原拒绝判断在7.41f就已与说明冲突。"},
+        {"review_id":"audit:doom_bringer_devour:spell_steal:base","verdict":"holds","quote":"Consumes an enemy or neutral creep, acquiring any special abilities that it possessed.","reason_zh":"基础吞噬在未开启替代施法时仍可获得被吞单位的技能。"},
+        {"review_id":"0e234c07bae2d264c62c","verdict":"holds","quote":"Consumes an enemy or neutral creep","reason_zh":"吞噬可以选取一个敌方小兵为施法目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "doom_bringer_scorched_earth",
+      "rows": [
+        {"review_id":"36e5cb0de0822b37c2b2","verdict":"holds","quote":"Carpets the nearby earth in flames which damage enemies","reason_zh":"一次施放产生的火焰仍可伤害周围多个敌人。"},
+        {"review_id":"audit:doom_bringer_scorched_earth:aura:base","verdict":"holds","quote":"Scorched Earth follows Doom, centered on his location.","reason_zh":"焦土以末日使者为中心随他移动，持续伤害周围敌人，符合敌方光环的定义。"},
+        {"review_id":"bd88535e95d6b211c27a","verdict":"holds","quote":"granting Doom increased movement speed and health regeneration.","reason_zh":"焦土仍提高末日使者自身的移动速度。"},
+        {"review_id":"941a2aa7b329800adf22","verdict":"holds","quote":"granting Doom increased movement speed and health regeneration.","reason_zh":"焦土仍为末日使者提供生命恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dragon_knight_breathe_fire",
+      "rows": [
+        {"review_id":"c02c8170dcb729d3d584","verdict":"holds","quote":"Unleashes a breath of fire in front of Dragon Knight that burns enemies","reason_zh":"一次喷吐仍可灼烧龙骑士前方的多个敌人。"},
+        {"review_id":"audit:dragon_knight_breathe_fire:attack_damage_reduction:base","verdict":"holds","quote":"reduces the damage their attacks deal.","reason_zh":"命中敌人的攻击伤害仍会降低，调整后的持续时间在各级均大于零。"},
+        {"review_id":"3fc4a148fde9bd9cb9ba","verdict":"holds","quote":"reduces the damage their attacks deal.","reason_zh":"技能降低被命中敌人的攻击输出，没有赋予受击者护盾或承伤减免。"},
+        {"review_id":"bc50fe6daaac5c3a02d8","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"格挡在说明中只作为火焰气息不会触发的交互出现，技能本身没有提供指向技能格挡。"},
+        {"review_id":"34bf284edbf459bc26b7","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"反弹在说明中只作为火焰气息不会触发的交互出现，技能本身没有提供指向技能反弹。"},
+        {"review_id":"251ad1b82ca0a8518e34","verdict":"unclear","quote":"Unleashes a breath of fire in front of Dragon Knight that burns enemies","reason_zh":"喷吐方向和作用范围不能确定施放时能否选取敌方单位，格挡与反弹说明也不能确定指向方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dragon_knight_dragon_tail",
+      "rows": [
+        {"review_id":"60c9c5647b492ce8f805","verdict":"holds","quote":"stunning and damaging it and units close to it.","reason_zh":"神龙摆尾可同时伤害主目标及其附近单位。"},
+        {"review_id":"3b8fcf83c4712f63d2bb","verdict":"holds","quote":"stunning and damaging it and units close to it.","reason_zh":"说明明确保留了对目标及其附近单位的眩晕效果。"},
+        {"review_id":"3c76d81c1ee61eadd866","verdict":"holds","quote":"Dragon Knight smites an enemy unit with his shield","reason_zh":"技能以一个敌方单位为主目标，随后波及其附近单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dragon_knight_elder_dragon_form",
+      "rows": [
+        {"review_id":"6e6a64d618f4d36a4609","verdict":"holds","quote":"Level 2 Red : Grants splash damage to the dragon's attacks.","reason_zh":"基础技能达到二级后，一次龙形态攻击可以通过溅射伤害多个敌人。"},
+        {"review_id":"audit:dragon_knight_elder_dragon_form:attack_modifier:base","verdict":"holds","quote":"Level 3 Blue : Grants a debuff immunity piercing movement and attack frost slow on attack.","reason_zh":"三级蓝龙的普通攻击仍附带冰霜减速，符合攻击特效定义。"},
+        {"review_id":"audit:dragon_knight_elder_dragon_form:attack_slow:base","verdict":"holds","quote":"movement and attack frost slow on attack.","reason_zh":"三级蓝龙的冰霜攻击仍会降低目标的攻击速度。"},
+        {"review_id":"cb5bb3a2643bdd4bf2b7","verdict":"holds","quote":"Level 2 Red : Grants splash damage to the dragon's attacks.","reason_zh":"二级红龙仍赋予普通攻击溅射伤害。"},
+        {"review_id":"be712c59471918e24e3c","verdict":"holds","quote":"a debuff immunity piercing movement and attack frost slow on attack.","reason_zh":"无视减益免疫是冰霜攻击的性质，基础变身没有赋予龙骑士自身减益免疫。"},
+        {"review_id":"89bb7abdaa5801717a6b","verdict":"holds","quote":"gaining bonus movement speed","reason_zh":"变身仍为龙骑士自身提供额外移动速度。"},
+        {"review_id":"audit:dragon_knight_elder_dragon_form:pierces_debuff_immunity:base","verdict":"holds","quote":"Level 3 Blue : Grants a debuff immunity piercing movement and attack frost slow on attack.","reason_zh":"说明明确三级蓝龙攻击附带的移速和攻速减慢均能无视减益免疫。"},
+        {"review_id":"e6c313e5e1fb7a71811b","verdict":"holds","quote":"movement and attack frost slow on attack.","reason_zh":"三级蓝龙的冰霜攻击仍会降低目标的移动速度。"},
+        {"review_id":"audit:dragon_knight_elder_dragon_form:terrain_walk:scepter","verdict":"holds","quote":"Adds a Level 4 Black Dragon that has free pathing","reason_zh":"A杖提供的四级黑龙仍具有自由通行能力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dragon_knight_wyrms_wrath",
+      "rows": [
+        {"review_id":"3a142489218dfc0c5358","verdict":"holds","quote":"improves Dragon Knight's abilities and items to have increased AoE and causes his attacks to deal additional magic damage to enemy units.","reason_zh":"范围加成作用于技能和物品，说明没有赋予普攻附加伤害同时波及多个目标的效果。"},
+        {"review_id":"audit:dragon_knight_wyrms_wrath:attack_modifier:base","verdict":"holds","quote":"causes his attacks to deal additional magic damage to enemy units.","reason_zh":"普通攻击仍对敌方单位附加魔法伤害。"},
+        {"review_id":"3e8f1af570bf9be7696d","verdict":"unclear","quote":"bonus_aoe.base: [30,60,90,120]→[40,60,80,100]","reason_zh":"所列变更只给出了作用范围加成，没有提供可独立核实破坏判定的IsBreakable字段值。"},
+        {"review_id":"2d41eccbb5b247802970","verdict":"holds","quote":"causes his attacks to deal additional magic damage to enemy units.","reason_zh":"攻击附加魔法伤害，说明没有降低目标魔抗或提高其所受魔法伤害的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "drow_ranger_frost_arrows",
+      "rows": [
+        {"review_id":"6a8edc92616f80fb6bf5","verdict":"holds","quote":"Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.","reason_zh":"基础箭矢对攻击目标附加伤害，死亡时造成范围爆发的效果列在A杖升级中。"},
+        {"review_id":"d727d9ad797136859ada","verdict":"holds","quote":"If an enemy dies with Hypothermia stacks, they burst and deal damage per stack and slow in an area around it.","reason_zh":"A杖仍使带层数的敌人死亡时对周围造成范围伤害，每层爆发伤害由60升至70。"},
+        {"review_id":"06f55aebda28adee0544","verdict":"holds","quote":"Adds a freezing effect to Drow's attacks, slowing enemy movement and dealing bonus damage.","reason_zh":"基础攻击仍附带移速减慢和额外伤害。"},
+        {"review_id":"audit:drow_ranger_frost_arrows:attack_modifier:scepter","verdict":"holds","quote":"Frost Arrows now apply a Hypothermia stack to enemies","reason_zh":"A杖霜冻之箭仍可在命中敌人时施加低温层数，新上限为7层。"},
+        {"review_id":"6be4e658b103b050ae67","verdict":"holds","quote":"shard_regen_reduction_pct_per_stack.scepter: [10]→[13]","reason_zh":"A杖每层削减的生命恢复由10%升至13%，减疗仍然生效。"},
+        {"review_id":"364196fb532d1d8ea50f","verdict":"holds","quote":"slowing enemy movement and dealing bonus damage.","reason_zh":"基础霜冻之箭仍降低敌人的移动速度。"},
+        {"review_id":"99f1f8721d7cb7a33a43","verdict":"holds","quote":"they burst and deal damage per stack and slow in an area around it.","reason_zh":"A杖仍使带低温层数的敌人死亡时减速其周围敌人。"},
+        {"review_id":"bee5da1b1ff84d191931","verdict":"unclear","quote":"The slow duration is refreshed on successive casts.","reason_zh":"说明提到连续施放并描述了普攻目标受到的效果，但没有明确施放时能否直接选取敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "drow_ranger_marksmanship",
+      "rows": [
+        {"review_id":"audit:drow_ranger_marksmanship:attack_modifier:base","verdict":"holds","quote":"bonus_damage.base: [50,70,90]→[60,75,90]","reason_zh":"射手天赋仍有概率强化箭矢，触发时的额外伤害在各级均大于零。"},
+        {"review_id":"2511252c86193016cc7f","verdict":"unclear","quote":"This ability is disabled if there is an enemy hero within %disable_range% range.","reason_zh":"敌方英雄靠近会禁用技能，但这一条件不能证明技能可被破坏，材料也未给出IsBreakable值。"},
+        {"review_id":"655e436cc731512cf2f5","verdict":"holds","quote":"Drow's experiences in battle grant her a chance to launch arrows with incredible accuracy and effectiveness.","reason_zh":"这里的战斗经验是技能背景描述，实际效果是概率强化箭矢，没有额外金钱或经验收益。"},
+        {"review_id":"b66bc1ee209d0ed5431b","verdict":"holds","quote":"Marksmanship procs have true strike.","reason_zh":"射手天赋触发时的攻击仍然必中。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "drow_ranger_wave_of_silence",
+      "rows": [
+        {"review_id":"43b337c5ee02e95f2e5c","verdict":"holds","quote":"Knockback distance is relative to how close they are to Drow.","reason_zh":"狂风仍会击退敌人，位移距离与敌人距卓尔游侠的远近有关。"},
+        {"review_id":"09c1d4fa5717c67484ac","verdict":"holds","quote":"reveals invisible enemy units.","reason_zh":"狂风使隐身敌人显形，没有赋予单位隐身的效果。"},
+        {"review_id":"043a8932d0a3c333e6f8","verdict":"holds","quote":"reveals invisible enemy units.","reason_zh":"狂风仍可使命中的隐身敌方单位显形。"},
+        {"review_id":"bde5fca96c6e325f6001","verdict":"holds","quote":"Releases a wave that silences and knocks back and reveals invisible enemy units.","reason_zh":"狂风仍会沉默敌人，本次只缩短了技能冷却。"},
+        {"review_id":"74d194627da4b9ab6609","verdict":"holds","quote":"reveals invisible enemy units.","reason_zh":"说明只赋予波及敌人的显形效果，没有赋予持续侦测隐身单位的真视。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_boulder_smash",
+      "rows": [
+        {"review_id":"4247f048ada1fb46640f","verdict":"holds","quote":"The travelling unit or Remnant damages all enemy units it hits.","reason_zh":"被击出的单位或残岩仍可伤害沿途命中的所有敌人。"},
+        {"review_id":"audit:earth_spirit_boulder_smash:displace_other:base","verdict":"holds","quote":"Earth Spirit smashes the target enemy or ally, sending them in the direction he is facing.","reason_zh":"巨石冲击仍可把目标敌人或友军沿大地之灵的面朝方向击出。"},
+        {"review_id":"8603dd22ec8f2ad10087","verdict":"holds","quote":"move_slow.base: [50]→[40]","reason_zh":"残岩命中敌人时的移速减慢由50%降至40%，效果仍然存在。"},
+        {"review_id":"1fe0945420ea91e4bcef","verdict":"holds","quote":"Earth Spirit smashes the target enemy or ally","reason_zh":"巨石冲击可以直接选取敌方单位为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_geomagnetic_grip",
+      "rows": [
+        {"review_id":"0b7c301eed42f6a6e4a2","verdict":"holds","quote":"Pulled Remnants also deal damage to struck enemies.","reason_zh":"一次牵引的残岩仍能伤害途中命中的多个敌人。"},
+        {"review_id":"6c02d8a73b7b7821d9dd","verdict":"holds","quote":"Earth Spirit pulls the target Stone Remnant or Allied Unit.","reason_zh":"基础地磁之握仍可拉动目标友方单位。"},
+        {"review_id":"0178dd52ce9cbd0700d9","verdict":"holds","quote":"Enemies struck by the gripped target will be silenced.","reason_zh":"被牵引目标撞到的敌人仍会受到沉默。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_magnetize",
+      "rows": [
+        {"review_id":"10ec9c5154106e14895f","verdict":"holds","quote":"Magnetizes units in a small nearby area, causing them to take damage for a short duration.","reason_zh":"磁化仍对附近区域内多个单位持续造成伤害，调整后的每秒伤害在各级均大于零。"},
+        {"review_id":"1c99543ccd74dd5c5a5f","verdict":"holds","quote":"If an enemy hero is affected by Geomagnetic Grip or Boulder Smash, all magnetized heroes share the effects.","reason_zh":"磁化本身不直接施加沉默，磁化英雄共享的是地磁之握命中后施加的沉默。"},
+        {"review_id":"7f93a26752faa5b16afa","verdict":"holds","quote":"If an enemy hero is affected by Geomagnetic Grip or Boulder Smash, all magnetized heroes share the effects.","reason_zh":"磁化本身不直接减速，磁化英雄可以共享巨石冲击以残岩命中敌人时施加的减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_rolling_boulder",
+      "rows": [
+        {"review_id":"8936f216ef34d2956070","verdict":"holds","quote":"rolls toward the target location, dealing %damage% + %damage_str%%% STR damage and stunning enemy units.","reason_zh":"一次翻滚仍能伤害其碰撞范围内的多个敌方单位。"},
+        {"review_id":"1abdd5c435a577eb104b","verdict":"holds","quote":"Earth Spirit is untargetable and invulnerable while rolling.","reason_zh":"大地之灵在翻滚期间仍不可被选取且处于无敌状态。"},
+        {"review_id":"audit:earth_spirit_rolling_boulder:self_mobility:base","verdict":"holds","quote":"rolls toward the target location","reason_zh":"大地之灵会主动滚向目标位置，改变自身位置。"},
+        {"review_id":"1fb8b55a1b0d41c02e6d","verdict":"holds","quote":"stunning enemy units.","reason_zh":"翻滚命中敌方单位仍会造成眩晕。"},
+        {"review_id":"audit:earth_spirit_rolling_boulder:terrain_walk:base","verdict":"unclear","quote":"He will stop if he collides with an enemy hero or is stunned.","reason_zh":"说明列出了撞到敌方英雄或受眩晕时会停止，但没有说明能否穿过树木和悬崖等不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earth_spirit_stone_caller",
+      "rows": [
+        {"review_id":"fcf44279ab944ef44d37","verdict":"holds","quote":"Calling a Stone Remnant consumes a charge, which recharge over time.","reason_zh":"基础施放仍消耗一点可恢复的充能，采用固定冷却的是另列的命石效果。"},
+        {"review_id":"e7296373113786c745d3","verdict":"holds","quote":"Stone Remnants have no vision and are invulnerable","reason_zh":"说明仍明确残岩本身处于无敌状态。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earthshaker_echo_slam",
+      "rows": [
+        {"review_id":"ef9051ea93f657552597","verdict":"holds","quote":"Each enemy hit causes an echo to damage nearby units.","reason_zh":"每个被命中的敌人仍产生伤害周围单位的回音，各级回音伤害虽降低但均大于零。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "earthshaker_enchant_totem",
+      "rows": [
+        {"review_id":"audit:earthshaker_enchant_totem:aoe_damage:scepter","verdict":"holds","quote":"Grants Enchant Totem a cleaving attack.","reason_zh":"A杖仍使一次图腾攻击通过分裂伤害多个敌人。"},
+        {"review_id":"6d614cb713be19a24053","verdict":"holds","quote":"scepter_cleave_pct.scepter: [40]→[50]","reason_zh":"A杖分裂比例由40%升至50%，分裂攻击仍然存在。"},
+        {"review_id":"audit:earthshaker_enchant_totem:self_mobility:scepter","verdict":"holds","quote":"causing Earthshaker to jump in the air and land at the target spot","reason_zh":"持有A杖时对地施放仍会使撼地者跳至所选位置。"},
+        {"review_id":"audit:earthshaker_enchant_totem:terrain_walk:scepter","verdict":"unclear","quote":"causing Earthshaker to jump in the air and land at the target spot","reason_zh":"说明确认了跳跃位移，但未交代跳跃能否越过悬崖、树木等不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "elder_titan_ancestral_spirit",
+      "rows": [
+        {"review_id":"audit:elder_titan_ancestral_spirit:aoe_damage:base","verdict":"holds","quote":"damaging any units it passes through.","reason_zh":"同一次施放的游魂可以伤害沿途穿过的多个单位。"},
+        {"review_id":"2a767241f1ea1b41212c","verdict":"holds","quote":"Causes Elder Titan to become debuff immune and gain %immunity_resist%%% magic resistance for %scepter_magic_immune_per_hero% seconds per affected enemy Hero when the spirit returns.","reason_zh":"持有A杖时游魂回归仍会赋予上古巨神减益免疫，时长按受影响的敌方英雄数计算。"},
+        {"review_id":"d20578bf07b75a0be924","verdict":"holds","quote":"When the spirit rejoins the Titan, it grants bonus damage and movement speed for each unit it passed through.","reason_zh":"基础游魂回归时仍按穿过的单位数提高上古巨神的移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "elder_titan_echo_stomp",
+      "rows": [
+        {"review_id":"ad328570f0f382a9fd44","verdict":"holds","quote":"damaging and knocking nearby enemy units unconscious around their locations.","reason_zh":"本体和游魂的践踏都能伤害各自周围的多个敌人。"},
+        {"review_id":"d1dd070eb4befbce3826","verdict":"holds","quote":"CHANNELED - Elder Titan and his Astral Spirit both stomp the ground","reason_zh":"技能说明明确标记回音重踏需要持续施法。"},
+        {"review_id":"audit:elder_titan_echo_stomp:self_mobility:shard","verdict":"holds","quote":"Echo Stomp may be placed on alt-cast to allow Elder Titan to take the place of the Astral Spirit as it completes its stomp.","reason_zh":"持有魔晶并启用替代施法后，上古巨神仍可在践踏完成时移动到游魂的位置。"},
+        {"review_id":"6b59ccbaa0827a7c21b5","verdict":"unclear","quote":"knocking nearby enemy units unconscious","reason_zh":"说明确认敌人会失去意识，但未写明受伤后会醒来，无法完整核实所给睡眠定义。"},
+        {"review_id":"a6938e5efa558f2fa8dd","verdict":"holds","quote":"knocking nearby enemy units unconscious","reason_zh":"重踏的控制描述为使敌人失去意识，材料没有列出另行施加的眩晕效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "elder_titan_momentum",
+      "rows": [
+        {"review_id":"427a30ddda61213a46bb","verdict":"holds","quote":"Elder Titan gains armor equal to a percentage of his bonus movement speed.","reason_zh":"动量根据额外移动速度增加自身护甲，没有削减目标护甲的效果。"},
+        {"review_id":"f912683de1445e6dd9aa","verdict":"unclear","quote":"Momentum does not reduce Elder Titan's Armor if he is slowed below his base movement speed.","reason_zh":"该说明只涉及减速时的护甲计算，材料未提供IsBreakable值，无法独立确认不可被破坏的判断。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
