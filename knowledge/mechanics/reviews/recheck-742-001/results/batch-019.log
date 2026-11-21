@@ -1,0 +1,1173 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6f1-5b68-7652-a381-8b097a686008
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "skywrath_mage_arcane_bolt", "name_zh": "天怒法师·奥法鹰隼", "category": "2_纯数值", "text_741f": {"desc_loc": "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.", "notes_loc": ["The projectile moves very slowly (500 ms), providing 325 vision around it. Upon impact, it will reveal the target area for 3.34 seconds.", "Arcane Bolt cannot be disjointed."], "shard_loc": "When Skywrath Mage casts Arcane Bolt, %total_bolt_count% bolts are created, one aimed at the original target, and two others aimed at random enemies within %extra_bolt_search_radius% range of the original target. Heroes will take priority."}, "text_742": {"desc_loc": "Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.", "notes_loc": ["The projectile moves very slowly (500 ms), providing 325 vision around it. Upon impact, it will reveal the target area for 3.34 seconds.", "Arcane Bolt cannot be disjointed."], "shard_loc": "When Skywrath Mage casts Arcane Bolt, %total_bolt_count% bolts are created, one aimed at the original target, and two others aimed at random enemies within %extra_bolt_search_radius% range of the original target. Heroes will take priority."}, "changed_fields": [{"field": "secondary_bolt_interval", "old": null, "new": {"base": [1], "scepter": null, "shard": null}}], "rows": [{"review_id": "41e5ed3a7e82aa7acf42", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:skywrath_mage_arcane_bolt:aoe_damage:shard", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "f0867b76fc2992bf9e61", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "b12d46f6be780ef0728d", "mechanism": "reveal", "mechanism_zh": "显形", "definition": "使隐身单位显形，不等于持续真视", "condition": "base", "decision": "reject"}, {"review_id": "a75942ff7a7d96c46b82", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "skywrath_mage_concussive_shot", "name_zh": "天怒法师·震荡光弹", "category": "2_纯数值", "text_741f": {"desc_loc": "Skywrath Mage sets off a long range shot that hits the closest hero within a long range. Upon impact, it deals damage and slows in an area of effect.", "notes_loc": ["If no enemy heroes are in range or they are in fog, Concussive Shot targets the nearest enemy creep.", "Damages creeps around the impact area.", "Provides 400 vision around the projectile, and reveals the target area for 3.34 seconds upon impact."], "scepter_loc": "When Skywrath Mage casts Concussive Shot, a different random target within %scepter_radius% range of the original target will be hit with the same ability. Heroes will take priority."}, "text_742": {"desc_loc": "Skywrath Mage sets off a long range shot that hits the closest hero within a long range. Upon impact, it deals damage and slows in an area of effect.", "notes_loc": ["If no enemy heroes are in range or they are in fog, Concussive Shot targets the nearest enemy creep.", "Damages creeps around the impact area.", "Provides 400 vision around the projectile, and reveals the target area for 3.34 seconds upon impact."], "scepter_loc": "When Skywrath Mage casts Concussive Shot, a different random target within %scepter_radius% range of the original target will be hit with the same ability. Heroes will take priority."}, "changed_fields": [], "rows": [{"review_id": "64b319e5512b1756f74e", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "d1c70e0d1c626d30c3f2", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "cdd4d4dd088276752ac9", "mechanism": "reveal", "mechanism_zh": "显形", "definition": "使隐身单位显形，不等于持续真视", "condition": "base", "decision": "reject"}, {"review_id": "8e00fcf5de33c634c06a", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "skywrath_mage_mystic_flare", "name_zh": "天怒法师·神秘之耀", "category": "2_纯数值", "text_741f": {"desc_loc": "Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over %duration% seconds.", "notes_loc": ["Mystic Flare only affects Heroes. Mystic Flare does not damage creep heroes.", "Mystic Flare will damage enemy creeps if no enemy heroes are present.", "Mystic Flare will immediately destroy illusions."], "scepter_loc": "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within %scepter_radius% range of the original target. Heroes will take priority."}, "text_742": {"desc_loc": "Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over %duration% seconds.", "notes_loc": ["Mystic Flare only affects Heroes. Mystic Flare does not damage creep heroes.", "Mystic Flare will damage enemy creeps if no enemy heroes are present.", "Mystic Flare will immediately destroy illusions."], "scepter_loc": "When Skywrath Mage casts Mystic Flare, another Mystic Flare will be created on the position of a different random target enemy within %scepter_radius% range of the original target. Heroes will take priority."}, "changed_fields": [{"field": "damage", "old": {"base": [800, 1200, 1600], "scepter": null, "shard": null}, "new": {"base": [800, 1125, 1450], "scepter": null, "shard": null}}], "rows": [{"review_id": "77e555a8e817461b05e5", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:skywrath_mage_mystic_flare:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}]}, {"subject": "skywrath_mage_shield_of_the_scion", "name_zh": "天怒法师·天裔之盾", "category": "3_说明文字", "text_741f": {"desc_loc": "Every time Skywrath Mage deals magical damage to an enemy hero with his abilities, he gains a small magic damage barrier. Each buff stacks independently."}, "text_742": {"desc_loc": "Every time Skywrath Mage deals magical damage to an enemy hero with his abilities, he gains bonus intelligence and a small magic damage barrier. Each buff stacks independently."}, "changed_fields": [{"field": "barrier_duration", "old": {"base": [12], "scepter": null, "shard": null}, "new": {"base": [10], "scepter": null, "shard": null}}, {"field": "bonus_intelligence", "old": null, "new": {"base": [1], "scepter": null, "shard": null}}], "rows": [{"review_id": "3af860a2bf46a400618a", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "16cc693e6676fafb99c4", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "base", "decision": "accept"}]}, {"subject": "slardar_bash", "name_zh": "斯拉达·深海重击", "category": "2_纯数值", "text_741f": {"desc_loc": "After %attack_count% attacks, your next attack will bash the target.", "notes_loc": ["Does not stack with Skull Basher."]}, "text_742": {"desc_loc": "After %attack_count% attacks, your next attack will bash the target.", "notes_loc": ["Does not stack with Skull Basher."]}, "changed_fields": [], "rows": [{"review_id": "adc363e86b409f76339f", "mechanism": "bash", "mechanism_zh": "重击", "definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算", "condition": "base", "decision": "accept"}, {"review_id": "665991b7df5dabd52000", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "audit:slardar_bash:stun:base", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}]}, {"subject": "slardar_slithereen_crush", "name_zh": "斯拉达·鱼人碎击", "category": "2_纯数值", "text_741f": {"desc_loc": "Slams the ground, leaving a puddle of water, and stunning and damaging nearby enemy units. After the stun, the affected units are slowed.", "scepter_loc": "Increases Slithereen Crush puddle radius and duration.", "shard_loc": "Slithereen Crush now applies Corrosive Haze for a short time to units affected."}, "text_742": {"desc_loc": "Slams the ground, leaving a puddle of water, and stunning and damaging nearby enemy units. After the stun, the affected units are slowed.", "scepter_loc": "Increases Slithereen Crush puddle radius and duration.", "shard_loc": "Slithereen Crush now applies Corrosive Haze for a short time to units affected."}, "changed_fields": [], "rows": [{"review_id": "9c0b6437d69ad8cc5dde", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "b2c40997a7827d555922", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "e11b107c7149582c59ab", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}]}, {"subject": "slark_shadow_dance", "name_zh": "斯拉克·暗影之舞", "category": "2_纯数值", "text_741f": {"desc_loc": "When not visible to the enemy team, Slark passively gains bonus movement speed and health regeneration. If Slark is damaged by a neutral unit, the passive movement and health regeneration bonuses are lost for %neutral_disable% seconds. When activated, Slark hides himself in a cloud of shadows, becoming immune to detection. Attacking, casting spells, and using items will not reveal Slark, but enemies can see the cloud itself."}, "text_742": {"desc_loc": "When not visible to the enemy team, Slark passively gains bonus movement speed and health regeneration. If Slark is damaged by a neutral unit, the passive movement and health regeneration bonuses are lost for %neutral_disable% seconds. When activated, Slark hides himself in a cloud of shadows, becoming immune to detection. Attacking, casting spells, and using items will not reveal Slark, but enemies can see the cloud itself."}, "changed_fields": [], "rows": [{"review_id": "735c4a835d3b4b966d16", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "9be4a5a3df96daf08bd8", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "audit:slark_shadow_dance:invisibility:base", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "accept"}, {"review_id": "f6cf8025aead67d87bdd", "mechanism": "reveal", "mechanism_zh": "显形", "definition": "使隐身单位显形，不等于持续真视", "condition": "base", "decision": "reject"}]}, {"subject": "smoke_of_deceit", "name_zh": "诡计之雾", "category": "2_纯数值", "text_741f": {"desc_loc": "Use: Disguise Turns the caster and all allied player-controlled targets in a %application_radius% radius invisible, and grants %bonus_movement_speed%%% bonus movement speed for %duration% seconds. While the caster is still disguised, any allies that come within %secondary_application_radius% range of them will also get the buff applied to them. Each smoke can only be applied once to allies. Attacking or moving within %visibility_radius% range of an enemy hero or tower, will break the invisibility. Disguise grants invisibility that is immune to True Sight. Smoke of Deceit is usable from the backpack and has no cooldown when swapped into the main inventory."}, "text_742": {"desc_loc": "Use: Disguise Turns the caster and all allied player-controlled targets in a %application_radius% radius invisible, and grants %bonus_movement_speed%%% bonus movement speed for %duration% seconds. While the caster is still disguised, any allies that come within %secondary_application_radius% range of them will also get the buff applied to them. Each smoke can only be applied once to allies. Attacking or moving within %visibility_radius% range of an enemy hero or tower, will break the invisibility. Disguise grants invisibility that is immune to True Sight. Smoke of Deceit is usable from the backpack and has no cooldown when swapped into the main inventory."}, "changed_fields": [{"field": "bonus_movement_speed", "old": {"base": [15], "scepter": null, "shard": null}, "new": {"base": [25], "scepter": null, "shard": null}}, {"field": "duration", "old": {"base": [45], "scepter": null, "shard": null}, "new": {"base": [50], "scepter": null, "shard": null}}], "rows": [{"review_id": "2c0ffeb3a4bbd6e1c017", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "item", "decision": "reject"}, {"review_id": "433db0e0de6a675f18ee", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}, {"review_id": "adbfdd2c755c69bf84d1", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "item", "decision": "accept"}]}, {"subject": "snapfire_boomstick", "name_zh": "电炎绝手·猎枪", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Snapfire deals more damage to nearby enemies."}, "text_742": {"desc_loc": "Snapfire deals more damage to nearby enemies."}, "changed_fields": [{"field": "behavior", "old": "66", "new": "562949953421379"}], "rows": [{"review_id": "c2d8f4e79c8ed22fb9e3", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "cb8daaafa348f6991371", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}]}, {"subject": "snapfire_lil_shredder", "name_zh": "电炎绝手·霹雳铁手", "category": "2_纯数值", "text_741f": {"desc_loc": "Snapfire heats up her mounted turret to rapidly fire %buffed_attacks% attacks dealing fixed damage plus a percentage of her attack damage. Each attack reduces the enemy's armor. Provides bonus attack range for the duration.", "notes_loc": ["Sets base attack time to %base_attack_time%s for the duration.", "Attack modifiers have a chance to proc on Lil' Shredder attacks."]}, "text_742": {"desc_loc": "Snapfire heats up her mounted turret to rapidly fire %buffed_attacks% attacks dealing fixed damage plus a percentage of her attack damage. Each attack reduces the enemy's armor. Provides bonus attack range for the duration.", "notes_loc": ["Sets base attack time to %base_attack_time%s for the duration.", "Attack modifiers have a chance to proc on Lil' Shredder attacks."]}, "changed_fields": [{"field": "cooldowns", "old": [24, 20, 16, 12], "new": [21, 18, 15, 12]}, {"field": "AbilityCooldown", "old": {"base": [24, 20, 16, 12], "scepter": null, "shard": null}, "new": {"base": [21, 18, 15, 12], "scepter": null, "shard": null}}], "rows": [{"review_id": "2466462601432691a305", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "d2e7a2505b322b072f33", "mechanism": "armor_reduction", "mechanism_zh": "减护甲", "definition": "降低目标护甲", "condition": "base", "decision": "accept"}, {"review_id": "071b44d49a7d1b22263b", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}]}, {"subject": "snapfire_mortimer_kisses", "name_zh": "电炎绝手·蜥蜴绝吻", "category": "2_纯数值", "text_741f": {"desc_loc": "Snapfire's friend launches a barrage of firespit globs over %duration_tooltip% seconds. Globs cause impact damage and create pools of firespit, which slow and apply damage over time. Snapfire has a reduced turn rate for the duration and a minimum launch range of %min_range%. Each glob can be targeted with a right click.", "notes_loc": ["Can be cancelled by pressing Stop, Hold Position, or using another ability.", "Has a minimum travel time of %min_lob_travel_time% and maximum travel time of %max_lob_travel_time%."]}, "text_742": {"desc_loc": "Snapfire's friend launches a barrage of firespit globs over %duration_tooltip% seconds. Globs cause impact damage and create pools of firespit, which slow and apply damage over time. Snapfire has a reduced turn rate for the duration and a minimum launch range of %min_range%. Each glob can be targeted with a right click.", "notes_loc": ["Can be cancelled by pressing Stop, Hold Position, or using another ability.", "Has a minimum travel time of %min_lob_travel_time% and maximum travel time of %max_lob_travel_time%."]}, "changed_fields": [{"field": "damage_per_impact", "old": {"base": [170, 250, 330], "scepter": null, "shard": null}, "new": {"base": [180, 250, 320], "scepter": null, "shard": null}}], "rows": [{"review_id": "e957727cd0806e9dce5d", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:snapfire_mortimer_kisses:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "7790c0810e588427d9b9", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "snapfire_scatterblast", "name_zh": "电炎绝手·电光石火", "category": "2_纯数值", "text_741f": {"desc_loc": "Snapfire unloads with a wide blast that damages and slows enemies in a cone. Damage is increased by %point_blank_dmg_bonus_pct%%% and Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.", "facets_loc": ["Scatterblast is narrower and longer. Bonus damage and slow when enemies are not in point blank range."]}, "text_742": {"desc_loc": "Snapfire unloads with a wide blast that damages and slows enemies in a cone. Damage is increased by %point_blank_dmg_bonus_pct%%% and Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.", "facets_loc": ["Scatterblast is narrower and longer. Bonus damage and slow when enemies are not in point blank range."]}, "changed_fields": [{"field": "knockback_duration", "old": null, "new": {"base": [], "scepter": null, "shard": null}}], "rows": [{"review_id": "7238edbd635ac22dc13f", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:snapfire_scatterblast:attack_slow:base", "mechanism": "attack_slow", "mechanism_zh": "减攻速", "definition": "降低敌方单位的攻击速度", "condition": "base", "decision": "accept"}, {"review_id": "8f591af15e5a440a59ca", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "sniper_assassinate", "name_zh": "狙击手·暗杀", "category": "3_说明文字", "text_741f": {"desc_loc": "Sniper locks onto a target enemy unit and, after a short aiming duration, fires a devastating shot that deals Sniper's attack damage plus bonus damage at long range and mini-stuns the target. Whenever Sniper kills an enemy hero, Assassinate is refreshed.", "notes_loc": ["Crosshair effect is only visible to allies.", "Invisibility doesn't disjoint the projectile."], "scepter_loc": "Causes Assassinate to fire quicker and stun the enemy target."}, "text_742": {"desc_loc": "Sniper locks onto a target enemy unit and, after a short aiming duration, fires a devastating shot that deals Sniper's attack damage with bonus Item Potency and bonus damage at long range and mini-stuns the target. Whenever Sniper kills an enemy hero, Assassinate is refreshed.", "notes_loc": ["Crosshair effect is only visible to allies.", "Invisibility doesn't disjoint the projectile."], "scepter_loc": "Causes Assassinate to fire quicker and stun the enemy target."}, "changed_fields": [{"field": "bonus_potency", "old": null, "new": {"base": [20, 35, 50], "scepter": null, "shard": null}}], "rows": [{"review_id": "56743c388d4622c2fc87", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:sniper_assassinate:cooldown_reset:base", "mechanism": "cooldown_reset", "mechanism_zh": "刷新冷却", "definition": "立刻重置冷却", "condition": "base", "decision": "accept"}, {"review_id": "a362b7ff19a0d3af24ef", "mechanism": "projectile_dodge", "mechanism_zh": "躲避弹道", "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算", "condition": "base", "decision": "reject"}, {"review_id": "50539adb8283899c7de7", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "scepter_upgrade", "decision": "reject"}, {"review_id": "8c04115c8fff09d2eefd", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "a6ce82d782dead1a41ad", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "sniper_keen_scope", "name_zh": "狙击手·基恩瞄准镜", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Sniper’s attacks deal bonus damage for every %bonus_damage_distance% units of distance Sniper is from the target."}, "text_742": {"desc_loc": "Sniper’s attacks deal bonus damage for every %bonus_damage_distance% units of distance Sniper is from the target."}, "changed_fields": [{"field": "behavior", "old": "66", "new": "562949953421379"}], "rows": [{"review_id": "audit:sniper_keen_scope:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "34b88851a18505981058", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}]}, {"subject": "sniper_shrapnel", "name_zh": "狙击手·榴霰弹", "category": "2_纯数值", "text_741f": {"desc_loc": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every %abilitychargerestoretime% seconds.", "notes_loc": ["Damage is dealt 11 times, immediately at spell effect then every second.", "Does not damage buildings.", "Provides vision in the targeted area."], "facets_loc": ["Shrapnel slow and damage are increased, but duration is decreased."]}, "text_742": {"desc_loc": "Consumes a charge to launch a ball of shrapnel that showers the target area in explosive pellets. Enemies are subject to damage and slowed movement. Reveals the targeted area. Shrapnel charges restore every %abilitychargerestoretime% seconds.", "notes_loc": ["Damage is dealt 11 times, immediately at spell effect then every second.", "Does not damage buildings.", "Provides vision in the targeted area."], "facets_loc": ["Shrapnel slow and damage are increased, but duration is decreased."]}, "changed_fields": [{"field": "slow_movement_speed", "old": {"base": [-12, -18, -24, -30], "scepter": null, "shard": null}, "new": {"base": [-10, -15, -20, -25], "scepter": null, "shard": null}}], "rows": [{"review_id": "cd00531b467ea6ac5807", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "09735657453456831129", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "base", "decision": "accept"}, {"review_id": "6b5449a061c3306a9c80", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "audit:sniper_shrapnel:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "dbcf7b41e9a1e5b721ef", "mechanism": "reveal", "mechanism_zh": "显形", "definition": "使隐身单位显形，不等于持续真视", "condition": "base", "decision": "reject"}, {"review_id": "3de4bd126928a1c7057b", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "sniper_take_aim", "name_zh": "狙击手·瞄准", "category": "2_纯数值", "text_741f": {"desc_loc": "Passively increases Sniper's attack range by %passive_attack_range_bonus%. On cast, Sniper gains increased vision, Headshot chance, and attack range. Slows you by %slow%%% for the duration and restricts your vision to a frontal cone."}, "text_742": {"desc_loc": "Passively increases Sniper's attack range by %passive_attack_range_bonus%. On cast, Sniper gains increased vision, Headshot chance, and attack range. Slows you by %slow%%% for the duration and restricts your vision to a frontal cone."}, "changed_fields": [{"field": "cooldowns", "old": [20, 18, 16, 14], "new": [22, 20, 18, 16]}, {"field": "AbilityCooldown", "old": {"base": [20, 18, 16, 14], "scepter": null, "shard": null}, "new": {"base": [22, 20, 18, 16], "scepter": null, "shard": null}}], "rows": [{"review_id": "232a0dd704ee80c73bf3", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "2673db14fe23a1fac9cc", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "reject"}]}, {"subject": "solar_crest", "name_zh": "炎阳纹章", "category": "3_说明文字", "text_741f": {"desc_loc": "Active: Shine When cast on an ally, grants them %target_armor% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed and a %absorb_amount% physical damage barrier. Does not grant bonus armor, movement or attack speed if used on self. Duration: %duration%", "notes_loc": ["Shares cooldown with Pavise."]}, "text_742": {"desc_loc": "Active: Shine When cast on an ally, grants them %target_armor% armor, %target_attack_speed% attack speed, %target_movement_speed%%% movement speed and a %absorb_amount% physical damage barrier. Bonus armor, movement and attack speed have %self_efficacy%%% effectiveness when cast on self. Duration: %duration%", "notes_loc": ["Shares cooldown with Pavise."]}, "changed_fields": [{"field": "self_efficacy", "old": null, "new": {"base": [50], "scepter": null, "shard": null}}], "rows": [{"review_id": "add7c06a75f6759f1fa9", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "item", "decision": "accept"}, {"review_id": "332008ec7acecb1ef286", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}]}, {"subject": "spectre_desolate", "name_zh": "幽鬼·荒芜", "category": "2_纯数值", "text_741f": {"desc_loc": "Spectre and her illusions deal bonus Pure damage if attacking an enemy that does not have any allied units within a %radius% radius around them.", "notes_loc": ["Damage is dealt before Spectre's attack.", "Spectre's illusions also have Desolate."], "facets_loc": ["Spectre deals %bonus_damage_multiplier_tooltip%x damage with Desolate. Spectre's illusions no longer have Desolate."]}, "text_742": {"desc_loc": "Spectre and her illusions deal bonus Pure damage if attacking an enemy that does not have any allied units within a %radius% radius around them.", "notes_loc": ["Damage is dealt before Spectre's attack.", "Spectre's illusions also have Desolate."], "facets_loc": ["Spectre deals %bonus_damage_multiplier_tooltip%x damage with Desolate. Spectre's illusions no longer have Desolate."]}, "changed_fields": [], "rows": [{"review_id": "c9bc6d026367d5e3e462", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:spectre_desolate:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "b81724025130a3aa2d0b", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}]}, {"subject": "spectre_haunt", "name_zh": "幽鬼·鬼影重重", "category": "2_纯数值", "text_741f": {"desc_loc": "Creates a spectral nemesis to haunt all enemy Heroes. Haunt illusions are uncontrollable, take extra damage, and deal less damage than Spectre herself. They ignore terrain. The Reality sub-ability may be used to teleport to the illusion, destroying it.", "scepter_loc": "The first time Spectre uses Reality on a Haunt illusion, enemies in a %fear_aoe% area around the target are Feared away from Spectre for %fear_duration%s and have their movement speed slowed by %fear_movespeed_slow%%%. Reduces cooldown by %scepter_cooldown_reduction_tooltip%s."}, "text_742": {"desc_loc": "Creates a spectral nemesis to haunt all enemy Heroes. Haunt illusions are uncontrollable, take extra damage, and deal less damage than Spectre herself. They ignore terrain. The Reality sub-ability may be used to teleport to the illusion, destroying it.", "scepter_loc": "The first time Spectre uses Reality on a Haunt illusion, enemies in a %fear_aoe% area around the target are Feared away from Spectre for %fear_duration%s and have their movement speed slowed by %fear_movespeed_slow%%%. Reduces cooldown by %scepter_cooldown_reduction_tooltip%s."}, "changed_fields": [{"field": "illusion_effectiveness", "old": null, "new": {"base": [40], "scepter": null, "shard": null}}], "rows": [{"review_id": "e01b9b2edfa9f9f9bd99", "mechanism": "fear", "mechanism_zh": "恐惧", "definition": "目标被迫逃跑或远离某处", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "t5:spectre_haunt:illusions", "mechanism": "illusions", "mechanism_zh": "幻象", "definition": "制造自身或他人的幻象", "condition": "base", "decision": "accept"}, {"review_id": "c7af5e793f6e32b95428", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "reject"}, {"review_id": "4f742b105bbbdb4d9923", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "accept"}, {"review_id": "c550f034f37e3fead004", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "audit:spectre_haunt:terrain_walk:base", "mechanism": "terrain_walk", "mechanism_zh": "无视地形", "definition": "移动时不受悬崖等不可通行地形阻挡，也能穿过树木", "condition": "base", "decision": "accept"}]}, {"subject": "spectre_shadow_step", "name_zh": "幽鬼·如影随形", "category": "2_纯数值", "text_741f": {"desc_loc": "Sends an uncontrollable illusion at a target that follows and attacks the target. The Reality sub-ability may be used to teleport to the illusion, destroying it."}, "text_742": {"desc_loc": "Sends an uncontrollable illusion at a target that follows and attacks the target. The Reality sub-ability may be used to teleport to the illusion, destroying it."}, "changed_fields": [{"field": "illusion_effectiveness", "old": null, "new": {"base": [25], "scepter": null, "shard": null}}], "rows": [{"review_id": "t5:spectre_shadow_step:illusions", "mechanism": "illusions", "mechanism_zh": "幻象", "definition": "制造自身或他人的幻象", "condition": "base", "decision": "accept"}, {"review_id": "41750d86e3c8c5bad939", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "accept"}, {"review_id": "5e350ddf3af4eee106ba", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "skywrath_mage_arcane_bolt",
+      "rows": [
+        {
+          "review_id": "41e5ed3a7e82aa7acf42",
+          "verdict": "holds",
+          "quote": "dealing damage to an enemy unit based on Skywrath Mage's intelligence.",
+          "reason_zh": "基础说明仍只指定一个敌方单位，新增的弹体间隔字段没有给基础技能增加目标。"
+        },
+        {
+          "review_id": "audit:skywrath_mage_arcane_bolt:aoe_damage:shard",
+          "verdict": "holds",
+          "quote": "one aimed at the original target, and two others aimed at random enemies within %extra_bolt_search_radius% range of the original target.",
+          "reason_zh": "装备魔晶时，一次施法可用额外两枚弹体伤害原目标附近的其他敌人。"
+        },
+        {
+          "review_id": "f0867b76fc2992bf9e61",
+          "verdict": "holds",
+          "quote": "providing 325 vision around it. Upon impact, it will reveal the target area for 3.34 seconds.",
+          "reason_zh": "弹体飞行时提供周围325范围的视野，命中后还提供目标区域3.34秒的视野。"
+        },
+        {
+          "review_id": "b12d46f6be780ef0728d",
+          "verdict": "holds",
+          "quote": "Upon impact, it will reveal the target area for 3.34 seconds.",
+          "reason_zh": "原文中 reveal 的对象是目标区域，只能据此认定提供区域视野。"
+        },
+        {
+          "review_id": "a75942ff7a7d96c46b82",
+          "verdict": "holds",
+          "quote": "dealing damage to an enemy unit based on Skywrath Mage's intelligence.",
+          "reason_zh": "施法时仍以一个敌方单位为目标发射弹体。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skywrath_mage_concussive_shot",
+      "rows": [
+        {
+          "review_id": "64b319e5512b1756f74e",
+          "verdict": "holds",
+          "quote": "Upon impact, it deals damage and slows in an area of effect.",
+          "reason_zh": "光弹命中后会对落点范围内的敌人造成伤害。"
+        },
+        {
+          "review_id": "d1c70e0d1c626d30c3f2",
+          "verdict": "holds",
+          "quote": "Provides 400 vision around the projectile, and reveals the target area for 3.34 seconds upon impact.",
+          "reason_zh": "光弹飞行时提供周围400范围的视野，命中后提供目标区域3.34秒的视野。"
+        },
+        {
+          "review_id": "cdd4d4dd088276752ac9",
+          "verdict": "holds",
+          "quote": "reveals the target area for 3.34 seconds upon impact.",
+          "reason_zh": "说明只写明命中后获得区域视野，没有使隐身单位显形的效果。"
+        },
+        {
+          "review_id": "8e00fcf5de33c634c06a",
+          "verdict": "holds",
+          "quote": "Upon impact, it deals damage and slows in an area of effect.",
+          "reason_zh": "光弹命中后仍会降低范围内敌人的移动速度。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skywrath_mage_mystic_flare",
+      "rows": [
+        {
+          "review_id": "77e555a8e817461b05e5",
+          "verdict": "holds",
+          "quote": "Deals massive damage distributed evenly among any Heroes in the area over %duration% seconds.",
+          "reason_zh": "二、三级总伤害下调后，区域内的多个英雄仍会分摊伤害。"
+        },
+        {
+          "review_id": "audit:skywrath_mage_mystic_flare:ground_zone:base",
+          "verdict": "holds",
+          "quote": "distributed evenly among any Heroes in the area over %duration% seconds.",
+          "reason_zh": "法术区域在持续时间内对其中的英雄造成伤害，符合场地魔法定义。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skywrath_mage_shield_of_the_scion",
+      "rows": [
+        {
+          "review_id": "3af860a2bf46a400618a",
+          "verdict": "holds",
+          "quote": "barrier_duration: 12→10",
+          "reason_zh": "本次字段变更仅涉及护盾时长和额外智力，决定可破坏性的 IsBreakable 未变，沿用原判。"
+        },
+        {
+          "review_id": "16cc693e6676fafb99c4",
+          "verdict": "holds",
+          "quote": "he gains bonus intelligence and a small magic damage barrier.",
+          "reason_zh": "技能对敌方英雄造成魔法伤害时仍能获得魔法伤害护盾，护盾时长由12秒缩至10秒。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "slardar_bash",
+      "rows": [
+        {
+          "review_id": "adc363e86b409f76339f",
+          "verdict": "holds",
+          "quote": "After %attack_count% attacks, your next attack will bash the target.",
+          "reason_zh": "达到指定攻击次数后，下一次攻击仍会触发重击。"
+        },
+        {
+          "review_id": "665991b7df5dabd52000",
+          "verdict": "holds",
+          "quote": "After %attack_count% attacks, your next attack will bash the target.",
+          "reason_zh": "说明沿用旧版且字段变更清单为空，可被破坏的原判按 IsBreakable 未变保留。"
+        },
+        {
+          "review_id": "audit:slardar_bash:stun:base",
+          "verdict": "holds",
+          "quote": "your next attack will bash the target.",
+          "reason_zh": "按给定机制定义，触发重击的那次攻击会眩晕目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "slardar_slithereen_crush",
+      "rows": [
+        {
+          "review_id": "9c0b6437d69ad8cc5dde",
+          "verdict": "holds",
+          "quote": "stunning and damaging nearby enemy units.",
+          "reason_zh": "一次施放可对周围多个敌方单位造成伤害。"
+        },
+        {
+          "review_id": "b2c40997a7827d555922",
+          "verdict": "holds",
+          "quote": "After the stun, the affected units are slowed.",
+          "reason_zh": "受影响的敌人在眩晕结束后仍会被减速。"
+        },
+        {
+          "review_id": "e11b107c7149582c59ab",
+          "verdict": "holds",
+          "quote": "stunning and damaging nearby enemy units.",
+          "reason_zh": "基础技能仍会眩晕附近的敌方单位。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "slark_shadow_dance",
+      "rows": [
+        {
+          "review_id": "735c4a835d3b4b966d16",
+          "verdict": "holds",
+          "quote": "When not visible to the enemy team, Slark passively gains bonus movement speed and health regeneration.",
+          "reason_zh": "敌方看不见斯拉克时，他仍可获得被动移速加成，受到中立单位伤害会暂时失去加成。"
+        },
+        {
+          "review_id": "9be4a5a3df96daf08bd8",
+          "verdict": "holds",
+          "quote": "When not visible to the enemy team, Slark passively gains bonus movement speed and health regeneration.",
+          "reason_zh": "敌方看不见斯拉克时，他仍可获得额外生命恢复，受到中立单位伤害会暂时失去加成。"
+        },
+        {
+          "review_id": "audit:slark_shadow_dance:invisibility:base",
+          "verdict": "holds",
+          "quote": "When activated, Slark hides himself in a cloud of shadows, becoming immune to detection.",
+          "reason_zh": "主动施放后，斯拉克会隐去身形并免于侦测。"
+        },
+        {
+          "review_id": "f6cf8025aead67d87bdd",
+          "verdict": "holds",
+          "quote": "Attacking, casting spells, and using items will not reveal Slark, but enemies can see the cloud itself.",
+          "reason_zh": "敌人能看见云雾，斯拉克在其中攻击、施法或使用物品都不会显形。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "smoke_of_deceit",
+      "rows": [
+        {
+          "review_id": "2c0ffeb3a4bbd6e1c017",
+          "verdict": "holds",
+          "quote": "any allies that come within %secondary_application_radius% range of them will also get the buff applied to them.",
+          "reason_zh": "友军自行进入范围后获得增益，物品没有移动友军位置的效果。"
+        },
+        {
+          "review_id": "433db0e0de6a675f18ee",
+          "verdict": "holds",
+          "quote": "bonus_movement_speed: 15→25",
+          "reason_zh": "移速加成从15%提高到25%，装备加速的判断仍成立。"
+        },
+        {
+          "review_id": "adbfdd2c755c69bf84d1",
+          "verdict": "holds",
+          "quote": "Turns the caster and all allied player-controlled targets in a %application_radius% radius invisible",
+          "reason_zh": "使用者和施用范围内由友方玩家控制的单位仍会获得隐身。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "snapfire_boomstick",
+      "rows": [
+        {
+          "review_id": "c2d8f4e79c8ed22fb9e3",
+          "verdict": "holds",
+          "quote": "Snapfire deals more damage to nearby enemies.",
+          "reason_zh": "说明只按与敌人的距离提高伤害，没有写一次攻击会同时伤害多个敌人。"
+        },
+        {
+          "review_id": "cb8daaafa348f6991371",
+          "verdict": "holds",
+          "quote": "behavior: 66→562949953421379",
+          "reason_zh": "唯一变化的字段是 behavior，决定可破坏性的 IsBreakable 未变，沿用原来的否定判断。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "snapfire_lil_shredder",
+      "rows": [
+        {
+          "review_id": "2466462601432691a305",
+          "verdict": "holds",
+          "quote": "rapidly fire %buffed_attacks% attacks dealing fixed damage plus a percentage of her attack damage.",
+          "reason_zh": "说明描述的是连续多次强化攻击，本次冷却调整没有给攻击增加范围伤害。"
+        },
+        {
+          "review_id": "d2e7a2505b322b072f33",
+          "verdict": "holds",
+          "quote": "Each attack reduces the enemy's armor.",
+          "reason_zh": "每次强化攻击仍会降低受击敌人的护甲。"
+        },
+        {
+          "review_id": "071b44d49a7d1b22263b",
+          "verdict": "holds",
+          "quote": "Each attack reduces the enemy's armor.",
+          "reason_zh": "减甲由每次强化攻击施加，符合攻击附带额外效果的定义。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "snapfire_mortimer_kisses",
+      "rows": [
+        {
+          "review_id": "e957727cd0806e9dce5d",
+          "verdict": "holds",
+          "quote": "Globs cause impact damage and create pools of firespit, which slow and apply damage over time.",
+          "reason_zh": "单次命中的伤害数值调整后，一次施法产生的火池仍可伤害区域内的多个敌人。"
+        },
+        {
+          "review_id": "audit:snapfire_mortimer_kisses:ground_zone:base",
+          "verdict": "holds",
+          "quote": "create pools of firespit, which slow and apply damage over time.",
+          "reason_zh": "弹体落地后留下火池，持续对其中的敌人造成伤害和减速。"
+        },
+        {
+          "review_id": "7790c0810e588427d9b9",
+          "verdict": "holds",
+          "quote": "pools of firespit, which slow and apply damage over time.",
+          "reason_zh": "火池仍能降低敌人的移动速度。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "snapfire_scatterblast",
+      "rows": [
+        {
+          "review_id": "7238edbd635ac22dc13f",
+          "verdict": "holds",
+          "quote": "a wide blast that damages and slows enemies in a cone.",
+          "reason_zh": "一次射击仍可对锥形区域内的多个敌人造成伤害。"
+        },
+        {
+          "review_id": "audit:snapfire_scatterblast:attack_slow:base",
+          "verdict": "holds",
+          "quote": "Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.",
+          "reason_zh": "基础说明明确列出攻击减速，并说明近距离命中会增强该效果。"
+        },
+        {
+          "review_id": "8f591af15e5a440a59ca",
+          "verdict": "holds",
+          "quote": "Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.",
+          "reason_zh": "命中敌人仍会降低其移动速度，近距离命中还会增强减速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sniper_assassinate",
+      "rows": [
+        {
+          "review_id": "56743c388d4622c2fc87",
+          "verdict": "holds",
+          "quote": "Sniper locks onto a target enemy unit",
+          "reason_zh": "暗杀仍锁定一个敌方单位，新增的 Item Potency 没有改变说明中的目标数量。"
+        },
+        {
+          "review_id": "audit:sniper_assassinate:cooldown_reset:base",
+          "verdict": "holds",
+          "quote": "Whenever Sniper kills an enemy hero, Assassinate is refreshed.",
+          "reason_zh": "狙击手击杀敌方英雄时仍会刷新暗杀的冷却。"
+        },
+        {
+          "review_id": "a362b7ff19a0d3af24ef",
+          "verdict": "holds",
+          "quote": "Invisibility doesn't disjoint the projectile.",
+          "reason_zh": "这句说明隐身无法躲开暗杀弹体，没有赋予施法者主动躲避来袭弹道的能力。"
+        },
+        {
+          "review_id": "50539adb8283899c7de7",
+          "verdict": "now_wrong",
+          "quote": "Causes Assassinate to fire quicker and stun the enemy target.",
+          "reason_zh": "A杖说明明确写有眩晕，这条否定判断在7.41f就已与原文冲突，7.42仍应判为有。"
+        },
+        {
+          "review_id": "8c04115c8fff09d2eefd",
+          "verdict": "holds",
+          "quote": "and mini-stuns the target.",
+          "reason_zh": "基础暗杀仍会对目标造成小眩晕，符合眩晕定义。"
+        },
+        {
+          "review_id": "a6ce82d782dead1a41ad",
+          "verdict": "holds",
+          "quote": "Sniper locks onto a target enemy unit",
+          "reason_zh": "狙击手施放暗杀时仍可直接选择一个敌方单位。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sniper_keen_scope",
+      "rows": [
+        {
+          "review_id": "audit:sniper_keen_scope:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "Sniper’s attacks deal bonus damage for every %bonus_damage_distance% units of distance Sniper is from the target.",
+          "reason_zh": "每次攻击仍会根据狙击手与目标的距离附加伤害，符合攻击特效定义。"
+        },
+        {
+          "review_id": "34b88851a18505981058",
+          "verdict": "holds",
+          "quote": "behavior: 66→562949953421379",
+          "reason_zh": "本次仅改动 behavior，决定可破坏性的 IsBreakable 未变，沿用原判。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sniper_shrapnel",
+      "rows": [
+        {
+          "review_id": "cd00531b467ea6ac5807",
+          "verdict": "holds",
+          "quote": "showers the target area in explosive pellets. Enemies are subject to damage and slowed movement.",
+          "reason_zh": "榴霰弹覆盖目标区域，可对其中的多个敌人造成伤害。"
+        },
+        {
+          "review_id": "09735657453456831129",
+          "verdict": "holds",
+          "quote": "Consumes a charge to launch a ball of shrapnel",
+          "reason_zh": "每次施放仍会消耗一点充能。"
+        },
+        {
+          "review_id": "6b5449a061c3306a9c80",
+          "verdict": "holds",
+          "quote": "Provides vision in the targeted area.",
+          "reason_zh": "技能仍明确提供目标区域的视野。"
+        },
+        {
+          "review_id": "audit:sniper_shrapnel:ground_zone:base",
+          "verdict": "holds",
+          "quote": "Damage is dealt 11 times, immediately at spell effect then every second.",
+          "reason_zh": "目标区域在施放时立即造成伤害，随后每秒再次造成伤害，符合持续场地的定义。"
+        },
+        {
+          "review_id": "dbcf7b41e9a1e5b721ef",
+          "verdict": "holds",
+          "quote": "Provides vision in the targeted area.",
+          "reason_zh": "注释将揭示目标区域说明为提供视野，没有写到使隐身单位显形。"
+        },
+        {
+          "review_id": "3de4bd126928a1c7057b",
+          "verdict": "holds",
+          "quote": "slow_movement_speed: [-12, -18, -24, -30]→[-10, -15, -20, -25]",
+          "reason_zh": "各等级的移动减速有所减弱，但数值仍全部为负，减速机制成立。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sniper_take_aim",
+      "rows": [
+        {
+          "review_id": "232a0dd704ee80c73bf3",
+          "verdict": "holds",
+          "quote": "On cast, Sniper gains increased vision, Headshot chance, and attack range.",
+          "reason_zh": "施放后狙击手仍获得额外视野，视野范围限于前方锥形区域。"
+        },
+        {
+          "review_id": "2673db14fe23a1fac9cc",
+          "verdict": "holds",
+          "quote": "Slows you by %slow%%% for the duration",
+          "reason_zh": "减速作用于狙击手自身，未满足降低敌方单位移速的定义。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "solar_crest",
+      "rows": [
+        {
+          "review_id": "add7c06a75f6759f1fa9",
+          "verdict": "holds",
+          "quote": "a %absorb_amount% physical damage barrier.",
+          "reason_zh": "主动效果仍提供物理伤害护盾，自施效力调整只涉及护甲、移速和攻速加成。"
+        },
+        {
+          "review_id": "332008ec7acecb1ef286",
+          "verdict": "holds",
+          "quote": "Bonus armor, movement and attack speed have %self_efficacy%%% effectiveness when cast on self.",
+          "reason_zh": "装备仍可为友军加速，7.42还允许使用者自施时获得50%效力的移速加成。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spectre_desolate",
+      "rows": [
+        {
+          "review_id": "c9bc6d026367d5e3e462",
+          "verdict": "holds",
+          "quote": "if attacking an enemy that does not have any allied units within a %radius% radius around them.",
+          "reason_zh": "半径用于检查受击目标附近是否有其友军，额外伤害只作用于被攻击的孤立目标。"
+        },
+        {
+          "review_id": "audit:spectre_desolate:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "deal bonus Pure damage if attacking an enemy that does not have any allied units within a %radius% radius around them.",
+          "reason_zh": "攻击孤立敌人时仍会附带额外纯粹伤害，符合攻击特效定义。"
+        },
+        {
+          "review_id": "b81724025130a3aa2d0b",
+          "verdict": "holds",
+          "quote": "Damage is dealt before Spectre's attack.",
+          "reason_zh": "说明沿用旧版且字段变更清单为空，可被破坏的原判按 IsBreakable 未变保留。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spectre_haunt",
+      "rows": [
+        {
+          "review_id": "e01b9b2edfa9f9f9bd99",
+          "verdict": "holds",
+          "quote": "The first time Spectre uses Reality on a Haunt illusion, enemies in a %fear_aoe% area around the target are Feared away from Spectre for %fear_duration%s",
+          "reason_zh": "装备A杖后，首次对鬼影幻象使用 Reality 仍会使目标周围的敌人因恐惧而远离幽鬼。"
+        },
+        {
+          "review_id": "t5:spectre_haunt:illusions",
+          "verdict": "holds",
+          "quote": "Creates a spectral nemesis to haunt all enemy Heroes. Haunt illusions are uncontrollable",
+          "reason_zh": "基础技能仍会制造不可控的幻象追踪敌方英雄。"
+        },
+        {
+          "review_id": "c7af5e793f6e32b95428",
+          "verdict": "holds",
+          "quote": "Haunt illusions are uncontrollable, take extra damage, and deal less damage than Spectre herself.",
+          "reason_zh": "额外承伤描述的是鬼影幻象自身的属性，技能没有给被追踪的敌人施加伤害加深。"
+        },
+        {
+          "review_id": "4f742b105bbbdb4d9923",
+          "verdict": "holds",
+          "quote": "The Reality sub-ability may be used to teleport to the illusion, destroying it.",
+          "reason_zh": "幽鬼仍可通过子技能 Reality 主动传送到幻象所在位置。"
+        },
+        {
+          "review_id": "c550f034f37e3fead004",
+          "verdict": "holds",
+          "quote": "and have their movement speed slowed by %fear_movespeed_slow%%%.",
+          "reason_zh": "装备A杖后，首次对鬼影幻象使用 Reality 仍会降低目标周围敌人的移速。"
+        },
+        {
+          "review_id": "audit:spectre_haunt:terrain_walk:base",
+          "verdict": "holds",
+          "quote": "They ignore terrain.",
+          "reason_zh": "基础说明明确赋予鬼影幻象无视地形的移动能力。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spectre_shadow_step",
+      "rows": [
+        {
+          "review_id": "t5:spectre_shadow_step:illusions",
+          "verdict": "holds",
+          "quote": "Sends an uncontrollable illusion at a target that follows and attacks the target.",
+          "reason_zh": "基础技能仍会派出一个不可控的幻象追踪并攻击目标。"
+        },
+        {
+          "review_id": "41750d86e3c8c5bad939",
+          "verdict": "holds",
+          "quote": "The Reality sub-ability may be used to teleport to the illusion, destroying it.",
+          "reason_zh": "幽鬼仍能通过子技能 Reality 传送至幻象所在位置。"
+        },
+        {
+          "review_id": "5e350ddf3af4eee106ba",
+          "verdict": "holds",
+          "quote": "Sends an uncontrollable illusion at a target that follows and attacks the target.",
+          "reason_zh": "施法时指定一个敌方目标，幻象随后追踪并攻击该目标。"
+        }
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+36,171
+{
+  "objects": [
+    {
+      "subject": "skywrath_mage_arcane_bolt",
+      "rows": [
+        {
+          "review_id": "41e5ed3a7e82aa7acf42",
+          "verdict": "holds",
+          "quote": "dealing damage to an enemy unit based on Skywrath Mage's intelligence.",
+          "reason_zh": "基础说明仍只指定一个敌方单位，新增的弹体间隔字段没有给基础技能增加目标。"
+        },
+        {
+          "review_id": "audit:skywrath_mage_arcane_bolt:aoe_damage:shard",
+          "verdict": "holds",
+          "quote": "one aimed at the original target, and two others aimed at random enemies within %extra_bolt_search_radius% range of the original target.",
+          "reason_zh": "装备魔晶时，一次施法可用额外两枚弹体伤害原目标附近的其他敌人。"
+        },
+        {
+          "review_id": "f0867b76fc2992bf9e61",
+          "verdict": "holds",
+          "quote": "providing 325 vision around it. Upon impact, it will reveal the target area for 3.34 seconds.",
+          "reason_zh": "弹体飞行时提供周围325范围的视野，命中后还提供目标区域3.34秒的视野。"
+        },
+        {
+          "review_id": "b12d46f6be780ef0728d",
+          "verdict": "holds",
+          "quote": "Upon impact, it will reveal the target area for 3.34 seconds.",
+          "reason_zh": "原文中 reveal 的对象是目标区域，只能据此认定提供区域视野。"
+        },
+        {
+          "review_id": "a75942ff7a7d96c46b82",
+          "verdict": "holds",
+          "quote": "dealing damage to an enemy unit based on Skywrath Mage's intelligence.",
+          "reason_zh": "施法时仍以一个敌方单位为目标发射弹体。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skywrath_mage_concussive_shot",
+      "rows": [
+        {
+          "review_id": "64b319e5512b1756f74e",
+          "verdict": "holds",
+          "quote": "Upon impact, it deals damage and slows in an area of effect.",
+          "reason_zh": "光弹命中后会对落点范围内的敌人造成伤害。"
+        },
+        {
+          "review_id": "d1c70e0d1c626d30c3f2",
+          "verdict": "holds",
+          "quote": "Provides 400 vision around the projectile, and reveals the target area for 3.34 seconds upon impact.",
+          "reason_zh": "光弹飞行时提供周围400范围的视野，命中后提供目标区域3.34秒的视野。"
+        },
+        {
+          "review_id": "cdd4d4dd088276752ac9",
+          "verdict": "holds",
+          "quote": "reveals the target area for 3.34 seconds upon impact.",
+          "reason_zh": "说明只写明命中后获得区域视野，没有使隐身单位显形的效果。"
+        },
+        {
+          "review_id": "8e00fcf5de33c634c06a",
+          "verdict": "holds",
+          "quote": "Upon impact, it deals damage and slows in an area of effect.",
+          "reason_zh": "光弹命中后仍会降低范围内敌人的移动速度。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skywrath_mage_mystic_flare",
+      "rows": [
+        {
+          "review_id": "77e555a8e817461b05e5",
+          "verdict": "holds",
+          "quote": "Deals massive damage distributed evenly among any Heroes in the area over %duration% seconds.",
+          "reason_zh": "二、三级总伤害下调后，区域内的多个英雄仍会分摊伤害。"
+        },
+        {
+          "review_id": "audit:skywrath_mage_mystic_flare:ground_zone:base",
+          "verdict": "holds",
+          "quote": "distributed evenly among any Heroes in the area over %duration% seconds.",
+          "reason_zh": "法术区域在持续时间内对其中的英雄造成伤害，符合场地魔法定义。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "skywrath_mage_shield_of_the_scion",
+      "rows": [
+        {
+          "review_id": "3af860a2bf46a400618a",
+          "verdict": "holds",
+          "quote": "barrier_duration: 12→10",
+          "reason_zh": "本次字段变更仅涉及护盾时长和额外智力，决定可破坏性的 IsBreakable 未变，沿用原判。"
+        },
+        {
+          "review_id": "16cc693e6676fafb99c4",
+          "verdict": "holds",
+          "quote": "he gains bonus intelligence and a small magic damage barrier.",
+          "reason_zh": "技能对敌方英雄造成魔法伤害时仍能获得魔法伤害护盾，护盾时长由12秒缩至10秒。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "slardar_bash",
+      "rows": [
+        {
+          "review_id": "adc363e86b409f76339f",
+          "verdict": "holds",
+          "quote": "After %attack_count% attacks, your next attack will bash the target.",
+          "reason_zh": "达到指定攻击次数后，下一次攻击仍会触发重击。"
+        },
+        {
+          "review_id": "665991b7df5dabd52000",
+          "verdict": "holds",
+          "quote": "After %attack_count% attacks, your next attack will bash the target.",
+          "reason_zh": "说明沿用旧版且字段变更清单为空，可被破坏的原判按 IsBreakable 未变保留。"
+        },
+        {
+          "review_id": "audit:slardar_bash:stun:base",
+          "verdict": "holds",
+          "quote": "your next attack will bash the target.",
+          "reason_zh": "按给定机制定义，触发重击的那次攻击会眩晕目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "slardar_slithereen_crush",
+      "rows": [
+        {
+          "review_id": "9c0b6437d69ad8cc5dde",
+          "verdict": "holds",
+          "quote": "stunning and damaging nearby enemy units.",
+          "reason_zh": "一次施放可对周围多个敌方单位造成伤害。"
+        },
+        {
+          "review_id": "b2c40997a7827d555922",
+          "verdict": "holds",
+          "quote": "After the stun, the affected units are slowed.",
+          "reason_zh": "受影响的敌人在眩晕结束后仍会被减速。"
+        },
+        {
+          "review_id": "e11b107c7149582c59ab",
+          "verdict": "holds",
+          "quote": "stunning and damaging nearby enemy units.",
+          "reason_zh": "基础技能仍会眩晕附近的敌方单位。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "slark_shadow_dance",
+      "rows": [
+        {
+          "review_id": "735c4a835d3b4b966d16",
+          "verdict": "holds",
+          "quote": "When not visible to the enemy team, Slark passively gains bonus movement speed and health regeneration.",
+          "reason_zh": "敌方看不见斯拉克时，他仍可获得被动移速加成，受到中立单位伤害会暂时失去加成。"
+        },
+        {
+          "review_id": "9be4a5a3df96daf08bd8",
+          "verdict": "holds",
+          "quote": "When not visible to the enemy team, Slark passively gains bonus movement speed and health regeneration.",
+          "reason_zh": "敌方看不见斯拉克时，他仍可获得额外生命恢复，受到中立单位伤害会暂时失去加成。"
+        },
+        {
+          "review_id": "audit:slark_shadow_dance:invisibility:base",
+          "verdict": "holds",
+          "quote": "When activated, Slark hides himself in a cloud of shadows, becoming immune to detection.",
+          "reason_zh": "主动施放后，斯拉克会隐去身形并免于侦测。"
+        },
+        {
+          "review_id": "f6cf8025aead67d87bdd",
+          "verdict": "holds",
+          "quote": "Attacking, casting spells, and using items will not reveal Slark, but enemies can see the cloud itself.",
+          "reason_zh": "敌人能看见云雾，斯拉克在其中攻击、施法或使用物品都不会显形。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "smoke_of_deceit",
+      "rows": [
+        {
+          "review_id": "2c0ffeb3a4bbd6e1c017",
+          "verdict": "holds",
+          "quote": "any allies that come within %secondary_application_radius% range of them will also get the buff applied to them.",
+          "reason_zh": "友军自行进入范围后获得增益，物品没有移动友军位置的效果。"
+        },
+        {
+          "review_id": "433db0e0de6a675f18ee",
+          "verdict": "holds",
+          "quote": "bonus_movement_speed: 15→25",
+          "reason_zh": "移速加成从15%提高到25%，装备加速的判断仍成立。"
+        },
+        {
+          "review_id": "adbfdd2c755c69bf84d1",
+          "verdict": "holds",
+          "quote": "Turns the caster and all allied player-controlled targets in a %application_radius% radius invisible",
+          "reason_zh": "使用者和施用范围内由友方玩家控制的单位仍会获得隐身。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "snapfire_boomstick",
+      "rows": [
+        {
+          "review_id": "c2d8f4e79c8ed22fb9e3",
+          "verdict": "holds",
+          "quote": "Snapfire deals more damage to nearby enemies.",
+          "reason_zh": "说明只按与敌人的距离提高伤害，没有写一次攻击会同时伤害多个敌人。"
+        },
+        {
+          "review_id": "cb8daaafa348f6991371",
+          "verdict": "holds",
+          "quote": "behavior: 66→562949953421379",
+          "reason_zh": "唯一变化的字段是 behavior，决定可破坏性的 IsBreakable 未变，沿用原来的否定判断。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "snapfire_lil_shredder",
+      "rows": [
+        {
+          "review_id": "2466462601432691a305",
+          "verdict": "holds",
+          "quote": "rapidly fire %buffed_attacks% attacks dealing fixed damage plus a percentage of her attack damage.",
+          "reason_zh": "说明描述的是连续多次强化攻击，本次冷却调整没有给攻击增加范围伤害。"
+        },
+        {
+          "review_id": "d2e7a2505b322b072f33",
+          "verdict": "holds",
+          "quote": "Each attack reduces the enemy's armor.",
+          "reason_zh": "每次强化攻击仍会降低受击敌人的护甲。"
+        },
+        {
+          "review_id": "071b44d49a7d1b22263b",
+          "verdict": "holds",
+          "quote": "Each attack reduces the enemy's armor.",
+          "reason_zh": "减甲由每次强化攻击施加，符合攻击附带额外效果的定义。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "snapfire_mortimer_kisses",
+      "rows": [
+        {
+          "review_id": "e957727cd0806e9dce5d",
+          "verdict": "holds",
+          "quote": "Globs cause impact damage and create pools of firespit, which slow and apply damage over time.",
+          "reason_zh": "单次命中的伤害数值调整后，一次施法产生的火池仍可伤害区域内的多个敌人。"
+        },
+        {
+          "review_id": "audit:snapfire_mortimer_kisses:ground_zone:base",
+          "verdict": "holds",
+          "quote": "create pools of firespit, which slow and apply damage over time.",
+          "reason_zh": "弹体落地后留下火池，持续对其中的敌人造成伤害和减速。"
+        },
+        {
+          "review_id": "7790c0810e588427d9b9",
+          "verdict": "holds",
+          "quote": "pools of firespit, which slow and apply damage over time.",
+          "reason_zh": "火池仍能降低敌人的移动速度。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "snapfire_scatterblast",
+      "rows": [
+        {
+          "review_id": "7238edbd635ac22dc13f",
+          "verdict": "holds",
+          "quote": "a wide blast that damages and slows enemies in a cone.",
+          "reason_zh": "一次射击仍可对锥形区域内的多个敌人造成伤害。"
+        },
+        {
+          "review_id": "audit:snapfire_scatterblast:attack_slow:base",
+          "verdict": "holds",
+          "quote": "Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.",
+          "reason_zh": "基础说明明确列出攻击减速，并说明近距离命中会增强该效果。"
+        },
+        {
+          "review_id": "8f591af15e5a440a59ca",
+          "verdict": "holds",
+          "quote": "Movement Slow, Attack Slow and Slow Duration are increased by %point_blank_debuff_duration_pct%%% for enemies caught at point-blank range.",
+          "reason_zh": "命中敌人仍会降低其移动速度，近距离命中还会增强减速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sniper_assassinate",
+      "rows": [
+        {
+          "review_id": "56743c388d4622c2fc87",
+          "verdict": "holds",
+          "quote": "Sniper locks onto a target enemy unit",
+          "reason_zh": "暗杀仍锁定一个敌方单位，新增的 Item Potency 没有改变说明中的目标数量。"
+        },
+        {
+          "review_id": "audit:sniper_assassinate:cooldown_reset:base",
+          "verdict": "holds",
+          "quote": "Whenever Sniper kills an enemy hero, Assassinate is refreshed.",
+          "reason_zh": "狙击手击杀敌方英雄时仍会刷新暗杀的冷却。"
+        },
+        {
+          "review_id": "a362b7ff19a0d3af24ef",
+          "verdict": "holds",
+          "quote": "Invisibility doesn't disjoint the projectile.",
+          "reason_zh": "这句说明隐身无法躲开暗杀弹体，没有赋予施法者主动躲避来袭弹道的能力。"
+        },
+        {
+          "review_id": "50539adb8283899c7de7",
+          "verdict": "now_wrong",
+          "quote": "Causes Assassinate to fire quicker and stun the enemy target.",
+          "reason_zh": "A杖说明明确写有眩晕，这条否定判断在7.41f就已与原文冲突，7.42仍应判为有。"
+        },
+        {
+          "review_id": "8c04115c8fff09d2eefd",
+          "verdict": "holds",
+          "quote": "and mini-stuns the target.",
+          "reason_zh": "基础暗杀仍会对目标造成小眩晕，符合眩晕定义。"
+        },
+        {
+          "review_id": "a6ce82d782dead1a41ad",
+          "verdict": "holds",
+          "quote": "Sniper locks onto a target enemy unit",
+          "reason_zh": "狙击手施放暗杀时仍可直接选择一个敌方单位。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sniper_keen_scope",
+      "rows": [
+        {
+          "review_id": "audit:sniper_keen_scope:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "Sniper’s attacks deal bonus damage for every %bonus_damage_distance% units of distance Sniper is from the target.",
+          "reason_zh": "每次攻击仍会根据狙击手与目标的距离附加伤害，符合攻击特效定义。"
+        },
+        {
+          "review_id": "34b88851a18505981058",
+          "verdict": "holds",
+          "quote": "behavior: 66→562949953421379",
+          "reason_zh": "本次仅改动 behavior，决定可破坏性的 IsBreakable 未变，沿用原判。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sniper_shrapnel",
+      "rows": [
+        {
+          "review_id": "cd00531b467ea6ac5807",
+          "verdict": "holds",
+          "quote": "showers the target area in explosive pellets. Enemies are subject to damage and slowed movement.",
+          "reason_zh": "榴霰弹覆盖目标区域，可对其中的多个敌人造成伤害。"
+        },
+        {
+          "review_id": "09735657453456831129",
+          "verdict": "holds",
+          "quote": "Consumes a charge to launch a ball of shrapnel",
+          "reason_zh": "每次施放仍会消耗一点充能。"
+        },
+        {
+          "review_id": "6b5449a061c3306a9c80",
+          "verdict": "holds",
+          "quote": "Provides vision in the targeted area.",
+          "reason_zh": "技能仍明确提供目标区域的视野。"
+        },
+        {
+          "review_id": "audit:sniper_shrapnel:ground_zone:base",
+          "verdict": "holds",
+          "quote": "Damage is dealt 11 times, immediately at spell effect then every second.",
+          "reason_zh": "目标区域在施放时立即造成伤害，随后每秒再次造成伤害，符合持续场地的定义。"
+        },
+        {
+          "review_id": "dbcf7b41e9a1e5b721ef",
+          "verdict": "holds",
+          "quote": "Provides vision in the targeted area.",
+          "reason_zh": "注释将揭示目标区域说明为提供视野，没有写到使隐身单位显形。"
+        },
+        {
+          "review_id": "3de4bd126928a1c7057b",
+          "verdict": "holds",
+          "quote": "slow_movement_speed: [-12, -18, -24, -30]→[-10, -15, -20, -25]",
+          "reason_zh": "各等级的移动减速有所减弱，但数值仍全部为负，减速机制成立。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "sniper_take_aim",
+      "rows": [
+        {
+          "review_id": "232a0dd704ee80c73bf3",
+          "verdict": "holds",
+          "quote": "On cast, Sniper gains increased vision, Headshot chance, and attack range.",
+          "reason_zh": "施放后狙击手仍获得额外视野，视野范围限于前方锥形区域。"
+        },
+        {
+          "review_id": "2673db14fe23a1fac9cc",
+          "verdict": "holds",
+          "quote": "Slows you by %slow%%% for the duration",
+          "reason_zh": "减速作用于狙击手自身，未满足降低敌方单位移速的定义。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "solar_crest",
+      "rows": [
+        {
+          "review_id": "add7c06a75f6759f1fa9",
+          "verdict": "holds",
+          "quote": "a %absorb_amount% physical damage barrier.",
+          "reason_zh": "主动效果仍提供物理伤害护盾，自施效力调整只涉及护甲、移速和攻速加成。"
+        },
+        {
+          "review_id": "332008ec7acecb1ef286",
+          "verdict": "holds",
+          "quote": "Bonus armor, movement and attack speed have %self_efficacy%%% effectiveness when cast on self.",
+          "reason_zh": "装备仍可为友军加速，7.42还允许使用者自施时获得50%效力的移速加成。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spectre_desolate",
+      "rows": [
+        {
+          "review_id": "c9bc6d026367d5e3e462",
+          "verdict": "holds",
+          "quote": "if attacking an enemy that does not have any allied units within a %radius% radius around them.",
+          "reason_zh": "半径用于检查受击目标附近是否有其友军，额外伤害只作用于被攻击的孤立目标。"
+        },
+        {
+          "review_id": "audit:spectre_desolate:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "deal bonus Pure damage if attacking an enemy that does not have any allied units within a %radius% radius around them.",
+          "reason_zh": "攻击孤立敌人时仍会附带额外纯粹伤害，符合攻击特效定义。"
+        },
+        {
+          "review_id": "b81724025130a3aa2d0b",
+          "verdict": "holds",
+          "quote": "Damage is dealt before Spectre's attack.",
+          "reason_zh": "说明沿用旧版且字段变更清单为空，可被破坏的原判按 IsBreakable 未变保留。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spectre_haunt",
+      "rows": [
+        {
+          "review_id": "e01b9b2edfa9f9f9bd99",
+          "verdict": "holds",
+          "quote": "The first time Spectre uses Reality on a Haunt illusion, enemies in a %fear_aoe% area around the target are Feared away from Spectre for %fear_duration%s",
+          "reason_zh": "装备A杖后，首次对鬼影幻象使用 Reality 仍会使目标周围的敌人因恐惧而远离幽鬼。"
+        },
+        {
+          "review_id": "t5:spectre_haunt:illusions",
+          "verdict": "holds",
+          "quote": "Creates a spectral nemesis to haunt all enemy Heroes. Haunt illusions are uncontrollable",
+          "reason_zh": "基础技能仍会制造不可控的幻象追踪敌方英雄。"
+        },
+        {
+          "review_id": "c7af5e793f6e32b95428",
+          "verdict": "holds",
+          "quote": "Haunt illusions are uncontrollable, take extra damage, and deal less damage than Spectre herself.",
+          "reason_zh": "额外承伤描述的是鬼影幻象自身的属性，技能没有给被追踪的敌人施加伤害加深。"
+        },
+        {
+          "review_id": "4f742b105bbbdb4d9923",
+          "verdict": "holds",
+          "quote": "The Reality sub-ability may be used to teleport to the illusion, destroying it.",
+          "reason_zh": "幽鬼仍可通过子技能 Reality 主动传送到幻象所在位置。"
+        },
+        {
+          "review_id": "c550f034f37e3fead004",
+          "verdict": "holds",
+          "quote": "and have their movement speed slowed by %fear_movespeed_slow%%%.",
+          "reason_zh": "装备A杖后，首次对鬼影幻象使用 Reality 仍会降低目标周围敌人的移速。"
+        },
+        {
+          "review_id": "audit:spectre_haunt:terrain_walk:base",
+          "verdict": "holds",
+          "quote": "They ignore terrain.",
+          "reason_zh": "基础说明明确赋予鬼影幻象无视地形的移动能力。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "spectre_shadow_step",
+      "rows": [
+        {
+          "review_id": "t5:spectre_shadow_step:illusions",
+          "verdict": "holds",
+          "quote": "Sends an uncontrollable illusion at a target that follows and attacks the target.",
+          "reason_zh": "基础技能仍会派出一个不可控的幻象追踪并攻击目标。"
+        },
+        {
+          "review_id": "41750d86e3c8c5bad939",
+          "verdict": "holds",
+          "quote": "The Reality sub-ability may be used to teleport to the illusion, destroying it.",
+          "reason_zh": "幽鬼仍能通过子技能 Reality 传送至幻象所在位置。"
+        },
+        {
+          "review_id": "5e350ddf3af4eee106ba",
+          "verdict": "holds",
+          "quote": "Sends an uncontrollable illusion at a target that follows and attacks the target.",
+          "reason_zh": "施法时指定一个敌方目标，幻象随后追踪并攻击该目标。"
+        }
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

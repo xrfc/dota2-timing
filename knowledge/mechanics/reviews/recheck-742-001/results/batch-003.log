@@ -1,0 +1,1293 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6e5-077c-7cf2-85e7-c8c8dfdddb2d
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "bloodseeker_bloodrage", "name_zh": "血魔·血怒", "category": "2_纯数值", "text_741f": {"desc_loc": "Drives Bloodseeker into a bloodthirsty rage which causes him to attack faster and deal more spell damage at the cost of a percentage of his health per second.", "notes_loc": ["Damage dealt to Bloodseeker is non-lethal."], "shard_loc": "Bloodseeker's Bloodrage attacks now deal %max_health_dmg_pct%%% of the target's max health as Pure damage."}, "text_742": {"desc_loc": "Drives Bloodseeker into a bloodthirsty rage which causes him to attack faster and deal more spell damage at the cost of a percentage of his health per second.", "notes_loc": ["Damage dealt to Bloodseeker is non-lethal."], "shard_loc": "Bloodseeker's Bloodrage attacks now deal %max_health_dmg_pct%%% of the target's max health as Pure damage."}, "changed_fields": [{"field": "spell_amp", "old": {"base": [15, 20, 25, 30], "scepter": null, "shard": null}, "new": {"base": [12, 16, 20, 24], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:bloodseeker_bloodrage:attack_modifier:shard", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "5f805ffd825b867b3d96", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "base", "decision": "accept"}]}, {"subject": "bloodseeker_rupture", "name_zh": "血魔·割裂", "category": "3_说明文字", "text_741f": {"desc_loc": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health. If the unit moves, it takes damage based on the distance moved.", "scepter_loc": "Increases initial damage and grants %AbilityCharges% Rupture Charges."}, "text_742": {"desc_loc": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health. If the unit moves, it takes damage based on the distance moved.", "scepter_loc": "Increases initial damage and grants %AbilityCharges% Rupture Charges. Decreases cooldown by %bonus_AbilityCooldown%s."}, "changed_fields": [{"field": "AbilityCooldown", "old": {"base": [75, 70, 65], "scepter": null, "shard": null}, "new": {"base": [75, 70, 65], "scepter": [10], "shard": null}}, {"field": "duration", "old": {"base": [9, 10, 11], "scepter": null, "shard": null}, "new": {"base": [7, 9, 11], "scepter": null, "shard": null}}, {"field": "movement_damage_pct", "old": {"base": [35, 45, 55], "scepter": null, "shard": null}, "new": {"base": [45, 50, 55], "scepter": null, "shard": null}}], "rows": [{"review_id": "04666b9d4d1b7bda9a3a", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "c6d24a1a4371c9c1c614", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "c0dee5977d875af107a7", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "bloodseeker_thirst", "name_zh": "血魔·焦渴", "category": "2_纯数值", "text_741f": {"desc_loc": "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed when an enemy hero's health falls below %min_bonus_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero. Unlocks max movement speed for Bloodseeker.", "notes_loc": ["Not triggered by Illusions.", "Max movement speed bonus occurs when an enemy's health is at or below %max_bonus_pct%%%.", "Effects linger for %linger_duration% seconds if a target dies."], "facets_loc": ["Can be activated to grant bonus movement speed and %sanguivore_multiplier%x Sanguivore heal bonus for a short duration. While on cooldown, passive Thirst move speed is reduced by %inactive_penalty_pct%%% . Cannot be cast when all enemy heroes are at full health."]}, "text_742": {"desc_loc": "Bloodseeker is invigorated by the wounds of his enemies, gaining bonus movement speed when an enemy hero's health falls below %min_bonus_pct%%%, with the bonuses increasing as their health falls further. If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero. Bonuses stack per hero. Unlocks max movement speed for Bloodseeker.", "notes_loc": ["Not triggered by Illusions.", "Max movement speed bonus occurs when an enemy's health is at or below %max_bonus_pct%%%.", "Effects linger for %linger_duration% seconds if a target dies."], "facets_loc": ["Can be activated to grant bonus movement speed and %sanguivore_multiplier%x Sanguivore heal bonus for a short duration. While on cooldown, passive Thirst move speed is reduced by %inactive_penalty_pct%%% . Cannot be cast when all enemy heroes are at full health."]}, "changed_fields": [{"field": "bonus_movement_speed", "old": {"base": [10, 20, 30, 40], "scepter": null, "shard": null}, "new": {"base": [12, 20, 28, 36], "scepter": null, "shard": null}}], "rows": [{"review_id": "20626c1ec3be9231d5f0", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "6e4f3b540a4ae6a62dcc", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "a68b193784a2bb47c98d", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "0b48531995f9e1c55dd4", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "reject"}, {"review_id": "e8685a92b0014583d3e4", "mechanism": "true_sight", "mechanism_zh": "真视", "definition": "可看见隐身单位", "condition": "base", "decision": "accept"}]}, {"subject": "bloodstone", "name_zh": "血精石", "category": "2_纯数值", "text_741f": {"desc_loc": "Active: Bloodpact Increases Bloodstone's Spell Lifesteal to %spell_lifesteal_while_active%%%. Lasts %buff_duration% seconds. Passive: Spell Weakness Aura Enemy units take %aura_spell_vulnerability%%% increased damage from spells. Radius: %aura_radius%", "notes_loc": ["Spell Weakness Aura does not stack with Veil of Discord's Spell Weakness."]}, "text_742": {"desc_loc": "Active: Bloodpact Increases Bloodstone's Spell Lifesteal to %spell_lifesteal_while_active%%%. Lasts %buff_duration% seconds. Passive: Spell Weakness Aura Enemy units take %aura_spell_vulnerability%%% increased damage from spells. Radius: %aura_radius%", "notes_loc": ["Spell Weakness Aura does not stack with Veil of Discord's Spell Weakness."]}, "changed_fields": [{"field": "cooldowns", "old": [35], "new": [30]}, {"field": "AbilityCooldown", "old": {"base": [35], "scepter": null, "shard": null}, "new": {"base": [30], "scepter": null, "shard": null}}, {"field": "aura_spell_vulnerability", "old": {"base": [10], "scepter": null, "shard": null}, "new": {"base": [8], "scepter": null, "shard": null}}, {"field": "spell_lifesteal_while_active", "old": {"base": [60], "scepter": null, "shard": null}, "new": {"base": [70], "scepter": null, "shard": null}}], "rows": [{"review_id": "c1e0d0c931d07a344abd", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "item", "decision": "reject"}, {"review_id": "da1fe5b4658a3f7f250e", "mechanism": "aura", "mechanism_zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法", "condition": "item", "decision": "accept"}, {"review_id": "4d33c804e01513f66d21", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "item", "decision": "reject"}, {"review_id": "847cbcb56409d5684dfc", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "item", "decision": "accept"}, {"review_id": "b5155d42b834e8a63217", "mechanism": "magic_resist_reduction", "mechanism_zh": "减魔抗/魔法易伤", "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害", "condition": "item", "decision": "accept"}]}, {"subject": "bloodthorn", "name_zh": "血棘", "category": "3_说明文字", "text_741f": {"desc_loc": "Active: Soul Rend Silences a target for %silence_duration% seconds. At the end of the silence, an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage. All attacks on the silenced target will deal additional damage equal to %proc_damage_heroes% if the attacker is a hero, and %proc_damage_creeps%, if the attacker is a creep. Provides True Strike for your attacks and attacks from your controlled units against the silenced target. Passive: Pierce Grants each attack a %proc_chance%%% chance to pierce through evasion and deal %passive_proc_damage% bonus magical damage."}, "text_742": {"desc_loc": "Active: Soul Rend Silences a target for %silence_duration% seconds. At the end of the silence, an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage. All attacks on the silenced target will deal additional damage equal to %proc_damage_heroes% if the attacker is a hero, and %proc_damage_creeps%, if the attacker is a creep. Provides True Strike for your attacks and attacks from your controlled units against the silenced target."}, "changed_fields": [{"field": "item_cost", "old": 6400, "new": 6250}, {"field": "passive_proc_damage", "old": {"base": [60], "scepter": null, "shard": null}, "new": null}, {"field": "proc_chance", "old": {"base": [40], "scepter": null, "shard": null}, "new": null}, {"field": "proc_damage_creeps", "old": {"base": [25], "scepter": null, "shard": null}, "new": {"base": [20], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:bloodthorn:attack_modifier:item", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "item", "decision": "accept"}, {"review_id": "audit:bloodthorn:incoming_damage_amp:item", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "item", "decision": "accept"}, {"review_id": "8e0f2fd2cc75bb460610", "mechanism": "magic_resist_reduction", "mechanism_zh": "减魔抗/魔法易伤", "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害", "condition": "item", "decision": "reject"}, {"review_id": "e57e91809a3631493e3c", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "item", "decision": "accept"}, {"review_id": "6b7d62cdc72b370c4032", "mechanism": "pierce_evasion", "mechanism_zh": "克敌机先", "definition": "攻击无视闪避（必中）", "condition": "item", "decision": "accept"}, {"review_id": "72703b77330b2889566e", "mechanism": "pierce_evasion", "mechanism_zh": "克敌机先", "definition": "攻击无视闪避（必中）", "condition": "item", "decision": "accept"}, {"review_id": "c5c89a459a131403bff3", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "item", "decision": "accept"}, {"review_id": "87ea31fe89cdc0961f5e", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "item", "decision": "reject"}]}, {"subject": "boots", "name_zh": "速度之靴", "category": "5_增删或退出", "text_741f": {}, "text_742": {"desc_loc": "Movement speed bonuses from multiple pairs of boots do not stack."}, "changed_fields": [{"field": "behavior", "old": null, "new": "2"}, {"field": "target_team", "old": null, "new": 0}, {"field": "target_type", "old": null, "new": 0}, {"field": "flags", "old": null, "new": 0}, {"field": "damage", "old": null, "new": 0}, {"field": "immunity", "old": null, "new": 0}, {"field": "dispellable", "old": null, "new": 0}, {"field": "ability_has_scepter", "old": null, "new": false}, {"field": "ability_has_shard", "old": null, "new": false}, {"field": "cast_ranges", "old": null, "new": [0]}, {"field": "cast_points", "old": null, "new": [0]}, {"field": "channel_times", "old": null, "new": [0]}, {"field": "cooldowns", "old": null, "new": [0]}, {"field": "durations", "old": null, "new": [0]}, {"field": "damages", "old": null, "new": [0, 0, 0, 0]}, {"field": "mana_costs", "old": null, "new": [0]}, {"field": "health_costs", "old": null, "new": []}, {"field": "item_cost", "old": null, "new": 500}, {"field": "bonus_movement_speed", "old": null, "new": {"base": [45], "scepter": null, "shard": null}}], "rows": [{"review_id": "fcab0823b9cf802c2ef8", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}]}, {"subject": "bounty_hunter_shuriken_toss", "name_zh": "赏金猎人·投掷飞镖", "category": "2_纯数值", "text_741f": {"desc_loc": "Hurls a deadly shuriken at an enemy unit, dealing damage and slowing the target's movement speed. The shuriken will bounce to any Tracked units who are within a %bounce_aoe% radius of each other.", "scepter_loc": "Increases cast range and applies Jinada on hit."}, "text_742": {"desc_loc": "Hurls a deadly shuriken at an enemy unit, dealing damage and slowing the target's movement speed. The shuriken will bounce to any Tracked units who are within a %bounce_aoe% radius of each other.", "scepter_loc": "Increases cast range and applies Jinada on hit."}, "changed_fields": [], "rows": [{"review_id": "7469215ada7c28a99e33", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:bounty_hunter_shuriken_toss:economy:scepter", "mechanism": "economy", "mechanism_zh": "经济经验", "definition": "提供额外金钱或经验；只是正常赏金不算", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "5f06fa0115fbb9bbbe64", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "4adb849a1ebd828ab4d1", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "bounty_hunter_track", "name_zh": "赏金猎人·追踪术", "category": "2_纯数值", "text_741f": {"desc_loc": "Tracks an enemy hero, granting True Sight of the target, increasing the damage they take and providing information on how much gold it is carrying. If the target dies, Bounty Hunter and nearby heroes collect a bonus bounty of gold. Casting Track does not take you out of invisibility.", "notes_loc": ["Bounty Hunter will get the bonus gold if the target dies while Track is active, regardless of how it died.", "Track's effect is only visible to allies.", "You can see the amount of gold the target is carrying by mousing over the debuff icon above the target's ability bar.", "Bonus gold is reliable gold."]}, "text_742": {"desc_loc": "Tracks an enemy hero, granting True Sight of the target, increasing the damage they take and providing information on how much gold it is carrying. If the target dies, Bounty Hunter and nearby heroes collect a bonus bounty of gold. Casting Track does not take you out of invisibility.", "notes_loc": ["Bounty Hunter will get the bonus gold if the target dies while Track is active, regardless of how it died.", "Track's effect is only visible to allies.", "You can see the amount of gold the target is carrying by mousing over the debuff icon above the target's ability bar.", "Bonus gold is reliable gold."]}, "changed_fields": [{"field": "target_damage_amp", "old": {"base": [8, 12, 16], "scepter": null, "shard": null}, "new": {"base": [6, 10, 14], "scepter": null, "shard": null}}], "rows": [{"review_id": "0f0e423bcf367d725787", "mechanism": "economy", "mechanism_zh": "经济经验", "definition": "提供额外金钱或经验；只是正常赏金不算", "condition": "base", "decision": "accept"}, {"review_id": "audit:bounty_hunter_track:grant_vision:base", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "audit:bounty_hunter_track:incoming_damage_amp:base", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "accept"}, {"review_id": "audit:bounty_hunter_track:reveal:base", "mechanism": "reveal", "mechanism_zh": "显形", "definition": "使隐身单位显形，不等于持续真视", "condition": "base", "decision": "accept"}, {"review_id": "3b5c2596011f2cde4194", "mechanism": "true_sight", "mechanism_zh": "真视", "definition": "可看见隐身单位", "condition": "base", "decision": "accept"}, {"review_id": "1260c5b7e6450e3e4f8f", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "bounty_hunter_wind_walk", "name_zh": "赏金猎人·暗影步", "category": "2_纯数值", "text_741f": {"desc_loc": "Bounty Hunter becomes invisible and gains bonus movement speed and the ability to move through other units until he attacks or casts a spell. If he breaks the invisibility with an attack, that attack will stun the target for a short duration.", "notes_loc": ["Will not break most channeling of spells upon activation."]}, "text_742": {"desc_loc": "Bounty Hunter becomes invisible and gains bonus movement speed and the ability to move through other units until he attacks or casts a spell. If he breaks the invisibility with an attack, that attack will stun the target for a short duration.", "notes_loc": ["Will not break most channeling of spells upon activation."]}, "changed_fields": [{"field": "bonus_move_speed_pct", "old": {"base": [11, 14, 17, 20], "scepter": null, "shard": null}, "new": {"base": [9, 12, 15, 18], "scepter": null, "shard": null}}, {"field": "stun_duration", "old": {"base": [1, 1.2, 1.4, 1.6], "scepter": null, "shard": null}, "new": {"base": [0.9, 1.1, 1.3, 1.5], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:bounty_hunter_wind_walk:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "d79cea01edef8201f179", "mechanism": "channel_interrupt", "mechanism_zh": "打断持续施法", "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记", "condition": "base", "decision": "reject"}, {"review_id": "70d512d52eecf0f53f7b", "mechanism": "economy", "mechanism_zh": "经济经验", "definition": "提供额外金钱或经验；只是正常赏金不算", "condition": "base", "decision": "reject"}, {"review_id": "68f783785e1e58600dd2", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "fe95f9901a60f35e5a9e", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "accept"}, {"review_id": "audit:bounty_hunter_wind_walk:phased:base", "mechanism": "phased", "mechanism_zh": "相位移动", "definition": "移动不受单位碰撞阻挡", "condition": "base", "decision": "accept"}, {"review_id": "c8288ad225616bae04db", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}]}, {"subject": "brewmaster_cinder_brew", "name_zh": "酒仙·余烬佳酿", "category": "2_纯数值", "text_741f": {"desc_loc": "Rolls a barrel of ale at enemies that damages enemies along its path and spills out at the target location. Any enemy in the path or the spill area is drenched in cinder brew, becoming slowed. If the enemy receives Magic or Pure damage, they will be ignited, extending the duration by %extra_duration%s and causing them to take damage over time.", "facets_loc": ["Cinder Brew is now a rolling barrel of ale that drenches enemies in its path and explodes at the end."]}, "text_742": {"desc_loc": "Rolls a barrel of ale at enemies that damages enemies along its path and spills out at the target location. Any enemy in the path or the spill area is drenched in cinder brew, becoming slowed. If the enemy receives Magic or Pure damage, they will be ignited, extending the duration by %extra_duration%s and causing them to take damage over time.", "facets_loc": ["Cinder Brew is now a rolling barrel of ale that drenches enemies in its path and explodes at the end."]}, "changed_fields": [{"field": "total_ignite_damage", "old": {"base": [80, 160, 240, 320], "scepter": null, "shard": null}, "new": {"base": [75, 150, 225, 300], "scepter": null, "shard": null}}], "rows": [{"review_id": "afac2657e8ffcba73902", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "0782f020843ab6efdd4b", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "brewmaster_liquid_courage", "name_zh": "酒仙·壮胆酒", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "When Brewmaster drops below %min_health_threshold%%% Health he gains a Status Resistance buff and his movement speed alternates every %speed_toggle_time%s between being faster and being slower. The effect becomes stronger at lower health, scaling from 0 up to max values at %max_health_threshold%%% Health.", "shard_loc": "Toss a strong drink to a teammate or drink it yourself, activating the maximum power effect of Liquid Courage and granting %max_hp_regen%%% Max HP Regen per second. Lasts %drink_duration% seconds."}, "text_742": {"desc_loc": "After taking %damage_threshold% damage from player-controlled units, Brewmaster gains a Status Resistance buff for %trigger_duration%s and his movement speed alternates every %speed_toggle_time%s between being faster and being slower. Damage taken is reset if Brewmaster takes no damage for %damage_reset_interval%s. Can only trigger once every %trigger_cooldown%s.", "notes_loc": ["Damage from Roshan counts towards the damage threshold."], "shard_loc": "Liquid Courage can be activated to toss a strong drink to a teammate or yourself to gain the effects of Liquid Courage and %max_hp_regen%%% Max HP Regen per second. Increases speed increase. Lasts %drink_duration% seconds."}, "changed_fields": [{"field": "behavior", "old": "1688849860263939", "new": "1688849860263938"}, {"field": "AbilityCooldown", "old": {"base": [0], "scepter": null, "shard": [20]}, "new": {"base": [0], "scepter": null, "shard": [15]}}, {"field": "damage_reset_interval", "old": null, "new": {"base": [7], "scepter": null, "shard": null}}, {"field": "damage_threshold", "old": null, "new": {"base": [400], "scepter": null, "shard": null}}, {"field": "max_health_threshold", "old": {"base": [20], "scepter": null, "shard": null}, "new": null}, {"field": "max_speed", "old": {"base": [30], "scepter": null, "shard": null}, "new": {"base": [30], "scepter": null, "shard": [20]}}, {"field": "min_health_threshold", "old": {"base": [50], "scepter": null, "shard": null}, "new": null}, {"field": "trigger_cooldown", "old": null, "new": {"base": [15], "scepter": null, "shard": null}}, {"field": "trigger_duration", "old": null, "new": {"base": [5], "scepter": null, "shard": null}}], "rows": [{"review_id": "250196a73630c3bbf96f", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}, {"review_id": "5a7c27e4b74f1655d4a3", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "audit:brewmaster_liquid_courage:healing:shard", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "5d66ef354906cd9023bb", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "reject"}, {"review_id": "0022a156f62ba85785ef", "mechanism": "status_resistance", "mechanism_zh": "状态抗性", "definition": "缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）", "condition": "base", "decision": "accept"}]}, {"subject": "brewmaster_primal_split", "name_zh": "酒仙·元素分离", "category": "2_纯数值", "text_741f": {"desc_loc": "Splits Brewmaster into elements, forming 3 specialized warriors, adept at survival, each with their own abilities. If any of them survive until the end of their summoned timer, the Brewmaster is reborn. Each Warrior gains its respective Drunken Brawler stance.", "notes_loc": ["The Earth Element will carry all auras that the Brewmaster has, as well as True Sight.", "The Fire Element has phased movement.", "When the spell ends, Brewmaster will take the place of an element in this order, assuming they are alive: Earth, Storm, Fire."], "scepter_loc": "Primal Split gains %scepter_bonus_levels% max and current level, improving the Brewlings and their abilities. Allows Primal Split to be cancelled early, and causes the Brewlings to be Brewed Up when Primal Split begins."}, "text_742": {"desc_loc": "Splits Brewmaster into elements, forming 3 specialized warriors, adept at survival, each with their own abilities. If any of them survive until the end of their summoned timer, the Brewmaster is reborn. Each Warrior gains its respective Drunken Brawler stance.", "notes_loc": ["The Earth Element will carry all auras that the Brewmaster has, as well as True Sight.", "The Fire Element has phased movement.", "When the spell ends, Brewmaster will take the place of an element in this order, assuming they are alive: Earth, Storm, Fire."], "scepter_loc": "Primal Split gains %scepter_bonus_levels% max and current level, improving the Brewlings and their abilities. Allows Primal Split to be cancelled early, and causes the Brewlings to be Brewed Up when Primal Split begins."}, "changed_fields": [{"field": "attribute_share_pct", "old": {"base": [0], "scepter": [0], "shard": null}, "new": null}, {"field": "dmg_per_attribute", "old": {"base": [0], "scepter": [0], "shard": null}, "new": null}, {"field": "hp_per_attribute", "old": {"base": [0], "scepter": [0], "shard": null}, "new": null}, {"field": "tooltip_earth_brewling_hp", "old": {"base": [1400, 2300, 3200, 4100], "scepter": null, "shard": null}, "new": {"base": [1400, 2200, 3000, 3800], "scepter": null, "shard": null}}, {"field": "tooltip_fire_brewling_damage", "old": {"base": [70, 120, 170, 220], "scepter": null, "shard": null}, "new": {"base": [70, 115, 160, 205], "scepter": null, "shard": null}}], "rows": [{"review_id": "db1fdd819ce268edc431", "mechanism": "aura", "mechanism_zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法", "condition": "base", "decision": "reject"}, {"review_id": "3eeab5b7af0e9b82cce7", "mechanism": "cleave", "mechanism_zh": "分裂溅射", "definition": "攻击伤害波及周围单位", "condition": "base", "decision": "reject"}, {"review_id": "4077ff5e24a5b7dce1c6", "mechanism": "phased", "mechanism_zh": "相位移动", "definition": "移动不受单位碰撞阻挡", "condition": "base", "decision": "accept"}, {"review_id": "d847d6ccab42280a1a5e", "mechanism": "respawn", "mechanism_zh": "重生", "definition": "死亡后复活，或影响复活", "condition": "base", "decision": "accept"}, {"review_id": "846f1e690d9ec0a71a65", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "accept"}, {"review_id": "68ba6a59cc7414eb2dc3", "mechanism": "true_sight", "mechanism_zh": "真视", "definition": "可看见隐身单位", "condition": "base", "decision": "reject"}]}, {"subject": "brewmaster_thunder_clap", "name_zh": "酒仙·雷霆一击", "category": "2_纯数值", "text_741f": {"desc_loc": "Slams the ground, dealing damage and slowing the movement speed and attack rate of nearby enemy units."}, "text_742": {"desc_loc": "Slams the ground, dealing damage and slowing the movement speed and attack rate of nearby enemy units."}, "changed_fields": [{"field": "duration", "old": {"base": [4, 4.25, 4.5, 4.75], "scepter": null, "shard": null}, "new": {"base": [3.5, 3.75, 4, 4.25], "scepter": null, "shard": null}}], "rows": [{"review_id": "3f422ada1bc96e1c303e", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:brewmaster_thunder_clap:attack_slow:base", "mechanism": "attack_slow", "mechanism_zh": "减攻速", "definition": "降低敌方单位的攻击速度", "condition": "base", "decision": "accept"}, {"review_id": "2b1f34f67fd21488cb62", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "bristleback_prickly", "name_zh": "钢背兽·尖刺在背", "category": "2_纯数值", "text_741f": {"desc_loc": "Bristleback has bonus damage and debuff duration amp against enemy heroes that are behind him."}, "text_742": {"desc_loc": "Bristleback has bonus damage and debuff duration amp against enemy heroes that are behind him."}, "changed_fields": [{"field": "amp_pct", "old": {"base": [4.5], "scepter": null, "shard": null}, "new": {"base": [5], "scepter": null, "shard": null}}], "rows": [{"review_id": "50c144f8ce1d8314163d", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}]}, {"subject": "bristleback_viscous_nasal_goo", "name_zh": "钢背兽·粘稠鼻液", "category": "3_说明文字", "text_741f": {"desc_loc": "Covers a target in snot, causing it to have reduced armor and movement speed for %goo_duration% seconds. Multiple casts stack and refresh the duration.", "facets_loc": ["Max stacks and armor reduction per stack increased."]}, "text_742": {"desc_loc": "Covers a target in snot, causing it to have reduced armor and movement speed for %goo_duration% seconds. Multiple casts stack and refresh the duration."}, "changed_fields": [{"field": "mana_costs", "old": [12, 16, 20, 24], "new": [10, 15, 20, 25]}, {"field": "AbilityManaCost", "old": {"base": [12, 16, 20, 24], "scepter": null, "shard": null}, "new": {"base": [10, 15, 20, 25], "scepter": null, "shard": null}}, {"field": "armor_per_stack", "old": {"base": [2, 2.5, 3, 3.5], "scepter": null, "shard": null}, "new": {"base": [1, 2, 3, 4], "scepter": null, "shard": null}}, {"field": "base_armor", "old": {"base": [1.5, 2, 2.5, 3], "scepter": null, "shard": null}, "new": {"base": [1, 2, 3, 4], "scepter": null, "shard": null}}], "rows": [{"review_id": "80bf97baeff9d8ecc7b0", "mechanism": "armor_reduction", "mechanism_zh": "减护甲", "definition": "降低目标护甲", "condition": "base", "decision": "accept"}, {"review_id": "a2e5bc147f853ec7f6da", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "8b675b13b8077e5fc933", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "broodmother_incapacitating_bite", "name_zh": "育母蜘蛛·麻痹之咬", "category": "2_纯数值", "text_741f": {"desc_loc": "Broodmother's venom cripples enemy units, causing her attacks to slow and giving the affected unit a chance to miss its attacks and extra damage from attacks.", "notes_loc": ["The miss chance stacks with evasion and terrain dodge chance."]}, "text_742": {"desc_loc": "Broodmother's venom cripples enemy units, causing her attacks to slow and giving the affected unit a chance to miss its attacks and extra damage from attacks.", "notes_loc": ["The miss chance stacks with evasion and terrain dodge chance."]}, "changed_fields": [], "rows": [{"review_id": "0734a0739ce2be3ac62e", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:broodmother_incapacitating_bite:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "6deeae95279b0f40c9d0", "mechanism": "blind", "mechanism_zh": "致盲", "definition": "使敌方单位的攻击有概率落空", "condition": "base", "decision": "accept"}, {"review_id": "5de486688645bbfae6a9", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "c3490f2351844afc22b5", "mechanism": "evasion", "mechanism_zh": "闪避", "definition": "自身有概率使敌方攻击落空", "condition": "base", "decision": "reject"}, {"review_id": "add955020046e620e918", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "accept"}, {"review_id": "75fc39e5211f6545b620", "mechanism": "projectile_dodge", "mechanism_zh": "躲避弹道", "definition": "主动使已飞来的弹道落空；“无法被躲避”的说明不算", "condition": "base", "decision": "reject"}, {"review_id": "04ec4ee5430bcb87908c", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "broodmother_spawn_spiderlings", "name_zh": "育母蜘蛛·孵化蜘蛛", "category": "2_纯数值", "text_741f": {"desc_loc": "Broodmother injects her young into an enemy unit, dealing damage and slowing them for %slow_duration% seconds. The spiderlings will hatch if the target is killed while under this influence.", "notes_loc": ["If the target is killed within %buff_duration% seconds of being hit with this skill, the Spiderlings will spawn.", "Units killed by Spiderlings will then give birth to additional Spiderlings."]}, "text_742": {"desc_loc": "Broodmother injects her young into an enemy unit, dealing damage and slowing them for %slow_duration% seconds. The spiderlings will hatch if the target is killed while under this influence.", "notes_loc": ["If the target is killed within %buff_duration% seconds of being hit with this skill, the Spiderlings will spawn.", "Units killed by Spiderlings will then give birth to additional Spiderlings."]}, "changed_fields": [{"field": "damage_bonus", "old": {"base": [0, 3, 6], "scepter": null, "shard": null}, "new": {"base": [0, 6, 12], "scepter": null, "shard": null}}, {"field": "tooltip_spiderling_damage", "old": null, "new": {"base": [18.5, 24.5, 30.5], "scepter": null, "shard": null}}], "rows": [{"review_id": "b1dc968af260c4db6a17", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "aff92ef822270c470a09", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "audit:broodmother_spawn_spiderlings:summons:base", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "accept"}, {"review_id": "b1a4b491256547016908", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "broodmother_spiders_milk", "name_zh": "育母蜘蛛·蜘蛛奶", "category": "3_说明文字", "text_741f": {"desc_loc": "Whenever Broodmother kills a unit, she and all units under her control in a %kill_heal_aoe% radius receive a buff for %kill_heal_duration%s that heals them for a percentage of the victim's health every %tick_rate% seconds. Healing from creeps is reduced by %kill_creeps_penalty%%%."}, "text_742": {"desc_loc": "Whenever Broodmother or a nearby unit under her control kills an enemy, Broodmother and her units close to the victim receive a buff for %kill_heal_duration%s that heals them for a percentage of the victim's health every %tick_rate% seconds. Healing from creeps is reduced by %kill_creeps_penalty%%%."}, "changed_fields": [{"field": "kill_heal_aoe", "old": {"base": [600], "scepter": null, "shard": null}, "new": {"base": [900], "scepter": null, "shard": null}}, {"field": "kill_heal_heroes", "old": {"base": [1.9], "scepter": null, "shard": null}, "new": {"base": [2.9], "scepter": null, "shard": null}}], "rows": [{"review_id": "33da405d7ebc0b55011f", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "74ef47b600ee8227e970", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}]}, {"subject": "buckler", "name_zh": "玄冥盾牌", "category": "2_纯数值", "text_741f": {"desc_loc": "Passive: Buckler Aura Grants %bonus_aoe_armor% armor to allied player units. Radius: %bonus_aoe_radius%"}, "text_742": {"desc_loc": "Passive: Buckler Aura Grants %bonus_aoe_armor% armor to allied player units. Radius: %bonus_aoe_radius%"}, "changed_fields": [{"field": "armor", "old": {"base": [1], "scepter": null, "shard": null}, "new": {"base": [2], "scepter": null, "shard": null}}, {"field": "bonus_aoe_armor", "old": {"base": [2], "scepter": null, "shard": null}, "new": {"base": [1], "scepter": null, "shard": null}}], "rows": [{"review_id": "f4695f002d2dac8d6c19", "mechanism": "aura", "mechanism_zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法", "condition": "item", "decision": "accept"}]}, {"subject": "butterfly", "name_zh": "蝴蝶", "category": "2_纯数值", "text_741f": {"notes_loc": ["Stacks diminishingly with other sources of Evasion."]}, "text_742": {"notes_loc": ["Stacks diminishingly with other sources of Evasion."]}, "changed_fields": [{"field": "item_cost", "old": 5450, "new": 5000}, {"field": "bonus_attack_speed", "old": null, "new": {"base": [30], "scepter": null, "shard": null}}, {"field": "bonus_attack_speed_pct", "old": {"base": [20], "scepter": null, "shard": null}, "new": null}, {"field": "bonus_evasion", "old": {"base": [35], "scepter": null, "shard": null}, "new": {"base": [30], "scepter": null, "shard": null}}], "rows": [{"review_id": "84900c0d14d0d430a780", "mechanism": "evasion", "mechanism_zh": "闪避", "definition": "自身有概率使敌方攻击落空", "condition": "item", "decision": "accept"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "bloodseeker_bloodrage",
+      "rows": [
+        {
+          "review_id": "audit:bloodseeker_bloodrage:attack_modifier:shard",
+          "verdict": "holds",
+          "quote": "Bloodseeker's Bloodrage attacks now deal %max_health_dmg_pct%%% of the target's max health as Pure damage.",
+          "reason_zh": "魔晶仍使血怒期间的普攻附带按目标最大生命值计算的纯粹伤害。"
+        },
+        {
+          "review_id": "5f805ffd825b867b3d96",
+          "verdict": "holds",
+          "quote": "spell_amp.base: [15,20,25,30]→[12,16,20,24]",
+          "reason_zh": "各等级的法术放大均有下调，但仍为正值。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bloodseeker_rupture",
+      "rows": [
+        {
+          "review_id": "04666b9d4d1b7bda9a3a",
+          "verdict": "holds",
+          "quote": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health. If the unit moves, it takes damage based on the distance moved.",
+          "reason_zh": "初始伤害和移动伤害都只作用于同一个敌方目标。"
+        },
+        {
+          "review_id": "c6d24a1a4371c9c1c614",
+          "verdict": "holds",
+          "quote": "Increases initial damage and grants %AbilityCharges% Rupture Charges. Decreases cooldown by %bonus_AbilityCooldown%s.",
+          "reason_zh": "A杖仍提供割裂充能，新增的冷却缩短只作用于割裂自身。"
+        },
+        {
+          "review_id": "c0dee5977d875af107a7",
+          "verdict": "holds",
+          "quote": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health.",
+          "reason_zh": "基础技能仍以一个敌方单位为施法目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bloodseeker_thirst",
+      "rows": [
+        {
+          "review_id": "20626c1ec3be9231d5f0",
+          "verdict": "unclear",
+          "quote": "bonus_movement_speed.base: [10,20,30,40]→[12,20,28,36]",
+          "reason_zh": "材料只给出移速字段的变化，缺少确认可被破坏所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "6e4f3b540a4ae6a62dcc",
+          "verdict": "holds",
+          "quote": "If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero.",
+          "reason_zh": "敌方英雄生命值低于阈值时，血魔仍获得该英雄的视野。"
+        },
+        {
+          "review_id": "a68b193784a2bb47c98d",
+          "verdict": "holds",
+          "quote": "bonus_movement_speed.base: [10,20,30,40]→[12,20,28,36]",
+          "reason_zh": "调整后各等级仍给血魔提供正的移速加成。"
+        },
+        {
+          "review_id": "0b48531995f9e1c55dd4",
+          "verdict": "holds",
+          "quote": "he will also gain vision and True Sight of that hero.",
+          "reason_zh": "低血量阈值触发的是对敌方英雄的视野和真视，没有赋予单位隐身的效果。"
+        },
+        {
+          "review_id": "e8685a92b0014583d3e4",
+          "verdict": "holds",
+          "quote": "If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero.",
+          "reason_zh": "敌方英雄生命值低于阈值时，血魔仍获得对该英雄的真视。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bloodstone",
+      "rows": [
+        {
+          "review_id": "c1e0d0c931d07a344abd",
+          "verdict": "holds",
+          "quote": "Enemy units take %aura_spell_vulnerability%%% increased damage from spells.",
+          "reason_zh": "光环提高范围内敌人受到的技能伤害，光环本身没有造成范围伤害。"
+        },
+        {
+          "review_id": "da1fe5b4658a3f7f250e",
+          "verdict": "holds",
+          "quote": "Passive: Spell Weakness Aura Enemy units take %aura_spell_vulnerability%%% increased damage from spells. Radius: %aura_radius%",
+          "reason_zh": "持有者周围的敌方单位仍受法术易伤光环影响。"
+        },
+        {
+          "review_id": "4d33c804e01513f66d21",
+          "verdict": "holds",
+          "quote": "Enemy units take %aura_spell_vulnerability%%% increased damage from spells.",
+          "reason_zh": "增伤限定于技能伤害，按机制表应归入技能易伤。"
+        },
+        {
+          "review_id": "847cbcb56409d5684dfc",
+          "verdict": "holds",
+          "quote": "spell_lifesteal_while_active.base: [60]→[70]",
+          "reason_zh": "主动期间的技能吸血从60%提高到70%。"
+        },
+        {
+          "review_id": "b5155d42b834e8a63217",
+          "verdict": "holds",
+          "quote": "aura_spell_vulnerability.base: [10]→[8]",
+          "reason_zh": "敌方单位受到的额外技能伤害从10%降至8%，技能易伤仍生效。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bloodthorn",
+      "rows": [
+        {
+          "review_id": "audit:bloodthorn:attack_modifier:item",
+          "verdict": "holds",
+          "quote": "All attacks on the silenced target will deal additional damage equal to %proc_damage_heroes% if the attacker is a hero, and %proc_damage_creeps%, if the attacker is a creep.",
+          "reason_zh": "被动穿刺已移除，但攻击被血棘沉默的目标仍会附带额外伤害。"
+        },
+        {
+          "review_id": "audit:bloodthorn:incoming_damage_amp:item",
+          "verdict": "holds",
+          "quote": "At the end of the silence, an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage.",
+          "reason_zh": "沉默期间受到的全部伤害都参与额外伤害结算，包括物理伤害。"
+        },
+        {
+          "review_id": "8e0f2fd2cc75bb460610",
+          "verdict": "holds",
+          "quote": "an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage.",
+          "reason_zh": "魔法是追加伤害的结算类型，说明没有赋予目标减魔抗或技能易伤。"
+        },
+        {
+          "review_id": "e57e91809a3631493e3c",
+          "verdict": "unclear",
+          "quote": "item_cost: 6400→6250",
+          "reason_zh": "所列装备字段和主动说明均未给出回蓝属性，无法独立确认该行。"
+        },
+        {
+          "review_id": "6b7d62cdc72b370c4032",
+          "verdict": "holds",
+          "quote": "Provides True Strike for your attacks and attacks from your controlled units against the silenced target.",
+          "reason_zh": "被动概率穿刺移除后，持有者及其控制单位攻击被血棘沉默的目标仍然必中。"
+        },
+        {
+          "review_id": "72703b77330b2889566e",
+          "verdict": "holds",
+          "quote": "Provides True Strike for your attacks and attacks from your controlled units against the silenced target.",
+          "reason_zh": "该行判断的是装备是否具有克敌机先，主动沉默期间的必中仍满足定义。"
+        },
+        {
+          "review_id": "c5c89a459a131403bff3",
+          "verdict": "holds",
+          "quote": "Silences a target for %silence_duration% seconds.",
+          "reason_zh": "血棘主动仍会沉默目标。"
+        },
+        {
+          "review_id": "87ea31fe89cdc0961f5e",
+          "verdict": "holds",
+          "quote": "At the end of the silence, an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage.",
+          "reason_zh": "主动效果按目标所受伤害追加一次结算，没有提高持有者的法术伤害倍率。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "boots",
+      "rows": [
+        {
+          "review_id": "fcab0823b9cf802c2ef8",
+          "verdict": "holds",
+          "quote": "bonus_movement_speed.base: null→[45]",
+          "reason_zh": "7.42的装备字段明确给出45点移速加成。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bounty_hunter_shuriken_toss",
+      "rows": [
+        {
+          "review_id": "7469215ada7c28a99e33",
+          "verdict": "holds",
+          "quote": "The shuriken will bounce to any Tracked units who are within a %bounce_aoe% radius of each other.",
+          "reason_zh": "飞镖可弹向彼此处于指定距离内的追踪目标，一次施放能伤害多个敌人。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_shuriken_toss:economy:scepter",
+          "verdict": "unclear",
+          "quote": "Increases cast range and applies Jinada on hit.",
+          "reason_zh": "A杖说明只确认命中时触发 Jinada，材料未说明该效果是否带来额外金钱或经验。"
+        },
+        {
+          "review_id": "5f06fa0115fbb9bbbe64",
+          "verdict": "holds",
+          "quote": "slowing the target's movement speed.",
+          "reason_zh": "飞镖仍降低目标的移动速度。"
+        },
+        {
+          "review_id": "4adb849a1ebd828ab4d1",
+          "verdict": "holds",
+          "quote": "Hurls a deadly shuriken at an enemy unit",
+          "reason_zh": "施法时仍选取一个敌方单位作为飞镖的初始目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bounty_hunter_track",
+      "rows": [
+        {
+          "review_id": "0f0e423bcf367d725787",
+          "verdict": "holds",
+          "quote": "If the target dies, Bounty Hunter and nearby heroes collect a bonus bounty of gold.",
+          "reason_zh": "追踪目标死亡时仍会发放额外赏金。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_track:grant_vision:base",
+          "verdict": "unclear",
+          "quote": "Tracks an enemy hero, granting True Sight of the target",
+          "reason_zh": "说明明确赋予对目标的真视，但未说明失去普通视野时是否仍提供目标视野。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_track:incoming_damage_amp:base",
+          "verdict": "holds",
+          "quote": "target_damage_amp.base: [8,12,16]→[6,10,14]",
+          "reason_zh": "各等级的目标所受伤害加成均有下调，但仍为正值。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_track:reveal:base",
+          "verdict": "holds",
+          "quote": "granting True Sight of the target",
+          "reason_zh": "对追踪目标的真视仍能使处于隐身状态的该目标被看见。"
+        },
+        {
+          "review_id": "3b5c2596011f2cde4194",
+          "verdict": "holds",
+          "quote": "granting True Sight of the target",
+          "reason_zh": "追踪术仍明确提供对目标英雄的真视。"
+        },
+        {
+          "review_id": "1260c5b7e6450e3e4f8f",
+          "verdict": "holds",
+          "quote": "Tracks an enemy hero",
+          "reason_zh": "追踪术仍以一个敌方英雄为施法目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bounty_hunter_wind_walk",
+      "rows": [
+        {
+          "review_id": "audit:bounty_hunter_wind_walk:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "If he breaks the invisibility with an attack, that attack will stun the target for a short duration.",
+          "reason_zh": "用于破隐的那次普攻仍附带眩晕。"
+        },
+        {
+          "review_id": "d79cea01edef8201f179",
+          "verdict": "holds",
+          "quote": "Will not break most channeling of spells upon activation.",
+          "reason_zh": "注释说的是开启暗影步对已有引导的影响，破隐攻击的眩晕也不重复计作独立打断机制。"
+        },
+        {
+          "review_id": "70d512d52eecf0f53f7b",
+          "verdict": "holds",
+          "quote": "If he breaks the invisibility with an attack, that attack will stun the target for a short duration.",
+          "reason_zh": "说明列出的破隐攻击效果为眩晕，没有额外金钱或经验收益。"
+        },
+        {
+          "review_id": "68f783785e1e58600dd2",
+          "verdict": "holds",
+          "quote": "bonus_move_speed_pct.base: [11,14,17,20]→[9,12,15,18]",
+          "reason_zh": "移速加成下调后，各等级仍提供加速。"
+        },
+        {
+          "review_id": "fe95f9901a60f35e5a9e",
+          "verdict": "holds",
+          "quote": "Bounty Hunter becomes invisible",
+          "reason_zh": "开启暗影步仍使赏金猎人隐身。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_wind_walk:phased:base",
+          "verdict": "holds",
+          "quote": "the ability to move through other units until he attacks or casts a spell.",
+          "reason_zh": "暗影步期间仍可穿过其他单位，直至攻击或施法。"
+        },
+        {
+          "review_id": "c8288ad225616bae04db",
+          "verdict": "holds",
+          "quote": "stun_duration.base: [1,1.2,1.4,1.6]→[0.9,1.1,1.3,1.5]",
+          "reason_zh": "破隐攻击的眩晕时间缩短，但各等级均大于零。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "brewmaster_cinder_brew",
+      "rows": [
+        {
+          "review_id": "afac2657e8ffcba73902",
+          "verdict": "holds",
+          "quote": "Rolls a barrel of ale at enemies that damages enemies along its path",
+          "reason_zh": "一次施放仍可伤害酒桶路径上的多个敌人。"
+        },
+        {
+          "review_id": "0782f020843ab6efdd4b",
+          "verdict": "holds",
+          "quote": "Any enemy in the path or the spill area is drenched in cinder brew, becoming slowed.",
+          "reason_zh": "酒桶路径或泼洒范围内被浸湿的敌人仍会减速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "brewmaster_liquid_courage",
+      "rows": [
+        {
+          "review_id": "250196a73630c3bbf96f",
+          "verdict": "unclear",
+          "quote": "behavior: 1688849860263939→1688849860263938",
+          "reason_zh": "行为字段有变化，但材料未给出判断能否被破坏所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "5a7c27e4b74f1655d4a3",
+          "verdict": "holds",
+          "quote": "his movement speed alternates every %speed_toggle_time%s between being faster and being slower.",
+          "reason_zh": "基础触发方式改为累计受伤达到阈值，触发后仍有自身加速阶段。"
+        },
+        {
+          "review_id": "audit:brewmaster_liquid_courage:healing:shard",
+          "verdict": "holds",
+          "quote": "toss a strong drink to a teammate or yourself to gain the effects of Liquid Courage and %max_hp_regen%%% Max HP Regen per second.",
+          "reason_zh": "魔晶主动仍使自己或一名队友每秒按最大生命值回复生命。"
+        },
+        {
+          "review_id": "5d66ef354906cd9023bb",
+          "verdict": "holds",
+          "quote": "his movement speed alternates every %speed_toggle_time%s between being faster and being slower.",
+          "reason_zh": "变慢阶段作用于酒仙自身，基础效果没有降低敌方单位的移速。"
+        },
+        {
+          "review_id": "0022a156f62ba85785ef",
+          "verdict": "holds",
+          "quote": "After taking %damage_threshold% damage from player-controlled units, Brewmaster gains a Status Resistance buff for %trigger_duration%s",
+          "reason_zh": "基础技能仍提供状态抗性，触发要求由低生命值改为累计受到指定来源的伤害。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "brewmaster_primal_split",
+      "rows": [
+        {
+          "review_id": "db1fdd819ce268edc431",
+          "verdict": "holds",
+          "quote": "The Earth Element will carry all auras that the Brewmaster has",
+          "reason_zh": "大地元素继承酒仙已有的光环，技能本身没有赋予独立光环。"
+        },
+        {
+          "review_id": "3eeab5b7af0e9b82cce7",
+          "verdict": "holds",
+          "quote": "Splits Brewmaster into elements, forming 3 specialized warriors",
+          "reason_zh": "说明中的分离是生成元素战士，没有提到普攻伤害溅射。"
+        },
+        {
+          "review_id": "4077ff5e24a5b7dce1c6",
+          "verdict": "holds",
+          "quote": "The Fire Element has phased movement.",
+          "reason_zh": "烈火元素仍具有相位移动。"
+        },
+        {
+          "review_id": "d847d6ccab42280a1a5e",
+          "verdict": "holds",
+          "quote": "If any of them survive until the end of their summoned timer, the Brewmaster is reborn.",
+          "reason_zh": "召唤时限结束时，只要有一个元素战士存活，酒仙就会重生。"
+        },
+        {
+          "review_id": "846f1e690d9ec0a71a65",
+          "verdict": "holds",
+          "quote": "tooltip_earth_brewling_hp.base: [1400,2300,3200,4100]→[1400,2200,3000,3800]",
+          "reason_zh": "技能仍生成元素战士，大地元素在各等级都有明确的生命值。"
+        },
+        {
+          "review_id": "68ba6a59cc7414eb2dc3",
+          "verdict": "unclear",
+          "quote": "The Earth Element will carry all auras that the Brewmaster has, as well as True Sight.",
+          "reason_zh": "说明称大地元素会携带真视，但未明确真视是否必须来自酒仙已有的效果，因此无法确认基础技能应排除真视。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "brewmaster_thunder_clap",
+      "rows": [
+        {
+          "review_id": "3f422ada1bc96e1c303e",
+          "verdict": "holds",
+          "quote": "Slams the ground, dealing damage and slowing the movement speed and attack rate of nearby enemy units.",
+          "reason_zh": "一次施放仍能伤害酒仙周围的多个敌方单位。"
+        },
+        {
+          "review_id": "audit:brewmaster_thunder_clap:attack_slow:base",
+          "verdict": "holds",
+          "quote": "slowing the movement speed and attack rate of nearby enemy units.",
+          "reason_zh": "效果持续时间缩短，附近敌人的攻击速度仍会降低。"
+        },
+        {
+          "review_id": "2b1f34f67fd21488cb62",
+          "verdict": "holds",
+          "quote": "slowing the movement speed and attack rate of nearby enemy units.",
+          "reason_zh": "效果持续时间缩短，附近敌人的移动速度仍会降低。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bristleback_prickly",
+      "rows": [
+        {
+          "review_id": "50c144f8ce1d8314163d",
+          "verdict": "unclear",
+          "quote": "amp_pct.base: [4.5]→[5]",
+          "reason_zh": "材料只给出增幅数值的变化，缺少确认可被破坏所需的 IsBreakable 值。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bristleback_viscous_nasal_goo",
+      "rows": [
+        {
+          "review_id": "80bf97baeff9d8ecc7b0",
+          "verdict": "holds",
+          "quote": "Covers a target in snot, causing it to have reduced armor and movement speed for %goo_duration% seconds.",
+          "reason_zh": "删除命石说明后，基础描述仍明确写有减甲，基础减甲和每层减甲也都保有正值。"
+        },
+        {
+          "review_id": "a2e5bc147f853ec7f6da",
+          "verdict": "holds",
+          "quote": "causing it to have reduced armor and movement speed for %goo_duration% seconds.",
+          "reason_zh": "鼻液仍会降低目标的移动速度。"
+        },
+        {
+          "review_id": "8b675b13b8077e5fc933",
+          "verdict": "holds",
+          "quote": "Covers a target in snot, causing it to have reduced armor and movement speed",
+          "reason_zh": "鼻液仍指向单个目标，对其施加减甲和减速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "broodmother_incapacitating_bite",
+      "rows": [
+        {
+          "review_id": "0734a0739ce2be3ac62e",
+          "verdict": "holds",
+          "quote": "giving the affected unit a chance to miss its attacks and extra damage from attacks.",
+          "reason_zh": "效果施加于受攻击的单位，说明没有一次攻击波及多个敌人的效果。"
+        },
+        {
+          "review_id": "audit:broodmother_incapacitating_bite:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "causing her attacks to slow and giving the affected unit a chance to miss its attacks",
+          "reason_zh": "育母蜘蛛的普攻仍附带减速并使目标的攻击有概率落空。"
+        },
+        {
+          "review_id": "6deeae95279b0f40c9d0",
+          "verdict": "holds",
+          "quote": "giving the affected unit a chance to miss its attacks",
+          "reason_zh": "受影响敌人的攻击仍有概率落空，符合致盲定义。"
+        },
+        {
+          "review_id": "5de486688645bbfae6a9",
+          "verdict": "unclear",
+          "quote": "Broodmother's venom cripples enemy units, causing her attacks to slow",
+          "reason_zh": "文字说明了普攻附效，材料未给出确认可被破坏所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "c3490f2351844afc22b5",
+          "verdict": "holds",
+          "quote": "The miss chance stacks with evasion and terrain dodge chance.",
+          "reason_zh": "技能给敌人施加可与闪避叠加的落空概率，没有赋予育母蜘蛛自身闪避。"
+        },
+        {
+          "review_id": "add955020046e620e918",
+          "verdict": "holds",
+          "quote": "giving the affected unit a chance to miss its attacks and extra damage from attacks.",
+          "reason_zh": "受影响的目标仍会从攻击中受到额外伤害。"
+        },
+        {
+          "review_id": "75fc39e5211f6545b620",
+          "verdict": "holds",
+          "quote": "giving the affected unit a chance to miss its attacks",
+          "reason_zh": "敌方攻击有概率落空，说明没有主动躲避已飞来弹道的效果。"
+        },
+        {
+          "review_id": "04ec4ee5430bcb87908c",
+          "verdict": "holds",
+          "quote": "causing her attacks to slow",
+          "reason_zh": "育母蜘蛛的攻击仍会使敌人减速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "broodmother_spawn_spiderlings",
+      "rows": [
+        {
+          "review_id": "b1dc968af260c4db6a17",
+          "verdict": "holds",
+          "quote": "Broodmother injects her young into an enemy unit, dealing damage and slowing them for %slow_duration% seconds.",
+          "reason_zh": "施放时的伤害只作用于被注入幼体的单个敌人。"
+        },
+        {
+          "review_id": "aff92ef822270c470a09",
+          "verdict": "holds",
+          "quote": "dealing damage and slowing them for %slow_duration% seconds.",
+          "reason_zh": "命中时仍使目标减速。"
+        },
+        {
+          "review_id": "audit:broodmother_spawn_spiderlings:summons:base",
+          "verdict": "holds",
+          "quote": "If the target is killed within %buff_duration% seconds of being hit with this skill, the Spiderlings will spawn.",
+          "reason_zh": "目标在技能命中后的规定时间内死亡，仍会生成小蜘蛛。"
+        },
+        {
+          "review_id": "b1a4b491256547016908",
+          "verdict": "holds",
+          "quote": "Broodmother injects her young into an enemy unit",
+          "reason_zh": "施法时仍选取一个敌方单位作为注入幼体的目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "broodmother_spiders_milk",
+      "rows": [
+        {
+          "review_id": "33da405d7ebc0b55011f",
+          "verdict": "unclear",
+          "quote": "Whenever Broodmother or a nearby unit under her control kills an enemy",
+          "reason_zh": "新版说明扩展了击杀触发者，材料未给出确认可被破坏所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "74ef47b600ee8227e970",
+          "verdict": "holds",
+          "quote": "Broodmother and her units close to the victim receive a buff for %kill_heal_duration%s that heals them for a percentage of the victim's health every %tick_rate% seconds.",
+          "reason_zh": "育母蜘蛛或附近受控单位完成击杀后，仍会触发按死者生命值计算的周期治疗。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "buckler",
+      "rows": [
+        {
+          "review_id": "f4695f002d2dac8d6c19",
+          "verdict": "holds",
+          "quote": "Passive: Buckler Aura Grants %bonus_aoe_armor% armor to allied player units. Radius: %bonus_aoe_radius%",
+          "reason_zh": "光环提供的护甲从2点降至1点，仍作用于持有者附近的友方玩家单位。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "butterfly",
+      "rows": [
+        {
+          "review_id": "84900c0d14d0d430a780",
+          "verdict": "holds",
+          "quote": "bonus_evasion.base: [35]→[30]",
+          "reason_zh": "装备提供的闪避从35%降至30%，仍然生效。"
+        }
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+39,612
+{
+  "objects": [
+    {
+      "subject": "bloodseeker_bloodrage",
+      "rows": [
+        {
+          "review_id": "audit:bloodseeker_bloodrage:attack_modifier:shard",
+          "verdict": "holds",
+          "quote": "Bloodseeker's Bloodrage attacks now deal %max_health_dmg_pct%%% of the target's max health as Pure damage.",
+          "reason_zh": "魔晶仍使血怒期间的普攻附带按目标最大生命值计算的纯粹伤害。"
+        },
+        {
+          "review_id": "5f805ffd825b867b3d96",
+          "verdict": "holds",
+          "quote": "spell_amp.base: [15,20,25,30]→[12,16,20,24]",
+          "reason_zh": "各等级的法术放大均有下调，但仍为正值。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bloodseeker_rupture",
+      "rows": [
+        {
+          "review_id": "04666b9d4d1b7bda9a3a",
+          "verdict": "holds",
+          "quote": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health. If the unit moves, it takes damage based on the distance moved.",
+          "reason_zh": "初始伤害和移动伤害都只作用于同一个敌方目标。"
+        },
+        {
+          "review_id": "c6d24a1a4371c9c1c614",
+          "verdict": "holds",
+          "quote": "Increases initial damage and grants %AbilityCharges% Rupture Charges. Decreases cooldown by %bonus_AbilityCooldown%s.",
+          "reason_zh": "A杖仍提供割裂充能，新增的冷却缩短只作用于割裂自身。"
+        },
+        {
+          "review_id": "c0dee5977d875af107a7",
+          "verdict": "holds",
+          "quote": "Causes an enemy unit's skin to rupture, dealing initial damage based on its current health.",
+          "reason_zh": "基础技能仍以一个敌方单位为施法目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bloodseeker_thirst",
+      "rows": [
+        {
+          "review_id": "20626c1ec3be9231d5f0",
+          "verdict": "unclear",
+          "quote": "bonus_movement_speed.base: [10,20,30,40]→[12,20,28,36]",
+          "reason_zh": "材料只给出移速字段的变化，缺少确认可被破坏所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "6e4f3b540a4ae6a62dcc",
+          "verdict": "holds",
+          "quote": "If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero.",
+          "reason_zh": "敌方英雄生命值低于阈值时，血魔仍获得该英雄的视野。"
+        },
+        {
+          "review_id": "a68b193784a2bb47c98d",
+          "verdict": "holds",
+          "quote": "bonus_movement_speed.base: [10,20,30,40]→[12,20,28,36]",
+          "reason_zh": "调整后各等级仍给血魔提供正的移速加成。"
+        },
+        {
+          "review_id": "0b48531995f9e1c55dd4",
+          "verdict": "holds",
+          "quote": "he will also gain vision and True Sight of that hero.",
+          "reason_zh": "低血量阈值触发的是对敌方英雄的视野和真视，没有赋予单位隐身的效果。"
+        },
+        {
+          "review_id": "e8685a92b0014583d3e4",
+          "verdict": "holds",
+          "quote": "If an enemy hero's health falls below %invis_threshold_pct%%%, he will also gain vision and True Sight of that hero.",
+          "reason_zh": "敌方英雄生命值低于阈值时，血魔仍获得对该英雄的真视。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bloodstone",
+      "rows": [
+        {
+          "review_id": "c1e0d0c931d07a344abd",
+          "verdict": "holds",
+          "quote": "Enemy units take %aura_spell_vulnerability%%% increased damage from spells.",
+          "reason_zh": "光环提高范围内敌人受到的技能伤害，光环本身没有造成范围伤害。"
+        },
+        {
+          "review_id": "da1fe5b4658a3f7f250e",
+          "verdict": "holds",
+          "quote": "Passive: Spell Weakness Aura Enemy units take %aura_spell_vulnerability%%% increased damage from spells. Radius: %aura_radius%",
+          "reason_zh": "持有者周围的敌方单位仍受法术易伤光环影响。"
+        },
+        {
+          "review_id": "4d33c804e01513f66d21",
+          "verdict": "holds",
+          "quote": "Enemy units take %aura_spell_vulnerability%%% increased damage from spells.",
+          "reason_zh": "增伤限定于技能伤害，按机制表应归入技能易伤。"
+        },
+        {
+          "review_id": "847cbcb56409d5684dfc",
+          "verdict": "holds",
+          "quote": "spell_lifesteal_while_active.base: [60]→[70]",
+          "reason_zh": "主动期间的技能吸血从60%提高到70%。"
+        },
+        {
+          "review_id": "b5155d42b834e8a63217",
+          "verdict": "holds",
+          "quote": "aura_spell_vulnerability.base: [10]→[8]",
+          "reason_zh": "敌方单位受到的额外技能伤害从10%降至8%，技能易伤仍生效。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bloodthorn",
+      "rows": [
+        {
+          "review_id": "audit:bloodthorn:attack_modifier:item",
+          "verdict": "holds",
+          "quote": "All attacks on the silenced target will deal additional damage equal to %proc_damage_heroes% if the attacker is a hero, and %proc_damage_creeps%, if the attacker is a creep.",
+          "reason_zh": "被动穿刺已移除，但攻击被血棘沉默的目标仍会附带额外伤害。"
+        },
+        {
+          "review_id": "audit:bloodthorn:incoming_damage_amp:item",
+          "verdict": "holds",
+          "quote": "At the end of the silence, an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage.",
+          "reason_zh": "沉默期间受到的全部伤害都参与额外伤害结算，包括物理伤害。"
+        },
+        {
+          "review_id": "8e0f2fd2cc75bb460610",
+          "verdict": "holds",
+          "quote": "an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage.",
+          "reason_zh": "魔法是追加伤害的结算类型，说明没有赋予目标减魔抗或技能易伤。"
+        },
+        {
+          "review_id": "e57e91809a3631493e3c",
+          "verdict": "unclear",
+          "quote": "item_cost: 6400→6250",
+          "reason_zh": "所列装备字段和主动说明均未给出回蓝属性，无法独立确认该行。"
+        },
+        {
+          "review_id": "6b7d62cdc72b370c4032",
+          "verdict": "holds",
+          "quote": "Provides True Strike for your attacks and attacks from your controlled units against the silenced target.",
+          "reason_zh": "被动概率穿刺移除后，持有者及其控制单位攻击被血棘沉默的目标仍然必中。"
+        },
+        {
+          "review_id": "72703b77330b2889566e",
+          "verdict": "holds",
+          "quote": "Provides True Strike for your attacks and attacks from your controlled units against the silenced target.",
+          "reason_zh": "该行判断的是装备是否具有克敌机先，主动沉默期间的必中仍满足定义。"
+        },
+        {
+          "review_id": "c5c89a459a131403bff3",
+          "verdict": "holds",
+          "quote": "Silences a target for %silence_duration% seconds.",
+          "reason_zh": "血棘主动仍会沉默目标。"
+        },
+        {
+          "review_id": "87ea31fe89cdc0961f5e",
+          "verdict": "holds",
+          "quote": "At the end of the silence, an additional %silence_damage_percent%%% of all damage taken during the silence will be dealt to the target as magical damage.",
+          "reason_zh": "主动效果按目标所受伤害追加一次结算，没有提高持有者的法术伤害倍率。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "boots",
+      "rows": [
+        {
+          "review_id": "fcab0823b9cf802c2ef8",
+          "verdict": "holds",
+          "quote": "bonus_movement_speed.base: null→[45]",
+          "reason_zh": "7.42的装备字段明确给出45点移速加成。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bounty_hunter_shuriken_toss",
+      "rows": [
+        {
+          "review_id": "7469215ada7c28a99e33",
+          "verdict": "holds",
+          "quote": "The shuriken will bounce to any Tracked units who are within a %bounce_aoe% radius of each other.",
+          "reason_zh": "飞镖可弹向彼此处于指定距离内的追踪目标，一次施放能伤害多个敌人。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_shuriken_toss:economy:scepter",
+          "verdict": "unclear",
+          "quote": "Increases cast range and applies Jinada on hit.",
+          "reason_zh": "A杖说明只确认命中时触发 Jinada，材料未说明该效果是否带来额外金钱或经验。"
+        },
+        {
+          "review_id": "5f06fa0115fbb9bbbe64",
+          "verdict": "holds",
+          "quote": "slowing the target's movement speed.",
+          "reason_zh": "飞镖仍降低目标的移动速度。"
+        },
+        {
+          "review_id": "4adb849a1ebd828ab4d1",
+          "verdict": "holds",
+          "quote": "Hurls a deadly shuriken at an enemy unit",
+          "reason_zh": "施法时仍选取一个敌方单位作为飞镖的初始目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bounty_hunter_track",
+      "rows": [
+        {
+          "review_id": "0f0e423bcf367d725787",
+          "verdict": "holds",
+          "quote": "If the target dies, Bounty Hunter and nearby heroes collect a bonus bounty of gold.",
+          "reason_zh": "追踪目标死亡时仍会发放额外赏金。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_track:grant_vision:base",
+          "verdict": "unclear",
+          "quote": "Tracks an enemy hero, granting True Sight of the target",
+          "reason_zh": "说明明确赋予对目标的真视，但未说明失去普通视野时是否仍提供目标视野。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_track:incoming_damage_amp:base",
+          "verdict": "holds",
+          "quote": "target_damage_amp.base: [8,12,16]→[6,10,14]",
+          "reason_zh": "各等级的目标所受伤害加成均有下调，但仍为正值。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_track:reveal:base",
+          "verdict": "holds",
+          "quote": "granting True Sight of the target",
+          "reason_zh": "对追踪目标的真视仍能使处于隐身状态的该目标被看见。"
+        },
+        {
+          "review_id": "3b5c2596011f2cde4194",
+          "verdict": "holds",
+          "quote": "granting True Sight of the target",
+          "reason_zh": "追踪术仍明确提供对目标英雄的真视。"
+        },
+        {
+          "review_id": "1260c5b7e6450e3e4f8f",
+          "verdict": "holds",
+          "quote": "Tracks an enemy hero",
+          "reason_zh": "追踪术仍以一个敌方英雄为施法目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bounty_hunter_wind_walk",
+      "rows": [
+        {
+          "review_id": "audit:bounty_hunter_wind_walk:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "If he breaks the invisibility with an attack, that attack will stun the target for a short duration.",
+          "reason_zh": "用于破隐的那次普攻仍附带眩晕。"
+        },
+        {
+          "review_id": "d79cea01edef8201f179",
+          "verdict": "holds",
+          "quote": "Will not break most channeling of spells upon activation.",
+          "reason_zh": "注释说的是开启暗影步对已有引导的影响，破隐攻击的眩晕也不重复计作独立打断机制。"
+        },
+        {
+          "review_id": "70d512d52eecf0f53f7b",
+          "verdict": "holds",
+          "quote": "If he breaks the invisibility with an attack, that attack will stun the target for a short duration.",
+          "reason_zh": "说明列出的破隐攻击效果为眩晕，没有额外金钱或经验收益。"
+        },
+        {
+          "review_id": "68f783785e1e58600dd2",
+          "verdict": "holds",
+          "quote": "bonus_move_speed_pct.base: [11,14,17,20]→[9,12,15,18]",
+          "reason_zh": "移速加成下调后，各等级仍提供加速。"
+        },
+        {
+          "review_id": "fe95f9901a60f35e5a9e",
+          "verdict": "holds",
+          "quote": "Bounty Hunter becomes invisible",
+          "reason_zh": "开启暗影步仍使赏金猎人隐身。"
+        },
+        {
+          "review_id": "audit:bounty_hunter_wind_walk:phased:base",
+          "verdict": "holds",
+          "quote": "the ability to move through other units until he attacks or casts a spell.",
+          "reason_zh": "暗影步期间仍可穿过其他单位，直至攻击或施法。"
+        },
+        {
+          "review_id": "c8288ad225616bae04db",
+          "verdict": "holds",
+          "quote": "stun_duration.base: [1,1.2,1.4,1.6]→[0.9,1.1,1.3,1.5]",
+          "reason_zh": "破隐攻击的眩晕时间缩短，但各等级均大于零。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "brewmaster_cinder_brew",
+      "rows": [
+        {
+          "review_id": "afac2657e8ffcba73902",
+          "verdict": "holds",
+          "quote": "Rolls a barrel of ale at enemies that damages enemies along its path",
+          "reason_zh": "一次施放仍可伤害酒桶路径上的多个敌人。"
+        },
+        {
+          "review_id": "0782f020843ab6efdd4b",
+          "verdict": "holds",
+          "quote": "Any enemy in the path or the spill area is drenched in cinder brew, becoming slowed.",
+          "reason_zh": "酒桶路径或泼洒范围内被浸湿的敌人仍会减速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "brewmaster_liquid_courage",
+      "rows": [
+        {
+          "review_id": "250196a73630c3bbf96f",
+          "verdict": "unclear",
+          "quote": "behavior: 1688849860263939→1688849860263938",
+          "reason_zh": "行为字段有变化，但材料未给出判断能否被破坏所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "5a7c27e4b74f1655d4a3",
+          "verdict": "holds",
+          "quote": "his movement speed alternates every %speed_toggle_time%s between being faster and being slower.",
+          "reason_zh": "基础触发方式改为累计受伤达到阈值，触发后仍有自身加速阶段。"
+        },
+        {
+          "review_id": "audit:brewmaster_liquid_courage:healing:shard",
+          "verdict": "holds",
+          "quote": "toss a strong drink to a teammate or yourself to gain the effects of Liquid Courage and %max_hp_regen%%% Max HP Regen per second.",
+          "reason_zh": "魔晶主动仍使自己或一名队友每秒按最大生命值回复生命。"
+        },
+        {
+          "review_id": "5d66ef354906cd9023bb",
+          "verdict": "holds",
+          "quote": "his movement speed alternates every %speed_toggle_time%s between being faster and being slower.",
+          "reason_zh": "变慢阶段作用于酒仙自身，基础效果没有降低敌方单位的移速。"
+        },
+        {
+          "review_id": "0022a156f62ba85785ef",
+          "verdict": "holds",
+          "quote": "After taking %damage_threshold% damage from player-controlled units, Brewmaster gains a Status Resistance buff for %trigger_duration%s",
+          "reason_zh": "基础技能仍提供状态抗性，触发要求由低生命值改为累计受到指定来源的伤害。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "brewmaster_primal_split",
+      "rows": [
+        {
+          "review_id": "db1fdd819ce268edc431",
+          "verdict": "holds",
+          "quote": "The Earth Element will carry all auras that the Brewmaster has",
+          "reason_zh": "大地元素继承酒仙已有的光环，技能本身没有赋予独立光环。"
+        },
+        {
+          "review_id": "3eeab5b7af0e9b82cce7",
+          "verdict": "holds",
+          "quote": "Splits Brewmaster into elements, forming 3 specialized warriors",
+          "reason_zh": "说明中的分离是生成元素战士，没有提到普攻伤害溅射。"
+        },
+        {
+          "review_id": "4077ff5e24a5b7dce1c6",
+          "verdict": "holds",
+          "quote": "The Fire Element has phased movement.",
+          "reason_zh": "烈火元素仍具有相位移动。"
+        },
+        {
+          "review_id": "d847d6ccab42280a1a5e",
+          "verdict": "holds",
+          "quote": "If any of them survive until the end of their summoned timer, the Brewmaster is reborn.",
+          "reason_zh": "召唤时限结束时，只要有一个元素战士存活，酒仙就会重生。"
+        },
+        {
+          "review_id": "846f1e690d9ec0a71a65",
+          "verdict": "holds",
+          "quote": "tooltip_earth_brewling_hp.base: [1400,2300,3200,4100]→[1400,2200,3000,3800]",
+          "reason_zh": "技能仍生成元素战士，大地元素在各等级都有明确的生命值。"
+        },
+        {
+          "review_id": "68ba6a59cc7414eb2dc3",
+          "verdict": "unclear",
+          "quote": "The Earth Element will carry all auras that the Brewmaster has, as well as True Sight.",
+          "reason_zh": "说明称大地元素会携带真视，但未明确真视是否必须来自酒仙已有的效果，因此无法确认基础技能应排除真视。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "brewmaster_thunder_clap",
+      "rows": [
+        {
+          "review_id": "3f422ada1bc96e1c303e",
+          "verdict": "holds",
+          "quote": "Slams the ground, dealing damage and slowing the movement speed and attack rate of nearby enemy units.",
+          "reason_zh": "一次施放仍能伤害酒仙周围的多个敌方单位。"
+        },
+        {
+          "review_id": "audit:brewmaster_thunder_clap:attack_slow:base",
+          "verdict": "holds",
+          "quote": "slowing the movement speed and attack rate of nearby enemy units.",
+          "reason_zh": "效果持续时间缩短，附近敌人的攻击速度仍会降低。"
+        },
+        {
+          "review_id": "2b1f34f67fd21488cb62",
+          "verdict": "holds",
+          "quote": "slowing the movement speed and attack rate of nearby enemy units.",
+          "reason_zh": "效果持续时间缩短，附近敌人的移动速度仍会降低。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bristleback_prickly",
+      "rows": [
+        {
+          "review_id": "50c144f8ce1d8314163d",
+          "verdict": "unclear",
+          "quote": "amp_pct.base: [4.5]→[5]",
+          "reason_zh": "材料只给出增幅数值的变化，缺少确认可被破坏所需的 IsBreakable 值。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bristleback_viscous_nasal_goo",
+      "rows": [
+        {
+          "review_id": "80bf97baeff9d8ecc7b0",
+          "verdict": "holds",
+          "quote": "Covers a target in snot, causing it to have reduced armor and movement speed for %goo_duration% seconds.",
+          "reason_zh": "删除命石说明后，基础描述仍明确写有减甲，基础减甲和每层减甲也都保有正值。"
+        },
+        {
+          "review_id": "a2e5bc147f853ec7f6da",
+          "verdict": "holds",
+          "quote": "causing it to have reduced armor and movement speed for %goo_duration% seconds.",
+          "reason_zh": "鼻液仍会降低目标的移动速度。"
+        },
+        {
+          "review_id": "8b675b13b8077e5fc933",
+          "verdict": "holds",
+          "quote": "Covers a target in snot, causing it to have reduced armor and movement speed",
+          "reason_zh": "鼻液仍指向单个目标，对其施加减甲和减速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "broodmother_incapacitating_bite",
+      "rows": [
+        {
+          "review_id": "0734a0739ce2be3ac62e",
+          "verdict": "holds",
+          "quote": "giving the affected unit a chance to miss its attacks and extra damage from attacks.",
+          "reason_zh": "效果施加于受攻击的单位，说明没有一次攻击波及多个敌人的效果。"
+        },
+        {
+          "review_id": "audit:broodmother_incapacitating_bite:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "causing her attacks to slow and giving the affected unit a chance to miss its attacks",
+          "reason_zh": "育母蜘蛛的普攻仍附带减速并使目标的攻击有概率落空。"
+        },
+        {
+          "review_id": "6deeae95279b0f40c9d0",
+          "verdict": "holds",
+          "quote": "giving the affected unit a chance to miss its attacks",
+          "reason_zh": "受影响敌人的攻击仍有概率落空，符合致盲定义。"
+        },
+        {
+          "review_id": "5de486688645bbfae6a9",
+          "verdict": "unclear",
+          "quote": "Broodmother's venom cripples enemy units, causing her attacks to slow",
+          "reason_zh": "文字说明了普攻附效，材料未给出确认可被破坏所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "c3490f2351844afc22b5",
+          "verdict": "holds",
+          "quote": "The miss chance stacks with evasion and terrain dodge chance.",
+          "reason_zh": "技能给敌人施加可与闪避叠加的落空概率，没有赋予育母蜘蛛自身闪避。"
+        },
+        {
+          "review_id": "add955020046e620e918",
+          "verdict": "holds",
+          "quote": "giving the affected unit a chance to miss its attacks and extra damage from attacks.",
+          "reason_zh": "受影响的目标仍会从攻击中受到额外伤害。"
+        },
+        {
+          "review_id": "75fc39e5211f6545b620",
+          "verdict": "holds",
+          "quote": "giving the affected unit a chance to miss its attacks",
+          "reason_zh": "敌方攻击有概率落空，说明没有主动躲避已飞来弹道的效果。"
+        },
+        {
+          "review_id": "04ec4ee5430bcb87908c",
+          "verdict": "holds",
+          "quote": "causing her attacks to slow",
+          "reason_zh": "育母蜘蛛的攻击仍会使敌人减速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "broodmother_spawn_spiderlings",
+      "rows": [
+        {
+          "review_id": "b1dc968af260c4db6a17",
+          "verdict": "holds",
+          "quote": "Broodmother injects her young into an enemy unit, dealing damage and slowing them for %slow_duration% seconds.",
+          "reason_zh": "施放时的伤害只作用于被注入幼体的单个敌人。"
+        },
+        {
+          "review_id": "aff92ef822270c470a09",
+          "verdict": "holds",
+          "quote": "dealing damage and slowing them for %slow_duration% seconds.",
+          "reason_zh": "命中时仍使目标减速。"
+        },
+        {
+          "review_id": "audit:broodmother_spawn_spiderlings:summons:base",
+          "verdict": "holds",
+          "quote": "If the target is killed within %buff_duration% seconds of being hit with this skill, the Spiderlings will spawn.",
+          "reason_zh": "目标在技能命中后的规定时间内死亡，仍会生成小蜘蛛。"
+        },
+        {
+          "review_id": "b1a4b491256547016908",
+          "verdict": "holds",
+          "quote": "Broodmother injects her young into an enemy unit",
+          "reason_zh": "施法时仍选取一个敌方单位作为注入幼体的目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "broodmother_spiders_milk",
+      "rows": [
+        {
+          "review_id": "33da405d7ebc0b55011f",
+          "verdict": "unclear",
+          "quote": "Whenever Broodmother or a nearby unit under her control kills an enemy",
+          "reason_zh": "新版说明扩展了击杀触发者，材料未给出确认可被破坏所需的 IsBreakable 值。"
+        },
+        {
+          "review_id": "74ef47b600ee8227e970",
+          "verdict": "holds",
+          "quote": "Broodmother and her units close to the victim receive a buff for %kill_heal_duration%s that heals them for a percentage of the victim's health every %tick_rate% seconds.",
+          "reason_zh": "育母蜘蛛或附近受控单位完成击杀后，仍会触发按死者生命值计算的周期治疗。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "buckler",
+      "rows": [
+        {
+          "review_id": "f4695f002d2dac8d6c19",
+          "verdict": "holds",
+          "quote": "Passive: Buckler Aura Grants %bonus_aoe_armor% armor to allied player units. Radius: %bonus_aoe_radius%",
+          "reason_zh": "光环提供的护甲从2点降至1点，仍作用于持有者附近的友方玩家单位。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "butterfly",
+      "rows": [
+        {
+          "review_id": "84900c0d14d0d430a780",
+          "verdict": "holds",
+          "quote": "bonus_evasion.base: [35]→[30]",
+          "reason_zh": "装备提供的闪避从35%降至30%，仍然生效。"
+        }
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

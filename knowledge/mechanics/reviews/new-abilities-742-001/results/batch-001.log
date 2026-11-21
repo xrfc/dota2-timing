@@ -1,0 +1,449 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6f9-53ee-7061-8830-4c2d6b9b7b67
+--------
+user
+你在独立为Dota 2的技能抽取机制标签。只依据下面的JSON（7.42官方英文说明`text_742`、数据字段`flags`、数值`values`；`%xxx%`是数值占位符），不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆补充材料没写的效果。
+
+对每个技能，列出下表中它**具有**的每个机制（`accept`），以及看起来相关、但细读后不具有的机制（`reject`，写明原因）。每条写适用条件：base基础、scepter_upgrade需A杖、shard_upgrade需魔晶（技能本身由A杖或魔晶授予时，其效果记在对应条件下）。不要列可驱散性、伤害类型、魔耗、可被破坏、单体指向、持续施法这几项（它们由游戏字段直接读出）。
+
+`quote`摘原文，`reason_zh`一句中文说明，`uncertain`表示材料不足。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待抽取技能（JSON）：
+[{"subject": "beastmaster_summon_thunderhide", "name_en": "Summon Ancient Thunderhide", "text_742": {"desc_loc": "Beastmaster calls forth an Ancient Thunderhide to fight alongside him. The Thunderhide can Slam the ground to damage and slow nearby enemies, and beats its Thunderhide Drum as Beastmaster or Beastmaster's units attack, increasing their damage and max health.", "notes_loc": ["A newly summoned Thunderhide's Slam starts on a %thunderhide_slam_spawn_cooldown% second cooldown."]}, "flags": {"behavior": "8589934597", "target_team": 0, "target_type": 0, "damage": 0, "immunity": 0, "dispellable": 0, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": true, "ability_is_granted_by_shard": false, "ability_is_innate": false}, "values": {"thunderhide_base_max_health": {"base": [2200], "scepter": null, "shard": null}, "thunderhide_base_damage": {"base": [90], "scepter": null, "shard": null}, "thunderhide_total_damage_tooltip": {"base": [90], "scepter": null, "shard": null}, "thunderhide_bonus_damage": {"base": [], "scepter": null, "shard": null}, "thunderhide_base_xp_bounty": {"base": [124], "scepter": null, "shard": null}, "thunderhide_base_movespeed": {"base": [355], "scepter": null, "shard": null}, "thunderhide_slam_spawn_cooldown": {"base": [5], "scepter": null, "shard": null}, "AbilityCastPoint": {"base": [0.3], "scepter": null, "shard": null}, "AbilityManaCost": {"base": [100], "scepter": null, "shard": null}, "AbilityCooldown": {"base": [60], "scepter": null, "shard": null}}}, {"subject": "chaos_knight_armageddon", "name_en": "Ahead, Armageddon", "text_742": {"desc_loc": "For each second Chaos Knight keeps moving without stopping or attacking, Armageddon gains bonus movement speed. The bonus drains away while stopping, and lost when attacking. While at least one of Chaos Knight's phantasms is alive, Ahead, Armageddon can be activated to charge over terrain, building up to a max speed before releasing. Chaos Knight and the illusions will attack units they charge over.", "notes_loc": ["Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.", "Ahead, Armageddon is only available when at least 1 of Chaos Knight's illusions created with the active cast of Phantasm is alive.", "Activation of Ahead, Armageddon will gather all of Chaos Knight's illusions in %illusion_radius% radius regardless of how they were created."]}, "flags": {"behavior": "525328", "target_team": 0, "target_type": 0, "damage": 1, "immunity": 3, "dispellable": 0, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": false, "ability_is_innate": true}, "values": {"speed_per_second": {"base": [5], "scepter": null, "shard": null}, "drain_rate_multiplier": {"base": [4], "scepter": null, "shard": null}, "think_interval": {"base": [0.1], "scepter": null, "shard": null}, "max_bonus_speed": {"base": [20], "scepter": null, "shard": null}, "charge_speed_multiplier": {"base": [2], "scepter": null, "shard": null}, "current_max_charge_speed": {"base": [0], "scepter": null, "shard": null}, "charge_accel_time": {"base": [0.5], "scepter": null, "shard": null}, "charge_decel_time": {"base": [0.5], "scepter": null, "shard": null}, "illusion_radius": {"base": [1300], "scepter": null, "shard": null}, "turn_rate": {"base": [25], "scepter": null, "shard": null}, "hit_radius": {"base": [150], "scepter": null, "shard": null}, "formation_spacing": {"base": [130], "scepter": null, "shard": null}, "formation_jitter": {"base": [60], "scepter": null, "shard": null}, "formation_width": {"base": [100], "scepter": null, "shard": null}, "run_animation_rate": {"base": [1.8], "scepter": null, "shard": null}, "max_charge_time": {"base": [1], "scepter": null, "shard": null}, "windup_turn_rate": {"base": [120], "scepter": null, "shard": null}, "attack_while_charging": {"base": [1], "scepter": null, "shard": null}, "jump_distance": {"base": [500], "scepter": null, "shard": null}, "jump_height": {"base": [160], "scepter": null, "shard": null}, "AbilityCastPoint": {"base": [0.4], "scepter": null, "shard": null}, "AbilityManaCost": {"base": [50], "scepter": null, "shard": null}, "AbilityCooldown": {"base": [30], "scepter": null, "shard": null}}}, {"subject": "chaos_knight_armageddons_flank_end", "name_en": "Heel, Armageddon", "text_742": {}, "flags": {"behavior": "171968581", "target_team": 0, "target_type": 0, "damage": 0, "immunity": 0, "dispellable": 0, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": false, "ability_is_innate": true}, "values": {"AbilityCastRange": {"base": [999999], "scepter": null, "shard": null}, "AbilityCooldown": {"base": [0.3], "scepter": null, "shard": null}}}, {"subject": "dazzle_through_the_realm", "name_en": "Through the Realm", "text_742": {"desc_loc": "Only active during Nothl Projection. Dazzle pulls his body through the Nothl Realm to his spirit. Nothl Projection ends upon return. Cannot be cast if Dazzle's body is rooted or leashed."}, "flags": {"behavior": "8589936709", "target_team": 0, "target_type": 0, "damage": 0, "immunity": 0, "dispellable": 0, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": true, "ability_is_innate": false}, "values": {}}, {"subject": "lycan_pack_hunter", "name_en": "Pack Hunter", "text_742": {"desc_loc": "Lycan and units under his control mark units on attack for %mark_duration% seconds. When Lycan or a unit under his control attacks a marked unit, it deals bonus damage equal to %bonus_damage%%% of its attack damage per stack, and heals the attacker for %lifesteal%%% of its attack damage per stack.", "notes_loc": ["Each unit can apply 1 mark per enemy.", "Marked units are revealed through fog of war and invisibility.", "Does not pierce Debuff Immunity."]}, "flags": {"behavior": "4398046511106", "target_team": 0, "target_type": 0, "damage": 1, "immunity": 4, "dispellable": 2, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": false, "ability_is_innate": true}, "values": {"mark_duration": {"base": [6], "scepter": null, "shard": null}, "bonus_damage": {"base": [5], "scepter": null, "shard": null}, "lifesteal": {"base": [3], "scepter": null, "shard": null}}}, {"subject": "meepo_fling_release", "name_en": "Fling", "text_742": {"desc_loc": "Throws the Meepo or creep carried by Divided We Stand at the target, dealing damage in a %impact_radius% radius and slowing on impact. If the carried target is a Meepo, it shares damage with the carrier. The carried target will be dropped after %hold_duration% seconds.", "notes_loc": ["Does not trigger spell reflect."]}, "flags": {"behavior": "8589934713", "target_team": 3, "target_type": 19, "damage": 2, "immunity": 4, "dispellable": 2, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": true, "ability_is_innate": false}, "values": {"fling_damage": {"base": [100, 150, 200, 250], "scepter": null, "shard": null}, "impact_radius": {"base": [200], "scepter": null, "shard": null}, "movement_slow": {"base": [-30, -40, -50, -60], "scepter": null, "shard": null}, "fling_slow_duration": {"base": [1.5, 2, 2.5, 3], "scepter": null, "shard": null}, "range": {"base": [600, 700, 800, 900], "scepter": null, "shard": null}, "hold_duration": {"base": [5], "scepter": null, "shard": null}, "fling_movespeed": {"base": [1000], "scepter": null, "shard": null}, "vision_radius": {"base": [300], "scepter": null, "shard": null}, "AbilityCastPoint": {"base": [0.2], "scepter": null, "shard": null}}}, {"subject": "nyx_assassin_scarab_metabolism", "name_en": "Scarab Metabolism", "text_742": {"desc_loc": "After %out_of_combat_time%s without taking damage, Nyx Assassin gains bonus movement speed and regenerates based on his max health and max mana per second."}, "flags": {"behavior": "562949953421315", "target_team": 0, "target_type": 0, "damage": 0, "immunity": 0, "dispellable": 3, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": false, "ability_is_innate": true}, "values": {"out_of_combat_time": {"base": [3], "scepter": null, "shard": null}, "health_regen_pct": {"base": [0.35], "scepter": null, "shard": null}, "mana_regen_pct": {"base": [0.35], "scepter": null, "shard": null}, "bonus_movement_speed": {"base": [5], "scepter": null, "shard": null}, "breaks_on_damage": {"base": [1], "scepter": null, "shard": null}, "multiplier": {"base": [1], "scepter": null, "shard": null}}}, {"subject": "undying_bite", "name_en": "Zombie Bite", "text_742": {"desc_loc": "Undying sinks his teeth into his target, dealing his attack damage plus bonus physical damage and healing himself for the amount dealt. Biting a hero turns them into a zombie for %zombie_duration%s: becoming melee, silenced, %zombie_slow%%% slowed, and dealing %zombie_damage_reduction%%% less damage. Bitten creeps die and become a controllable zombie for %creep_zombie_duration%s.", "notes_loc": ["Bite has %bonus_attack_range% bonus attack range.", "Bite cannot miss."]}, "flags": {"behavior": "8590065673", "target_team": 2, "target_type": 19, "damage": 1, "immunity": 4, "dispellable": 2, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": true, "ability_is_innate": false}, "values": {"bonus_attack_range": {"base": [250], "scepter": null, "shard": null}, "miss_distance": {"base": [150], "scepter": null, "shard": null}, "lunge_distance": {"base": [250], "scepter": null, "shard": null}, "lunge_duration": {"base": [0.2], "scepter": null, "shard": null}, "damage": {"base": [250], "scepter": null, "shard": null}, "zombie_duration": {"base": [3], "scepter": null, "shard": null}, "zombie_damage_reduction": {"base": [40], "scepter": null, "shard": null}, "zombie_slow": {"base": [25], "scepter": null, "shard": null}, "creep_zombie_duration": {"base": [20], "scepter": null, "shard": null}, "zombie_health": {"base": [3], "scepter": null, "shard": null}, "zombie_bonus_damage": {"base": [], "scepter": null, "shard": null}, "AbilityCastRange": {"base": [400], "scepter": null, "shard": null}, "AbilityManaCost": {"base": [70], "scepter": null, "shard": null}, "AbilityCooldown": {"base": [18], "scepter": null, "shard": null}}}, {"subject": "weaver_time_lapse_ally", "name_en": "Time Lapse (Ally)", "text_742": {"desc_loc": "Weaver warps an allied Hero backward to whatever position it was in five seconds earlier - restoring the HP and mana it had at that time. Shares a cooldown with Time Lapse. DISPEL TYPE: Strong Dispel", "notes_loc": ["Removes most negative buffs from the target.", "Disjoints projectiles.", "Level matches Time Lapse."]}, "flags": {"behavior": "8757968969", "target_team": 1, "target_type": 1, "damage": 0, "immunity": 0, "dispellable": 0, "ability_has_scepter": true, "ability_has_shard": false, "ability_is_granted_by_scepter": true, "ability_is_granted_by_shard": false, "ability_is_innate": false}, "values": {"AbilityCastRange": {"base": [500], "scepter": null, "shard": null}}}, {"subject": "clinkz_strafe", "name_en": "Strafe", "text_742": {"desc_loc": "Clinkz gains attack speed and has bonus attack range. Any current Skeleton Archers within a %strafe_skeleton_radius% radius of Clinkz also gain bonus attack range and %archer_attack_speed_pct%%% of the attack speed bonus. Casting Strafe does not break Skeleton Walk invisibility.", "facets_loc": ["Clinkz and each Skeleton Archer apply a stacking debuff, one stack per attacking Skeleton Archer, causing them to miss %bonus_blind_pct%%% of their attacks per stack for %debuff_duration%s. Applies to buildings as well."]}, "flags": {"behavior": "134219780", "target_team": 2, "target_type": 23, "damage": 0, "immunity": 3, "dispellable": 2, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": false, "ability_is_innate": false}, "values": {"attack_speed_bonus": {"base": [120, 160, 200, 240], "scepter": null, "shard": null}, "duration": {"base": [3.5], "scepter": null, "shard": null}, "attack_range_bonus": {"base": [200], "scepter": null, "shard": null}, "strafe_skeleton_radius": {"base": [1200], "scepter": null, "shard": null}, "archer_attack_speed_pct": {"base": [40], "scepter": null, "shard": null}, "debuff_duration": {"base": [0], "scepter": null, "shard": null}, "blind_pct": {"base": [0], "scepter": null, "shard": null}, "AbilityCastRange": {"base": [1200], "scepter": null, "shard": null}, "AbilityManaCost": {"base": [55, 60, 65, 70], "scepter": null, "shard": null}, "AbilityCooldown": {"base": [24, 21, 18, 15], "scepter": null, "shard": null}}}, {"subject": "invoker_alacrity", "name_en": "Alacrity", "text_742": {"desc_loc": "Invoker infuses an ally with an immense surge of energy, increasing their attack speed based on the level of Wex and their damage based on the level of Exort ."}, "flags": {"behavior": "8757706825", "target_team": 1, "target_type": 3, "damage": 1, "immunity": 1, "dispellable": 2, "ability_has_scepter": false, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": false, "ability_is_innate": false}, "values": {"bonus_attack_speed": {"base": [10, 22, 34, 46, 58, 70, 82, 94, 106], "scepter": null, "shard": null}, "bonus_damage": {"base": [10, 22, 34, 46, 58, 70, 82, 94, 106], "scepter": null, "shard": null}, "duration": {"base": [9], "scepter": null, "shard": null}, "AbilityCastRange": {"base": [700], "scepter": null, "shard": null}, "AbilityCastPoint": {"base": [0.05], "scepter": null, "shard": null}, "AbilityManaCost": {"base": [75], "scepter": null, "shard": null}, "AbilityCooldown": {"base": [15], "scepter": null, "shard": null}}}, {"subject": "invoker_exort", "name_en": "Exort", "text_742": {"desc_loc": "Allows manipulation of fire elements. Active Exort instances imbue Invoker with bonus attack damage. Passively grants bonus intelligence per level of Exort .", "notes_loc": ["Invoker can only have 3 of any instance.", "Will not break invisibility and can be cast while channeling."], "scepter_loc": "Grants %scepter_bonus_levels% current and max level.", "facets_loc": ["Exort gains an additional max level. When Invoker reaches level 6, Exort gains an additional level."]}, "flags": {"behavior": "70368748374020", "target_team": 0, "target_type": 0, "damage": 0, "immunity": 0, "dispellable": 3, "ability_has_scepter": true, "ability_has_shard": false, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": false, "ability_is_innate": false}, "values": {"max_level": {"base": [8], "scepter": [1], "shard": null}, "bonus_damage_per_instance": {"base": [2, 4, 6, 8, 10, 12, 14, 16, 18], "scepter": null, "shard": null}, "upgrade_at_level": {"base": [0], "scepter": null, "shard": null}, "intelligence_bonus": {"base": [1], "scepter": null, "shard": null}, "scepter_bonus_levels": {"base": [0], "scepter": [1], "shard": null}, "facet_bonus_levels": {"base": [0], "scepter": null, "shard": null}}}, {"subject": "pugna_nether_ward", "name_en": "Nether Ward", "text_742": {"desc_loc": "Pugna places a Nether Ward at the target location. The ward will fire at any enemy hero who casts a spell dealing base damage plus the damage multiplier of the mana spent by the enemy hero. Only one Nether Ward can be active at a time; casting a new one destroys the previous ward.", "notes_loc": ["Nether Ward deals damage before the actual spell is cast, so if the caster dies the spell will have no effect.", "Nether Ward can be decrepified.", "Illusions and creeps deal 25% damage to Nether Ward."], "shard_loc": "Increases cast range to %AbilityCastRange%.", "facets_loc": ["Nether Ward restores mana and health to Pugna based on how much damage is dealt."]}, "flags": {"behavior": "16", "target_team": 0, "target_type": 0, "damage": 2, "immunity": 4, "dispellable": 0, "ability_has_scepter": false, "ability_has_shard": true, "ability_is_granted_by_scepter": false, "ability_is_granted_by_shard": false, "ability_is_innate": false}, "values": {"radius": {"base": [1400], "scepter": null, "shard": null}, "base_damage": {"base": [50, 70, 90, 110], "scepter": null, "shard": null}, "mana_multiplier": {"base": [1, 1.2, 1.4, 1.6], "scepter": null, "shard": null}, "attacks_to_destroy": {"base": [3, 4, 5, 6], "scepter": null, "shard": null}, "nether_ward_gold_bounty": {"base": [20, 40, 60, 80], "scepter": null, "shard": null}, "self_restoration_range": {"base": [1200], "scepter": null, "shard": null}, "AbilityCastRange": {"base": [175], "scepter": null, "shard": [375]}, "AbilityDuration": {"base": [21, 24, 27, 30], "scepter": null, "shard": null}, "AbilityCastPoint": {"base": [0.2], "scepter": null, "shard": null}, "AbilityManaCost": {"base": [75, 100, 125, 150], "scepter": null, "shard": null}, "AbilityCooldown": {"base": [40], "scepter": null, "shard": null}}}]
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "beastmaster_summon_thunderhide",
+      "mechanisms": [
+        {"mechanism":"summons","condition":"scepter_upgrade","decision":"accept","quote":"Beastmaster calls forth an Ancient Thunderhide to fight alongside him.","reason_zh":"A杖授予此技能，召出的远古雷肤兽有2200点基础最大生命值。","uncertain":false},
+        {"mechanism":"slow","condition":"scepter_upgrade","decision":"accept","quote":"Slam the ground to damage and slow nearby enemies","reason_zh":"雷肤兽的践踏会降低附近敌人的移动速度。","uncertain":false},
+        {"mechanism":"aoe_damage","condition":"scepter_upgrade","decision":"accept","quote":"Slam the ground to damage and slow nearby enemies","reason_zh":"一次践踏可以同时伤害附近多个敌人。","uncertain":false},
+        {"mechanism":"stun","condition":"scepter_upgrade","decision":"reject","quote":"Slam the ground to damage and slow nearby enemies","reason_zh":"践踏列出的控制效果只有减速。","uncertain":false},
+        {"mechanism":"attack_slow","condition":"scepter_upgrade","decision":"reject","quote":"slow nearby enemies","reason_zh":"说明没有写践踏会降低攻击速度。","uncertain":false},
+        {"mechanism":"attack_modifier","condition":"scepter_upgrade","decision":"reject","quote":"beats its Thunderhide Drum as Beastmaster or Beastmaster's units attack, increasing their damage and max health","reason_zh":"攻击触发战鼓提高攻击方的伤害和生命上限，说明没有写普攻会对目标附加效果。","uncertain":false},
+        {"mechanism":"healing","condition":"scepter_upgrade","decision":"reject","quote":"increasing their damage and max health","reason_zh":"战鼓提高生命上限，说明没有写它会回复已损失的生命值。","uncertain":false},
+        {"mechanism":"cooldown_reduction","condition":"scepter_upgrade","decision":"reject","quote":"A newly summoned Thunderhide's Slam starts on a %thunderhide_slam_spawn_cooldown% second cooldown.","reason_zh":"该数值规定新召雷肤兽首次使用践踏前的等待时间。","uncertain":false},
+        {"mechanism":"economy","condition":"scepter_upgrade","decision":"reject","quote":"\"thunderhide_base_xp_bounty\": {\"base\": [124]","reason_zh":"该字段是雷肤兽的基础经验赏金。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "chaos_knight_armageddon",
+      "mechanisms": [
+        {"mechanism":"haste","condition":"base","decision":"accept","quote":"For each second Chaos Knight keeps moving without stopping or attacking, Armageddon gains bonus movement speed.","reason_zh":"持续移动且不攻击时，每秒获得5点额外移速，最多20点。","uncertain":false},
+        {"mechanism":"self_mobility","condition":"base","decision":"accept","quote":"Ahead, Armageddon can be activated to charge over terrain","reason_zh":"至少一个由主动施放 Phantasm 创造的幻象存活时，混沌骑士可以主动冲锋。","uncertain":false},
+        {"mechanism":"terrain_walk","condition":"base","decision":"accept","quote":"charge over terrain","reason_zh":"混沌骑士可以在这次冲锋中越过地形。","uncertain":false},
+        {"mechanism":"displace_other","condition":"base","decision":"accept","quote":"Activation of Ahead, Armageddon will gather all of Chaos Knight's illusions in %illusion_radius% radius regardless of how they were created.","reason_zh":"发动时会把1300范围内已有的己方幻象集结起来随英雄冲锋。","uncertain":false},
+        {"mechanism":"aoe_damage","condition":"base","decision":"accept","quote":"Chaos Knight and the illusions will attack units they charge over.","reason_zh":"一次冲锋可通过沿途攻击对多个敌方单位造成伤害。","uncertain":false},
+        {"mechanism":"pierces_debuff_immunity","condition":"base","decision":"accept","quote":"\"immunity\": 3","reason_zh":"该技能的 immunity 字段为3，符合无视减益免疫的判据。","uncertain":false},
+        {"mechanism":"illusions","condition":"base","decision":"reject","quote":"illusions created with the active cast of Phantasm","reason_zh":"发动所需的幻象由 Phantasm 创造，本技能集结已有幻象。","uncertain":false},
+        {"mechanism":"charges","condition":"base","decision":"reject","quote":"building up to a max speed before releasing","reason_zh":"蓄力积累的是冲锋速度，没有可逐次消耗的使用次数。","uncertain":false},
+        {"mechanism":"stun","condition":"base","decision":"reject","quote":"Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.","reason_zh":"眩晕是施法者蓄力时受到后会取消冲锋的控制。","uncertain":false},
+        {"mechanism":"hex","condition":"base","decision":"reject","quote":"Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.","reason_zh":"妖术列在能取消施法者蓄力的外来控制中。","uncertain":false},
+        {"mechanism":"fear","condition":"base","decision":"reject","quote":"Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.","reason_zh":"恐惧会取消施法者的蓄力，冲锋本身没有迫使敌人逃跑的效果。","uncertain":false},
+        {"mechanism":"taunt","condition":"base","decision":"reject","quote":"Chaos Knight and the illusions will attack units they charge over.","reason_zh":"冲锋沿途触发攻击，没有写强制单位锁定某个攻击目标，说明中的嘲讽是取消蓄力的外来控制。","uncertain":false},
+        {"mechanism":"root","condition":"base","decision":"reject","quote":"Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.","reason_zh":"缠绕会取消施法者的蓄力，说明没有写冲锋能缠绕目标。","uncertain":false},
+        {"mechanism":"attack_modifier","condition":"base","decision":"reject","quote":"will attack units they charge over","reason_zh":"技能触发沿途攻击，说明没有给这些攻击附加命中效果。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "chaos_knight_armageddons_flank_end",
+      "mechanisms": []
+    },
+    {
+      "subject": "dazzle_through_the_realm",
+      "mechanisms": [
+        {"mechanism":"self_mobility","condition":"shard_upgrade","decision":"accept","quote":"Dazzle pulls his body through the Nothl Realm to his spirit.","reason_zh":"魔晶授予此技能，戴泽可在 Nothl Projection 期间把自己的本体拉到灵体所在位置。","uncertain":false},
+        {"mechanism":"displace_other","condition":"shard_upgrade","decision":"reject","quote":"Dazzle pulls his body","reason_zh":"被拉动的是戴泽自己的本体。","uncertain":false},
+        {"mechanism":"root","condition":"shard_upgrade","decision":"reject","quote":"Cannot be cast if Dazzle's body is rooted or leashed.","reason_zh":"本体已被缠绕是禁止施放的条件。","uncertain":false},
+        {"mechanism":"leash","condition":"shard_upgrade","decision":"reject","quote":"Cannot be cast if Dazzle's body is rooted or leashed.","reason_zh":"本体已被束缚是禁止施放的条件。","uncertain":false},
+        {"mechanism":"cyclone_banish","condition":"shard_upgrade","decision":"reject","quote":"pulls his body through the Nothl Realm to his spirit","reason_zh":"穿过异界描述的是本体的移动过程，材料没有说明途中会被放逐、无敌或不可选取。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "lycan_pack_hunter",
+      "mechanisms": [
+        {"mechanism":"attack_modifier","condition":"base","decision":"accept","quote":"Lycan and units under his control mark units on attack for %mark_duration% seconds.","reason_zh":"狼人及其控制的单位普攻时施加6秒标记，攻击已标记单位时每层附加相当于攻击力5%的伤害。","uncertain":false},
+        {"mechanism":"lifesteal","condition":"base","decision":"accept","quote":"heals the attacker for %lifesteal%%% of its attack damage per stack","reason_zh":"攻击已标记单位时，攻击者每层按自身攻击力的3%回复生命。","uncertain":false},
+        {"mechanism":"healing","condition":"base","decision":"accept","quote":"heals the attacker","reason_zh":"命中已标记单位会直接治疗发动这次攻击的狼人或受控单位。","uncertain":false},
+        {"mechanism":"reveal","condition":"base","decision":"accept","quote":"Marked units are revealed through fog of war and invisibility.","reason_zh":"标记会使带标记的隐身单位显形。","uncertain":false},
+        {"mechanism":"grant_vision","condition":"base","decision":"accept","quote":"Marked units are revealed through fog of war and invisibility.","reason_zh":"战争迷雾中的标记目标也可见，因此获得该目标的视野。","uncertain":false},
+        {"mechanism":"true_sight","condition":"base","decision":"reject","quote":"Marked units are revealed","reason_zh":"显形限定于带标记的目标，材料没有赋予发现其他隐身单位的能力。","uncertain":false},
+        {"mechanism":"pierces_debuff_immunity","condition":"base","decision":"reject","quote":"Does not pierce Debuff Immunity.","reason_zh":"说明明确写明不能无视减益免疫。","uncertain":false},
+        {"mechanism":"incoming_damage_amp","condition":"base","decision":"reject","quote":"When Lycan or a unit under his control attacks a marked unit, it deals bonus damage","reason_zh":"额外伤害由符合条件的攻击者在命中时造成，标记没有提高目标普遍承受的伤害。","uncertain":false},
+        {"mechanism":"critical","condition":"base","decision":"reject","quote":"bonus damage equal to %bonus_damage%%% of its attack damage per stack","reason_zh":"每层标记计算一份附加伤害，说明没有把该次攻击判定为暴击。","uncertain":false},
+        {"mechanism":"charges","condition":"base","decision":"reject","quote":"Each unit can apply 1 mark per enemy.","reason_zh":"标记层数由参与攻击的单位决定，没有施放时消耗的充能点数。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "meepo_fling_release",
+      "mechanisms": [
+        {"mechanism":"displace_other","condition":"shard_upgrade","decision":"accept","quote":"Throws the Meepo or creep carried by Divided We Stand at the target","reason_zh":"魔晶授予的投掷会把携带的另一个米波或小兵移向目标。","uncertain":false},
+        {"mechanism":"aoe_damage","condition":"shard_upgrade","decision":"accept","quote":"dealing damage in a %impact_radius% radius","reason_zh":"落点半径200范围内的多个敌人可受到冲击伤害。","uncertain":false},
+        {"mechanism":"slow","condition":"shard_upgrade","decision":"accept","quote":"slowing on impact","reason_zh":"命中时降低敌人的移动速度，降幅随等级从30%升至60%。","uncertain":false},
+        {"mechanism":"damage_block","condition":"shard_upgrade","decision":"accept","quote":"If the carried target is a Meepo, it shares damage with the carrier.","reason_zh":"携带另一只米波时，两者分摊伤害，降低单个承伤者承担的份额，材料未给出分摊比例。","uncertain":false},
+        {"mechanism":"grant_vision","condition":"shard_upgrade","decision":"accept","quote":"\"vision_radius\": {\"base\": [300]","reason_zh":"视野半径字段支持提供300范围视野，但材料未说明视野中心和持续时间。","uncertain":true},
+        {"mechanism":"self_mobility","condition":"shard_upgrade","decision":"reject","quote":"Throws the Meepo or creep carried by Divided We Stand","reason_zh":"发生位移的是被携带单位，说明没有写投掷者也随之移动。","uncertain":false},
+        {"mechanism":"haste","condition":"shard_upgrade","decision":"reject","quote":"\"fling_movespeed\": {\"base\": [1000]","reason_zh":"该数值描述投掷过程的移动速度，没有给单位提供移速加成。","uncertain":false},
+        {"mechanism":"spell_reflect","condition":"shard_upgrade","decision":"reject","quote":"Does not trigger spell reflect.","reason_zh":"说明描述投掷与法术反弹的交互，此技能本身没有反弹指向技能的效果。","uncertain":false},
+        {"mechanism":"ground_zone","condition":"shard_upgrade","decision":"reject","quote":"slowing on impact","reason_zh":"范围效果在落地冲击时施加，没有留下持续影响后来者的区域。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "nyx_assassin_scarab_metabolism",
+      "mechanisms": [
+        {"mechanism":"haste","condition":"base","decision":"accept","quote":"After %out_of_combat_time%s without taking damage, Nyx Assassin gains bonus movement speed","reason_zh":"连续3秒未受伤害后，司夜刺客获得5点额外移动速度。","uncertain":false},
+        {"mechanism":"healing","condition":"base","decision":"accept","quote":"regenerates based on his max health and max mana per second","reason_zh":"连续3秒未受伤害后，每秒按最大生命值的0.35%回复自身生命。","uncertain":false},
+        {"mechanism":"mana_gain","condition":"base","decision":"accept","quote":"regenerates based on his max health and max mana per second","reason_zh":"连续3秒未受伤害后，每秒按最大法力值的0.35%回复自身法力。","uncertain":false},
+        {"mechanism":"lifesteal","condition":"base","decision":"reject","quote":"regenerates based on his max health and max mana per second","reason_zh":"生命按时间和自身生命上限回复，无需攻击或造成伤害。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "undying_bite",
+      "mechanisms": [
+        {"mechanism":"lifesteal","condition":"shard_upgrade","decision":"accept","quote":"healing himself for the amount dealt","reason_zh":"魔晶授予的噬咬按本次造成的伤害等量回复不朽尸王的生命。","uncertain":false},
+        {"mechanism":"healing","condition":"shard_upgrade","decision":"accept","quote":"healing himself for the amount dealt","reason_zh":"噬咬直接治疗施法者自身。","uncertain":false},
+        {"mechanism":"silence","condition":"shard_upgrade","decision":"accept","quote":"becoming melee, silenced, %zombie_slow%%% slowed","reason_zh":"被咬的英雄在3秒僵尸形态期间受到沉默。","uncertain":false},
+        {"mechanism":"slow","condition":"shard_upgrade","decision":"accept","quote":"%zombie_slow%%% slowed","reason_zh":"被咬英雄的移动速度在僵尸形态期间降低25%。","uncertain":false},
+        {"mechanism":"summons","condition":"shard_upgrade","decision":"accept","quote":"Bitten creeps die and become a controllable zombie for %creep_zombie_duration%s.","reason_zh":"咬死小兵后得到一个可控制20秒的僵尸，材料列有僵尸生命值，未写按受击次数摧毁。","uncertain":false},
+        {"mechanism":"pierce_evasion","condition":"shard_upgrade","decision":"accept","quote":"Bite cannot miss.","reason_zh":"噬咬这一次攻击必中。","uncertain":false},
+        {"mechanism":"self_mobility","condition":"shard_upgrade","decision":"accept","quote":"\"lunge_distance\": {\"base\": [250]","reason_zh":"突进距离250与突进时长0.2秒的字段支持噬咬包含自身突进，但正文未描述移动过程。","uncertain":true},
+        {"mechanism":"hex","condition":"shard_upgrade","decision":"reject","quote":"becoming melee, silenced, %zombie_slow%%% slowed, and dealing %zombie_damage_reduction%%% less damage","reason_zh":"变成僵尸的英雄仍可进行近战攻击，不满足妖术的行动限制。","uncertain":false},
+        {"mechanism":"disarm","condition":"shard_upgrade","decision":"reject","quote":"becoming melee","reason_zh":"英雄变为近战后仍可普攻。","uncertain":false},
+        {"mechanism":"attack_damage_reduction","condition":"shard_upgrade","decision":"reject","quote":"dealing %zombie_damage_reduction%%% less damage","reason_zh":"材料写的是英雄造成的伤害降低40%，没有写其攻击力数值被降低。","uncertain":false},
+        {"mechanism":"attack_modifier","condition":"shard_upgrade","decision":"reject","quote":"Undying sinks his teeth into his target, dealing his attack damage plus bonus physical damage","reason_zh":"附加伤害属于主动施放的这次噬咬，材料没有写它强化普通攻击或下一次普攻。","uncertain":false},
+        {"mechanism":"execute","condition":"shard_upgrade","decision":"reject","quote":"Bitten creeps die","reason_zh":"小兵死亡由单位类型决定，没有生命值阈值条件。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "weaver_time_lapse_ally",
+      "mechanisms": [
+        {"mechanism":"displace_other","condition":"scepter_upgrade","decision":"accept","quote":"Weaver warps an allied Hero backward to whatever position it was in five seconds earlier","reason_zh":"A杖授予的友军版本可把目标英雄移回其5秒前的位置。","uncertain":false},
+        {"mechanism":"applies_strong_dispel","condition":"scepter_upgrade","decision":"accept","quote":"DISPEL TYPE: Strong Dispel","reason_zh":"施放时对目标友方英雄施加强驱散。","uncertain":false},
+        {"mechanism":"projectile_dodge","condition":"scepter_upgrade","decision":"accept","quote":"Disjoints projectiles.","reason_zh":"施放时能让已飞向目标的弹道落空。","uncertain":false},
+        {"mechanism":"healing","condition":"scepter_upgrade","decision":"reject","quote":"restoring the HP and mana it had at that time","reason_zh":"生命值回到5秒前的数值，可能回升，但材料没有将这种回溯记为治疗或生命再生。","uncertain":false},
+        {"mechanism":"mana_gain","condition":"scepter_upgrade","decision":"reject","quote":"Weaver warps an allied Hero backward to whatever position it was in five seconds earlier - restoring the HP and mana it had at that time.","reason_zh":"该版本回溯友方目标的法力值，材料没有说明它能为施法者自身回蓝。","uncertain":false},
+        {"mechanism":"self_mobility","condition":"scepter_upgrade","decision":"reject","quote":"Weaver warps an allied Hero backward","reason_zh":"此条目描述友军版本，材料仅明确了目标友方英雄的位移。","uncertain":true},
+        {"mechanism":"cooldown_reset","condition":"scepter_upgrade","decision":"reject","quote":"Shares a cooldown with Time Lapse.","reason_zh":"两个版本共享冷却，没有写回溯会刷新任何冷却。","uncertain":false},
+        {"mechanism":"cooldown_reduction","condition":"scepter_upgrade","decision":"reject","quote":"Shares a cooldown with Time Lapse.","reason_zh":"共享冷却没有缩短另一技能的冷却时间。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "clinkz_strafe",
+      "mechanisms": [
+        {"mechanism":"blind","condition":"base","decision":"accept","quote":"causing them to miss %bonus_blind_pct%%% of their attacks per stack for %debuff_duration%s. Applies to buildings as well.","reason_zh":"仅命石说明写明受减益目标的攻击会落空，且对建筑有效，所给基础数值不足以确定该命石的实际概率和时长。","uncertain":true},
+        {"mechanism":"attack_modifier","condition":"base","decision":"accept","quote":"Clinkz and each Skeleton Archer apply a stacking debuff, one stack per attacking Skeleton Archer","reason_zh":"对应命石使克林克兹与骷髅弓手的攻击附加可叠层的致盲减益。","uncertain":false},
+        {"mechanism":"pierces_debuff_immunity","condition":"base","decision":"accept","quote":"\"immunity\": 3","reason_zh":"该技能的 immunity 字段为3，符合无视减益免疫的判据。","uncertain":false},
+        {"mechanism":"evasion","condition":"base","decision":"reject","quote":"apply a stacking debuff","reason_zh":"攻击落空来自攻击方身上的减益，材料没有给克林克兹或弓手赋予闪避。","uncertain":false},
+        {"mechanism":"invisibility","condition":"base","decision":"reject","quote":"Casting Strafe does not break Skeleton Walk invisibility.","reason_zh":"扫射可以保留 Skeleton Walk 已提供的隐身。","uncertain":false},
+        {"mechanism":"summons","condition":"base","decision":"reject","quote":"Any current Skeleton Archers within a %strafe_skeleton_radius% radius of Clinkz","reason_zh":"扫射强化施放时已经存在的骷髅弓手。","uncertain":false},
+        {"mechanism":"aura","condition":"base","decision":"reject","quote":"Any current Skeleton Archers within a %strafe_skeleton_radius% radius of Clinkz also gain bonus attack range","reason_zh":"说明按施放时范围内已有的弓手发放增益，没有写后来进入范围的弓手也持续获得增益。","uncertain":false},
+        {"mechanism":"haste","condition":"base","decision":"reject","quote":"Clinkz gains attack speed and has bonus attack range.","reason_zh":"提高的是攻击速度和攻击距离。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "invoker_alacrity",
+      "mechanisms": [
+        {"mechanism":"attack_modifier","condition":"base","decision":"reject","quote":"increasing their attack speed based on the level of Wex and their damage based on the level of Exort","reason_zh":"灵动迅捷直接提高友军攻速和攻击力，没有给普攻附加命中效果。","uncertain":false},
+        {"mechanism":"haste","condition":"base","decision":"reject","quote":"increasing their attack speed","reason_zh":"说明提高的是攻击速度。","uncertain":false},
+        {"mechanism":"spell_amp","condition":"base","decision":"reject","quote":"\"bonus_damage\": {\"base\": [10, 22, 34, 46, 58, 70, 82, 94, 106]","reason_zh":"说明与数值给出固定伤害加成，没有写技能伤害获得放大。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "invoker_exort",
+      "mechanisms": [
+        {"mechanism":"attack_modifier","condition":"base","decision":"reject","quote":"Active Exort instances imbue Invoker with bonus attack damage.","reason_zh":"激活的火元素只提供额外攻击力，没有给普攻附加命中效果。","uncertain":false},
+        {"mechanism":"charges","condition":"base","decision":"reject","quote":"Invoker can only have 3 of any instance.","reason_zh":"三个是同时存在的元素实例上限，没有说明施放时会消耗充能。","uncertain":false},
+        {"mechanism":"invisibility","condition":"base","decision":"reject","quote":"Will not break invisibility","reason_zh":"施放火元素可以保留已有隐身，技能本身没有赋予隐身。","uncertain":false},
+        {"mechanism":"stat_steal","condition":"base","decision":"reject","quote":"Passively grants bonus intelligence per level of Exort","reason_zh":"智力由火元素等级被动提供，没有从目标夺取属性。","uncertain":false},
+        {"mechanism":"mana_gain","condition":"base","decision":"reject","quote":"Passively grants bonus intelligence per level of Exort","reason_zh":"材料只写获得智力，没有列出法力回复效果。","uncertain":false},
+        {"mechanism":"spell_amp","condition":"scepter_upgrade","decision":"reject","quote":"Grants %scepter_bonus_levels% current and max level.","reason_zh":"A杖提高火元素的当前等级和等级上限，材料没有写它提供法术放大。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "pugna_nether_ward",
+      "mechanisms": [
+        {"mechanism":"aoe_damage","condition":"base","decision":"accept","quote":"The ward will fire at any enemy hero who casts a spell","reason_zh":"一次放置的守卫可在持续期间分别伤害范围内多个施法的敌方英雄。","uncertain":false},
+        {"mechanism":"healing","condition":"base","decision":"accept","quote":"Nether Ward restores mana and health to Pugna based on how much damage is dealt.","reason_zh":"对应命石使守卫根据造成的伤害为帕格纳回复生命。","uncertain":false},
+        {"mechanism":"lifesteal","condition":"base","decision":"accept","quote":"restores mana and health to Pugna based on how much damage is dealt","reason_zh":"对应命石按技能造成的伤害治疗施法者，符合技能吸血的定义。","uncertain":false},
+        {"mechanism":"mana_gain","condition":"base","decision":"accept","quote":"Nether Ward restores mana and health to Pugna based on how much damage is dealt.","reason_zh":"对应命石使守卫根据造成的伤害为帕格纳自身回蓝。","uncertain":false},
+        {"mechanism":"summons","condition":"base","decision":"reject","quote":"\"attacks_to_destroy\": {\"base\": [3, 4, 5, 6]","reason_zh":"幽冥守卫按受攻击次数摧毁，属于召唤物标签明确排除的单位。","uncertain":false},
+        {"mechanism":"ground_zone","condition":"base","decision":"reject","quote":"The ward will fire at any enemy hero who casts a spell","reason_zh":"守卫虽固定放置，敌人仅停留在范围内不会持续受伤，攻击由敌方英雄施法触发。","uncertain":false},
+        {"mechanism":"aura","condition":"base","decision":"reject","quote":"Pugna places a Nether Ward at the target location.","reason_zh":"说明描述定点守卫响应敌方施法，没有描述随单位移动并持续施加的周围效果。","uncertain":false},
+        {"mechanism":"damage_return","condition":"base","decision":"reject","quote":"will fire at any enemy hero who casts a spell","reason_zh":"触发条件是敌方英雄施法，无需守卫或帕格纳先受到攻击或伤害。","uncertain":false},
+        {"mechanism":"mana_burn","condition":"base","decision":"reject","quote":"the mana spent by the enemy hero","reason_zh":"敌人施法已经花费的法力用于计算守卫伤害，守卫没有额外扣除敌方法力。","uncertain":false},
+        {"mechanism":"spell_block","condition":"base","decision":"reject","quote":"if the caster dies the spell will have no effect","reason_zh":"敌方技能失效的条件是施法者先被守卫击杀，没有指向技能格挡效果。","uncertain":false},
+        {"mechanism":"execute","condition":"base","decision":"reject","quote":"Nether Ward deals damage before the actual spell is cast, so if the caster dies the spell will have no effect.","reason_zh":"施法者可能被先结算的伤害击杀，材料没有按生命阈值直接击杀的规则。","uncertain":false},
+        {"mechanism":"ethereal","condition":"base","decision":"reject","quote":"Nether Ward can be decrepified.","reason_zh":"该句说明守卫可被施加虚无，放置守卫本身没有施加虚无。","uncertain":false},
+        {"mechanism":"economy","condition":"base","decision":"reject","quote":"\"nether_ward_gold_bounty\": {\"base\": [20, 40, 60, 80]","reason_zh":"该字段是击毁守卫的普通金钱赏金。","uncertain":false}
+      ]
+    }
+  ]
+}
+tokens used
+31,682
+{
+  "objects": [
+    {
+      "subject": "beastmaster_summon_thunderhide",
+      "mechanisms": [
+        {"mechanism":"summons","condition":"scepter_upgrade","decision":"accept","quote":"Beastmaster calls forth an Ancient Thunderhide to fight alongside him.","reason_zh":"A杖授予此技能，召出的远古雷肤兽有2200点基础最大生命值。","uncertain":false},
+        {"mechanism":"slow","condition":"scepter_upgrade","decision":"accept","quote":"Slam the ground to damage and slow nearby enemies","reason_zh":"雷肤兽的践踏会降低附近敌人的移动速度。","uncertain":false},
+        {"mechanism":"aoe_damage","condition":"scepter_upgrade","decision":"accept","quote":"Slam the ground to damage and slow nearby enemies","reason_zh":"一次践踏可以同时伤害附近多个敌人。","uncertain":false},
+        {"mechanism":"stun","condition":"scepter_upgrade","decision":"reject","quote":"Slam the ground to damage and slow nearby enemies","reason_zh":"践踏列出的控制效果只有减速。","uncertain":false},
+        {"mechanism":"attack_slow","condition":"scepter_upgrade","decision":"reject","quote":"slow nearby enemies","reason_zh":"说明没有写践踏会降低攻击速度。","uncertain":false},
+        {"mechanism":"attack_modifier","condition":"scepter_upgrade","decision":"reject","quote":"beats its Thunderhide Drum as Beastmaster or Beastmaster's units attack, increasing their damage and max health","reason_zh":"攻击触发战鼓提高攻击方的伤害和生命上限，说明没有写普攻会对目标附加效果。","uncertain":false},
+        {"mechanism":"healing","condition":"scepter_upgrade","decision":"reject","quote":"increasing their damage and max health","reason_zh":"战鼓提高生命上限，说明没有写它会回复已损失的生命值。","uncertain":false},
+        {"mechanism":"cooldown_reduction","condition":"scepter_upgrade","decision":"reject","quote":"A newly summoned Thunderhide's Slam starts on a %thunderhide_slam_spawn_cooldown% second cooldown.","reason_zh":"该数值规定新召雷肤兽首次使用践踏前的等待时间。","uncertain":false},
+        {"mechanism":"economy","condition":"scepter_upgrade","decision":"reject","quote":"\"thunderhide_base_xp_bounty\": {\"base\": [124]","reason_zh":"该字段是雷肤兽的基础经验赏金。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "chaos_knight_armageddon",
+      "mechanisms": [
+        {"mechanism":"haste","condition":"base","decision":"accept","quote":"For each second Chaos Knight keeps moving without stopping or attacking, Armageddon gains bonus movement speed.","reason_zh":"持续移动且不攻击时，每秒获得5点额外移速，最多20点。","uncertain":false},
+        {"mechanism":"self_mobility","condition":"base","decision":"accept","quote":"Ahead, Armageddon can be activated to charge over terrain","reason_zh":"至少一个由主动施放 Phantasm 创造的幻象存活时，混沌骑士可以主动冲锋。","uncertain":false},
+        {"mechanism":"terrain_walk","condition":"base","decision":"accept","quote":"charge over terrain","reason_zh":"混沌骑士可以在这次冲锋中越过地形。","uncertain":false},
+        {"mechanism":"displace_other","condition":"base","decision":"accept","quote":"Activation of Ahead, Armageddon will gather all of Chaos Knight's illusions in %illusion_radius% radius regardless of how they were created.","reason_zh":"发动时会把1300范围内已有的己方幻象集结起来随英雄冲锋。","uncertain":false},
+        {"mechanism":"aoe_damage","condition":"base","decision":"accept","quote":"Chaos Knight and the illusions will attack units they charge over.","reason_zh":"一次冲锋可通过沿途攻击对多个敌方单位造成伤害。","uncertain":false},
+        {"mechanism":"pierces_debuff_immunity","condition":"base","decision":"accept","quote":"\"immunity\": 3","reason_zh":"该技能的 immunity 字段为3，符合无视减益免疫的判据。","uncertain":false},
+        {"mechanism":"illusions","condition":"base","decision":"reject","quote":"illusions created with the active cast of Phantasm","reason_zh":"发动所需的幻象由 Phantasm 创造，本技能集结已有幻象。","uncertain":false},
+        {"mechanism":"charges","condition":"base","decision":"reject","quote":"building up to a max speed before releasing","reason_zh":"蓄力积累的是冲锋速度，没有可逐次消耗的使用次数。","uncertain":false},
+        {"mechanism":"stun","condition":"base","decision":"reject","quote":"Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.","reason_zh":"眩晕是施法者蓄力时受到后会取消冲锋的控制。","uncertain":false},
+        {"mechanism":"hex","condition":"base","decision":"reject","quote":"Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.","reason_zh":"妖术列在能取消施法者蓄力的外来控制中。","uncertain":false},
+        {"mechanism":"fear","condition":"base","decision":"reject","quote":"Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.","reason_zh":"恐惧会取消施法者的蓄力，冲锋本身没有迫使敌人逃跑的效果。","uncertain":false},
+        {"mechanism":"taunt","condition":"base","decision":"reject","quote":"Chaos Knight and the illusions will attack units they charge over.","reason_zh":"冲锋沿途触发攻击，没有写强制单位锁定某个攻击目标，说明中的嘲讽是取消蓄力的外来控制。","uncertain":false},
+        {"mechanism":"root","condition":"base","decision":"reject","quote":"Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.","reason_zh":"缠绕会取消施法者的蓄力，说明没有写冲锋能缠绕目标。","uncertain":false},
+        {"mechanism":"attack_modifier","condition":"base","decision":"reject","quote":"will attack units they charge over","reason_zh":"技能触发沿途攻击，说明没有给这些攻击附加命中效果。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "chaos_knight_armageddons_flank_end",
+      "mechanisms": []
+    },
+    {
+      "subject": "dazzle_through_the_realm",
+      "mechanisms": [
+        {"mechanism":"self_mobility","condition":"shard_upgrade","decision":"accept","quote":"Dazzle pulls his body through the Nothl Realm to his spirit.","reason_zh":"魔晶授予此技能，戴泽可在 Nothl Projection 期间把自己的本体拉到灵体所在位置。","uncertain":false},
+        {"mechanism":"displace_other","condition":"shard_upgrade","decision":"reject","quote":"Dazzle pulls his body","reason_zh":"被拉动的是戴泽自己的本体。","uncertain":false},
+        {"mechanism":"root","condition":"shard_upgrade","decision":"reject","quote":"Cannot be cast if Dazzle's body is rooted or leashed.","reason_zh":"本体已被缠绕是禁止施放的条件。","uncertain":false},
+        {"mechanism":"leash","condition":"shard_upgrade","decision":"reject","quote":"Cannot be cast if Dazzle's body is rooted or leashed.","reason_zh":"本体已被束缚是禁止施放的条件。","uncertain":false},
+        {"mechanism":"cyclone_banish","condition":"shard_upgrade","decision":"reject","quote":"pulls his body through the Nothl Realm to his spirit","reason_zh":"穿过异界描述的是本体的移动过程，材料没有说明途中会被放逐、无敌或不可选取。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "lycan_pack_hunter",
+      "mechanisms": [
+        {"mechanism":"attack_modifier","condition":"base","decision":"accept","quote":"Lycan and units under his control mark units on attack for %mark_duration% seconds.","reason_zh":"狼人及其控制的单位普攻时施加6秒标记，攻击已标记单位时每层附加相当于攻击力5%的伤害。","uncertain":false},
+        {"mechanism":"lifesteal","condition":"base","decision":"accept","quote":"heals the attacker for %lifesteal%%% of its attack damage per stack","reason_zh":"攻击已标记单位时，攻击者每层按自身攻击力的3%回复生命。","uncertain":false},
+        {"mechanism":"healing","condition":"base","decision":"accept","quote":"heals the attacker","reason_zh":"命中已标记单位会直接治疗发动这次攻击的狼人或受控单位。","uncertain":false},
+        {"mechanism":"reveal","condition":"base","decision":"accept","quote":"Marked units are revealed through fog of war and invisibility.","reason_zh":"标记会使带标记的隐身单位显形。","uncertain":false},
+        {"mechanism":"grant_vision","condition":"base","decision":"accept","quote":"Marked units are revealed through fog of war and invisibility.","reason_zh":"战争迷雾中的标记目标也可见，因此获得该目标的视野。","uncertain":false},
+        {"mechanism":"true_sight","condition":"base","decision":"reject","quote":"Marked units are revealed","reason_zh":"显形限定于带标记的目标，材料没有赋予发现其他隐身单位的能力。","uncertain":false},
+        {"mechanism":"pierces_debuff_immunity","condition":"base","decision":"reject","quote":"Does not pierce Debuff Immunity.","reason_zh":"说明明确写明不能无视减益免疫。","uncertain":false},
+        {"mechanism":"incoming_damage_amp","condition":"base","decision":"reject","quote":"When Lycan or a unit under his control attacks a marked unit, it deals bonus damage","reason_zh":"额外伤害由符合条件的攻击者在命中时造成，标记没有提高目标普遍承受的伤害。","uncertain":false},
+        {"mechanism":"critical","condition":"base","decision":"reject","quote":"bonus damage equal to %bonus_damage%%% of its attack damage per stack","reason_zh":"每层标记计算一份附加伤害，说明没有把该次攻击判定为暴击。","uncertain":false},
+        {"mechanism":"charges","condition":"base","decision":"reject","quote":"Each unit can apply 1 mark per enemy.","reason_zh":"标记层数由参与攻击的单位决定，没有施放时消耗的充能点数。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "meepo_fling_release",
+      "mechanisms": [
+        {"mechanism":"displace_other","condition":"shard_upgrade","decision":"accept","quote":"Throws the Meepo or creep carried by Divided We Stand at the target","reason_zh":"魔晶授予的投掷会把携带的另一个米波或小兵移向目标。","uncertain":false},
+        {"mechanism":"aoe_damage","condition":"shard_upgrade","decision":"accept","quote":"dealing damage in a %impact_radius% radius","reason_zh":"落点半径200范围内的多个敌人可受到冲击伤害。","uncertain":false},
+        {"mechanism":"slow","condition":"shard_upgrade","decision":"accept","quote":"slowing on impact","reason_zh":"命中时降低敌人的移动速度，降幅随等级从30%升至60%。","uncertain":false},
+        {"mechanism":"damage_block","condition":"shard_upgrade","decision":"accept","quote":"If the carried target is a Meepo, it shares damage with the carrier.","reason_zh":"携带另一只米波时，两者分摊伤害，降低单个承伤者承担的份额，材料未给出分摊比例。","uncertain":false},
+        {"mechanism":"grant_vision","condition":"shard_upgrade","decision":"accept","quote":"\"vision_radius\": {\"base\": [300]","reason_zh":"视野半径字段支持提供300范围视野，但材料未说明视野中心和持续时间。","uncertain":true},
+        {"mechanism":"self_mobility","condition":"shard_upgrade","decision":"reject","quote":"Throws the Meepo or creep carried by Divided We Stand","reason_zh":"发生位移的是被携带单位，说明没有写投掷者也随之移动。","uncertain":false},
+        {"mechanism":"haste","condition":"shard_upgrade","decision":"reject","quote":"\"fling_movespeed\": {\"base\": [1000]","reason_zh":"该数值描述投掷过程的移动速度，没有给单位提供移速加成。","uncertain":false},
+        {"mechanism":"spell_reflect","condition":"shard_upgrade","decision":"reject","quote":"Does not trigger spell reflect.","reason_zh":"说明描述投掷与法术反弹的交互，此技能本身没有反弹指向技能的效果。","uncertain":false},
+        {"mechanism":"ground_zone","condition":"shard_upgrade","decision":"reject","quote":"slowing on impact","reason_zh":"范围效果在落地冲击时施加，没有留下持续影响后来者的区域。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "nyx_assassin_scarab_metabolism",
+      "mechanisms": [
+        {"mechanism":"haste","condition":"base","decision":"accept","quote":"After %out_of_combat_time%s without taking damage, Nyx Assassin gains bonus movement speed","reason_zh":"连续3秒未受伤害后，司夜刺客获得5点额外移动速度。","uncertain":false},
+        {"mechanism":"healing","condition":"base","decision":"accept","quote":"regenerates based on his max health and max mana per second","reason_zh":"连续3秒未受伤害后，每秒按最大生命值的0.35%回复自身生命。","uncertain":false},
+        {"mechanism":"mana_gain","condition":"base","decision":"accept","quote":"regenerates based on his max health and max mana per second","reason_zh":"连续3秒未受伤害后，每秒按最大法力值的0.35%回复自身法力。","uncertain":false},
+        {"mechanism":"lifesteal","condition":"base","decision":"reject","quote":"regenerates based on his max health and max mana per second","reason_zh":"生命按时间和自身生命上限回复，无需攻击或造成伤害。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "undying_bite",
+      "mechanisms": [
+        {"mechanism":"lifesteal","condition":"shard_upgrade","decision":"accept","quote":"healing himself for the amount dealt","reason_zh":"魔晶授予的噬咬按本次造成的伤害等量回复不朽尸王的生命。","uncertain":false},
+        {"mechanism":"healing","condition":"shard_upgrade","decision":"accept","quote":"healing himself for the amount dealt","reason_zh":"噬咬直接治疗施法者自身。","uncertain":false},
+        {"mechanism":"silence","condition":"shard_upgrade","decision":"accept","quote":"becoming melee, silenced, %zombie_slow%%% slowed","reason_zh":"被咬的英雄在3秒僵尸形态期间受到沉默。","uncertain":false},
+        {"mechanism":"slow","condition":"shard_upgrade","decision":"accept","quote":"%zombie_slow%%% slowed","reason_zh":"被咬英雄的移动速度在僵尸形态期间降低25%。","uncertain":false},
+        {"mechanism":"summons","condition":"shard_upgrade","decision":"accept","quote":"Bitten creeps die and become a controllable zombie for %creep_zombie_duration%s.","reason_zh":"咬死小兵后得到一个可控制20秒的僵尸，材料列有僵尸生命值，未写按受击次数摧毁。","uncertain":false},
+        {"mechanism":"pierce_evasion","condition":"shard_upgrade","decision":"accept","quote":"Bite cannot miss.","reason_zh":"噬咬这一次攻击必中。","uncertain":false},
+        {"mechanism":"self_mobility","condition":"shard_upgrade","decision":"accept","quote":"\"lunge_distance\": {\"base\": [250]","reason_zh":"突进距离250与突进时长0.2秒的字段支持噬咬包含自身突进，但正文未描述移动过程。","uncertain":true},
+        {"mechanism":"hex","condition":"shard_upgrade","decision":"reject","quote":"becoming melee, silenced, %zombie_slow%%% slowed, and dealing %zombie_damage_reduction%%% less damage","reason_zh":"变成僵尸的英雄仍可进行近战攻击，不满足妖术的行动限制。","uncertain":false},
+        {"mechanism":"disarm","condition":"shard_upgrade","decision":"reject","quote":"becoming melee","reason_zh":"英雄变为近战后仍可普攻。","uncertain":false},
+        {"mechanism":"attack_damage_reduction","condition":"shard_upgrade","decision":"reject","quote":"dealing %zombie_damage_reduction%%% less damage","reason_zh":"材料写的是英雄造成的伤害降低40%，没有写其攻击力数值被降低。","uncertain":false},
+        {"mechanism":"attack_modifier","condition":"shard_upgrade","decision":"reject","quote":"Undying sinks his teeth into his target, dealing his attack damage plus bonus physical damage","reason_zh":"附加伤害属于主动施放的这次噬咬，材料没有写它强化普通攻击或下一次普攻。","uncertain":false},
+        {"mechanism":"execute","condition":"shard_upgrade","decision":"reject","quote":"Bitten creeps die","reason_zh":"小兵死亡由单位类型决定，没有生命值阈值条件。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "weaver_time_lapse_ally",
+      "mechanisms": [
+        {"mechanism":"displace_other","condition":"scepter_upgrade","decision":"accept","quote":"Weaver warps an allied Hero backward to whatever position it was in five seconds earlier","reason_zh":"A杖授予的友军版本可把目标英雄移回其5秒前的位置。","uncertain":false},
+        {"mechanism":"applies_strong_dispel","condition":"scepter_upgrade","decision":"accept","quote":"DISPEL TYPE: Strong Dispel","reason_zh":"施放时对目标友方英雄施加强驱散。","uncertain":false},
+        {"mechanism":"projectile_dodge","condition":"scepter_upgrade","decision":"accept","quote":"Disjoints projectiles.","reason_zh":"施放时能让已飞向目标的弹道落空。","uncertain":false},
+        {"mechanism":"healing","condition":"scepter_upgrade","decision":"reject","quote":"restoring the HP and mana it had at that time","reason_zh":"生命值回到5秒前的数值，可能回升，但材料没有将这种回溯记为治疗或生命再生。","uncertain":false},
+        {"mechanism":"mana_gain","condition":"scepter_upgrade","decision":"reject","quote":"Weaver warps an allied Hero backward to whatever position it was in five seconds earlier - restoring the HP and mana it had at that time.","reason_zh":"该版本回溯友方目标的法力值，材料没有说明它能为施法者自身回蓝。","uncertain":false},
+        {"mechanism":"self_mobility","condition":"scepter_upgrade","decision":"reject","quote":"Weaver warps an allied Hero backward","reason_zh":"此条目描述友军版本，材料仅明确了目标友方英雄的位移。","uncertain":true},
+        {"mechanism":"cooldown_reset","condition":"scepter_upgrade","decision":"reject","quote":"Shares a cooldown with Time Lapse.","reason_zh":"两个版本共享冷却，没有写回溯会刷新任何冷却。","uncertain":false},
+        {"mechanism":"cooldown_reduction","condition":"scepter_upgrade","decision":"reject","quote":"Shares a cooldown with Time Lapse.","reason_zh":"共享冷却没有缩短另一技能的冷却时间。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "clinkz_strafe",
+      "mechanisms": [
+        {"mechanism":"blind","condition":"base","decision":"accept","quote":"causing them to miss %bonus_blind_pct%%% of their attacks per stack for %debuff_duration%s. Applies to buildings as well.","reason_zh":"仅命石说明写明受减益目标的攻击会落空，且对建筑有效，所给基础数值不足以确定该命石的实际概率和时长。","uncertain":true},
+        {"mechanism":"attack_modifier","condition":"base","decision":"accept","quote":"Clinkz and each Skeleton Archer apply a stacking debuff, one stack per attacking Skeleton Archer","reason_zh":"对应命石使克林克兹与骷髅弓手的攻击附加可叠层的致盲减益。","uncertain":false},
+        {"mechanism":"pierces_debuff_immunity","condition":"base","decision":"accept","quote":"\"immunity\": 3","reason_zh":"该技能的 immunity 字段为3，符合无视减益免疫的判据。","uncertain":false},
+        {"mechanism":"evasion","condition":"base","decision":"reject","quote":"apply a stacking debuff","reason_zh":"攻击落空来自攻击方身上的减益，材料没有给克林克兹或弓手赋予闪避。","uncertain":false},
+        {"mechanism":"invisibility","condition":"base","decision":"reject","quote":"Casting Strafe does not break Skeleton Walk invisibility.","reason_zh":"扫射可以保留 Skeleton Walk 已提供的隐身。","uncertain":false},
+        {"mechanism":"summons","condition":"base","decision":"reject","quote":"Any current Skeleton Archers within a %strafe_skeleton_radius% radius of Clinkz","reason_zh":"扫射强化施放时已经存在的骷髅弓手。","uncertain":false},
+        {"mechanism":"aura","condition":"base","decision":"reject","quote":"Any current Skeleton Archers within a %strafe_skeleton_radius% radius of Clinkz also gain bonus attack range","reason_zh":"说明按施放时范围内已有的弓手发放增益，没有写后来进入范围的弓手也持续获得增益。","uncertain":false},
+        {"mechanism":"haste","condition":"base","decision":"reject","quote":"Clinkz gains attack speed and has bonus attack range.","reason_zh":"提高的是攻击速度和攻击距离。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "invoker_alacrity",
+      "mechanisms": [
+        {"mechanism":"attack_modifier","condition":"base","decision":"reject","quote":"increasing their attack speed based on the level of Wex and their damage based on the level of Exort","reason_zh":"灵动迅捷直接提高友军攻速和攻击力，没有给普攻附加命中效果。","uncertain":false},
+        {"mechanism":"haste","condition":"base","decision":"reject","quote":"increasing their attack speed","reason_zh":"说明提高的是攻击速度。","uncertain":false},
+        {"mechanism":"spell_amp","condition":"base","decision":"reject","quote":"\"bonus_damage\": {\"base\": [10, 22, 34, 46, 58, 70, 82, 94, 106]","reason_zh":"说明与数值给出固定伤害加成，没有写技能伤害获得放大。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "invoker_exort",
+      "mechanisms": [
+        {"mechanism":"attack_modifier","condition":"base","decision":"reject","quote":"Active Exort instances imbue Invoker with bonus attack damage.","reason_zh":"激活的火元素只提供额外攻击力，没有给普攻附加命中效果。","uncertain":false},
+        {"mechanism":"charges","condition":"base","decision":"reject","quote":"Invoker can only have 3 of any instance.","reason_zh":"三个是同时存在的元素实例上限，没有说明施放时会消耗充能。","uncertain":false},
+        {"mechanism":"invisibility","condition":"base","decision":"reject","quote":"Will not break invisibility","reason_zh":"施放火元素可以保留已有隐身，技能本身没有赋予隐身。","uncertain":false},
+        {"mechanism":"stat_steal","condition":"base","decision":"reject","quote":"Passively grants bonus intelligence per level of Exort","reason_zh":"智力由火元素等级被动提供，没有从目标夺取属性。","uncertain":false},
+        {"mechanism":"mana_gain","condition":"base","decision":"reject","quote":"Passively grants bonus intelligence per level of Exort","reason_zh":"材料只写获得智力，没有列出法力回复效果。","uncertain":false},
+        {"mechanism":"spell_amp","condition":"scepter_upgrade","decision":"reject","quote":"Grants %scepter_bonus_levels% current and max level.","reason_zh":"A杖提高火元素的当前等级和等级上限，材料没有写它提供法术放大。","uncertain":false}
+      ]
+    },
+    {
+      "subject": "pugna_nether_ward",
+      "mechanisms": [
+        {"mechanism":"aoe_damage","condition":"base","decision":"accept","quote":"The ward will fire at any enemy hero who casts a spell","reason_zh":"一次放置的守卫可在持续期间分别伤害范围内多个施法的敌方英雄。","uncertain":false},
+        {"mechanism":"healing","condition":"base","decision":"accept","quote":"Nether Ward restores mana and health to Pugna based on how much damage is dealt.","reason_zh":"对应命石使守卫根据造成的伤害为帕格纳回复生命。","uncertain":false},
+        {"mechanism":"lifesteal","condition":"base","decision":"accept","quote":"restores mana and health to Pugna based on how much damage is dealt","reason_zh":"对应命石按技能造成的伤害治疗施法者，符合技能吸血的定义。","uncertain":false},
+        {"mechanism":"mana_gain","condition":"base","decision":"accept","quote":"Nether Ward restores mana and health to Pugna based on how much damage is dealt.","reason_zh":"对应命石使守卫根据造成的伤害为帕格纳自身回蓝。","uncertain":false},
+        {"mechanism":"summons","condition":"base","decision":"reject","quote":"\"attacks_to_destroy\": {\"base\": [3, 4, 5, 6]","reason_zh":"幽冥守卫按受攻击次数摧毁，属于召唤物标签明确排除的单位。","uncertain":false},
+        {"mechanism":"ground_zone","condition":"base","decision":"reject","quote":"The ward will fire at any enemy hero who casts a spell","reason_zh":"守卫虽固定放置，敌人仅停留在范围内不会持续受伤，攻击由敌方英雄施法触发。","uncertain":false},
+        {"mechanism":"aura","condition":"base","decision":"reject","quote":"Pugna places a Nether Ward at the target location.","reason_zh":"说明描述定点守卫响应敌方施法，没有描述随单位移动并持续施加的周围效果。","uncertain":false},
+        {"mechanism":"damage_return","condition":"base","decision":"reject","quote":"will fire at any enemy hero who casts a spell","reason_zh":"触发条件是敌方英雄施法，无需守卫或帕格纳先受到攻击或伤害。","uncertain":false},
+        {"mechanism":"mana_burn","condition":"base","decision":"reject","quote":"the mana spent by the enemy hero","reason_zh":"敌人施法已经花费的法力用于计算守卫伤害，守卫没有额外扣除敌方法力。","uncertain":false},
+        {"mechanism":"spell_block","condition":"base","decision":"reject","quote":"if the caster dies the spell will have no effect","reason_zh":"敌方技能失效的条件是施法者先被守卫击杀，没有指向技能格挡效果。","uncertain":false},
+        {"mechanism":"execute","condition":"base","decision":"reject","quote":"Nether Ward deals damage before the actual spell is cast, so if the caster dies the spell will have no effect.","reason_zh":"施法者可能被先结算的伤害击杀，材料没有按生命阈值直接击杀的规则。","uncertain":false},
+        {"mechanism":"ethereal","condition":"base","decision":"reject","quote":"Nether Ward can be decrepified.","reason_zh":"该句说明守卫可被施加虚无，放置守卫本身没有施加虚无。","uncertain":false},
+        {"mechanism":"economy","condition":"base","decision":"reject","quote":"\"nether_ward_gold_bounty\": {\"base\": [20, 40, 60, 80]","reason_zh":"该字段是击毁守卫的普通金钱赏金。","uncertain":false}
+      ]
+    }
+  ]
+}

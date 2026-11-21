@@ -1,0 +1,573 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6ee-b473-78f0-928d-e4ee0c79f7a2
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "phantom_lancer_phantom_edge", "name_zh": "幻影长矛手·幻影冲锋", "category": "2_纯数值", "text_741f": {"desc_loc": "When targeting an enemy for an attack, Phantom Lancer quickly charges into range, gaining increased movement speed and evasion.", "notes_loc": ["If the attack order is cancelled, the movement speed bonus is lost.", "Rush movement speed is %bonus_speed%."], "scepter_loc": "Increases Range. Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them. Additionally, every %illusion_spawn_travel_distance% units rushed creates a Juxtapose illusion that rushes to the target alongside Phantom Lancer."}, "text_742": {"desc_loc": "When targeting an enemy for an attack, Phantom Lancer quickly charges into range, gaining increased movement speed and evasion.", "notes_loc": ["If the attack order is cancelled, the movement speed bonus is lost.", "Rush movement speed is %bonus_speed%."], "scepter_loc": "Increases Range. Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them. Additionally, every %illusion_spawn_travel_distance% units rushed creates a Juxtapose illusion that rushes to the target alongside Phantom Lancer."}, "changed_fields": [{"field": "max_distance", "old": {"base": [600, 675, 750, 825], "scepter": [575], "shard": null}, "new": {"base": [600, 675, 750, 825], "scepter": [525], "shard": null}}], "rows": [{"review_id": "87bb5f0bdadffc315897", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "reject"}, {"review_id": "c4884ac910ef1f798531", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "8057271605ca3e24f423", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "base", "decision": "reject"}, {"review_id": "6477ea2181fa90cc3ef0", "mechanism": "evasion", "mechanism_zh": "闪避", "definition": "自身有概率使敌方攻击落空", "condition": "base", "decision": "accept"}, {"review_id": "bf4ea89b3284277a6f8e", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "aacb5765f531c8f16595", "mechanism": "illusions", "mechanism_zh": "幻象", "definition": "制造自身或他人的幻象", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "audit:phantom_lancer_phantom_edge:self_mobility:base", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "accept"}, {"review_id": "audit:phantom_lancer_phantom_edge:terrain_walk:base", "mechanism": "terrain_walk", "mechanism_zh": "无视地形", "definition": "移动时不受悬崖等不可通行地形阻挡，也能穿过树木", "condition": "base", "decision": "accept"}]}, {"subject": "phantom_lancer_spirit_lance", "name_zh": "幻影长矛手·灵魂之矛", "category": "2_纯数值", "text_741f": {"desc_loc": "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit.", "notes_loc": ["Illusions within %fake_lance_distance% range of Phantom Lancer will mimic the cast animation."], "scepter_loc": "Spirit Lance bounces once on enemies, prioritizing Heroes. Increases Spirit Lance illusion damage.", "facets_loc": ["Spirit Lances from Phantom Lancer's illusions deal %illusion_lance_damage_pct%%% Lance Damage."]}, "text_742": {"desc_loc": "Sends a magical spirit lance to a target enemy unit that damages and slows, while summoning an illusory phantom to attack the unit.", "notes_loc": ["Illusions within %fake_lance_distance% range of Phantom Lancer will mimic the cast animation."], "scepter_loc": "Spirit Lance bounces once on enemies, prioritizing Heroes. Increases Spirit Lance illusion damage.", "facets_loc": ["Spirit Lances from Phantom Lancer's illusions deal %illusion_lance_damage_pct%%% Lance Damage."]}, "changed_fields": [], "rows": [{"review_id": "1822d35476ce3ca4220e", "mechanism": "illusions", "mechanism_zh": "幻象", "definition": "制造自身或他人的幻象", "condition": "base", "decision": "accept"}, {"review_id": "63c213cf7081e3b61f07", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "7ff406b0fdcc332574f6", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "reject"}, {"review_id": "716e8354f0ced1f1e0c8", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "phase_boots", "name_zh": "相位鞋", "category": "2_纯数值", "text_741f": {"desc_loc": "Active: Phase Gives %phase_movement_speed%%% increased movement speed on melee heroes, and %phase_movement_speed_range%%% on ranged heroes, and lets you move through units and turn more quickly for %phase_duration% seconds. Movement speed bonuses from multiple pairs of boots do not stack."}, "text_742": {"desc_loc": "Active: Phase Gives %phase_movement_speed%%% increased movement speed on melee heroes, and %phase_movement_speed_range%%% on ranged heroes, and lets you move through units and turn more quickly for %phase_duration% seconds. Movement speed bonuses from multiple pairs of boots do not stack."}, "changed_fields": [{"field": "bonus_damage", "old": null, "new": {"base": [15], "scepter": null, "shard": null}}, {"field": "bonus_damage_melee", "old": {"base": [18], "scepter": null, "shard": null}, "new": null}, {"field": "bonus_damage_range", "old": {"base": [12], "scepter": null, "shard": null}, "new": null}, {"field": "bonus_movement_speed", "old": {"base": [50], "scepter": null, "shard": null}, "new": null}, {"field": "bonus_movement_speed_melee", "old": null, "new": {"base": [55], "scepter": null, "shard": null}}, {"field": "bonus_movement_speed_ranged", "old": null, "new": {"base": [45], "scepter": null, "shard": null}}], "rows": [{"review_id": "7c6901fa2d3e4e9970b0", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}, {"review_id": "f4b91c9fc6490ca8d833", "mechanism": "phased", "mechanism_zh": "相位移动", "definition": "移动不受单位碰撞阻挡", "condition": "item", "decision": "accept"}]}, {"subject": "phoenix_sun_ray", "name_zh": "凤凰·烈日炙烤", "category": "2_纯数值", "text_741f": {"desc_loc": "Phoenix expels a beam of light at the cost of its own health. The beam damages enemies and heals allies for a base amount plus a percentage of their max health. The percentage increases as the beam continues to fire.", "notes_loc": ["Sun Ray has a width of %radius% units, and a length of %abilitycastrange% units.", "Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.", "Phoenix can use items and abilities without canceling Sun Ray."], "shard_loc": "Allows Sun Ray to be cast during Supernova."}, "text_742": {"desc_loc": "Phoenix expels a beam of light at the cost of its own health. The beam damages enemies and heals allies for a base amount plus a percentage of their max health. The percentage increases as the beam continues to fire.", "notes_loc": ["Sun Ray has a width of %radius% units, and a length of %abilitycastrange% units.", "Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.", "Phoenix can use items and abilities without canceling Sun Ray."], "shard_loc": "Allows Sun Ray to be cast during Supernova."}, "changed_fields": [{"field": "mana_costs", "old": [100, 110, 120, 130], "new": [90, 105, 120, 135]}, {"field": "AbilityManaCost", "old": {"base": [100, 110, 120, 130], "scepter": null, "shard": null}, "new": {"base": [90, 105, 120, 135], "scepter": null, "shard": null}}, {"field": "base_damage", "old": {"base": [15, 20, 25, 30], "scepter": null, "shard": null}, "new": {"base": [20, 25, 30, 35], "scepter": null, "shard": null}}], "rows": [{"review_id": "6e361d7bbbde4b97ffbc", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "ed42c8c2537976e46a87", "mechanism": "channel_interrupt", "mechanism_zh": "打断持续施法", "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记", "condition": "base", "decision": "reject"}, {"review_id": "534860cf3f3f7cf4e803", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "aff2bf1baa66b0e200c5", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "base", "decision": "reject"}, {"review_id": "b8ecaf866e2f2a509aac", "mechanism": "sleep", "mechanism_zh": "睡眠", "definition": "无法行动，受伤害后醒来", "condition": "base", "decision": "reject"}, {"review_id": "af8618c1c17739dbfa6a", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "reject"}]}, {"subject": "phoenix_supernova", "name_zh": "凤凰·超新星", "category": "3_说明文字", "text_741f": {"desc_loc": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities. DISPEL TYPE: Strong Dispel", "scepter_loc": "Increases number of attacks to destroy Supernova and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together."}, "text_742": {"desc_loc": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun has pip health. Creeps and illusions deal 25% damage to the sun. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities. DISPEL TYPE: Strong Dispel", "scepter_loc": "Increases Supernova's pip health and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together."}, "changed_fields": [{"field": "stun_duration", "old": {"base": [1.6, 2, 2.4], "scepter": null, "shard": null}, "new": {"base": [1.8, 2.1, 2.4], "scepter": null, "shard": null}}], "rows": [{"review_id": "5142545a2ec4a634ef28", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "b3792bc9cfa0a763b57c", "mechanism": "applies_strong_dispel", "mechanism_zh": "施加强驱散", "definition": "移除目标身上可被强驱散的效果（含多数眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "audit:phoenix_supernova:aura:base", "mechanism": "aura", "mechanism_zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法", "condition": "base", "decision": "accept"}, {"review_id": "audit:phoenix_supernova:cooldown_reset:base", "mechanism": "cooldown_reset", "mechanism_zh": "刷新冷却", "definition": "立刻重置冷却", "condition": "base", "decision": "accept"}, {"review_id": "audit:phoenix_supernova:healing:base", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "354a424bb6ea1ad31e5e", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "base", "decision": "accept"}, {"review_id": "9b506f6f2bfe56ca4851", "mechanism": "respawn", "mechanism_zh": "重生", "definition": "死亡后复活，或影响复活", "condition": "base", "decision": "accept"}, {"review_id": "b08e4fe99ceb96405382", "mechanism": "respawn", "mechanism_zh": "重生", "definition": "死亡后复活，或影响复活", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "867d805275e77e2ac98b", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}]}, {"subject": "phylactery", "name_zh": "灵匣", "category": "3_说明文字", "text_741f": {"desc_loc": "Passive: Empower Spell The next Unit Target spell you cast on an enemy deals a separate %bonus_spell_damage% bonus damage to the target and slows them by %slow%%% for %slow_duration%s."}, "text_742": {"desc_loc": "Passive: Empower Spell The next Unit Target spell you cast on an enemy deals a separate %bonus_spell_damage% bonus damage to the target and slows them by %slow%%% for %slow_duration%s."}, "changed_fields": [{"field": "cooldowns", "old": [9], "new": [8]}, {"field": "AbilityCooldown", "old": {"base": [9], "scepter": null, "shard": null}, "new": {"base": [8], "scepter": null, "shard": null}}, {"field": "bonus_spell_damage", "old": {"base": [150], "scepter": null, "shard": null}, "new": {"base": [130], "scepter": null, "shard": null}}, {"field": "slow", "old": {"base": [30], "scepter": null, "shard": null}, "new": {"base": [40], "scepter": null, "shard": null}}, {"field": "slow_duration", "old": {"base": [3], "scepter": null, "shard": null}, "new": {"base": [2], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:phylactery:healing:item", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "item", "decision": "accept"}, {"review_id": "3b95924d43619c222bbd", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "item", "decision": "accept"}, {"review_id": "8f6d1bdf00637fa34095", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "item", "decision": "accept"}, {"review_id": "b619500fa49440ddd5f9", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "item", "decision": "reject"}]}, {"subject": "pipe", "name_zh": "洞察烟斗", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Active: Barrier Gives a magic damage barrier that absorbs %barrier_block% damage to all nearby allies. Lasts %barrier_duration% seconds. Radius: %barrier_radius% Passive: Insight Aura Gives allied units %magic_resistance_aura%%% magic resistance. Radius: %aura_radius%", "notes_loc": ["Barrier does not affect units that have been affected by Barrier within Pipe of Insight's cooldown.", "Stacks multiplicatively with other sources of magic resistance."]}, "text_742": {"desc_loc": "Active: Barrier Gives a magic damage barrier that absorbs %barrier_block% damage to all nearby allies. Lasts %barrier_duration% seconds. Radius: %barrier_radius% Passive: Insight Aura Gives allied units %magic_resistance_aura%%% magic resistance. Radius: %aura_radius%", "notes_loc": ["Barrier does not affect units that have been affected by Barrier within Pipe of Insight's cooldown.", "Stacks multiplicatively with other sources of magic resistance."]}, "changed_fields": [{"field": "dispellable", "old": 0, "new": 2}, {"field": "cooldowns", "old": [60], "new": [50]}, {"field": "AbilityCooldown", "old": {"base": [60], "scepter": null, "shard": null}, "new": {"base": [50], "scepter": null, "shard": null}}], "rows": [{"review_id": "91966fcae9096ad74d38", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "item", "decision": "reject"}, {"review_id": "dce4d634ee69bdcecfc6", "mechanism": "aura", "mechanism_zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法", "condition": "item", "decision": "accept"}, {"review_id": "54a8041616495ab6f4ad", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "item", "decision": "accept"}, {"review_id": "audit:pipe:healing:item", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "item", "decision": "accept"}]}, {"subject": "power_treads", "name_zh": "动力鞋", "category": "5_增删或退出", "text_741f": {}, "text_742": {"desc_loc": "Active: Switch Attribute Switches between +%bonus_stat% Strength, +%bonus_stat% Agility, or +%bonus_stat% Intelligence. Movement speed bonuses from multiple pairs of boots do not stack.", "notes_loc": ["Power Treads can be built using a Belt of Strength, Band of Elvenskin, or a Robe of the Magi."]}, "changed_fields": [{"field": "behavior", "old": null, "new": "2052"}, {"field": "target_team", "old": null, "new": 0}, {"field": "target_type", "old": null, "new": 0}, {"field": "flags", "old": null, "new": 0}, {"field": "damage", "old": null, "new": 0}, {"field": "immunity", "old": null, "new": 0}, {"field": "dispellable", "old": null, "new": 0}, {"field": "ability_has_scepter", "old": null, "new": false}, {"field": "ability_has_shard", "old": null, "new": false}, {"field": "cast_ranges", "old": null, "new": [0]}, {"field": "cast_points", "old": null, "new": [0]}, {"field": "channel_times", "old": null, "new": [0]}, {"field": "cooldowns", "old": null, "new": [0]}, {"field": "durations", "old": null, "new": [0]}, {"field": "damages", "old": null, "new": [0, 0, 0, 0]}, {"field": "mana_costs", "old": null, "new": [0]}, {"field": "health_costs", "old": null, "new": []}, {"field": "item_cost", "old": null, "new": 1400}, {"field": "bonus_attack_speed", "old": null, "new": {"base": [25], "scepter": null, "shard": null}}, {"field": "bonus_movement_speed_melee", "old": null, "new": {"base": [55], "scepter": null, "shard": null}}, {"field": "bonus_movement_speed_ranged", "old": null, "new": {"base": [45], "scepter": null, "shard": null}}, {"field": "bonus_stat", "old": null, "new": {"base": [10], "scepter": null, "shard": null}}], "rows": [{"review_id": "d115cae8ca094dabe6e6", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}]}, {"subject": "primal_beast_rock_throw", "name_zh": "獸·砸", "category": "3_说明文字", "text_741f": {"desc_loc": "Primal Beast throws a rock at the target location that stuns and damages enemies. The rock cannot be thrown within a minimum range of Primal Beast. After landing, the rock splits into 3 additional fragments that land behind the initial target location. Rock Throw increases stacks of Uproar for each hero hit."}, "text_742": {"desc_loc": "Primal Beast throws a rock at the target location that stuns enemies and deals %base_damage% + %damage_str_pct%%% STR damage. The rock cannot be thrown within a minimum range of Primal Beast. After landing, the rock splits into 3 additional fragments that land behind the initial target location. Rock Throw increases stacks of Uproar for each hero hit."}, "changed_fields": [{"field": "base_damage", "old": {"base": [325], "scepter": null, "shard": null}, "new": {"base": [300], "scepter": null, "shard": null}}, {"field": "damage_str_pct", "old": null, "new": {"base": [100], "scepter": null, "shard": null}}], "rows": [{"review_id": "d1890545484d1e7d30a7", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "02b70f5cff1185627ef1", "mechanism": "cleave", "mechanism_zh": "分裂溅射", "definition": "攻击伤害波及周围单位", "condition": "base", "decision": "reject"}, {"review_id": "ae17309ba6ec697f1d17", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}]}, {"subject": "puck_dream_coil", "name_zh": "帕克·梦境缠绕", "category": "2_纯数值", "text_741f": {"desc_loc": "Creates a coil of volatile magic that latches onto enemy Heroes, damaging and leashing them. If the enemy hero stretches the coil by moving too far away, it snaps, stunning and dealing additional damage.", "scepter_loc": "All enemies affected by Dream Coil are attacked at a rate equal to %attack_rate_pct%%% of Puck's attack rate. The attacks continue while the target is stunned if they break the Dream Coil."}, "text_742": {"desc_loc": "Creates a coil of volatile magic that latches onto enemy Heroes, damaging and leashing them. If the enemy hero stretches the coil by moving too far away, it snaps, stunning and dealing additional damage.", "scepter_loc": "All enemies affected by Dream Coil are attacked at a rate equal to %attack_rate_pct%%% of Puck's attack rate. The attacks continue while the target is stunned if they break the Dream Coil."}, "changed_fields": [{"field": "cooldowns", "old": [75], "new": [80, 75, 70]}, {"field": "AbilityCooldown", "old": {"base": [75], "scepter": null, "shard": null}, "new": {"base": [80, 75, 70], "scepter": null, "shard": null}}], "rows": [{"review_id": "45da1b3ede10dfd77af7", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "audit:puck_dream_coil:aoe_damage:base", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "b1a444f9d631d664ceca", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "reject"}, {"review_id": "d5b9f097eb8be3376f2f", "mechanism": "leash", "mechanism_zh": "束缚", "definition": "目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用", "condition": "base", "decision": "accept"}, {"review_id": "72f4e4bf28b69c04782c", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "base", "decision": "reject"}, {"review_id": "813c1e098956bc6d5f09", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "scepter_upgrade", "decision": "reject"}, {"review_id": "aab4edb47c445475a948", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}]}, {"subject": "puck_waning_rift", "name_zh": "帕克·新月之痕", "category": "2_纯数值", "text_741f": {"desc_loc": "Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby.", "facets_loc": ["Waning Rift pushes enemies away. If the ability is in alt-cast state, it will pull them instead."]}, "text_742": {"desc_loc": "Puck teleports to the target location and releases a burst of faerie dust that deals damage and silences enemy units nearby.", "facets_loc": ["Waning Rift pushes enemies away. If the ability is in alt-cast state, it will pull them instead."]}, "changed_fields": [{"field": "cooldowns", "old": [16, 15, 14, 13], "new": [15, 14, 13, 12]}, {"field": "AbilityCooldown", "old": {"base": [16, 15, 14, 13], "scepter": null, "shard": null}, "new": {"base": [15, 14, 13, 12], "scepter": null, "shard": null}}], "rows": [{"review_id": "37c1e06237a5e972c876", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "5bc4827e577541980230", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "accept"}, {"review_id": "1a1c56a18d5c8bfeec39", "mechanism": "silence", "mechanism_zh": "沉默", "definition": "目标无法施放技能（仍可攻击、使用物品）", "condition": "base", "decision": "accept"}]}, {"subject": "pudge_dismember", "name_zh": "帕吉·肢解", "category": "2_纯数值", "text_741f": {"desc_loc": "CHANNELED - Pudge chows down on an enemy unit, disabling it and dealing damage over time. Damage is increased by Pudge's Strength and heals him for the total amount. Pudge pulls the unit at a rate of %pull_units_per_second% units, up to a minimum of %pull_distance_limit% range.", "notes_loc": ["If a unit becomes invisible while Dismembered, it will still be under the effects of Dismember."], "facets_loc": ["Dismember increases Strength when dealing damage to heroes."]}, "text_742": {"desc_loc": "CHANNELED - Pudge chows down on an enemy unit, disabling it and dealing damage over time. Damage is increased by Pudge's Strength and heals him for the total amount. Pudge pulls the unit at a rate of %pull_units_per_second% units, up to a minimum of %pull_distance_limit% range.", "notes_loc": ["If a unit becomes invisible while Dismembered, it will still be under the effects of Dismember."], "facets_loc": ["Dismember increases Strength when dealing damage to heroes."]}, "changed_fields": [{"field": "strength_damage", "old": {"base": [0.3, 0.6, 0.9], "scepter": null, "shard": null}, "new": {"base": [0.3, 0.5, 0.7], "scepter": null, "shard": null}}], "rows": [{"review_id": "c59bd5e4a8e83e68666e", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "0c806faeb301cd13063f", "mechanism": "channeled", "mechanism_zh": "持续施法", "definition": "施法者自身需要持续引导，被打断即停止", "condition": "base", "decision": "accept"}, {"review_id": "c1c0a6a1acb19862a69b", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "9a32114bd655cb3921ea", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "55f03d5e069745765658", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "reject"}, {"review_id": "audit:pudge_dismember:lifesteal:base", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "base", "decision": "accept"}, {"review_id": "audit:pudge_dismember:stun:base", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "5a3a511df769042a7d74", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "pudge_meat_hook", "name_zh": "帕吉·肉钩", "category": "3_说明文字", "text_741f": {"desc_loc": "Launches a bloody hook toward a unit or location. The hook will snag the first unit it encounters, dragging the unit back to Pudge, killing it if it's a non-ancient creep and dealing damage if it is an enemy otherwise.", "notes_loc": ["Interrupts channeling spells of the primary target if it's an enemy.", "Meat Hook hits invisible units.", "Meat Hook can go through trees, cliffs, buildings, ancient units and Roshan.", "Meat Hook can drag friendly units, but they won't be damaged.", "Meat Hook can hit and drag runes to Pudge, refunding the Hook's mana cost."], "shard_loc": "When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled. When Meat Hook hits an ally, Meat Hook's cooldown is reduced by %cooldown_reduction_pct_allied_hook%%%.", "facets_loc": ["Meat Hook deals bonus damage based on the distance pulled, but base damage is reduced."]}, "text_742": {"desc_loc": "Launches a bloody hook toward a unit or location. The hook will snag the first unit it encounters, dragging the unit back to Pudge, killing it if it's a non-ancient creep and dealing damage if it is an enemy otherwise.", "notes_loc": ["Interrupts channeling spells of the primary target if it's an enemy.", "Meat Hook hits invisible units.", "Meat Hook can go through trees, cliffs, buildings, ancient units and Roshan.", "Meat Hook can drag friendly units, but they won't be damaged.", "Meat Hook can hit and drag runes to Pudge, refunding the Hook's mana cost."], "shard_loc": "Increases range. When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled.", "facets_loc": ["Meat Hook deals bonus damage based on the distance pulled, but base damage is reduced."]}, "changed_fields": [{"field": "AbilityCastRange", "old": {"base": [1300], "scepter": null, "shard": null}, "new": {"base": [1300], "scepter": null, "shard": [100]}}, {"field": "cooldown_reduction_pct_allied_hook", "old": {"base": [0], "scepter": null, "shard": [50]}, "new": {"base": [0], "scepter": null, "shard": [0]}}], "rows": [{"review_id": "7a480add2125b604a894", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "c81e58a5173bb24041df", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "5ee3b680453f2297c6bc", "mechanism": "channel_interrupt", "mechanism_zh": "打断持续施法", "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记", "condition": "base", "decision": "accept"}, {"review_id": "5f5e03d8a276a1f2b8ef", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "audit:pudge_meat_hook:displace_other:base", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "1aa1e012f2e1a57edb39", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "reject"}, {"review_id": "7f2882ccd2906d8baaca", "mechanism": "tree_walk", "mechanism_zh": "穿树", "definition": "移动时能穿过树木，但不能越过悬崖或地形", "condition": "base", "decision": "reject"}]}, {"subject": "pugna_decrepify", "name_zh": "帕格纳·衰老", "category": "3_说明文字", "text_741f": {"desc_loc": "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked. Healing on affected allies is increased, while afflicted enemies take extra magic damage instead.", "notes_loc": ["Only magical and pure damage can affect a unit under the effects of Decrepify.", "Doesn't slow allied units.", "Can be used on your Nether Ward."]}, "text_742": {"desc_loc": "A powerful banishing spell that slows a unit and renders it unable to attack or be attacked. Healing received and dealt by affected allies is increased, while afflicted enemies take extra magic damage instead.", "notes_loc": ["Only magical and pure damage can affect a unit under the effects of Decrepify.", "Doesn't slow allied units.", "Can be used on your Nether Ward."]}, "changed_fields": [{"field": "mana_costs", "old": [80], "new": [50, 60, 70, 80]}, {"field": "AbilityManaCost", "old": {"base": [80], "scepter": null, "shard": null}, "new": {"base": [50, 60, 70, 80], "scepter": null, "shard": null}}, {"field": "bonus_spell_damage_pct", "old": {"base": [-20, -30, -40, -50], "scepter": null, "shard": null}, "new": {"base": [-16, -24, -32, -40], "scepter": null, "shard": null}}], "rows": [{"review_id": "020385b9b09915b67b7f", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "8081de344bac18007e77", "mechanism": "cyclone_banish", "mechanism_zh": "吹风/放逐", "definition": "使目标短暂离开战场，期间无敌或不可被选取", "condition": "base", "decision": "reject"}, {"review_id": "371b31e9c3292a3f3126", "mechanism": "ethereal", "mechanism_zh": "虚无", "definition": "单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用", "condition": "base", "decision": "accept"}, {"review_id": "6bdc3362ebedd3032325", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "reject"}, {"review_id": "5e4c6ec515da87c7dfce", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "reject"}, {"review_id": "0485a0f4255743a9d5df", "mechanism": "magic_resist_reduction", "mechanism_zh": "减魔抗/魔法易伤", "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害", "condition": "base", "decision": "accept"}, {"review_id": "cbbc4cb973cb1cee2bc9", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "9651e7885caaf7fd1553", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "pugna_life_drain", "name_zh": "帕格纳·生命汲取", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target. When cast on an ally, Pugna will drain his own health into his ally.", "scepter_loc": "Reduces cooldown by %abilitycooldown%s. When targeting an enemy hero, Pugna reduces their outgoing spell damage by %spell_amp_drain_rate%%% per second up to a maximum of %spell_amp_drain_max%%% and increases his own, up to a maximum of %max_spell_amp_drain_pct%%%. When draining through a Nether Ward using Shard, the rate of increase/decrease is %spell_amp_drain_rate_ward%%% instead. Debuff lasts %spell_amp_drain_duration% seconds.", "shard_loc": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed."}, "text_742": {"desc_loc": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit, healing himself for the damage dealt and granting vision over the target. When cast on an ally, Pugna heals his ally and takes magical damage equal to the amount healed. This damage cannot kill Pugna.", "shard_loc": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed."}, "changed_fields": [{"field": "ability_has_scepter", "old": true, "new": false}, {"field": "channel_times", "old": [10], "new": [0]}, {"field": "durations", "old": [0], "new": [10]}, {"field": "mana_costs", "old": [115, 160, 205], "new": [100, 150, 200]}, {"field": "AbilityChannelTime", "old": {"base": [10], "scepter": null, "shard": null}, "new": null}, {"field": "AbilityCooldown", "old": {"base": [7], "scepter": [50], "shard": null}, "new": {"base": [7], "scepter": null, "shard": null}}, {"field": "AbilityDuration", "old": null, "new": {"base": [10], "scepter": null, "shard": null}}, {"field": "AbilityManaCost", "old": {"base": [115, 160, 205], "scepter": null, "shard": null}, "new": {"base": [100, 150, 200], "scepter": null, "shard": null}}, {"field": "ally_healing", "old": {"base": [150, 250, 350], "scepter": null, "shard": null}, "new": null}, {"field": "bonus_heal_pct", "old": {"base": [], "scepter": null, "shard": null}, "new": null}, {"field": "health_drain", "old": {"base": [150, 250, 350], "scepter": null, "shard": null}, "new": null}, {"field": "life_drain", "old": null, "new": {"base": [150, 250, 350], "scepter": null, "shard": null}}, {"field": "max_spell_amp_drain_pct", "old": {"base": [0], "scepter": [100], "shard": null}, "new": null}, {"field": "spell_amp_drain_duration", "old": {"base": [0], "scepter": [8], "shard": null}, "new": null}, {"field": "spell_amp_drain_max", "old": {"base": [0], "scepter": [75], "shard": null}, "new": null}, {"field": "spell_amp_drain_rate", "old": {"base": [0], "scepter": [8], "shard": null}, "new": null}, {"field": "spell_amp_drain_rate_ward", "old": {"base": [0], "scepter": [4], "shard": null}, "new": null}], "rows": [{"review_id": "137f88a2ce8c64a604cc", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "183ab2109f1ba7b83e72", "mechanism": "channel_interrupt", "mechanism_zh": "打断持续施法", "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "7c2911cf7844f3051597", "mechanism": "channeled", "mechanism_zh": "持续施法", "definition": "施法者自身需要持续引导，被打断即停止", "condition": "base", "decision": "accept"}, {"review_id": "2d79c4ddd343bbed2738", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "390ace6a8585d2e16f1d", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "audit:pugna_life_drain:lifesteal:base", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "base", "decision": "accept"}, {"review_id": "959b59da03f5fcc0e46f", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "36582c96a8b988f26381", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "pugna_oblivion_savant", "name_zh": "帕格纳·湮灭专家", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Pugna can cast spells and use items while channeling. Pugna receives %tower_scale%%% spell amplification per destroyed tower."}, "text_742": {"desc_loc": "Pugna can cast spells and use items while channeling. Pugna receives %tower_scale%%% spell amplification per destroyed tower.", "scepter_loc": "Gains %AbilityCharges% charges with a %AbilityChargeRestoreTime% restore time. Pugna can cast any of his abilities an additional time, consuming an Oblivion Savant charge instead."}, "changed_fields": [{"field": "behavior", "old": "2", "new": "567347999932419"}, {"field": "ability_has_scepter", "old": false, "new": true}, {"field": "AbilityChargeRestoreTime", "old": null, "new": {"base": [0], "scepter": [20], "shard": null}}, {"field": "AbilityCharges", "old": null, "new": {"base": [0], "scepter": [2], "shard": null}}, {"field": "recast_min_cooldown", "old": null, "new": {"base": [0], "scepter": [0.25], "shard": null}}], "rows": [{"review_id": "c55296b669a74e4738fc", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}, {"review_id": "c59ab23ddd895aa8e553", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "base", "decision": "accept"}]}, {"subject": "queenofpain_scream_of_pain", "name_zh": "痛苦女王·痛苦尖叫", "category": "2_纯数值", "text_741f": {"desc_loc": "The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies. %damage_reflected_to_self%%% of the damage dealt to heroes is reflected back to her.", "notes_loc": ["Scream Of Pain will hit invisible units.", "Scream Of Pain cannot be disjointed.", "Damage to illusions is not reflected. Damage reflected is before reduction and non-lethal.", "Reflected damage does not provide any lifesteal and cannot be reflected."]}, "text_742": {"desc_loc": "The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies. %damage_reflected_to_self%%% of the damage dealt to heroes is reflected back to her.", "notes_loc": ["Scream Of Pain will hit invisible units.", "Scream Of Pain cannot be disjointed.", "Damage to illusions is not reflected. Damage reflected is before reduction and non-lethal.", "Reflected damage does not provide any lifesteal and cannot be reflected."]}, "changed_fields": [], "rows": [{"review_id": "38b002d4cf8d6cf900fe", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "09a5cee39f4e5b225f0c", "mechanism": "damage_return", "mechanism_zh": "反伤", "definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件", "condition": "base", "decision": "reject"}, {"review_id": "d02f3d0edec7d858cfdd", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "reject"}]}, {"subject": "queenofpain_shadow_strike", "name_zh": "痛苦女王·暗影突袭", "category": "2_纯数值", "text_741f": {"desc_loc": "Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement speed slowed for %duration% seconds. An instance of damage is dealt every %damage_interval% seconds.", "notes_loc": ["The affected unit slowly regains its original movement speed every second during the duration.", "Units afflicted by Shadow Strike can be denied by their allies when their HP drops below 25% of their maximum health."], "scepter_loc": "Causes Shadow Strike to become a %aoe_radius% AoE Spell. When Shadow Strike ends or is re-applied to an enemy Hero, the target emits a Scream of Pain, hitting any nearby enemies."}, "text_742": {"desc_loc": "Hurls a poisoned dagger which deals large initial damage, and then deals damage over time. The poisoned unit has its movement speed slowed for %duration% seconds. An instance of damage is dealt every %damage_interval% seconds.", "notes_loc": ["The affected unit slowly regains its original movement speed every second during the duration.", "Units afflicted by Shadow Strike can be denied by their allies when their HP drops below 25% of their maximum health."], "scepter_loc": "Causes Shadow Strike to become a %aoe_radius% AoE Spell. When Shadow Strike ends or is re-applied to an enemy Hero, the target emits a Scream of Pain, hitting any nearby enemies."}, "changed_fields": [{"field": "duration", "old": {"base": [16], "scepter": null, "shard": null}, "new": {"base": [13], "scepter": null, "shard": null}}, {"field": "duration_damage", "old": {"base": [20, 40, 60, 80], "scepter": null, "shard": null}, "new": {"base": [25, 50, 75, 100], "scepter": null, "shard": null}}], "rows": [{"review_id": "b54c85dafb96f3e88d38", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "04ddd5fd6b2dac55910c", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "10a955ea366f594b6cb1", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "queenofpain_sonic_wave", "name_zh": "痛苦女王·超声冲击波", "category": "2_纯数值", "text_741f": {"desc_loc": "Creates a gigantic wave of sound in front of Queen of Pain, dealing heavy damage to all enemy units in its wake and pushing them back.", "notes_loc": ["Sonic Wave can hit units up to 1150 units away."]}, "text_742": {"desc_loc": "Creates a gigantic wave of sound in front of Queen of Pain, dealing heavy damage to all enemy units in its wake and pushing them back.", "notes_loc": ["Sonic Wave can hit units up to 1150 units away."]}, "changed_fields": [{"field": "cooldowns", "old": [110, 95, 80], "new": [105, 90, 75]}, {"field": "AbilityCooldown", "old": {"base": [110, 95, 80], "scepter": null, "shard": null}, "new": {"base": [105, 90, 75], "scepter": null, "shard": null}}, {"field": "damage", "old": {"base": [325, 475, 625], "scepter": null, "shard": null}, "new": {"base": [325, 455, 585], "scepter": null, "shard": null}}], "rows": [{"review_id": "ef10f9654cc5c2bdc188", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "2a052dce4eaf5a6a46ad", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}]}, {"subject": "queenofpain_succubus", "name_zh": "痛苦女王·魅魔", "category": "2_纯数值", "text_741f": {"desc_loc": "All sources of Spell Lifesteal also apply to Pure Damage. Queen of Pain gains Spell Lifesteal that increases with proximity to her enemies. Lifesteal is at its maximum when the enemy is %close_radius% units or closer to her and at its minimum when the enemy is %max_radius% units or further from her.", "facets_loc": ["Spell Lifesteal also applies to Pure & Magical reflected damage."]}, "text_742": {"desc_loc": "All sources of Spell Lifesteal also apply to Pure Damage. Queen of Pain gains Spell Lifesteal that increases with proximity to her enemies. Lifesteal is at its maximum when the enemy is %close_radius% units or closer to her and at its minimum when the enemy is %max_radius% units or further from her.", "facets_loc": ["Spell Lifesteal also applies to Pure & Magical reflected damage."]}, "changed_fields": [{"field": "spell_lifesteal", "old": {"base": [2], "scepter": null, "shard": null}, "new": {"base": [3], "scepter": null, "shard": null}}, {"field": "spell_lifesteal_close", "old": {"base": [14], "scepter": null, "shard": null}, "new": {"base": [17], "scepter": null, "shard": null}}], "rows": [{"review_id": "696487217e7d3ab6d96b", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "8c6841945a58c06ead09", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "base", "decision": "accept"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "phantom_lancer_phantom_edge",
+      "rows": [
+        {"review_id":"87bb5f0bdadffc315897","verdict":"holds","quote":"Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them.","reason_zh":"A杖让幻象分别攻击途经的敌人，冲锋本身没有对这些敌人造成范围伤害。"},
+        {"review_id":"c4884ac910ef1f798531","verdict":"unclear","quote":"max_distance.scepter: 575→525","reason_zh":"材料只给出A杖冲锋距离的变化，缺少独立确认基础技能可被破坏所需的 IsBreakable 值。"},
+        {"review_id":"8057271605ca3e24f423","verdict":"holds","quote":"When targeting an enemy for an attack, Phantom Lancer quickly charges into range","reason_zh":"此处的 charges 描述向攻击目标冲锋，说明中没有使用一次便消耗一点的充能。"},
+        {"review_id":"6477ea2181fa90cc3ef0","verdict":"holds","quote":"gaining increased movement speed and evasion.","reason_zh":"基础冲锋仍为幻影长矛手提供闪避。"},
+        {"review_id":"bf4ea89b3284277a6f8e","verdict":"holds","quote":"gaining increased movement speed and evasion.","reason_zh":"基础冲锋仍提升幻影长矛手自身的移动速度。"},
+        {"review_id":"aacb5765f531c8f16595","verdict":"holds","quote":"Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them.","reason_zh":"A杖冲锋距离缩短后，穿过敌人仍会制造幻象。"},
+        {"review_id":"audit:phantom_lancer_phantom_edge:self_mobility:base","verdict":"holds","quote":"Phantom Lancer quickly charges into range","reason_zh":"幻影长矛手会冲向攻击目标，进入攻击距离。"},
+        {"review_id":"audit:phantom_lancer_phantom_edge:terrain_walk:base","verdict":"unclear","quote":"Phantom Lancer quickly charges into range","reason_zh":"说明确认了冲锋位移，但没有交代冲锋能否穿过树木和悬崖。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "phantom_lancer_spirit_lance",
+      "rows": [
+        {"review_id":"1822d35476ce3ca4220e","verdict":"holds","quote":"summoning an illusory phantom to attack the unit.","reason_zh":"基础灵魂之矛会制造一个攻击目标的幻象。"},
+        {"review_id":"63c213cf7081e3b61f07","verdict":"holds","quote":"a target enemy unit that damages and slows","reason_zh":"基础灵魂之矛仍对命中的敌方目标施加减速。"},
+        {"review_id":"7ff406b0fdcc332574f6","verdict":"holds","quote":"summoning an illusory phantom to attack the unit.","reason_zh":"说明将产生的单位明确称为幻象，没有另外召唤或控制其他单位。"},
+        {"review_id":"716e8354f0ced1f1e0c8","verdict":"holds","quote":"Sends a magical spirit lance to a target enemy unit","reason_zh":"施法时可以直接选择一个敌方单位作为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "phase_boots",
+      "rows": [
+        {"review_id":"7c6901fa2d3e4e9970b0","verdict":"holds","quote":"Gives %phase_movement_speed%%% increased movement speed on melee heroes, and %phase_movement_speed_range%%% on ranged heroes","reason_zh":"主动相位仍为近战和远程英雄加速，装备的常驻移速加成也分别为55和45。"},
+        {"review_id":"f4b91c9fc6490ca8d833","verdict":"holds","quote":"lets you move through units and turn more quickly for %phase_duration% seconds.","reason_zh":"开启相位后，持有者仍能穿过其他单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "phoenix_sun_ray",
+      "rows": [
+        {"review_id":"6e361d7bbbde4b97ffbc","verdict":"holds","quote":"The beam damages enemies and heals allies for a base amount plus a percentage of their max health.","reason_zh":"一次施放的光束仍能灼伤其范围内的多个敌人。"},
+        {"review_id":"ed42c8c2537976e46a87","verdict":"holds","quote":"Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.","reason_zh":"说明写的是凤凰受控会中止光束，没有赋予光束打断敌方持续施法的效果。"},
+        {"review_id":"534860cf3f3f7cf4e803","verdict":"holds","quote":"heals allies for a base amount plus a percentage of their max health.","reason_zh":"光束仍按基础值和友军最大生命值的一定比例治疗友军。"},
+        {"review_id":"b8ecaf866e2f2a509aac","verdict":"holds","quote":"Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.","reason_zh":"沉默是凤凰受到后会中止光束的控制，光束没有对敌人施加沉默。"},
+        {"review_id":"af8618c1c17739dbfa6a","verdict":"holds","quote":"Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.","reason_zh":"睡眠是中止凤凰光束的外部控制，光束没有使目标入睡。"},
+        {"review_id":"af8618c1c17739dbfa6a","verdict":"holds","quote":"Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.","reason_zh":"眩晕会使凤凰中止光束，说明没有赋予光束眩晕敌人的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "phoenix_supernova",
+      "rows": [
+        {"review_id":"5142545a2ec4a634ef28","verdict":"holds","quote":"Transforms into a burning sun that scorches enemies in a huge area.","reason_zh":"烈日仍能灼伤大范围内的多个敌人。"},
+        {"review_id":"b3792bc9cfa0a763b57c","verdict":"holds","quote":"DISPEL TYPE: Strong Dispel","reason_zh":"基础技能明确标注施加强驱散。"},
+        {"review_id":"audit:phoenix_supernova:aura:base","verdict":"holds","quote":"Transforms into a burning sun that scorches enemies in a huge area.","reason_zh":"持续灼烧以凤凰化成的烈日为中心，作用于周围敌人。"},
+        {"review_id":"audit:phoenix_supernova:cooldown_reset:base","verdict":"holds","quote":"restoring Phoenix to full health and mana with refreshed abilities.","reason_zh":"烈日成功爆炸时会刷新凤凰的技能冷却。"},
+        {"review_id":"audit:phoenix_supernova:healing:base","verdict":"holds","quote":"restoring Phoenix to full health and mana","reason_zh":"烈日成功爆炸时会回满凤凰的生命值。"},
+        {"review_id":"354a424bb6ea1ad31e5e","verdict":"holds","quote":"restoring Phoenix to full health and mana","reason_zh":"烈日成功爆炸时会回满凤凰自身的法力值。"},
+        {"review_id":"9b506f6f2bfe56ca4851","verdict":"holds","quote":"The Phoenix willingly ends its current life for the chance to be reborn.","reason_zh":"基础技能仍让凤凰有机会在烈日存续至结束时重生。"},
+        {"review_id":"b08e4fe99ceb96405382","verdict":"holds","quote":"allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together.","reason_zh":"A杖仍允许凤凰带一名友方英雄进入烈日并一同重生。"},
+        {"review_id":"867d805275e77e2ac98b","verdict":"holds","quote":"the sun explodes, stunning all nearby enemies","reason_zh":"烈日爆炸仍会眩晕周围所有敌人，调整后的各级眩晕时长都大于零。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"damage_block","condition":"base","quote":"The sun has pip health. Creeps and illusions deal 25% damage to the sun.","reason_zh":"7.42为烈日的格数生命加入了来源限定的减伤规则，小兵和幻象对烈日只造成25%的伤害。"}
+      ]
+    },
+    {
+      "subject": "phylactery",
+      "rows": [
+        {"review_id":"audit:phylactery:healing:item","verdict":"unclear","quote":"deals a separate %bonus_spell_damage% bonus damage to the target and slows them","reason_zh":"说明和变更字段只涉及被动的伤害、减速与冷却，缺少可核实装备生命回复的属性值。"},
+        {"review_id":"3b95924d43619c222bbd","verdict":"unclear","quote":"deals a separate %bonus_spell_damage% bonus damage to the target and slows them","reason_zh":"被动说明没有回蓝效果，材料也没有提供装备的法力回复属性值。"},
+        {"review_id":"8f6d1bdf00637fa34095","verdict":"holds","quote":"slow: 30→40；slow_duration: 3→2","reason_zh":"触发后的减速从30%提高到40%，持续时间从3秒缩短到2秒。"},
+        {"review_id":"b619500fa49440ddd5f9","verdict":"holds","quote":"deals a separate %bonus_spell_damage% bonus damage to the target","reason_zh":"灵匣独立结算一段额外伤害，没有提高触发技能本身的伤害。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pipe",
+      "rows": [
+        {"review_id":"91966fcae9096ad74d38","verdict":"holds","quote":"Gives a magic damage barrier that absorbs %barrier_block% damage to all nearby allies.","reason_zh":"主动范围效果为附近友军吸收伤害，没有对范围内敌人造成伤害。"},
+        {"review_id":"dce4d634ee69bdcecfc6","verdict":"holds","quote":"Passive: Insight Aura Gives allied units %magic_resistance_aura%%% magic resistance. Radius: %aura_radius%","reason_zh":"洞察光环仍为持有者周围的友方单位提供魔法抗性。"},
+        {"review_id":"54a8041616495ab6f4ad","verdict":"holds","quote":"Gives a magic damage barrier that absorbs %barrier_block% damage to all nearby allies.","reason_zh":"主动护盾仍能为附近友军吸收魔法伤害。"},
+        {"review_id":"audit:pipe:healing:item","verdict":"unclear","quote":"Passive: Insight Aura Gives allied units %magic_resistance_aura%%% magic resistance.","reason_zh":"光环说明只列出魔抗，所给字段也不足以确认装备是否另有生命回复属性。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"effect_dispellability","condition":"item","quote":"dispellable: 0→2","reason_zh":"7.42将烟斗效果的驱散属性从0改为2，材料未提供数值与具体驱散等级的对照。"}
+      ]
+    },
+    {
+      "subject": "power_treads",
+      "rows": [
+        {"review_id":"d115cae8ca094dabe6e6","verdict":"holds","quote":"bonus_movement_speed_melee.base: null→55；bonus_movement_speed_ranged.base: null→45","reason_zh":"7.42的装备字段明确给近战持有者增加55移速、远程持有者增加45移速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "primal_beast_rock_throw",
+      "rows": [
+        {"review_id":"d1890545484d1e7d30a7","verdict":"holds","quote":"Primal Beast throws a rock at the target location that stuns enemies and deals %base_damage% + %damage_str_pct%%% STR damage.","reason_zh":"投向目标地点的岩石仍可伤害多个敌人，力量加成只改变伤害计算。"},
+        {"review_id":"02b70f5cff1185627ef1","verdict":"holds","quote":"After landing, the rock splits into 3 additional fragments that land behind the initial target location.","reason_zh":"碎片由技能投出的岩石落地后产生，没有让普通攻击溅射。"},
+        {"review_id":"ae17309ba6ec697f1d17","verdict":"holds","quote":"throws a rock at the target location that stuns enemies","reason_zh":"投石仍会眩晕命中的敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "puck_dream_coil",
+      "rows": [
+        {"review_id":"45da1b3ede10dfd77af7","verdict":"holds","quote":"All enemies affected by Dream Coil are attacked at a rate equal to %attack_rate_pct%%% of Puck's attack rate.","reason_zh":"有A杖时，一次梦境缠绕能让所有受影响的敌人受到攻击。"},
+        {"review_id":"audit:puck_dream_coil:aoe_damage:base","verdict":"holds","quote":"latches onto enemy Heroes, damaging and leashing them.","reason_zh":"基础技能一次可连接并伤害多名敌方英雄。"},
+        {"review_id":"b1a444f9d631d664ceca","verdict":"holds","quote":"it snaps, stunning and dealing additional damage.","reason_zh":"挣断连接会另外造成一次伤害，没有提高目标受到的物理或全部伤害。"},
+        {"review_id":"d5b9f097eb8be3376f2f","verdict":"holds","quote":"latches onto enemy Heroes, damaging and leashing them.","reason_zh":"基础技能明确对连接的敌方英雄施加束缚。"},
+        {"review_id":"72f4e4bf28b69c04782c","verdict":"holds","quote":"If the enemy hero stretches the coil by moving too far away, it snaps","reason_zh":"受影响的敌人仍能走动，甚至可以走远并挣断连接。"},
+        {"review_id":"813c1e098956bc6d5f09","verdict":"holds","quote":"The attacks continue while the target is stunned if they break the Dream Coil.","reason_zh":"A杖目标仍可移动并挣断连接，升级只让攻击在断裂眩晕期间继续。"},
+        {"review_id":"aab4edb47c445475a948","verdict":"holds","quote":"it snaps, stunning and dealing additional damage.","reason_zh":"敌人移动过远使连接断裂时仍会受到眩晕。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "puck_waning_rift",
+      "rows": [
+        {"review_id":"37c1e06237a5e972c876","verdict":"holds","quote":"a burst of faerie dust that deals damage and silences enemy units nearby.","reason_zh":"一次施放仍能对落点附近的多个敌方单位造成伤害。"},
+        {"review_id":"5bc4827e577541980230","verdict":"holds","quote":"Puck teleports to the target location","reason_zh":"帕克自身仍会传送到目标地点。"},
+        {"review_id":"1a1c56a18d5c8bfeec39","verdict":"holds","quote":"silences enemy units nearby.","reason_zh":"新月之痕仍会沉默附近的敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pudge_dismember",
+      "rows": [
+        {"review_id":"c59bd5e4a8e83e68666e","verdict":"holds","quote":"Pudge chows down on an enemy unit, disabling it and dealing damage over time.","reason_zh":"肢解的持续伤害作用于被咬住的单个敌方单位。"},
+        {"review_id":"0c806faeb301cd13063f","verdict":"holds","quote":"CHANNELED - Pudge chows down on an enemy unit","reason_zh":"技能仍明确标注为持续施法。"},
+        {"review_id":"c1c0a6a1acb19862a69b","verdict":"holds","quote":"Pudge pulls the unit at a rate of %pull_units_per_second% units","reason_zh":"帕吉仍会把被肢解的单位拉向自己。"},
+        {"review_id":"9a32114bd655cb3921ea","verdict":"holds","quote":"Damage is increased by Pudge's Strength and heals him for the total amount.","reason_zh":"肢解造成伤害时仍会为帕吉恢复生命值。"},
+        {"review_id":"55f03d5e069745765658","verdict":"holds","quote":"If a unit becomes invisible while Dismembered, it will still be under the effects of Dismember.","reason_zh":"说明只交代目标中途隐身后肢解仍会生效，没有赋予肢解使单位隐身的能力。"},
+        {"review_id":"audit:pudge_dismember:lifesteal:base","verdict":"holds","quote":"Damage is increased by Pudge's Strength and heals him for the total amount.","reason_zh":"帕吉按肢解造成的伤害全额恢复自身生命，符合技能吸血的定义。"},
+        {"review_id":"audit:pudge_dismember:stun:base","verdict":"holds","quote":"Pudge chows down on an enemy unit, disabling it and dealing damage over time.","reason_zh":"肢解期间目标仍被持续控制而无法行动，本次调整只涉及力量伤害系数。"},
+        {"review_id":"5a3a511df769042a7d74","verdict":"holds","quote":"Pudge chows down on an enemy unit, disabling it","reason_zh":"肢解仍以一个敌方单位为施法目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pudge_meat_hook",
+      "rows": [
+        {"review_id":"7a480add2125b604a894","verdict":"holds","quote":"The hook will snag the first unit it encounters","reason_zh":"基础肉钩只钩住遇到的第一个单位，单次命中没有范围伤害。"},
+        {"review_id":"c81e58a5173bb24041df","verdict":"holds","quote":"When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled.","reason_zh":"魔晶的距离加成伤害仍只结算给被钩中的敌人。"},
+        {"review_id":"5ee3b680453f2297c6bc","verdict":"holds","quote":"Interrupts channeling spells of the primary target if it's an enemy.","reason_zh":"基础肉钩明确会打断敌方主目标的持续施法。"},
+        {"review_id":"5f5e03d8a276a1f2b8ef","verdict":"holds","quote":"Increases range. When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled.","reason_zh":"拉回目标由基础肉钩提供，魔晶只增加射程并按拉动距离附加伤害。"},
+        {"review_id":"audit:pudge_meat_hook:displace_other:base","verdict":"holds","quote":"dragging the unit back to Pudge","reason_zh":"基础肉钩会把钩中的单位拉回帕吉身边。"},
+        {"review_id":"1aa1e012f2e1a57edb39","verdict":"holds","quote":"Meat Hook hits invisible units.","reason_zh":"肉钩可以命中已经隐身的单位，没有使单位隐身的效果。"},
+        {"review_id":"7f2882ccd2906d8baaca","verdict":"holds","quote":"Meat Hook can go through trees, cliffs, buildings, ancient units and Roshan.","reason_zh":"可以穿过树木的是飞出的钩子，帕吉自身没有获得穿树移动能力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pugna_decrepify",
+      "rows": [
+        {"review_id":"020385b9b09915b67b7f","verdict":"holds","quote":"A powerful banishing spell that slows a unit and renders it unable to attack or be attacked.","reason_zh":"衰老对一个单位施加状态，说明没有范围伤害效果。"},
+        {"review_id":"8081de344bac18007e77","verdict":"holds","quote":"Only magical and pure damage can affect a unit under the effects of Decrepify.","reason_zh":"受影响单位仍在场且能受到魔法和纯粹伤害，不符合放逐所需的离场状态。"},
+        {"review_id":"371b31e9c3292a3f3126","verdict":"holds","quote":"renders it unable to attack or be attacked.","reason_zh":"目标无法攻击或被攻击，同时仍可受到魔法和纯粹伤害，符合虚无的定义。"},
+        {"review_id":"6bdc3362ebedd3032325","verdict":"holds","quote":"Healing received and dealt by affected allies is increased","reason_zh":"衰老提高友军接受和施加的治疗量，技能本身没有直接恢复生命。"},
+        {"review_id":"5e4c6ec515da87c7dfce","verdict":"holds","quote":"afflicted enemies take extra magic damage instead.","reason_zh":"敌方目标的易伤只适用于魔法伤害，没有扩大到物理或全部伤害。"},
+        {"review_id":"0485a0f4255743a9d5df","verdict":"holds","quote":"afflicted enemies take extra magic damage instead.","reason_zh":"7.42仍明确规定受影响的敌人承受额外魔法伤害。"},
+        {"review_id":"cbbc4cb973cb1cee2bc9","verdict":"holds","quote":"A powerful banishing spell that slows a unit","reason_zh":"衰老仍能减慢敌方目标，备注明确排除了友方单位。"},
+        {"review_id":"9651e7885caaf7fd1553","verdict":"holds","quote":"slows a unit and renders it unable to attack or be attacked. Healing received and dealt by affected allies is increased, while afflicted enemies take extra magic damage instead.","reason_zh":"衰老对一个选定单位施放，允许选择敌方目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pugna_life_drain",
+      "rows": [
+        {"review_id":"137f88a2ce8c64a604cc","verdict":"holds","quote":"causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward","reason_zh":"魔晶仍允许一次生命汲取经守卫折射到范围内所有敌方英雄。"},
+        {"review_id":"183ab2109f1ba7b83e72","verdict":"holds","quote":"The effect is interrupted if the ward is destroyed.","reason_zh":"守卫被摧毁会中止折射效果，魔晶没有打断敌方持续施法的效果。"},
+        {"review_id":"7c2911cf7844f3051597","verdict":"now_wrong","quote":"channel_times: [10]→[0]；AbilityChannelTime.base: [10]→null；durations: [0]→[10]","reason_zh":"英文说明仍标注 CHANNELED，但按字段优先规则，原10秒引导已改为10秒效果持续时间。"},
+        {"review_id":"2d79c4ddd343bbed2738","verdict":"holds","quote":"granting vision over the target.","reason_zh":"对敌方施放仍会提供目标的视野。"},
+        {"review_id":"390ace6a8585d2e16f1d","verdict":"holds","quote":"When cast on an ally, Pugna heals his ally and takes magical damage equal to the amount healed.","reason_zh":"对友军施放仍会治疗该友军，对敌人施放也仍能治疗帕格纳自身。"},
+        {"review_id":"audit:pugna_life_drain:lifesteal:base","verdict":"holds","quote":"healing himself for the damage dealt","reason_zh":"对敌施放时，帕格纳按实际造成的伤害恢复自身生命。"},
+        {"review_id":"959b59da03f5fcc0e46f","verdict":"now_wrong","quote":"ability_has_scepter: true→false；max_spell_amp_drain_pct.scepter: [100]→null","reason_zh":"生命汲取的A杖升级及其法术放大汲取字段均已移除。"},
+        {"review_id":"36582c96a8b988f26381","verdict":"holds","quote":"When cast on an enemy, Pugna drains health from the target enemy unit","reason_zh":"生命汲取仍可直接选择一个敌方单位施放。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"magical_damage","condition":"base","quote":"When cast on an ally, Pugna heals his ally and takes magical damage equal to the amount healed. This damage cannot kill Pugna.","reason_zh":"7.42将对友军施放时的自身生命消耗明确改为等同治疗量的非致死魔法伤害，承伤者是帕格纳自己。"}
+      ]
+    },
+    {
+      "subject": "pugna_oblivion_savant",
+      "rows": [
+        {"review_id":"c55296b669a74e4738fc","verdict":"unclear","quote":"ability_has_scepter: false→true","reason_zh":"新增A杖升级不能确定基础技能能否被破坏，材料没有提供 IsBreakable 值。"},
+        {"review_id":"c59ab23ddd895aa8e553","verdict":"holds","quote":"Pugna receives %tower_scale%%% spell amplification per destroyed tower.","reason_zh":"每座被摧毁的塔仍会为帕格纳提供基础技能自带的法术放大。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"charges","condition":"scepter_upgrade","quote":"Pugna can cast any of his abilities an additional time, consuming an Oblivion Savant charge instead.","reason_zh":"新增A杖升级提供2点充能，每额外施放一次技能消耗1点，充能恢复时间为20秒。"}
+      ]
+    },
+    {
+      "subject": "queenofpain_scream_of_pain",
+      "rows": [
+        {"review_id":"38b002d4cf8d6cf900fe","verdict":"holds","quote":"The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies.","reason_zh":"一次尖叫能伤害痛苦女王周围的多个敌人。"},
+        {"review_id":"09a5cee39f4e5b225f0c","verdict":"holds","quote":"%damage_reflected_to_self%%% of the damage dealt to heroes is reflected back to her.","reason_zh":"伤害由痛苦女王主动击中英雄后回到自身，没有在她受击时触发对外反击。"},
+        {"review_id":"d02f3d0edec7d858cfdd","verdict":"holds","quote":"Scream Of Pain will hit invisible units.","reason_zh":"尖叫能命中隐身单位，没有使任何单位隐身。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "queenofpain_shadow_strike",
+      "rows": [
+        {"review_id":"b54c85dafb96f3e88d38","verdict":"holds","quote":"Causes Shadow Strike to become a %aoe_radius% AoE Spell. When Shadow Strike ends or is re-applied to an enemy Hero, the target emits a Scream of Pain, hitting any nearby enemies.","reason_zh":"A杖仍将暗影突袭改为范围技能，并使目标在效果结束或被重新施加时发出范围尖叫。"},
+        {"review_id":"04ddd5fd6b2dac55910c","verdict":"holds","quote":"The poisoned unit has its movement speed slowed for %duration% seconds.","reason_zh":"中毒目标仍会受到移动减速，持续时间从16秒缩短到13秒。"},
+        {"review_id":"10a955ea366f594b6cb1","verdict":"holds","quote":"The poisoned unit has its movement speed slowed for %duration% seconds.","reason_zh":"基础毒镖仍作用于选定的单个敌人，本次只调整持续时间和持续伤害。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "queenofpain_sonic_wave",
+      "rows": [
+        {"review_id":"ef10f9654cc5c2bdc188","verdict":"holds","quote":"dealing heavy damage to all enemy units in its wake","reason_zh":"冲击波仍能伤害路径上的所有敌方单位。"},
+        {"review_id":"2a052dce4eaf5a6a46ad","verdict":"holds","quote":"all enemy units in its wake and pushing them back.","reason_zh":"冲击波仍会将命中的敌方单位向后推。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "queenofpain_succubus",
+      "rows": [
+        {"review_id":"696487217e7d3ab6d96b","verdict":"unclear","quote":"spell_lifesteal: 2→3；spell_lifesteal_close: 14→17","reason_zh":"这两个字段只说明吸血数值提高，材料没有提供判定可破坏性所需的 IsBreakable 值。"},
+        {"review_id":"8c6841945a58c06ead09","verdict":"holds","quote":"Queen of Pain gains Spell Lifesteal that increases with proximity to her enemies.","reason_zh":"痛苦女王仍获得随敌我距离缩短而增强的技能吸血，基础值和近距离值均有所提高。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+42,689
+{
+  "objects": [
+    {
+      "subject": "phantom_lancer_phantom_edge",
+      "rows": [
+        {"review_id":"87bb5f0bdadffc315897","verdict":"holds","quote":"Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them.","reason_zh":"A杖让幻象分别攻击途经的敌人，冲锋本身没有对这些敌人造成范围伤害。"},
+        {"review_id":"c4884ac910ef1f798531","verdict":"unclear","quote":"max_distance.scepter: 575→525","reason_zh":"材料只给出A杖冲锋距离的变化，缺少独立确认基础技能可被破坏所需的 IsBreakable 值。"},
+        {"review_id":"8057271605ca3e24f423","verdict":"holds","quote":"When targeting an enemy for an attack, Phantom Lancer quickly charges into range","reason_zh":"此处的 charges 描述向攻击目标冲锋，说明中没有使用一次便消耗一点的充能。"},
+        {"review_id":"6477ea2181fa90cc3ef0","verdict":"holds","quote":"gaining increased movement speed and evasion.","reason_zh":"基础冲锋仍为幻影长矛手提供闪避。"},
+        {"review_id":"bf4ea89b3284277a6f8e","verdict":"holds","quote":"gaining increased movement speed and evasion.","reason_zh":"基础冲锋仍提升幻影长矛手自身的移动速度。"},
+        {"review_id":"aacb5765f531c8f16595","verdict":"holds","quote":"Whenever Phantom Lancer Rushes through enemies, he creates Juxtapose illusions that attack them.","reason_zh":"A杖冲锋距离缩短后，穿过敌人仍会制造幻象。"},
+        {"review_id":"audit:phantom_lancer_phantom_edge:self_mobility:base","verdict":"holds","quote":"Phantom Lancer quickly charges into range","reason_zh":"幻影长矛手会冲向攻击目标，进入攻击距离。"},
+        {"review_id":"audit:phantom_lancer_phantom_edge:terrain_walk:base","verdict":"unclear","quote":"Phantom Lancer quickly charges into range","reason_zh":"说明确认了冲锋位移，但没有交代冲锋能否穿过树木和悬崖。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "phantom_lancer_spirit_lance",
+      "rows": [
+        {"review_id":"1822d35476ce3ca4220e","verdict":"holds","quote":"summoning an illusory phantom to attack the unit.","reason_zh":"基础灵魂之矛会制造一个攻击目标的幻象。"},
+        {"review_id":"63c213cf7081e3b61f07","verdict":"holds","quote":"a target enemy unit that damages and slows","reason_zh":"基础灵魂之矛仍对命中的敌方目标施加减速。"},
+        {"review_id":"7ff406b0fdcc332574f6","verdict":"holds","quote":"summoning an illusory phantom to attack the unit.","reason_zh":"说明将产生的单位明确称为幻象，没有另外召唤或控制其他单位。"},
+        {"review_id":"716e8354f0ced1f1e0c8","verdict":"holds","quote":"Sends a magical spirit lance to a target enemy unit","reason_zh":"施法时可以直接选择一个敌方单位作为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "phase_boots",
+      "rows": [
+        {"review_id":"7c6901fa2d3e4e9970b0","verdict":"holds","quote":"Gives %phase_movement_speed%%% increased movement speed on melee heroes, and %phase_movement_speed_range%%% on ranged heroes","reason_zh":"主动相位仍为近战和远程英雄加速，装备的常驻移速加成也分别为55和45。"},
+        {"review_id":"f4b91c9fc6490ca8d833","verdict":"holds","quote":"lets you move through units and turn more quickly for %phase_duration% seconds.","reason_zh":"开启相位后，持有者仍能穿过其他单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "phoenix_sun_ray",
+      "rows": [
+        {"review_id":"6e361d7bbbde4b97ffbc","verdict":"holds","quote":"The beam damages enemies and heals allies for a base amount plus a percentage of their max health.","reason_zh":"一次施放的光束仍能灼伤其范围内的多个敌人。"},
+        {"review_id":"ed42c8c2537976e46a87","verdict":"holds","quote":"Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.","reason_zh":"说明写的是凤凰受控会中止光束，没有赋予光束打断敌方持续施法的效果。"},
+        {"review_id":"534860cf3f3f7cf4e803","verdict":"holds","quote":"heals allies for a base amount plus a percentage of their max health.","reason_zh":"光束仍按基础值和友军最大生命值的一定比例治疗友军。"},
+        {"review_id":"b8ecaf866e2f2a509aac","verdict":"holds","quote":"Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.","reason_zh":"沉默是凤凰受到后会中止光束的控制，光束没有对敌人施加沉默。"},
+        {"review_id":"af8618c1c17739dbfa6a","verdict":"holds","quote":"Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.","reason_zh":"睡眠是中止凤凰光束的外部控制，光束没有使目标入睡。"},
+        {"review_id":"af8618c1c17739dbfa6a","verdict":"holds","quote":"Sun Ray is canceled if Phoenix gets stunned, silenced, cycloned, hexed or slept.","reason_zh":"眩晕会使凤凰中止光束，说明没有赋予光束眩晕敌人的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "phoenix_supernova",
+      "rows": [
+        {"review_id":"5142545a2ec4a634ef28","verdict":"holds","quote":"Transforms into a burning sun that scorches enemies in a huge area.","reason_zh":"烈日仍能灼伤大范围内的多个敌人。"},
+        {"review_id":"b3792bc9cfa0a763b57c","verdict":"holds","quote":"DISPEL TYPE: Strong Dispel","reason_zh":"基础技能明确标注施加强驱散。"},
+        {"review_id":"audit:phoenix_supernova:aura:base","verdict":"holds","quote":"Transforms into a burning sun that scorches enemies in a huge area.","reason_zh":"持续灼烧以凤凰化成的烈日为中心，作用于周围敌人。"},
+        {"review_id":"audit:phoenix_supernova:cooldown_reset:base","verdict":"holds","quote":"restoring Phoenix to full health and mana with refreshed abilities.","reason_zh":"烈日成功爆炸时会刷新凤凰的技能冷却。"},
+        {"review_id":"audit:phoenix_supernova:healing:base","verdict":"holds","quote":"restoring Phoenix to full health and mana","reason_zh":"烈日成功爆炸时会回满凤凰的生命值。"},
+        {"review_id":"354a424bb6ea1ad31e5e","verdict":"holds","quote":"restoring Phoenix to full health and mana","reason_zh":"烈日成功爆炸时会回满凤凰自身的法力值。"},
+        {"review_id":"9b506f6f2bfe56ca4851","verdict":"holds","quote":"The Phoenix willingly ends its current life for the chance to be reborn.","reason_zh":"基础技能仍让凤凰有机会在烈日存续至结束时重生。"},
+        {"review_id":"b08e4fe99ceb96405382","verdict":"holds","quote":"allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together.","reason_zh":"A杖仍允许凤凰带一名友方英雄进入烈日并一同重生。"},
+        {"review_id":"867d805275e77e2ac98b","verdict":"holds","quote":"the sun explodes, stunning all nearby enemies","reason_zh":"烈日爆炸仍会眩晕周围所有敌人，调整后的各级眩晕时长都大于零。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"damage_block","condition":"base","quote":"The sun has pip health. Creeps and illusions deal 25% damage to the sun.","reason_zh":"7.42为烈日的格数生命加入了来源限定的减伤规则，小兵和幻象对烈日只造成25%的伤害。"}
+      ]
+    },
+    {
+      "subject": "phylactery",
+      "rows": [
+        {"review_id":"audit:phylactery:healing:item","verdict":"unclear","quote":"deals a separate %bonus_spell_damage% bonus damage to the target and slows them","reason_zh":"说明和变更字段只涉及被动的伤害、减速与冷却，缺少可核实装备生命回复的属性值。"},
+        {"review_id":"3b95924d43619c222bbd","verdict":"unclear","quote":"deals a separate %bonus_spell_damage% bonus damage to the target and slows them","reason_zh":"被动说明没有回蓝效果，材料也没有提供装备的法力回复属性值。"},
+        {"review_id":"8f6d1bdf00637fa34095","verdict":"holds","quote":"slow: 30→40；slow_duration: 3→2","reason_zh":"触发后的减速从30%提高到40%，持续时间从3秒缩短到2秒。"},
+        {"review_id":"b619500fa49440ddd5f9","verdict":"holds","quote":"deals a separate %bonus_spell_damage% bonus damage to the target","reason_zh":"灵匣独立结算一段额外伤害，没有提高触发技能本身的伤害。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pipe",
+      "rows": [
+        {"review_id":"91966fcae9096ad74d38","verdict":"holds","quote":"Gives a magic damage barrier that absorbs %barrier_block% damage to all nearby allies.","reason_zh":"主动范围效果为附近友军吸收伤害，没有对范围内敌人造成伤害。"},
+        {"review_id":"dce4d634ee69bdcecfc6","verdict":"holds","quote":"Passive: Insight Aura Gives allied units %magic_resistance_aura%%% magic resistance. Radius: %aura_radius%","reason_zh":"洞察光环仍为持有者周围的友方单位提供魔法抗性。"},
+        {"review_id":"54a8041616495ab6f4ad","verdict":"holds","quote":"Gives a magic damage barrier that absorbs %barrier_block% damage to all nearby allies.","reason_zh":"主动护盾仍能为附近友军吸收魔法伤害。"},
+        {"review_id":"audit:pipe:healing:item","verdict":"unclear","quote":"Passive: Insight Aura Gives allied units %magic_resistance_aura%%% magic resistance.","reason_zh":"光环说明只列出魔抗，所给字段也不足以确认装备是否另有生命回复属性。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"effect_dispellability","condition":"item","quote":"dispellable: 0→2","reason_zh":"7.42将烟斗效果的驱散属性从0改为2，材料未提供数值与具体驱散等级的对照。"}
+      ]
+    },
+    {
+      "subject": "power_treads",
+      "rows": [
+        {"review_id":"d115cae8ca094dabe6e6","verdict":"holds","quote":"bonus_movement_speed_melee.base: null→55；bonus_movement_speed_ranged.base: null→45","reason_zh":"7.42的装备字段明确给近战持有者增加55移速、远程持有者增加45移速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "primal_beast_rock_throw",
+      "rows": [
+        {"review_id":"d1890545484d1e7d30a7","verdict":"holds","quote":"Primal Beast throws a rock at the target location that stuns enemies and deals %base_damage% + %damage_str_pct%%% STR damage.","reason_zh":"投向目标地点的岩石仍可伤害多个敌人，力量加成只改变伤害计算。"},
+        {"review_id":"02b70f5cff1185627ef1","verdict":"holds","quote":"After landing, the rock splits into 3 additional fragments that land behind the initial target location.","reason_zh":"碎片由技能投出的岩石落地后产生，没有让普通攻击溅射。"},
+        {"review_id":"ae17309ba6ec697f1d17","verdict":"holds","quote":"throws a rock at the target location that stuns enemies","reason_zh":"投石仍会眩晕命中的敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "puck_dream_coil",
+      "rows": [
+        {"review_id":"45da1b3ede10dfd77af7","verdict":"holds","quote":"All enemies affected by Dream Coil are attacked at a rate equal to %attack_rate_pct%%% of Puck's attack rate.","reason_zh":"有A杖时，一次梦境缠绕能让所有受影响的敌人受到攻击。"},
+        {"review_id":"audit:puck_dream_coil:aoe_damage:base","verdict":"holds","quote":"latches onto enemy Heroes, damaging and leashing them.","reason_zh":"基础技能一次可连接并伤害多名敌方英雄。"},
+        {"review_id":"b1a444f9d631d664ceca","verdict":"holds","quote":"it snaps, stunning and dealing additional damage.","reason_zh":"挣断连接会另外造成一次伤害，没有提高目标受到的物理或全部伤害。"},
+        {"review_id":"d5b9f097eb8be3376f2f","verdict":"holds","quote":"latches onto enemy Heroes, damaging and leashing them.","reason_zh":"基础技能明确对连接的敌方英雄施加束缚。"},
+        {"review_id":"72f4e4bf28b69c04782c","verdict":"holds","quote":"If the enemy hero stretches the coil by moving too far away, it snaps","reason_zh":"受影响的敌人仍能走动，甚至可以走远并挣断连接。"},
+        {"review_id":"813c1e098956bc6d5f09","verdict":"holds","quote":"The attacks continue while the target is stunned if they break the Dream Coil.","reason_zh":"A杖目标仍可移动并挣断连接，升级只让攻击在断裂眩晕期间继续。"},
+        {"review_id":"aab4edb47c445475a948","verdict":"holds","quote":"it snaps, stunning and dealing additional damage.","reason_zh":"敌人移动过远使连接断裂时仍会受到眩晕。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "puck_waning_rift",
+      "rows": [
+        {"review_id":"37c1e06237a5e972c876","verdict":"holds","quote":"a burst of faerie dust that deals damage and silences enemy units nearby.","reason_zh":"一次施放仍能对落点附近的多个敌方单位造成伤害。"},
+        {"review_id":"5bc4827e577541980230","verdict":"holds","quote":"Puck teleports to the target location","reason_zh":"帕克自身仍会传送到目标地点。"},
+        {"review_id":"1a1c56a18d5c8bfeec39","verdict":"holds","quote":"silences enemy units nearby.","reason_zh":"新月之痕仍会沉默附近的敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pudge_dismember",
+      "rows": [
+        {"review_id":"c59bd5e4a8e83e68666e","verdict":"holds","quote":"Pudge chows down on an enemy unit, disabling it and dealing damage over time.","reason_zh":"肢解的持续伤害作用于被咬住的单个敌方单位。"},
+        {"review_id":"0c806faeb301cd13063f","verdict":"holds","quote":"CHANNELED - Pudge chows down on an enemy unit","reason_zh":"技能仍明确标注为持续施法。"},
+        {"review_id":"c1c0a6a1acb19862a69b","verdict":"holds","quote":"Pudge pulls the unit at a rate of %pull_units_per_second% units","reason_zh":"帕吉仍会把被肢解的单位拉向自己。"},
+        {"review_id":"9a32114bd655cb3921ea","verdict":"holds","quote":"Damage is increased by Pudge's Strength and heals him for the total amount.","reason_zh":"肢解造成伤害时仍会为帕吉恢复生命值。"},
+        {"review_id":"55f03d5e069745765658","verdict":"holds","quote":"If a unit becomes invisible while Dismembered, it will still be under the effects of Dismember.","reason_zh":"说明只交代目标中途隐身后肢解仍会生效，没有赋予肢解使单位隐身的能力。"},
+        {"review_id":"audit:pudge_dismember:lifesteal:base","verdict":"holds","quote":"Damage is increased by Pudge's Strength and heals him for the total amount.","reason_zh":"帕吉按肢解造成的伤害全额恢复自身生命，符合技能吸血的定义。"},
+        {"review_id":"audit:pudge_dismember:stun:base","verdict":"holds","quote":"Pudge chows down on an enemy unit, disabling it and dealing damage over time.","reason_zh":"肢解期间目标仍被持续控制而无法行动，本次调整只涉及力量伤害系数。"},
+        {"review_id":"5a3a511df769042a7d74","verdict":"holds","quote":"Pudge chows down on an enemy unit, disabling it","reason_zh":"肢解仍以一个敌方单位为施法目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pudge_meat_hook",
+      "rows": [
+        {"review_id":"7a480add2125b604a894","verdict":"holds","quote":"The hook will snag the first unit it encounters","reason_zh":"基础肉钩只钩住遇到的第一个单位，单次命中没有范围伤害。"},
+        {"review_id":"c81e58a5173bb24041df","verdict":"holds","quote":"When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled.","reason_zh":"魔晶的距离加成伤害仍只结算给被钩中的敌人。"},
+        {"review_id":"5ee3b680453f2297c6bc","verdict":"holds","quote":"Interrupts channeling spells of the primary target if it's an enemy.","reason_zh":"基础肉钩明确会打断敌方主目标的持续施法。"},
+        {"review_id":"5f5e03d8a276a1f2b8ef","verdict":"holds","quote":"Increases range. When Meat Hook hits an enemy, it deals bonus damage based on the distance pulled.","reason_zh":"拉回目标由基础肉钩提供，魔晶只增加射程并按拉动距离附加伤害。"},
+        {"review_id":"audit:pudge_meat_hook:displace_other:base","verdict":"holds","quote":"dragging the unit back to Pudge","reason_zh":"基础肉钩会把钩中的单位拉回帕吉身边。"},
+        {"review_id":"1aa1e012f2e1a57edb39","verdict":"holds","quote":"Meat Hook hits invisible units.","reason_zh":"肉钩可以命中已经隐身的单位，没有使单位隐身的效果。"},
+        {"review_id":"7f2882ccd2906d8baaca","verdict":"holds","quote":"Meat Hook can go through trees, cliffs, buildings, ancient units and Roshan.","reason_zh":"可以穿过树木的是飞出的钩子，帕吉自身没有获得穿树移动能力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pugna_decrepify",
+      "rows": [
+        {"review_id":"020385b9b09915b67b7f","verdict":"holds","quote":"A powerful banishing spell that slows a unit and renders it unable to attack or be attacked.","reason_zh":"衰老对一个单位施加状态，说明没有范围伤害效果。"},
+        {"review_id":"8081de344bac18007e77","verdict":"holds","quote":"Only magical and pure damage can affect a unit under the effects of Decrepify.","reason_zh":"受影响单位仍在场且能受到魔法和纯粹伤害，不符合放逐所需的离场状态。"},
+        {"review_id":"371b31e9c3292a3f3126","verdict":"holds","quote":"renders it unable to attack or be attacked.","reason_zh":"目标无法攻击或被攻击，同时仍可受到魔法和纯粹伤害，符合虚无的定义。"},
+        {"review_id":"6bdc3362ebedd3032325","verdict":"holds","quote":"Healing received and dealt by affected allies is increased","reason_zh":"衰老提高友军接受和施加的治疗量，技能本身没有直接恢复生命。"},
+        {"review_id":"5e4c6ec515da87c7dfce","verdict":"holds","quote":"afflicted enemies take extra magic damage instead.","reason_zh":"敌方目标的易伤只适用于魔法伤害，没有扩大到物理或全部伤害。"},
+        {"review_id":"0485a0f4255743a9d5df","verdict":"holds","quote":"afflicted enemies take extra magic damage instead.","reason_zh":"7.42仍明确规定受影响的敌人承受额外魔法伤害。"},
+        {"review_id":"cbbc4cb973cb1cee2bc9","verdict":"holds","quote":"A powerful banishing spell that slows a unit","reason_zh":"衰老仍能减慢敌方目标，备注明确排除了友方单位。"},
+        {"review_id":"9651e7885caaf7fd1553","verdict":"holds","quote":"slows a unit and renders it unable to attack or be attacked. Healing received and dealt by affected allies is increased, while afflicted enemies take extra magic damage instead.","reason_zh":"衰老对一个选定单位施放，允许选择敌方目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "pugna_life_drain",
+      "rows": [
+        {"review_id":"137f88a2ce8c64a604cc","verdict":"holds","quote":"causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward","reason_zh":"魔晶仍允许一次生命汲取经守卫折射到范围内所有敌方英雄。"},
+        {"review_id":"183ab2109f1ba7b83e72","verdict":"holds","quote":"The effect is interrupted if the ward is destroyed.","reason_zh":"守卫被摧毁会中止折射效果，魔晶没有打断敌方持续施法的效果。"},
+        {"review_id":"7c2911cf7844f3051597","verdict":"now_wrong","quote":"channel_times: [10]→[0]；AbilityChannelTime.base: [10]→null；durations: [0]→[10]","reason_zh":"英文说明仍标注 CHANNELED，但按字段优先规则，原10秒引导已改为10秒效果持续时间。"},
+        {"review_id":"2d79c4ddd343bbed2738","verdict":"holds","quote":"granting vision over the target.","reason_zh":"对敌方施放仍会提供目标的视野。"},
+        {"review_id":"390ace6a8585d2e16f1d","verdict":"holds","quote":"When cast on an ally, Pugna heals his ally and takes magical damage equal to the amount healed.","reason_zh":"对友军施放仍会治疗该友军，对敌人施放也仍能治疗帕格纳自身。"},
+        {"review_id":"audit:pugna_life_drain:lifesteal:base","verdict":"holds","quote":"healing himself for the damage dealt","reason_zh":"对敌施放时，帕格纳按实际造成的伤害恢复自身生命。"},
+        {"review_id":"959b59da03f5fcc0e46f","verdict":"now_wrong","quote":"ability_has_scepter: true→false；max_spell_amp_drain_pct.scepter: [100]→null","reason_zh":"生命汲取的A杖升级及其法术放大汲取字段均已移除。"},
+        {"review_id":"36582c96a8b988f26381","verdict":"holds","quote":"When cast on an enemy, Pugna drains health from the target enemy unit","reason_zh":"生命汲取仍可直接选择一个敌方单位施放。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"magical_damage","condition":"base","quote":"When cast on an ally, Pugna heals his ally and takes magical damage equal to the amount healed. This damage cannot kill Pugna.","reason_zh":"7.42将对友军施放时的自身生命消耗明确改为等同治疗量的非致死魔法伤害，承伤者是帕格纳自己。"}
+      ]
+    },
+    {
+      "subject": "pugna_oblivion_savant",
+      "rows": [
+        {"review_id":"c55296b669a74e4738fc","verdict":"unclear","quote":"ability_has_scepter: false→true","reason_zh":"新增A杖升级不能确定基础技能能否被破坏，材料没有提供 IsBreakable 值。"},
+        {"review_id":"c59ab23ddd895aa8e553","verdict":"holds","quote":"Pugna receives %tower_scale%%% spell amplification per destroyed tower.","reason_zh":"每座被摧毁的塔仍会为帕格纳提供基础技能自带的法术放大。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"charges","condition":"scepter_upgrade","quote":"Pugna can cast any of his abilities an additional time, consuming an Oblivion Savant charge instead.","reason_zh":"新增A杖升级提供2点充能，每额外施放一次技能消耗1点，充能恢复时间为20秒。"}
+      ]
+    },
+    {
+      "subject": "queenofpain_scream_of_pain",
+      "rows": [
+        {"review_id":"38b002d4cf8d6cf900fe","verdict":"holds","quote":"The Queen of Pain lets loose a piercing scream around her, damaging nearby enemies.","reason_zh":"一次尖叫能伤害痛苦女王周围的多个敌人。"},
+        {"review_id":"09a5cee39f4e5b225f0c","verdict":"holds","quote":"%damage_reflected_to_self%%% of the damage dealt to heroes is reflected back to her.","reason_zh":"伤害由痛苦女王主动击中英雄后回到自身，没有在她受击时触发对外反击。"},
+        {"review_id":"d02f3d0edec7d858cfdd","verdict":"holds","quote":"Scream Of Pain will hit invisible units.","reason_zh":"尖叫能命中隐身单位，没有使任何单位隐身。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "queenofpain_shadow_strike",
+      "rows": [
+        {"review_id":"b54c85dafb96f3e88d38","verdict":"holds","quote":"Causes Shadow Strike to become a %aoe_radius% AoE Spell. When Shadow Strike ends or is re-applied to an enemy Hero, the target emits a Scream of Pain, hitting any nearby enemies.","reason_zh":"A杖仍将暗影突袭改为范围技能，并使目标在效果结束或被重新施加时发出范围尖叫。"},
+        {"review_id":"04ddd5fd6b2dac55910c","verdict":"holds","quote":"The poisoned unit has its movement speed slowed for %duration% seconds.","reason_zh":"中毒目标仍会受到移动减速，持续时间从16秒缩短到13秒。"},
+        {"review_id":"10a955ea366f594b6cb1","verdict":"holds","quote":"The poisoned unit has its movement speed slowed for %duration% seconds.","reason_zh":"基础毒镖仍作用于选定的单个敌人，本次只调整持续时间和持续伤害。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "queenofpain_sonic_wave",
+      "rows": [
+        {"review_id":"ef10f9654cc5c2bdc188","verdict":"holds","quote":"dealing heavy damage to all enemy units in its wake","reason_zh":"冲击波仍能伤害路径上的所有敌方单位。"},
+        {"review_id":"2a052dce4eaf5a6a46ad","verdict":"holds","quote":"all enemy units in its wake and pushing them back.","reason_zh":"冲击波仍会将命中的敌方单位向后推。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "queenofpain_succubus",
+      "rows": [
+        {"review_id":"696487217e7d3ab6d96b","verdict":"unclear","quote":"spell_lifesteal: 2→3；spell_lifesteal_close: 14→17","reason_zh":"这两个字段只说明吸血数值提高，材料没有提供判定可破坏性所需的 IsBreakable 值。"},
+        {"review_id":"8c6841945a58c06ead09","verdict":"holds","quote":"Queen of Pain gains Spell Lifesteal that increases with proximity to her enemies.","reason_zh":"痛苦女王仍获得随敌我距离缩短而增强的技能吸血，基础值和近距离值均有所提高。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
