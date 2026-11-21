@@ -20,6 +20,8 @@ Semantics that consumers must not reinterpret:
   enemies: evaluation only, never a feature.
 """
 
+from dota_items.storage import digest
+
 TABLE_SCHEMA = "death-risk-table/4"  # 4: manifest and per-match generation digest
 MANIFEST_SCHEMA = "death-risk-manifest/1"
 MANIFEST = "manifest.json"
@@ -99,8 +101,8 @@ def check_manifest(manifest):
     missing = [key for key in CONDITION_KEYS if key not in manifest.get("conditions", {})]
     if missing:
         raise TableError(f"manifest conditions miss {missing}")
-    if not isinstance(manifest.get("conditions_digest"), str):
-        raise TableError("manifest has no conditions_digest")
+    if manifest.get("conditions_digest") != digest(manifest["conditions"]):
+        raise TableError("manifest conditions_digest mismatch")
 
 
 def check_table(value, match_id, conditions_digest):

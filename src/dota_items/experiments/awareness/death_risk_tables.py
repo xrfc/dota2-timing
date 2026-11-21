@@ -135,6 +135,8 @@ def _checked_files(folder, allow_legacy, holdout, info):
             value = pickle.load(stream)  # written by build_death_risk_table.py, local only
         if verified:
             check_table(value, match_id, expected)
+            if digest(value.get("params")) != digest(params):
+                raise TableError(f"{path}: parameters differ from the manifest")
         else:
             if value.get("schema") not in LEGACY_SCHEMAS:
                 raise TableError(f"{path}: schema {value.get('schema')} in a legacy folder")
@@ -171,7 +173,7 @@ def load_tables(folder, allow_legacy=False, holdout=is_holdout):
     return risk, win, deaths, info
 
 
-def load_risk_frame(folder, every=0, allow_legacy=False, holdout=is_holdout):
+def load_risk_frame(folder, every=0, allow_legacy=False, holdout=is_holdout, *, columns=None):
     """(risk DataFrame, deaths, info), keeping one row every `every` seconds.
 
     Built file by file, so a table sampled every second (2026-11-18, U174: about five
@@ -185,7 +187,7 @@ def load_risk_frame(folder, every=0, allow_legacy=False, holdout=is_holdout):
         params = value.get("params") or {"start": 60, "step": 5}
         if every and every % params["step"]:
             raise TableError(f"every={every} is not a multiple of the step {params['step']}")
-        part = pd.DataFrame(value["risk"])
+        part = pd.DataFrame.from_records(value["risk"], columns=columns)
         if every and len(part):
             part = part[(part["t"] - params["start"]) % every == 0]
         frames.append(part)

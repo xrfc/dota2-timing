@@ -4,7 +4,7 @@ Each report of train_death_risk.py sets its alert threshold at 5% false alarms p
 sample. A finer step checks more often, so that threshold gives more alarms per hour and
 more deaths "alerted". This script re-reads the out-of-fold scores of every report and
 sets each threshold to the same number of false-alarm onsets per hour outside fights as
-the first report, then gives the fight-level alert shares.
+the first report, and within its false-alarm time share, then gives the fight-level alert shares.
 
     compare_death_risk_steps.py --root data/demos-2026-11 --table death-risk-v4-1s \
         --reports reports/death-risk-v4-every5-2026-11-18 reports/death-risk-v4-every3-2026-11-18
@@ -36,32 +36,42 @@ def main(argv=None):
     parser.add_argument("--out", type=Path)
     args = parser.parse_args(argv)
     folder = args.root / args.table
-    parts, _ = load_parts(folder)
+    parts, info = load_parts(folder)
     spans = fight_spans(parts["hits"], parts["contact"])
     del parts
-    _, deaths, _ = load_risk_frame(folder, every=15)
+    keys = ["match_id", "hero", "t"]
+    base, deaths, _ = load_risk_frame(folder, columns=[*keys, "dies_20"])
+    base = base.set_index(keys)["dies_20"].sort_index()
     deaths = pd.DataFrame(deaths)
     rows, target = [], None
     for path in args.reports:
         report = json.loads((path / "report.json").read_text(encoding="utf-8"))
-        if report["input"]["conditions_digest"] is None:
-            parser.error(f"{path}: input not verified")
+        if report["input"]["conditions_digest"] != info["conditions_digest"]:
+            parser.error(f"{path}: input differs from comparison table")
         step = report["every_seconds"]
+        if step <= 0 or step % info["params"]["step"]:
+            parser.error(f"{path}: incompatible sampling step")
         scores = np.load(path / "out-of-fold.npz", allow_pickle=False)
         frame = pd.DataFrame({k: scores[k] for k in ("match_id", "hero", "t")})
         y, boosting = scores["y"], scores["boosting"]
+        expected = base[(base.index.get_level_values("t") - info["params"]["start"]) % step == 0]
+        actual = frame.assign(label=y).set_index(keys)["label"].sort_index()
+        if not actual.index.equals(expected.index) or not np.array_equal(actual, expected):
+            parser.error(f"{path}: prediction rows or death labels differ from the table")
         outside = ~in_fight(frame, spans)
         if target is None:
-            target = false_alarm_rate(
-                frame, boosting, y, outside, report["fight_alerts"]["threshold"], step
-            )[0]
-        threshold = threshold_for_rate(frame, boosting, y, outside, step, target)
+            threshold = report["fight_alerts"]["threshold"]
+            target, max_share = false_alarm_rate(frame, boosting, y, outside, threshold, step)
+        else:
+            threshold = threshold_for_rate(
+                frame, boosting, y, outside, step, target, max_share=max_share
+            )
         onsets, share = false_alarm_rate(frame, boosting, y, outside, threshold, step)
         found = fight_alerts(frame, deaths, boosting, threshold, 20, spans)
         rows.append({
             "report": str(path),
             "every_seconds": step,
-            "threshold": round(threshold, 4),
+            "threshold": threshold,
             "false_alarm_onsets_per_hour": round(onsets, 2),
             "share_of_time_in_false_alarm": round(share, 4),
             **summarize_fight_alerts(found),
@@ -71,7 +81,8 @@ def main(argv=None):
         args.out.mkdir(parents=True, exist_ok=False)
         (args.out / "report.json").write_text(
             json.dumps({"schema": "death-risk-step-comparison/1",
-                        "onsets_per_hour_target": round(target, 2), "rows": rows},
+                        "onsets_per_hour_target": target, "false_alarm_share_limit": max_share,
+                        "rows": rows},
                        ensure_ascii=False, indent=1) + "\n",
             encoding="utf-8",
         )  # fmt: skip

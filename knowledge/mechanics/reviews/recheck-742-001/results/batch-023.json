@@ -1,0 +1,491 @@
+{
+  "objects": [
+    {
+      "subject": "weaver_the_swarm",
+      "rows": [
+        {
+          "review_id": "e9fdefbc73648a3fbf1a",
+          "verdict": "unclear",
+          "quote": "a swarm of %count% young Weavers that latch on any enemy unit in their path, attacking and reducing armor",
+          "reason_zh": "按一次施放可伤害多个敌人的定义，多只甲虫分头附着攻击已与原 reject 有冲突，但两版对此描述相同，无法归为 7.42 导致的判定变化。"
+        },
+        {
+          "review_id": "edeadd2bd1906e1dfe05",
+          "verdict": "holds",
+          "quote": "attacking and reducing armor until it is killed",
+          "reason_zh": "甲虫附着后仍会攻击目标并降低其护甲。"
+        },
+        {
+          "review_id": "f973be9c5847347d78b2",
+          "verdict": "holds",
+          "quote": "Beetles are Spell Immune",
+          "reason_zh": "技能免疫仍作用于甲虫本体。"
+        },
+        {
+          "review_id": "6a59377632ba7afcff80",
+          "verdict": "holds",
+          "quote": "Beetles provide vision.",
+          "reason_zh": "甲虫仍提供视野。"
+        }
+      ],
+      "new_mechanisms": [
+        {
+          "mechanism": "damage_block",
+          "condition": "base",
+          "quote": "Creeps and illusions deal 25% damage to beetles.",
+          "reason_zh": "7.42 明确将小兵和幻象对甲虫造成的伤害降至 25%，属于仅针对这两类来源的比例减伤。"
+        }
+      ]
+    },
+    {
+      "subject": "weaver_threads_of_fate",
+      "rows": [
+        {
+          "review_id": "eba83aa3165a36123b26",
+          "verdict": "holds",
+          "quote": "While the thread holds, the enemy is slowed again every %established_thread_duration%s. Each established thread of fate grants bonus damage to Weaver.",
+          "reason_zh": "连线对该敌人重复施加减速，并给编织者增加攻击伤害，说明中没有一次对多个敌人造成伤害的效果。"
+        },
+        {
+          "review_id": "e6c698617e5da6b0e3f9",
+          "verdict": "unclear",
+          "quote": "thread_setup_time: 1.5→1.25",
+          "reason_zh": "所给字段只说明建立连线所需时间缩短，未给出可用于核实原 accept 的 IsBreakable 值。"
+        },
+        {
+          "review_id": "382aee02d8fe96376ff0",
+          "verdict": "holds",
+          "quote": "While the thread holds, the enemy is slowed again every %established_thread_duration%s.",
+          "reason_zh": "建立连线时的减速仍在，7.42 还会在线维持期间定期再次减速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "weaver_time_lapse",
+      "rows": [
+        {
+          "review_id": "2a6d72dbfbcb44a2d6df",
+          "verdict": "holds",
+          "quote": "DISPEL TYPE: Strong Dispel",
+          "reason_zh": "基础技能仍对编织者自身施加强驱散。"
+        },
+        {
+          "review_id": "246321342318c660c3aa",
+          "verdict": "holds",
+          "quote": "No effect on cooldown, gold or experience.",
+          "reason_zh": "时光倒流不会改变金钱或经验。"
+        },
+        {
+          "review_id": "audit:weaver_time_lapse:healing:base",
+          "verdict": "holds",
+          "quote": "regaining the HP and mana from that time",
+          "reason_zh": "五秒前的生命值较高时，回溯仍能为编织者恢复生命。"
+        },
+        {
+          "review_id": "e4b72b747d33d4154a05",
+          "verdict": "holds",
+          "quote": "regaining the HP and mana from that time",
+          "reason_zh": "五秒前的法力值较高时，回溯仍能为编织者恢复法力。"
+        },
+        {
+          "review_id": "18b9488a8925f18509f6",
+          "verdict": "holds",
+          "quote": "Time Lapse disjoints projectiles.",
+          "reason_zh": "施放时光倒流仍能躲避已飞来的弹道。"
+        },
+        {
+          "review_id": "audit:weaver_time_lapse:self_mobility:base",
+          "verdict": "holds",
+          "quote": "Weaver warps backward to whatever position it was in five seconds earlier",
+          "reason_zh": "基础技能仍能使编织者回到自己五秒前的位置。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "wind_waker",
+      "rows": [
+        {
+          "review_id": "7192bf86dec42f32baf8",
+          "verdict": "holds",
+          "quote": "Sweeps a target unit up into a cyclone",
+          "reason_zh": "每次施放只卷起一个目标，敌方目标落地时受到伤害，说明未列出波及周围单位的效果。"
+        },
+        {
+          "review_id": "227f22d5b14136458ec0",
+          "verdict": "holds",
+          "quote": "Dispel Type: Basic Dispel",
+          "reason_zh": "吹风仍施加弱驱散。"
+        },
+        {
+          "review_id": "8cca9099450dc1590c30",
+          "verdict": "holds",
+          "quote": "Sweeps a target unit up into a cyclone, making them invulnerable for %cyclone_duration% seconds.",
+          "reason_zh": "目标仍会被卷起，并在吹风期间无敌。"
+        },
+        {
+          "review_id": "dd0286eb2c38fdbd9260",
+          "verdict": "holds",
+          "quote": "Sweeps a target unit up into a cyclone, making them invulnerable for %cyclone_duration% seconds.",
+          "reason_zh": "装备主动效果仍能将所选单位短暂吹起。"
+        },
+        {
+          "review_id": "7a28c359d2021f13976a",
+          "verdict": "holds",
+          "quote": "bonus_movement_speed: 30→25",
+          "reason_zh": "装备移速加成降至 25，仍能提高持有者的移动速度。"
+        },
+        {
+          "review_id": "f8c1cd780e0eb7960f74",
+          "verdict": "holds",
+          "quote": "making them invulnerable for %cyclone_duration% seconds",
+          "reason_zh": "被卷起的目标在吹风期间仍处于无敌状态。"
+        },
+        {
+          "review_id": "3fec86f5346b853dc305",
+          "verdict": "unclear",
+          "quote": "bonus_movement_speed: 30→25",
+          "reason_zh": "材料只给出装备移速的数值变化，主动说明和字段均未给出回蓝效果或回蓝数值。"
+        },
+        {
+          "review_id": "audit:wind_waker:self_mobility:item",
+          "verdict": "holds",
+          "quote": "When cast on yourself, you can move the tornado at a speed of %tornado_speed%.",
+          "reason_zh": "对自己施放时仍可主动移动旋风，改变自身位置。"
+        },
+        {
+          "review_id": "audit:wind_waker:terrain_walk:item",
+          "verdict": "holds",
+          "quote": "When cast on yourself, the cyclone can be moved anywhere at a speed of 360.",
+          "reason_zh": "对自己施放时旋风可移至任意位置，支持吹风期间无视地形移动。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "windrunner_focusfire",
+      "rows": [
+        {
+          "review_id": "d1f48f8f24dd59d9a57a",
+          "verdict": "holds",
+          "quote": "with a reduction to her attack damage and her Item Potency",
+          "reason_zh": "攻击伤害和物品效力的降低都作用于风行者自身，敌方目标的攻击力没有受到削减。"
+        },
+        {
+          "review_id": "ff58a1b29732e06cd2b8",
+          "verdict": "holds",
+          "quote": "against a single enemy unit or structure",
+          "reason_zh": "基础施放方式仍可选择单个敌方单位，随机射击属于另列的命石效果。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "windrunner_tailwind",
+      "rows": [
+        {
+          "review_id": "982d94c571914df47a7b",
+          "verdict": "now_wrong",
+          "quote": "Break disables the gaining of new stacks. Break does not disable the bonuses from existing stacks.",
+          "reason_zh": "7.42 新增说明明确破坏会阻止获得新层数，已有层数的加成仍生效，已符合技能部分可被破坏的定义。"
+        },
+        {
+          "review_id": "28f996053643bbf7c004",
+          "verdict": "holds",
+          "quote": "gives Windranger a brief burst of movement speed",
+          "reason_zh": "基础技能触发顺风时仍会短暂提高风行者的移速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "winter_wyvern_arctic_burn",
+      "rows": [
+        {
+          "review_id": "45ae8b486ca195d97773",
+          "verdict": "holds",
+          "quote": "allowing her to exhale a blistering chill into each attack",
+          "reason_zh": "烧灼逐次附在普通攻击上，说明未写单次攻击会波及其他敌人。"
+        },
+        {
+          "review_id": "audit:winter_wyvern_arctic_burn:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "slow enemies with a magical freeze that strips them of %percent_damage%%% of their current health each second",
+          "reason_zh": "普通攻击仍附带减速和按目标当前生命值计算的持续伤害。"
+        },
+        {
+          "review_id": "3208ccf3d7ada49e194c",
+          "verdict": "holds",
+          "quote": "Increases Winter Wyvern's movement speed.",
+          "reason_zh": "A 杖升级仍会提升寒冬飞龙自身的移动速度。"
+        },
+        {
+          "review_id": "d44c396f24f5f7fcc2f8",
+          "verdict": "holds",
+          "quote": "Causes Arctic Burn to be a toggle ability, draining mana every second when active.",
+          "reason_zh": "A 杖开启技能后每秒消耗施法者自己的法力，说明未写削减敌方法力。"
+        },
+        {
+          "review_id": "6616a38fc45b7bd593b4",
+          "verdict": "holds",
+          "quote": "draining mana every second when active",
+          "reason_zh": "A 杖开启技能会持续消耗自身法力，没有为自身恢复法力的效果。"
+        },
+        {
+          "review_id": "1a63a52b236745cd4aaa",
+          "verdict": "holds",
+          "quote": "slow enemies with a magical freeze",
+          "reason_zh": "基础技能强化的攻击仍会减慢敌人的移动速度。"
+        },
+        {
+          "review_id": "audit:winter_wyvern_arctic_burn:flying:base",
+          "verdict": "holds",
+          "quote": "granting her unobstructed movement",
+          "reason_zh": "寒冬飞龙在基础技能的飞行期间仍可无视地形移动。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "winter_wyvern_cold_embrace",
+      "rows": [
+        {
+          "review_id": "audit:winter_wyvern_cold_embrace:damage_block:base",
+          "verdict": "holds",
+          "quote": "The cocoon blocks all physical damage.",
+          "reason_zh": "冰茧仍会为目标挡下全部物理伤害。"
+        },
+        {
+          "review_id": "e334bb67db85cc0d0813",
+          "verdict": "holds",
+          "quote": "heal_additive: [40,45,50,55]→[32,40,48,56]",
+          "reason_zh": "每秒固定治疗量调整后各级仍为正值，按目标最大生命值计算的治疗也仍保留。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "winter_wyvern_splinter_blast",
+      "rows": [
+        {
+          "review_id": "b9acd7b3abe1898db676",
+          "verdict": "holds",
+          "quote": "hurling damaging splinters into nearby enemies in a %split_radius% base radius",
+          "reason_zh": "一次施放产生的碎片仍能伤害主目标周围的多个敌人。"
+        },
+        {
+          "review_id": "adcefb692f703b4be676",
+          "verdict": "holds",
+          "quote": "Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%.",
+          "reason_zh": "被碎片击中的敌人仍会减速。"
+        },
+        {
+          "review_id": "829e966b46986c14a5f0",
+          "verdict": "holds",
+          "quote": "Launches a ball of brittle ice toward a unit.",
+          "reason_zh": "施放时仍选择一个单位作为主弹道目标，即使该目标本身不受碎片伤害也符合单位指向。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "wisp_overcharge",
+      "rows": [
+        {
+          "review_id": "abaec203c99d69fe7a4c",
+          "verdict": "holds",
+          "quote": "health regeneration based on max health",
+          "reason_zh": "过载持续时间由 8 秒缩短至 7 秒，期间仍按最大生命值提供生命恢复。"
+        },
+        {
+          "review_id": "f868cd9ec698c7ba7415",
+          "verdict": "holds",
+          "quote": "Overcharge grants attack speed and spell amplification to Io and any Tethered allies.",
+          "reason_zh": "提供法术放大的过载效果仍对艾欧及其连接的友军生效。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "witch_blade",
+      "rows": [
+        {
+          "review_id": "audit:witch_blade:attack_modifier:item",
+          "verdict": "holds",
+          "quote": "Causes your next attack to apply a poison for %slow_duration% seconds",
+          "reason_zh": "持有者的下一次攻击仍能施毒，7.42 新增说明仅排除了幻象触发。"
+        },
+        {
+          "review_id": "03f1b7878ab9a8800a26",
+          "verdict": "unclear",
+          "quote": "Illusions do not apply Witch Blade",
+          "reason_zh": "新增说明只涉及幻象能否触发被动，材料未提供可核实装备回蓝的说明或属性值。"
+        },
+        {
+          "review_id": "71e06aca0bcc44c137b8",
+          "verdict": "holds",
+          "quote": "This attack has True Strike.",
+          "reason_zh": "触发巫师之刃的攻击仍具有必中效果。"
+        },
+        {
+          "review_id": "7e6db1b417d7e0a4ec93",
+          "verdict": "holds",
+          "quote": "slowing by %slow%%%",
+          "reason_zh": "持有者施加的毒素仍会减速目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "witch_doctor_death_ward",
+      "rows": [
+        {
+          "review_id": "aa085b39ddfcba9b57ae",
+          "verdict": "holds",
+          "quote": "Death Ward attacks bounce between nearby enemies.",
+          "reason_zh": "A 杖仍让守卫的攻击在附近敌人之间弹射，一次攻击可伤害多个目标。"
+        },
+        {
+          "review_id": "6267c32ee4522d48065d",
+          "verdict": "holds",
+          "quote": "only destroyed if Witch Doctor is interrupted or its duration expires",
+          "reason_zh": "打断指巫医自身的引导可被中止，说明没有赋予守卫打断敌方持续施法的效果。"
+        },
+        {
+          "review_id": "de4431af99d5b459eee0",
+          "verdict": "holds",
+          "quote": "CHANNELED - Summons a deadly ward to attack enemy heroes within its attack range.",
+          "reason_zh": "死亡守卫仍需要巫医持续引导。"
+        },
+        {
+          "review_id": "2a7fe0620d27960770bd",
+          "verdict": "unclear",
+          "quote": "The Death Ward is invulnerable, and is only destroyed if Witch Doctor is interrupted or its duration expires.",
+          "reason_zh": "两版都明确守卫本体无敌，原 reject 若指守卫则早已与说明冲突，若指施法者则成立，该行未注明作用对象。"
+        },
+        {
+          "review_id": "716cf38920fc34462644",
+          "verdict": "unclear",
+          "quote": "Death Ward has %bonus_accuracy%%% bonus accuracy.",
+          "reason_zh": "说明只给出额外命中率的占位符，缺少实际数值，无法确认攻击必定无视闪避。"
+        },
+        {
+          "review_id": "cfe752f54e02853d5b89",
+          "verdict": "holds",
+          "quote": "Summons a deadly ward to attack enemy heroes within its attack range.",
+          "reason_zh": "技能生成的是死亡守卫，按给定的召唤物定义应予排除。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "yasha_and_kaya",
+      "rows": [
+        {
+          "review_id": "81549d244037f0ef3a93",
+          "verdict": "holds",
+          "quote": "movement_speed_percent_bonus: 12→10",
+          "reason_zh": "移速加成由 12% 降至 10%，装备仍能加速。"
+        },
+        {
+          "review_id": "c0c6d32ff6ba707e738f",
+          "verdict": "holds",
+          "quote": "mana_regen_multiplier: 30→25",
+          "reason_zh": "回蓝倍率加成降至 25%，仍会提高自身法力恢复。"
+        },
+        {
+          "review_id": "15cd66537268ccebcba4",
+          "verdict": "holds",
+          "quote": "spell_amp: 12→10",
+          "reason_zh": "法术放大由 12% 降至 10%，效果仍在。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "zuus_cloud",
+      "rows": [
+        {
+          "review_id": "c02107ed3d222adb0fa3",
+          "verdict": "holds",
+          "quote": "Grants %cloud_bounty_tooltip% gold if destroyed by an enemy hero.",
+          "reason_zh": "该金钱是敌方英雄摧毁雷云所得的赏金，按定义不计为额外经济。"
+        },
+        {
+          "review_id": "audit:zuus_cloud:stun:scepter",
+          "verdict": "unclear",
+          "quote": "Affects the closest enemy unit with strikes from Zeus's current level of Lightning Bolt.",
+          "reason_zh": "材料只说明雷云会施放当前等级的雷击，未给出雷击的眩晕说明或相应的 A 杖条件。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "zuus_lightning_hands",
+      "rows": [
+        {
+          "review_id": "4c58253779d2292f728d",
+          "verdict": "unclear",
+          "quote": "his attacks create Arc Lightnings that deal a percentage of its damage",
+          "reason_zh": "说明确认攻击会产生弧形闪电，但未写明一次触发能命中多少个敌人。"
+        },
+        {
+          "review_id": "audit:zuus_lightning_hands:attack_modifier:shard",
+          "verdict": "unclear",
+          "quote": "his attacks create Arc Lightnings that deal a percentage of its damage",
+          "reason_zh": "两版都明确写有攻击特效，但所给说明和字段均未交代获得该效果是否需要魔晶。"
+        },
+        {
+          "review_id": "c383fb836aac2f226569",
+          "verdict": "holds",
+          "quote": "Zeus gains bonus attack speed and his attacks create Arc Lightnings that deal a percentage of its damage.",
+          "reason_zh": "技能主说明仍写明宙斯本人的普通攻击会触发弧形闪电，删除的是幻象伤害比例字段。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "zuus_static_field",
+      "rows": [
+        {
+          "review_id": "ebc54c6a0406cce23343",
+          "verdict": "holds",
+          "quote": "Zeus shocks any enemy that he attacks or is hit with his abilities",
+          "reason_zh": "静电场逐个对受到攻击或技能命中的敌人触发，说明未写该次电击会波及其他单位。"
+        },
+        {
+          "review_id": "audit:zuus_static_field:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "Zeus shocks any enemy that he attacks or is hit with his abilities, causing damage equal to a percentage of their current health.",
+          "reason_zh": "宙斯的普通攻击仍会附加按目标当前生命值计算的电击伤害。"
+        },
+        {
+          "review_id": "05d1f99d13b9a23eb780",
+          "verdict": "unclear",
+          "quote": "Zeus shocks any enemy that he attacks or is hit with his abilities",
+          "reason_zh": "说明只交代电击的触发方式，材料未提供可核实破坏交互的 IsBreakable 值。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "zuus_thundergods_wrath",
+      "rows": [
+        {
+          "review_id": "b20d18b4b4b083207602",
+          "verdict": "holds",
+          "quote": "Strikes all enemy heroes with a bolt of lightning, dealing damage no matter where they may be.",
+          "reason_zh": "一次施放仍能伤害所有敌方英雄，命石令伤害依次结算也符合多目标伤害定义。"
+        },
+        {
+          "review_id": "8a7a4dceb4127c0e1be1",
+          "verdict": "holds",
+          "quote": "Provides True Sight around each hero before they are struck.",
+          "reason_zh": "雷击落下前仍会在每名敌方英雄周围提供真视。"
+        }
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

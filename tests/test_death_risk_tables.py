@@ -34,6 +34,7 @@ def write_match(folder, match_id, digest, source=("s", 1), **change):
         "match_id": match_id,
         "conditions_digest": digest,
         "source_key": list(source),
+        "params": PARAMS,
         "risk": [{"match_id": match_id, "hero": "h", "t": 60, "hit_recent": 0, "dies_20": 0}],
         "win": [{"match_id": match_id, "t": 0}],
         "deaths": [],
@@ -60,7 +61,7 @@ def test_folder_refuses_other_positions_params_or_producer(tmp_path):
     assert json.loads((folder / MANIFEST).read_text())["conditions"]["positions"] == [1]
     for changed in (
         conditions(tmp_path, positions=(1, 5)),
-        conditions(tmp_path, params={**PARAMS, "step": 1}),
+        conditions(tmp_path, params={"start": 60, "step": 1}),
         conditions(tmp_path, producer="v = 2\n"),
     ):
         with pytest.raises(TableError, match="other conditions"):
@@ -204,14 +205,14 @@ def test_fight_level_alert_must_come_before_the_fight_started():
 
 def test_risk_frame_keeps_one_row_every_n_seconds(tmp_path):
     folder = tmp_path / "table"
-    digest = tables.prepare_folder(folder, conditions(tmp_path, params={**PARAMS, "step": 1}))
+    digest = tables.prepare_folder(folder, conditions(tmp_path, params={"start": 60, "step": 1}))
     rows = [{"match_id": KEPT, "hero": "h", "t": t, "hit_recent": 0} for t in range(60, 76)]
     write_match(folder, KEPT, digest, risk=rows, params={"start": 60, "step": 1})
     frame, _, info = tables.load_risk_frame(folder, every=5)
     assert frame["t"].tolist() == [60, 65, 70, 75] and info["every_seconds"] == 5
     assert tables.load_risk_frame(folder, every=3)[0]["t"].tolist() == [60, 63, 66, 69, 72, 75]
     write_match(folder, KEPT, digest, risk=rows, params={"start": 60, "step": 2})
-    with pytest.raises(TableError, match="not a multiple"):
+    with pytest.raises(TableError, match="parameters differ"):
         tables.load_risk_frame(folder, every=3)
 
 
@@ -227,6 +228,26 @@ def test_false_alarms_are_counted_per_hour_not_per_sample():
     assert threshold > 0.5  # no false alarm at all
 
 
+def test_threshold_handles_split_alarm_runs():
+    frame = pd.DataFrame({"match_id": [7] * 3, "hero": ["v"] * 3, "t": [0, 1, 2]})
+    assert (
+        death_risk_eval.threshold_for_rate(
+            frame, np.array([0.9, 0.45, 0.9]), np.zeros(3), np.ones(3, dtype=bool), 1, 1200
+        )
+        == 0
+    )
+
+
+def test_manifest_rejects_an_edited_step(tmp_path):
+    folder = tmp_path / "tables"
+    tables.prepare_folder(folder, conditions(tmp_path))
+    path = folder / MANIFEST
+    manifest = json.loads(path.read_text())
+    manifest["conditions"]["params"]["step"] = 1
+    with pytest.raises(TableError, match="digest"):
+        tables.check_manifest(manifest)
+
+
 def test_fight_coverage_includes_unsampled_target_deaths_once():
     frame = pd.DataFrame({"match_id": [7], "hero": ["v"], "t": [60]})
     deaths = pd.DataFrame(
@@ -237,3 +258,12 @@ def test_fight_coverage_includes_unsampled_target_deaths_once():
     assert summary["deaths"] == 3 and summary["deaths_with_samples"] == 1
     assert summary["alerted_before_fight"] == 1 and summary["share_of_all_deaths"] == 0.3333
     assert found[0]["peak"] is None
+
+
+def test_time_budget_rejects_a_continuous_hour_of_false_alarms():
+    frame = pd.DataFrame({"match_id": 7, "hero": "v", "t": range(3600)})
+    scores = np.full(3600, 0.1)
+    scores[[100, 200]] = 0.9
+    y, mask = np.zeros(3600), np.ones(3600, dtype=bool)
+    threshold = death_risk_eval.threshold_for_rate(frame, scores, y, mask, 1, 2, max_share=2 / 3600)
+    assert death_risk_eval.false_alarm_rate(frame, scores, y, mask, threshold, 1) == (2, 2 / 3600)

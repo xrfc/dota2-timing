@@ -1,0 +1,227 @@
+{
+  "objects": [
+    {
+      "subject": "medusa_stone_gaze",
+      "rows": [
+        {"review_id":"audit:medusa_stone_gaze:attack_slow:base","verdict":"holds","quote":"Any enemy units looking at Medusa will have their movement and attack speed slowed.","reason_zh":"面朝美杜莎的敌人仍会被降低攻击速度。"},
+        {"review_id":"86588fbad855882e8615","verdict":"holds","quote":"Petrified units are stunned, and take bonus physical attack damage.","reason_zh":"石化目标受到的物理攻击伤害仍会增加。"},
+        {"review_id":"c3497672954ef31d7a38","verdict":"holds","quote":"Any enemy units looking at Medusa will have their movement and attack speed slowed.","reason_zh":"面朝美杜莎的敌人仍会被降低移动速度。"},
+        {"review_id":"1d7bad12136c50586554","verdict":"holds","quote":"Petrified units are stunned","reason_zh":"敌人累计注视足够久而石化时，仍会受到眩晕。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "meepo_divided_we_stand",
+      "rows": [
+        {"review_id":"6c0936fdc58cd902bdd7","verdict":"holds","quote":"Experience gained by any Meepo is decreased proportionally by the number of Meepos that have gained experience in the last %xp_penalty_time%s.","reason_zh":"新增规则按近期获得经验的米波数量削减经验，没有提供额外经验。"},
+        {"review_id":"9fd8c211345b66d447b2","verdict":"holds","quote":"Damage, attack speed, health, mana, regeneration, mana burn, and proc chance bonuses from items are distributed equally among the amount of Meepos","reason_zh":"基础技能分配装备提供的加成，本身没有给米波回复或抽取法力的效果。"},
+        {"review_id":"423bc22d83d71b699635","verdict":"holds","quote":"Use the sub-ability to throw the carried unit at the target","reason_zh":"新增投掷属于魔晶升级，移动的是被携带单位，基础技能仍无施法者自身位移。"},
+        {"review_id":"8f238d372d0db5e81a33","verdict":"holds","quote":"Meepo summons another Meepo, which levels up and shares items with the main Meepo.","reason_zh":"基础技能仍会召唤能够升级、共享物品的另一个米波。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"disarm","condition":"shard_upgrade","quote":"Divided We Stand can be cast to pick up the target friendly Meepo or creep, disarming Meepo and disabling them.","reason_zh":"魔晶新增的拾取动作会缴械携带单位的米波。"},
+        {"mechanism":"displace_other","condition":"shard_upgrade","quote":"Use the sub-ability to throw the carried unit at the target","reason_zh":"魔晶子技能可以把携带的友方米波或小兵投向目标。"},
+        {"mechanism":"aoe_damage","condition":"shard_upgrade","quote":"dealing damage and slowing enemies within %radius_tooltip% radius of the impact","reason_zh":"投掷命中时可以对落点范围内的多个敌人造成伤害。"},
+        {"mechanism":"slow","condition":"shard_upgrade","quote":"slowing enemies within %radius_tooltip% radius of the impact","reason_zh":"投掷还会降低落点范围内敌人的移动速度。"},
+        {"mechanism":"damage_block","condition":"shard_upgrade","quote":"If the carried target is a Meepo, it shares damage with the carrier.","reason_zh":"携带另一只米波时，两者分摊伤害，从而减少单只米波承担的伤害。"},
+        {"mechanism":"mana_cost","condition":"shard_upgrade","quote":"AbilityManaCost.shard: null→[40]","reason_zh":"魔晶新增的主动施放消耗40点法力。"}
+      ]
+    },
+    {
+      "subject": "meepo_petrify",
+      "rows": [
+        {"review_id":"1ded141b4ca97ab1b964","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"掘地仍会对米波自身施加弱驱散。"},
+        {"review_id":"audit:meepo_petrify:healing:shard","verdict":"condition_changed","quote":"hp_restore.base: [25]→[50]","reason_zh":"回复应记为基础条件（base），两版都将回复量列在基础字段，7.42将其提高至最大生命值的50%。"},
+        {"review_id":"4d75fdf84cc7416548d4","verdict":"holds","quote":"causing him to become invulnerable and untargetable for %duration%s","reason_zh":"掘地期间米波仍无敌且不可选取，持续时间从3秒延长至4秒。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "meepo_poof",
+      "rows": [
+        {"review_id":"2fa6587ff4230cfa24c1","verdict":"holds","quote":"damaging the enemy in both the departure and arrival locations","reason_zh":"移除A杖升级后，基础技能仍在出发地和到达地造成范围伤害。"},
+        {"review_id":"7056861bb759c22212b6","verdict":"holds","quote":"after channeling for %cast_duration% seconds","reason_zh":"基础传送仍需要米波持续施法。"},
+        {"review_id":"f3308f6ea0d8cb0aa5ca","verdict":"holds","quote":"a Meepo can teleport to another Meepo or itself","reason_zh":"施法的米波仍可以传送到另一只米波的位置。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mekansm",
+      "rows": [
+        {"review_id":"151614bb76ac04a1b3a0","verdict":"holds","quote":"Passive: Mekansm Aura Grants %aura_health_regen% health regeneration to allied units in a %aura_radius% radius.","reason_zh":"装备的被动光环仍为周围友方单位提供生命恢复。"},
+        {"review_id":"5604e10b42e1a570aae3","verdict":"holds","quote":"Restores %heal_amount% health to allied units in a %heal_radius% radius.","reason_zh":"主动施放仍会为范围内符合条件的友方单位恢复生命。"},
+        {"review_id":"6d9e2d1f32351c5c3a2d","verdict":"holds","quote":"Grants %aura_health_regen% health regeneration to allied units in a %aura_radius% radius.","reason_zh":"被动光环提供的生命恢复也符合治疗与回复的定义。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "meteor_hammer",
+      "rows": [
+        {"review_id":"350878281232de541d3e","verdict":"holds","quote":"strikes a %impact_radius% AoE, stunning enemies for %stun_duration%s and dealing %impact_damage_units% impact damage","reason_zh":"陨石仍能对落点范围内的多个敌人造成冲击伤害。"},
+        {"review_id":"95b9db1c3a9654525662","verdict":"holds","quote":"CHANNELED - After a %max_duration%s channel","reason_zh":"召下陨石仍需先完成持续施法。"},
+        {"review_id":"d3233ec39d303caa9574","verdict":"holds","quote":"mana_regen_multiplier.base: [25]→[20]","reason_zh":"法力回复倍率加成降低后仍为正值。"},
+        {"review_id":"aa301c5c529384ddb843","verdict":"holds","quote":"Non-building units are also slowed by %burn_slow%%% for %burn_duration%s.","reason_zh":"非建筑单位在灼烧期间仍会减速，幅度从20%降至15%。"},
+        {"review_id":"a7b4e2df9ed0d5695600","verdict":"holds","quote":"spell_amp.base: [10]→[6]","reason_zh":"法术放大从10降至6，装备仍提供这项加成。"},
+        {"review_id":"8b99367292d9d6e96ca5","verdict":"holds","quote":"stunning enemies for %stun_duration%s","reason_zh":"陨石命中仍会眩晕敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mirana_arrow",
+      "rows": [
+        {"review_id":"acc2a9beff63d6370f8a","verdict":"holds","quote":"stuns and damages the first enemy unit it strikes","reason_zh":"基础箭只伤害首先命中的敌方单位，沿途伤害多个敌人需要A杖。"},
+        {"review_id":"bd94f3d6985e73e6a06d","verdict":"holds","quote":"Causes Sacred Arrow to release a Starstorm on enemies along the travel path of the primary arrow","reason_zh":"A杖仍能伤害箭矢路径上的多个敌人，本次调整的是命中目标所受第二次群星风暴的伤害比例。"},
+        {"review_id":"e136e69d032ca4bad7ed","verdict":"holds","quote":"Instantly kills the first non-ancient creep it hits.","reason_zh":"直接击杀取决于命中非远古小兵，没有生命值阈值条件。"},
+        {"review_id":"7afe5a93ba571ca165e4","verdict":"holds","quote":"Sacred Arrow can hit invisible units.","reason_zh":"箭矢可以命中隐身单位，技能没有赋予单位隐身的效果。"},
+        {"review_id":"92ba211c00c125cfcb22","verdict":"holds","quote":"stuns and damages the first enemy unit it strikes","reason_zh":"基础箭仍会眩晕首先命中的敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mirana_celestial_quiver",
+      "rows": [
+        {"review_id":"092d8c40457cae1102c2","verdict":"holds","quote":"When a charge is available, Mirana's next attack will have bonus item potency and magic damage.","reason_zh":"有充能时下一次普攻仍附带额外魔法伤害，并新增物品效力加成。"},
+        {"review_id":"e71f2879c4364758355e","verdict":"unclear","quote":"When a charge is available, Mirana's next attack will have bonus item potency and magic damage.","reason_zh":"说明只描述充能攻击，材料没有给出可独立确认破坏交互的 IsBreakable 值。"},
+        {"review_id":"8f509e8b17d6a3c79739","verdict":"holds","quote":"When a charge is available, Mirana's next attack will have bonus item potency and magic damage.","reason_zh":"基础强化攻击仍以有可用充能为触发条件。"},
+        {"review_id":"a653e22098ee32b0ccb6","verdict":"holds","quote":"Grants %quiver_restore% temporary Charges while Leap's buff is active.","reason_zh":"魔晶仍会在跳跃增益期间提供临时充能。"},
+        {"review_id":"e035b3631b3f315e51ff","verdict":"holds","quote":"Mirana's next attack will have bonus item potency and magic damage.","reason_zh":"新增物品效力强化的是米拉娜的下一次攻击，说明没有赋予目标减魔抗或魔法易伤。"},
+        {"review_id":"3ff41d702fa85635cc08","verdict":"holds","quote":"Grants %quiver_restore% temporary Charges while Leap's buff is active.","reason_zh":"跳跃增益是获得临时充能的条件，箭袋的魔晶效果本身没有位移动作。"},
+        {"review_id":"9e056c72a092788cdca3","verdict":"unclear","quote":"When a charge is available, Mirana's next attack will have bonus item potency and magic damage.","reason_zh":"说明只写强化下一次普攻，没有给出足以确认该技能能主动对敌方单位施放的目标信息。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mirana_starfall",
+      "rows": [
+        {"review_id":"4c0934fc12c58f5cfe0c","verdict":"holds","quote":"Calls down a wave of meteors to damage nearby enemy units.","reason_zh":"一次施放仍能伤害米拉娜附近的多个敌人。"},
+        {"review_id":"c91ec4a4e4150bbd8049","verdict":"holds","quote":"Calls down a wave of meteors to damage nearby enemy units.","reason_zh":"伤害由施法召下的流星造成，技能没有给普通攻击附加效果。"},
+        {"review_id":"3566d879973592e31fe9","verdict":"holds","quote":"Calls down a wave of meteors to damage nearby enemy units.","reason_zh":"说明描述流星打击，没有创建有生命值的单位或夺取单位控制权。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "mjollnir",
+      "rows": [
+        {"review_id":"d8f463de4161b53eeeb0","verdict":"holds","quote":"leaps between %chain_strikes% targets within a %chain_radius% radius, dealing %chain_damage% magical damage to each","reason_zh":"连环闪电一次触发仍能弹跳并伤害多个目标。"},
+        {"review_id":"audit:mjollnir:attack_modifier:item","verdict":"holds","quote":"Grants a %chain_chance%%% chance on attack to release a bolt of electricity","reason_zh":"普攻仍有概率附带连环闪电，新增说明限定幻象的攻击无法触发。"},
+        {"review_id":"a7b2f4fa5f8c2108ffd9","verdict":"holds","quote":"Static Charge cannot trigger more than once per second.","reason_zh":"静电冲击按概率触发且有触发间隔，说明没有使用一次消耗一点的物品充能。"},
+        {"review_id":"audit:mjollnir:damage_return:item","verdict":"holds","quote":"chance to release a %static_damage% magical damage shocking bolt at a nearby attacker and %static_strikes% additional enemies","reason_zh":"受护盾保护的单位遭到攻击时仍有概率以魔法伤害反击附近攻击者和其他敌人。"},
+        {"review_id":"audit:mjollnir:pierce_evasion:item","verdict":"holds","quote":"Lightning proc pierces evasion.","reason_zh":"触发闪电的攻击仍会无视闪避。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "monkey_king_bar",
+      "rows": [
+        {"review_id":"audit:monkey_king_bar:attack_modifier:item","verdict":"holds","quote":"deal %bonus_chance_damage% bonus magical damage if the attacker is a hero or %bonus_chance_damage_illu% if the attacker is an illusion","reason_zh":"普攻触发穿刺时仍附带魔法伤害，英雄与幻象分别使用各自的伤害值。"},
+        {"review_id":"70b133abe29bb7366ae8","verdict":"holds","quote":"deal %bonus_chance_damage% bonus magical damage if the attacker is a hero","reason_zh":"穿刺直接造成额外魔法伤害，没有降低目标魔抗或增加目标所受魔法伤害的效果。"},
+        {"review_id":"69b7ff8bf3df5d7ef222","verdict":"holds","quote":"Grants each attack a %bonus_chance%%% chance to pierce through evasion","reason_zh":"每次攻击仍有概率无视闪避。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "monkey_king_boundless_strike",
+      "rows": [
+        {"review_id":"196e13aad5570abc144c","verdict":"holds","quote":"stunning enemies in a line and damaging them with bonus damage and a critical hit based on his attack","reason_zh":"基础技能仍能一次伤害直线上的多个敌人。"},
+        {"review_id":"469371740e673370f3ca","verdict":"holds","quote":"Boundless Strike applies Primal Spring with %spring_channel_pct%%% of the max channeling duration power","reason_zh":"魔晶按最大引导威力的一定比例施加乾坤之跃效果，没有要求施法者持续引导棒击大地。"},
+        {"review_id":"97fbac5f04a1df58a307","verdict":"holds","quote":"strike_crit_mult.base: [120,140,160,180]→[120,130,140,150]","reason_zh":"调整后各等级暴击倍率仍高于100%。"},
+        {"review_id":"62c16e4f124719c724f2","verdict":"holds","quote":"Has True Strike.","reason_zh":"基础棒击仍具有必中效果。"},
+        {"review_id":"2514a6ca94a0eb37034c","verdict":"holds","quote":"When Boundless Strike is set to alt-cast, Monkey King leaps to the target position","reason_zh":"魔晶替代施法仍使齐天大圣自身跳跃，7.42将落点改为目标位置。"},
+        {"review_id":"d8f88354b72289484de5","verdict":"holds","quote":"stun_duration.base: [0.7,0.9,1.1,1.3]→[0.75,1,1.25,1.5]","reason_zh":"各等级眩晕时间都提高了，基础眩晕仍成立。"},
+        {"review_id":"audit:monkey_king_boundless_strike:terrain_walk:shard","verdict":"unclear","quote":"Monkey King leaps to the target position","reason_zh":"说明确认了跳跃落点，没有交代移动能否穿过树木和不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "monkey_king_jingu_mastery",
+      "rows": [
+        {"review_id":"951ab733220c08018ece","verdict":"holds","quote":"Upon the number of required hits on the same enemy hero, Monkey King earns %charges% charged attacks that have bonus damage and lifesteal.","reason_zh":"命中同一英雄达到要求后获得强化攻击，技能本身没有让一次攻击伤害多个敌人。"},
+        {"review_id":"audit:monkey_king_jingu_mastery:attack_modifier:base","verdict":"holds","quote":"Monkey King earns %charges% charged attacks that have bonus damage and lifesteal.","reason_zh":"达到命中次数后，限定次数的后续普攻仍会附带额外伤害。"},
+        {"review_id":"a0f3b6edd97a6fc1364b","verdict":"holds","quote":"Break disables the gaining of new stacks.","reason_zh":"说明明确破坏会阻止获得新层数，已有层数的加成仍然生效。"},
+        {"review_id":"ca5b8b28be76ee60befc","verdict":"holds","quote":"Monkey King earns %charges% charged attacks","reason_zh":"这里计数的是可打出的强化普攻次数，没有可供逐次施放的技能充能。"},
+        {"review_id":"b98d9cb3f97685b19ed9","verdict":"holds","quote":"charged attacks that have bonus damage and lifesteal","reason_zh":"达到所需命中次数后获得的强化攻击仍带有吸血。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "monkey_king_tree_dance",
+      "rows": [
+        {"review_id":"ea54592f9d73e5167ab3","verdict":"holds","quote":"Movement is interrupted if Monkey King is stunned, hexed or banished.","reason_zh":"说明写的是齐天大圣受控时自身移动会中断，没有写丛林之舞能打断敌人的持续施法。"},
+        {"review_id":"ecc5be74eb452c399eaf","verdict":"holds","quote":"While perched, he gains the Primal Spring ability-a channeled leap attack.","reason_zh":"持续施法属于栖树后获得的乾坤之跃，丛林之舞本身是跳向树木。"},
+        {"review_id":"291319341e737eed6831","verdict":"holds","quote":"Monkey King jumps to a tree and perches atop it.","reason_zh":"齐天大圣仍能主动跳到树上，跳跃距离从900提高至1000。"},
+        {"review_id":"35b9692ce10d33023a6d","verdict":"holds","quote":"Monkey King jumps to a tree and perches atop it.","reason_zh":"跳跃和栖树均未对敌方单位施加移动减速。"},
+        {"review_id":"555d6d74ad7695cd3986","verdict":"holds","quote":"If Monkey King's tree is destroyed, he falls and is stunned for %unperched_stunned_duration%s.","reason_zh":"树被毁时受晕的是跌落的齐天大圣，技能没有对敌人施加眩晕。"},
+        {"review_id":"audit:monkey_king_tree_dance:terrain_walk:base","verdict":"unclear","quote":"Monkey King jumps to a tree and perches atop it.","reason_zh":"跳到树上能确认自身位移，说明和距离字段都不足以确认移动时能穿树和越过悬崖。"},
+        {"review_id":"543b26e8da216dd5fc23","verdict":"holds","quote":"If Monkey King's tree is destroyed, he falls","reason_zh":"树被摧毁只是触发跌落的条件，技能本身没有摧毁树木的动作。"},
+        {"review_id":"0598e1765c7cb1d40b29","verdict":"holds","quote":"Monkey King jumps to a tree and perches atop it.","reason_zh":"施法选择的目标是树木，不满足可选择敌方单位的条件。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "morphling_replicate",
+      "rows": [
+        {"review_id":"5614558f4d72acbb6188","verdict":"now_wrong","quote":"scepter_illusion_outgoing.scepter: [100]→null","reason_zh":"旧A杖创建目标英雄强幻象的说明和幻象伤害字段已移除，新说明只描述短暂出现并重复施法的复制体。"},
+        {"review_id":"audit:morphling_replicate:self_mobility:scepter","verdict":"now_wrong","quote":"lesser replicants appear one after another %scepter_echo_cast_delay% seconds apart, and cast it again at a nearby target","reason_zh":"A杖已改为复制体重复施法，旧版切换变形时由本体取代幻象位置的效果已删除。"},
+        {"review_id":"f9b5b49b3b674ba53e58","verdict":"holds","quote":"Does not trigger spell reflect.","reason_zh":"基础变形仍未获得反弹指向技能的效果，说明也明确此次施放不会触发技能反弹。"},
+        {"review_id":"audit:morphling_replicate:spell_steal:base","verdict":"holds","quote":"gaining their basic abilities","reason_zh":"变体精灵变形时仍会获得目标敌人的基础技能。"},
+        {"review_id":"0dba6399710fa947dc5d","verdict":"holds","quote":"Morphling changes his form to match the targeted enemy","reason_zh":"基础变形仍可主动选择敌方单位为目标。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"aoe_damage","condition":"scepter_upgrade","quote":"cast it again at a nearby target, or the same target if no other valid targets are available. Every echo is weaker, dealing less damage","reason_zh":"变形期间施放有伤害的指向技能时，A杖回响可另选附近目标，使这一次主动施法能伤害多个敌人。"}
+      ]
+    },
+    {
+      "subject": "muerta_gunslinger",
+      "rows": [
+        {"review_id":"audit:muerta_gunslinger:aoe_damage:base","verdict":"holds","quote":"Muerta's attacks have a chance to fire a second shot at another target.","reason_zh":"开启技能后一次普攻仍可能射中两个目标，第二枪的触发概率提高。"},
+        {"review_id":"c1a031cada6169337934","verdict":"holds","quote":"The secondary shot can trigger attack modifiers.","reason_zh":"技能提供一次额外射击，该射击可以触发已有的攻击特效。"},
+        {"review_id":"45f5d72743fee8c72f58","verdict":"unclear","quote":"double_shot_chance.base: [18,27,36,45]→[20,30,40,50]","reason_zh":"所给字段只确认第二枪概率提高，没有提供可独立核实破坏交互的 IsBreakable 值。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "muerta_spectral_slug",
+      "rows": [
+        {"review_id":"2f1501ab14cd522a9ded","verdict":"holds","quote":"Muerta shoots a spectral bullet at an enemy, dealing damage, knocking them back","reason_zh":"每次施放仍只伤害一个目标，新增两点充能没有让单发子弹造成范围伤害。"},
+        {"review_id":"audit:muerta_spectral_slug:displace_other:shard","verdict":"condition_changed","quote":"Muerta shoots a spectral bullet at an enemy, dealing damage, knocking them back","reason_zh":"击退应记为基础条件（base），两版基础说明都直接写明击退敌人，没有列出魔晶前提。"},
+        {"review_id":"4729a02d1f6982b4ce58","verdict":"holds","quote":"turning them ethereal for %duration%s - rendering them immune to physical damage and unable to attack","reason_zh":"目标仍进入虚无状态，持续时间从3秒降至2.25秒。"},
+        {"review_id":"05f20cb763c2210a0081","verdict":"holds","quote":"more vulnerable to magic damage","reason_zh":"易伤限定为魔法伤害，未增加目标所受的物理或全部伤害。"},
+        {"review_id":"ee7c8c23d42fc82ce08a","verdict":"holds","quote":"The target is slowed and %bonus_spell_damage_pct%%% more vulnerable to magic damage.","reason_zh":"目标仍会受到更多魔法伤害。"},
+        {"review_id":"9c670c3c96301190c161","verdict":"holds","quote":"The target is slowed","reason_zh":"幽魂子弹仍会降低目标的移动速度。"},
+        {"review_id":"2e914a0711ed2e591333","verdict":"holds","quote":"Muerta shoots a spectral bullet at an enemy","reason_zh":"技能仍向选定的单个敌人发射子弹。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"charges","condition":"base","quote":"AbilityCharges.base: null→[2]；AbilityChargeRestoreTime.base: null→[12]","reason_zh":"基础技能新增两点施法充能，每点恢复时间为12秒。"}
+      ]
+    },
+    {
+      "subject": "muerta_the_calling",
+      "rows": [
+        {"review_id":"8acd788fc0969c1badd9","verdict":"holds","quote":"Revenants deal damage and silence enemies as they pass through them.","reason_zh":"一次施放产生的亡魂仍可穿过并伤害多个敌人。"},
+        {"review_id":"audit:muerta_the_calling:ground_zone:base","verdict":"holds","quote":"slowly circle the targeted location. Enemies within the area are slowed.","reason_zh":"亡魂持续环绕指定地点，留在区域内的敌人会持续受到减速。"},
+        {"review_id":"41342dca992a72fa03c4","verdict":"holds","quote":"Revenants deal damage and silence enemies as they pass through them.","reason_zh":"亡魂穿过敌人时仍会施加沉默。"},
+        {"review_id":"9736d9215a722a5e7d76","verdict":"holds","quote":"Enemies within the area are slowed.","reason_zh":"区域内的敌人仍会被降低移动速度。"},
+        {"review_id":"749cc5943db78386d1b0","verdict":"holds","quote":"revenants that slowly circle the targeted location","reason_zh":"两版均只描述亡魂环绕地点并造成场地效果，材料没有显示新增了具有生命值的召唤单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "naga_siren_eelskin",
+      "rows": [
+        {"review_id":"64c11def15895d5fe6e9","verdict":"unclear","quote":"Naga Siren has bonus evasion, increased per every other Naga Siren within %radius% radius.","reason_zh":"说明只确认闪避及其加成条件，材料没有给出判定可被破坏所需的 IsBreakable 值。"},
+        {"review_id":"1e9247460912e9655999","verdict":"holds","quote":"Naga Siren has bonus evasion","reason_zh":"鳗鱼皮仍为娜迦海妖自身提供额外闪避。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "naga_siren_mirror_image",
+      "rows": [
+        {"review_id":"913d2c3950e3dd6b0a67","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"施放镜像时仍会对娜迦海妖自身施加弱驱散。"},
+        {"review_id":"t5:naga_siren_mirror_image:illusions","verdict":"holds","quote":"Creates multiple images of Naga Siren under her control.","reason_zh":"技能仍会创建多个受娜迦海妖控制的自身幻象。"},
+        {"review_id":"42ce61bbcdf22629029b","verdict":"holds","quote":"Naga Siren is invulnerable for %invuln_duration% seconds when casting","reason_zh":"娜迦海妖在施放镜像时仍会短暂无敌。"},
+        {"review_id":"ea10685e5c739d77dd37","verdict":"holds","quote":"Naga Siren is invulnerable for %invuln_duration% seconds when casting, allowing her to dodge stuns and damage.","reason_zh":"说明将避开眩晕和伤害归因于施法时的无敌，没有写明会使已飞来的弹道落空。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

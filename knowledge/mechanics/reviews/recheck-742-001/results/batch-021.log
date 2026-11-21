@@ -1,0 +1,549 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6f2-96d5-7dc0-bb54-854757a6f89e
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "tidehunter_dead_in_the_water", "name_zh": "潮汐猎人·重如铁锚", "category": "3_说明文字", "text_741f": {"desc_loc": "Tidehunter attaches a heavy anchor to an enemy hero. The hero is leashed while attached to the anchor. Attempting to move more than %chain_length% units away from the anchor forces the hero to %max_movement_speed% move speed, dragging the anchor behind them. The anchor can be destroyed with %attacks_to_destroy% hero attacks."}, "text_742": {"desc_loc": "Tidehunter attaches a heavy anchor to an enemy hero. The hero is leashed while attached to the anchor. Attempting to move more than %chain_length% units away from the anchor forces the hero to %max_movement_speed% move speed, dragging the anchor behind them. The anchor has %attacks_to_destroy% pip health."}, "changed_fields": [], "rows": [{"review_id": "c601d1e74e2898e60f4a", "mechanism": "leash", "mechanism_zh": "束缚", "definition": "目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用", "condition": "base", "decision": "accept"}, {"review_id": "audit:tidehunter_dead_in_the_water:root:shard", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "audit:tidehunter_dead_in_the_water:slow:shard", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "1c3009edce869ae2976b", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "tidehunter_gush", "name_zh": "潮汐猎人·巨浪", "category": "2_纯数值", "text_741f": {"desc_loc": "Summons a gush of water to damage an enemy unit, reducing their movement speed and armor.", "scepter_loc": "Gush becomes a ground targeted wave ability that affects enemy units in a line. Decreases cooldown."}, "text_742": {"desc_loc": "Summons a gush of water to damage an enemy unit, reducing their movement speed and armor.", "scepter_loc": "Gush becomes a ground targeted wave ability that affects enemy units in a line. Decreases cooldown."}, "changed_fields": [{"field": "durations", "old": [4.5], "new": [4]}, {"field": "AbilityDuration", "old": {"base": [4.5], "scepter": null, "shard": null}, "new": {"base": [4], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:tidehunter_gush:aoe_damage:scepter", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "c7085bee2837295b5a23", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "345db03fbc4ac43b5f44", "mechanism": "armor_reduction", "mechanism_zh": "减护甲", "definition": "降低目标护甲", "condition": "base", "decision": "accept"}, {"review_id": "d30f7d06a11ffafda394", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "dd7f1f2664196dc8352f", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "reject"}, {"review_id": "6e3d94b18ae6ab5f015c", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "tidehunter_leviathans_catch", "name_zh": "潮汐猎人·利维坦的渔获", "category": "2_纯数值", "text_741f": {"desc_loc": "Whenever an enemy hero is killed by Tidehunter or dies under his debuffs, a fish appears in their place; Tidehunter can eat the fish to permanently gain %fish_health_bonus% Health, %fish_attack_range% Attack Range, and %fish_damage_block% Bonus Damage Block. Tidehunter eats a free fish every time he reaches an even hero level.", "notes_loc": ["Enemies can destroy the fish.", "Bonus Damage Block only applies if another source of Damage Block will be affecting the incoming physical attack."]}, "text_742": {"desc_loc": "Whenever an enemy hero is killed by Tidehunter or dies under his debuffs, a fish appears in their place; Tidehunter can eat the fish to permanently gain %fish_health_bonus% Health, %fish_attack_range% Attack Range, and %fish_damage_block% Bonus Damage Block. Tidehunter eats a free fish every time he reaches an even hero level.", "notes_loc": ["Enemies can destroy the fish.", "Bonus Damage Block only applies if another source of Damage Block will be affecting the incoming physical attack."]}, "changed_fields": [{"field": "fish_health_bonus", "old": {"base": [3], "scepter": null, "shard": null}, "new": {"base": [5], "scepter": null, "shard": null}}], "rows": [{"review_id": "6de01f5b32adb2663e4d", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}, {"review_id": "3f688fde8c50c887101a", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "base", "decision": "accept"}]}, {"subject": "tidehunter_ravage", "name_zh": "潮汐猎人·毁灭", "category": "2_纯数值", "text_741f": {"desc_loc": "Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units.", "notes_loc": ["Ravage will hit invisible units.", "Ravage waves move outwards at a speed of %speed%."]}, "text_742": {"desc_loc": "Slams the ground, causing tentacles to erupt in all directions, damaging and stunning all nearby enemy units.", "notes_loc": ["Ravage will hit invisible units.", "Ravage waves move outwards at a speed of %speed%."]}, "changed_fields": [{"field": "damages", "old": [275, 375, 475], "new": [275, 365, 455]}, {"field": "AbilityDamage", "old": {"base": [275, 375, 475], "scepter": null, "shard": null}, "new": {"base": [275, 365, 455], "scepter": null, "shard": null}}], "rows": [{"review_id": "238ed25423a2be3991fa", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "58f6ecd0c93358b3b687", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "reject"}, {"review_id": "0d3623750e15dd0cf1d8", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}]}, {"subject": "tinker_deploy_turrets", "name_zh": "修补匠·部署炮塔", "category": "3_说明文字", "text_741f": {"desc_loc": "Deploys 3 uncontrollable turrets at the target location. Enemies hit by the impact take damage and are pushed away from the landing point. If Tinker is hit, he also gets pushed by the impact. Once deployed, the turret fires missiles in the direction of the nearest enemy hero.", "scepter_loc": "Turrets fire missiles %missile_attack_rate_tooltip%%% faster."}, "text_742": {"desc_loc": "Deploys 3 uncontrollable turrets at the target location. Enemies hit by the impact take damage and are pushed away from the landing point. If Tinker is hit, he also gets pushed by the impact. Once deployed, the turret fires missiles in the direction of the nearest enemy hero.", "scepter_loc": "Turrets missiles have %bonus_missile_range%%% faster attack interval, increased range, and increased speed."}, "changed_fields": [{"field": "missile_attack_rate_tooltip", "old": {"base": [20], "scepter": null, "shard": null}, "new": null}, {"field": "missile_range", "old": {"base": [750, 800, 850, 900], "scepter": null, "shard": null}, "new": {"base": [750, 800, 850, 900], "scepter": [20], "shard": null}}, {"field": "missile_speed", "old": {"base": [1350], "scepter": null, "shard": null}, "new": {"base": [1350], "scepter": [20], "shard": null}}, {"field": "missile_target_range", "old": {"base": [650, 700, 750, 800], "scepter": null, "shard": null}, "new": {"base": [650, 700, 750, 800], "scepter": [20], "shard": null}}], "rows": [{"review_id": "2af97ab28f3d35fcac08", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "4074acd9896e68b4b470", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "audit:tinker_deploy_turrets:summons:base", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "reject"}]}, {"subject": "tinker_laser", "name_zh": "修补匠·激光", "category": "2_纯数值", "text_741f": {"desc_loc": "Fires an intense energy beam, damaging and blinding the target. Blinded targets miss all physical attacks.", "scepter_loc": "Upgrades Tinker's Laser into a Shrink Ray, reducing the main target's size, current health, and maximum health by %scepter_reduction_pct%%% (stacking). Does not pierce debuff immunity."}, "text_742": {"desc_loc": "Fires an intense energy beam, damaging and blinding the target. Blinded targets miss all physical attacks.", "scepter_loc": "Upgrades Tinker's Laser into a Shrink Ray, reducing the main target's size, current health, and maximum health by %scepter_reduction_pct%%% (stacking). Does not pierce debuff immunity."}, "changed_fields": [{"field": "scepter_reduction_pct", "old": {"base": [0], "scepter": [13], "shard": null}, "new": {"base": [0], "scepter": [9], "shard": null}}], "rows": [{"review_id": "f6040d5a63f076002e31", "mechanism": "blind", "mechanism_zh": "致盲", "definition": "使敌方单位的攻击有概率落空", "condition": "base", "decision": "accept"}, {"review_id": "audit:tinker_laser:hp_removal:scepter", "mechanism": "hp_removal", "mechanism_zh": "生命移除", "definition": "直接移除生命，不算伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "2e64dd87d6938e557576", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "tinker_march_of_the_machines", "name_zh": "修补匠·机械行军", "category": "2_纯数值", "text_741f": {"desc_loc": "Enlists an army of robotic minions to destroy enemy units in an area around Tinker.", "notes_loc": ["Robots spawn at a rate of %machines_per_sec% per second."], "scepter_loc": "March of the Machines applies a non-stacking heal over time when passing through allied heroes.", "facets_loc": ["March of the Machines applies a non-stacking heal over time when passing through allied heroes."]}, "text_742": {"desc_loc": "Enlists an army of robotic minions to destroy enemy units in an area around Tinker.", "notes_loc": ["Robots spawn at a rate of %machines_per_sec% per second."], "scepter_loc": "March of the Machines applies a non-stacking heal over time when passing through allied heroes.", "facets_loc": ["March of the Machines applies a non-stacking heal over time when passing through allied heroes."]}, "changed_fields": [{"field": "heal_per_second", "old": {"base": [0], "scepter": [35], "shard": null}, "new": {"base": [0], "scepter": [45], "shard": null}}], "rows": [{"review_id": "audit:tinker_march_of_the_machines:aoe_damage:base", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "24d00d2e3d6a77e54fb9", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "scepter_upgrade", "decision": "accept"}]}, {"subject": "tinker_warp_grenade", "name_zh": "修补匠·折跃耀光", "category": "3_说明文字", "text_741f": {"desc_loc": "Throws a flare towards an enemy, dealing damage, teleporting them away, rooting them and reducing their Cast and Attack Range for %debuff_duration% seconds. The target is teleported further the closer they are to Tinker.", "notes_loc": ["Max teleportation distance is %warp_distance_pct_tooltip%%% of Warp Flare's cast range, which decreases down to 0 at max cast range."]}, "text_742": {"desc_loc": "Throws a flare towards an enemy, dealing damage, teleporting them away, slowing them and reducing their Cast and Attack Range for %debuff_duration% seconds. The target is teleported further the closer they are to Tinker.", "notes_loc": ["Max teleportation distance is %warp_distance_pct_tooltip%%% of Warp Flare's cast range, which decreases down to 0 at max cast range."]}, "changed_fields": [{"field": "debuff_duration", "old": {"base": [2], "scepter": null, "shard": null}, "new": {"base": [3], "scepter": null, "shard": null}}, {"field": "movement_slow_pct", "old": null, "new": {"base": [100], "scepter": null, "shard": null}}], "rows": [{"review_id": "fbb41f8726b503e5af47", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:tinker_warp_grenade:displace_other:shard", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "855c0c95b122e6825ef3", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "base", "decision": "accept"}, {"review_id": "85d9dc88c2cc51a8c28d", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "reject"}, {"review_id": "13b22f12c38161473234", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "tiny_avalanche", "name_zh": "小小·山崩", "category": "2_纯数值", "text_741f": {"desc_loc": "Bombards an area with rocks, continously doing small intervals of damage and stun to enemy units."}, "text_742": {"desc_loc": "Bombards an area with rocks, continously doing small intervals of damage and stun to enemy units."}, "changed_fields": [{"field": "projectile_speed", "old": {"base": [1200], "scepter": null, "shard": null}, "new": {"base": [1500], "scepter": null, "shard": null}}], "rows": [{"review_id": "a83a121e829beafcfa16", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:tiny_avalanche:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "37a2417240c07987d784", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}]}, {"subject": "tiny_tree_grab", "name_zh": "小小·抓树", "category": "2_纯数值", "text_741f": {"desc_loc": "Grabs a tree and causes Tiny to have bonus range, damage, and a splashing attack for a limited number of attacks. The tree can be thrown, to deal your attack to a unit at a distance.", "notes_loc": ["The cooldown begins when the tree is thrown."]}, "text_742": {"desc_loc": "Grabs a tree and causes Tiny to have bonus range, damage, and a splashing attack for a limited number of attacks. The tree can be thrown, to deal your attack to a unit at a distance.", "notes_loc": ["The cooldown begins when the tree is thrown."]}, "changed_fields": [{"field": "cast_ranges", "old": [200], "new": [275]}, {"field": "AbilityCastRange", "old": {"base": [200], "scepter": null, "shard": null}, "new": {"base": [275], "scepter": null, "shard": null}}], "rows": [{"review_id": "5bd28ccda2828bfb5ed5", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "7b2125391ce3d5281f97", "mechanism": "cleave", "mechanism_zh": "分裂溅射", "definition": "攻击伤害波及周围单位", "condition": "base", "decision": "accept"}, {"review_id": "audit:tiny_tree_grab:tree_destroy:base", "mechanism": "tree_destroy", "mechanism_zh": "砍树", "definition": "能摧毁树木", "condition": "base", "decision": "accept"}, {"review_id": "0e76b524b220e0cbf3bd", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "reject"}]}, {"subject": "tranquil_boots", "name_zh": "静谧之鞋", "category": "3_说明文字", "text_741f": {"desc_loc": "Passive: Break Whenever you attack a hero or are attacked by any unit, the bonus %bonus_health_regen% HP regen is lost and the movement speed bonus is reduced to %broken_movement_speed% for %break_time% seconds. Movement speed bonuses from multiple pairs of boots do not stack."}, "text_742": {"desc_loc": "Passive: Respite Whenever you attack a hero or are attacked by any unit, the health regen bonus is reduced to %broken_health_regen% and the movement speed bonus is reduced to %broken_movement_speed% for %break_time% seconds. Movement speed bonuses from multiple pairs of boots do not stack."}, "changed_fields": [{"field": "broken_health_regen", "old": null, "new": {"base": [2], "scepter": null, "shard": null}}], "rows": [{"review_id": "5af770c0b44398281493", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}, {"review_id": "606499e427e4b284ac33", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "item", "decision": "accept"}]}, {"subject": "treant_eyes_in_the_forest", "name_zh": "树精卫士·丛林之眼", "category": "2_纯数值", "text_741f": {"desc_loc": "Treant Protector enchants a tree, which grants him unobstructed vision in that location. The eyes last for %duration% seconds and are invisible, but are destroyed if their host tree is destroyed or if they are attacked directly.", "notes_loc": ["Being entangled by Overgrowth through enchanted trees from Eyes in the Forest does damage.", "If the enemy has True Sight, they will be able to see which trees are enchanted."]}, "text_742": {"desc_loc": "Treant Protector enchants a tree, which grants him unobstructed vision in that location. The eyes last for %duration% seconds and are invisible, but are destroyed if their host tree is destroyed or if they are attacked directly.", "notes_loc": ["Being entangled by Overgrowth through enchanted trees from Eyes in the Forest does damage.", "If the enemy has True Sight, they will be able to see which trees are enchanted."]}, "changed_fields": [], "rows": [{"review_id": "e8ba8f6a5341be8bcc90", "mechanism": "charges", "mechanism_zh": "充能", "definition": "技能或物品用一次消耗一点；只决定数值或层数的不算", "condition": "base", "decision": "accept"}, {"review_id": "66c98233374070c1a75f", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "audit:treant_eyes_in_the_forest:high_ground_vision:shard", "mechanism": "high_ground_vision", "mechanism_zh": "高空视野", "definition": "获得不被阻挡的视野，如暗夜魔王的大招", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "ac533a4e9088176e89ef", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "base", "decision": "reject"}, {"review_id": "dd8942c40dce837e75c9", "mechanism": "tree_destroy", "mechanism_zh": "砍树", "definition": "能摧毁树木", "condition": "base", "decision": "reject"}, {"review_id": "c8d6b6571b599e603dc3", "mechanism": "true_sight", "mechanism_zh": "真视", "definition": "可看见隐身单位", "condition": "base", "decision": "reject"}, {"review_id": "fa957c2e0ea72b92fcb6", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "reject"}]}, {"subject": "treant_leech_seed", "name_zh": "树精卫士·寄生种子", "category": "2_纯数值", "text_741f": {"desc_loc": "Treant's attack plants a life-sapping seed in an enemy unit. That unit takes additional magic damage, is rooted and disarmed for a short duration, and emits %healing_pulse_count% healing pulses to up to %max_heal_units% nearby allies of Treant Protector based on the damage dealt by the attack.", "facets_loc": ["Leech Seed can be ground targeted, planting a tree that heals allies and damages all enemies in the effect radius for the duration of the ability. Damage to creeps is reduced by %creep_damage_reduction_pct%%%. If the tree is cut down, it immediately re-grows again."]}, "text_742": {"desc_loc": "Treant's attack plants a life-sapping seed in an enemy unit. That unit takes additional magic damage, is rooted and disarmed for a short duration, and emits %healing_pulse_count% healing pulses to up to %max_heal_units% nearby allies of Treant Protector based on the damage dealt by the attack.", "facets_loc": ["Leech Seed can be ground targeted, planting a tree that heals allies and damages all enemies in the effect radius for the duration of the ability. Damage to creeps is reduced by %creep_damage_reduction_pct%%%. If the tree is cut down, it immediately re-grows again."]}, "changed_fields": [{"field": "mana_costs", "old": [35], "new": [20]}, {"field": "AbilityManaCost", "old": {"base": [35], "scepter": null, "shard": null}, "new": {"base": [20], "scepter": null, "shard": null}}], "rows": [{"review_id": "2f3a6481b32bee988149", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "58b60079be3658705c3a", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "ffd23c162a219a58368c", "mechanism": "bind", "mechanism_zh": "捆缚", "definition": "目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法", "condition": "base", "decision": "accept"}, {"review_id": "172dd6048e6cdb633a72", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "f82c6afeab2c921cf3e8", "mechanism": "disarm", "mechanism_zh": "缴械", "definition": "目标无法普通攻击", "condition": "base", "decision": "accept"}, {"review_id": "8b97ffb99c9db33c1209", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "9dc871d49bc3eb985744", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "reject"}, {"review_id": "628e3a79cee3249bbca0", "mechanism": "magic_resist_reduction", "mechanism_zh": "减魔抗/魔法易伤", "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害", "condition": "base", "decision": "reject"}, {"review_id": "83d39cd24cf02b1ac76e", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "treant_natures_grasp", "name_zh": "树精卫士·自然卷握", "category": "3_说明文字", "text_741f": {"desc_loc": "Creates vines towards the target location. Vines slow down and deal damage to enemies that walk through. Does %creep_penalty%%% less damage to creeps."}, "text_742": {"desc_loc": "Creates vines towards the target location. Vines slow down and deal damage to enemies that walk through."}, "changed_fields": [{"field": "creep_penalty", "old": {"base": [35], "scepter": null, "shard": null}, "new": null}], "rows": [{"review_id": "b4901aaa947763c7e7f2", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:treant_natures_grasp:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "b56373940b0b6cdc9d27", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "troll_warlord_battle_trance", "name_zh": "巨魔战将·战斗专注", "category": "3_说明文字", "text_741f": {"desc_loc": "Troll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes. Damage does not kill you during this mode. Grants you bonus lifesteal, attack speed, slow resistance and movement speed. Applies a Basic Dispel. DISPEL TYPE: Basic Dispel", "notes_loc": ["Troll can still use his items and abilities while affected by Battle Trance, but not other commands.", "Troll can still be killed with Axe's Culling Blade.", "Troll is granted vision over the target."], "facets_loc": ["During Battle Trance, Troll Warlord has increased max Fervor stacks and no attack speed limit. Battle Trance grants allied heroes %attack_speed_share_percent%%% of the attack speed bonus."]}, "text_742": {"desc_loc": "Troll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes. Unslowable while attacking. Damage does not kill you during this mode. Grants you bonus lifesteal, attack speed, status resistance, and movement speed. Applies a Basic Dispel. DISPEL TYPE: Basic Dispel", "notes_loc": ["Troll can still use his items and abilities while affected by Battle Trance, but not other commands.", "Troll can still be killed with Axe's Culling Blade.", "Troll is granted vision over the target."], "facets_loc": ["During Battle Trance, Troll Warlord has increased max Fervor stacks and no attack speed limit. Battle Trance grants allied heroes %attack_speed_share_percent%%% of the attack speed bonus."]}, "changed_fields": [{"field": "slow_resistance", "old": {"base": [35], "scepter": null, "shard": null}, "new": null}, {"field": "status_resistance", "old": null, "new": {"base": [15, 20, 25], "scepter": null, "shard": null}}], "rows": [{"review_id": "9030410c6da5414d485d", "mechanism": "applies_basic_dispel", "mechanism_zh": "施加弱驱散", "definition": "移除目标身上可被弱驱散的效果", "condition": "base", "decision": "accept"}, {"review_id": "audit:troll_warlord_battle_trance:death_prevention:base", "mechanism": "death_prevention", "mechanism_zh": "免死", "definition": "在一段时间内不会被打死（如薄葬、回光返照）", "condition": "base", "decision": "accept"}, {"review_id": "17ae2e8e0664321b8aef", "mechanism": "execute", "mechanism_zh": "斩杀", "definition": "目标低于生命阈值时直接杀死", "condition": "base", "decision": "reject"}, {"review_id": "062386e9d9312364613b", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "67c4f04a8aafa1268b03", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "c369a97a09d616e0584d", "mechanism": "lifesteal", "mechanism_zh": "吸血", "definition": "攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）", "condition": "base", "decision": "accept"}, {"review_id": "62613f1350de1228dd41", "mechanism": "slow_resistance", "mechanism_zh": "减速抗性", "definition": "降低自身受到的减速效果（如散夜对剑+30%）", "condition": "base", "decision": "accept"}, {"review_id": "audit:troll_warlord_battle_trance:forced_action:base", "mechanism": "taunt", "mechanism_zh": "嘲讽", "definition": "单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算", "condition": "base", "decision": "accept"}]}, {"subject": "tusk_drinking_buddies", "name_zh": "巨牙海民·酒友", "category": "2_纯数值", "text_741f": {"desc_loc": "Tusk reaches out to tag an allied unit, pulling them closer. Once tagged, both Tusk and his tagged ally gain movement speed and armor.", "notes_loc": ["Doesn't pull Tusk or targeted ally if they are within %min_distance% range of each other.", "Cannot be used during Snowball."]}, "text_742": {"desc_loc": "Tusk reaches out to tag an allied unit, pulling them closer. Once tagged, both Tusk and his tagged ally gain movement speed and armor.", "notes_loc": ["Doesn't pull Tusk or targeted ally if they are within %min_distance% range of each other.", "Cannot be used during Snowball."]}, "changed_fields": [{"field": "buff_duration", "old": {"base": [6], "scepter": null, "shard": null}, "new": {"base": [7], "scepter": null, "shard": null}}, {"field": "movespeed_bonus", "old": {"base": [25], "scepter": null, "shard": null}, "new": {"base": [30], "scepter": null, "shard": null}}], "rows": [{"review_id": "ded9522bee6f9eaafa3e", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "09f4588c6729db21e8bd", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "audit:tusk_drinking_buddies:self_mobility:shard", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "audit:tusk_drinking_buddies:terrain_walk:shard", "mechanism": "terrain_walk", "mechanism_zh": "无视地形", "definition": "移动时不受悬崖等不可通行地形阻挡，也能穿过树木", "condition": "shard_upgrade", "decision": "accept"}]}, {"subject": "undying_ceaseless_dirge", "name_zh": "不朽尸王·挽歌犹唱", "category": "3_说明文字", "text_741f": {"desc_loc": "When Undying dies he will instantly respawn in the fountain. Begins the game on cooldown. Cannot be refreshed."}, "text_742": {"desc_loc": "When Undying dies he will instantly respawn in the fountain. Begins the game on cooldown. Cannot be refreshed and is not affected by cooldown reduction."}, "changed_fields": [], "rows": [{"review_id": "b9194c489349772ab74e", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}, {"review_id": "09c4ebf7ef84233cccc4", "mechanism": "respawn", "mechanism_zh": "重生", "definition": "死亡后复活，或影响复活", "condition": "base", "decision": "accept"}]}, {"subject": "undying_flesh_golem", "name_zh": "不朽尸王·血肉傀儡", "category": "2_纯数值", "text_741f": {"desc_loc": "Undying transforms into a horrifying flesh golem. While in this state, he gains a percentage increase to strength, bonus movement speed, and causes attacks to slow, apply damage amplification, and spawn Tombstone zombies.", "facets_loc": ["While transformed into a Flesh Golem, attacks spawn a zombie."]}, "text_742": {"desc_loc": "Undying transforms into a horrifying flesh golem. While in this state, he gains a percentage increase to strength, bonus movement speed, and causes attacks to slow, apply damage amplification, and spawn Tombstone zombies.", "facets_loc": ["While transformed into a Flesh Golem, attacks spawn a zombie."]}, "changed_fields": [{"field": "damage_amp", "old": {"base": [25, 30, 35], "scepter": null, "shard": null}, "new": {"base": [20, 25, 30], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:undying_flesh_golem:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "eb11ceb893590b10a325", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "a4cf535ce2d1901de191", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "accept"}, {"review_id": "7e3174a9258041fc1557", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "undying_soul_rip", "name_zh": "不朽尸王·噬魂", "category": "2_纯数值", "text_741f": {"desc_loc": "Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy. Soul Rip can also be used to heal Tombstone.", "notes_loc": ["Can heal Tombstone, but can't heal or damage other buildings.", "Does not rip from invisible units, invulnerable units, units in the fog of war, or spell immune enemies.", "Does rip from spell immune allies, including zombies."], "facets_loc": ["Casting Soul Rip on allies increases their Strength by a percentage of Undying's Strength."]}, "text_742": {"desc_loc": "Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy. Soul Rip can also be used to heal Tombstone.", "notes_loc": ["Can heal Tombstone, but can't heal or damage other buildings.", "Does not rip from invisible units, invulnerable units, units in the fog of war, or spell immune enemies.", "Does rip from spell immune allies, including zombies."], "facets_loc": ["Casting Soul Rip on allies increases their Strength by a percentage of Undying's Strength."]}, "changed_fields": [{"field": "strength_share_duration", "old": {"base": [0], "scepter": null, "shard": null}, "new": null}, {"field": "strength_share_model_scale", "old": {"base": [0], "scepter": null, "shard": null}, "new": null}, {"field": "strength_share_percent", "old": {"base": [0], "scepter": null, "shard": null}, "new": null}, {"field": "tombstone_heal", "old": {"base": [4, 8, 12, 16], "scepter": null, "shard": null}, "new": {"base": [1, 2, 3, 4], "scepter": null, "shard": null}}], "rows": [{"review_id": "649c2580025cd6ee081b", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "a2135dec4c019380bab5", "mechanism": "debuff_immunity", "mechanism_zh": "减益免疫/技能免疫", "definition": "处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）", "condition": "base", "decision": "reject"}, {"review_id": "a398d8c969e4c08402c6", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "d5e57f0f93f66dedf40f", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "undying_tombstone", "name_zh": "不朽尸王·墓碑", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Summons a tombstone at the target point. Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them. Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie.", "notes_loc": ["Tombstone is Spell Immune, but can be healed by Soul Rip.", "Zombies and Tombstone are Spell Immune.", "If their initial target dies or goes out of vision, the Zombie will die."], "shard_loc": "Tombstone can be cast on an allied hero to bunker inside of the tombstone. Heroes that enter the Tombstone cannot leave for %tombstone_bunker_cd% seconds nor can they re-enter after leaving. If the tombstone is destroyed with a hero inside, that hero gets stunned for %tombstone_stun_penalty% seconds."}, "text_742": {"desc_loc": "Summons a tombstone at the target point. Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them. Zombies have the Deathlust ability, which causes their attacks to slow the target, and if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie.", "notes_loc": ["Tombstone is Spell Immune, but can be healed by Soul Rip.", "Zombies and Tombstone are Spell Immune.", "If their initial target dies or goes out of vision, the Zombie will die."], "shard_loc": "Tombstone can be cast on an allied hero to bunker inside of the tombstone. Heroes that enter the Tombstone cannot leave for %tombstone_bunker_cd% seconds nor can they re-enter after leaving. If the tombstone is destroyed with a hero inside, that hero gets stunned for %tombstone_stun_penalty% seconds."}, "changed_fields": [{"field": "ability_has_shard", "old": true, "new": false}, {"field": "tombstone_health", "old": {"base": [20, 24, 28, 32], "scepter": null, "shard": null}, "new": {"base": [5, 6, 7, 8], "scepter": null, "shard": null}}, {"field": "zombie_health", "old": {"base": [2], "scepter": null, "shard": null}, "new": {"base": [1], "scepter": null, "shard": null}}], "rows": [{"review_id": "4d11a1e0737317667dc6", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:undying_tombstone:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "973837647c6283b42739", "mechanism": "debuff_immunity", "mechanism_zh": "减益免疫/技能免疫", "definition": "处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）", "condition": "base", "decision": "accept"}, {"review_id": "d20d74cf93a471b2d0e5", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "95de13655b39ceaff5dd", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "reject"}, {"review_id": "44c08947f7032fa76e4a", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "067d2e71afe53a3ef84e", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "c34d840b58ad1a51df66", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "reject"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "tidehunter_dead_in_the_water",
+      "rows": [
+        {"review_id":"c601d1e74e2898e60f4a","verdict":"holds","quote":"The hero is leashed while attached to the anchor.","reason_zh":"敌方英雄连着铁锚时仍受束缚。"},
+        {"review_id":"audit:tidehunter_dead_in_the_water:root:shard","verdict":"holds","quote":"dragging the anchor behind them","reason_zh":"目标超出铁链长度后仍能拖着锚移动，因此原先拒绝缠绕的判断成立。"},
+        {"review_id":"audit:tidehunter_dead_in_the_water:slow:shard","verdict":"holds","quote":"Attempting to move more than %chain_length% units away from the anchor forces the hero to %max_movement_speed% move speed","reason_zh":"目标试图超出铁链长度时仍会被限制移速，本次只改了锚的生命说明。"},
+        {"review_id":"1c3009edce869ae2976b","verdict":"holds","quote":"Tidehunter attaches a heavy anchor to an enemy hero.","reason_zh":"技能仍以一名敌方英雄为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tidehunter_gush",
+      "rows": [
+        {"review_id":"audit:tidehunter_gush:aoe_damage:scepter","verdict":"holds","quote":"Gush becomes a ground targeted wave ability that affects enemy units in a line.","reason_zh":"A杖巨浪仍能在一次施放中伤害直线上的多个敌人。"},
+        {"review_id":"c7085bee2837295b5a23","verdict":"holds","quote":"Summons a gush of water to damage an enemy unit","reason_zh":"基础巨浪只伤害一个敌方单位，直线范围效果仍需A杖。"},
+        {"review_id":"345db03fbc4ac43b5f44","verdict":"holds","quote":"reducing their movement speed and armor","reason_zh":"持续时间从4.5秒缩短至4秒，减甲效果仍在。"},
+        {"review_id":"d30f7d06a11ffafda394","verdict":"holds","quote":"reducing their movement speed and armor","reason_zh":"持续时间缩短后，巨浪仍会降低目标的移动速度。"},
+        {"review_id":"dd7f1f2664196dc8352f","verdict":"holds","quote":"Summons a gush of water to damage an enemy unit","reason_zh":"说明中的召出对象是一股水流，没有生成带生命值的单位。"},
+        {"review_id":"6e3d94b18ae6ab5f015c","verdict":"holds","quote":"Summons a gush of water to damage an enemy unit","reason_zh":"基础施放仍选取一个敌方单位作为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tidehunter_leviathans_catch",
+      "rows": [
+        {"review_id":"6de01f5b32adb2663e4d","verdict":"holds","quote":"fish_health_bonus.base: 3→5","reason_zh":"唯一变动是每条鱼增加的生命值，决定可破坏性的IsBreakable字段没有变化，原拒绝判断仍成立。"},
+        {"review_id":"3f688fde8c50c887101a","verdict":"holds","quote":"Bonus Damage Block only applies if another source of Damage Block will be affecting the incoming physical attack.","reason_zh":"受到的物理攻击触发其他来源的伤害格挡时，渔获仍提供额外格挡。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tidehunter_ravage",
+      "rows": [
+        {"review_id":"238ed25423a2be3991fa","verdict":"holds","quote":"damaging and stunning all nearby enemy units","reason_zh":"各级伤害仍大于零，附近所有敌方单位仍会受到伤害。"},
+        {"review_id":"58f6ecd0c93358b3b687","verdict":"holds","quote":"Ravage will hit invisible units.","reason_zh":"毁灭可以命中已经隐身的单位，技能本身没有赋予隐身的效果。"},
+        {"review_id":"0d3623750e15dd0cf1d8","verdict":"holds","quote":"stunning all nearby enemy units","reason_zh":"本次调低了部分等级的伤害，范围眩晕仍在。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tinker_deploy_turrets",
+      "rows": [
+        {"review_id":"2af97ab28f3d35fcac08","verdict":"holds","quote":"Enemies hit by the impact take damage and are pushed away from the landing point.","reason_zh":"炮塔落地时仍能对冲击范围内的多个敌人造成伤害。"},
+        {"review_id":"4074acd9896e68b4b470","verdict":"holds","quote":"Enemies hit by the impact take damage and are pushed away from the landing point.","reason_zh":"落地冲击仍会把命中的敌人推离落点。"},
+        {"review_id":"audit:tinker_deploy_turrets:summons:base","verdict":"unclear","quote":"Deploys 3 uncontrollable turrets at the target location.","reason_zh":"说明只确认炮塔不可控，没有给出其生命值或受击计数方式，无法据此核实召唤物的拒绝判断。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tinker_laser",
+      "rows": [
+        {"review_id":"f6040d5a63f076002e31","verdict":"holds","quote":"Blinded targets miss all physical attacks.","reason_zh":"被激光致盲的目标仍会打空所有物理攻击。"},
+        {"review_id":"audit:tinker_laser:hp_removal:scepter","verdict":"holds","quote":"scepter_reduction_pct.scepter: 13→9","reason_zh":"A杖缩小射线仍按比例直接削减目标的当前和最大生命值，削减比例降至9%。"},
+        {"review_id":"2e64dd87d6938e557576","verdict":"holds","quote":"Fires an intense energy beam, damaging and blinding the target.","reason_zh":"基础激光仍指向一个目标并对其造成伤害和致盲。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tinker_march_of_the_machines",
+      "rows": [
+        {"review_id":"audit:tinker_march_of_the_machines:aoe_damage:base","verdict":"holds","quote":"Enlists an army of robotic minions to destroy enemy units in an area around Tinker.","reason_zh":"一次机械行军仍能伤害修补匠周围区域内的多个敌人。"},
+        {"review_id":"24d00d2e3d6a77e54fb9","verdict":"holds","quote":"heal_per_second.scepter: 35→45","reason_zh":"A杖机械行军经过友方英雄时仍施加不可叠加的持续治疗，每秒治疗量提高至45。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tinker_warp_grenade",
+      "rows": [
+        {"review_id":"fbb41f8726b503e5af47","verdict":"holds","quote":"Throws a flare towards an enemy, dealing damage, teleporting them away, slowing them","reason_zh":"耀光的伤害和新增减速均作用于同一个敌人，仍无范围伤害。"},
+        {"review_id":"audit:tinker_warp_grenade:displace_other:shard","verdict":"holds","quote":"The target is teleported further the closer they are to Tinker.","reason_zh":"传送敌方目标的效果仍在，目标越靠近修补匠，被传送的距离越远。"},
+        {"review_id":"855c0c95b122e6825ef3","verdict":"now_wrong","quote":"teleporting them away, slowing them and reducing their Cast and Attack Range","reason_zh":"7.42将原文中的缠绕替换为减速，原先接受缠绕的判断已失效。"},
+        {"review_id":"85d9dc88c2cc51a8c28d","verdict":"holds","quote":"The target is teleported further the closer they are to Tinker.","reason_zh":"被传送的是敌方目标，修补匠自身没有位移。"},
+        {"review_id":"13b22f12c38161473234","verdict":"holds","quote":"Throws a flare towards an enemy","reason_zh":"耀光仍向一个选定的敌人施放。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"slow","condition":"base","quote":"movement_slow_pct.base: null→100","reason_zh":"7.42新增100%移动减速，取代原先的缠绕，减益持续3秒。"}
+      ]
+    },
+    {
+      "subject": "tiny_avalanche",
+      "rows": [
+        {"review_id":"a83a121e829beafcfa16","verdict":"holds","quote":"Bombards an area with rocks, continously doing small intervals of damage and stun to enemy units.","reason_zh":"落石仍会对轰击区域内的多个敌方单位分段造成伤害。"},
+        {"review_id":"audit:tiny_avalanche:ground_zone:base","verdict":"holds","quote":"Bombards an area with rocks, continously doing small intervals of damage and stun to enemy units.","reason_zh":"同一片落石区域仍会持续分段生效，本次只提高了弹道速度。"},
+        {"review_id":"37a2417240c07987d784","verdict":"holds","quote":"small intervals of damage and stun to enemy units","reason_zh":"落石仍会分段眩晕敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tiny_tree_grab",
+      "rows": [
+        {"review_id":"5bd28ccda2828bfb5ed5","verdict":"holds","quote":"a splashing attack for a limited number of attacks","reason_zh":"抓树后一次攻击仍能通过溅射伤害多个敌人。"},
+        {"review_id":"7b2125391ce3d5281f97","verdict":"holds","quote":"a splashing attack for a limited number of attacks","reason_zh":"持树期间有限次数的普通攻击仍带有溅射。"},
+        {"review_id":"audit:tiny_tree_grab:tree_destroy:base","verdict":"holds","quote":"Grabs a tree and causes Tiny to have bonus range, damage, and a splashing attack","reason_zh":"小小仍会从原处取走一棵树作为武器，本次只增加了抓树距离。"},
+        {"review_id":"0e76b524b220e0cbf3bd","verdict":"holds","quote":"Grabs a tree","reason_zh":"抓树这次施放选取树木，说明中对远处单位发动攻击属于后续投树。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tranquil_boots",
+      "rows": [
+        {"review_id":"5af770c0b44398281493","verdict":"holds","quote":"the movement speed bonus is reduced to %broken_movement_speed% for %break_time% seconds","reason_zh":"装备仍提供移动速度加成，攻击英雄或受到攻击时该加成暂时降低。"},
+        {"review_id":"606499e427e4b284ac33","verdict":"holds","quote":"broken_health_regen.base: null→2","reason_zh":"装备仍提供生命恢复，攻击英雄或受到攻击后也会保留2点生命恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "treant_eyes_in_the_forest",
+      "rows": [
+        {"review_id":"e8ba8f6a5341be8bcc90","verdict":"unclear","quote":"The eyes last for %duration% seconds","reason_zh":"说明给出的是丛林之眼的持续时间，材料没有可核实每次施放消耗一点充能的文字或字段。"},
+        {"review_id":"66c98233374070c1a75f","verdict":"holds","quote":"grants him unobstructed vision in that location","reason_zh":"被附魔的树仍为树精卫士提供当地视野。"},
+        {"review_id":"audit:treant_eyes_in_the_forest:high_ground_vision:shard","verdict":"holds","quote":"Treant Protector enchants a tree, which grants him unobstructed vision in that location.","reason_zh":"丛林之眼仍明确提供不受阻挡的视野，两版材料没有显示该效果的获取条件发生迁移。"},
+        {"review_id":"ac533a4e9088176e89ef","verdict":"holds","quote":"The eyes last for %duration% seconds and are invisible","reason_zh":"隐身的是树上的眼，说明没有赋予施法者、友军、召唤物或复制体隐身。"},
+        {"review_id":"dd8942c40dce837e75c9","verdict":"holds","quote":"are destroyed if their host tree is destroyed","reason_zh":"宿主树被摧毁会导致眼消失，技能本身没有摧毁树木的效果。"},
+        {"review_id":"c8d6b6571b599e603dc3","verdict":"holds","quote":"If the enemy has True Sight, they will be able to see which trees are enchanted.","reason_zh":"真视是敌方看见附魔树的条件，丛林之眼自身提供的是无阻挡视野。"},
+        {"review_id":"fa957c2e0ea72b92fcb6","verdict":"holds","quote":"Treant Protector enchants a tree","reason_zh":"施放目标是树木，没有选取敌方单位的施放方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "treant_leech_seed",
+      "rows": [
+        {"review_id":"2f3a6481b32bee988149","verdict":"holds","quote":"Treant's attack plants a life-sapping seed in an enemy unit. That unit takes additional magic damage","reason_zh":"基础攻击只对被种下种子的单位追加伤害，伤害范围内所有敌人属于命石说明中的地面施放效果。"},
+        {"review_id":"58b60079be3658705c3a","verdict":"holds","quote":"Treant's attack plants a life-sapping seed in an enemy unit.","reason_zh":"攻击仍会给命中的敌人种下种子并触发额外效果。"},
+        {"review_id":"ffd23c162a219a58368c","verdict":"holds","quote":"is rooted and disarmed for a short duration","reason_zh":"目标仍同时受到缠绕和缴械，期间不能移动或普通攻击，符合捆缚定义。"},
+        {"review_id":"172dd6048e6cdb633a72","verdict":"holds","quote":"AbilityManaCost.base: 35→20","reason_zh":"字段变动只涉及魔耗，决定可破坏性的IsBreakable字段没有变化，原接受判断仍成立。"},
+        {"review_id":"f82c6afeab2c921cf3e8","verdict":"holds","quote":"is rooted and disarmed for a short duration","reason_zh":"被种下种子的敌方单位仍会短暂受到缴械。"},
+        {"review_id":"8b97ffb99c9db33c1209","verdict":"holds","quote":"emits %healing_pulse_count% healing pulses to up to %max_heal_units% nearby allies of Treant Protector","reason_zh":"种子仍会发出治疗脉冲，为附近友军恢复生命。"},
+        {"review_id":"9dc871d49bc3eb985744","verdict":"holds","quote":"That unit takes additional magic damage","reason_zh":"种子附加一段魔法伤害，说明没有提高目标所受物理伤害或全部伤害的效果。"},
+        {"review_id":"628e3a79cee3249bbca0","verdict":"holds","quote":"That unit takes additional magic damage","reason_zh":"该次攻击附带额外魔法伤害，说明没有降低目标魔抗或放大所受法术伤害的效果。"},
+        {"review_id":"83d39cd24cf02b1ac76e","verdict":"unclear","quote":"Treant's attack plants a life-sapping seed in an enemy unit.","reason_zh":"原文明确了攻击命中的敌人，但没有说明主动施放时能否选取敌方单位，魔耗变化也无法确定指向方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "treant_natures_grasp",
+      "rows": [
+        {"review_id":"b4901aaa947763c7e7f2","verdict":"holds","quote":"Vines slow down and deal damage to enemies that walk through.","reason_zh":"藤蔓仍能伤害穿过它的多个敌人，本次移除了对小兵的伤害折减。"},
+        {"review_id":"audit:treant_natures_grasp:ground_zone:base","verdict":"holds","quote":"Creates vines towards the target location. Vines slow down and deal damage to enemies that walk through.","reason_zh":"藤蔓仍留在通往目标地点的地面上，持续影响经过的敌人。"},
+        {"review_id":"b56373940b0b6cdc9d27","verdict":"holds","quote":"Vines slow down and deal damage to enemies that walk through.","reason_zh":"穿过藤蔓的敌人仍会被减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "troll_warlord_battle_trance",
+      "rows": [
+        {"review_id":"9030410c6da5414d485d","verdict":"holds","quote":"Applies a Basic Dispel.","reason_zh":"战斗专注仍会施加弱驱散。"},
+        {"review_id":"audit:troll_warlord_battle_trance:death_prevention:base","verdict":"holds","quote":"Damage does not kill you during this mode.","reason_zh":"战斗专注期间伤害仍无法致死，说明保留了淘汰之刃的例外。"},
+        {"review_id":"17ae2e8e0664321b8aef","verdict":"holds","quote":"Troll can still be killed with Axe's Culling Blade.","reason_zh":"斩杀来自斧王的淘汰之刃，战斗专注自身没有按生命阈值击杀目标的效果。"},
+        {"review_id":"062386e9d9312364613b","verdict":"holds","quote":"Troll is granted vision over the target.","reason_zh":"巨魔战将仍会获得目标的视野。"},
+        {"review_id":"67c4f04a8aafa1268b03","verdict":"holds","quote":"Grants you bonus lifesteal, attack speed, status resistance, and movement speed.","reason_zh":"战斗专注仍提高巨魔战将自身的移动速度。"},
+        {"review_id":"c369a97a09d616e0584d","verdict":"holds","quote":"Grants you bonus lifesteal","reason_zh":"战斗专注仍提供额外吸血。"},
+        {"review_id":"62613f1350de1228dd41","verdict":"now_wrong","quote":"slow_resistance.base: 35→null","reason_zh":"原有35%减速抗性已删除，7.42改为攻击时无法被减速，并另行提供状态抗性。"},
+        {"review_id":"audit:troll_warlord_battle_trance:forced_action:base","verdict":"holds","quote":"forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes","reason_zh":"技能仍强迫巨魔战将持续攻击范围内的敌人并优先选择英雄，符合强迫自身攻击的嘲讽定义。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"status_resistance","condition":"base","quote":"status_resistance.base: null→[15,20,25]","reason_zh":"7.42新增基础状态抗性，三级战斗专注分别提供15%、20%和25%。"}
+      ]
+    },
+    {
+      "subject": "tusk_drinking_buddies",
+      "rows": [
+        {"review_id":"ded9522bee6f9eaafa3e","verdict":"holds","quote":"Tusk reaches out to tag an allied unit, pulling them closer.","reason_zh":"双方距离达到拉动条件时，海民仍会把目标友军拉近。"},
+        {"review_id":"09f4588c6729db21e8bd","verdict":"holds","quote":"movespeed_bonus.base: 25→30","reason_zh":"海民和被标记友军仍获得移速加成，数值从25提高到30，材料没有显示升级条件变动。"},
+        {"review_id":"audit:tusk_drinking_buddies:self_mobility:shard","verdict":"holds","quote":"Doesn't pull Tusk or targeted ally if they are within %min_distance% range of each other.","reason_zh":"说明仍将海民自身列为可被拉动的一方，并明确双方距离过近时不发生位移。"},
+        {"review_id":"audit:tusk_drinking_buddies:terrain_walk:shard","verdict":"unclear","quote":"Once tagged, both Tusk and his tagged ally gain movement speed and armor.","reason_zh":"材料只说明拉动、加速和护甲效果，没有说明魔晶是否允许海民移动时穿越不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "undying_ceaseless_dirge",
+      "rows": [
+        {"review_id":"b9194c489349772ab74e","verdict":"holds","quote":"Cannot be refreshed and is not affected by cooldown reduction.","reason_zh":"新增文字只涉及减冷却，变动字段中没有IsBreakable，原先拒绝可被破坏的判断不受此次变动影响。"},
+        {"review_id":"09c4ebf7ef84233cccc4","verdict":"holds","quote":"When Undying dies he will instantly respawn in the fountain.","reason_zh":"技能生效时，尸王死亡后仍会立即在泉水重生。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "undying_flesh_golem",
+      "rows": [
+        {"review_id":"audit:undying_flesh_golem:attack_modifier:base","verdict":"holds","quote":"causes attacks to slow, apply damage amplification, and spawn Tombstone zombies","reason_zh":"变身后的普通攻击仍会附带减速和伤害加深。"},
+        {"review_id":"eb11ceb893590b10a325","verdict":"holds","quote":"bonus movement speed","reason_zh":"尸王在变身期间仍获得移动速度加成。"},
+        {"review_id":"a4cf535ce2d1901de191","verdict":"holds","quote":"damage_amp.base: [25,30,35]→[20,25,30]","reason_zh":"伤害加深的数值下调，各级仍分别有20%、25%和30%的加深效果。"},
+        {"review_id":"7e3174a9258041fc1557","verdict":"holds","quote":"causes attacks to slow","reason_zh":"变身后的攻击仍会降低目标的移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "undying_soul_rip",
+      "rows": [
+        {"review_id":"649c2580025cd6ee081b","verdict":"unclear","quote":"Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy.","reason_zh":"说明明确会从附近多个单位抽取生命，但只明确对一个敌方目标造成伤害，无法确认范围抽取本身是否按伤害结算。"},
+        {"review_id":"a2135dec4c019380bab5","verdict":"holds","quote":"Does rip from spell immune allies, including zombies.","reason_zh":"说明描述的是噬魂与已有技能免疫的单位如何交互，技能本身没有赋予减益免疫。"},
+        {"review_id":"a398d8c969e4c08402c6","verdict":"holds","quote":"tombstone_heal.base: [4,8,12,16]→[1,2,3,4]","reason_zh":"噬魂仍可治疗友军，对墓碑的治疗量也仍在各级大于零。"},
+        {"review_id":"d5e57f0f93f66dedf40f","verdict":"holds","quote":"uses it to heal an ally, or damage an enemy","reason_zh":"噬魂仍可选取一个敌人作为伤害目标，也可选取友军进行治疗。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "undying_tombstone",
+      "rows": [
+        {"review_id":"4d11a1e0737317667dc6","verdict":"holds","quote":"Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them.","reason_zh":"墓碑在范围内各个敌人旁生成僵尸，由僵尸分别攻击目标，基础说明没有直接造成范围伤害的效果。"},
+        {"review_id":"audit:undying_tombstone:attack_modifier:base","verdict":"holds","quote":"which causes their attacks to slow the target","reason_zh":"僵尸的普通攻击仍会附带减速。"},
+        {"review_id":"973837647c6283b42739","verdict":"holds","quote":"Zombies and Tombstone are Spell Immune.","reason_zh":"墓碑和僵尸仍具有技能免疫。"},
+        {"review_id":"d20d74cf93a471b2d0e5","verdict":"holds","quote":"if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie","reason_zh":"目标生命低于阈值时，僵尸仍会提高自身移动速度。"},
+        {"review_id":"95de13655b39ceaff5dd","verdict":"holds","quote":"Tombstone is Spell Immune, but can be healed by Soul Rip.","reason_zh":"治疗由噬魂提供，墓碑是接受治疗的一方。"},
+        {"review_id":"44c08947f7032fa76e4a","verdict":"holds","quote":"Zombies have the Deathlust ability, which causes their attacks to slow the target","reason_zh":"僵尸的攻击仍会降低目标的移动速度。"},
+        {"review_id":"067d2e71afe53a3ef84e","verdict":"holds","quote":"ability_has_shard: true→false","reason_zh":"7.42已关闭墓碑的魔晶升级，即使魔晶说明仍有眩晕文字，该条件下拒绝眩晕的判断仍成立。"},
+        {"review_id":"c34d840b58ad1a51df66","verdict":"unclear","quote":"zombie_health.base: 2→1","reason_zh":"墓碑和僵尸的生命数值均有调整，但字段没有说明它们按伤害量还是按受击次数扣除，无法核实召唤物的拒绝判断。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+38,889
+{
+  "objects": [
+    {
+      "subject": "tidehunter_dead_in_the_water",
+      "rows": [
+        {"review_id":"c601d1e74e2898e60f4a","verdict":"holds","quote":"The hero is leashed while attached to the anchor.","reason_zh":"敌方英雄连着铁锚时仍受束缚。"},
+        {"review_id":"audit:tidehunter_dead_in_the_water:root:shard","verdict":"holds","quote":"dragging the anchor behind them","reason_zh":"目标超出铁链长度后仍能拖着锚移动，因此原先拒绝缠绕的判断成立。"},
+        {"review_id":"audit:tidehunter_dead_in_the_water:slow:shard","verdict":"holds","quote":"Attempting to move more than %chain_length% units away from the anchor forces the hero to %max_movement_speed% move speed","reason_zh":"目标试图超出铁链长度时仍会被限制移速，本次只改了锚的生命说明。"},
+        {"review_id":"1c3009edce869ae2976b","verdict":"holds","quote":"Tidehunter attaches a heavy anchor to an enemy hero.","reason_zh":"技能仍以一名敌方英雄为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tidehunter_gush",
+      "rows": [
+        {"review_id":"audit:tidehunter_gush:aoe_damage:scepter","verdict":"holds","quote":"Gush becomes a ground targeted wave ability that affects enemy units in a line.","reason_zh":"A杖巨浪仍能在一次施放中伤害直线上的多个敌人。"},
+        {"review_id":"c7085bee2837295b5a23","verdict":"holds","quote":"Summons a gush of water to damage an enemy unit","reason_zh":"基础巨浪只伤害一个敌方单位，直线范围效果仍需A杖。"},
+        {"review_id":"345db03fbc4ac43b5f44","verdict":"holds","quote":"reducing their movement speed and armor","reason_zh":"持续时间从4.5秒缩短至4秒，减甲效果仍在。"},
+        {"review_id":"d30f7d06a11ffafda394","verdict":"holds","quote":"reducing their movement speed and armor","reason_zh":"持续时间缩短后，巨浪仍会降低目标的移动速度。"},
+        {"review_id":"dd7f1f2664196dc8352f","verdict":"holds","quote":"Summons a gush of water to damage an enemy unit","reason_zh":"说明中的召出对象是一股水流，没有生成带生命值的单位。"},
+        {"review_id":"6e3d94b18ae6ab5f015c","verdict":"holds","quote":"Summons a gush of water to damage an enemy unit","reason_zh":"基础施放仍选取一个敌方单位作为目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tidehunter_leviathans_catch",
+      "rows": [
+        {"review_id":"6de01f5b32adb2663e4d","verdict":"holds","quote":"fish_health_bonus.base: 3→5","reason_zh":"唯一变动是每条鱼增加的生命值，决定可破坏性的IsBreakable字段没有变化，原拒绝判断仍成立。"},
+        {"review_id":"3f688fde8c50c887101a","verdict":"holds","quote":"Bonus Damage Block only applies if another source of Damage Block will be affecting the incoming physical attack.","reason_zh":"受到的物理攻击触发其他来源的伤害格挡时，渔获仍提供额外格挡。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tidehunter_ravage",
+      "rows": [
+        {"review_id":"238ed25423a2be3991fa","verdict":"holds","quote":"damaging and stunning all nearby enemy units","reason_zh":"各级伤害仍大于零，附近所有敌方单位仍会受到伤害。"},
+        {"review_id":"58f6ecd0c93358b3b687","verdict":"holds","quote":"Ravage will hit invisible units.","reason_zh":"毁灭可以命中已经隐身的单位，技能本身没有赋予隐身的效果。"},
+        {"review_id":"0d3623750e15dd0cf1d8","verdict":"holds","quote":"stunning all nearby enemy units","reason_zh":"本次调低了部分等级的伤害，范围眩晕仍在。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tinker_deploy_turrets",
+      "rows": [
+        {"review_id":"2af97ab28f3d35fcac08","verdict":"holds","quote":"Enemies hit by the impact take damage and are pushed away from the landing point.","reason_zh":"炮塔落地时仍能对冲击范围内的多个敌人造成伤害。"},
+        {"review_id":"4074acd9896e68b4b470","verdict":"holds","quote":"Enemies hit by the impact take damage and are pushed away from the landing point.","reason_zh":"落地冲击仍会把命中的敌人推离落点。"},
+        {"review_id":"audit:tinker_deploy_turrets:summons:base","verdict":"unclear","quote":"Deploys 3 uncontrollable turrets at the target location.","reason_zh":"说明只确认炮塔不可控，没有给出其生命值或受击计数方式，无法据此核实召唤物的拒绝判断。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tinker_laser",
+      "rows": [
+        {"review_id":"f6040d5a63f076002e31","verdict":"holds","quote":"Blinded targets miss all physical attacks.","reason_zh":"被激光致盲的目标仍会打空所有物理攻击。"},
+        {"review_id":"audit:tinker_laser:hp_removal:scepter","verdict":"holds","quote":"scepter_reduction_pct.scepter: 13→9","reason_zh":"A杖缩小射线仍按比例直接削减目标的当前和最大生命值，削减比例降至9%。"},
+        {"review_id":"2e64dd87d6938e557576","verdict":"holds","quote":"Fires an intense energy beam, damaging and blinding the target.","reason_zh":"基础激光仍指向一个目标并对其造成伤害和致盲。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tinker_march_of_the_machines",
+      "rows": [
+        {"review_id":"audit:tinker_march_of_the_machines:aoe_damage:base","verdict":"holds","quote":"Enlists an army of robotic minions to destroy enemy units in an area around Tinker.","reason_zh":"一次机械行军仍能伤害修补匠周围区域内的多个敌人。"},
+        {"review_id":"24d00d2e3d6a77e54fb9","verdict":"holds","quote":"heal_per_second.scepter: 35→45","reason_zh":"A杖机械行军经过友方英雄时仍施加不可叠加的持续治疗，每秒治疗量提高至45。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tinker_warp_grenade",
+      "rows": [
+        {"review_id":"fbb41f8726b503e5af47","verdict":"holds","quote":"Throws a flare towards an enemy, dealing damage, teleporting them away, slowing them","reason_zh":"耀光的伤害和新增减速均作用于同一个敌人，仍无范围伤害。"},
+        {"review_id":"audit:tinker_warp_grenade:displace_other:shard","verdict":"holds","quote":"The target is teleported further the closer they are to Tinker.","reason_zh":"传送敌方目标的效果仍在，目标越靠近修补匠，被传送的距离越远。"},
+        {"review_id":"855c0c95b122e6825ef3","verdict":"now_wrong","quote":"teleporting them away, slowing them and reducing their Cast and Attack Range","reason_zh":"7.42将原文中的缠绕替换为减速，原先接受缠绕的判断已失效。"},
+        {"review_id":"85d9dc88c2cc51a8c28d","verdict":"holds","quote":"The target is teleported further the closer they are to Tinker.","reason_zh":"被传送的是敌方目标，修补匠自身没有位移。"},
+        {"review_id":"13b22f12c38161473234","verdict":"holds","quote":"Throws a flare towards an enemy","reason_zh":"耀光仍向一个选定的敌人施放。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"slow","condition":"base","quote":"movement_slow_pct.base: null→100","reason_zh":"7.42新增100%移动减速，取代原先的缠绕，减益持续3秒。"}
+      ]
+    },
+    {
+      "subject": "tiny_avalanche",
+      "rows": [
+        {"review_id":"a83a121e829beafcfa16","verdict":"holds","quote":"Bombards an area with rocks, continously doing small intervals of damage and stun to enemy units.","reason_zh":"落石仍会对轰击区域内的多个敌方单位分段造成伤害。"},
+        {"review_id":"audit:tiny_avalanche:ground_zone:base","verdict":"holds","quote":"Bombards an area with rocks, continously doing small intervals of damage and stun to enemy units.","reason_zh":"同一片落石区域仍会持续分段生效，本次只提高了弹道速度。"},
+        {"review_id":"37a2417240c07987d784","verdict":"holds","quote":"small intervals of damage and stun to enemy units","reason_zh":"落石仍会分段眩晕敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tiny_tree_grab",
+      "rows": [
+        {"review_id":"5bd28ccda2828bfb5ed5","verdict":"holds","quote":"a splashing attack for a limited number of attacks","reason_zh":"抓树后一次攻击仍能通过溅射伤害多个敌人。"},
+        {"review_id":"7b2125391ce3d5281f97","verdict":"holds","quote":"a splashing attack for a limited number of attacks","reason_zh":"持树期间有限次数的普通攻击仍带有溅射。"},
+        {"review_id":"audit:tiny_tree_grab:tree_destroy:base","verdict":"holds","quote":"Grabs a tree and causes Tiny to have bonus range, damage, and a splashing attack","reason_zh":"小小仍会从原处取走一棵树作为武器，本次只增加了抓树距离。"},
+        {"review_id":"0e76b524b220e0cbf3bd","verdict":"holds","quote":"Grabs a tree","reason_zh":"抓树这次施放选取树木，说明中对远处单位发动攻击属于后续投树。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "tranquil_boots",
+      "rows": [
+        {"review_id":"5af770c0b44398281493","verdict":"holds","quote":"the movement speed bonus is reduced to %broken_movement_speed% for %break_time% seconds","reason_zh":"装备仍提供移动速度加成，攻击英雄或受到攻击时该加成暂时降低。"},
+        {"review_id":"606499e427e4b284ac33","verdict":"holds","quote":"broken_health_regen.base: null→2","reason_zh":"装备仍提供生命恢复，攻击英雄或受到攻击后也会保留2点生命恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "treant_eyes_in_the_forest",
+      "rows": [
+        {"review_id":"e8ba8f6a5341be8bcc90","verdict":"unclear","quote":"The eyes last for %duration% seconds","reason_zh":"说明给出的是丛林之眼的持续时间，材料没有可核实每次施放消耗一点充能的文字或字段。"},
+        {"review_id":"66c98233374070c1a75f","verdict":"holds","quote":"grants him unobstructed vision in that location","reason_zh":"被附魔的树仍为树精卫士提供当地视野。"},
+        {"review_id":"audit:treant_eyes_in_the_forest:high_ground_vision:shard","verdict":"holds","quote":"Treant Protector enchants a tree, which grants him unobstructed vision in that location.","reason_zh":"丛林之眼仍明确提供不受阻挡的视野，两版材料没有显示该效果的获取条件发生迁移。"},
+        {"review_id":"ac533a4e9088176e89ef","verdict":"holds","quote":"The eyes last for %duration% seconds and are invisible","reason_zh":"隐身的是树上的眼，说明没有赋予施法者、友军、召唤物或复制体隐身。"},
+        {"review_id":"dd8942c40dce837e75c9","verdict":"holds","quote":"are destroyed if their host tree is destroyed","reason_zh":"宿主树被摧毁会导致眼消失，技能本身没有摧毁树木的效果。"},
+        {"review_id":"c8d6b6571b599e603dc3","verdict":"holds","quote":"If the enemy has True Sight, they will be able to see which trees are enchanted.","reason_zh":"真视是敌方看见附魔树的条件，丛林之眼自身提供的是无阻挡视野。"},
+        {"review_id":"fa957c2e0ea72b92fcb6","verdict":"holds","quote":"Treant Protector enchants a tree","reason_zh":"施放目标是树木，没有选取敌方单位的施放方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "treant_leech_seed",
+      "rows": [
+        {"review_id":"2f3a6481b32bee988149","verdict":"holds","quote":"Treant's attack plants a life-sapping seed in an enemy unit. That unit takes additional magic damage","reason_zh":"基础攻击只对被种下种子的单位追加伤害，伤害范围内所有敌人属于命石说明中的地面施放效果。"},
+        {"review_id":"58b60079be3658705c3a","verdict":"holds","quote":"Treant's attack plants a life-sapping seed in an enemy unit.","reason_zh":"攻击仍会给命中的敌人种下种子并触发额外效果。"},
+        {"review_id":"ffd23c162a219a58368c","verdict":"holds","quote":"is rooted and disarmed for a short duration","reason_zh":"目标仍同时受到缠绕和缴械，期间不能移动或普通攻击，符合捆缚定义。"},
+        {"review_id":"172dd6048e6cdb633a72","verdict":"holds","quote":"AbilityManaCost.base: 35→20","reason_zh":"字段变动只涉及魔耗，决定可破坏性的IsBreakable字段没有变化，原接受判断仍成立。"},
+        {"review_id":"f82c6afeab2c921cf3e8","verdict":"holds","quote":"is rooted and disarmed for a short duration","reason_zh":"被种下种子的敌方单位仍会短暂受到缴械。"},
+        {"review_id":"8b97ffb99c9db33c1209","verdict":"holds","quote":"emits %healing_pulse_count% healing pulses to up to %max_heal_units% nearby allies of Treant Protector","reason_zh":"种子仍会发出治疗脉冲，为附近友军恢复生命。"},
+        {"review_id":"9dc871d49bc3eb985744","verdict":"holds","quote":"That unit takes additional magic damage","reason_zh":"种子附加一段魔法伤害，说明没有提高目标所受物理伤害或全部伤害的效果。"},
+        {"review_id":"628e3a79cee3249bbca0","verdict":"holds","quote":"That unit takes additional magic damage","reason_zh":"该次攻击附带额外魔法伤害，说明没有降低目标魔抗或放大所受法术伤害的效果。"},
+        {"review_id":"83d39cd24cf02b1ac76e","verdict":"unclear","quote":"Treant's attack plants a life-sapping seed in an enemy unit.","reason_zh":"原文明确了攻击命中的敌人，但没有说明主动施放时能否选取敌方单位，魔耗变化也无法确定指向方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "treant_natures_grasp",
+      "rows": [
+        {"review_id":"b4901aaa947763c7e7f2","verdict":"holds","quote":"Vines slow down and deal damage to enemies that walk through.","reason_zh":"藤蔓仍能伤害穿过它的多个敌人，本次移除了对小兵的伤害折减。"},
+        {"review_id":"audit:treant_natures_grasp:ground_zone:base","verdict":"holds","quote":"Creates vines towards the target location. Vines slow down and deal damage to enemies that walk through.","reason_zh":"藤蔓仍留在通往目标地点的地面上，持续影响经过的敌人。"},
+        {"review_id":"b56373940b0b6cdc9d27","verdict":"holds","quote":"Vines slow down and deal damage to enemies that walk through.","reason_zh":"穿过藤蔓的敌人仍会被减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "troll_warlord_battle_trance",
+      "rows": [
+        {"review_id":"9030410c6da5414d485d","verdict":"holds","quote":"Applies a Basic Dispel.","reason_zh":"战斗专注仍会施加弱驱散。"},
+        {"review_id":"audit:troll_warlord_battle_trance:death_prevention:base","verdict":"holds","quote":"Damage does not kill you during this mode.","reason_zh":"战斗专注期间伤害仍无法致死，说明保留了淘汰之刃的例外。"},
+        {"review_id":"17ae2e8e0664321b8aef","verdict":"holds","quote":"Troll can still be killed with Axe's Culling Blade.","reason_zh":"斩杀来自斧王的淘汰之刃，战斗专注自身没有按生命阈值击杀目标的效果。"},
+        {"review_id":"062386e9d9312364613b","verdict":"holds","quote":"Troll is granted vision over the target.","reason_zh":"巨魔战将仍会获得目标的视野。"},
+        {"review_id":"67c4f04a8aafa1268b03","verdict":"holds","quote":"Grants you bonus lifesteal, attack speed, status resistance, and movement speed.","reason_zh":"战斗专注仍提高巨魔战将自身的移动速度。"},
+        {"review_id":"c369a97a09d616e0584d","verdict":"holds","quote":"Grants you bonus lifesteal","reason_zh":"战斗专注仍提供额外吸血。"},
+        {"review_id":"62613f1350de1228dd41","verdict":"now_wrong","quote":"slow_resistance.base: 35→null","reason_zh":"原有35%减速抗性已删除，7.42改为攻击时无法被减速，并另行提供状态抗性。"},
+        {"review_id":"audit:troll_warlord_battle_trance:forced_action:base","verdict":"holds","quote":"forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes","reason_zh":"技能仍强迫巨魔战将持续攻击范围内的敌人并优先选择英雄，符合强迫自身攻击的嘲讽定义。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"status_resistance","condition":"base","quote":"status_resistance.base: null→[15,20,25]","reason_zh":"7.42新增基础状态抗性，三级战斗专注分别提供15%、20%和25%。"}
+      ]
+    },
+    {
+      "subject": "tusk_drinking_buddies",
+      "rows": [
+        {"review_id":"ded9522bee6f9eaafa3e","verdict":"holds","quote":"Tusk reaches out to tag an allied unit, pulling them closer.","reason_zh":"双方距离达到拉动条件时，海民仍会把目标友军拉近。"},
+        {"review_id":"09f4588c6729db21e8bd","verdict":"holds","quote":"movespeed_bonus.base: 25→30","reason_zh":"海民和被标记友军仍获得移速加成，数值从25提高到30，材料没有显示升级条件变动。"},
+        {"review_id":"audit:tusk_drinking_buddies:self_mobility:shard","verdict":"holds","quote":"Doesn't pull Tusk or targeted ally if they are within %min_distance% range of each other.","reason_zh":"说明仍将海民自身列为可被拉动的一方，并明确双方距离过近时不发生位移。"},
+        {"review_id":"audit:tusk_drinking_buddies:terrain_walk:shard","verdict":"unclear","quote":"Once tagged, both Tusk and his tagged ally gain movement speed and armor.","reason_zh":"材料只说明拉动、加速和护甲效果，没有说明魔晶是否允许海民移动时穿越不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "undying_ceaseless_dirge",
+      "rows": [
+        {"review_id":"b9194c489349772ab74e","verdict":"holds","quote":"Cannot be refreshed and is not affected by cooldown reduction.","reason_zh":"新增文字只涉及减冷却，变动字段中没有IsBreakable，原先拒绝可被破坏的判断不受此次变动影响。"},
+        {"review_id":"09c4ebf7ef84233cccc4","verdict":"holds","quote":"When Undying dies he will instantly respawn in the fountain.","reason_zh":"技能生效时，尸王死亡后仍会立即在泉水重生。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "undying_flesh_golem",
+      "rows": [
+        {"review_id":"audit:undying_flesh_golem:attack_modifier:base","verdict":"holds","quote":"causes attacks to slow, apply damage amplification, and spawn Tombstone zombies","reason_zh":"变身后的普通攻击仍会附带减速和伤害加深。"},
+        {"review_id":"eb11ceb893590b10a325","verdict":"holds","quote":"bonus movement speed","reason_zh":"尸王在变身期间仍获得移动速度加成。"},
+        {"review_id":"a4cf535ce2d1901de191","verdict":"holds","quote":"damage_amp.base: [25,30,35]→[20,25,30]","reason_zh":"伤害加深的数值下调，各级仍分别有20%、25%和30%的加深效果。"},
+        {"review_id":"7e3174a9258041fc1557","verdict":"holds","quote":"causes attacks to slow","reason_zh":"变身后的攻击仍会降低目标的移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "undying_soul_rip",
+      "rows": [
+        {"review_id":"649c2580025cd6ee081b","verdict":"unclear","quote":"Undying rips health away from all nearby units and uses it to heal an ally, or damage an enemy.","reason_zh":"说明明确会从附近多个单位抽取生命，但只明确对一个敌方目标造成伤害，无法确认范围抽取本身是否按伤害结算。"},
+        {"review_id":"a2135dec4c019380bab5","verdict":"holds","quote":"Does rip from spell immune allies, including zombies.","reason_zh":"说明描述的是噬魂与已有技能免疫的单位如何交互，技能本身没有赋予减益免疫。"},
+        {"review_id":"a398d8c969e4c08402c6","verdict":"holds","quote":"tombstone_heal.base: [4,8,12,16]→[1,2,3,4]","reason_zh":"噬魂仍可治疗友军，对墓碑的治疗量也仍在各级大于零。"},
+        {"review_id":"d5e57f0f93f66dedf40f","verdict":"holds","quote":"uses it to heal an ally, or damage an enemy","reason_zh":"噬魂仍可选取一个敌人作为伤害目标，也可选取友军进行治疗。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "undying_tombstone",
+      "rows": [
+        {"review_id":"4d11a1e0737317667dc6","verdict":"holds","quote":"Zombies will frequently spawn next to every enemy unit in the area around the Tombstone, and attack them.","reason_zh":"墓碑在范围内各个敌人旁生成僵尸，由僵尸分别攻击目标，基础说明没有直接造成范围伤害的效果。"},
+        {"review_id":"audit:undying_tombstone:attack_modifier:base","verdict":"holds","quote":"which causes their attacks to slow the target","reason_zh":"僵尸的普通攻击仍会附带减速。"},
+        {"review_id":"973837647c6283b42739","verdict":"holds","quote":"Zombies and Tombstone are Spell Immune.","reason_zh":"墓碑和僵尸仍具有技能免疫。"},
+        {"review_id":"d20d74cf93a471b2d0e5","verdict":"holds","quote":"if the target reaches below a certain amount of health, increases the attack and movement speed of the zombie","reason_zh":"目标生命低于阈值时，僵尸仍会提高自身移动速度。"},
+        {"review_id":"95de13655b39ceaff5dd","verdict":"holds","quote":"Tombstone is Spell Immune, but can be healed by Soul Rip.","reason_zh":"治疗由噬魂提供，墓碑是接受治疗的一方。"},
+        {"review_id":"44c08947f7032fa76e4a","verdict":"holds","quote":"Zombies have the Deathlust ability, which causes their attacks to slow the target","reason_zh":"僵尸的攻击仍会降低目标的移动速度。"},
+        {"review_id":"067d2e71afe53a3ef84e","verdict":"holds","quote":"ability_has_shard: true→false","reason_zh":"7.42已关闭墓碑的魔晶升级，即使魔晶说明仍有眩晕文字，该条件下拒绝眩晕的判断仍成立。"},
+        {"review_id":"c34d840b58ad1a51df66","verdict":"unclear","quote":"zombie_health.base: 2→1","reason_zh":"墓碑和僵尸的生命数值均有调整，但字段没有说明它们按伤害量还是按受击次数扣除，无法核实召唤物的拒绝判断。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
