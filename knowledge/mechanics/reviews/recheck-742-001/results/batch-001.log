@@ -1,0 +1,563 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6e2-2b09-70c0-99d9-c41fbd0c29df
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "abaddon_aphotic_shield", "name_zh": "亚巴顿·无光之盾", "category": "2_纯数值", "text_741f": {"desc_loc": "Summons dark energies around an ally unit, dispelling them and creating an all damage barrier that absorbs a set amount of damage before expiring. When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it. DISPEL TYPE: Strong Dispel", "notes_loc": ["The max damage is always dealt whether the barrier is destroyed by expiring or absorbing damage.", "The explosion does not damage units hidden by the fog of war."], "shard_loc": "%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.", "facets_loc": ["Damage barrier amount increased, but no longer bursts upon expiration. %absorb_to_damage%%% of absorbed damage is dealt to nearby enemies. Increases cooldown."]}, "text_742": {"desc_loc": "Summons dark energies around an ally unit, dispelling them and creating an all damage barrier that absorbs a set amount of damage before expiring. When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it. DISPEL TYPE: Strong Dispel", "notes_loc": ["The max damage is always dealt whether the barrier is destroyed by expiring or absorbing damage.", "The explosion does not damage units hidden by the fog of war."], "shard_loc": "%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.", "facets_loc": ["Damage barrier amount increased, but no longer bursts upon expiration. %absorb_to_damage%%% of absorbed damage is dealt to nearby enemies. Increases cooldown."]}, "changed_fields": [{"field": "AbilityChargeRestoreTime", "old": null, "new": {"base": [12, 10, 8, 6], "scepter": null, "shard": null}}, {"field": "AbilityCharges", "old": null, "new": {"base": [], "scepter": null, "shard": null}}, {"field": "regen", "old": {"base": [], "scepter": null, "shard": null}, "new": null}], "rows": [{"review_id": "12a06e3d6478cf1fa673", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "8dad476900d8610048cd", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "ecb86845a281bf965219", "mechanism": "applies_strong_dispel", "mechanism_zh": "施加强驱散", "definition": "移除目标身上可被强驱散的效果（含多数眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "5991fbaf7387e26a1eb7", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "base", "decision": "accept"}, {"review_id": "b6e74ff2589b8c45f1ef", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "f8330b7587285ea0c12a", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "reject"}]}, {"subject": "abaddon_borrowed_time", "name_zh": "亚巴顿·回光返照", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "When activated, dispels you and all damage dealt to you will heal instead of harm. If the ability is not on cooldown, it will automatically activate if your health falls below %hp_threshold%. DISPEL TYPE: Strong Dispel", "notes_loc": ["Borrowed Time can be manually activated while Abaddon is disabled, but not while silenced. The passive activation can still occur while silenced.", "Aphotic Shield does not block any damage to Abaddon when Borrowed Time is active, allowing him to heal.", "Break prevents Borrowed Time from automatically activating."], "scepter_loc": "Increases duration. While Borrowed Time is active, anytime an ally takes more than %ally_threshold_scepter% damage while within Mist Coil's cast range of Abaddon, an individual Mist Coil will automatically fire towards that ally.", "facets_loc": ["While Borrowed Time is active, Abaddon and enemies within %immolate_aoe% radius take %immolate_damage% damage per second."]}, "text_742": {"desc_loc": "When activated, dispels you and all damage dealt to you will heal instead of harm. If the ability is not on cooldown, it will automatically activate if your health falls below %hp_threshold%. DISPEL TYPE: Strong Dispel", "notes_loc": ["Borrowed Time can be manually activated while Abaddon is disabled, but not while silenced. The passive activation can still occur while silenced.", "Aphotic Shield does not block any damage to Abaddon when Borrowed Time is active, allowing him to heal.", "Break prevents Borrowed Time from automatically activating."]}, "changed_fields": [{"field": "ability_has_scepter", "old": true, "new": false}, {"field": "ally_threshold_scepter", "old": {"base": [0], "scepter": [550], "shard": null}, "new": null}, {"field": "duration", "old": {"base": [4, 5, 6], "scepter": [3], "shard": null}, "new": {"base": [4, 5, 6], "scepter": null, "shard": null}}], "rows": [{"review_id": "6cf640f6253139a1968b", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "reject"}, {"review_id": "524ea5a99b66274e609c", "mechanism": "applies_strong_dispel", "mechanism_zh": "施加强驱散", "definition": "移除目标身上可被强驱散的效果（含多数眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "6f614275c32e26be491d", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "7f265d17f0bee979f2a6", "mechanism": "death_prevention", "mechanism_zh": "免死", "definition": "在一段时间内不会被打死（如薄葬、回光返照）", "condition": "base", "decision": "accept"}, {"review_id": "7f888fc2eb8cd385bef3", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "2c98c2cb05a4a2a4bb26", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "scepter_upgrade", "decision": "reject"}]}, {"subject": "abaddon_death_coil", "name_zh": "亚巴顿·迷雾缠绕", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health.", "notes_loc": ["Abaddon can not kill himself with this skill."], "facets_loc": ["Mist Coil also deals %damage_percentage_on_perform_attack%%% attack damage and applies effects from items and abilities. Self Damage increased when targeting enemies."]}, "text_742": {"desc_loc": "Abaddon releases a coil of deathly mist at the cost of Abaddon's health. Friendly units are healed and have their movement speed increased. Enemy units are damaged and slowed. Health cost is %self_damage_pct%%% of the Damage/Heal amount.", "notes_loc": ["Abaddon can not kill himself with this skill.", "Mist Coil's health cost will damage Aphotic Shield and other barriers before using Abaddon's health."], "scepter_loc": "Mist Coil affects all units in a %effect_radius% radius around the target. When Mist Coil hits enemies, Abaddon deals %damage_percentage_on_perform_attack%%% of his attack damage and applies on-hit effects with %potency%%% Item Potency."}, "changed_fields": [{"field": "ability_has_scepter", "old": false, "new": true}, {"field": "damage_percentage_on_perform_attack", "old": {"base": [], "scepter": null, "shard": null}, "new": {"base": [0], "scepter": [100], "shard": null}}, {"field": "duration", "old": null, "new": {"base": [0.7, 0.8, 0.9, 1], "scepter": null, "shard": null}}, {"field": "effect_radius", "old": {"base": [], "scepter": null, "shard": null}, "new": {"base": [0], "scepter": [400], "shard": null}}, {"field": "movement_speed_pct", "old": null, "new": {"base": [60], "scepter": null, "shard": null}}, {"field": "perform_attack", "old": {"base": [], "scepter": null, "shard": null}, "new": {"base": [0], "scepter": [1], "shard": null}}, {"field": "potency", "old": null, "new": {"base": [0], "scepter": [80], "shard": null}}, {"field": "self_damage", "old": {"base": [40], "scepter": null, "shard": null}, "new": null}, {"field": "self_damage_enemy_target", "old": {"base": [40], "scepter": null, "shard": null}, "new": null}, {"field": "self_damage_pct", "old": null, "new": {"base": [40], "scepter": null, "shard": null}}], "rows": [{"review_id": "f5f47bc0d9db93f9412b", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "e01f7cdb62122e1046a5", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "52a5b55a7ce6f1fd8e95", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "abaddon_frostmourne", "name_zh": "亚巴顿·魔霭诅咒", "category": "3_说明文字", "text_741f": {"desc_loc": "Abaddon strikes an enemy, affecting them by a chilling curse, slowing them, causing them to take damage over time, and all attacks against them gain an attack speed boost. Damage over time component to buildings is reduced by %tower_dps_pct%%%."}, "text_742": {"desc_loc": "Abaddon strikes an enemy, affecting them by a chilling curse, slowing them, causing them to take damage over time, and all attacks against them gain an attack speed boost. Abaddon gains %curse_self_attack_speed_multiplier_tooltip_only%x the attack speed boost. Damage over time component to buildings is reduced by %tower_dps_penalty_pct%%%."}, "changed_fields": [{"field": "curse_attack_speed", "old": {"base": [10, 20, 30, 40], "scepter": null, "shard": null}, "new": {"base": [15, 20, 25, 30], "scepter": null, "shard": null}}, {"field": "curse_dps", "old": {"base": [15, 25, 35, 45], "scepter": null, "shard": null}, "new": {"base": [12, 20, 28, 36], "scepter": null, "shard": null}}, {"field": "curse_duration", "old": {"base": [2], "scepter": null, "shard": null}, "new": {"base": [3], "scepter": null, "shard": null}}, {"field": "curse_self_attack_speed", "old": null, "new": {"base": [22.5, 30, 37.5, 45], "scepter": null, "shard": null}}, {"field": "curse_self_attack_speed_multiplier_tooltip_only", "old": null, "new": {"base": [1.5], "scepter": null, "shard": null}}, {"field": "hit_count", "old": {"base": [1], "scepter": null, "shard": null}, "new": null}, {"field": "slow_duration", "old": {"base": [2], "scepter": null, "shard": null}, "new": null}, {"field": "tower_dps_pct", "old": {"base": [100], "scepter": null, "shard": null}, "new": null}, {"field": "tower_dps_penalty_pct", "old": null, "new": {"base": [100], "scepter": null, "shard": null}}], "rows": [{"review_id": "5388d26e118abfa3417e", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:abaddon_frostmourne:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "30e55fe750e981045a87", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "59b84b5db11958e4fd3b", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "abaddon_withering_mist", "name_zh": "亚巴顿·凋零迷雾", "category": "3_说明文字", "text_741f": {"desc_loc": "Damaging enemies applies the Withering Mist debuff for %duration%s. Affected enemies have their Health Restoration reduced by %heal_reduction_pct%%% if they are below %hp_threshold_pct%%% HP."}, "text_742": {"desc_loc": "Damaging enemies reduces their Health Restoration for %duration%s. The lower the enemy's HP, the stronger the Health restoration reduction effect. Minimum effect of %min_heal_reduction_pct%%% at full health. Maximum effect at zero health. Does not apply from item damage."}, "changed_fields": [{"field": "heal_reduction_pct", "old": {"base": [29.5], "scepter": null, "shard": null}, "new": null}, {"field": "hp_threshold_pct", "old": {"base": [40], "scepter": null, "shard": null}, "new": null}, {"field": "max_heal_reduction_pct", "old": null, "new": {"base": [40], "scepter": null, "shard": null}}, {"field": "min_heal_reduction_pct", "old": null, "new": {"base": [10], "scepter": null, "shard": null}}], "rows": [{"review_id": "8580b6af0a2d9111ad8e", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "c2dd818ab9c8a64c54f8", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "023b1cfedc31aaaf3dcb", "mechanism": "heal_reduction", "mechanism_zh": "治疗削减", "definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响", "condition": "base", "decision": "accept"}]}, {"subject": "abyssal_blade", "name_zh": "深渊之刃", "category": "3_说明文字", "text_741f": {"desc_loc": "Active: Overwhelm Stuns a target enemy unit for %stun_duration% seconds. Pierces Debuff Immunity. Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus physical damage. Bash chance for ranged heroes is %bash_chance_ranged%%%.", "notes_loc": ["The stun is melee range.", "Does not stack with other bashes, and does not grant bash to Clones and Tempest Doubles.", "Multiple sources of damage block do not stack.", "The following heroes cannot trigger Bash on this item: Spirit Breaker, Faceless Void, Slardar, and Kez while in Sai mode."]}, "text_742": {"desc_loc": "Active: Overwhelm Stuns a target enemy unit for %stun_duration% seconds. Pierces Debuff Immunity. Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus physical damage. Bash chance for ranged heroes is %bash_chance_ranged%%%.", "notes_loc": ["The stun is melee range.", "Does not stack with other bashes, and does not grant bash to Clones, Illusions, or Tempest Doubles.", "The following heroes cannot trigger Bash on this item: Spirit Breaker, Faceless Void, Slardar, and Kez while in Sai mode.", "Attack Range bonuses from Dragon Lance and its upgrades do not stack."]}, "changed_fields": [{"field": "cast_ranges", "old": [150], "new": [175]}, {"field": "item_cost", "old": 6250, "new": 6150}, {"field": "AbilityCastRange", "old": {"base": [150], "scepter": null, "shard": null}, "new": {"base": [175], "scepter": null, "shard": null}}, {"field": "base_attack_range_melee", "old": null, "new": {"base": [25], "scepter": null, "shard": null}}, {"field": "bonus_agility", "old": null, "new": {"base": [15], "scepter": null, "shard": null}}, {"field": "hp_regen_amp", "old": {"base": [16], "scepter": null, "shard": null}, "new": null}, {"field": "slow_resistance", "old": {"base": [30], "scepter": null, "shard": null}, "new": null}], "rows": [{"review_id": "6bff14de65c720924c05", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "item", "decision": "reject"}, {"review_id": "cd98da73ae5e3687e164", "mechanism": "bash", "mechanism_zh": "重击", "definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算", "condition": "item", "decision": "accept"}, {"review_id": "325afb07ca5141e24d40", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "item", "decision": "reject"}, {"review_id": "e8f160c820a1e8d97873", "mechanism": "pierces_debuff_immunity", "mechanism_zh": "无视减益免疫", "definition": "效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）", "condition": "item", "decision": "accept"}, {"review_id": "audit:abyssal_blade:slow_resistance:item", "mechanism": "slow_resistance", "mechanism_zh": "减速抗性", "definition": "降低自身受到的减速效果（如散夜对剑+30%）", "condition": "item", "decision": "accept"}, {"review_id": "04fa0ef69a96f89755a7", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "item", "decision": "accept"}, {"review_id": "af53553ef03fbfbbe6f5", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "item", "decision": "accept"}, {"review_id": "c359f7cc91fdc0ad13f8", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "item", "decision": "accept"}]}, {"subject": "abyssal_underlord_dark_portal", "name_zh": "孽主·恶魔之扉", "category": "3_说明文字", "text_741f": {"desc_loc": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side. Portals have to be at least %minimum_distance% away from each other.", "notes_loc": ["Double-click to teleport to your team's base, in front of your fountain"], "scepter_loc": "Summons a Pit of Malice around each of the portals. Reduces cooldown.", "facets_loc": ["Underlord summons uncontrollable demonic Warriors and Archers after travelling through the Fiend's Gate that attack nearby enemies. These units deal %underling_building_damage_reduction_tooltip%%% damage to buildings."]}, "text_742": {"desc_loc": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side. Portals have to be at least %minimum_distance% away from each other.", "notes_loc": ["Double-click to teleport to your team's base, in front of your fountain"], "scepter_loc": "Summons a Pit of Malice around the furthermost of the portals. Reduces cooldown.", "facets_loc": ["Underlord summons uncontrollable demonic Warriors and Archers after travelling through the Fiend's Gate that attack nearby enemies. These units deal %underling_building_damage_reduction_tooltip%%% damage to buildings."]}, "changed_fields": [{"field": "cooldowns", "old": [110, 105, 100], "new": [115, 105, 95]}, {"field": "AbilityCooldown", "old": {"base": [110, 105, 100], "scepter": [20], "shard": null}, "new": {"base": [115, 105, 95], "scepter": [20], "shard": null}}, {"field": "aura_radius", "old": null, "new": {"base": [0], "scepter": [1200], "shard": null}}, {"field": "shot_cooldown", "old": null, "new": {"base": [0], "scepter": [0.8], "shard": null}}, {"field": "shot_damage", "old": null, "new": {"base": [0], "scepter": [0], "shard": null}}, {"field": "shot_movement_speed_pct", "old": null, "new": {"base": [0], "scepter": [40], "shard": null}}, {"field": "shot_slow_duration", "old": null, "new": {"base": [0], "scepter": [2.5], "shard": null}}, {"field": "shot_speed", "old": null, "new": {"base": [0], "scepter": [950], "shard": null}}, {"field": "shot_vision", "old": null, "new": {"base": [0], "scepter": [100], "shard": null}}, {"field": "shot_vision_duration", "old": null, "new": {"base": [0], "scepter": [1.5], "shard": null}}, {"field": "warp_channel_duration", "old": {"base": [3.5], "scepter": null, "shard": null}, "new": {"base": [3.5, 3.25, 3], "scepter": null, "shard": null}}], "rows": [{"review_id": "audit:abyssal_underlord_dark_portal:aoe_damage:scepter", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "6e0a7e13d695487c8eee", "mechanism": "channeled", "mechanism_zh": "持续施法", "definition": "施法者自身需要持续引导，被打断即停止", "condition": "base", "decision": "reject"}, {"review_id": "audit:abyssal_underlord_dark_portal:displace_other:base", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "audit:abyssal_underlord_dark_portal:ground_zone:scepter", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "audit:abyssal_underlord_dark_portal:root:scepter", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "138331cab6893993b41e", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "scepter_upgrade", "decision": "reject"}, {"review_id": "c989d06692066a02ad9f", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "accept"}]}, {"subject": "abyssal_underlord_raid_boss", "name_zh": "孽主·侵略大军", "category": "3_说明文字", "text_741f": {"desc_loc": "After an allied hero Teleports, they temporarily gain Damage Reduction and Movement Speed. Allies receive %dark_portal_multiplier%x bonuses if teleporting via Fiend's Gate."}, "text_742": {"desc_loc": "After an allied hero Teleports, they temporarily gain a Physical Damage Barrier based on their max health and Movement Speed. Allies receive %dark_portal_multiplier%x bonuses if teleporting via Fiend's Gate."}, "changed_fields": [{"field": "barrier_max_health_pct", "old": null, "new": {"base": [8.5], "scepter": null, "shard": null}}, {"field": "buff_duration", "old": {"base": [5], "scepter": null, "shard": null}, "new": {"base": [6], "scepter": null, "shard": null}}, {"field": "damage_reduction", "old": {"base": [3.7], "scepter": null, "shard": null}, "new": null}], "rows": [{"review_id": "ec3e03a5a294a8a824da", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "c5c60221b29ab7606e25", "mechanism": "damage_block", "mechanism_zh": "护盾/伤害吸收/减伤", "definition": "吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）", "condition": "base", "decision": "accept"}, {"review_id": "d459cb44e9075b5ec96d", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "58d316e6a4678c80739b", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "base", "decision": "reject"}, {"review_id": "fa7545c29e6d5ee5a5b5", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "reject"}]}, {"subject": "aether_lens", "name_zh": "Aether Lens", "category": "2_纯数值", "text_741f": {"notes_loc": ["Cast Range bonuses from Aether Lens and Dagon do not stack."]}, "text_742": {"notes_loc": ["Cast Range bonuses from Aether Lens and Dagon do not stack."]}, "changed_fields": [{"field": "item_cost", "old": 2275, "new": 2100}, {"field": "cast_range_bonus", "old": {"base": [225], "scepter": null, "shard": null}, "new": {"base": [200], "scepter": null, "shard": null}}], "rows": [{"review_id": "17e69798a3c6a3f66932", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "item", "decision": "accept"}]}, {"subject": "alchemist_berserk_potion", "name_zh": "炼金术士·狂暴药剂", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Alchemist throws a potion at an ally, applying a basic dispel and giving them attack speed, movement speed and HP regen. DISPEL TYPE: Basic Dispel", "facets_loc": ["While Alchemist is affected by Chemical Rage, cooldown is reduced by %chemical_rage_cooldown_reduction_pct%%%."]}, "text_742": {"desc_loc": "Alchemist throws a potion at an ally, applying a basic dispel and giving them attack speed, movement speed and HP regen. DISPEL TYPE: Basic Dispel", "facets_loc": ["While Alchemist is affected by Chemical Rage, cooldown is reduced by %chemical_rage_cooldown_reduction_pct%%%."]}, "changed_fields": [{"field": "dispellable", "old": 2, "new": 3}, {"field": "mana_costs", "old": [100], "new": [75]}, {"field": "AbilityManaCost", "old": {"base": [100], "scepter": null, "shard": null}, "new": {"base": [75], "scepter": null, "shard": null}}], "rows": [{"review_id": "ae26e07267b79b539a3f", "mechanism": "applies_basic_dispel", "mechanism_zh": "施加弱驱散", "definition": "移除目标身上可被弱驱散的效果", "condition": "base", "decision": "accept"}, {"review_id": "9a8c0166570afbebc9e0", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "6087ba2c896efaf75a14", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}]}, {"subject": "alchemist_goblins_greed", "name_zh": "炼金术士·贪魔的贪婪", "category": "2_纯数值", "text_741f": {"desc_loc": "Alchemist synthesizes additional gold from his enemies and bounty runes. With each kill, Alchemist earns base bonus gold and extra bonus gold. If Alchemist kills another unit which yields gold within the next %duration% seconds, an additional instance of Extra Bonus Gold is added to the total. Additionally, causes bounty runes to yield more gold.", "scepter_loc": "Alchemist melts down Aghanim's Scepter to grant an allied hero all Aghanim's Scepter upgrades. Alchemist will gain bonus %scepter_bonus_damage% damage and %bonus_gold_per_scepter% additional base and max Greevil's Greed Extra Gold for each melted Scepter.", "facets_loc": ["Alchemist gains %gpm_increase_per_stack% GPM for each Aghanim's Scepter he has granted to allies."]}, "text_742": {"desc_loc": "Alchemist synthesizes additional gold from his enemies and bounty runes. With each kill, Alchemist earns base bonus gold and extra bonus gold. If Alchemist kills another unit which yields gold within the next %duration% seconds, an additional instance of Extra Bonus Gold is added to the total. Additionally, causes bounty runes to yield more gold.", "scepter_loc": "Alchemist melts down Aghanim's Scepter to grant an allied hero all Aghanim's Scepter upgrades. Alchemist will gain bonus %scepter_bonus_damage% damage and %bonus_gold_per_scepter% additional base and max Greevil's Greed Extra Gold for each melted Scepter.", "facets_loc": ["Alchemist gains %gpm_increase_per_stack% GPM for each Aghanim's Scepter he has granted to allies."]}, "changed_fields": [{"field": "scepter_bonus_damage", "old": {"base": [15], "scepter": null, "shard": null}, "new": {"base": [20], "scepter": null, "shard": null}}], "rows": [{"review_id": "7a5c71d6bbe8acd03b08", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "b0dbc98060cb0d9273ca", "mechanism": "economy", "mechanism_zh": "经济经验", "definition": "提供额外金钱或经验；只是正常赏金不算", "condition": "base", "decision": "accept"}]}, {"subject": "ancient_apparition_bone_chill", "name_zh": "远古冰魄·刺骨严寒", "category": "3_说明文字", "text_741f": {"desc_loc": "When Ancient Apparition deals Magic damage to an enemy with his abilities, it is slowed for a short duration. If the target is a Hero, its Strength is also reduced. Multiple instances of this effect stack and have independent durations.", "scepter_loc": "Increases Base Strength Reduction by %tooltip_scepter_bonus%."}, "text_742": {"desc_loc": "When Ancient Apparition deals Magic damage to an enemy Hero with his abilities its Strength is reduced. Multiple instances of this effect stack and have independent durations.", "scepter_loc": "Increases Base Strength Reduction by %tooltip_scepter_bonus%."}, "changed_fields": [{"field": "movement_slow_pct", "old": {"base": [2], "scepter": null, "shard": null}, "new": {"base": [], "scepter": null, "shard": null}}], "rows": [{"review_id": "8a62e8f48646ffba341c", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "520b3e8b16fbc21a4e03", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}, {"review_id": "f718ffee4caf02179a56", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "ancient_apparition_chilling_touch", "name_zh": "远古冰魄·极寒之触", "category": "2_纯数值", "text_741f": {"desc_loc": "Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.", "scepter_loc": "Removes cooldown."}, "text_742": {"desc_loc": "Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.", "scepter_loc": "Removes cooldown."}, "changed_fields": [{"field": "mana_costs", "old": [35], "new": [30]}, {"field": "AbilityManaCost", "old": {"base": [35], "scepter": null, "shard": null}, "new": {"base": [30], "scepter": null, "shard": null}}, {"field": "attacks_as_magic", "old": null, "new": {"base": [0], "scepter": [0], "shard": null}}, {"field": "damage", "old": {"base": [35, 65, 95, 125], "scepter": null, "shard": null}, "new": {"base": [40, 80, 120, 160], "scepter": null, "shard": null}}], "rows": [{"review_id": "6e2259ca556fe474e521", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "8c0f3404b538630621fa", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "b191adef9793c1cf912e", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "ancient_apparition_cold_feet", "name_zh": "远古冰魄·寒霜之足", "category": "3_说明文字", "text_741f": {"desc_loc": "Places a curse on an enemy, dealing damage over time. If the enemy unit doesn't move outside of the given range from the initial location, it will be stunned and frozen in place after %AbilityDuration% seconds.", "notes_loc": ["Deals damage every half second."], "facets_loc": ["Cold Feet becomes an AoE point targeted ability, with the radius depending on the current level of Ice Blast."]}, "text_742": {"desc_loc": "Places a curse on an enemy, dealing damage over time and slowing the target. If the enemy unit doesn't move outside of the given range from the initial location, it will be stunned and frozen in place after %AbilityDuration% seconds.", "notes_loc": ["Deals damage every half second."], "facets_loc": ["Cold Feet becomes an AoE point targeted ability, with the radius depending on the current level of Ice Blast."]}, "changed_fields": [{"field": "leash", "old": null, "new": {"base": [], "scepter": null, "shard": null}}, {"field": "movement_slow", "old": null, "new": {"base": [4, 6, 8, 10], "scepter": null, "shard": null}}], "rows": [{"review_id": "260f6b7f332b274e64b9", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "399a29e359128b7dffd3", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "c4edd5471615128972cf", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "ancient_apparition_ice_blast", "name_zh": "远古冰魄·冰晶爆轰", "category": "2_纯数值", "text_741f": {"desc_loc": "Launches a tracer toward any location on the battlefield, which must be triggered again to mark the area to be blasted by a damaging explosion of hail. The further the tracer travels, the larger the explosion will be. Enemies caught in the explosion, or who touch the icy ball of hail as it travels, are Frostbitten, taking damage over time and prevented from regenerating or healing. If a Frostbitten unit's health drops below a certain percentage, they will instantly shatter.", "notes_loc": ["Upon cast, this ability is replaced by Release, used to stop the tracer on the target area.", "The area of effect is %radius_min% + %radius_grow%*TimeTraveled, capped at %radius_max%.", "Kill will be granted to the source of the damage that triggers the shatter.", "The shatter effect doesn't work on illusions.", "The HP Freeze prevents most kinds of healing, including the fountain, except Sunder, Time Lapse and Supernova."], "shard_loc": "Freezes enemies hit with the current level of Cold Feet for %cold_feet_stun_duration_pct%%% of the duration."}, "text_742": {"desc_loc": "Launches a tracer toward any location on the battlefield, which must be triggered again to mark the area to be blasted by a damaging explosion of hail. The further the tracer travels, the larger the explosion will be. Enemies caught in the explosion, or who touch the icy ball of hail as it travels, are Frostbitten, taking damage over time and prevented from regenerating or healing. If a Frostbitten unit's health drops below a certain percentage, they will instantly shatter.", "notes_loc": ["Upon cast, this ability is replaced by Release, used to stop the tracer on the target area.", "The area of effect is %radius_min% + %radius_grow%*TimeTraveled, capped at %radius_max%.", "Kill will be granted to the source of the damage that triggers the shatter.", "The shatter effect doesn't work on illusions.", "The HP Freeze prevents most kinds of healing, including the fountain, except Sunder, Time Lapse and Supernova."], "shard_loc": "Freezes enemies hit with the current level of Cold Feet for %cold_feet_stun_duration_pct%%% of the duration."}, "changed_fields": [{"field": "damages", "old": [250, 325, 400], "new": [200, 300, 400]}, {"field": "AbilityDamage", "old": {"base": [250, 325, 400], "scepter": null, "shard": null}, "new": {"base": [200, 300, 400], "scepter": null, "shard": null}}], "rows": [{"review_id": "51560e60ab4622181565", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "447c2150e295f830da79", "mechanism": "execute", "mechanism_zh": "斩杀", "definition": "目标低于生命阈值时直接杀死", "condition": "base", "decision": "accept"}, {"review_id": "5665b59b817b23e128f8", "mechanism": "heal_reduction", "mechanism_zh": "治疗削减", "definition": "降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响", "condition": "base", "decision": "accept"}, {"review_id": "a48dba2c6b9516657805", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "reject"}, {"review_id": "6d64ca7f0c59779adbe5", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "shard_upgrade", "decision": "accept"}]}, {"subject": "ancient_apparition_ice_vortex", "name_zh": "远古冰魄·冰霜漩涡", "category": "2_纯数值", "text_741f": {"desc_loc": "Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range.", "notes_loc": ["Provides vision in a small area where it is placed."]}, "text_742": {"desc_loc": "Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range.", "notes_loc": ["Provides vision in a small area where it is placed."]}, "changed_fields": [{"field": "movement_speed_pct", "old": {"base": [-8], "scepter": null, "shard": null}, "new": {"base": [-10, -15, -20, -25], "scepter": null, "shard": null}}, {"field": "spell_resist_pct", "old": {"base": [-16, -19, -22, -25], "scepter": null, "shard": null}, "new": {"base": [-14, -16, -18, -20], "scepter": null, "shard": null}}], "rows": [{"review_id": "aef71eb038e9abfe7709", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "f6314dcae344c1e2d415", "mechanism": "grant_vision", "mechanism_zh": "提供视野", "definition": "提供目标或区域的视野", "condition": "base", "decision": "accept"}, {"review_id": "audit:ancient_apparition_ice_vortex:ground_zone:base", "mechanism": "ground_zone", "mechanism_zh": "场地魔法", "definition": "在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算", "condition": "base", "decision": "accept"}, {"review_id": "audit:ancient_apparition_ice_vortex:magic_resist_reduction:base", "mechanism": "magic_resist_reduction", "mechanism_zh": "减魔抗/魔法易伤", "definition": "降低目标魔抗，或让目标受到更多魔法或技能伤害", "condition": "base", "decision": "accept"}, {"review_id": "c915fd0f285f73a4f6b0", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "angels_demise", "name_zh": "绝刃", "category": "5_增删或退出", "text_741f": {"desc_loc": "Passive: Empower Spell The next Unit Target spell you cast on an enemy deals a separate %bonus_spell_damage% additional damage, disables their passives, and slows their movement speed by %slow%%% for %slow_duration%s.", "notes_loc": ["The slow debuff is dispellable.", "The break debuff is not dispellable."]}, "text_742": {"desc_loc": "Passive: Empower Spell The next Unit Target spell you cast on an enemy deals a separate %bonus_spell_damage% additional damage, disables their passives, and slows their movement speed by %slow%%% for %slow_duration%s.", "notes_loc": ["The slow debuff is dispellable.", "The break debuff is not dispellable."]}, "changed_fields": [], "rows": [{"review_id": "audit:angels_demise:applies_break:item", "mechanism": "applies_break", "mechanism_zh": "施加破坏", "definition": "使目标的被动技能暂时失效", "condition": "item", "decision": "accept"}, {"review_id": "audit:angels_demise:healing:item", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "item", "decision": "accept"}, {"review_id": "f977607053076e6a3665", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "item", "decision": "accept"}, {"review_id": "1ea67b39407b5d933a49", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "item", "decision": "accept"}, {"review_id": "6ed681394ba9db5726ca", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "item", "decision": "accept"}, {"review_id": "c4baa5ab9e94cc51f251", "mechanism": "spell_amp", "mechanism_zh": "法术放大", "definition": "提高技能造成的伤害", "condition": "item", "decision": "reject"}]}, {"subject": "antimage_counterspell", "name_zh": "敌法师·法术反制", "category": "2_纯数值", "text_741f": {"desc_loc": "Passively grants magic resistance. Counterspell may be activated to create an anti-magic shell around Anti-Mage that blocks and reflects any targeted spells.", "notes_loc": ["Break disables the passive magic resistance."], "shard_loc": "Creates a blinked fragment of Anti-Mage next to the enemy caster upon reflecting their unit-targeted spell while active.", "facets_loc": ["Counterspell burns a percentage of the countered spell's mana cost from its caster and does damage based on %damage_from_mana_drain_percent%%% of the burned mana cost, up to a maximum of %max_damage_from_mana_drain% damage per reflected spell."]}, "text_742": {"desc_loc": "Passively grants magic resistance. Counterspell may be activated to create an anti-magic shell around Anti-Mage that blocks and reflects any targeted spells.", "notes_loc": ["Break disables the passive magic resistance."], "shard_loc": "Creates a blinked fragment of Anti-Mage next to the enemy caster upon reflecting their unit-targeted spell while active.", "facets_loc": ["Counterspell burns a percentage of the countered spell's mana cost from its caster and does damage based on %damage_from_mana_drain_percent%%% of the burned mana cost, up to a maximum of %max_damage_from_mana_drain% damage per reflected spell."]}, "changed_fields": [{"field": "reflected_debuff_duration_pct", "old": null, "new": {"base": [], "scepter": null, "shard": null}}], "rows": [{"review_id": "5aea2395abfd2193ba6a", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "609c42f3ef12eaa15b6c", "mechanism": "damage_return", "mechanism_zh": "反伤", "definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件", "condition": "base", "decision": "reject"}, {"review_id": "488de93bf271dcbe75cd", "mechanism": "self_mobility", "mechanism_zh": "自身位移", "definition": "闪烁、冲刺、跳跃、传送等主动改变自身位置", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "275967c2ba08ccd3efdb", "mechanism": "spell_block", "mechanism_zh": "格挡指向技能", "definition": "使指向自身或队友的技能失效", "condition": "base", "decision": "accept"}, {"review_id": "212f91f02dd62ed26441", "mechanism": "spell_reflect", "mechanism_zh": "反弹指向技能", "definition": "把指向技能反弹给施法者", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "8645534f779abf2a8d27", "mechanism": "spell_reflect", "mechanism_zh": "反弹指向技能", "definition": "把指向技能反弹给施法者", "condition": "base", "decision": "accept"}]}, {"subject": "antimage_mana_break", "name_zh": "敌法师·法力损毁", "category": "2_纯数值", "text_741f": {"desc_loc": "Burns an opponent's mana on each attack and deals damage equal to a percentage of the mana burnt.", "notes_loc": ["Mana Break has %illusion_percentage%%% mana burn effect if caused by illusions."], "scepter_loc": "Increases Max Mana Burned per Hit."}, "text_742": {"desc_loc": "Burns an opponent's mana on each attack and deals damage equal to a percentage of the mana burnt.", "notes_loc": ["Mana Break has %illusion_percentage%%% mana burn effect if caused by illusions."], "scepter_loc": "Increases Max Mana Burned per Hit."}, "changed_fields": [], "rows": [{"review_id": "audit:antimage_mana_break:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "f15287d0fecd25c3927d", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "58afc8e51eb59d393ae3", "mechanism": "mana_burn", "mechanism_zh": "烧蓝/法力削减", "definition": "减少目标的法力值", "condition": "base", "decision": "accept"}]}, {"subject": "antimage_mana_void", "name_zh": "敌法师·法力虚空", "category": "2_纯数值", "text_741f": {"desc_loc": "For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies. The main target is also mini-stunned.", "notes_loc": ["Damage is calculated based on the primary target's mana, but applied to all enemies within the area of effect."], "facets_loc": ["Passively grants attack damage when an enemy hero's mana falls below %min_bonus_pct%%%, with the bonuses increasing as their mana falls further. If the enemies mana falls below %threshold_pct%%% Anti-Mage gains the maximum amount of damage, as well as vision and True Sight of that hero. Applies to enemy heroes within %thirst_range% range. Bonuses stack per hero."]}, "text_742": {"desc_loc": "For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies. The main target is also mini-stunned.", "notes_loc": ["Damage is calculated based on the primary target's mana, but applied to all enemies within the area of effect."], "facets_loc": ["Passively grants attack damage when an enemy hero's mana falls below %min_bonus_pct%%%, with the bonuses increasing as their mana falls further. If the enemies mana falls below %threshold_pct%%% Anti-Mage gains the maximum amount of damage, as well as vision and True Sight of that hero. Applies to enemy heroes within %thirst_range% range. Bonuses stack per hero."]}, "changed_fields": [], "rows": [{"review_id": "bbfa473fd9d67c215734", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "b0af743ecf15a5b52f76", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}, {"review_id": "ad96bbb08be9b8c4d434", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "46beb7baf9dddc6ac9fd", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "abaddon_aphotic_shield",
+      "rows": [
+        {"review_id":"12a06e3d6478cf1fa673","verdict":"holds","quote":"%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.","reason_zh":"魔晶仍会将部分吸收的伤害施加给附近多个敌人。"},
+        {"review_id":"8dad476900d8610048cd","verdict":"holds","quote":"When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it.","reason_zh":"基础护盾破裂时仍会对周围区域造成伤害。"},
+        {"review_id":"ecb86845a281bf965219","verdict":"holds","quote":"DISPEL TYPE: Strong Dispel","reason_zh":"对友军施放基础护盾时仍施加强驱散。"},
+        {"review_id":"5991fbaf7387e26a1eb7","verdict":"holds","quote":"an all damage barrier that absorbs a set amount of damage before expiring","reason_zh":"基础护盾仍能吸收一定数额的各类伤害。"},
+        {"review_id":"b6e74ff2589b8c45f1ef","verdict":"holds","quote":"%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.","reason_zh":"吸收伤害由基础护盾提供，魔晶提供的是按已吸收伤害对敌人造成伤害的效果。"},
+        {"review_id":"f8330b7587285ea0c12a","verdict":"holds","quote":"Summons dark energies around an ally unit, dispelling them and creating an all damage barrier","reason_zh":"技能在已有友军身上生成护盾，没有召唤有血量的单位或夺取单位控制权。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abaddon_borrowed_time",
+      "rows": [
+        {"review_id":"6cf640f6253139a1968b","verdict":"holds","quote":"ability_has_scepter: true→false","reason_zh":"回光返照的 A 杖升级已移除，因此原行关于 A 杖不提供范围伤害的否定判断仍成立。"},
+        {"review_id":"524ea5a99b66274e609c","verdict":"holds","quote":"DISPEL TYPE: Strong Dispel","reason_zh":"基础技能发动时仍会对自身施加强驱散。"},
+        {"review_id":"6f614275c32e26be491d","verdict":"holds","quote":"Break prevents Borrowed Time from automatically activating.","reason_zh":"破坏仍能阻止被动自动发动，材料也未列出 IsBreakable 变更。"},
+        {"review_id":"7f265d17f0bee979f2a6","verdict":"holds","quote":"all damage dealt to you will heal instead of harm","reason_zh":"技能生效期间，受到的伤害会转为治疗，从而防止亚巴顿被这些伤害击杀。"},
+        {"review_id":"7f888fc2eb8cd385bef3","verdict":"holds","quote":"all damage dealt to you will heal instead of harm","reason_zh":"基础技能仍将受到的伤害转为自身治疗。"},
+        {"review_id":"2c98c2cb05a4a2a4bb26","verdict":"holds","quote":"ability_has_scepter: true→false","reason_zh":"回光返照已无 A 杖升级，因此 A 杖不提供缠绕的原判仍成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abaddon_death_coil",
+      "rows": [
+        {"review_id":"f5f47bc0d9db93f9412b","verdict":"holds","quote":"effect_radius.base: []→[0]","reason_zh":"基础作用半径为 0，只有 A 杖把效果扩展到目标周围，基础范围伤害的否定判断仍成立。"},
+        {"review_id":"e01f7cdb62122e1046a5","verdict":"holds","quote":"Friendly units are healed and have their movement speed increased.","reason_zh":"基础技能对友军仍有治疗效果。"},
+        {"review_id":"52a5b55a7ce6f1fd8e95","verdict":"holds","quote":"Enemy units are damaged and slowed.","reason_zh":"基础技能仍可选中敌方单位施加伤害和减速，A 杖扩大的是目标周围的作用范围。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"haste","condition":"base","quote":"Friendly units are healed and have their movement speed increased.","reason_zh":"7.42 为基础技能命中的友军新增移动速度加成。"},
+        {"mechanism":"slow","condition":"base","quote":"Enemy units are damaged and slowed.","reason_zh":"7.42 为基础技能命中的敌人新增移动减速。"},
+        {"mechanism":"aoe_damage","condition":"scepter_upgrade","quote":"Mist Coil affects all units in a %effect_radius% radius around the target.","reason_zh":"新增 A 杖升级使技能能伤害目标周围 400 范围内的多个敌人，现有否定行仅适用于基础技能。"}
+      ]
+    },
+    {
+      "subject": "abaddon_frostmourne",
+      "rows": [
+        {"review_id":"5388d26e118abfa3417e","verdict":"holds","quote":"Abaddon strikes an enemy, affecting them by a chilling curse","reason_zh":"每次攻击把诅咒施加给被击中的敌人，本次调整没有使伤害波及周围单位。"},
+        {"review_id":"audit:abaddon_frostmourne:attack_modifier:base","verdict":"holds","quote":"Abaddon strikes an enemy, affecting them by a chilling curse, slowing them, causing them to take damage over time","reason_zh":"普通攻击仍会附加造成减速和持续伤害的诅咒。"},
+        {"review_id":"30e55fe750e981045a87","verdict":"holds","quote":"curse_duration.base: [2]→[3]","reason_zh":"本次调整涉及诅咒时长、伤害及攻速等字段，未列出 IsBreakable 变更，沿用原行的可被破坏判定。"},
+        {"review_id":"59b84b5db11958e4fd3b","verdict":"holds","quote":"affecting them by a chilling curse, slowing them","reason_zh":"7.42 仍明确写有诅咒减速，删除单独的 slow_duration 字段没有删除该效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abaddon_withering_mist",
+      "rows": [
+        {"review_id":"8580b6af0a2d9111ad8e","verdict":"holds","quote":"Damaging enemies reduces their Health Restoration for %duration%s.","reason_zh":"受到伤害是敌人被减疗的触发条件，凋零迷雾本身没有新增对多个敌人造成伤害的效果。"},
+        {"review_id":"c2dd818ab9c8a64c54f8","verdict":"holds","quote":"max_heal_reduction_pct.base: null→[40]","reason_zh":"改动调整了减疗强度及触发条件，未列出 IsBreakable 变更，沿用原行的可被破坏判定。"},
+        {"review_id":"023b1cfedc31aaaf3dcb","verdict":"holds","quote":"The lower the enemy's HP, the stronger the Health restoration reduction effect.","reason_zh":"基础技能仍削减生命恢复，强度从满血时的 10% 随生命降低而增至最高 40%，物品伤害不能触发。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abyssal_blade",
+      "rows": [
+        {"review_id":"6bff14de65c720924c05","verdict":"holds","quote":"chance on hit to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus physical damage","reason_zh":"重击的额外伤害仍施加给本次攻击目标，主动技能也只指向一个敌人。"},
+        {"review_id":"cd98da73ae5e3687e164","verdict":"holds","quote":"Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target","reason_zh":"符合条件的英雄攻击命中时仍有概率触发重击，新说明明确幻象不能获得该重击。"},
+        {"review_id":"325afb07ca5141e24d40","verdict":"holds","quote":"Active: Overwhelm Stuns a target enemy unit for %stun_duration% seconds. Pierces Debuff Immunity.","reason_zh":"7.42 的装备效果和字段变更均未新增伤害格挡，旧版关于格挡不叠加的通用注释也已删除。"},
+        {"review_id":"e8f160c820a1e8d97873","verdict":"holds","quote":"Active: Overwhelm Stuns a target enemy unit for %stun_duration% seconds. Pierces Debuff Immunity.","reason_zh":"装备主动技能仍明确无视减益免疫。"},
+        {"review_id":"audit:abyssal_blade:slow_resistance:item","verdict":"now_wrong","quote":"slow_resistance.base: [30]→null","reason_zh":"装备原有的 30% 减速抗性已移除。"},
+        {"review_id":"04fa0ef69a96f89755a7","verdict":"holds","quote":"Stuns a target enemy unit for %stun_duration% seconds.","reason_zh":"装备主动技能仍能眩晕指定敌人。"},
+        {"review_id":"af53553ef03fbfbbe6f5","verdict":"holds","quote":"chance on hit to stun the target for %bash_duration% seconds","reason_zh":"被动重击触发时仍会眩晕攻击目标。"},
+        {"review_id":"c359f7cc91fdc0ad13f8","verdict":"holds","quote":"Stuns a target enemy unit for %stun_duration% seconds.","reason_zh":"装备仍具备眩晕机制，主动施法距离调整没有移除眩晕。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abyssal_underlord_dark_portal",
+      "rows": [
+        {"review_id":"audit:abyssal_underlord_dark_portal:aoe_damage:scepter","verdict":"holds","quote":"Summons a Pit of Malice around the furthermost of the portals.","reason_zh":"原行所对应的怨念深渊仍由 A 杖在远端门生成，生成地点从两处减为一处，范围伤害判定仍成立。"},
+        {"review_id":"6e0a7e13d695487c8eee","verdict":"holds","quote":"Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side.","reason_zh":"需要引导的是英雄使用传送门的过程，孽主开门本身没有持续施法要求。"},
+        {"review_id":"audit:abyssal_underlord_dark_portal:displace_other:base","verdict":"holds","quote":"Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side.","reason_zh":"其他英雄仍可自行引导穿门，由传送门将其送到另一端。"},
+        {"review_id":"audit:abyssal_underlord_dark_portal:ground_zone:scepter","verdict":"holds","quote":"Summons a Pit of Malice around the furthermost of the portals.","reason_zh":"A 杖仍在固定的门周围生成怨念深渊场地，现在仅在远端门生成。"},
+        {"review_id":"audit:abyssal_underlord_dark_portal:root:scepter","verdict":"holds","quote":"Summons a Pit of Malice around the furthermost of the portals.","reason_zh":"原行认定提供缠绕的怨念深渊仍在远端门生成，适用条件仍为 A 杖。"},
+        {"review_id":"138331cab6893993b41e","verdict":"holds","quote":"Summons a Pit of Malice around the furthermost of the portals. Reduces cooldown.","reason_zh":"自身传送由基础传送门提供，A 杖改动没有额外提供孽主自身位移。"},
+        {"review_id":"c989d06692066a02ad9f","verdict":"holds","quote":"Double-click to teleport to your team's base, in front of your fountain","reason_zh":"孽主仍能通过基础技能传送自身。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"slow","condition":"scepter_upgrade","quote":"shot_slow_duration.scepter: null→[2.5]；shot_movement_speed_pct.scepter: null→[40]","reason_zh":"新增 A 杖弹体字段给出 40% 的移动减速和 2.5 秒的持续时间。"},
+        {"mechanism":"grant_vision","condition":"scepter_upgrade","quote":"shot_vision.scepter: null→[100]；shot_vision_duration.scepter: null→[1.5]","reason_zh":"新增 A 杖弹体字段给出 100 的视野范围和 1.5 秒的视野持续时间。"}
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_raid_boss",
+      "rows": [
+        {"review_id":"ec3e03a5a294a8a824da","verdict":"holds","quote":"barrier_max_health_pct.base: null→[8.5]","reason_zh":"本次变更将减伤改为护盾并调整持续时间，未列出 IsBreakable 变更，沿用原行的可被破坏判定。"},
+        {"review_id":"c5c60221b29ab7606e25","verdict":"holds","quote":"they temporarily gain a Physical Damage Barrier based on their max health","reason_zh":"传送后的百分比减伤改为按友军最大生命值计算的物理伤害护盾，仍符合伤害吸收机制。"},
+        {"review_id":"d459cb44e9075b5ec96d","verdict":"holds","quote":"they temporarily gain a Physical Damage Barrier based on their max health and Movement Speed.","reason_zh":"友方英雄传送后仍会获得临时移动速度加成。"},
+        {"review_id":"58d316e6a4678c80739b","verdict":"holds","quote":"After an allied hero Teleports","reason_zh":"传送是获得增益的前置事件，该技能本身没有提供位移。"},
+        {"review_id":"fa7545c29e6d5ee5a5b5","verdict":"holds","quote":"After an allied hero Teleports, they temporarily gain a Physical Damage Barrier based on their max health and Movement Speed.","reason_zh":"移速效果作用于传送后的友军，没有对敌人施加减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "aether_lens",
+      "rows": [
+        {"review_id":"17e69798a3c6a3f66932","verdict":"holds","quote":"item_cost: 2275→2100；cast_range_bonus.base: [225]→[200]","reason_zh":"本次仅改动价格与施法距离，没有改变原行所记的装备回蓝属性。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "alchemist_berserk_potion",
+      "rows": [
+        {"review_id":"ae26e07267b79b539a3f","verdict":"holds","quote":"applying a basic dispel","reason_zh":"药剂施放时仍对友军施加弱驱散，dispellable 字段的变化描述的是药剂效果自身的可驱散性。"},
+        {"review_id":"9a8c0166570afbebc9e0","verdict":"holds","quote":"giving them attack speed, movement speed and HP regen","reason_zh":"药剂仍为友军提高移动速度，本次材料未显示原行的魔晶获取条件发生变化。"},
+        {"review_id":"6087ba2c896efaf75a14","verdict":"holds","quote":"giving them attack speed, movement speed and HP regen","reason_zh":"药剂仍给予友军生命恢复。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"effect_dispellability","condition":"base","quote":"dispellable: 2→3","reason_zh":"7.42 改变了药剂增益自身的可驱散规则，材料未给出枚举值 3 对应的驱散等级。"}
+      ]
+    },
+    {
+      "subject": "alchemist_goblins_greed",
+      "rows": [
+        {"review_id":"7a5c71d6bbe8acd03b08","verdict":"holds","quote":"scepter_bonus_damage.base: [15]→[20]","reason_zh":"唯一字段改动是熔化 A 杖的攻击力奖励，IsBreakable 未列为变化字段，沿用原行的可被破坏判定。"},
+        {"review_id":"b0dbc98060cb0d9273ca","verdict":"holds","quote":"Alchemist synthesizes additional gold from his enemies and bounty runes.","reason_zh":"击杀与赏金神符仍可为炼金术士提供额外金钱。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ancient_apparition_bone_chill",
+      "rows": [
+        {"review_id":"8a62e8f48646ffba341c","verdict":"holds","quote":"When Ancient Apparition deals Magic damage to an enemy Hero with his abilities its Strength is reduced.","reason_zh":"技能魔法伤害触发力量削减，刺骨严寒本身没有新增范围伤害。"},
+        {"review_id":"520b3e8b16fbc21a4e03","verdict":"holds","quote":"movement_slow_pct.base: [2]→[]","reason_zh":"本次仅列出减速字段变更，未列出 IsBreakable 变更，沿用原行关于不可被破坏的判断。"},
+        {"review_id":"f718ffee4caf02179a56","verdict":"now_wrong","quote":"movement_slow_pct.base: [2]→[]","reason_zh":"原有减速数值被清空，7.42 说明也删除了减速，仅保留对敌方英雄的力量削减。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ancient_apparition_chilling_touch",
+      "rows": [
+        {"review_id":"6e2259ca556fe474e521","verdict":"holds","quote":"Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.","reason_zh":"强化攻击仍附加魔法伤害与减速。"},
+        {"review_id":"8c0f3404b538630621fa","verdict":"holds","quote":"a burst of magical damage and slow","reason_zh":"基础强化攻击仍会减速命中的目标。"},
+        {"review_id":"b191adef9793c1cf912e","verdict":"holds","quote":"Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.","reason_zh":"本次调整了伤害和魔耗，未改变原行所记的敌方单位指向方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ancient_apparition_cold_feet",
+      "rows": [
+        {"review_id":"260f6b7f332b274e64b9","verdict":"holds","quote":"Places a curse on an enemy, dealing damage over time and slowing the target.","reason_zh":"基础施法仍对一个敌人施加诅咒，范围点目标施法仍由原有命石说明单独提供。"},
+        {"review_id":"399a29e359128b7dffd3","verdict":"holds","quote":"If the enemy unit doesn't move outside of the given range from the initial location, it will be stunned and frozen in place after %AbilityDuration% seconds.","reason_zh":"目标未及时离开初始位置周围的范围时，仍会被眩晕。"},
+        {"review_id":"c4edd5471615128972cf","verdict":"holds","quote":"Places a curse on an enemy","reason_zh":"基础技能仍以一个敌方单位为施法目标。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"slow","condition":"base","quote":"Places a curse on an enemy, dealing damage over time and slowing the target.","reason_zh":"7.42 为基础诅咒新增移动减速，各级数值为 4%、6%、8%、10%。"}
+      ]
+    },
+    {
+      "subject": "ancient_apparition_ice_blast",
+      "rows": [
+        {"review_id":"51560e60ab4622181565","verdict":"holds","quote":"the area to be blasted by a damaging explosion of hail","reason_zh":"基础爆炸仍能伤害区域内的多个敌人，各级伤害调整后均大于 0。"},
+        {"review_id":"447c2150e295f830da79","verdict":"holds","quote":"If a Frostbitten unit's health drops below a certain percentage, they will instantly shatter.","reason_zh":"受冻单位生命低于阈值时仍会被直接击杀，说明保留了幻象例外。"},
+        {"review_id":"5665b59b817b23e128f8","verdict":"holds","quote":"taking damage over time and prevented from regenerating or healing","reason_zh":"受冻敌人仍会被禁止进行大多数形式的生命恢复。"},
+        {"review_id":"a48dba2c6b9516657805","verdict":"holds","quote":"prevented from regenerating or healing","reason_zh":"技能施加的是对生命恢复的限制，没有给单位恢复生命。"},
+        {"review_id":"6d64ca7f0c59779adbe5","verdict":"holds","quote":"Freezes enemies hit with the current level of Cold Feet for %cold_feet_stun_duration_pct%%% of the duration.","reason_zh":"魔晶仍会按当前寒霜之足眩晕时长的一定比例冻结命中的敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ancient_apparition_ice_vortex",
+      "rows": [
+        {"review_id":"aef71eb038e9abfe7709","verdict":"holds","quote":"Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range.","reason_zh":"漩涡仍对范围内的多个敌人造成伤害。"},
+        {"review_id":"f6314dcae344c1e2d415","verdict":"holds","quote":"Provides vision in a small area where it is placed.","reason_zh":"漩涡仍提供放置地点周围小范围的视野。"},
+        {"review_id":"audit:ancient_apparition_ice_vortex:ground_zone:base","verdict":"holds","quote":"Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range.","reason_zh":"漩涡仍在放置地点持续影响范围内的敌人。"},
+        {"review_id":"audit:ancient_apparition_ice_vortex:magic_resist_reduction:base","verdict":"holds","quote":"spell_resist_pct.base: [-16,-19,-22,-25]→[-14,-16,-18,-20]","reason_zh":"各级减抗幅度降低，但范围内敌人仍会受到更多魔法伤害。"},
+        {"review_id":"c915fd0f285f73a4f6b0","verdict":"holds","quote":"movement_speed_pct.base: [-8]→[-10,-15,-20,-25]","reason_zh":"减速从固定 8% 改为随等级增强，各级仍会降低敌人移速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "angels_demise",
+      "rows": [
+        {"review_id":"audit:angels_demise:applies_break:item","verdict":"holds","quote":"disables their passives","reason_zh":"装备强化的下一次敌方单位指向技能仍会使目标的被动失效。"},
+        {"review_id":"audit:angels_demise:healing:item","verdict":"holds","quote":"Passive: Empower Spell","reason_zh":"两版被动说明相同且没有字段变更，沿用原行的装备回复判定，所引说明未单列回复属性。"},
+        {"review_id":"f977607053076e6a3665","verdict":"holds","quote":"Passive: Empower Spell","reason_zh":"两版说明相同且没有字段变更，沿用原行的装备回蓝判定，所引说明未单列回蓝属性。"},
+        {"review_id":"1ea67b39407b5d933a49","verdict":"holds","quote":"slows their movement speed by %slow%%% for %slow_duration%s.","reason_zh":"强化技能命中敌人时仍会降低其移动速度。"},
+        {"review_id":"6ed681394ba9db5726ca","verdict":"holds","quote":"The slow debuff is dispellable.","reason_zh":"7.42 仍明确保留可被驱散的减速效果。"},
+        {"review_id":"c4baa5ab9e94cc51f251","verdict":"holds","quote":"deals a separate %bonus_spell_damage% additional damage","reason_zh":"装备触发的是一次独立额外伤害，没有提高技能本身的伤害倍率。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "antimage_counterspell",
+      "rows": [
+        {"review_id":"5aea2395abfd2193ba6a","verdict":"holds","quote":"Break disables the passive magic resistance.","reason_zh":"破坏仍使被动魔法抗性失效，材料也未列出 IsBreakable 变更。"},
+        {"review_id":"609c42f3ef12eaa15b6c","verdict":"holds","quote":"blocks and reflects any targeted spells","reason_zh":"基础护盾在指向技能命中时进行格挡和反弹，没有新增因自身受到伤害而触发的反击伤害。"},
+        {"review_id":"488de93bf271dcbe75cd","verdict":"holds","quote":"Creates a blinked fragment of Anti-Mage next to the enemy caster","reason_zh":"魔晶在敌方施法者旁生成碎片，敌法师本体没有发生位移。"},
+        {"review_id":"275967c2ba08ccd3efdb","verdict":"holds","quote":"an anti-magic shell around Anti-Mage that blocks and reflects any targeted spells","reason_zh":"基础护盾仍可格挡指向敌法师的技能。"},
+        {"review_id":"212f91f02dd62ed26441","verdict":"holds","quote":"Creates a blinked fragment of Anti-Mage next to the enemy caster upon reflecting their unit-targeted spell while active.","reason_zh":"反弹由基础护盾提供，魔晶只在成功反弹后生成碎片。"},
+        {"review_id":"8645534f779abf2a8d27","verdict":"holds","quote":"blocks and reflects any targeted spells","reason_zh":"基础护盾仍会反弹指向技能。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "antimage_mana_break",
+      "rows": [
+        {"review_id":"audit:antimage_mana_break:attack_modifier:base","verdict":"holds","quote":"Burns an opponent's mana on each attack and deals damage equal to a percentage of the mana burnt.","reason_zh":"每次攻击仍附带烧蓝和按烧蓝量计算的伤害。"},
+        {"review_id":"f15287d0fecd25c3927d","verdict":"holds","quote":"Burns an opponent's mana on each attack","reason_zh":"两版说明相同且无字段变更，沿用原行依据 IsBreakable 作出的可被破坏判定。"},
+        {"review_id":"58afc8e51eb59d393ae3","verdict":"holds","quote":"Burns an opponent's mana on each attack","reason_zh":"每次攻击仍会削减对手的法力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "antimage_mana_void",
+      "rows": [
+        {"review_id":"bbfa473fd9d67c215734","verdict":"holds","quote":"Damage is calculated based on the primary target's mana, but applied to all enemies within the area of effect.","reason_zh":"伤害仍按主目标法力计算，并施加给范围内的所有敌人。"},
+        {"review_id":"b0af743ecf15a5b52f76","verdict":"holds","quote":"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies.","reason_zh":"两版说明相同且无字段变更，沿用原行关于基础技能不可被破坏的判定。"},
+        {"review_id":"ad96bbb08be9b8c4d434","verdict":"holds","quote":"The main target is also mini-stunned.","reason_zh":"主目标仍会受到小眩晕。"},
+        {"review_id":"46beb7baf9dddc6ac9fd","verdict":"holds","quote":"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies.","reason_zh":"施法仍以一个敌方单位为主目标，伤害同时波及其周围敌人。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+42,214
+{
+  "objects": [
+    {
+      "subject": "abaddon_aphotic_shield",
+      "rows": [
+        {"review_id":"12a06e3d6478cf1fa673","verdict":"holds","quote":"%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.","reason_zh":"魔晶仍会将部分吸收的伤害施加给附近多个敌人。"},
+        {"review_id":"8dad476900d8610048cd","verdict":"holds","quote":"When the barrier is destroyed it will burst and deal damage equal to the amount it could absorb to an area around it.","reason_zh":"基础护盾破裂时仍会对周围区域造成伤害。"},
+        {"review_id":"ecb86845a281bf965219","verdict":"holds","quote":"DISPEL TYPE: Strong Dispel","reason_zh":"对友军施放基础护盾时仍施加强驱散。"},
+        {"review_id":"5991fbaf7387e26a1eb7","verdict":"holds","quote":"an all damage barrier that absorbs a set amount of damage before expiring","reason_zh":"基础护盾仍能吸收一定数额的各类伤害。"},
+        {"review_id":"b6e74ff2589b8c45f1ef","verdict":"holds","quote":"%absorb_to_damage%%% of absorbed damage is dealt to nearby enemies.","reason_zh":"吸收伤害由基础护盾提供，魔晶提供的是按已吸收伤害对敌人造成伤害的效果。"},
+        {"review_id":"f8330b7587285ea0c12a","verdict":"holds","quote":"Summons dark energies around an ally unit, dispelling them and creating an all damage barrier","reason_zh":"技能在已有友军身上生成护盾，没有召唤有血量的单位或夺取单位控制权。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abaddon_borrowed_time",
+      "rows": [
+        {"review_id":"6cf640f6253139a1968b","verdict":"holds","quote":"ability_has_scepter: true→false","reason_zh":"回光返照的 A 杖升级已移除，因此原行关于 A 杖不提供范围伤害的否定判断仍成立。"},
+        {"review_id":"524ea5a99b66274e609c","verdict":"holds","quote":"DISPEL TYPE: Strong Dispel","reason_zh":"基础技能发动时仍会对自身施加强驱散。"},
+        {"review_id":"6f614275c32e26be491d","verdict":"holds","quote":"Break prevents Borrowed Time from automatically activating.","reason_zh":"破坏仍能阻止被动自动发动，材料也未列出 IsBreakable 变更。"},
+        {"review_id":"7f265d17f0bee979f2a6","verdict":"holds","quote":"all damage dealt to you will heal instead of harm","reason_zh":"技能生效期间，受到的伤害会转为治疗，从而防止亚巴顿被这些伤害击杀。"},
+        {"review_id":"7f888fc2eb8cd385bef3","verdict":"holds","quote":"all damage dealt to you will heal instead of harm","reason_zh":"基础技能仍将受到的伤害转为自身治疗。"},
+        {"review_id":"2c98c2cb05a4a2a4bb26","verdict":"holds","quote":"ability_has_scepter: true→false","reason_zh":"回光返照已无 A 杖升级，因此 A 杖不提供缠绕的原判仍成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abaddon_death_coil",
+      "rows": [
+        {"review_id":"f5f47bc0d9db93f9412b","verdict":"holds","quote":"effect_radius.base: []→[0]","reason_zh":"基础作用半径为 0，只有 A 杖把效果扩展到目标周围，基础范围伤害的否定判断仍成立。"},
+        {"review_id":"e01f7cdb62122e1046a5","verdict":"holds","quote":"Friendly units are healed and have their movement speed increased.","reason_zh":"基础技能对友军仍有治疗效果。"},
+        {"review_id":"52a5b55a7ce6f1fd8e95","verdict":"holds","quote":"Enemy units are damaged and slowed.","reason_zh":"基础技能仍可选中敌方单位施加伤害和减速，A 杖扩大的是目标周围的作用范围。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"haste","condition":"base","quote":"Friendly units are healed and have their movement speed increased.","reason_zh":"7.42 为基础技能命中的友军新增移动速度加成。"},
+        {"mechanism":"slow","condition":"base","quote":"Enemy units are damaged and slowed.","reason_zh":"7.42 为基础技能命中的敌人新增移动减速。"},
+        {"mechanism":"aoe_damage","condition":"scepter_upgrade","quote":"Mist Coil affects all units in a %effect_radius% radius around the target.","reason_zh":"新增 A 杖升级使技能能伤害目标周围 400 范围内的多个敌人，现有否定行仅适用于基础技能。"}
+      ]
+    },
+    {
+      "subject": "abaddon_frostmourne",
+      "rows": [
+        {"review_id":"5388d26e118abfa3417e","verdict":"holds","quote":"Abaddon strikes an enemy, affecting them by a chilling curse","reason_zh":"每次攻击把诅咒施加给被击中的敌人，本次调整没有使伤害波及周围单位。"},
+        {"review_id":"audit:abaddon_frostmourne:attack_modifier:base","verdict":"holds","quote":"Abaddon strikes an enemy, affecting them by a chilling curse, slowing them, causing them to take damage over time","reason_zh":"普通攻击仍会附加造成减速和持续伤害的诅咒。"},
+        {"review_id":"30e55fe750e981045a87","verdict":"holds","quote":"curse_duration.base: [2]→[3]","reason_zh":"本次调整涉及诅咒时长、伤害及攻速等字段，未列出 IsBreakable 变更，沿用原行的可被破坏判定。"},
+        {"review_id":"59b84b5db11958e4fd3b","verdict":"holds","quote":"affecting them by a chilling curse, slowing them","reason_zh":"7.42 仍明确写有诅咒减速，删除单独的 slow_duration 字段没有删除该效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abaddon_withering_mist",
+      "rows": [
+        {"review_id":"8580b6af0a2d9111ad8e","verdict":"holds","quote":"Damaging enemies reduces their Health Restoration for %duration%s.","reason_zh":"受到伤害是敌人被减疗的触发条件，凋零迷雾本身没有新增对多个敌人造成伤害的效果。"},
+        {"review_id":"c2dd818ab9c8a64c54f8","verdict":"holds","quote":"max_heal_reduction_pct.base: null→[40]","reason_zh":"改动调整了减疗强度及触发条件，未列出 IsBreakable 变更，沿用原行的可被破坏判定。"},
+        {"review_id":"023b1cfedc31aaaf3dcb","verdict":"holds","quote":"The lower the enemy's HP, the stronger the Health restoration reduction effect.","reason_zh":"基础技能仍削减生命恢复，强度从满血时的 10% 随生命降低而增至最高 40%，物品伤害不能触发。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abyssal_blade",
+      "rows": [
+        {"review_id":"6bff14de65c720924c05","verdict":"holds","quote":"chance on hit to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus physical damage","reason_zh":"重击的额外伤害仍施加给本次攻击目标，主动技能也只指向一个敌人。"},
+        {"review_id":"cd98da73ae5e3687e164","verdict":"holds","quote":"Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target","reason_zh":"符合条件的英雄攻击命中时仍有概率触发重击，新说明明确幻象不能获得该重击。"},
+        {"review_id":"325afb07ca5141e24d40","verdict":"holds","quote":"Active: Overwhelm Stuns a target enemy unit for %stun_duration% seconds. Pierces Debuff Immunity.","reason_zh":"7.42 的装备效果和字段变更均未新增伤害格挡，旧版关于格挡不叠加的通用注释也已删除。"},
+        {"review_id":"e8f160c820a1e8d97873","verdict":"holds","quote":"Active: Overwhelm Stuns a target enemy unit for %stun_duration% seconds. Pierces Debuff Immunity.","reason_zh":"装备主动技能仍明确无视减益免疫。"},
+        {"review_id":"audit:abyssal_blade:slow_resistance:item","verdict":"now_wrong","quote":"slow_resistance.base: [30]→null","reason_zh":"装备原有的 30% 减速抗性已移除。"},
+        {"review_id":"04fa0ef69a96f89755a7","verdict":"holds","quote":"Stuns a target enemy unit for %stun_duration% seconds.","reason_zh":"装备主动技能仍能眩晕指定敌人。"},
+        {"review_id":"af53553ef03fbfbbe6f5","verdict":"holds","quote":"chance on hit to stun the target for %bash_duration% seconds","reason_zh":"被动重击触发时仍会眩晕攻击目标。"},
+        {"review_id":"c359f7cc91fdc0ad13f8","verdict":"holds","quote":"Stuns a target enemy unit for %stun_duration% seconds.","reason_zh":"装备仍具备眩晕机制，主动施法距离调整没有移除眩晕。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "abyssal_underlord_dark_portal",
+      "rows": [
+        {"review_id":"audit:abyssal_underlord_dark_portal:aoe_damage:scepter","verdict":"holds","quote":"Summons a Pit of Malice around the furthermost of the portals.","reason_zh":"原行所对应的怨念深渊仍由 A 杖在远端门生成，生成地点从两处减为一处，范围伤害判定仍成立。"},
+        {"review_id":"6e0a7e13d695487c8eee","verdict":"holds","quote":"Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side.","reason_zh":"需要引导的是英雄使用传送门的过程，孽主开门本身没有持续施法要求。"},
+        {"review_id":"audit:abyssal_underlord_dark_portal:displace_other:base","verdict":"holds","quote":"Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side.","reason_zh":"其他英雄仍可自行引导穿门，由传送门将其送到另一端。"},
+        {"review_id":"audit:abyssal_underlord_dark_portal:ground_zone:scepter","verdict":"holds","quote":"Summons a Pit of Malice around the furthermost of the portals.","reason_zh":"A 杖仍在固定的门周围生成怨念深渊场地，现在仅在远端门生成。"},
+        {"review_id":"audit:abyssal_underlord_dark_portal:root:scepter","verdict":"holds","quote":"Summons a Pit of Malice around the furthermost of the portals.","reason_zh":"原行认定提供缠绕的怨念深渊仍在远端门生成，适用条件仍为 A 杖。"},
+        {"review_id":"138331cab6893993b41e","verdict":"holds","quote":"Summons a Pit of Malice around the furthermost of the portals. Reduces cooldown.","reason_zh":"自身传送由基础传送门提供，A 杖改动没有额外提供孽主自身位移。"},
+        {"review_id":"c989d06692066a02ad9f","verdict":"holds","quote":"Double-click to teleport to your team's base, in front of your fountain","reason_zh":"孽主仍能通过基础技能传送自身。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"slow","condition":"scepter_upgrade","quote":"shot_slow_duration.scepter: null→[2.5]；shot_movement_speed_pct.scepter: null→[40]","reason_zh":"新增 A 杖弹体字段给出 40% 的移动减速和 2.5 秒的持续时间。"},
+        {"mechanism":"grant_vision","condition":"scepter_upgrade","quote":"shot_vision.scepter: null→[100]；shot_vision_duration.scepter: null→[1.5]","reason_zh":"新增 A 杖弹体字段给出 100 的视野范围和 1.5 秒的视野持续时间。"}
+      ]
+    },
+    {
+      "subject": "abyssal_underlord_raid_boss",
+      "rows": [
+        {"review_id":"ec3e03a5a294a8a824da","verdict":"holds","quote":"barrier_max_health_pct.base: null→[8.5]","reason_zh":"本次变更将减伤改为护盾并调整持续时间，未列出 IsBreakable 变更，沿用原行的可被破坏判定。"},
+        {"review_id":"c5c60221b29ab7606e25","verdict":"holds","quote":"they temporarily gain a Physical Damage Barrier based on their max health","reason_zh":"传送后的百分比减伤改为按友军最大生命值计算的物理伤害护盾，仍符合伤害吸收机制。"},
+        {"review_id":"d459cb44e9075b5ec96d","verdict":"holds","quote":"they temporarily gain a Physical Damage Barrier based on their max health and Movement Speed.","reason_zh":"友方英雄传送后仍会获得临时移动速度加成。"},
+        {"review_id":"58d316e6a4678c80739b","verdict":"holds","quote":"After an allied hero Teleports","reason_zh":"传送是获得增益的前置事件，该技能本身没有提供位移。"},
+        {"review_id":"fa7545c29e6d5ee5a5b5","verdict":"holds","quote":"After an allied hero Teleports, they temporarily gain a Physical Damage Barrier based on their max health and Movement Speed.","reason_zh":"移速效果作用于传送后的友军，没有对敌人施加减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "aether_lens",
+      "rows": [
+        {"review_id":"17e69798a3c6a3f66932","verdict":"holds","quote":"item_cost: 2275→2100；cast_range_bonus.base: [225]→[200]","reason_zh":"本次仅改动价格与施法距离，没有改变原行所记的装备回蓝属性。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "alchemist_berserk_potion",
+      "rows": [
+        {"review_id":"ae26e07267b79b539a3f","verdict":"holds","quote":"applying a basic dispel","reason_zh":"药剂施放时仍对友军施加弱驱散，dispellable 字段的变化描述的是药剂效果自身的可驱散性。"},
+        {"review_id":"9a8c0166570afbebc9e0","verdict":"holds","quote":"giving them attack speed, movement speed and HP regen","reason_zh":"药剂仍为友军提高移动速度，本次材料未显示原行的魔晶获取条件发生变化。"},
+        {"review_id":"6087ba2c896efaf75a14","verdict":"holds","quote":"giving them attack speed, movement speed and HP regen","reason_zh":"药剂仍给予友军生命恢复。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"effect_dispellability","condition":"base","quote":"dispellable: 2→3","reason_zh":"7.42 改变了药剂增益自身的可驱散规则，材料未给出枚举值 3 对应的驱散等级。"}
+      ]
+    },
+    {
+      "subject": "alchemist_goblins_greed",
+      "rows": [
+        {"review_id":"7a5c71d6bbe8acd03b08","verdict":"holds","quote":"scepter_bonus_damage.base: [15]→[20]","reason_zh":"唯一字段改动是熔化 A 杖的攻击力奖励，IsBreakable 未列为变化字段，沿用原行的可被破坏判定。"},
+        {"review_id":"b0dbc98060cb0d9273ca","verdict":"holds","quote":"Alchemist synthesizes additional gold from his enemies and bounty runes.","reason_zh":"击杀与赏金神符仍可为炼金术士提供额外金钱。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ancient_apparition_bone_chill",
+      "rows": [
+        {"review_id":"8a62e8f48646ffba341c","verdict":"holds","quote":"When Ancient Apparition deals Magic damage to an enemy Hero with his abilities its Strength is reduced.","reason_zh":"技能魔法伤害触发力量削减，刺骨严寒本身没有新增范围伤害。"},
+        {"review_id":"520b3e8b16fbc21a4e03","verdict":"holds","quote":"movement_slow_pct.base: [2]→[]","reason_zh":"本次仅列出减速字段变更，未列出 IsBreakable 变更，沿用原行关于不可被破坏的判断。"},
+        {"review_id":"f718ffee4caf02179a56","verdict":"now_wrong","quote":"movement_slow_pct.base: [2]→[]","reason_zh":"原有减速数值被清空，7.42 说明也删除了减速，仅保留对敌方英雄的力量削减。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ancient_apparition_chilling_touch",
+      "rows": [
+        {"review_id":"6e2259ca556fe474e521","verdict":"holds","quote":"Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.","reason_zh":"强化攻击仍附加魔法伤害与减速。"},
+        {"review_id":"8c0f3404b538630621fa","verdict":"holds","quote":"a burst of magical damage and slow","reason_zh":"基础强化攻击仍会减速命中的目标。"},
+        {"review_id":"b191adef9793c1cf912e","verdict":"holds","quote":"Enhances Ancient Apparition's attack with increased range and a burst of magical damage and slow.","reason_zh":"本次调整了伤害和魔耗，未改变原行所记的敌方单位指向方式。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ancient_apparition_cold_feet",
+      "rows": [
+        {"review_id":"260f6b7f332b274e64b9","verdict":"holds","quote":"Places a curse on an enemy, dealing damage over time and slowing the target.","reason_zh":"基础施法仍对一个敌人施加诅咒，范围点目标施法仍由原有命石说明单独提供。"},
+        {"review_id":"399a29e359128b7dffd3","verdict":"holds","quote":"If the enemy unit doesn't move outside of the given range from the initial location, it will be stunned and frozen in place after %AbilityDuration% seconds.","reason_zh":"目标未及时离开初始位置周围的范围时，仍会被眩晕。"},
+        {"review_id":"c4edd5471615128972cf","verdict":"holds","quote":"Places a curse on an enemy","reason_zh":"基础技能仍以一个敌方单位为施法目标。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"slow","condition":"base","quote":"Places a curse on an enemy, dealing damage over time and slowing the target.","reason_zh":"7.42 为基础诅咒新增移动减速，各级数值为 4%、6%、8%、10%。"}
+      ]
+    },
+    {
+      "subject": "ancient_apparition_ice_blast",
+      "rows": [
+        {"review_id":"51560e60ab4622181565","verdict":"holds","quote":"the area to be blasted by a damaging explosion of hail","reason_zh":"基础爆炸仍能伤害区域内的多个敌人，各级伤害调整后均大于 0。"},
+        {"review_id":"447c2150e295f830da79","verdict":"holds","quote":"If a Frostbitten unit's health drops below a certain percentage, they will instantly shatter.","reason_zh":"受冻单位生命低于阈值时仍会被直接击杀，说明保留了幻象例外。"},
+        {"review_id":"5665b59b817b23e128f8","verdict":"holds","quote":"taking damage over time and prevented from regenerating or healing","reason_zh":"受冻敌人仍会被禁止进行大多数形式的生命恢复。"},
+        {"review_id":"a48dba2c6b9516657805","verdict":"holds","quote":"prevented from regenerating or healing","reason_zh":"技能施加的是对生命恢复的限制，没有给单位恢复生命。"},
+        {"review_id":"6d64ca7f0c59779adbe5","verdict":"holds","quote":"Freezes enemies hit with the current level of Cold Feet for %cold_feet_stun_duration_pct%%% of the duration.","reason_zh":"魔晶仍会按当前寒霜之足眩晕时长的一定比例冻结命中的敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ancient_apparition_ice_vortex",
+      "rows": [
+        {"review_id":"aef71eb038e9abfe7709","verdict":"holds","quote":"Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range.","reason_zh":"漩涡仍对范围内的多个敌人造成伤害。"},
+        {"review_id":"f6314dcae344c1e2d415","verdict":"holds","quote":"Provides vision in a small area where it is placed.","reason_zh":"漩涡仍提供放置地点周围小范围的视野。"},
+        {"review_id":"audit:ancient_apparition_ice_vortex:ground_zone:base","verdict":"holds","quote":"Creates a vortex of icy energy that slows, deals damage, and increases magic damage done to enemies in its range.","reason_zh":"漩涡仍在放置地点持续影响范围内的敌人。"},
+        {"review_id":"audit:ancient_apparition_ice_vortex:magic_resist_reduction:base","verdict":"holds","quote":"spell_resist_pct.base: [-16,-19,-22,-25]→[-14,-16,-18,-20]","reason_zh":"各级减抗幅度降低，但范围内敌人仍会受到更多魔法伤害。"},
+        {"review_id":"c915fd0f285f73a4f6b0","verdict":"holds","quote":"movement_speed_pct.base: [-8]→[-10,-15,-20,-25]","reason_zh":"减速从固定 8% 改为随等级增强，各级仍会降低敌人移速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "angels_demise",
+      "rows": [
+        {"review_id":"audit:angels_demise:applies_break:item","verdict":"holds","quote":"disables their passives","reason_zh":"装备强化的下一次敌方单位指向技能仍会使目标的被动失效。"},
+        {"review_id":"audit:angels_demise:healing:item","verdict":"holds","quote":"Passive: Empower Spell","reason_zh":"两版被动说明相同且没有字段变更，沿用原行的装备回复判定，所引说明未单列回复属性。"},
+        {"review_id":"f977607053076e6a3665","verdict":"holds","quote":"Passive: Empower Spell","reason_zh":"两版说明相同且没有字段变更，沿用原行的装备回蓝判定，所引说明未单列回蓝属性。"},
+        {"review_id":"1ea67b39407b5d933a49","verdict":"holds","quote":"slows their movement speed by %slow%%% for %slow_duration%s.","reason_zh":"强化技能命中敌人时仍会降低其移动速度。"},
+        {"review_id":"6ed681394ba9db5726ca","verdict":"holds","quote":"The slow debuff is dispellable.","reason_zh":"7.42 仍明确保留可被驱散的减速效果。"},
+        {"review_id":"c4baa5ab9e94cc51f251","verdict":"holds","quote":"deals a separate %bonus_spell_damage% additional damage","reason_zh":"装备触发的是一次独立额外伤害，没有提高技能本身的伤害倍率。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "antimage_counterspell",
+      "rows": [
+        {"review_id":"5aea2395abfd2193ba6a","verdict":"holds","quote":"Break disables the passive magic resistance.","reason_zh":"破坏仍使被动魔法抗性失效，材料也未列出 IsBreakable 变更。"},
+        {"review_id":"609c42f3ef12eaa15b6c","verdict":"holds","quote":"blocks and reflects any targeted spells","reason_zh":"基础护盾在指向技能命中时进行格挡和反弹，没有新增因自身受到伤害而触发的反击伤害。"},
+        {"review_id":"488de93bf271dcbe75cd","verdict":"holds","quote":"Creates a blinked fragment of Anti-Mage next to the enemy caster","reason_zh":"魔晶在敌方施法者旁生成碎片，敌法师本体没有发生位移。"},
+        {"review_id":"275967c2ba08ccd3efdb","verdict":"holds","quote":"an anti-magic shell around Anti-Mage that blocks and reflects any targeted spells","reason_zh":"基础护盾仍可格挡指向敌法师的技能。"},
+        {"review_id":"212f91f02dd62ed26441","verdict":"holds","quote":"Creates a blinked fragment of Anti-Mage next to the enemy caster upon reflecting their unit-targeted spell while active.","reason_zh":"反弹由基础护盾提供，魔晶只在成功反弹后生成碎片。"},
+        {"review_id":"8645534f779abf2a8d27","verdict":"holds","quote":"blocks and reflects any targeted spells","reason_zh":"基础护盾仍会反弹指向技能。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "antimage_mana_break",
+      "rows": [
+        {"review_id":"audit:antimage_mana_break:attack_modifier:base","verdict":"holds","quote":"Burns an opponent's mana on each attack and deals damage equal to a percentage of the mana burnt.","reason_zh":"每次攻击仍附带烧蓝和按烧蓝量计算的伤害。"},
+        {"review_id":"f15287d0fecd25c3927d","verdict":"holds","quote":"Burns an opponent's mana on each attack","reason_zh":"两版说明相同且无字段变更，沿用原行依据 IsBreakable 作出的可被破坏判定。"},
+        {"review_id":"58afc8e51eb59d393ae3","verdict":"holds","quote":"Burns an opponent's mana on each attack","reason_zh":"每次攻击仍会削减对手的法力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "antimage_mana_void",
+      "rows": [
+        {"review_id":"bbfa473fd9d67c215734","verdict":"holds","quote":"Damage is calculated based on the primary target's mana, but applied to all enemies within the area of effect.","reason_zh":"伤害仍按主目标法力计算，并施加给范围内的所有敌人。"},
+        {"review_id":"b0af743ecf15a5b52f76","verdict":"holds","quote":"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies.","reason_zh":"两版说明相同且无字段变更，沿用原行关于基础技能不可被破坏的判定。"},
+        {"review_id":"ad96bbb08be9b8c4d434","verdict":"holds","quote":"The main target is also mini-stunned.","reason_zh":"主目标仍会受到小眩晕。"},
+        {"review_id":"46beb7baf9dddc6ac9fd","verdict":"holds","quote":"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies.","reason_zh":"施法仍以一个敌方单位为主目标，伤害同时波及其周围敌人。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

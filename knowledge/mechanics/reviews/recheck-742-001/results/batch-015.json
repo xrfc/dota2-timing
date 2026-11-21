@@ -1,0 +1,192 @@
+{
+  "objects": [
+    {
+      "subject": "ogre_magi_dumb_luck",
+      "rows": [
+        {"review_id":"dfbae26fda8aabf3632b","verdict":"holds","quote":"Ogre Magi's max Intelligence is 0. He receives mana and mana regeneration from Strength.","reason_zh":"两版说明相同，字段变更中也没有 IsBreakable，沿用基础技能不可被破坏的原判。"},
+        {"review_id":"d0539413ded7cc10b010","verdict":"holds","quote":"He receives mana and mana regeneration from Strength.","reason_zh":"力量仍为食人魔魔法师自身提供法力回复。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"ogre_magi_fireblast",
+      "rows":[
+        {"review_id":"3577b90479fb3abfc406","verdict":"holds","quote":"When Multicast, Fireblast hits the same target each time with a %multicast_delay% seconds interval.","reason_zh":"基础施法命中一个敌人，多重施法也只重复命中同一目标，因此范围伤害的否定判定仍成立。"},
+        {"review_id":"d2eb502b9d7f781ab085","verdict":"holds","quote":"dealing damage and stunning the target.","reason_zh":"命中时仍会眩晕目标。"},
+        {"review_id":"c0bc7c77fa0f245295ae","verdict":"holds","quote":"Blasts an enemy unit with a wave of fire","reason_zh":"施放时仍以一个敌方单位为目标。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"ogre_magi_ignite",
+      "rows":[
+        {"review_id":"audit:ogre_magi_ignite:aoe_damage:base","verdict":"holds","quote":"Drenches the target and another random unit in volatile chemicals, causing it to burst into flames.","reason_zh":"一次基础施法仍可使主目标和另一个随机单位受到燃烧伤害。"},
+        {"review_id":"de7e88e05d8aa44379a9","verdict":"holds","quote":"The target is in immense pain, taking damage and moving more slowly.","reason_zh":"燃烧伤害和持续时间虽有调整，目标仍会被降低移动速度。"},
+        {"review_id":"3e8ba6840f4afeef1c86","verdict":"holds","quote":"Drenches the target and another random unit in volatile chemicals","reason_zh":"施放时仍可指定敌方主目标，另一个受影响的单位才是随机选取的。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"omniknight_hammer_of_purity",
+      "rows":[
+        {"review_id":"7029481b549a6c7eb1eb","verdict":"holds","quote":"causing his attack to have increased range, deal pure damage based on a percentage of his base damage and slow his target for a short duration.","reason_zh":"强化攻击仍附带纯粹伤害和减速，符合攻击特效定义。"},
+        {"review_id":"1c0f948162e6d260cf87","verdict":"holds","quote":"When attacking non-hero targets, amount healed is decreased by the standard creep lifesteal factor.","reason_zh":"新增说明只涉及攻击非英雄时的回复量，字段变更中没有 IsBreakable，沿用可被破坏的原判。"},
+        {"review_id":"f292d3b0a154035bc0ec","verdict":"holds","quote":"Omniknight heals for %heal_pct%%% of the damage dealt over %heal_duration%s.","reason_zh":"全能骑士仍会在一段时间内回复生命，攻击非英雄只会降低回复量。"},
+        {"review_id":"audit:omniknight_hammer_of_purity:lifesteal:base","verdict":"holds","quote":"Omniknight heals for %heal_pct%%% of the damage dealt over %heal_duration%s.","reason_zh":"自身回复量仍按这次攻击造成的伤害计算，符合吸血定义。"},
+        {"review_id":"f5a8f83fc59e587a654d","verdict":"holds","quote":"slow his target for a short duration.","reason_zh":"强化攻击仍会短暂减速目标。"},
+        {"review_id":"f2136996ac190ba19044","verdict":"holds","quote":"When attacking non-hero targets, amount healed is decreased by the standard creep lifesteal factor.","reason_zh":"本次新增说明只区分受击目标对应的回复量，施法指向没有变更，沿用可指定敌方单位的原判。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"oracle_false_promise",
+      "rows":[
+        {"review_id":"355fa674836ea818ae86","verdict":"holds","quote":"Removes most negative status effects and disables on initial cast. DISPEL TYPE: Strong Dispel","reason_zh":"施法之初仍会对友方目标施加强驱散。"},
+        {"review_id":"e226ed1f447f7c3b23d9","verdict":"holds","quote":"delaying any healing or damage taken until False Promise ends.","reason_zh":"目标受到的伤害仍延至技能结束时结算，符合减伤条目中的延迟结算定义。"},
+        {"review_id":"dbbfb105e87b729dddd7","verdict":"holds","quote":"delaying any healing or damage taken until False Promise ends.","reason_zh":"致命伤害也会延迟结算，因此目标在效果期间仍可免于被这部分伤害击杀。"},
+        {"review_id":"5ef1d0e1f81d8094c6fd","verdict":"holds","quote":"Any healing that is delayed by False Promise is amplified.","reason_zh":"技能延迟并放大目标收到的治疗，本身没有独立的生命回复量。"},
+        {"review_id":"5e6dbfca16aae95b20d7","verdict":"holds","quote":"Delayed damage and healing will take armor and magic resistance reductions into account when received.","reason_zh":"结算会计入目标当时已有的魔抗削减，技能本身没有施加减魔抗或魔法易伤。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"oracle_fates_edict",
+      "rows":[
+        {"review_id":"732942d1eda4844db90d","verdict":"holds","quote":"Oracle enraptures a target, disarming them","reason_zh":"目标仍会被缴械，冷却调整不影响该效果。"},
+        {"review_id":"299eb9d2f5e4f397e8b1","verdict":"holds","quote":"Oracle enraptures a target, disarming them and granting them %magic_damage_resistance_pct_tooltip%%% magic damage resistance.","reason_zh":"技能仍对指定单位施加效果，本次只调整冷却，沿用可指定敌方单位的原判。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"oracle_purifying_flames",
+      "rows":[
+        {"review_id":"b2d1f3c6091d4d8168ee","verdict":"holds","quote":"causing them to regenerate health over time.","reason_zh":"初始伤害结算后，目标仍会持续回复生命。"},
+        {"review_id":"3ff284eabbbe981574e0","verdict":"holds","quote":"Can be cast on enemies and allies.","reason_zh":"施法时仍可指定一个敌方或友方单位。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"orb_of_corrosion",
+      "rows":[
+        {"review_id":"2ec2ed2a104021d2967b","verdict":"holds","quote":"Your attacks reduce the target's armor by %corruption_armor%","reason_zh":"装备者的攻击仍会降低目标护甲。"},
+        {"review_id":"audit:orb_of_corrosion:attack_modifier:item","verdict":"holds","quote":"Your attacks reduce the target's armor by %corruption_armor%, slows their movement by %slow_ranged%%% (%slow_melee%%% against melee targets), and reduces Health Restoration by %heal_reduction%%%.","reason_zh":"减甲、减速和减疗仍由装备者的普通攻击施加。"},
+        {"review_id":"3bf4f912189e3573f751","verdict":"holds","quote":"reduces Health Restoration by %heal_reduction%%%.","reason_zh":"攻击仍会削减目标的生命恢复，新增说明仅限定该效果与其他物品的叠加。"},
+        {"review_id":"bae6d7685c525c50779a","verdict":"holds","quote":"slows their movement by %slow_ranged%%% (%slow_melee%%% against melee targets)","reason_zh":"攻击仍会降低目标移动速度，新增的叠加限制未移除减速。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"orb_of_frost",
+      "rows":[
+        {"review_id":"audit:orb_of_frost:attack_modifier:item","verdict":"holds","quote":"Your attacks slow the target's movement by %slow_ranged%%% (%slow_melee%%% against melee targets), and reduces Health Restoration by %heal_reduction%%%.","reason_zh":"装备者的普通攻击仍附带减速和减疗。"},
+        {"review_id":"6a8428bde7538e2dce83","verdict":"holds","quote":"reduces Health Restoration by %heal_reduction%%%.","reason_zh":"受击目标的生命恢复仍会被削减。"},
+        {"review_id":"6b4a87f559d21ecc5d8c","verdict":"holds","quote":"Your attacks slow the target's movement by %slow_ranged%%% (%slow_melee%%% against melee targets)","reason_zh":"攻击仍会降低目标的移动速度。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"orb_of_venom",
+      "rows":[
+        {"review_id":"audit:orb_of_venom:attack_modifier:item","verdict":"holds","quote":"Passive: Poison Attack Poisons the target hero, dealing %damage% magical damage per second.","reason_zh":"装备者攻击英雄仍可附加持续毒伤，目标限于英雄且幻象攻击不能触发，均未移除装备的攻击特效。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"orchid",
+      "rows":[
+        {"review_id":"8853de935d4d8f958e6c","verdict":"holds","quote":"At the end of the silence, %silence_damage_percent%%% of the damage received while silenced is inflicted as bonus magical damage.","reason_zh":"沉默结束时会按期间所受伤害另行造成魔法伤害，说明没有赋予减魔抗或魔法易伤效果。"},
+        {"review_id":"929c70d7cfe4c3cce617","verdict":"holds","quote":"Active: Soul Burn Silences the target unit for %silence_duration% seconds.","reason_zh":"引文仅描述主动效果，两版说明相同且没有回蓝字段变更，沿用装备提供自身回蓝的原判。"},
+        {"review_id":"38cfb2b22f1a3786db4e","verdict":"holds","quote":"Silences the target unit for %silence_duration% seconds.","reason_zh":"主动效果仍会使目标沉默。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"overwhelming_blink",
+      "rows":[
+        {"review_id":"195129478b3f1ac81342","verdict":"holds","quote":"After teleportation, all enemies in a %radius% AoE take damage","reason_zh":"一次传送仍可对落点范围内的所有敌人造成伤害。"},
+        {"review_id":"audit:overwhelming_blink:attack_slow:item","verdict":"holds","quote":"attack_slow.base: [50]→[70]","reason_zh":"减攻速数值从50提高到70，装备仍会降低敌方攻速。"},
+        {"review_id":"d1bf0f20de1627f4c116","verdict":"holds","quote":"Teleport to a target point up to %blink_range% units away.","reason_zh":"主动使用仍会将装备者传送到指定地点。"},
+        {"review_id":"ea89d954d653478161e0","verdict":"holds","quote":"Self-casting will cause you to teleport in the direction of your team's fountain.","reason_zh":"对自己施放时仍会朝己方泉水方向传送，符合自身位移定义。"},
+        {"review_id":"ea0fca55691277e6605c","verdict":"holds","quote":"movement_slow.base: [50]→[35]","reason_zh":"移动减速数值降至35，仍会降低敌方移速。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"pangolier_swashbuckle",
+      "rows":[
+        {"review_id":"audit:pangolier_swashbuckle:aoe_damage:base","verdict":"holds","quote":"then slashes and briefly slows all enemies in the drawn direction with several quick swipes.","reason_zh":"每次斩击的伤害和斩击次数虽有调整，一次施法仍可伤害所选方向上的多个敌人。"},
+        {"review_id":"5efd17e3877eaa17a332","verdict":"holds","quote":"Pangolier dashes along the target line","reason_zh":"石鳞剑士仍会沿指定路线冲刺。"},
+        {"review_id":"8bb65250b2e042136bd8","verdict":"holds","quote":"briefly slows all enemies in the drawn direction","reason_zh":"斩击仍会短暂降低所选方向上敌人的移速。"},
+        {"review_id":"audit:pangolier_swashbuckle:terrain_walk:base","verdict":"holds","quote":"Pangolier dashes along the target line","reason_zh":"两版的冲刺描述相同，本次改动涉及斩击伤害、次数和物品效力，沿用原有的地形通行判定。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"pavise",
+      "rows":[
+        {"review_id":"4ec068786133e91d40cd","verdict":"holds","quote":"grants them a physical damage barrier that absorbs %absorb_amount% damage.","reason_zh":"价格调整后，主动效果仍为友方目标提供吸收物理伤害的护盾。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"phantom_assassin_blur",
+      "rows":[
+        {"review_id":"audit:phantom_assassin_blur:cooldown_reduction:shard","verdict":"holds","quote":"Any time Phantom Assassin gets a hero kill, her ability cooldowns advance %cooldown_refund_pct%%% of their max cooldown values.","reason_zh":"装备魔晶时，幻影刺客击杀英雄仍会推进其他技能的冷却。"},
+        {"review_id":"535962c624fc8a073843","verdict":"holds","quote":"active_movespeed_bonus.base: [9.5]→[12]","reason_zh":"基础技能的移速加成提高到12，自身加速仍成立。"},
+        {"review_id":"audit:phantom_assassin_blur:invisibility:base","verdict":"holds","quote":"causing her to be impossible to see until she comes near enemy heroes or towers.","reason_zh":"基础技能仍可使幻影刺客隐身，新增的攻击解除条件只影响隐身何时结束。"},
+        {"review_id":"32050a2734c2f1236be8","verdict":"holds","quote":"disjointing incoming projectiles","reason_zh":"施放时仍可使已经飞来的弹道落空。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"phantom_assassin_immaterial",
+      "rows":[
+        {"review_id":"839e3be4e957dfef9302","verdict":"holds","quote":"evasion.base: [25,35,45,55]→[20,30,40,50]","reason_zh":"变更字段只有闪避数值，没有 IsBreakable 变更，沿用可被破坏的原判。"},
+        {"review_id":"c5fe94d57f6b36bcf09b","verdict":"holds","quote":"evasion.base: [25,35,45,55]→[20,30,40,50]","reason_zh":"各级闪避数值均下调，但仍全部大于零。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"phantom_assassin_phantom_strike",
+      "rows":[
+        {"review_id":"2966d3ead42e9058acea","verdict":"holds","quote":"Teleports to a unit, friendly or enemy, and grants bonus attack speed while attacking if it's an enemy unit.","reason_zh":"两版说明均只描述传送和攻速，且没有充能字段变更，沿用基础技能具有充能的原判。"},
+        {"review_id":"5342c583d7689ff5798f","verdict":"holds","quote":"Teleports to a unit, friendly or enemy","reason_zh":"幻影刺客仍可将自身传送至所选单位。"},
+        {"review_id":"c4c9a19f3fd010964b01","verdict":"holds","quote":"Teleports to a unit, friendly or enemy","reason_zh":"传送目标可选敌方单位，符合单体指向定义。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"phantom_assassin_stifling_dagger",
+      "rows":[
+        {"review_id":"f2f4770312252748eaf4","verdict":"holds","quote":"Throws a dagger slowing the enemy unit's movement speed, dealing %base_damage%+%attack_factor_tooltip%%% of Phantom Assassin's attack damage as physical damage","reason_zh":"基础短匕的伤害仍作用于一个敌方单位，未增加对周围敌人的伤害。"},
+        {"review_id":"906e413b39050ff6384a","verdict":"holds","quote":"Stifling Dagger grants vision around its location while it travels and upon impact.","reason_zh":"短匕飞行途中及命中时仍提供所在位置周围的视野。"},
+        {"review_id":"060b0ebfce87092d6fbf","verdict":"holds","quote":"slowing the enemy unit's movement speed","reason_zh":"短匕仍会降低敌方目标的移动速度。"},
+        {"review_id":"e6b6b1a9658bc34c0ef8","verdict":"holds","quote":"Throws a dagger slowing the enemy unit's movement speed","reason_zh":"短匕仍以一个敌方单位为施法目标。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"phantom_lancer_doppelwalk",
+      "rows":[
+        {"review_id":"816318b325e562c4c8f6","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"基础技能仍会施加弱驱散。"},
+        {"review_id":"8c509a9b8626cf757710","verdict":"holds","quote":"along with two additional doppelgangers.","reason_zh":"重新出现时仍会额外制造两个幻象。"},
+        {"review_id":"1b424ccd8968ef3fa47f","verdict":"holds","quote":"This ability can be used to dodge projectiles, and dispel debuffs.","reason_zh":"施放该技能仍可躲避弹道。"},
+        {"review_id":"audit:phantom_lancer_doppelwalk:self_mobility:base","verdict":"holds","quote":"Phantom Lancer and any of his nearby illusions reappear at a random position within the targeted location","reason_zh":"幻影长矛手本体会在目标区域内的随机位置重新出现，仍属于自身位移。"},
+        {"review_id":"audit:phantom_lancer_doppelwalk:tree_destroy:base","verdict":"holds","quote":"Trees near a reappearing unit will be destroyed.","reason_zh":"单位重新出现时仍会摧毁附近的树木。"}
+      ],
+      "new_mechanisms":[]
+    },
+    {
+      "subject":"phantom_lancer_juxtapose",
+      "rows":[
+        {"review_id":"audit:phantom_lancer_juxtapose:attack_modifier:base","verdict":"holds","quote":"Phantom Lancer has a chance to fracture his presence on an attack, creating an illusion of himself.","reason_zh":"普通攻击仍有概率额外生成幻象，攻击触发的效果仍在。"},
+        {"review_id":"5dfa392d062faa693c92","verdict":"holds","quote":"illusion_duration.base: [8]→[7]","reason_zh":"改动仅涉及幻象持续时间和魔晶主动技能冷却，没有 IsBreakable 变更，沿用可被破坏的原判。"},
+        {"review_id":"3861d90474c3f5a90526","verdict":"holds","quote":"His movement speed is increased by %invis_movespeed%%% during this invisibility.","reason_zh":"装备魔晶后，主动技能提供的隐身仍会提高自身移速。"},
+        {"review_id":"006b642f01d90ce6f782","verdict":"holds","quote":"while generating a duplicate image to confuse enemies.","reason_zh":"魔晶主动技能仍会在使本体隐身时制造幻象。"},
+        {"review_id":"19b6d5160bc86c8ae9be","verdict":"holds","quote":"creating an illusion of himself.","reason_zh":"本体攻击仍有概率制造自身幻象，持续时间从8秒缩短至7秒。"},
+        {"review_id":"fda03be72d07857cf4f0","verdict":"holds","quote":"Renders Phantom Lancer invisible for up to %invis_duration% seconds","reason_zh":"魔晶主动技能仍可使幻影长矛手隐身。"}
+      ],
+      "new_mechanisms":[]
+    }
+  ]
+}

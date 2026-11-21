@@ -17,6 +17,8 @@ spells and items, flying vision, trees that were cut, heroes with unusual vision
 and invisibility. Nothing here is model input yet.
 """
 
+import gzip
+import json
 import math
 
 CELL = 64
@@ -40,6 +42,21 @@ RANGE = {
     "illusion": (1800, 800),  # sees like its hero
     "summon": (800, 800),  # a guess: summons differ by unit and are not looked up
 }
+
+
+def read_creep_positions(path, match_id):
+    """Read matched capture samples. An absent second has unknown creep positions."""
+    with gzip.open(path, "rt", encoding="utf-8") as stream:
+        header = json.loads(stream.readline())
+        if header.get("schema") != "gem-creep-capture/1" or header.get("match_id") != match_id:
+            raise ValueError(f"{path}: unexpected creep capture schema or match")
+        positions = {}
+        for row in map(json.loads, stream):
+            second = row["t"]
+            if second in positions or not isinstance(row["creeps"], list):
+                raise ValueError(f"{path}: invalid creep sample at {second}")
+            positions[second] = row["creeps"]
+    return positions
 
 
 def is_day(second):
