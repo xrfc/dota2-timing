@@ -62,6 +62,7 @@ def test_independent_cases_and_adjudication_revision(tmp_path, queue):
         vote(queue, a, "alice", "retreat"),
         vote(queue, a, "bob", "farm", choice="retreat"),
         vote(queue, b, "alice", "unknown"),
+        vote(queue, b, "bob", "retreat"),
         vote(queue, b, "friend", "retreat", previewed=1),
     ]
     result = queue.build_queue([folder], reviews, limit=1)
@@ -187,14 +188,15 @@ def test_replaced_evidence_requests_a_fresh_first_then_an_updated_adjudication(t
     a = case("lane", 930)
     folder = packet(tmp_path, "lane", [a])
     first = vote(queue, a, "one", "unknown")
-    template = queue.build_queue([folder], [first])["adjudication_template"]
+    dissent = vote(queue, a, "other", "retreat")
+    template = queue.build_queue([folder], [first, dissent])["adjudication_template"]
     template["decisions"][0]["decision"] = "unknown"
     a["mana"] = 200
     packet(tmp_path, "lane", [a])
     result = queue.build_queue([folder], [first], adjudications=template)
     assert [r["reason"] for r in result["queue"]] == ["fresh_reviewer"]
     assert result["adjudication_template"]["decisions"] == []
-    current = vote(queue, a, "two", "farm")
+    current = vote(queue, a, "two", "unknown")
     result = queue.build_queue([folder], [current], adjudications=template)
     assert [r["reason"] for r in result["queue"]] == ["changed_evidence"]
     revised = result["adjudication_template"]
@@ -224,3 +226,20 @@ def test_filter_keeps_original_group_budget(tmp_path, queue):
     result = queue.build_queue([folder], eligible_ids={c["id"] for c in rows} - selected)
     assert result["counts"]["blocked_groups"] == 5
     assert result["queue"] == []
+
+
+@pytest.mark.parametrize("count", [1, 3])
+def test_only_unknown_blind_firsts_finish_the_sample_without_another_review(tmp_path, queue, count):
+    a = case("lane", 900)
+    folder = packet(tmp_path, "lane", [a, case("lane", 920)])
+    rows = [vote(queue, a, str(i), "unknown") for i in range(count)]
+    rows.append(vote(queue, a, "after-preview", "retreat", previewed=1))
+    result = queue.build_queue([folder], rows)
+    assert result["queue"] == [] and result["deferred"] == 0
+    assert result["counts"]["covered_groups"] == 1
+    assert result["counts"]["unranked_cases"] == 1
+    assert result["adjudication_template"]["decisions"] == []
+    rows.append(vote(queue, a, "new-blind", "farm"))
+    updated = queue.build_queue([folder], rows)
+    assert updated["counts"]["unranked_cases"] == 0
+    assert [task["reason"] for task in updated["queue"]] == ["insufficient_evidence"]

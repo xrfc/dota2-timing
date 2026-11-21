@@ -20,7 +20,7 @@ CHOICES = {
 }
 PROMPTS = {
     "disagreement": "独立首次判断在可执行动作上有分歧。请核对决定排序的事前证据。",
-    "insufficient_evidence": "独立首次判断提出证据不足。请核对缺失因素，可保留证据不足。",
+    "insufficient_evidence": "具体行动与证据不足的独立判断并存。请核对影响排序的因素。",
     "changed_evidence": "先前裁定对应的情景或独立首次意见已更新。请复核当前依据。",
     "independent_sample": "请在揭示分析前判断本组的代表片段。",
     "fresh_reviewer": "本组候选已有评审或预览记录。请由未看过该段分析的评审人独立判断。",
@@ -226,7 +226,7 @@ def build_queue(folders, reviews=(), limit=5, eligible_ids=None, adjudications=N
     votes, exposed, counts = collect_reviews(reviews, modes, versions)
     decisions = read_adjudications(adjudications, modes)
     tasks = []
-    groups_covered = blocked_groups = group_count = adjudicated = stale = 0
+    groups_covered = blocked_groups = group_count = adjudicated = stale = unranked = 0
     for mode, cases in by_mode.items():
         needs_current_first = set()
         for case in cases:
@@ -237,7 +237,7 @@ def build_queue(folders, reviews=(), limit=5, eligible_ids=None, adjudications=N
             choices = set(firsts.values())
             if len(choices - {"unknown"}) >= 2:
                 reason = "disagreement"
-            elif "unknown" in choices:
+            elif "unknown" in choices and len(choices) > 1:
                 reason = "insufficient_evidence"
             elif key in decisions:
                 if not firsts:
@@ -247,6 +247,8 @@ def build_queue(folders, reviews=(), limit=5, eligible_ids=None, adjudications=N
                     continue
                 reason = "changed_evidence"
             else:
+                if choices == {"unknown"}:
+                    unranked += 1
                 continue
             fingerprint = hashlib.sha256(
                 json_bytes([versions[key], sorted(firsts.items())])
@@ -297,6 +299,7 @@ def build_queue(folders, reviews=(), limit=5, eligible_ids=None, adjudications=N
             "covered_groups": groups_covered,
             "blocked_groups": blocked_groups,
             "adjudicated_cases": adjudicated,
+            "unranked_cases": unranked,
             "stale_adjudications": stale,
         },
         "tasks_by_reason": dict(Counter(item["reason"] for _, _, item in tasks)),
