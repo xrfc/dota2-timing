@@ -258,3 +258,12 @@ def test_fight_coverage_includes_unsampled_target_deaths_once():
     assert summary["deaths"] == 3 and summary["deaths_with_samples"] == 1
     assert summary["alerted_before_fight"] == 1 and summary["share_of_all_deaths"] == 0.3333
     assert found[0]["peak"] is None
+
+
+def test_time_budget_rejects_a_continuous_hour_of_false_alarms():
+    frame = pd.DataFrame({"match_id": 7, "hero": "v", "t": range(3600)})
+    scores = np.full(3600, 0.1)
+    scores[[100, 200]] = 0.9
+    y, mask = np.zeros(3600), np.ones(3600, dtype=bool)
+    threshold = death_risk_eval.threshold_for_rate(frame, scores, y, mask, 1, 2, max_share=2 / 3600)
+    assert death_risk_eval.false_alarm_rate(frame, scores, y, mask, threshold, 1) == (2, 2 / 3600)

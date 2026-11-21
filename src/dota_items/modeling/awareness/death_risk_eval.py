@@ -342,7 +342,7 @@ def false_alarm_rate(frame, scores, y, mask, threshold, step):
     return float((alarm & ~(previous & same)).sum() / hours), float(alarm.sum() / mask.sum())
 
 
-def threshold_for_rate(frame, scores, y, mask, step, onsets_per_hour):
+def threshold_for_rate(frame, scores, y, mask, step, onsets_per_hour, *, max_share=1.0):
     """Count alarm runs at every score boundary, including thresholds that split runs."""
     eligible = np.asarray(mask) & (np.asarray(y) == 0)
     if not eligible.any():
@@ -368,4 +368,6 @@ def threshold_for_rate(frame, scores, y, mask, step, onsets_per_hour):
         + np.searchsorted(joins, thresholds)
     )
     hours = np.asarray(mask).sum() * step / 3600
-    return float(thresholds[np.flatnonzero(runs / hours <= onsets_per_hour)[0]])
+    occupied = (len(starts) - np.searchsorted(starts, thresholds)) / np.asarray(mask).sum()
+    allowed = (runs / hours <= onsets_per_hour) & (occupied <= max_share)
+    return float(thresholds[np.flatnonzero(allowed)[0]])

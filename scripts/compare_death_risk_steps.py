@@ -4,7 +4,7 @@ Each report of train_death_risk.py sets its alert threshold at 5% false alarms p
 sample. A finer step checks more often, so that threshold gives more alarms per hour and
 more deaths "alerted". This script re-reads the out-of-fold scores of every report and
 sets each threshold to the same number of false-alarm onsets per hour outside fights as
-the first report, then gives the fight-level alert shares.
+the first report, and within its false-alarm time share, then gives the fight-level alert shares.
 
     compare_death_risk_steps.py --root data/demos-2026-11 --table death-risk-v4-1s \
         --reports reports/death-risk-v4-every5-2026-11-18 reports/death-risk-v4-every3-2026-11-18
@@ -60,10 +60,12 @@ def main(argv=None):
             parser.error(f"{path}: prediction rows or death labels differ from the table")
         outside = ~in_fight(frame, spans)
         if target is None:
-            target = false_alarm_rate(
-                frame, boosting, y, outside, report["fight_alerts"]["threshold"], step
-            )[0]
-        threshold = threshold_for_rate(frame, boosting, y, outside, step, target)
+            threshold = report["fight_alerts"]["threshold"]
+            target, max_share = false_alarm_rate(frame, boosting, y, outside, threshold, step)
+        else:
+            threshold = threshold_for_rate(
+                frame, boosting, y, outside, step, target, max_share=max_share
+            )
         onsets, share = false_alarm_rate(frame, boosting, y, outside, threshold, step)
         found = fight_alerts(frame, deaths, boosting, threshold, 20, spans)
         rows.append({
@@ -79,7 +81,7 @@ def main(argv=None):
         args.out.mkdir(parents=True, exist_ok=False)
         (args.out / "report.json").write_text(
             json.dumps({"schema": "death-risk-step-comparison/1",
-                        "onsets_per_hour_target": round(target, 2), "rows": rows},
+                        "onsets_per_hour_target": target, "false_alarm_share_limit": max_share, "rows": rows},
                        ensure_ascii=False, indent=1) + "\n",
             encoding="utf-8",
         )  # fmt: skip
