@@ -81,7 +81,8 @@ def main(argv=None):
         args.out.mkdir(parents=True, exist_ok=False)
         (args.out / "report.json").write_text(
             json.dumps({"schema": "death-risk-step-comparison/1",
-                        "onsets_per_hour_target": target, "false_alarm_share_limit": max_share, "rows": rows},
+                        "onsets_per_hour_target": target, "false_alarm_share_limit": max_share,
+                        "rows": rows},
                        ensure_ascii=False, indent=1) + "\n",
             encoding="utf-8",
         )  # fmt: skip
