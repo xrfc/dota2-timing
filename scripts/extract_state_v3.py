@@ -12,7 +12,6 @@ time (about 40 s and 0.4 GB of memory each), so it can run next to the collector
 """
 
 import argparse
-import fcntl
 import gzip
 import json
 import time
@@ -44,7 +43,8 @@ def extract(root, mid, capture=capture_state_v3):
     started = time.time()
     with prepared_demo(demo, out_dir / ".unpack") as raw:
         header, rows = capture(raw)
-    header = {**header, "match_id": mid}
+    if header.get("match_id") != mid:
+        raise ValueError(f"{mid}: state capture belongs to match {header.get('match_id')}")
     part = target.with_name(target.name + ".part")
     with gzip.open(part, "wt", encoding="utf-8") as stream:
         stream.write(json.dumps(header, ensure_ascii=False) + "\n")
@@ -69,6 +69,8 @@ def extract(root, mid, capture=capture_state_v3):
 
 
 def run(args):
+    import fcntl
+
     root = args.root.resolve()
     lock = (root / ".state-v3.lock").open("a")
     try:
