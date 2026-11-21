@@ -149,3 +149,62 @@ def test_capture_truncation_wins_over_a_later_match_end(report_inputs, tmp_path)
     assert end_case["t"] == outcome["last_state_second"] == 1026
     assert action["action"] == "unknown" and not outcome["complete"]
     assert outcome["farm_value"]["next_20s"]["observed_seconds"] == 0
+
+
+@pytest.mark.parametrize("mode", ["lane", "wave", "jungle"])
+def test_generated_report_runs_through_handoff_and_reopens_on_new_evidence(
+    report_inputs, tmp_path, mode
+):
+    from decision_review_handoff import prepare, read_ledger, record
+    from friend_review_server import case_sha256
+
+    generator, mid, _, _ = report_inputs
+    [(case, action, outcome)] = generator.build_match(tmp_path, mid, {}, mode)
+    key = f"{'' if mode == 'lane' else mode + '-'}{mid}-{case['hero']}-{case['t']}"
+    case["id"] = key
+    folder = tmp_path / "report"
+    folder.mkdir()
+    manifest = {"schema": f"{mode}-decision-review/1", "mode": mode, "cases": [case]}
+    (folder / "cases.json").write_text(json.dumps(manifest))
+    for side, value in (("actions", action), ("outcomes", outcome)):
+        (folder / side).mkdir()
+        (folder / side / f"{key}.json").write_text(json.dumps(value))
+
+    initial, _, eligible, _ = prepare([folder])
+    assert initial["state"] == "human_judgment" and eligible == {key}, initial
+    assert initial["legacy_end_unverified"] == 0
+    assert initial["judgments"]["queue"][0]["reason"] == "independent_sample"
+
+    def vote(reviewer, choice):
+        return dict(
+            reviewer=reviewer,
+            case_id=key,
+            case_sha256=case_sha256(case),
+            first=choice,
+            choice=choice,
+            previewed=False,
+            note="private",
+        )
+
+    alternative = "rotate" if mode == "jungle" else "retreat"
+    reviews = [vote("a", "farm"), vote("b", alternative)]
+    disagreement = prepare([folder], reviews)[0]["judgments"]["queue"][0]
+    assert disagreement["reason"] == "disagreement"
+    ledger = tmp_path / "private" / "decisions.sqlite3"
+    record(ledger, disagreement, "unknown")
+    record(ledger, disagreement, "unknown")
+    with pytest.raises(ValueError, match="已有不同裁定"):
+        record(ledger, disagreement, "farm")
+    final = prepare([folder], reviews, read_ledger(ledger))[0]
+    assert final["state"] == "complete" and final["judgments"]["counts"]["adjudicated_cases"] == 1
+    reviews.append(vote("c", "farm"))
+    reopened = prepare([folder], reviews, read_ledger(ledger))[0]
+    assert reopened["state"] == "human_judgment"
+    record(ledger, reopened["judgments"]["queue"][0], "farm")
+    # Restoring a previously reviewed source snapshot reuses that exact verdict.
+    assert prepare([folder], reviews[:2], read_ledger(ledger))[0]["state"] == "complete"
+    # A contradictory support window must go to material repair before any manual decision.
+    outcome["support_followup"]["hit_offsets"] = [400]
+    (folder / "outcomes" / f"{key}.json").write_text(json.dumps(outcome))
+    broken = prepare([folder], reviews)[0]
+    assert broken["state"] == "repair_required" and not broken["judgments"]["queue"]

@@ -15,6 +15,7 @@ from functools import lru_cache
 from math import dist
 from pathlib import Path
 
+from check_support_travel import check_review_metadata
 from detect_ganks import match_inputs
 from gank_review import MAP, names
 
@@ -131,9 +132,7 @@ def support_opportunity(tracks, hits, hero, t):
 def build_match(root, mid, means, mode="lane", *, wave_coverage=None):
     if is_holdout(mid):
         raise ValueError(f"{mid} is reserved for holdout evaluation")
-    meta = read_json(root / "meta" / f"{mid}.json")
-    if meta.get("match_id") != mid or meta.get("patch") != 60:
-        raise ValueError(f"{mid}: expected the patch-60 cohort used for the 7.41f analysis")
+    check_review_metadata(root, mid)
     match = match_inputs(root, mid, root / "gank-inputs-v2")
     damage = hero_hits_by_second(match)
     heroes = sorted(h for h, pos in match["positions"].items() if pos == 1)

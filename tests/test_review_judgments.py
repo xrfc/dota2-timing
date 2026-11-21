@@ -243,3 +243,19 @@ def test_only_unknown_blind_firsts_finish_the_sample_without_another_review(tmp_
     updated = queue.build_queue([folder], rows)
     assert updated["counts"]["unranked_cases"] == 0
     assert [task["reason"] for task in updated["queue"]] == ["insufficient_evidence"]
+
+
+def test_handoff_with_missing_reports_never_declares_the_human_work_complete(tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(SCRIPTS))
+    from decision_review_handoff import prepare
+
+    missing = tmp_path / "not-generated"
+    result, folders, eligible, _ = prepare([missing])
+    assert result["state"] == "data_required" and not result["judgments"]["queue"]
+    assert not folders and not eligible and not missing.exists()
+    assert result["material_issues"][0]["reason"] == "missing_file"
+
+    missing.mkdir()
+    (missing / "cases.json").write_text("{")
+    broken = prepare([missing])[0]
+    assert broken["state"] == "repair_required" and not broken["judgments"]["queue"]

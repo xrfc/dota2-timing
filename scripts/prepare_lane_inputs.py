@@ -12,7 +12,7 @@ from importlib.metadata import PackageNotFoundError
 from pathlib import Path
 
 from build_replay_compat import build
-from check_support_travel import MATCHES
+from check_support_travel import MATCHES, check_review_metadata
 
 REPO = Path(__file__).resolve().parents[1]
 CAPTURE_SCHEMAS = {"state-v3": "gem-state-capture/3", "extras-v1": "gem-extras-capture/1"}
@@ -27,9 +27,7 @@ def _target(root, mid, kind):
 def _check_match(root, mid):
     if mid not in MATCHES:
         raise ValueError(f"{mid}: outside the three 7.41f review matches")
-    meta = json.loads((root / "meta" / f"{mid}.json").read_text(encoding="utf-8"))
-    if meta.get("match_id") != mid or meta.get("patch") != 60:
-        raise ValueError(f"{mid}: unexpected metadata match or patch")
+    check_review_metadata(root, mid)
 
 
 def _validate(path, kind, mid):

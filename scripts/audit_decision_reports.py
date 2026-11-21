@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import math
 import re
 from collections import Counter
 from pathlib import Path
@@ -31,11 +32,15 @@ def value(row, key, kind):
     return result
 
 
+def reject_nonfinite(token):
+    raise ValueError(f"invalid JSON number: {token}")
+
+
 def read_object(folder, relative):
     path = folder / relative
     try:
         require(path.resolve().is_relative_to(folder.resolve()), relative, "outside_report")
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(path.read_text(encoding="utf-8"), parse_constant=reject_nonfinite)
     except FileNotFoundError as exc:
         raise EvidenceIssue("incomplete", relative, "missing_file") from exc
     except (ValueError, OSError, RuntimeError) as exc:
@@ -96,6 +101,18 @@ def history(case):
             sec <= case["t"] and (previous is None or sec > previous), "history.t", "frame_time"
         )
         previous = sec
+        ally = frame.get("ally")
+        if ally is not None:
+            require(
+                isinstance(ally, list)
+                and len(ally) == 2
+                and type(ally[0]) in (int, float)
+                and math.isfinite(ally[0])
+                and ally[0] >= 0
+                and isinstance(ally[1], str),
+                "history.ally",
+                "invalid_team_position",
+            )
         for enemy in value(frame, "enemies", list):
             require(isinstance(enemy, dict), "history.enemies", "invalid_enemy")
             if "last_seen" not in enemy:

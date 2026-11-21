@@ -174,3 +174,47 @@ def test_extraction_refuses_filename_mismatched_with_decoded_replay_id(prep, tmp
         extract_creeps.extract(tmp_path, mid, kind="extras")
     for kind in prep.CAPTURE_SCHEMAS:
         assert not prep._target(tmp_path, mid, kind).exists()
+
+
+def test_public_cohort_can_use_raw_only_but_never_overrides_contradictory_metadata(prep, tmp_path):
+    mid = prep.MATCHES[0]
+    prep.check_review_metadata(tmp_path, mid)
+    with pytest.raises(FileNotFoundError):
+        prep.check_review_metadata(tmp_path, 12345)
+    metadata(tmp_path, mid)
+    path = tmp_path / "meta" / f"{mid}.json"
+    path.write_text(json.dumps({"match_id": mid, "patch": 60, "start_time": 1794988801}))
+    with pytest.raises(ValueError, match="outside"):
+        prep.check_review_metadata(tmp_path, mid)
+
+
+def test_handoff_generates_missing_modes_and_reuses_existing_reports(prep, tmp_path, monkeypatch):
+    import build_map_knowledge
+    import decision_review_handoff as handoff
+
+    folders = [tmp_path / mode for mode in handoff.MODES]
+    folders[1].mkdir()
+    existing = folders[1] / "cases.json"
+    existing.write_text("original")
+    maps, preparations, calls = [], [], []
+    monkeypatch.setattr(
+        build_map_knowledge, "prepare_741_map", lambda path, *, fetch: maps.append(fetch)
+    )
+    monkeypatch.setattr(prep, "prepare_inputs", lambda root, ids: preparations.append((root, ids)))
+
+    def generate(command, **kwargs):
+        mode = command[command.index("--mode") + 1]
+        assert command[command.index("--matches") + 1 : command.index("--out")] == [
+            str(mid) for mid in prep.MATCHES
+        ]
+        folder = Path(command[-1])
+        assert folder.name == mode
+        folder.mkdir()
+        calls.append(mode)
+
+    monkeypatch.setattr(handoff.subprocess, "run", generate)
+    handoff.generate_missing(tmp_path, folders)
+    handoff.generate_missing(tmp_path, folders, fetch_map=True)
+    assert maps == [False] and preparations == [(tmp_path, prep.MATCHES)]
+    assert calls == [handoff.MODES[0], handoff.MODES[2]]
+    assert existing.read_text() == "original"

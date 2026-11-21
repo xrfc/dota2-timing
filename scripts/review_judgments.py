@@ -204,9 +204,10 @@ def read_adjudications(data, modes):
             raise ValueError(f"{key}: invalid adjudication")
         if not isinstance(digest, str) or not re.fullmatch("[a-f0-9]{64}", digest):
             raise ValueError(f"{key}: expected an evidence fingerprint")
-        if key in decisions:
-            raise ValueError(f"{key}: duplicated adjudication")
-        decisions[key] = digest
+        versions = decisions.setdefault(key, set())
+        if digest in versions:
+            raise ValueError(f"{key}: duplicated adjudication for the same evidence")
+        versions.add(digest)
     return decisions
 
 
@@ -253,7 +254,7 @@ def build_queue(folders, reviews=(), limit=5, eligible_ids=None, adjudications=N
             fingerprint = hashlib.sha256(
                 json_bytes([versions[key], sorted(firsts.items())])
             ).hexdigest()
-            if decisions.get(key) == fingerprint:
+            if fingerprint in decisions.get(key, ()):
                 adjudicated += 1
                 continue
             if key in decisions:
