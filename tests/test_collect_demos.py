@@ -242,7 +242,13 @@ def test_resume_collects_until_qualifying_target(tmp_path, monkeypatch):
     for mid, rank in ((1, 65), (2, 71)):
         m.write_new(
             root / f"receipts/{mid}.json",
-            {"match_id": mid, "status": "parsed", "avg_rank_tier": rank, "parse_seconds": 10},
+            {
+                "match_id": mid,
+                "status": "parsed",
+                "avg_rank_tier": rank,
+                "parse_seconds": 10,
+                "start_time": 5000,
+            },
         )
     processed = []
 
@@ -252,7 +258,7 @@ def test_resume_collects_until_qualifying_target(tmp_path, monkeypatch):
 
     def process(root, row, api, plain, patch_start, args):
         processed.append(row["match_id"])
-        return {**row, "status": "parsed", "parse_seconds": 10}
+        return {**row, "status": "parsed", "parse_seconds": 10, "patch_start": patch_start}
 
     monkeypatch.delenv("OPENDOTA_API_KEY", raising=False)
     monkeypatch.setattr(m, "REPO", tmp_path)
@@ -289,3 +295,13 @@ def test_back_off_waits_longer_then_stops(tmp_path):
     assert waits == [60, 480, 1800]
     assert not m.back_off(tmp_path, m.MAX_FAILURES, args, waits.append)
     assert not m.back_off(tmp_path, 1, SimpleNamespace(once=True), waits.append)
+
+
+def test_resume_counts_only_current_patch_including_dated_legacy_receipts():
+    m = module()
+    base = {"status": "parsed", "avg_rank_tier": 70}
+    assert not m.counts_toward_target(base | {"patch_start": 100}, 500)
+    assert not m.counts_toward_target(base | {"start_time": 100}, 500)
+    assert not m.counts_toward_target(base, 500)
+    assert m.counts_toward_target(base | {"start_time": 4100}, 500)
+    assert m.counts_toward_target(base | {"patch_start": 500}, 500)

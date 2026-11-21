@@ -142,3 +142,20 @@ def test_alias_identity_is_resolved_from_raw_player_not_array_order(tmp_path, fo
             validate_match(path)
     else:
         validate_match(path)
+
+
+@pytest.mark.parametrize("legacy", [False, True])
+def test_cache_binds_uncompressed_digest_independently(imported, legacy):
+    import sqlite3
+
+    source, calls, result = imported
+    if legacy:
+        with sqlite3.connect(source.parent / "cache/index.sqlite") as index:
+            index.execute("DROP TABLE replay_digests")
+    path = Path(result["manifest"])
+    manifest = read_json(path)
+    original = manifest["demo_sha256"]
+    manifest["demo_sha256"] = "0" * 64
+    write_json(path, manifest)
+    repaired = ingest_demo(source, source.parent / "cache")
+    assert repaired["demo_sha256"] == original and len(calls) == 2

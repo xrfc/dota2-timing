@@ -72,3 +72,5 @@ nohup env -u http_proxy -u https_proxy PYTHONPATH=src .venv/bin/python scripts/c
 ## 不会做的事
 
 不用付费密钥，不请求OpenDota解析，不训练模型，不上传任何东西；demo和解析结果都在被忽略的`data/`里，不进仓库（用户规定demo和对局解析文件不推送）。
+
+恢复采集时以本轮 Valve 补丁发布时间统计目标。旧回执按比赛开始时间和发布后一小时的筛选线归属；没有可核对时间的比赛保留在总量中。进度、重试和报告采用同一口径。

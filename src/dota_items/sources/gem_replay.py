@@ -210,6 +210,10 @@ CREATE TABLE IF NOT EXISTS item_events (
     PRIMARY KEY (source_sha256, player_slot, ordinal),
     FOREIGN KEY (source_sha256, player_slot) REFERENCES players(source_sha256, player_slot)
 );
+CREATE TABLE IF NOT EXISTS replay_digests (
+    source_sha256 TEXT PRIMARY KEY REFERENCES matches(source_sha256) ON DELETE CASCADE,
+    demo_sha256 TEXT NOT NULL
+);
 CREATE INDEX IF NOT EXISTS idx_matches_match_id ON matches(match_id);
 CREATE INDEX IF NOT EXISTS idx_item_events_item_key ON item_events(item_key);
 """
@@ -249,7 +253,8 @@ def ingest_demo(source: Path, data_dir: Path, *, force: bool = False) -> dict[st
     database = data_dir / "index.sqlite"
     with closing(_initialize_index(database)) as index:
         existing = index.execute(
-            "SELECT source_sha256, match_id, normalized_json, raw_json FROM matches "
+            "SELECT m.source_sha256, m.match_id, m.normalized_json, m.raw_json, d.demo_sha256 "
+            "FROM matches AS m LEFT JOIN replay_digests AS d USING (source_sha256) "
             "WHERE source_sha256 = ?",
             (source_sha,),
         ).fetchone()
@@ -281,6 +286,19 @@ def ingest_demo(source: Path, data_dir: Path, *, force: bool = False) -> dict[st
                 )
             except (ValueError, OSError, AttributeError):
                 cache_valid = False
+        if cache_valid and existing[4] is None:
+            # Upgrade a legacy index using the source replay, independently of its manifest.
+            with prepared_demo(source, data_dir / ".tmp") as replay:
+                replay_digest = file_hash(replay)
+            cache_valid = replay_digest == manifest["demo_sha256"]
+            if cache_valid:
+                with index:
+                    index.execute(
+                        "INSERT OR IGNORE INTO replay_digests VALUES (?, ?)",
+                        (source_sha, replay_digest),
+                    )
+        elif cache_valid:
+            cache_valid = existing[4] == manifest["demo_sha256"]
         if cache_valid:
             return {
                 "status": "cached",
@@ -373,6 +391,7 @@ def ingest_demo(source: Path, data_dir: Path, *, force: bool = False) -> dict[st
                     len(issues),
                 ),
             )
+            index.execute("INSERT INTO replay_digests VALUES (?, ?)", (source_sha, replay_sha))
             for player in canonical["players"]:
                 slot = player["player_slot"]
                 index.execute(

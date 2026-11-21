@@ -101,8 +101,17 @@ def meets_rank(record):
     return isinstance(rank, (int, float)) and rank >= MIN_RANK
 
 
-def counts_toward_target(receipt):
-    return receipt["status"] == OK and meets_rank(receipt)
+def in_patch(receipt, patch_start):
+    if patch_start is None:
+        return True
+    if receipt.get("patch_start") is not None:
+        return receipt["patch_start"] == patch_start
+    # Earlier receipts record the match start. Apply the collector's original one-hour margin.
+    return (receipt.get("start_time") or 0) >= patch_start + 3600
+
+
+def counts_toward_target(receipt, patch_start=None):
+    return receipt["status"] == OK and meets_rank(receipt) and in_patch(receipt, patch_start)
 
 
 # Discovery -------------------------------------------------------------------------------
@@ -251,7 +260,12 @@ def compress(source, target):
 
 def process(root, row, api, valve, patch_start, args, runner=subprocess.run):
     mid = row["match_id"]
-    receipt = {"match_id": mid, "avg_rank_tier": row.get("avg_rank_tier"), "started_at": now()}
+    receipt = {
+        "match_id": mid,
+        "avg_rank_tier": row.get("avg_rank_tier"),
+        "started_at": now(),
+        "patch_start": patch_start,
+    }
     if not meets_rank(receipt):
         return {**receipt, "status": "skipped", "reasons": ["rank_below_threshold_or_unknown"]}
     meta_path = root / "meta" / f"{mid}.json"
@@ -346,8 +360,6 @@ def run(args):
         "script_sha256": sha256(__file__),
     }
     history = root / "runs.jsonl"
-    with history.open("a", encoding="utf-8") as stream:
-        stream.write(json.dumps({**config, "started_at": now()}, ensure_ascii=False) + "\n")
     # The OpenDota budget file is shared with the other collectors; hold their lock too.
     runtime = REPO / "reports/collection-runtime"
     runtime.mkdir(parents=True, exist_ok=True)
@@ -359,18 +371,27 @@ def run(args):
     budget = RequestBudget(BUDGETS[args.route])
     api, plain = clients(args.route, budget)
     failures = 0
+    patch_start = None
     try:
         patch, patch_start = latest_patch_start(plain)
+        with history.open("a", encoding="utf-8") as stream:
+            stream.write(
+                json.dumps(
+                    {**config, "started_at": now(), "patch": patch, "patch_start": patch_start},
+                    ensure_ascii=False,
+                )
+                + "\n"
+            )
         log(
             root,
             f"patch {patch}; target {args.target} parsed matches with avg_rank_tier >= {MIN_RANK}",
         )
         if args.retry_failed:
             retry(root, api, plain, patch_start, args)
-        log(root, progress(root, args.target))
+        log(root, progress(root, args.target, patch_start))
         while True:
             done = receipts(root)
-            parsed = sum(map(counts_toward_target, done.values()))
+            parsed = sum(counts_toward_target(r, patch_start) for r in done.values())
             if parsed >= args.target:
                 log(root, f"target reached: {parsed} parsed")
                 break
@@ -412,24 +433,28 @@ def run(args):
                     break  # rediscover after waiting; this match was not marked done
                 failures = 0
                 write_new(root / "receipts" / f"{row['match_id']}.json", receipt)
-                parsed += counts_toward_target(receipt)
+                parsed += counts_toward_target(receipt, patch_start)
                 log(root, f"{row['match_id']} {receipt['status']} {receipt.get('reasons', '')}")
-                log(root, progress(root, args.target))
+                log(root, progress(root, args.target, patch_start))
             if args.once:
                 break
     finally:
         api.close()
         plain.close()
-        write_new(root / "summary.json", summary(root))
+        if patch_start is not None:
+            write_new(root / "summary.json", summary(root, patch_start))
 
 
 def retry(root, api, plain, patch_start, args, runner=subprocess.run):
     """Process parse failures again; their metadata and demo are reused, not downloaded."""
     done = receipts(root)
-    parsed = sum(map(counts_toward_target, done.values()))
+    parsed = sum(counts_toward_target(r, patch_start) for r in done.values())
     for mid, old in sorted(done.items()):
         if parsed >= args.target:
             break
+        if old.get("patch_start") is not None or old.get("start_time") is not None:
+            if not in_patch(old, patch_start):
+                continue
         if old["status"] != "parse_failed" or not meets_rank(old):
             continue
         receipt = process(
@@ -443,7 +468,7 @@ def retry(root, api, plain, patch_start, args, runner=subprocess.run):
         )
         receipt["retried_from"] = old.get("error", "")[:200]
         write_new(root / "receipts" / f"{mid}.json", receipt)
-        parsed += counts_toward_target(receipt)
+        parsed += counts_toward_target(receipt, patch_start)
         log(root, f"{mid} retried: {receipt['status']}")
 
 
@@ -470,10 +495,10 @@ def wait_out(root, budget, pause, args):
     time.sleep(max(60, until - time.time()))
 
 
-def progress(root, target):
+def progress(root, target, patch_start=None):
     """One line: parsed so far, skips, average time per match and the time still needed."""
     done = list(receipts(root).values())
-    parsed = [r for r in done if counts_toward_target(r)]
+    parsed = [r for r in done if counts_toward_target(r, patch_start)]
     secs = [r.get("download_seconds", 0) + r.get("parse_seconds", 0) for r in parsed[-50:]]
     each = sum(secs) / len(secs) if secs else 0
     left = max(0, target - len(parsed)) * each / 3600
@@ -484,16 +509,20 @@ def progress(root, target):
     )
 
 
-def summary(root):
+def summary(root, patch_start=None):
     done = receipts(root)
     saved = [r for r in done.values() if r["status"] == OK]
-    parsed = [r for r in saved if counts_toward_target(r)]
+    parsed = [r for r in saved if counts_toward_target(r, patch_start)]
     heroes = Counter(h for r in parsed for h in r.get("heroes", []))
     return {
         "updated_at": now(),
         "parsed": len(parsed),
         "parsed_total": len(saved),
-        "parsed_outside_rank": len(saved) - len(parsed),
+        "patch_start": patch_start,
+        "parsed_outside_rank": sum(not meets_rank(r) for r in saved),
+        "parsed_outside_patch_or_unknown": sum(
+            meets_rank(r) and not in_patch(r, patch_start) for r in saved
+        ),
         "statuses": dict(Counter(r["status"] for r in done.values())),
         "skip_reasons": dict(Counter(x for r in done.values() for x in r.get("reasons", []))),
         "demo_gb": round(sum(r.get("demo_bytes", 0) for r in saved) / 1024**3, 2),
@@ -508,7 +537,14 @@ def summary(root):
 
 
 def report(args):
-    result = summary(args.root.resolve())
+    root = args.root.resolve()
+    history = root / "runs.jsonl"
+    patch_start = None
+    if history.exists():
+        for line in history.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                patch_start = json.loads(line).get("patch_start")
+    result = summary(root, patch_start)
     shown = {k: v for k, v in result.items() if k != "hero_games"}
     print(json.dumps(shown, ensure_ascii=False, indent=1))
 
