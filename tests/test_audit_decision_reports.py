@@ -145,3 +145,52 @@ def test_cli_reports_incomplete_folder_and_fails_on_corrupt_manifest(tmp_path):
     (tmp_path / "cases.json").write_text("[]")
     result = subprocess.run(cmd, capture_output=True, text=True, check=False)
     assert result.returncode == 1 and json.loads(result.stdout)["reports"][0]["status"] == "failed"
+
+
+def test_certified_end_bounds_action_deaths_farm_and_hits_independently(tmp_path):
+    case, action, outcome = report_data()
+    outcome.update(match_duration=904, last_state_second=938)
+    write_packet(tmp_path, case, action, outcome)
+    row = audited(tmp_path)
+    assert row["match_end"]["effective_end"] == 904
+    assert [row["checks"][name] for name in ("farm", "deaths", "support")] == ["failed"] * 3
+    outcome["complete"] = outcome["support_followup"]["complete"] = False
+    outcome["death_seconds"] = [904]
+    outcome["support_followup"]["hit_offsets"] = [4]
+    outcome["farm_value"] = {
+        "next_6s": {"lane": 2, "neutral": 1, "observed_seconds": 4},
+        "next_20s": {"lane": 2, "neutral": 1, "observed_seconds": 4},
+    }
+    write_packet(tmp_path, case, action, outcome)
+    assert "action_claim_in_partial_window" in {i["reason"] for i in audited(tmp_path)["issues"]}
+    action["action"] = "unknown"
+    write_packet(tmp_path, case, action, outcome)
+    assert audited(tmp_path)["status"] == "passed"
+    outcome.update(match_duration=950, last_state_second=904)
+    write_packet(tmp_path, case, action, outcome)
+    assert audited(tmp_path)["match_end"]["effective_end"] == 904
+    outcome["last_state_second"] = 899
+    write_packet(tmp_path, case, action, outcome)
+    assert audited(tmp_path)["checks"]["match_end"] == "failed"
+
+
+def test_legacy_bounds_approach_and_missing_positions(tmp_path):
+    case, action, outcome = report_data()
+    case["history"][0]["enemies"][0].update(last_seen=None, distance=None)
+    outcome["observed_approach"] = {
+        "observed_seconds": 20,
+        "window_complete": True,
+        "missing_samples": 21,
+        "first_seen_offset": None,
+        "first_entry_offset": None,
+    }
+    write_packet(tmp_path, case, action, outcome)
+    row = audited(tmp_path)
+    assert row["checks"]["match_end"] == "unverified_legacy" and row["status"] == "passed"
+    outcome["observed_approach"]["first_seen_offset"] = 21
+    write_packet(tmp_path, case, action, outcome)
+    assert "entry_outside_window" in {i["reason"] for i in audited(tmp_path)["issues"]}
+    del outcome["observed_approach"]
+    outcome["match_duration"] = 950
+    write_packet(tmp_path, case, action, outcome)
+    assert audited(tmp_path)["checks"]["match_end"] == "incomplete"

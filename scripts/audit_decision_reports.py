@@ -75,6 +75,8 @@ def history(case):
         "support_followup",
         "walk_hit_window",
         "observed_approach",
+        "match_duration",
+        "last_state_second",
     ):
         require(key not in case, key, "post_decision_field_in_evidence")
     if isinstance(case.get("farm_value"), dict):
@@ -139,7 +141,15 @@ def nonnegative(row, key):
     return number
 
 
-def farm_windows(outcome, mode, observed_action):
+def match_end(outcome, t):
+    duration = nonnegative(outcome, "match_duration")
+    last = nonnegative(outcome, "last_state_second")
+    end = min(duration, last)
+    require(t <= end, "t", "decision_after_match_end")
+    return {"match_duration": duration, "last_state_second": last, "effective_end": end}
+
+
+def farm_windows(outcome, mode, observed_action, expected_stop):
     quantity = "neutral" if mode == "jungle" else "lane"
     hit_key = "jungle_last_hits" if mode == "jungle" else "lane_last_hits"
     total = nonnegative(outcome, hit_key)
@@ -148,6 +158,16 @@ def farm_windows(outcome, mode, observed_action):
     long = value(farm, "next_20s", dict)
     stop = nonnegative(long, "observed_seconds")
     require(stop <= OUTCOME_SECONDS, "next_20s.observed_seconds", "outside_window")
+    require(
+        expected_stop is None or expected_stop == stop,
+        "next_20s.observed_seconds",
+        "window_beyond_or_short_of_match_end",
+    )
+    require(
+        stop >= ACTION_SECONDS or observed_action in (None, "unknown"),
+        "action",
+        "action_claim_in_partial_window",
+    )
     require(
         value(short, "observed_seconds", int) == min(stop, ACTION_SECONDS),
         "next_6s.observed_seconds",
@@ -174,6 +194,8 @@ def farm_windows(outcome, mode, observed_action):
 def death_window(outcome, t, stop):
     complete = value(outcome, "complete", bool)
     deaths = value(outcome, "death_seconds", list)
+    if stop is not None:
+        require(complete == (stop == OUTCOME_SECONDS), "complete", "window_mismatch")
     horizon = OUTCOME_SECONDS if stop is None else stop
     require(
         all(type(s) is int and t < s <= t + horizon for s in deaths),
@@ -187,12 +209,45 @@ def death_window(outcome, t, stop):
     }
 
 
+def approach_window(approach, stop, complete):
+    span = nonnegative(approach, "observed_seconds")
+    require(
+        span <= OUTCOME_SECONDS and (stop is None or span == stop),
+        "observed_approach.observed_seconds",
+        "window_mismatch",
+    )
+    require(
+        value(approach, "window_complete", bool) == complete == (span == OUTCOME_SECONDS),
+        "observed_approach.window_complete",
+        "window_mismatch",
+    )
+    require(
+        nonnegative(approach, "missing_samples") <= span + 1,
+        "missing_samples",
+        "excess_missing_samples",
+    )
+    seen, entry = approach.get("first_seen_offset"), approach.get("first_entry_offset")
+    require(
+        seen is None or type(seen) is int and 0 <= seen <= span,
+        "first_seen_offset",
+        "entry_outside_window",
+    )
+    require(
+        entry is None or type(entry) is int and entry == seen,
+        "first_entry_offset",
+        "conflicting_entry_offset",
+    )
+    return span
+
+
 def support_window(case, outcome, stop):
     if "support_opportunity" not in case:
         raise EvidenceIssue("incomplete", "support_opportunity", "missing_field")
     if case["support_opportunity"] is None:
         require(
-            not any(k in outcome for k in ("support_followup", "walk_hit_window")),
+            not any(
+                k in outcome for k in ("support_followup", "walk_hit_window", "observed_approach")
+            ),
             "support_followup",
             "followup_without_target",
         )
@@ -207,7 +262,13 @@ def support_window(case, outcome, stop):
     require(
         complete == value(outcome, "complete", bool), "support_followup.complete", "window_mismatch"
     )
+    if stop is not None:
+        require(
+            complete == (stop == OUTCOME_SECONDS), "support_followup.complete", "window_mismatch"
+        )
     offsets = value(followup, "hit_offsets", list)
+    if "observed_approach" in outcome:
+        stop = approach_window(value(outcome, "observed_approach", dict), stop, complete)
     end = OUTCOME_SECONDS if stop is None else stop
     require(
         all(type(sec) is int and 0 < sec <= end for sec in offsets),
@@ -268,7 +329,17 @@ def audit_case(folder, case, mode, duplicates):
         )
         outcome = checked(result, "outcome_file", read_object, folder, f"outcomes/{key}.json")
         if outcome is not None:
-            stop = checked(result, "farm", farm_windows, outcome, mode, observed)
+            expected_stop = None
+            if "match_duration" in outcome or "last_state_second" in outcome:
+                end = checked(result, "match_end", match_end, outcome, case["t"])
+                if end is not None:
+                    result["match_end"] = end
+                    expected_stop = min(end["effective_end"] - case["t"], OUTCOME_SECONDS)
+            else:
+                result["checks"]["match_end"] = "unverified_legacy"
+            stop = checked(result, "farm", farm_windows, outcome, mode, observed, expected_stop)
+            if expected_stop is not None:
+                stop = expected_stop
             result["outcome_window"] = checked(
                 result, "deaths", death_window, outcome, case["t"], stop
             )
