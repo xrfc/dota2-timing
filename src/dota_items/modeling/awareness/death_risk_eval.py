@@ -247,7 +247,7 @@ def in_fight(frame, spans):
 
 
 def fight_alerts(frame, deaths, scores, threshold, horizon, spans, fight=FIGHT):
-    """One dict per death with samples in the `horizon` before it (fight-level measure).
+    """One row per distinct death of a tracked hero, including unsampled windows.
 
     `alerted`: a sample outside every fight, in [death - horizon, fight start), scored at
     or above `threshold`. `lead_to_fight` and `lead_to_death` count from the first such
@@ -263,14 +263,14 @@ def fight_alerts(frame, deaths, scores, threshold, horizon, spans, fight=FIGHT):
         part = part.sort_values("t")
         series[key] = (part["t"].to_numpy(), part["_score"].to_numpy(), part["_fight"].to_numpy())
     found = []
-    for death in deaths.itertuples(index=False):
+    empty = (np.array([], dtype=int), np.array([]), np.array([], dtype=bool))
+    for death in deaths.drop_duplicates(["match_id", "hero", "t"]).itertuples(index=False):
         key = (death.match_id, death.hero)
-        if key not in series:
+        # The contact table includes every target hero, even without any risk samples.
+        if key not in series and key not in spans:
             continue
-        times, values, fights = series[key]
+        times, values, fights = series.get(key, empty)
         window = (times >= death.t - horizon) & (times < death.t)
-        if not window.any():
-            continue
         start = fight_start(spans.get(key, ()), int(death.t), fight["gap"])
         before = window & (times < start) & ~fights
         alert = before & (values >= threshold)
@@ -280,13 +280,14 @@ def fight_alerts(frame, deaths, scores, threshold, horizon, spans, fight=FIGHT):
                 "match_id": death.match_id,
                 "hero": death.hero,
                 "t": int(death.t),
+                "has_sample": bool(window.any()),
                 "fight_start": int(start),
                 "fight_seconds": int(death.t - start),
                 "could_alert": bool(before.any()),
                 "alerted": bool(alert.any()),
                 "lead_to_fight": int(start - first) if first is not None else None,
                 "lead_to_death": int(death.t - first) if first is not None else None,
-                "peak": float(values[window].max()),
+                "peak": float(values[window].max()) if window.any() else None,
             }
         )
     return found
@@ -307,6 +308,7 @@ def summarize_fight_alerts(found):
 
     return {
         "deaths": count,
+        "deaths_with_samples": sum(bool(row.get("has_sample", True)) for row in found),
         "could_alert": len(could),
         "alerted_before_fight": len(alerted),
         "share_of_all_deaths": share(alerted, found),
