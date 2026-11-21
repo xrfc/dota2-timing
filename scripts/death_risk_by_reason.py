@@ -110,7 +110,9 @@ def main(argv=None):
         frame.assign(y=oof["y"]).set_index(keys).sort_index().y, reference.dies_20
     ):
         raise ValueError("Death labels differ")
-    unique_deaths = pd.DataFrame(deaths).drop_duplicates(keys)
+    unique_deaths = pd.DataFrame.from_records(deaths, columns=[*keys, "position"]).drop_duplicates(
+        keys
+    )
     found = death_alerts(frame, unique_deaths, oof["boosting"], threshold, HORIZON)
     index = episode_index(args.episodes)
     rows = by_reason(found, index)
@@ -126,27 +128,46 @@ def main(argv=None):
         "reasons": rows,
     }
     if "fight_alerts" in report:
-        raw = pd.read_csv(args.risk / "fight-alerts.csv")
+        try:
+            raw = pd.read_csv(args.risk / "fight-alerts.csv")
+        except pd.errors.EmptyDataError:
+            # Early producers wrote only a newline for an empty evaluation.
+            raw = pd.DataFrame(columns=keys)
         fights = raw.drop_duplicates()
         result["duplicate_fight_evaluations"] = len(raw) - len(fights)
         scored = {(r["match_id"], r["hero"], r["t"]) for r in found}
         fight_keys = list(zip(fights.match_id, fights.hero, fights.t, strict=True))
-        expected_keys = scored
-        if "has_sample" in fights:
-            positions = info["positions"]
-            expected_keys = set(
-                unique_deaths.loc[unique_deaths.position.isin(positions), keys].itertuples(
-                    index=False, name=None
-                )
+        positions = info["positions"]
+        if positions is None:
+            raise ValueError("Fight coverage requires verified target positions")
+        targets = set(
+            unique_deaths.loc[unique_deaths.position.isin(positions), keys].itertuples(
+                index=False, name=None
             )
-            sampled_keys = set(
-                fights.loc[fights.has_sample, keys].itertuples(index=False, name=None)
-            )
-            if sampled_keys != scored:
+        )
+        modern = "has_sample" in fights
+        expected_keys = targets if modern else scored
+        if modern:
+            sampled = set(fights.loc[fights.has_sample, keys].itertuples(index=False, name=None))
+            if sampled != scored:
                 raise ValueError("Fight sample coverage differs from the table")
         if len(fight_keys) != len(set(fight_keys)) or set(fight_keys) != expected_keys:
             raise ValueError("Fight evaluation and death samples differ")
-        result["before_fight"] = by_reason(fights.to_dict("records"), index, summarize_fight_alerts)
+        fight_rows = fights.to_dict("records")
+        if not modern:
+            for mid, hero, second in sorted(targets - scored):
+                fight_rows.append(
+                    {
+                        "match_id": mid,
+                        "hero": hero,
+                        "t": second,
+                        "has_sample": False,
+                        "could_alert": False,
+                        "alerted": False,
+                        "fight_seconds": None,
+                    }
+                )
+        result["before_fight"] = by_reason(fight_rows, index, summarize_fight_alerts)
     args.out.mkdir(parents=True, exist_ok=False)
     (args.out / "report.json").write_text(
         json.dumps(result, ensure_ascii=False, indent=1) + "\n", encoding="utf-8"
