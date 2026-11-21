@@ -489,7 +489,7 @@ def attach_risk(deaths, folder, match_id, before=30, after=5):
             risk["fight_measure"] = True
             risk["threshold"] = report["fight_alerts"]["threshold"]
             row = fights.get((episode["victim"], episode["end"]))
-            if row:
+            if row and row.get("has_sample") != "False":
                 risk["fight_start"] = int(row["fight_start"])
                 risk["could_alert"] = row["could_alert"] == "True"
                 risk["alert_second"] = (

@@ -49,7 +49,7 @@ function draw() {
   el('ally').textContent = '最近存活队友：' + (f.ally ? zh(f.ally[1]) + '，距离 ' + f.ally[0] : '无位置记录');
   el('enemies').replaceChildren(...f.enemies.map(e => {
     const li = document.createElement('li');
-    const seen = e.last_seen == null ? '此前没有视野记录' : e.last_seen === f.t ? '当前有视野记录，位置缺失' : (f.t - e.last_seen) + ' 秒前最后露头';
+    const seen = e.dead ? '已阵亡' : e.last_seen == null ? '此前没有视野记录' : e.last_seen === f.t ? '当前有视野记录，位置缺失' : (f.t - e.last_seen) + ' 秒前最后露头';
     li.textContent = zh(e.hero) + ' · ' + (e.distance == null ? seen : '可见，距离 ' + e.distance);
     return li;
   }));
@@ -84,7 +84,7 @@ function draw() {
   }
   for (const enemy of f.enemies) {
     const trail = enemy.trail || [];
-    if (!trail.length) continue;
+    if (enemy.dead || !trail.length) continue;
     const path = trail.map(([,x,y]) => project([x,y]));
     g.strokeStyle = '#ffada8'; g.lineWidth = 2; g.beginPath();
     path.forEach(([x,y],i) => i ? g.lineTo(x,y) : g.moveTo(x,y)); g.stroke();
