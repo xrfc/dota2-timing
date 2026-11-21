@@ -112,3 +112,35 @@ def test_extra_sources_are_held_watchers_summons_and_illusions():
         ("summon", (2, 2)),
     ]
     assert v.RANGE["watcher"] == (800, 450)
+
+
+def test_tree_disk_intersects_short_ray_between_clear_endpoints():
+    import runpy
+    from pathlib import Path
+
+    tree_terrain = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "scripts/vision_tree_check.py")
+    )["TreeTerrain"]
+    terrain = tree_terrain(flat(), [(16, 31)], 32)
+    assert not terrain.clear((ORIGIN - 15, ORIGIN), (ORIGIN + 46, ORIGIN), 1)
+    assert terrain.clear((ORIGIN - 15, ORIGIN - 2), (ORIGIN + 46, ORIGIN - 2), 1)
+
+
+def test_creep_samples_require_matching_identity_and_preserve_gaps(tmp_path):
+    import gzip
+    import json
+
+    import pytest
+
+    path = tmp_path / "creeps.gz"
+    for schema in ("gem-creep-capture/1", "other"):
+        with gzip.open(path, "wt") as stream:
+            for row in ({"schema": schema, "match_id": 7}, {"t": 0, "creeps": []}):
+                stream.write(json.dumps(row) + "\n")
+        with pytest.raises(ValueError):
+            v.read_creep_positions(path, 8)
+        if schema == "other":
+            with pytest.raises(ValueError):
+                v.read_creep_positions(path, 7)
+        else:
+            assert v.read_creep_positions(path, 7) == {0: []}

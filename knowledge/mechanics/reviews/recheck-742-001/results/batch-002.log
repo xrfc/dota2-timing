@@ -1,0 +1,1197 @@
+[codex-prefer] account=main
+OpenAI Codex v0.166.0
+--------
+workdir: /tmp/claude-1000/-home-node--openclaw-workspace-work-dota2-timing/a5d70981-e074-4c23-9710-8f0083d49b3e/scratchpad/empty
+model: gpt-6.2-astra
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a1f6e5-077c-7282-a8bb-650c86f18e04
+--------
+user
+你在独立复核Dota 2机制知识库在7.42补丁后是否仍然成立。只依据下面的材料，不要读取其他文件，不要运行命令，不要联网，不要凭游戏记忆加入材料没写的效果或变化。
+
+每个对象给出：7.41f和7.42的官方英文说明（`text_741f`、`text_742`；`%xxx%`是数值占位符；某键在7.42里消失表示该文字被删除）、变化了的数据字段（`changed_fields`，`base`为基础值，`scepter`/`shard`为A杖/魔晶下的值，`null`表示该值不存在），以及知识库里这个对象现有的行（`rows`）。每行是一条“该对象有/没有某机制”的判断：`decision=accept`表示有，`reject`表示判过、认为没有；`condition`是适用条件（base基础、scepter_upgrade需A杖、shard_upgrade需魔晶、item装备）。
+
+对每一行判断：在7.42下，这一行的decision在其condition下是否仍然正确。
+- `holds`：仍然正确（大多数纯数值调整属于此类，只要数值没有变成0、效果没有被删除）。
+- `now_wrong`：7.42的变化使这一行的decision不再正确（例如效果被删除、数值变成0、A杖升级被移除；或原来reject的机制现在被加入）。
+- `condition_changed`：机制仍在，但适用条件变了（例如原A杖效果并入基础技能、改由魔晶提供）；在`reason_zh`里写新条件。
+- `unclear`：材料不足以判断。
+机制由游戏字段读出的（如可被驱散、伤害类型、可被破坏、魔耗），以`changed_fields`里对应字段为准。
+
+另外，`new_mechanisms`只列**7.42的变化本身新带来**、而现有行里没有的机制（用下表的id，写条件和原文）；不要补列7.41f就已存在的效果。没有就给空数组。
+
+`quote`摘7.42原文或字段变化作为依据（字段变化写成“字段: 旧→新”），`reason_zh`一句中文说明。每个对象、每一行都要输出，`subject`和`review_id`原样返回。
+
+机制表：
+- `stun`（眩晕）：使目标无法行动和施法的硬控（含小眩晕）
+- `hex`（妖术）：把目标变成无害小动物，期间无法攻击、施法和使用物品
+- `silence`（沉默）：目标无法施放技能（仍可攻击、使用物品）
+- `mute`（锁闭）：目标无法使用物品
+- `disarm`（缴械）：目标无法普通攻击
+- `root`（缠绕）：目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法
+- `taunt`（嘲讽）：单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算
+- `fear`（恐惧）：目标被迫逃跑或远离某处
+- `hypnotize`（蛊惑）：目标被迫走向施法者、某个单位或指定方向
+- `sleep`（睡眠）：无法行动，受伤害后醒来
+- `cyclone_banish`（吹风/放逐）：使目标短暂离开战场，期间无敌或不可被选取
+- `slow`（减速）：降低敌方单位的移动速度
+- `attack_slow`（减攻速）：降低敌方单位的攻击速度
+- `evasion`（闪避）：自身有概率使敌方攻击落空
+- `blind`（致盲）：使敌方单位的攻击有概率落空
+- `debuff_immunity`（减益免疫/技能免疫）：处于减益免疫（技能免疫）时，只有能无视减益免疫的效果才对其生效（如碎颅锤的重击可以眩晕开了黑皇杖的单位）
+- `pierces_debuff_immunity`（无视减益免疫）：效果对处于减益免疫的敌方仍生效（技能看immunity=3，装备看官方说明）
+- `invulnerable_untargetable`（无敌/不可选取）：暂时无法被伤害或无法被指向
+- `damage_block`（护盾/伤害吸收/减伤）：吸收一定伤害、按比例减少受到的伤害，或把受到的伤害延迟结算（如统帅朗姆酒、虚妄之诺）
+- `death_prevention`（免死）：在一段时间内不会被打死（如薄葬、回光返照）
+- `status_resistance`（状态抗性）：缩短自身受到的控制与减益的持续时间（如散夜对剑+16%）
+- `slow_resistance`（减速抗性）：降低自身受到的减速效果（如散夜对剑+30%）
+- `haste`（加速）：提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算
+- `applies_basic_dispel`（施加弱驱散）：移除目标身上可被弱驱散的效果
+- `applies_strong_dispel`（施加强驱散）：移除目标身上可被强驱散的效果（含多数眩晕）
+- `effect_dispellability`（效果可驱散性）：技能施加的效果能被哪种驱散移除：仅强驱散/弱驱散/不可驱散
+- `applies_break`（施加破坏）：使目标的被动技能暂时失效
+- `break_sensitive`（可被破坏）：技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准
+- `invisibility`（隐身）：使自身、队友、召唤物或复制体隐身
+- `true_sight`（真视）：可看见隐身单位
+- `healing`（治疗/回复）：恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）
+- `lifesteal`（吸血）：攻击或技能恢复自身生命：按造成的伤害、按目标生命或每次攻击固定值（攻击吸血、技能吸血、如噬魂鬼·盛宴、附魂面具）
+- `heal_reduction`（治疗削减）：降低或禁止目标的任何形式生命恢复，含属性回复；提升生命上限的效果不受影响
+- `mana_burn`（烧蓝/法力削减）：减少目标的法力值
+- `mana_gain`（自身回蓝/吸蓝）：为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算
+- `mana_cost`（法力消耗）：技能的法力消耗（数值，来自官方字段），用于判断法力依赖
+- `illusions`（幻象）：制造自身或他人的幻象
+- `summons`（召唤物）：召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算
+- `self_mobility`（自身位移）：闪烁、冲刺、跳跃、传送等主动改变自身位置
+- `displace_other`（位移他人）：拉、推、交换、投掷其他单位（如动人之舐、移形换位）
+- `magical_damage`（魔法伤害）：技能伤害类型为魔法
+- `pure_damage`（纯粹伤害）：技能伤害类型为纯粹
+- `physical_damage`（物理伤害）：技能伤害类型为物理
+- `damage_return`（反伤）：受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件
+- `bash`（重击）：攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算
+- `pierce_evasion`（克敌机先）：攻击无视闪避（必中）
+- `critical`（暴击）：攻击造成额外倍数伤害；有概率触发或强化下一次攻击都算
+- `unit_target_spell`（单体指向技能）：主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。
+- `channeled`（持续施法）：施法者自身需要持续引导，被打断即停止
+- `ethereal`（虚无）：单位进入虚无状态：无法攻击，也不会受到物理攻击；魔法和纯粹伤害仍可作用
+- `armor_reduction`（减护甲）：降低目标护甲
+- `magic_resist_reduction`（减魔抗/魔法易伤）：降低目标魔抗，或让目标受到更多魔法或技能伤害
+- `incoming_damage_amp`（伤害加深）：让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）
+- `attack_damage_reduction`（减攻击力）：降低目标的攻击力
+- `spell_block`（格挡指向技能）：使指向自身或队友的技能失效
+- `spell_reflect`（反弹指向技能）：把指向技能反弹给施法者
+- `projectile_dodge`（躲避弹道）：主动使已飞来的弹道落空；“无法被躲避”的说明不算
+- `channel_interrupt`（打断持续施法）：说明明确写打断持续施法；眩晕、沉默等已有控制不重复记
+- `bind`（捆缚）：目标不能移动，也不能攻击，闪烁和传送类也不能用，但仍能施法
+- `leash`（束缚）：目标还能走，但被限制在一定范围内或被拴住走不远，闪烁和传送类不能用
+- `terrain`（创造地形）：在地上造出单位不能穿过的地形，无视地形的单位能越过
+- `cleave`（分裂溅射）：攻击伤害波及周围单位
+- `attack_modifier`（攻击特效）：让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条
+- `spell_amp`（法术放大）：提高技能造成的伤害
+- `aura`（光环）：跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法
+- `ground_zone`（场地魔法）：在地面某个位置留下一块持续一段时间的作用区域，单位留在其中就持续受影响（如寒冰之墙、臭云、烟幕）；区域跟着单位走的归光环，瞬间生效一次的不算
+- `reveal`（显形）：使隐身单位显形，不等于持续真视
+- `grant_vision`（提供视野）：提供目标或区域的视野
+- `reduce_vision`（减视野）：降低目标的视野
+- `phased`（相位移动）：移动不受单位碰撞阻挡
+- `terrain_walk`（无视地形）：移动时不受悬崖等不可通行地形阻挡，也能穿过树木
+- `high_ground_vision`（高空视野）：获得不被阻挡的视野，如暗夜魔王的大招
+- `tree_walk`（穿树）：移动时能穿过树木，但不能越过悬崖或地形
+- `tree_destroy`（砍树）：能摧毁树木
+- `respawn`（重生）：死亡后复活，或影响复活
+- `execute`（斩杀）：目标低于生命阈值时直接杀死
+- `hp_removal`（生命移除）：直接移除生命，不算伤害
+- `spell_steal`（偷技能）：获得其他单位的技能
+- `stat_steal`（偷属性）：夺取目标的属性
+- `cooldown_reduction`（减冷却）：减少别的技能或物品的冷却；只减这个技能自身的不算
+- `cooldown_reset`（刷新冷却）：立刻重置冷却
+- `economy`（经济经验）：提供额外金钱或经验；只是正常赏金不算
+- `charges`（充能）：技能或物品用一次消耗一点；只决定数值或层数的不算
+- `aoe_damage`（范围伤害）：一次施放或一次攻击能对多个敌方单位造成伤害
+
+待复核对象（JSON）：
+[{"subject": "arc_warden_runic_infusion", "name_zh": "天穹守望者·神符灌注", "category": "2_纯数值", "text_741f": {"desc_loc": "Runes of Power fuse to the Self. Arc Warden gains +%all_attribute_bonus_per_stack% all attributes permanently whenever Arc Warden or the Tempest Double activates a Power Rune.", "facets_loc": ["Runes of Power fuse to the Self. Arc Warden gains +%all_attribute_bonus_per_stack% all attributes permanently whenever Arc Warden or the Tempest Double activates a Power Rune."]}, "text_742": {"desc_loc": "Runes of Power fuse to the Self. Arc Warden gains +%all_attribute_bonus_per_stack% all attributes permanently whenever Arc Warden or the Tempest Double activates a Power Rune.", "facets_loc": ["Runes of Power fuse to the Self. Arc Warden gains +%all_attribute_bonus_per_stack% all attributes permanently whenever Arc Warden or the Tempest Double activates a Power Rune."]}, "changed_fields": [], "rows": [{"review_id": "9d13f2789ec9f6d24784", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "reject"}]}, {"subject": "arc_warden_tempest_double", "name_zh": "天穹守望者·风暴双雄", "category": "2_纯数值", "text_741f": {"desc_loc": "Briefly refocusing its fractured elements into a single form, the Arc Warden is able to create a perfect electrical duplication of itself. The duplicate can use all of Arc Warden's current items and spells, except most consumables and items that drop on death. The duplicate has separate item and ability cooldowns. The Tempest Double loses its sense of self and fractures over time, becoming slower and less accurate.", "notes_loc": ["Tempest Double and Refresher Orb cannot be used by the duplicate."], "shard_loc": "The Tempest Double is infused with the bonuses of Arcane, Invisibility, and Haste Runes for %rune_duration%s when created. Does not trigger Runic Infusion.", "facets_loc": ["The Tempest Double is infused with the bonuses of Power Runes for %rune_duration%s when created. Level 1 - Arcane Rune. Level 2 - Arcane and Invisibility Runes. Level 3 - Arcane, Invisibility, and Haste Runes."]}, "text_742": {"desc_loc": "Briefly refocusing its fractured elements into a single form, the Arc Warden is able to create a perfect electrical duplication of itself. The duplicate can use all of Arc Warden's current items and spells, except most consumables and items that drop on death. The duplicate has separate item and ability cooldowns. The Tempest Double loses its sense of self and fractures over time, becoming slower and less accurate.", "notes_loc": ["Tempest Double and Refresher Orb cannot be used by the duplicate."], "shard_loc": "The Tempest Double is infused with the bonuses of Arcane, Invisibility, and Haste Runes for %rune_duration%s when created. Does not trigger Runic Infusion.", "facets_loc": ["The Tempest Double is infused with the bonuses of Power Runes for %rune_duration%s when created. Level 1 - Arcane Rune. Level 2 - Arcane and Invisibility Runes. Level 3 - Arcane, Invisibility, and Haste Runes."]}, "changed_fields": [{"field": "bounty", "old": {"base": [180, 240, 300], "scepter": null, "shard": null}, "new": null}, {"field": "bounty_gold", "old": {"base": [70], "scepter": null, "shard": null}, "new": {"base": [100], "scepter": null, "shard": null}}, {"field": "bounty_xp", "old": {"base": [70], "scepter": null, "shard": null}, "new": {"base": [100], "scepter": null, "shard": null}}], "rows": [{"review_id": "3f8503f7eace7280e71e", "mechanism": "blind", "mechanism_zh": "致盲", "definition": "使敌方单位的攻击有概率落空", "condition": "base", "decision": "reject"}, {"review_id": "9650a245a540158338b0", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "90d83f5b9a30c4d9d767", "mechanism": "invisibility", "mechanism_zh": "隐身", "definition": "使自身、队友、召唤物或复制体隐身", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "b79d43123a3c4d8542a5", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "reject"}, {"review_id": "audit:arc_warden_tempest_double:summons:base", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "accept"}]}, {"subject": "arcane_boots", "name_zh": "奥术鞋", "category": "2_纯数值", "text_741f": {"desc_loc": "Active: Replenish Restores %replenish_amount% mana to all nearby allies. Radius: %replenish_radius% Passive: Basilius Aura Grants %aura_mana_regen% mana regeneration to allies. Radius: %aura_radius% Movement speed bonuses from multiple pairs of boots do not stack.", "notes_loc": ["Does not work on Meepo clones."]}, "text_742": {"desc_loc": "Active: Replenish Restores %replenish_amount% mana to all nearby allies. Radius: %replenish_radius% Passive: Basilius Aura Grants %aura_mana_regen% mana regeneration to allies. Radius: %aura_radius% Movement speed bonuses from multiple pairs of boots do not stack.", "notes_loc": ["Does not work on Meepo clones."]}, "changed_fields": [{"field": "cooldowns", "old": [55], "new": [50]}, {"field": "AbilityCooldown", "old": {"base": [55], "scepter": null, "shard": null}, "new": {"base": [50], "scepter": null, "shard": null}}, {"field": "bonus_mana", "old": {"base": [125], "scepter": null, "shard": null}, "new": {"base": [150], "scepter": null, "shard": null}}, {"field": "bonus_movement", "old": {"base": [45], "scepter": null, "shard": null}, "new": {"base": [50], "scepter": null, "shard": null}}], "rows": [{"review_id": "12b462dbda359ba1cdc5", "mechanism": "aura", "mechanism_zh": "光环", "definition": "跟着单位持续影响周围单位；对友军或敌方都算，并记作用对象；固定在地上的区域归场地魔法", "condition": "item", "decision": "accept"}, {"review_id": "37692214f952f5d6a2d6", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "item", "decision": "accept"}, {"review_id": "c8eeada3c8e88f89102a", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "item", "decision": "accept"}, {"review_id": "db5562db44ae41f971df", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "item", "decision": "accept"}]}, {"subject": "armlet", "name_zh": "莫尔迪基安的臂章", "category": "4_行为/目标/驱散/免疫/A杖魔晶", "text_741f": {"desc_loc": "Toggle: Unholy Strength When active, Unholy Strength grants +%unholy_bonus_damage% damage, +%unholy_bonus_strength% strength and +%unholy_bonus_armor% armor, but drains %unholy_health_drain_per_second% health per second. You cannot die from the health drain when Unholy Strength is activated, nor from the strength loss when Unholy Strength is deactivated.", "notes_loc": ["The strength change will affect both maximum and current HP, but you cannot die from the change.", "The strength change occurs over 0.6 seconds.", "Activating or deactivating Unholy Strength does not interrupt channeling."]}, "text_742": {"desc_loc": "Toggle: Unholy Strength When active, Unholy Strength grants +%unholy_bonus_damage% damage, +%unholy_bonus_strength% Strength and +%unholy_bonus_armor% armor, but drains %unholy_health_drain_per_second% health per second. You cannot die from the health drain when Unholy Strength is activated, nor from the strength loss when Unholy Strength is deactivated.", "notes_loc": ["The strength change will affect both maximum and current HP, but you cannot die from the change.", "The strength change occurs over 0.6 seconds.", "Activating or deactivating Unholy Strength does not interrupt channeling."]}, "changed_fields": [{"field": "behavior", "old": "4194820", "new": "70368748372484"}], "rows": [{"review_id": "25cd2befd5561643ce77", "mechanism": "channel_interrupt", "mechanism_zh": "打断持续施法", "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记", "condition": "item", "decision": "reject"}, {"review_id": "0eccc36ddc805920436b", "mechanism": "death_prevention", "mechanism_zh": "免死", "definition": "在一段时间内不会被打死（如薄葬、回光返照）", "condition": "item", "decision": "reject"}, {"review_id": "f84e4bdfe2a3d5640d2e", "mechanism": "death_prevention", "mechanism_zh": "免死", "definition": "在一段时间内不会被打死（如薄葬、回光返照）", "condition": "item", "decision": "reject"}, {"review_id": "audit:armlet:healing:item", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "item", "decision": "accept"}]}, {"subject": "axe_battle_hunger", "name_zh": "斧王·战斗饥渴", "category": "2_纯数值", "text_741f": {"desc_loc": "Enrages an enemy unit, causing it to take damage over time until it kills another unit or the duration ends. The enemy is slowed as long as they are facing away from Axe.", "notes_loc": ["Destroying buildings will also remove the debuff."], "shard_loc": "Multiple instances of Battle Hunger can stack on a single target."}, "text_742": {"desc_loc": "Enrages an enemy unit, causing it to take damage over time until it kills another unit or the duration ends. The enemy is slowed as long as they are facing away from Axe.", "notes_loc": ["Destroying buildings will also remove the debuff."], "shard_loc": "Multiple instances of Battle Hunger can stack on a single target."}, "changed_fields": [{"field": "slow", "old": {"base": [18, 22, 26, 30], "scepter": null, "shard": null}, "new": {"base": [16, 19, 22, 25], "scepter": null, "shard": null}}], "rows": [{"review_id": "b4ba7669b6a17639ec30", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "bd909cf643394668bb95", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "e2824561e903d4b1b36a", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "axe_berserkers_call", "name_zh": "斧王·狂战士之吼", "category": "2_纯数值", "text_741f": {"desc_loc": "Axe taunts nearby enemy units, forcing them to attack him while he gains bonus armor during the duration.", "shard_loc": "Berserker's Call applies Battle Hunger to affected units.", "facets_loc": ["Berserker's Call gives Axe increased bonus armor and increases the attack speed of the affected units."]}, "text_742": {"desc_loc": "Axe taunts nearby enemy units, forcing them to attack him while he gains bonus armor during the duration.", "shard_loc": "Berserker's Call applies Battle Hunger to affected units.", "facets_loc": ["Berserker's Call gives Axe increased bonus armor and increases the attack speed of the affected units."]}, "changed_fields": [], "rows": [{"review_id": "audit:axe_berserkers_call:slow:shard", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "31ac2fb544d936000f99", "mechanism": "taunt", "mechanism_zh": "嘲讽", "definition": "单位被迫攻击某个目标：强迫敌人攻击施法者、决斗、被迫攻击队友、周围单位被迫攻击指定目标、强迫自身攻击都算", "condition": "base", "decision": "accept"}]}, {"subject": "axe_counter_helix", "name_zh": "斧王·反击螺旋", "category": "3_说明文字", "text_741f": {"desc_loc": "After a set number of attacks, Axe will perform a helix counter attack, dealing pure damage to all nearby enemies.", "notes_loc": ["Counter Helix triggers when the attack hits.", "Illusions' counters don't increase when they attack when you have a Scepter."], "scepter_loc": "Counter Helix now applies a stacking debuff to enemies hit by it that causes them to deal less total attack damage to Axe. Counter Helix no longer has a cooldown and its counter advances when Axe attacks."}, "text_742": {"desc_loc": "After a set number of attacks, Axe will perform a helix counter attack, dealing pure damage to all nearby enemies.", "notes_loc": ["Illusions' counters don't increase when they attack when you have a Scepter."], "scepter_loc": "Counter Helix now applies a stacking debuff to enemies hit by it that causes them to deal less total attack damage to Axe. Counter Helix no longer has a cooldown and its counter advances when Axe attacks."}, "changed_fields": [{"field": "debuff_duration", "old": {"base": [0], "scepter": [6], "shard": null}, "new": {"base": [0], "scepter": [7], "shard": null}}], "rows": [{"review_id": "0ca85166d6eb6646b8ad", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "45dc3687ea59eefe295f", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}, {"review_id": "9f4ef3b647a41254167c", "mechanism": "damage_return", "mechanism_zh": "反伤", "definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件", "condition": "base", "decision": "accept"}]}, {"subject": "axe_culling_blade", "name_zh": "斧王·淘汰之刃", "category": "2_纯数值", "text_741f": {"desc_loc": "Axe spots a weakness and strikes, dealing pure damage. When an enemy hero is killed with Culling Blade, its cooldown is reset, and all nearby allied units gain bonus movement speed and armor. Axe permanently drenches his blade every time he kills an enemy Hero with Culling Blade, gaining bonus armor for each stack.", "notes_loc": ["Culling Blade death cannot be prevented with other abilities like Shallow Grave."]}, "text_742": {"desc_loc": "Axe spots a weakness and strikes, dealing pure damage. When an enemy hero is killed with Culling Blade, its cooldown is reset, and all nearby allied units gain bonus movement speed and armor. Axe permanently drenches his blade every time he kills an enemy Hero with Culling Blade, gaining bonus armor for each stack.", "notes_loc": ["Culling Blade death cannot be prevented with other abilities like Shallow Grave."]}, "changed_fields": [{"field": "speed_bonus", "old": {"base": [20, 25, 30], "scepter": null, "shard": null}, "new": {"base": [25], "scepter": null, "shard": null}}], "rows": [{"review_id": "f778949844863d898b95", "mechanism": "cooldown_reset", "mechanism_zh": "刷新冷却", "definition": "立刻重置冷却", "condition": "base", "decision": "accept"}, {"review_id": "0d3e4c482d88004fb58d", "mechanism": "execute", "mechanism_zh": "斩杀", "definition": "目标低于生命阈值时直接杀死", "condition": "base", "decision": "accept"}, {"review_id": "6c58753a281ae7c69578", "mechanism": "haste", "mechanism_zh": "加速", "definition": "提升自身、自己的单位或友方的移动速度（顺带加一点移速的也算）；只让敌人变慢的不算", "condition": "base", "decision": "accept"}, {"review_id": "e0af26270370f77ae0b7", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "bane_brain_sap", "name_zh": "祸乱之源·蚀脑", "category": "2_纯数值", "text_741f": {"desc_loc": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.", "shard_loc": "Reduces cooldown by %bonus_AbilityCooldown%. Causes Brain Sap to become a %shard_radius% AoE spell. Secondary targets only heal for %shard_secondary_target_heal_pct%%%."}, "text_742": {"desc_loc": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.", "shard_loc": "Reduces cooldown by %bonus_AbilityCooldown%. Causes Brain Sap to become a %shard_radius% AoE spell. Secondary targets only heal for %shard_secondary_target_heal_pct%%%."}, "changed_fields": [{"field": "AbilityCooldown", "old": {"base": [17, 15, 13, 11], "scepter": null, "shard": [3]}, "new": {"base": [17, 15, 13, 11], "scepter": null, "shard": [4]}}], "rows": [{"review_id": "57bc0f003b1a45f41cf4", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "audit:bane_brain_sap:aoe_damage:shard", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "e5950d9618750a3af0f7", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "base", "decision": "accept"}, {"review_id": "ee4efca2197c20e479f8", "mechanism": "healing", "mechanism_zh": "治疗/回复", "definition": "恢复生命值（治疗、生命恢复），含属性生命恢复（如治疗指环+4.5）", "condition": "shard_upgrade", "decision": "reject"}, {"review_id": "d88a435418d4898d340d", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "bane_fiends_grip", "name_zh": "祸乱之源·魔爪", "category": "2_纯数值", "text_741f": {"desc_loc": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.", "scepter_loc": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack."}, "text_742": {"desc_loc": "CHANNELED - Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.", "scepter_loc": "Reduces Fiend's Grip cooldown by %bonus_AbilityCooldown%s. Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target. Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted. Damage does not stack."}, "changed_fields": [{"field": "cooldowns", "old": [120, 110, 100], "new": [125, 110, 95]}, {"field": "AbilityCooldown", "old": {"base": [120, 110, 100], "scepter": [40], "shard": null}, "new": {"base": [125, 110, 95], "scepter": [35], "shard": null}}, {"field": "scepter_incoming_illusion_damage", "old": {"base": [0], "scepter": [225], "shard": null}, "new": {"base": [0], "scepter": [200], "shard": null}}], "rows": [{"review_id": "5ceccc6e1381cc05d491", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "ad2e6f6bf320668956f4", "mechanism": "channel_interrupt", "mechanism_zh": "打断持续施法", "definition": "说明明确写打断持续施法；眩晕、沉默等已有控制不重复记", "condition": "scepter_upgrade", "decision": "reject"}, {"review_id": "7d7ee27fa905964fff9b", "mechanism": "channeled", "mechanism_zh": "持续施法", "definition": "施法者自身需要持续引导，被打断即停止", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "e683545cf52a65e6276f", "mechanism": "channeled", "mechanism_zh": "持续施法", "definition": "施法者自身需要持续引导，被打断即停止", "condition": "base", "decision": "accept"}, {"review_id": "2b8b90e2f4748da95fc0", "mechanism": "illusions", "mechanism_zh": "幻象", "definition": "制造自身或他人的幻象", "condition": "scepter_upgrade", "decision": "accept"}, {"review_id": "1d29eb4d1a0c64ca5fdd", "mechanism": "mana_burn", "mechanism_zh": "烧蓝/法力削减", "definition": "减少目标的法力值", "condition": "base", "decision": "accept"}, {"review_id": "d29d7320e605c107a8fb", "mechanism": "mana_gain", "mechanism_zh": "自身回蓝/吸蓝", "definition": "为自己恢复或从其他单位抽取法力（如莱恩法力吸取），含属性回蓝和回蓝倍率；对友军生效且能给自己回蓝的也算", "condition": "base", "decision": "accept"}, {"review_id": "audit:bane_fiends_grip:stun:base", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "accept"}, {"review_id": "629cda520d28e440a01f", "mechanism": "unit_target_spell", "mechanism_zh": "单体指向技能", "definition": "主动技能或物品施放时，可以选择敌方单位为目标；允许同一技能或物品也能选择友方。指向方式不推断是否触发林肯格挡或莲花反弹，具体交互分别核对。", "condition": "base", "decision": "accept"}]}, {"subject": "basher", "name_zh": "碎颅锤", "category": "3_说明文字", "text_741f": {"desc_loc": "Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus physical damage. Bash chance for ranged heroes is %bash_chance_ranged%%%.", "notes_loc": ["Does not stack with other sources of Bash.", "The following heroes cannot trigger Bash on this item: Spirit Breaker, Faceless Void, Slardar, and Kez while in Sai mode.", "Does not grant Bash to Clones and Tempest Doubles."]}, "text_742": {"desc_loc": "Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus physical damage. Bash chance for ranged heroes is %bash_chance_ranged%%%.", "notes_loc": ["Does not stack with other sources of Bash.", "The following heroes cannot trigger Bash on this item: Spirit Breaker, Faceless Void, Slardar, and Kez while in Sai mode.", "Does not grant Bash to Clones, Illusions, or Tempest Doubles."]}, "changed_fields": [], "rows": [{"review_id": "4e036070674d288ff9f1", "mechanism": "bash", "mechanism_zh": "重击", "definition": "攻击或技能造成重击（眩晕目标）；有概率、固定攻击次数或技能触发都算", "condition": "item", "decision": "accept"}, {"review_id": "14fac6de51de9ca62862", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "item", "decision": "accept"}]}, {"subject": "batrider_flamebreak", "name_zh": "蝙蝠骑士·烈焰破击", "category": "2_纯数值", "text_741f": {"desc_loc": "Hurls an explosive cocktail that explodes when it reaches the target location, knocking back, slowing and dealing damage over time to enemies in the area."}, "text_742": {"desc_loc": "Hurls an explosive cocktail that explodes when it reaches the target location, knocking back, slowing and dealing damage over time to enemies in the area."}, "changed_fields": [{"field": "damage_impact", "old": {"base": [25, 50, 75, 100], "scepter": null, "shard": null}, "new": {"base": [30, 60, 90, 120], "scepter": null, "shard": null}}], "rows": [{"review_id": "0baff3438ea203536d81", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "11d60487289b0f38738d", "mechanism": "displace_other", "mechanism_zh": "位移他人", "definition": "拉、推、交换、投掷其他单位（如动人之舐、移形换位）", "condition": "base", "decision": "accept"}, {"review_id": "4217e62d61239b8329df", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "f4596c5a1de109539014", "mechanism": "stun", "mechanism_zh": "眩晕", "definition": "使目标无法行动和施法的硬控（含小眩晕）", "condition": "base", "decision": "reject"}]}, {"subject": "batrider_sticky_napalm", "name_zh": "蝙蝠骑士·粘性燃油", "category": "2_纯数值", "text_741f": {"desc_loc": "Drenches an area in sticky oil, amplifying damage from Batrider's attacks and abilities and slowing the movement speed and turn rate of enemies. Additional casts of Sticky Napalm continue to increase damage, up to %max_stacks% stacks. Applies a small amount of damage with each cast.", "notes_loc": ["All damage from Batrider gets amplified, except for Radiance, Orb of Venom, Urn of Shadows, and Spirit Vessel.", "Sticky Napalm does not require turning to cast.", "Sticky Napalm deals %creep_damage_pct%%% damage to creeps."], "shard_loc": "Sticky Napalm no longer has a stack limit. Sticky Napalm deals damage to structures.", "facets_loc": ["Increases the max level of Sticky Napalm. Level %max_level_tooltip% Sticky Napalm causes every attack to apply %napalm_stacks_on_attack_tooltip% stack of Sticky Napalm."]}, "text_742": {"desc_loc": "Drenches an area in sticky oil, amplifying damage from Batrider's attacks and abilities and slowing the movement speed and turn rate of enemies. Additional casts of Sticky Napalm continue to increase damage, up to %max_stacks% stacks. Applies a small amount of damage with each cast.", "notes_loc": ["All damage from Batrider gets amplified, except for Radiance, Orb of Venom, Urn of Shadows, and Spirit Vessel.", "Sticky Napalm does not require turning to cast.", "Sticky Napalm deals %creep_damage_pct%%% damage to creeps."], "shard_loc": "Sticky Napalm no longer has a stack limit. Sticky Napalm deals damage to structures.", "facets_loc": ["Increases the max level of Sticky Napalm. Level %max_level_tooltip% Sticky Napalm causes every attack to apply %napalm_stacks_on_attack_tooltip% stack of Sticky Napalm."]}, "changed_fields": [{"field": "cooldowns", "old": [3], "new": [4]}, {"field": "mana_costs", "old": [22], "new": [25]}, {"field": "AbilityCooldown", "old": {"base": [3], "scepter": null, "shard": null}, "new": {"base": [4], "scepter": null, "shard": null}}, {"field": "AbilityManaCost", "old": {"base": [22], "scepter": null, "shard": null}, "new": {"base": [25], "scepter": null, "shard": null}}, {"field": "application_damage", "old": {"base": [5, 10, 15, 20], "scepter": null, "shard": null}, "new": {"base": [7, 14, 21, 28], "scepter": null, "shard": null}}, {"field": "creep_damage_pct", "old": {"base": [20], "scepter": null, "shard": null}, "new": {"base": [25], "scepter": null, "shard": null}}, {"field": "damage", "old": {"base": [2.5, 5, 7.5, 10], "scepter": null, "shard": null}, "new": {"base": [6, 12, 18, 24], "scepter": null, "shard": null}}, {"field": "duration", "old": {"base": [6], "scepter": null, "shard": null}, "new": {"base": [7], "scepter": null, "shard": null}}, {"field": "max_stacks", "old": {"base": [20], "scepter": null, "shard": null}, "new": {"base": [10], "scepter": null, "shard": null}}, {"field": "movement_speed_pct", "old": {"base": [-0.75, -1.5, -2.25, -3], "scepter": null, "shard": null}, "new": {"base": [2, 4, 6, 8], "scepter": null, "shard": null}}, {"field": "stacks_per_cast", "old": {"base": [2], "scepter": null, "shard": null}, "new": {"base": [1], "scepter": null, "shard": null}}, {"field": "turn_rate_pct", "old": {"base": [-10, -30, -50, -70], "scepter": null, "shard": null}, "new": {"base": [10, 25, 40, 55], "scepter": null, "shard": null}}], "rows": [{"review_id": "81157b4fb558c79b51c1", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:batrider_sticky_napalm:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "d872f140e9b137a1ee5b", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "accept"}, {"review_id": "d0392d3b6a8acfffb04f", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}]}, {"subject": "beastmaster_inner_beast", "name_zh": "兽王·野性之心", "category": "2_纯数值", "text_741f": {"desc_loc": "Untaps the inner fury of Beastmaster and units he controls, passively increasing their attack speed.", "notes_loc": ["Break disables the passive attack speed bonus."], "facets_loc": ["Attack Speed bonus is increased by the number of units affected by Inner Beast.", "Can be activated to increase Beastmaster's attack speed and allow him to apply the Wild Axes damage amplification debuff on his attack target."]}, "text_742": {"desc_loc": "Untaps the inner fury of Beastmaster and units he controls, passively increasing their attack speed.", "notes_loc": ["Break disables the passive attack speed bonus."], "facets_loc": ["Attack Speed bonus is increased by the number of units affected by Inner Beast.", "Can be activated to increase Beastmaster's attack speed and allow him to apply the Wild Axes damage amplification debuff on his attack target."]}, "changed_fields": [], "rows": [{"review_id": "30baeead3c528c0db0ee", "mechanism": "break_sensitive", "mechanism_zh": "可被破坏", "definition": "技能（或技能的一部分）会被破坏暂时失效；以游戏文件IsBreakable=1为准", "condition": "base", "decision": "accept"}]}, {"subject": "beastmaster_summon_raptor", "name_zh": "兽王·召唤猛禽", "category": "2_纯数值", "text_741f": {"desc_loc": "Beastmaster summons %hawk_count% hawks that circle around Beastmaster and dive-bombs at enemies with a base attack rate of every %hawk_base_attack_interval%s, damaging and rooting them. Attack rate increases with the Hawk's attack speed. Prioritizes heroes.", "shard_loc": "Increases Hawk duration by %bonus_duration%s and summons an additional Hawk."}, "text_742": {"desc_loc": "Beastmaster summons %hawk_count% hawks that circle around Beastmaster and dive-bombs at enemies with a base attack rate of every %hawk_base_attack_interval%s, damaging and rooting them. Attack rate increases with the Hawk's attack speed. Prioritizes heroes.", "shard_loc": "Increases Hawk duration by %bonus_duration%s and summons an additional Hawk."}, "changed_fields": [{"field": "cooldowns", "old": [30], "new": [25]}, {"field": "AbilityCooldown", "old": {"base": [30], "scepter": null, "shard": null}, "new": {"base": [25], "scepter": null, "shard": null}}, {"field": "dive_damage", "old": {"base": [60, 95, 130, 165], "scepter": null, "shard": null}, "new": {"base": [70, 110, 150, 190], "scepter": null, "shard": null}}], "rows": [{"review_id": "3f7c58d6be7d8debd459", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "reject"}, {"review_id": "8dbc804dd760634bd920", "mechanism": "root", "mechanism_zh": "缠绕", "definition": "目标不能移动，闪烁和传送类也不能用，但仍能攻击和施法", "condition": "base", "decision": "accept"}, {"review_id": "61e19753ed69ee1e25d2", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "accept"}]}, {"subject": "beastmaster_summon_razorback", "name_zh": "兽王·召唤刀背兽", "category": "2_纯数值", "text_741f": {"desc_loc": "Beastmaster calls forth a Boar to aid in the battlefield. The Boar has a passive poison attack that slows attack and movement speeds."}, "text_742": {"desc_loc": "Beastmaster calls forth a Boar to aid in the battlefield. The Boar has a passive poison attack that slows attack and movement speeds."}, "changed_fields": [], "rows": [{"review_id": "audit:beastmaster_summon_razorback:attack_modifier:base", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "base", "decision": "accept"}, {"review_id": "audit:beastmaster_summon_razorback:attack_slow:base", "mechanism": "attack_slow", "mechanism_zh": "减攻速", "definition": "降低敌方单位的攻击速度", "condition": "base", "decision": "accept"}, {"review_id": "6565b41730d02cb3657c", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "base", "decision": "accept"}, {"review_id": "audit:beastmaster_summon_razorback:summons:base", "mechanism": "summons", "mechanism_zh": "召唤物", "definition": "召唤有血量的单位（可控或不可控都算），以及夺取已有单位的控制权；按受攻击次数计算的单位和死亡守卫不算", "condition": "base", "decision": "accept"}]}, {"subject": "beastmaster_wild_axes", "name_zh": "兽王·野性之斧", "category": "2_纯数值", "text_741f": {"desc_loc": "Beastmaster sends his axes flying and calls them home again, slicing through enemy units and trees along their path. Each axe can hit an enemy once, and amplifies subsequent damage from Beastmaster and his units.", "notes_loc": ["This ability destroys trees."], "shard_loc": "Beastmaster's attacks on enemy heroes also apply the Wild Axes debuff of its corresponding level."}, "text_742": {"desc_loc": "Beastmaster sends his axes flying and calls them home again, slicing through enemy units and trees along their path. Each axe can hit an enemy once, and amplifies subsequent damage from Beastmaster and his units.", "notes_loc": ["This ability destroys trees."], "shard_loc": "Beastmaster's attacks on enemy heroes also apply the Wild Axes debuff of its corresponding level."}, "changed_fields": [{"field": "axe_damage", "old": {"base": [40, 80, 120, 160], "scepter": null, "shard": null}, "new": {"base": [45, 85, 125, 165], "scepter": null, "shard": null}}, {"field": "damage_amp", "old": {"base": [5, 6, 7, 8], "scepter": null, "shard": null}, "new": {"base": [4, 5, 6, 7], "scepter": null, "shard": null}}], "rows": [{"review_id": "c2445b88a0f776abcfad", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "base", "decision": "accept"}, {"review_id": "audit:beastmaster_wild_axes:attack_modifier:shard", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "shard_upgrade", "decision": "accept"}, {"review_id": "audit:beastmaster_wild_axes:incoming_damage_amp:base", "mechanism": "incoming_damage_amp", "mechanism_zh": "伤害加深", "definition": "让目标受到更多物理伤害或全部伤害（只加深魔法的归上一项）", "condition": "base", "decision": "accept"}, {"review_id": "d534451879b78955f600", "mechanism": "tree_destroy", "mechanism_zh": "砍树", "definition": "能摧毁树木", "condition": "base", "decision": "accept"}]}, {"subject": "blade_mail", "name_zh": "刃甲", "category": "2_纯数值", "text_741f": {"desc_loc": "Active: Damage Return For %duration% seconds, return all incoming damage, increasing the percentage by %active_reflection_pct%%%. Passive: Damage Return Everytime you are attacked, you return %passive_reflection_constant% damage plus %passive_reflection_pct%%% of the attack damage dealt to you.", "notes_loc": ["Damage Return is calculated before any kind of reduction.", "Returned damage type is the same as it was received.", "Damage done by this item is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."]}, "text_742": {"desc_loc": "Active: Damage Return For %duration% seconds, return all incoming damage, increasing the percentage by %active_reflection_pct%%%. Passive: Damage Return Everytime you are attacked, you return %passive_reflection_constant% damage plus %passive_reflection_pct%%% of the attack damage dealt to you.", "notes_loc": ["Damage Return is calculated before any kind of reduction.", "Returned damage type is the same as it was received.", "Damage done by this item is considered reflected damage. Reflected damage does not provide any lifesteal and cannot be reflected."]}, "changed_fields": [{"field": "item_cost", "old": 2400, "new": 2350}], "rows": [{"review_id": "20fbb6cdc9268eed89a0", "mechanism": "damage_return", "mechanism_zh": "反伤", "definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件", "condition": "item", "decision": "accept"}, {"review_id": "c3774be5d7aaad2a2934", "mechanism": "damage_return", "mechanism_zh": "反伤", "definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件", "condition": "item", "decision": "accept"}, {"review_id": "e1ccf781dfdb23d1a725", "mechanism": "damage_return", "mechanism_zh": "反伤", "definition": "受到攻击或伤害时触发的反击伤害：按比例返还所受伤害、固定值反击，或受伤触发的范围伤害（如半人马·反伤、斧王·反击螺旋、钢毛后背）；攻击者不一定被打到也算，记条件", "condition": "item", "decision": "accept"}]}, {"subject": "blight_stone", "name_zh": "枯萎之珠", "category": "2_纯数值", "text_741f": {"desc_loc": "Passive: Lesser Corruption Your attacks reduce the target's armor by %corruption_armor% for %corruption_duration% seconds.", "notes_loc": ["Does not stack with its upgrades, Desolator, or Stygian Desolator."]}, "text_742": {"desc_loc": "Passive: Lesser Corruption Your attacks reduce the target's armor by %corruption_armor% for %corruption_duration% seconds.", "notes_loc": ["Does not stack with its upgrades, Desolator, or Stygian Desolator."]}, "changed_fields": [], "rows": [{"review_id": "ce9cac8ff0abc0c55124", "mechanism": "armor_reduction", "mechanism_zh": "减护甲", "definition": "降低目标护甲", "condition": "item", "decision": "accept"}, {"review_id": "audit:blight_stone:attack_modifier:item", "mechanism": "attack_modifier", "mechanism_zh": "攻击特效", "definition": "让普通攻击附带额外效果：减甲、减速、减疗、烧蓝、额外伤害、中毒、降低属性等；有概率触发或只强化下一次攻击也算。单纯提高攻击力、攻速，以及吸血、暴击、分裂弹射归各自词条", "condition": "item", "decision": "accept"}]}, {"subject": "blood_grenade", "name_zh": "血腥榴弹", "category": "3_说明文字", "text_741f": {"desc_loc": "Use: Throw Grenade Throw a grenade at the target area. Enemies in the area will take %impact_damage% damage on impact, and be slowed by %movespeed_slow%%% and take %damage_over_time% damage every %tick_rate%s for %debuff_duration% seconds. Radius %radius%."}, "text_742": {"desc_loc": "Use: Throw Grenade Throw a grenade at the target area. Enemies in the area will take %impact_damage% damage on impact, and be slowed by %movespeed_slow%%% and take %damage_over_time% damage every %tick_rate%s for %debuff_duration%s. Radius %radius%."}, "changed_fields": [], "rows": [{"review_id": "e3323eb09ce2a335d2db", "mechanism": "aoe_damage", "mechanism_zh": "范围伤害", "definition": "一次施放或一次攻击能对多个敌方单位造成伤害", "condition": "item", "decision": "accept"}, {"review_id": "9f54a84a7dd0372e9bf0", "mechanism": "slow", "mechanism_zh": "减速", "definition": "降低敌方单位的移动速度", "condition": "item", "decision": "accept"}]}]
+
+warning: Codex could not find bubblewrap on PATH. Install bubblewrap with your OS package manager. See the sandbox prerequisites: https://developers.openai.com/codex/concepts/sandboxing#prerequisites. Codex will use the bundled bubblewrap in the meantime.
+codex
+{
+  "objects": [
+    {
+      "subject": "arc_warden_runic_infusion",
+      "rows": [
+        {
+          "review_id": "9d13f2789ec9f6d24784",
+          "verdict": "holds",
+          "quote": "Arc Warden gains +%all_attribute_bonus_per_stack% all attributes permanently whenever Arc Warden or the Tempest Double activates a Power Rune.",
+          "reason_zh": "两个版本的说明相同，变更清单中也没有 IsBreakable 改动，因此沿用原有的不可被破坏判定。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "arc_warden_tempest_double",
+      "rows": [
+        {
+          "review_id": "3f8503f7eace7280e71e",
+          "verdict": "holds",
+          "quote": "The Tempest Double loses its sense of self and fractures over time, becoming slower and less accurate.",
+          "reason_zh": "攻击准确度随时间下降的是复制体自身，技能没有使敌方攻击落空的效果。"
+        },
+        {
+          "review_id": "9650a245a540158338b0",
+          "verdict": "holds",
+          "quote": "The Tempest Double is infused with the bonuses of Arcane, Invisibility, and Haste Runes for %rune_duration%s when created.",
+          "reason_zh": "持有魔晶时，新创建的复制体仍会获得急速神符的加速效果。"
+        },
+        {
+          "review_id": "90d83f5b9a30c4d9d767",
+          "verdict": "holds",
+          "quote": "The Tempest Double is infused with the bonuses of Arcane, Invisibility, and Haste Runes for %rune_duration%s when created.",
+          "reason_zh": "持有魔晶时，新创建的复制体仍会获得隐身神符的效果。"
+        },
+        {
+          "review_id": "b79d43123a3c4d8542a5",
+          "verdict": "holds",
+          "quote": "The Tempest Double loses its sense of self and fractures over time, becoming slower and less accurate.",
+          "reason_zh": "逐渐变慢的是复制体自身，基础技能没有降低敌方单位的移速。"
+        },
+        {
+          "review_id": "audit:arc_warden_tempest_double:summons:base",
+          "verdict": "holds",
+          "quote": "The duplicate can use all of Arc Warden's current items and spells, except most consumables and items that drop on death.",
+          "reason_zh": "基础技能仍会创建能独立使用物品和技能的复制体，本次赏金字段调整不影响其召唤物判定。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "arcane_boots",
+      "rows": [
+        {
+          "review_id": "12b462dbda359ba1cdc5",
+          "verdict": "holds",
+          "quote": "Passive: Basilius Aura Grants %aura_mana_regen% mana regeneration to allies. Radius: %aura_radius%",
+          "reason_zh": "装备的被动光环仍持续为范围内的友方单位提供法力回复。"
+        },
+        {
+          "review_id": "37692214f952f5d6a2d6",
+          "verdict": "holds",
+          "quote": "bonus_movement.base: [45]→[50]",
+          "reason_zh": "装备提供的移速加成从45提高到50，加速机制仍然成立。"
+        },
+        {
+          "review_id": "c8eeada3c8e88f89102a",
+          "verdict": "holds",
+          "quote": "Restores %replenish_amount% mana to all nearby allies.",
+          "reason_zh": "主动技能仍为范围内的友方单位补充法力。"
+        },
+        {
+          "review_id": "db5562db44ae41f971df",
+          "verdict": "holds",
+          "quote": "Grants %aura_mana_regen% mana regeneration to allies.",
+          "reason_zh": "被动光环仍提供持续法力回复，符合回蓝机制。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "armlet",
+      "rows": [
+        {
+          "review_id": "25cd2befd5561643ce77",
+          "verdict": "holds",
+          "quote": "Activating or deactivating Unholy Strength does not interrupt channeling.",
+          "reason_zh": "说明明确写明开启或关闭邪恶之力均不会打断持续施法。"
+        },
+        {
+          "review_id": "0eccc36ddc805920436b",
+          "verdict": "holds",
+          "quote": "You cannot die from the health drain when Unholy Strength is activated, nor from the strength loss when Unholy Strength is deactivated.",
+          "reason_zh": "不致死的限制仅适用于臂章自身的生命流失和关闭时的力量损失，不能据此判为持续免死。"
+        },
+        {
+          "review_id": "f84e4bdfe2a3d5640d2e",
+          "verdict": "holds",
+          "quote": "The strength change will affect both maximum and current HP, but you cannot die from the change.",
+          "reason_zh": "这条说明仅保证力量变化本身不会致死，未赋予抵御其他致死伤害的效果。"
+        },
+        {
+          "review_id": "audit:armlet:healing:item",
+          "verdict": "unclear",
+          "quote": "The strength change will affect both maximum and current HP, but you cannot die from the change.",
+          "reason_zh": "力量变化会调整当前和最大生命值，但材料没有给出治疗效果或装备的生命回复属性，无法独立确认该行。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "axe_battle_hunger",
+      "rows": [
+        {
+          "review_id": "b4ba7669b6a17639ec30",
+          "verdict": "holds",
+          "quote": "Enrages an enemy unit, causing it to take damage over time until it kills another unit or the duration ends.",
+          "reason_zh": "基础技能每次对一个敌方单位施加持续伤害，减速数值调整没有增加伤害目标。"
+        },
+        {
+          "review_id": "bd909cf643394668bb95",
+          "verdict": "holds",
+          "quote": "slow.base: [18, 22, 26, 30]→[16, 19, 22, 25]",
+          "reason_zh": "各级减速均有所下降，但目标背对斧王时仍会受到非零减速。"
+        },
+        {
+          "review_id": "e2824561e903d4b1b36a",
+          "verdict": "holds",
+          "quote": "Enrages an enemy unit, causing it to take damage over time",
+          "reason_zh": "基础技能仍以一个敌方单位为施放目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "axe_berserkers_call",
+      "rows": [
+        {
+          "review_id": "audit:axe_berserkers_call:slow:shard",
+          "verdict": "holds",
+          "quote": "Berserker's Call applies Battle Hunger to affected units. / The enemy is slowed as long as they are facing away from Axe.",
+          "reason_zh": "魔晶仍会对受吼叫影响的单位施加战斗饥渴，目标背对斧王时会受到该减速。"
+        },
+        {
+          "review_id": "31ac2fb544d936000f99",
+          "verdict": "holds",
+          "quote": "Axe taunts nearby enemy units, forcing them to attack him",
+          "reason_zh": "基础技能仍会强迫附近敌方单位攻击斧王。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "axe_counter_helix",
+      "rows": [
+        {
+          "review_id": "0ca85166d6eb6646b8ad",
+          "verdict": "holds",
+          "quote": "dealing pure damage to all nearby enemies.",
+          "reason_zh": "每次触发反击螺旋仍会伤害附近的所有敌人。"
+        },
+        {
+          "review_id": "45dc3687ea59eefe295f",
+          "verdict": "holds",
+          "quote": "debuff_duration.scepter: [6]→[7]",
+          "reason_zh": "唯一的字段变化是A杖减益的持续时间，IsBreakable 没有变更，因此沿用原有的可被破坏判定。"
+        },
+        {
+          "review_id": "9f4ef3b647a41254167c",
+          "verdict": "holds",
+          "quote": "After a set number of attacks, Axe will perform a helix counter attack, dealing pure damage to all nearby enemies.",
+          "reason_zh": "基础说明仍保留按攻击次数触发范围反击的效果，删去命中时点的注释不影响反伤判定。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "axe_culling_blade",
+      "rows": [
+        {
+          "review_id": "f778949844863d898b95",
+          "verdict": "holds",
+          "quote": "When an enemy hero is killed with Culling Blade, its cooldown is reset",
+          "reason_zh": "用淘汰之刃击杀敌方英雄仍会立刻重置该技能的冷却。"
+        },
+        {
+          "review_id": "0d3e4c482d88004fb58d",
+          "verdict": "unclear",
+          "quote": "Culling Blade death cannot be prevented with other abilities like Shallow Grave.",
+          "reason_zh": "说明确认薄葬等技能无法阻止淘汰之刃造成的死亡，但没有写明低于某个生命阈值就会被直接击杀。"
+        },
+        {
+          "review_id": "6c58753a281ae7c69578",
+          "verdict": "holds",
+          "quote": "speed_bonus.base: [20, 25, 30]→[25]",
+          "reason_zh": "击杀敌方英雄后，附近友方单位仍会获得移速加成，现为各级统一25。"
+        },
+        {
+          "review_id": "e0af26270370f77ae0b7",
+          "verdict": "holds",
+          "quote": "Axe spots a weakness and strikes, dealing pure damage. When an enemy hero is killed with Culling Blade, its cooldown is reset",
+          "reason_zh": "本次仅调整击杀后的移速奖励，原有的敌方单位指向判定继续适用。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bane_brain_sap",
+      "rows": [
+        {
+          "review_id": "57bc0f003b1a45f41cf4",
+          "verdict": "holds",
+          "quote": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.",
+          "reason_zh": "基础蚀脑伤害一个敌方单位，范围效果由魔晶提供。"
+        },
+        {
+          "review_id": "audit:bane_brain_sap:aoe_damage:shard",
+          "verdict": "holds",
+          "quote": "Causes Brain Sap to become a %shard_radius% AoE spell.",
+          "reason_zh": "魔晶仍使蚀脑能在一次施放中伤害范围内的多个目标。"
+        },
+        {
+          "review_id": "e5950d9618750a3af0f7",
+          "verdict": "holds",
+          "quote": "healing Bane and dealing damage.",
+          "reason_zh": "基础技能在造成伤害的同时仍会治疗祸乱之源。"
+        },
+        {
+          "review_id": "ee4efca2197c20e479f8",
+          "verdict": "now_wrong",
+          "quote": "Secondary targets only heal for %shard_secondary_target_heal_pct%%%.",
+          "reason_zh": "魔晶下次要目标也会按比例为祸乱之源提供治疗，原 reject 与两版说明均冲突，属于既有误判。"
+        },
+        {
+          "review_id": "d88a435418d4898d340d",
+          "verdict": "holds",
+          "quote": "Feasts on the vital energies of an enemy unit",
+          "reason_zh": "基础蚀脑仍可以对一个敌方单位施放。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bane_fiends_grip",
+      "rows": [
+        {
+          "review_id": "5ceccc6e1381cc05d491",
+          "verdict": "holds",
+          "quote": "Grips an enemy unit, disabling it and causing heavy damage over time",
+          "reason_zh": "基础魔爪持续伤害一个被抓取的敌方单位。"
+        },
+        {
+          "review_id": "ad2e6f6bf320668956f4",
+          "verdict": "holds",
+          "quote": "Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted.",
+          "reason_zh": "说明中的打断指幻象自身的引导被打断，未赋予A杖额外打断敌方持续施法的机制。"
+        },
+        {
+          "review_id": "7d7ee27fa905964fff9b",
+          "verdict": "holds",
+          "quote": "Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target.",
+          "reason_zh": "持有A杖时，两只幻象仍会一同对目标持续引导魔爪。"
+        },
+        {
+          "review_id": "e683545cf52a65e6276f",
+          "verdict": "holds",
+          "quote": "CHANNELED - Grips an enemy unit",
+          "reason_zh": "基础技能仍明确标为持续施法。"
+        },
+        {
+          "review_id": "2b8b90e2f4748da95fc0",
+          "verdict": "holds",
+          "quote": "Fiend's Grip now creates two uncontrollable illusions",
+          "reason_zh": "A杖仍会创建两只不可控幻象，本次调整了幻象的承伤比例。"
+        },
+        {
+          "review_id": "1d29eb4d1a0c64ca5fdd",
+          "verdict": "holds",
+          "quote": "stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+          "reason_zh": "魔爪仍按目标最大法力值周期性抽取法力，使目标的法力减少。"
+        },
+        {
+          "review_id": "d29d7320e605c107a8fb",
+          "verdict": "holds",
+          "quote": "stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+          "reason_zh": "祸乱之源仍会在引导期间周期性地从目标身上抽取法力。"
+        },
+        {
+          "review_id": "audit:bane_fiends_grip:stun:base",
+          "verdict": "holds",
+          "quote": "Grips an enemy unit, disabling it",
+          "reason_zh": "基础抓取仍使目标失去行动能力，本次冷却和幻象承伤调整不影响原有的硬控判定。"
+        },
+        {
+          "review_id": "629cda520d28e440a01f",
+          "verdict": "holds",
+          "quote": "Grips an enemy unit, disabling it and causing heavy damage over time",
+          "reason_zh": "基础魔爪仍选择一个敌方单位作为引导目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "basher",
+      "rows": [
+        {
+          "review_id": "4e036070674d288ff9f1",
+          "verdict": "holds",
+          "quote": "Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target",
+          "reason_zh": "符合条件的持有者仍有概率在攻击命中时触发重击，新增注释明确幻象也不能获得该重击。"
+        },
+        {
+          "review_id": "14fac6de51de9ca62862",
+          "verdict": "holds",
+          "quote": "chance on hit to stun the target for %bash_duration% seconds",
+          "reason_zh": "装备重击触发时仍会眩晕目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "batrider_flamebreak",
+      "rows": [
+        {
+          "review_id": "0baff3438ea203536d81",
+          "verdict": "holds",
+          "quote": "dealing damage over time to enemies in the area.",
+          "reason_zh": "一次爆炸仍能对目标区域内的多个敌人造成伤害。"
+        },
+        {
+          "review_id": "11d60487289b0f38738d",
+          "verdict": "holds",
+          "quote": "knocking back, slowing and dealing damage over time to enemies in the area.",
+          "reason_zh": "爆炸仍会击退范围内的敌人，改变其位置。"
+        },
+        {
+          "review_id": "4217e62d61239b8329df",
+          "verdict": "holds",
+          "quote": "knocking back, slowing and dealing damage over time to enemies in the area.",
+          "reason_zh": "命中区域内的敌人仍会受到减速。"
+        },
+        {
+          "review_id": "f4596c5a1de109539014",
+          "verdict": "holds",
+          "quote": "knocking back, slowing and dealing damage over time to enemies in the area.",
+          "reason_zh": "说明列出击退、减速和持续伤害，本次仅提高命中伤害，没有加入眩晕。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "batrider_sticky_napalm",
+      "rows": [
+        {
+          "review_id": "81157b4fb558c79b51c1",
+          "verdict": "holds",
+          "quote": "Drenches an area in sticky oil / Applies a small amount of damage with each cast.",
+          "reason_zh": "每次施放仍会对燃油覆盖范围内的敌人造成伤害。"
+        },
+        {
+          "review_id": "audit:batrider_sticky_napalm:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "Level %max_level_tooltip% Sticky Napalm causes every attack to apply %napalm_stacks_on_attack_tooltip% stack of Sticky Napalm.",
+          "reason_zh": "在对应命石下将粘性燃油升至说明指定等级后，普通攻击仍会附加燃油层数，无需A杖或魔晶。"
+        },
+        {
+          "review_id": "d872f140e9b137a1ee5b",
+          "verdict": "holds",
+          "quote": "amplifying damage from Batrider's attacks and abilities",
+          "reason_zh": "燃油仍会加深目标受到的蝙蝠骑士攻击和技能伤害。"
+        },
+        {
+          "review_id": "d0392d3b6a8acfffb04f",
+          "verdict": "holds",
+          "quote": "slowing the movement speed and turn rate of enemies.",
+          "reason_zh": "移速字段虽由负值改为正值，各级数值仍非零，7.42说明也明确写明会降低敌方移速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "beastmaster_inner_beast",
+      "rows": [
+        {
+          "review_id": "30baeead3c528c0db0ee",
+          "verdict": "holds",
+          "quote": "Break disables the passive attack speed bonus.",
+          "reason_zh": "说明明确写明破坏会禁用被动攻速加成，且没有 IsBreakable 字段变更。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "beastmaster_summon_raptor",
+      "rows": [
+        {
+          "review_id": "3f7c58d6be7d8debd459",
+          "verdict": "holds",
+          "quote": "dive-bombs at enemies with a base attack rate of every %hawk_base_attack_interval%s, damaging and rooting them.",
+          "reason_zh": "说明描述战鹰按攻击间隔俯冲选敌，本次仅改动冷却和俯冲伤害，没有增加单次俯冲的范围伤害。"
+        },
+        {
+          "review_id": "8dbc804dd760634bd920",
+          "verdict": "holds",
+          "quote": "damaging and rooting them.",
+          "reason_zh": "战鹰俯冲仍会缠绕命中的敌人。"
+        },
+        {
+          "review_id": "61e19753ed69ee1e25d2",
+          "verdict": "holds",
+          "quote": "Beastmaster summons %hawk_count% hawks that circle around Beastmaster",
+          "reason_zh": "基础技能仍会召唤环绕兽王并主动俯冲攻击的战鹰。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "beastmaster_summon_razorback",
+      "rows": [
+        {
+          "review_id": "audit:beastmaster_summon_razorback:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "The Boar has a passive poison attack that slows attack and movement speeds.",
+          "reason_zh": "刀背兽的普通攻击仍附带降低目标攻速和移速的毒素效果。"
+        },
+        {
+          "review_id": "audit:beastmaster_summon_razorback:attack_slow:base",
+          "verdict": "holds",
+          "quote": "The Boar has a passive poison attack that slows attack and movement speeds.",
+          "reason_zh": "刀背兽的毒素攻击仍会降低目标的攻击速度。"
+        },
+        {
+          "review_id": "6565b41730d02cb3657c",
+          "verdict": "holds",
+          "quote": "The Boar has a passive poison attack that slows attack and movement speeds.",
+          "reason_zh": "刀背兽的毒素攻击仍会降低目标的移动速度。"
+        },
+        {
+          "review_id": "audit:beastmaster_summon_razorback:summons:base",
+          "verdict": "holds",
+          "quote": "Beastmaster calls forth a Boar to aid in the battlefield.",
+          "reason_zh": "基础技能仍会召唤一只能够攻击的刀背兽。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "beastmaster_wild_axes",
+      "rows": [
+        {
+          "review_id": "c2445b88a0f776abcfad",
+          "verdict": "holds",
+          "quote": "slicing through enemy units and trees along their path.",
+          "reason_zh": "一次投掷仍能伤害飞斧路径上的多个敌方单位。"
+        },
+        {
+          "review_id": "audit:beastmaster_wild_axes:attack_modifier:shard",
+          "verdict": "holds",
+          "quote": "Beastmaster's attacks on enemy heroes also apply the Wild Axes debuff of its corresponding level.",
+          "reason_zh": "持有魔晶时，兽王对敌方英雄的普通攻击仍会附加对应等级的野性之斧减益。"
+        },
+        {
+          "review_id": "audit:beastmaster_wild_axes:incoming_damage_amp:base",
+          "verdict": "holds",
+          "quote": "damage_amp.base: [5, 6, 7, 8]→[4, 5, 6, 7]",
+          "reason_zh": "各级伤害加深值均下调但仍大于零，目标受到兽王及其单位的后续伤害仍会增加。"
+        },
+        {
+          "review_id": "d534451879b78955f600",
+          "verdict": "holds",
+          "quote": "This ability destroys trees.",
+          "reason_zh": "野性之斧仍能摧毁路径上的树木。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "blade_mail",
+      "rows": [
+        {
+          "review_id": "20fbb6cdc9268eed89a0",
+          "verdict": "holds",
+          "quote": "For %duration% seconds, return all incoming damage, increasing the percentage by %active_reflection_pct%%%.",
+          "reason_zh": "主动开启后，刃甲仍会在持续时间内返还受到的伤害。"
+        },
+        {
+          "review_id": "c3774be5d7aaad2a2934",
+          "verdict": "holds",
+          "quote": "Everytime you are attacked, you return %passive_reflection_constant% damage plus %passive_reflection_pct%%% of the attack damage dealt to you.",
+          "reason_zh": "被动仍在持有者受到攻击时返还固定伤害和按攻击伤害比例计算的伤害。"
+        },
+        {
+          "review_id": "e1ccf781dfdb23d1a725",
+          "verdict": "holds",
+          "quote": "Damage done by this item is considered reflected damage.",
+          "reason_zh": "装备造成的返还伤害仍明确归为反射伤害，本次只调整了售价。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "blight_stone",
+      "rows": [
+        {
+          "review_id": "ce9cac8ff0abc0c55124",
+          "verdict": "holds",
+          "quote": "Your attacks reduce the target's armor by %corruption_armor% for %corruption_duration% seconds.",
+          "reason_zh": "持有者的攻击仍会在一定时间内降低目标护甲。"
+        },
+        {
+          "review_id": "audit:blight_stone:attack_modifier:item",
+          "verdict": "holds",
+          "quote": "Your attacks reduce the target's armor",
+          "reason_zh": "减甲由持有者的普通攻击施加，符合攻击特效定义。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "blood_grenade",
+      "rows": [
+        {
+          "review_id": "e3323eb09ce2a335d2db",
+          "verdict": "holds",
+          "quote": "Enemies in the area will take %impact_damage% damage on impact",
+          "reason_zh": "一次投掷仍能对目标区域内的多个敌人造成伤害。"
+        },
+        {
+          "review_id": "9f54a84a7dd0372e9bf0",
+          "verdict": "holds",
+          "quote": "and be slowed by %movespeed_slow%%%",
+          "reason_zh": "命中区域内的敌人仍会受到移速减缓，本次仅改写持续时间的单位标记。"
+        }
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}
+tokens used
+38,729
+{
+  "objects": [
+    {
+      "subject": "arc_warden_runic_infusion",
+      "rows": [
+        {
+          "review_id": "9d13f2789ec9f6d24784",
+          "verdict": "holds",
+          "quote": "Arc Warden gains +%all_attribute_bonus_per_stack% all attributes permanently whenever Arc Warden or the Tempest Double activates a Power Rune.",
+          "reason_zh": "两个版本的说明相同，变更清单中也没有 IsBreakable 改动，因此沿用原有的不可被破坏判定。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "arc_warden_tempest_double",
+      "rows": [
+        {
+          "review_id": "3f8503f7eace7280e71e",
+          "verdict": "holds",
+          "quote": "The Tempest Double loses its sense of self and fractures over time, becoming slower and less accurate.",
+          "reason_zh": "攻击准确度随时间下降的是复制体自身，技能没有使敌方攻击落空的效果。"
+        },
+        {
+          "review_id": "9650a245a540158338b0",
+          "verdict": "holds",
+          "quote": "The Tempest Double is infused with the bonuses of Arcane, Invisibility, and Haste Runes for %rune_duration%s when created.",
+          "reason_zh": "持有魔晶时，新创建的复制体仍会获得急速神符的加速效果。"
+        },
+        {
+          "review_id": "90d83f5b9a30c4d9d767",
+          "verdict": "holds",
+          "quote": "The Tempest Double is infused with the bonuses of Arcane, Invisibility, and Haste Runes for %rune_duration%s when created.",
+          "reason_zh": "持有魔晶时，新创建的复制体仍会获得隐身神符的效果。"
+        },
+        {
+          "review_id": "b79d43123a3c4d8542a5",
+          "verdict": "holds",
+          "quote": "The Tempest Double loses its sense of self and fractures over time, becoming slower and less accurate.",
+          "reason_zh": "逐渐变慢的是复制体自身，基础技能没有降低敌方单位的移速。"
+        },
+        {
+          "review_id": "audit:arc_warden_tempest_double:summons:base",
+          "verdict": "holds",
+          "quote": "The duplicate can use all of Arc Warden's current items and spells, except most consumables and items that drop on death.",
+          "reason_zh": "基础技能仍会创建能独立使用物品和技能的复制体，本次赏金字段调整不影响其召唤物判定。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "arcane_boots",
+      "rows": [
+        {
+          "review_id": "12b462dbda359ba1cdc5",
+          "verdict": "holds",
+          "quote": "Passive: Basilius Aura Grants %aura_mana_regen% mana regeneration to allies. Radius: %aura_radius%",
+          "reason_zh": "装备的被动光环仍持续为范围内的友方单位提供法力回复。"
+        },
+        {
+          "review_id": "37692214f952f5d6a2d6",
+          "verdict": "holds",
+          "quote": "bonus_movement.base: [45]→[50]",
+          "reason_zh": "装备提供的移速加成从45提高到50，加速机制仍然成立。"
+        },
+        {
+          "review_id": "c8eeada3c8e88f89102a",
+          "verdict": "holds",
+          "quote": "Restores %replenish_amount% mana to all nearby allies.",
+          "reason_zh": "主动技能仍为范围内的友方单位补充法力。"
+        },
+        {
+          "review_id": "db5562db44ae41f971df",
+          "verdict": "holds",
+          "quote": "Grants %aura_mana_regen% mana regeneration to allies.",
+          "reason_zh": "被动光环仍提供持续法力回复，符合回蓝机制。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "armlet",
+      "rows": [
+        {
+          "review_id": "25cd2befd5561643ce77",
+          "verdict": "holds",
+          "quote": "Activating or deactivating Unholy Strength does not interrupt channeling.",
+          "reason_zh": "说明明确写明开启或关闭邪恶之力均不会打断持续施法。"
+        },
+        {
+          "review_id": "0eccc36ddc805920436b",
+          "verdict": "holds",
+          "quote": "You cannot die from the health drain when Unholy Strength is activated, nor from the strength loss when Unholy Strength is deactivated.",
+          "reason_zh": "不致死的限制仅适用于臂章自身的生命流失和关闭时的力量损失，不能据此判为持续免死。"
+        },
+        {
+          "review_id": "f84e4bdfe2a3d5640d2e",
+          "verdict": "holds",
+          "quote": "The strength change will affect both maximum and current HP, but you cannot die from the change.",
+          "reason_zh": "这条说明仅保证力量变化本身不会致死，未赋予抵御其他致死伤害的效果。"
+        },
+        {
+          "review_id": "audit:armlet:healing:item",
+          "verdict": "unclear",
+          "quote": "The strength change will affect both maximum and current HP, but you cannot die from the change.",
+          "reason_zh": "力量变化会调整当前和最大生命值，但材料没有给出治疗效果或装备的生命回复属性，无法独立确认该行。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "axe_battle_hunger",
+      "rows": [
+        {
+          "review_id": "b4ba7669b6a17639ec30",
+          "verdict": "holds",
+          "quote": "Enrages an enemy unit, causing it to take damage over time until it kills another unit or the duration ends.",
+          "reason_zh": "基础技能每次对一个敌方单位施加持续伤害，减速数值调整没有增加伤害目标。"
+        },
+        {
+          "review_id": "bd909cf643394668bb95",
+          "verdict": "holds",
+          "quote": "slow.base: [18, 22, 26, 30]→[16, 19, 22, 25]",
+          "reason_zh": "各级减速均有所下降，但目标背对斧王时仍会受到非零减速。"
+        },
+        {
+          "review_id": "e2824561e903d4b1b36a",
+          "verdict": "holds",
+          "quote": "Enrages an enemy unit, causing it to take damage over time",
+          "reason_zh": "基础技能仍以一个敌方单位为施放目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "axe_berserkers_call",
+      "rows": [
+        {
+          "review_id": "audit:axe_berserkers_call:slow:shard",
+          "verdict": "holds",
+          "quote": "Berserker's Call applies Battle Hunger to affected units. / The enemy is slowed as long as they are facing away from Axe.",
+          "reason_zh": "魔晶仍会对受吼叫影响的单位施加战斗饥渴，目标背对斧王时会受到该减速。"
+        },
+        {
+          "review_id": "31ac2fb544d936000f99",
+          "verdict": "holds",
+          "quote": "Axe taunts nearby enemy units, forcing them to attack him",
+          "reason_zh": "基础技能仍会强迫附近敌方单位攻击斧王。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "axe_counter_helix",
+      "rows": [
+        {
+          "review_id": "0ca85166d6eb6646b8ad",
+          "verdict": "holds",
+          "quote": "dealing pure damage to all nearby enemies.",
+          "reason_zh": "每次触发反击螺旋仍会伤害附近的所有敌人。"
+        },
+        {
+          "review_id": "45dc3687ea59eefe295f",
+          "verdict": "holds",
+          "quote": "debuff_duration.scepter: [6]→[7]",
+          "reason_zh": "唯一的字段变化是A杖减益的持续时间，IsBreakable 没有变更，因此沿用原有的可被破坏判定。"
+        },
+        {
+          "review_id": "9f4ef3b647a41254167c",
+          "verdict": "holds",
+          "quote": "After a set number of attacks, Axe will perform a helix counter attack, dealing pure damage to all nearby enemies.",
+          "reason_zh": "基础说明仍保留按攻击次数触发范围反击的效果，删去命中时点的注释不影响反伤判定。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "axe_culling_blade",
+      "rows": [
+        {
+          "review_id": "f778949844863d898b95",
+          "verdict": "holds",
+          "quote": "When an enemy hero is killed with Culling Blade, its cooldown is reset",
+          "reason_zh": "用淘汰之刃击杀敌方英雄仍会立刻重置该技能的冷却。"
+        },
+        {
+          "review_id": "0d3e4c482d88004fb58d",
+          "verdict": "unclear",
+          "quote": "Culling Blade death cannot be prevented with other abilities like Shallow Grave.",
+          "reason_zh": "说明确认薄葬等技能无法阻止淘汰之刃造成的死亡，但没有写明低于某个生命阈值就会被直接击杀。"
+        },
+        {
+          "review_id": "6c58753a281ae7c69578",
+          "verdict": "holds",
+          "quote": "speed_bonus.base: [20, 25, 30]→[25]",
+          "reason_zh": "击杀敌方英雄后，附近友方单位仍会获得移速加成，现为各级统一25。"
+        },
+        {
+          "review_id": "e0af26270370f77ae0b7",
+          "verdict": "holds",
+          "quote": "Axe spots a weakness and strikes, dealing pure damage. When an enemy hero is killed with Culling Blade, its cooldown is reset",
+          "reason_zh": "本次仅调整击杀后的移速奖励，原有的敌方单位指向判定继续适用。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bane_brain_sap",
+      "rows": [
+        {
+          "review_id": "57bc0f003b1a45f41cf4",
+          "verdict": "holds",
+          "quote": "Feasts on the vital energies of an enemy unit, healing Bane and dealing damage.",
+          "reason_zh": "基础蚀脑伤害一个敌方单位，范围效果由魔晶提供。"
+        },
+        {
+          "review_id": "audit:bane_brain_sap:aoe_damage:shard",
+          "verdict": "holds",
+          "quote": "Causes Brain Sap to become a %shard_radius% AoE spell.",
+          "reason_zh": "魔晶仍使蚀脑能在一次施放中伤害范围内的多个目标。"
+        },
+        {
+          "review_id": "e5950d9618750a3af0f7",
+          "verdict": "holds",
+          "quote": "healing Bane and dealing damage.",
+          "reason_zh": "基础技能在造成伤害的同时仍会治疗祸乱之源。"
+        },
+        {
+          "review_id": "ee4efca2197c20e479f8",
+          "verdict": "now_wrong",
+          "quote": "Secondary targets only heal for %shard_secondary_target_heal_pct%%%.",
+          "reason_zh": "魔晶下次要目标也会按比例为祸乱之源提供治疗，原 reject 与两版说明均冲突，属于既有误判。"
+        },
+        {
+          "review_id": "d88a435418d4898d340d",
+          "verdict": "holds",
+          "quote": "Feasts on the vital energies of an enemy unit",
+          "reason_zh": "基础蚀脑仍可以对一个敌方单位施放。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "bane_fiends_grip",
+      "rows": [
+        {
+          "review_id": "5ceccc6e1381cc05d491",
+          "verdict": "holds",
+          "quote": "Grips an enemy unit, disabling it and causing heavy damage over time",
+          "reason_zh": "基础魔爪持续伤害一个被抓取的敌方单位。"
+        },
+        {
+          "review_id": "ad2e6f6bf320668956f4",
+          "verdict": "holds",
+          "quote": "Illusions take %scepter_incoming_illusion_damage%%% incoming damage and immediately die if they are interrupted.",
+          "reason_zh": "说明中的打断指幻象自身的引导被打断，未赋予A杖额外打断敌方持续施法的机制。"
+        },
+        {
+          "review_id": "7d7ee27fa905964fff9b",
+          "verdict": "holds",
+          "quote": "Fiend's Grip now creates two uncontrollable illusions that are also channeling Fiend's Grip on the target.",
+          "reason_zh": "持有A杖时，两只幻象仍会一同对目标持续引导魔爪。"
+        },
+        {
+          "review_id": "e683545cf52a65e6276f",
+          "verdict": "holds",
+          "quote": "CHANNELED - Grips an enemy unit",
+          "reason_zh": "基础技能仍明确标为持续施法。"
+        },
+        {
+          "review_id": "2b8b90e2f4748da95fc0",
+          "verdict": "holds",
+          "quote": "Fiend's Grip now creates two uncontrollable illusions",
+          "reason_zh": "A杖仍会创建两只不可控幻象，本次调整了幻象的承伤比例。"
+        },
+        {
+          "review_id": "1d29eb4d1a0c64ca5fdd",
+          "verdict": "holds",
+          "quote": "stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+          "reason_zh": "魔爪仍按目标最大法力值周期性抽取法力，使目标的法力减少。"
+        },
+        {
+          "review_id": "d29d7320e605c107a8fb",
+          "verdict": "holds",
+          "quote": "stealing mana every %fiend_grip_tick_interval% seconds based on the unit's maximum mana.",
+          "reason_zh": "祸乱之源仍会在引导期间周期性地从目标身上抽取法力。"
+        },
+        {
+          "review_id": "audit:bane_fiends_grip:stun:base",
+          "verdict": "holds",
+          "quote": "Grips an enemy unit, disabling it",
+          "reason_zh": "基础抓取仍使目标失去行动能力，本次冷却和幻象承伤调整不影响原有的硬控判定。"
+        },
+        {
+          "review_id": "629cda520d28e440a01f",
+          "verdict": "holds",
+          "quote": "Grips an enemy unit, disabling it and causing heavy damage over time",
+          "reason_zh": "基础魔爪仍选择一个敌方单位作为引导目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "basher",
+      "rows": [
+        {
+          "review_id": "4e036070674d288ff9f1",
+          "verdict": "holds",
+          "quote": "Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target",
+          "reason_zh": "符合条件的持有者仍有概率在攻击命中时触发重击，新增注释明确幻象也不能获得该重击。"
+        },
+        {
+          "review_id": "14fac6de51de9ca62862",
+          "verdict": "holds",
+          "quote": "chance on hit to stun the target for %bash_duration% seconds",
+          "reason_zh": "装备重击触发时仍会眩晕目标。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "batrider_flamebreak",
+      "rows": [
+        {
+          "review_id": "0baff3438ea203536d81",
+          "verdict": "holds",
+          "quote": "dealing damage over time to enemies in the area.",
+          "reason_zh": "一次爆炸仍能对目标区域内的多个敌人造成伤害。"
+        },
+        {
+          "review_id": "11d60487289b0f38738d",
+          "verdict": "holds",
+          "quote": "knocking back, slowing and dealing damage over time to enemies in the area.",
+          "reason_zh": "爆炸仍会击退范围内的敌人，改变其位置。"
+        },
+        {
+          "review_id": "4217e62d61239b8329df",
+          "verdict": "holds",
+          "quote": "knocking back, slowing and dealing damage over time to enemies in the area.",
+          "reason_zh": "命中区域内的敌人仍会受到减速。"
+        },
+        {
+          "review_id": "f4596c5a1de109539014",
+          "verdict": "holds",
+          "quote": "knocking back, slowing and dealing damage over time to enemies in the area.",
+          "reason_zh": "说明列出击退、减速和持续伤害，本次仅提高命中伤害，没有加入眩晕。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "batrider_sticky_napalm",
+      "rows": [
+        {
+          "review_id": "81157b4fb558c79b51c1",
+          "verdict": "holds",
+          "quote": "Drenches an area in sticky oil / Applies a small amount of damage with each cast.",
+          "reason_zh": "每次施放仍会对燃油覆盖范围内的敌人造成伤害。"
+        },
+        {
+          "review_id": "audit:batrider_sticky_napalm:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "Level %max_level_tooltip% Sticky Napalm causes every attack to apply %napalm_stacks_on_attack_tooltip% stack of Sticky Napalm.",
+          "reason_zh": "在对应命石下将粘性燃油升至说明指定等级后，普通攻击仍会附加燃油层数，无需A杖或魔晶。"
+        },
+        {
+          "review_id": "d872f140e9b137a1ee5b",
+          "verdict": "holds",
+          "quote": "amplifying damage from Batrider's attacks and abilities",
+          "reason_zh": "燃油仍会加深目标受到的蝙蝠骑士攻击和技能伤害。"
+        },
+        {
+          "review_id": "d0392d3b6a8acfffb04f",
+          "verdict": "holds",
+          "quote": "slowing the movement speed and turn rate of enemies.",
+          "reason_zh": "移速字段虽由负值改为正值，各级数值仍非零，7.42说明也明确写明会降低敌方移速。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "beastmaster_inner_beast",
+      "rows": [
+        {
+          "review_id": "30baeead3c528c0db0ee",
+          "verdict": "holds",
+          "quote": "Break disables the passive attack speed bonus.",
+          "reason_zh": "说明明确写明破坏会禁用被动攻速加成，且没有 IsBreakable 字段变更。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "beastmaster_summon_raptor",
+      "rows": [
+        {
+          "review_id": "3f7c58d6be7d8debd459",
+          "verdict": "holds",
+          "quote": "dive-bombs at enemies with a base attack rate of every %hawk_base_attack_interval%s, damaging and rooting them.",
+          "reason_zh": "说明描述战鹰按攻击间隔俯冲选敌，本次仅改动冷却和俯冲伤害，没有增加单次俯冲的范围伤害。"
+        },
+        {
+          "review_id": "8dbc804dd760634bd920",
+          "verdict": "holds",
+          "quote": "damaging and rooting them.",
+          "reason_zh": "战鹰俯冲仍会缠绕命中的敌人。"
+        },
+        {
+          "review_id": "61e19753ed69ee1e25d2",
+          "verdict": "holds",
+          "quote": "Beastmaster summons %hawk_count% hawks that circle around Beastmaster",
+          "reason_zh": "基础技能仍会召唤环绕兽王并主动俯冲攻击的战鹰。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "beastmaster_summon_razorback",
+      "rows": [
+        {
+          "review_id": "audit:beastmaster_summon_razorback:attack_modifier:base",
+          "verdict": "holds",
+          "quote": "The Boar has a passive poison attack that slows attack and movement speeds.",
+          "reason_zh": "刀背兽的普通攻击仍附带降低目标攻速和移速的毒素效果。"
+        },
+        {
+          "review_id": "audit:beastmaster_summon_razorback:attack_slow:base",
+          "verdict": "holds",
+          "quote": "The Boar has a passive poison attack that slows attack and movement speeds.",
+          "reason_zh": "刀背兽的毒素攻击仍会降低目标的攻击速度。"
+        },
+        {
+          "review_id": "6565b41730d02cb3657c",
+          "verdict": "holds",
+          "quote": "The Boar has a passive poison attack that slows attack and movement speeds.",
+          "reason_zh": "刀背兽的毒素攻击仍会降低目标的移动速度。"
+        },
+        {
+          "review_id": "audit:beastmaster_summon_razorback:summons:base",
+          "verdict": "holds",
+          "quote": "Beastmaster calls forth a Boar to aid in the battlefield.",
+          "reason_zh": "基础技能仍会召唤一只能够攻击的刀背兽。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "beastmaster_wild_axes",
+      "rows": [
+        {
+          "review_id": "c2445b88a0f776abcfad",
+          "verdict": "holds",
+          "quote": "slicing through enemy units and trees along their path.",
+          "reason_zh": "一次投掷仍能伤害飞斧路径上的多个敌方单位。"
+        },
+        {
+          "review_id": "audit:beastmaster_wild_axes:attack_modifier:shard",
+          "verdict": "holds",
+          "quote": "Beastmaster's attacks on enemy heroes also apply the Wild Axes debuff of its corresponding level.",
+          "reason_zh": "持有魔晶时，兽王对敌方英雄的普通攻击仍会附加对应等级的野性之斧减益。"
+        },
+        {
+          "review_id": "audit:beastmaster_wild_axes:incoming_damage_amp:base",
+          "verdict": "holds",
+          "quote": "damage_amp.base: [5, 6, 7, 8]→[4, 5, 6, 7]",
+          "reason_zh": "各级伤害加深值均下调但仍大于零，目标受到兽王及其单位的后续伤害仍会增加。"
+        },
+        {
+          "review_id": "d534451879b78955f600",
+          "verdict": "holds",
+          "quote": "This ability destroys trees.",
+          "reason_zh": "野性之斧仍能摧毁路径上的树木。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "blade_mail",
+      "rows": [
+        {
+          "review_id": "20fbb6cdc9268eed89a0",
+          "verdict": "holds",
+          "quote": "For %duration% seconds, return all incoming damage, increasing the percentage by %active_reflection_pct%%%.",
+          "reason_zh": "主动开启后，刃甲仍会在持续时间内返还受到的伤害。"
+        },
+        {
+          "review_id": "c3774be5d7aaad2a2934",
+          "verdict": "holds",
+          "quote": "Everytime you are attacked, you return %passive_reflection_constant% damage plus %passive_reflection_pct%%% of the attack damage dealt to you.",
+          "reason_zh": "被动仍在持有者受到攻击时返还固定伤害和按攻击伤害比例计算的伤害。"
+        },
+        {
+          "review_id": "e1ccf781dfdb23d1a725",
+          "verdict": "holds",
+          "quote": "Damage done by this item is considered reflected damage.",
+          "reason_zh": "装备造成的返还伤害仍明确归为反射伤害，本次只调整了售价。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "blight_stone",
+      "rows": [
+        {
+          "review_id": "ce9cac8ff0abc0c55124",
+          "verdict": "holds",
+          "quote": "Your attacks reduce the target's armor by %corruption_armor% for %corruption_duration% seconds.",
+          "reason_zh": "持有者的攻击仍会在一定时间内降低目标护甲。"
+        },
+        {
+          "review_id": "audit:blight_stone:attack_modifier:item",
+          "verdict": "holds",
+          "quote": "Your attacks reduce the target's armor",
+          "reason_zh": "减甲由持有者的普通攻击施加，符合攻击特效定义。"
+        }
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "blood_grenade",
+      "rows": [
+        {
+          "review_id": "e3323eb09ce2a335d2db",
+          "verdict": "holds",
+          "quote": "Enemies in the area will take %impact_damage% damage on impact",
+          "reason_zh": "一次投掷仍能对目标区域内的多个敌人造成伤害。"
+        },
+        {
+          "review_id": "9f54a84a7dd0372e9bf0",
+          "verdict": "holds",
+          "quote": "and be slowed by %movespeed_slow%%%",
+          "reason_zh": "命中区域内的敌人仍会受到移速减缓，本次仅改写持续时间的单位标记。"
+        }
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

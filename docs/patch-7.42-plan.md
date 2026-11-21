@@ -31,3 +31,24 @@
 
 - 补丁到了以后是否授权联网：检查补丁内容、试采、重采。
 - 重采多少场（现在是1500场，约一周）。
+
+## 2026-11-20 执行顺序
+
+1. 已修游戏脚本跨英雄覆盖，保留旧审查包。新版差异、影响及新增对象位于 `knowledge/mechanics/reviews/patch-update-2026-11-19/revision-2/`。新增37个对象，命中事实从2299增至2331行；还须复核新命中及旧清单误归入“仅英雄级变化”的行。
+2. 已在 `knowledge/hero-capabilities/versions/7.42/` 单列注册表。构建命令为 `.venv/bin/python knowledge/hero-capabilities/build_profiles.py --snapshot knowledge/hero-capabilities/snapshots/2026-11-19 --target-patch 7.42 --output <新目录>`。英雄身份对照与角色标签沿用旧版固定的 OpenDota 目录。
+3. 候选构建用 `PYTHONPATH=src .venv/bin/python scripts/build_mechanics_facts_overlay.py --spec knowledge/mechanics/reviews/v27-build-draft-001.json --output <新目录>`。枚举含义继承 v2，示例按新快照校验；英雄伤害、驱散、魔耗、免疫字段重建，沿用 U79 排除。候选仅纳入部分裁定；装备字段、IsBreakable、规则、词表、升级数值和技能新增仍需核对。
+4. 将 A1、A2、A4、A6、A7 和盲审分歧逐项落实。补齐输入后构建正式 v27 与派生 v18，核对来源、条件和抽样英雄，再切换 current 并验证补丁。
+5. 独立修复路线 B 的输入一致性、误报预算比较及树半径检验。7.42 地图坐标等待新版来源，数据与模型验收沿用原有授权。
+
+补核清单：revision-2/fact-review-queue.json 列出 42 条新增命中或旧分类与脚本变化交叉的行；break-field-audit.json 并列 196 个技能的新 IsBreakable 字段与旧裁定，字段缺失保留未知。
+
+### 独立修复的复核结果
+
+- [死亡预警 PR 21](https://github.com/xrfc/dota2-timing/pull/21)：旧预测逐行与原表匹配。在约每小时 25.25 次误报下，5 秒采样战斗前预警占 30.12%，3 秒采样占 30.60%；尚未估计差异的不确定性。
+- 树半径修复按原 138 场 7.41f 录像复核，选型半组最佳半径 48 在确认半组为 87.88%，整格基线 87.89%。保留默认整格模型。见[视野 PR 22](https://github.com/xrfc/dota2-timing/pull/22) 的地图设计 §10.6。
+
+候选 004：3,292 行，接受 2,582、拒绝 710，累计归档 79。R09 已写入规则 v14 草案，沿用 U181。噬魂鬼感染和干扰者栅栏触发的其他技能按既有交叉复核入库；用户裁定和双 AI 同意分别记依据。
+
+补核发现半人马、光之守卫、变体精灵、恐怖利刃、巨牙海民和艾欧各一条 U47 的旧拒绝与新增 IsBreakable=1 冲突。候选保留原裁定，发布前核实作用范围。
+
+v27 改判行通过 decision_review 关联本轮复核记录，构建回执记录复核文件 SHA-256。prior_review 保留旧事实版本、原引文与票决；当前 quotes 使用本轮证据。

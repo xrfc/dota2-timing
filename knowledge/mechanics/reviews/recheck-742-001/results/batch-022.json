@@ -1,0 +1,210 @@
+{
+  "objects": [
+    {
+      "subject": "urn_of_shadows",
+      "rows": [
+        {"review_id":"6e0585c0ff34cf1e7305","verdict":"holds","quote":"deals %soul_damage_amount% damage per second when cast on enemies","reason_zh":"伤害施加给选中的敌人，说明中的半径用于获取充能。"},
+        {"review_id":"d80aa2eda6cca675cb3e","verdict":"holds","quote":"Gains charges every time an enemy hero dies within %soul_radius% units.","reason_zh":"附近敌方英雄死亡时灵龛仍获得充能，本次仅调整售价。"},
+        {"review_id":"84e972325f807614a471","verdict":"holds","quote":"Provides %soul_heal_amount% health regeneration when cast on allies","reason_zh":"对友军施放仍会提供生命恢复。"},
+        {"review_id":"f60d2f3f5137d1c2b001","verdict":"unclear","quote":"item_cost: 825→875","reason_zh":"唯一列出的字段是售价，主动说明也只写生命恢复和伤害，无法独立核实装备的回蓝属性。"},
+        {"review_id":"2da236cb9073cf147aa8","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"注释说明灵魂释放与技能格挡的交互，装备说明中也没有赋予持有者格挡指向技能的效果。"},
+        {"review_id":"be0c4f9173d00fbe941b","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"注释说明灵魂释放与技能反弹的交互，装备说明中也没有赋予持有者反弹指向技能的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "ursa_earthshock",
+      "rows": [
+        {"review_id":"c5dd77d2b99577e20a0e","verdict":"holds","quote":"damage and slow all enemy units in a nearby area","reason_zh":"落地冲击仍能伤害附近区域内的所有敌方单位。"},
+        {"review_id":"a307193676ebfa8c4033","verdict":"holds","quote":"Ursa leaps forward %hop_distance% units","reason_zh":"施放技能时熊战士仍会向前跳跃一段距离。"},
+        {"review_id":"0d885e8120919e44b01c","verdict":"holds","quote":"movement_slow.base: [-22,-28,-34,-40]→[-16,-24,-32,-40]","reason_zh":"各等级移速修正仍为负值，减速持续时间也仍有3.5秒。"},
+        {"review_id":"audit:ursa_earthshock:terrain_walk:base","verdict":"unclear","quote":"Ursa leaps forward %hop_distance% units","reason_zh":"向前跳跃能证明自身位移，材料没有交代跳跃或移动时能否穿过树木及不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "veil_of_discord",
+      "rows": [
+        {"review_id":"df8e7a6a21a181fa2773","verdict":"holds","quote":"Cast a %debuff_radius% radius blast that causes enemy heroes to take %spell_amp%%% increased damage from spells.","reason_zh":"爆发在范围内施加技能易伤，说明没有给爆发本身列出伤害。"},
+        {"review_id":"52d8fcd53caa4d880ba4","verdict":"holds","quote":"Spell Weakness does not stack with Bloodstone's Spell Weakness Aura.","reason_zh":"面纱主动施加一次范围减益，注释中提到的光环属于血精石。"},
+        {"review_id":"99297c0077c5a77982a8","verdict":"holds","quote":"increased damage from spells","reason_zh":"易伤限定于技能伤害，符合机制表中的技能易伤分类。"},
+        {"review_id":"audit:veil_of_discord:lifesteal:item","verdict":"unclear","quote":"causes enemy heroes to take %spell_amp%%% increased damage from spells","reason_zh":"说明和数值只涉及技能易伤，没有足以确认持有者按伤害回复生命的材料。"},
+        {"review_id":"1c6b8842d4c352894682","verdict":"holds","quote":"spell_amp.base: [10]→[8]","reason_zh":"敌方英雄受到的额外技能伤害从10%降至8%，技能易伤仍生效。"},
+        {"review_id":"6c353892f6e0872adae8","verdict":"holds","quote":"causes enemy heroes to take %spell_amp%%% increased damage from spells","reason_zh":"按题给的法术放大定义，对受减益英雄造成的技能伤害仍提高8%。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "vengefulspirit_command_aura",
+      "rows": [
+        {"review_id":"2bb2957a13800a64130c","verdict":"holds","quote":"increases the damage of nearby friendly heroes","reason_zh":"基础光环提高附近友方英雄的伤害，自身没有对范围内敌人造成伤害的描述。"},
+        {"review_id":"6fdf3646843d47e342a8","verdict":"holds","quote":"Vengeful Spirit's presence increases the damage of nearby friendly heroes.","reason_zh":"附近友方英雄仍随复仇之魂的位置获得伤害加成。"},
+        {"review_id":"a74ee62f96b937e6ac72","verdict":"holds","quote":"Break disables the damage aura.","reason_zh":"官方注释明确说明破坏会禁用伤害光环，所列字段中也没有相反的变更。"},
+        {"review_id":"388c845ff979020a8fcc","verdict":"holds","quote":"XP earned by her illusion is given to her.","reason_zh":"A杖幻象获得的经验仍归复仇之魂本体。"},
+        {"review_id":"13f5d1790ed82c78c663","verdict":"holds","quote":"Upon death, creates a strong illusion of Vengeful Spirit","reason_zh":"死亡触发的是创建自身幻象，A杖说明没有按生命阈值击杀目标的效果。"},
+        {"review_id":"2faa5b9b82d0e0499db4","verdict":"holds","quote":"Upon death, creates a strong illusion of Vengeful Spirit that deals full damage","reason_zh":"A杖升级仍会在死亡时创建强幻象，旧版说明已包含这一效果。"},
+        {"review_id":"e2d9624208fd3ed9e232","verdict":"holds","quote":"If the illusion is alive when Vengeful Spirit respawn, she will take its place.","reason_zh":"复活时若A杖幻象仍存活，本体会在幻象的位置复活。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "vengefulspirit_retribution",
+      "rows": [
+        {"review_id":"418bc9d4de9b63fc828f","verdict":"unclear","quote":"When attacking units with Pip Health, Vengeful Spirit is considered a ranged attacker.","reason_zh":"新增注释只涉及攻击类型，材料没有给出可独立核实破坏判定的 IsBreakable 值。"},
+        {"review_id":"audit:vengefulspirit_retribution:incoming_damage_amp:base","verdict":"unclear","quote":"Vengeful Spirit deals %bonus_damage%%% bonus damage to her killer until their next death.","reason_zh":"说明只确认复仇之魂对击杀者有额外伤害，无法据此确定击杀者具有所列的承受伤害加深机制。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "vengefulspirit_wave_of_terror",
+      "rows": [
+        {"review_id":"d09179bc99090c501e44","verdict":"holds","quote":"weakening the total attack damage and armor of enemies, and giving vision of the path ahead","reason_zh":"波及多个敌人的效果是削弱攻击力和护甲，7.42只调整魔耗，没有增加范围伤害。"},
+        {"review_id":"9f3d273e198692622717","verdict":"holds","quote":"weakening the total attack damage and armor of enemies","reason_zh":"恐怖波动仍会降低敌人的护甲。"},
+        {"review_id":"27d2eac84ada77cd5976","verdict":"holds","quote":"weakening the total attack damage and armor of enemies","reason_zh":"恐怖波动仍会降低敌人的总攻击力。"},
+        {"review_id":"0917161df0d192bd8f2b","verdict":"holds","quote":"giving vision of the path ahead","reason_zh":"技能仍会提供前方路径的视野。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "venomancer_noxious_plague",
+      "rows": [
+        {"review_id":"4b0e2c95e0bf55452bb3","verdict":"holds","quote":"all debuffs from Venomancer on the initial target and the plague are spread to nearby targets","reason_zh":"一次施放的瘟疫可传播到附近多个目标并造成持续伤害。"},
+        {"review_id":"63bcc55db9fa7be788a9","verdict":"holds","quote":"Infected units have decreased magic resistance.","reason_zh":"A杖说明仍明确降低受感染单位的魔法抗性。"},
+        {"review_id":"c7b0dd90c51c17e0d1f2","verdict":"holds","quote":"then slows the target and deals damage over time","reason_zh":"基础瘟疫在命中后仍会减速目标。"},
+        {"review_id":"ca90cc8ce7f229a3b2b2","verdict":"holds","quote":"Spread debuffs have fixed duration and are not modified by status resistance or debuff amplification.","reason_zh":"状态抗性只出现在对传播减益持续时间的说明中，技能没有赋予单位状态抗性。"},
+        {"review_id":"b3675412eeeb6821cb6e","verdict":"holds","quote":"Infects an enemy with a plague","reason_zh":"施放时选择一个敌人作为初始感染目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "venomancer_plague_ward",
+      "rows": [
+        {"review_id":"82175dfb9dbdf2c127f7","verdict":"holds","quote":"Ward attacks apply Venomancer's Poison Sting with %poison_sting_potency%%% damage/slow.","reason_zh":"守卫通过攻击给被攻击者施加毒刺，新说明没有给单次攻击增加范围伤害。"},
+        {"review_id":"audit:venomancer_plague_ward:attack_modifier:base","verdict":"holds","quote":"Ward attacks apply Venomancer's Poison Sting","reason_zh":"基础守卫的普通攻击明确附带瘴气毒刺。"},
+        {"review_id":"0a8342efa27a8a549210","verdict":"holds","quote":"The ward is immune to magic.","reason_zh":"说明仍明确赋予守卫自身技能免疫。"},
+        {"review_id":"audit:venomancer_plague_ward:slow:base","verdict":"holds","quote":"Ward attacks apply Venomancer's Poison Sting with %poison_sting_potency%%% damage/slow.","reason_zh":"新说明明确守卫攻击会施加毒刺减速，基础效力字段为50%。"},
+        {"review_id":"a5b1044c371b677bbca6","verdict":"holds","quote":"Poison Sting from a plague ward fully stacks with Poison Sting from Venomancer.","reason_zh":"守卫毒刺能与本体毒刺叠加，给出的效力只决定守卫毒刺自身的伤害和减速。"},
+        {"review_id":"d1fa089c27d08ad4bb85","verdict":"unclear","quote":"Summons a plague ward to attack enemy units and structures.","reason_zh":"原文确认会召出守卫，但没有说明它按生命值还是受击次数存活，无法核实按题给定义作出的排除判断。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "venomancer_snakebite",
+      "rows": [
+        {"review_id":"744d26f68ebec4f1e4a0","verdict":"holds","quote":"When the target attacks while infected, they take the initial damage again.","reason_zh":"初始伤害、持续毒伤和攻击触发的再次伤害都作用于同一目标。"},
+        {"review_id":"51e1396eee3671eb9765","verdict":"unclear","quote":"Venomancer summons a Spawn of Aktok to sink its fangs into a target","reason_zh":"原文描述召出毒物咬击目标，却没有交代该毒物是否作为有生命值的单位存在。"},
+        {"review_id":"2ed6da092266d3ef89a6","verdict":"holds","quote":"sink its fangs into a target, dealing magic damage and applying a toxin","reason_zh":"技能仍选定一个目标施加伤害和毒素，本次仅调整施法距离。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "viper_nethertoxin",
+      "rows": [
+        {"review_id":"924e072eb07c686cd442","verdict":"holds","quote":"Units in that area take an increasing damage over time based on how long they remain in it.","reason_zh":"一次施放能对停留在该区域内的多个单位造成持续伤害。"},
+        {"review_id":"858efabe317daf135b8f","verdict":"holds","quote":"Units in it have their attack speed slowed.","reason_zh":"处于毒区中的单位仍会降低攻击速度。"},
+        {"review_id":"audit:viper_nethertoxin:ground_zone:base","verdict":"holds","quote":"Viper releases a Nethertoxin at the targeted area. Units in that area take an increasing damage over time based on how long they remain in it.","reason_zh":"毒区留在选定地点，单位停留其中就会持续受影响。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "viper_predator",
+      "rows": [
+        {"review_id":"audit:viper_predator:attack_modifier:base","verdict":"holds","quote":"Viper's attacks deal an additional instance of physical damage per missing health percentage of the target hero.","reason_zh":"攻击仍按目标英雄已损生命百分比附加一段物理伤害，系数降至0.24后仍非零。"},
+        {"review_id":"419a44bd81575085b91a","verdict":"unclear","quote":"damage.base: [0.25]→[0.24]","reason_zh":"伤害系数不能验证可破坏性，材料没有列出 IsBreakable 的值。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "visage_grave_chill",
+      "rows": [
+        {"review_id":"audit:visage_grave_chill:attack_slow:base","verdict":"holds","quote":"Visage drains the movement and attack speed of the targeted unit","reason_zh":"基础技能仍会抽取目标的攻击速度。"},
+        {"review_id":"87c46b19f97932cbfa7c","verdict":"holds","quote":"Visage drains the movement and attack speed of the targeted unit, gaining the drained speed for itself and nearby Familiars.","reason_zh":"维萨吉自身和附近佣兽仍会获得移动速度加成。"},
+        {"review_id":"audit:visage_grave_chill:slow:base","verdict":"holds","quote":"Visage drains the movement and attack speed of the targeted unit","reason_zh":"抽取移动速度会使被选中目标减速。"},
+        {"review_id":"f55e17f0341a3ff58ca7","verdict":"holds","quote":"the targeted unit","reason_zh":"技能对选定单位施加移速和攻速削减，仍符合单体指向判定。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "vladmir",
+      "rows": [
+        {"review_id":"5ec739842b514e21e714","verdict":"holds","quote":"%damage_aura%%% bonus damage, %mana_regen_aura% mana regeneration, and %armor_aura% armor to nearby allies","reason_zh":"作用范围决定哪些友军获得加成，伤害加成没有赋予攻击范围伤害。"},
+        {"review_id":"5c6453f78d425bb40184","verdict":"holds","quote":"Passive: Vladmir's Aura Grants %lifesteal_aura%%% lifesteal, %damage_aura%%% bonus damage, %mana_regen_aura% mana regeneration, and %armor_aura% armor to nearby allies.","reason_zh":"装备仍以持有者为中心给附近友军提供光环加成，光环护甲从2降至1。"},
+        {"review_id":"a40778cb9e5e9c264123","verdict":"holds","quote":"Grants %lifesteal_aura%%% lifesteal","reason_zh":"光环仍明确赋予吸血。"},
+        {"review_id":"f99bae0ad6d088700d2a","verdict":"holds","quote":"Lifesteal on attacks against creeps is reduced to %lifesteal_creeps_tooltip%%%.","reason_zh":"攻击普通单位时仍可吸血，并按说明使用较低比例。"},
+        {"review_id":"e4bb2291846edf12e915","verdict":"holds","quote":"%mana_regen_aura% mana regeneration","reason_zh":"友方光环仍提供法力恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "void_spirit_astral_step",
+      "rows": [
+        {"review_id":"014fd73c74259f66ed0b","verdict":"holds","quote":"attacking all enemies along the path with bonus item potency","reason_zh":"一次施放仍会攻击路径上的所有敌人。"},
+        {"review_id":"audit:void_spirit_astral_step:attack_modifier:base","verdict":"holds","quote":"This attack inflicts a void mark that slows for %pop_damage_delay% seconds and then detonates.","reason_zh":"技能发动的攻击仍附带会减速并引爆的虚无印记。"},
+        {"review_id":"47597754feb8bc9ee512","verdict":"unclear","quote":"bonus_potency.base: null→[25]","reason_zh":"新增字段描述物品效力，所给文字和字段都未交代技能充能。"},
+        {"review_id":"cb85b41a1ce11d8308db","verdict":"holds","quote":"Astral Step attacks do not cleave.","reason_zh":"注释明确说明太虚之径的攻击不会分裂溅射。"},
+        {"review_id":"audit:void_spirit_astral_step:self_mobility:base","verdict":"holds","quote":"Void Spirit tears a rift through the astral plane to appear at the target location","reason_zh":"虚无之灵施放后会出现在目标位置，符合主动自身位移。"},
+        {"review_id":"6158f65495cc94ac218d","verdict":"holds","quote":"a void mark that slows for %pop_damage_delay% seconds","reason_zh":"印记在引爆前仍会减速敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "void_spirit_dissimilate",
+      "rows": [
+        {"review_id":"25b02b6e43c620086fa6","verdict":"holds","quote":"Upon exiting a portal, he damages all enemies in the area.","reason_zh":"离开传送门时仍会伤害区域内所有敌人。"},
+        {"review_id":"audit:void_spirit_dissimilate:invulnerable_untargetable:base","verdict":"unclear","quote":"Void Spirit temporarily fades into the aether, creating a number of portals through which he can reassemble himself.","reason_zh":"说明描述了暂时消失和重新现身，但没有明确这期间的受伤或可选取规则。"},
+        {"review_id":"audit:void_spirit_dissimilate:self_mobility:base","verdict":"holds","quote":"creating a number of portals through which he can reassemble himself","reason_zh":"虚无之灵能通过不同的传送门重新现身，从而改变自身位置。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "void_spirit_intrinsic_edge",
+      "rows": [
+        {"review_id":"5133f1d8c4340e62e79c","verdict":"unclear","quote":"behavior: 4406636445698→567356589867011","reason_zh":"变化的是行为字段，材料没有给出判定可破坏性所需的 IsBreakable 值。"},
+        {"review_id":"d5236cfcc4951e23ed90","verdict":"holds","quote":"more HP regen from Strength","reason_zh":"力量属性仍为虚无之灵提供额外生命恢复。"},
+        {"review_id":"11f19e747fc80a9eeec2","verdict":"holds","quote":"mana regen from Intelligence","reason_zh":"智力属性仍为虚无之灵提供额外法力恢复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "void_spirit_resonant_pulse",
+      "rows": [
+        {"review_id":"20ecad62a5d058b5dbad","verdict":"holds","quote":"emits a single damaging pulse around him","reason_zh":"单次脉冲仍能对虚无之灵周围的多个敌人造成伤害。"},
+        {"review_id":"0f2c9e3fa3e95847040f","verdict":"holds","quote":"Causes Resonant Pulse to silence and gain %max_charges% charges.","reason_zh":"A杖升级仍会给共鸣脉冲增加充能。"},
+        {"review_id":"21a3f725cef95ebc8ad8","verdict":"holds","quote":"base_absorb_amount.base: [25,50,75,100]→[40,60,80,100]","reason_zh":"基础护盾各等级的吸收量均大于零，仍能吸收物理伤害。"},
+        {"review_id":"ae23c8c5ece072f16476","verdict":"holds","quote":"Causes Resonant Pulse to silence","reason_zh":"A杖升级仍会使脉冲附带沉默。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "warlock_shadow_word",
+      "rows": [
+        {"review_id":"9151f3acb10a263c1972","verdict":"holds","quote":"deal damage to nearby enemy units","reason_zh":"受术单位仍会对附近多个敌人造成伤害，基础半径从225增至250。"},
+        {"review_id":"c833aebf0e3a3c79accf","verdict":"holds","quote":"heal nearby ally units. Target Unit will also heal or be damaged depending on whether they are ally or enemy.","reason_zh":"暗言术仍可治疗附近友军，并治疗作为施法目标的友军。"},
+        {"review_id":"97c310b8fab89f5abebd","verdict":"holds","quote":"Target Unit will also heal or be damaged depending on whether they are ally or enemy.","reason_zh":"施放时可选择敌方单位，基础技能仍符合单体指向条件。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "warlock_upheaval",
+      "rows": [
+        {"review_id":"891ee3bf901d6edb8f21","verdict":"holds","quote":"explodes dealing damage to all enemies around them upon death","reason_zh":"魔晶小鬼死亡时仍会爆炸并伤害周围所有敌人。"},
+        {"review_id":"audit:warlock_upheaval:aoe_damage:base","verdict":"holds","quote":"A powerful slowing and damaging current that grows stronger as it's channeled.","reason_zh":"基础技能的作用区域本身就能对其中的敌人造成伤害。"},
+        {"review_id":"4698c47ede2b729b1bea","verdict":"holds","quote":"CHANNELED - A powerful slowing and damaging current that grows stronger as it's channeled.","reason_zh":"基础技能明确要求术士持续引导。"},
+        {"review_id":"cfa044bdf5c41b6923a2","verdict":"holds","quote":"While channeling, Warlock spawns a minor imp every %imps_interval% seconds","reason_zh":"持有魔晶时术士仍须引导剧变，小鬼在引导期间生成。"},
+        {"review_id":"audit:warlock_upheaval:ground_zone:base","verdict":"holds","quote":"Enemies are slowed for %duration% second after leaving the area or the spell ends.","reason_zh":"敌人可以进入和离开剧变持续作用的区域，离开后减速还会短暂保留。"},
+        {"review_id":"a913c31735d346c466d8","verdict":"holds","quote":"Enemies are slowed for %duration% second after leaving the area or the spell ends.","reason_zh":"基础剧变仍施加减速，且减速会在离开区域或施法结束后短暂持续。"},
+        {"review_id":"audit:warlock_upheaval:summons:shard","verdict":"holds","quote":"Warlock spawns a minor imp every %imps_interval% seconds that lasts for %minor_imp_duration% seconds and explodes dealing damage to all enemies around them upon death.","reason_zh":"魔晶使术士定期召出能独立存续并在死亡时爆炸的小鬼。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "weaver_geminate_attack",
+      "rows": [
+        {"review_id":"d582d13fea779a90de58","verdict":"holds","quote":"Additional attacks have bonus damage and item potency.","reason_zh":"连击仍会产生带额外伤害的追加攻击，7.42还明确赋予追加攻击物品效力加成。"},
+        {"review_id":"8fcd337f35bd9cea97c4","verdict":"unclear","quote":"target_type: 23→55","reason_zh":"目标类型和物品效力的变化都不能核实可破坏性，材料没有给出 IsBreakable 值。"},
+        {"review_id":"30c12d5e67abce29ce9f","verdict":"unclear","quote":"target_type: 23→55","reason_zh":"目标类型字段和追加攻击说明均未明确玩家能否主动施放技能并选择敌方单位。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

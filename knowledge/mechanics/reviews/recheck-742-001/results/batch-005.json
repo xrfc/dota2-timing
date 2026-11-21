@@ -1,0 +1,221 @@
+{
+  "objects": [
+    {
+      "subject": "dark_willow_bedlam",
+      "rows": [
+        {"review_id":"573dbc3a61dc0d060715","verdict":"holds","quote":"rapidly attacking nearby enemies","reason_zh":"一次施放期间仍可攻击附近多个敌人，各级攻击伤害均大于零。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dawnbreaker_break_of_dawn",
+      "rows": [
+        {"review_id":"e6d15622c82c0c40acec","verdict":"unclear","quote":"max_vision_pct.base: [20]→[15]","reason_zh":"材料只给出视野字段的变化，未给出 IsBreakable 的取值，无法独立确认原拒绝判断。"},
+        {"review_id":"eb7af85cec4a4ef533a0","verdict":"holds","quote":"Whenever the sun comes out, Dawnbreaker gains bonus base damage and vision that decreases throughout the course of the day.","reason_zh":"白天仍提供额外视野，最大视野加成从20%降至15%。"},
+        {"review_id":"5d660fa78540060cbf5f","verdict":"holds","quote":"Break of Dawn provides healing amplification equal to the current damage increase.","reason_zh":"A杖提高治疗量，技能本身没有恢复生命的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dawnbreaker_fire_wreath",
+      "rows": [
+        {"review_id":"f3ddd4eb90f94e121520","verdict":"holds","quote":"On the final strike, she smashes her hammer down, stunning and damaging enemies in front of her.","reason_zh":"终击仍可伤害前方多个敌人，横扫和终击的伤害数值均未降至零。"},
+        {"review_id":"5aaa6734e1d41036f4f9","verdict":"holds","quote":"Cleave does not work with this ability.","reason_zh":"说明明确写明分裂对此技能无效。"},
+        {"review_id":"8f11501de207060c4ca5","verdict":"holds","quote":"Dawnbreaker gains debuff immunity with %immunity_resist%%% magic resistance and free movement during Starbreaker.","reason_zh":"魔晶仍使破晓辰星在施放星破天惊期间获得减益免疫。"},
+        {"review_id":"audit:dawnbreaker_fire_wreath:self_mobility:base","verdict":"holds","quote":"Can be self-cast to move forward.","reason_zh":"基础技能可通过自我施放主动向前移动。"},
+        {"review_id":"85e708a4acf89ca6c5ec","verdict":"holds","quote":"Dawnbreaker is slowed by %shard_movement_penalty%%% down to a minimum of %movement_speed%.","reason_zh":"魔晶的移速惩罚作用于破晓辰星自身，对敌人的减速来自基础横扫。"},
+        {"review_id":"a4d7fcc004e9e323d849","verdict":"holds","quote":"The first two strikes will slow enemy movement speed by %swipe_slow%%% for %sweep_stun_duration%s.","reason_zh":"基础技能的前两击仍降低敌方移动速度。"},
+        {"review_id":"b1c4f8b58712b254bd53","verdict":"holds","quote":"stunning and damaging enemies in front of her","reason_zh":"基础技能的终击仍使前方敌人眩晕。"},
+        {"review_id":"audit:dawnbreaker_fire_wreath:terrain_walk:shard","verdict":"holds","quote":"free movement during Starbreaker","reason_zh":"魔晶允许施放期间自由移动，说明未赋予跨越悬崖或穿越不可通行地形的能力。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dawnbreaker_luminosity",
+      "rows": [
+        {"review_id":"8246c7bf594153e8e277","verdict":"holds","quote":"charging her next attack with a critical hit that heals all allied heroes within %heal_radius% units around her","reason_zh":"范围效果作用于受到治疗的友方英雄，说明没有赋予该次攻击范围伤害。"},
+        {"review_id":"audit:dawnbreaker_luminosity:attack_modifier:base","verdict":"holds","quote":"charging her next attack with a critical hit that heals all allied heroes within %heal_radius% units around her","reason_zh":"强化后的下一次攻击除暴击外，还会触发对周围友军的治疗。"},
+        {"review_id":"aaac3bd57495e74995f8","verdict":"holds","quote":"Break disables the gaining of new stacks.","reason_zh":"说明明确破坏会阻止获得新层数，覆盖了技能的一部分。"},
+        {"review_id":"46695ac7b399da518632","verdict":"holds","quote":"charging her next attack with a critical hit","reason_zh":"达到所需攻击次数后，下一次攻击仍会暴击。"},
+        {"review_id":"4dd00b1efdc13bf7a6e7","verdict":"holds","quote":"heals all allied heroes within %heal_radius% units around her for a portion of attack damage dealt","reason_zh":"强化攻击仍按所造成攻击伤害的一部分治疗范围内的友方英雄。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dazzle_innate_weave",
+      "rows": [
+        {"review_id":"640857e0251a0c6a76af","verdict":"holds","quote":"increasing allied armor and reducing enemy armor","reason_zh":"基础编织仍降低受影响敌人的护甲。"},
+        {"review_id":"a2ab422aa2bd8ff700c2","verdict":"now_wrong","quote":"Break disables the applying of new stacks. Break does not disable the bonuses from existing stacks.","reason_zh":"7.42明确破坏会阻止施加新层数，即使已有层数继续生效，也符合部分机制可被破坏的定义。"},
+        {"review_id":"799443581e85b1792948","verdict":"now_wrong","quote":"ability_has_shard: true→false；ally_heal: {base:[0],scepter:null,shard:[60]}→null","reason_zh":"虽然魔晶说明仍提到治疗，但魔晶升级标记已关闭，原先每层60点的治疗字段也已删除。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dazzle_nothl_projection",
+      "rows": [
+        {"review_id":"bb942914e861a482e338","verdict":"holds","quote":"When Dazzle's spirit is further than %leash_start% units from the body, the tether will begin to pull him back.","reason_zh":"系绳拉回的是戴泽自己的灵体，没有移动其他单位。"},
+        {"review_id":"e141a2d57a89b0e6b4bf","verdict":"holds","quote":"Shallow Grave heals upon expiration","reason_zh":"基础投影期间，强化后的薄葬仍会在结束时治疗目标。"},
+        {"review_id":"50ea53ff6b4217ca569e","verdict":"holds","quote":"Poison Touch hexes enemies","reason_zh":"基础投影期间，剧毒之触仍会对敌人施加妖术。"},
+        {"review_id":"44f94dfd962227795472","verdict":"holds","quote":"traveling through the Nothl Realm as an invulnerable spirit","reason_zh":"说明明确投影期间戴泽的灵体处于无敌状态。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dazzle_poison_touch",
+      "rows": [
+        {"review_id":"67b4a5cf1cd9278e4c90","verdict":"holds","quote":"Releases a cone of poison that strikes multiple enemy units. Deals damage over time and slows the targets.","reason_zh":"一次施放可命中多个敌人并分别造成持续伤害。"},
+        {"review_id":"929c2e3ee8e05365a8ab","verdict":"holds","quote":"The damage is not reduced by damage block abilities.","reason_zh":"说明描述毒伤与伤害格挡的交互，剧毒之触本身没有提供护盾或减伤。"},
+        {"review_id":"790f2c7a7c349c8ab0d6","verdict":"holds","quote":"Deals damage over time and slows the targets.","reason_zh":"毒素仍降低受影响目标的移动速度。"},
+        {"review_id":"9db63c151aaa34e1222b","verdict":"holds","quote":"the debuff duration is refreshed and slow is increased","reason_zh":"戴泽的攻击会刷新减益并增强减速，说明没有提高技能伤害的效果。"},
+        {"review_id":"f57c4d5bbf1b25e7fcda","verdict":"holds","quote":"The damage is not reduced by damage block abilities.","reason_zh":"说明涉及毒伤如何结算，没有使指向自身或友军的技能失效的效果。"},
+        {"review_id":"b9b74a5ce572e08f5dd2","verdict":"unclear","quote":"Releases a cone of poison that strikes multiple enemy units.","reason_zh":"锥形毒素命中多个单位只说明命中范围，材料未说明施放时能否点选敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dazzle_shadow_wave",
+      "rows": [
+        {"review_id":"1d5c11a61b45934cb642","verdict":"holds","quote":"damaging any enemy units standing nearby","reason_zh":"一次基础暗影波可伤害受影响友军附近的多个敌人。"},
+        {"review_id":"b44683a66be3b0b0e923","verdict":"holds","quote":"Shadow Wave can now target and bounce between enemies in addition to allies. When bouncing to an enemy, they will take damage","reason_zh":"A杖暗影波可在多个敌人之间弹跳，并对弹到的敌人造成伤害。"},
+        {"review_id":"771f615b7fc5c8481b50","verdict":"holds","quote":"When bouncing to an enemy, they will take damage and heal nearby allies equal to %scepter_heal_pct%%% of the normal healing and damage values.","reason_zh":"A杖暗影波弹到敌人时仍会治疗附近友军。"},
+        {"review_id":"d27deb5cc39247959220","verdict":"holds","quote":"Sends out a bolt of power that arcs between allies, healing them while damaging any enemy units standing nearby. Dazzle is always healed by Shadow Wave.","reason_zh":"基础暗影波治疗弹到的友军，戴泽自身也总会受到治疗。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "dazzle_shallow_grave",
+      "rows": [
+        {"review_id":"c15b4af503b114a7b858","verdict":"holds","quote":"HP cannot go below 1 while under the effects of Shallow Grave, but Axe's Culling Blade will still kill the hero.","reason_zh":"薄葬保护期间生命值下限为1，说明保留了斧王淘汰之刃的例外。"},
+        {"review_id":"760e3f09453a6fb8cb0b","verdict":"holds","quote":"Axe's Culling Blade will still kill the hero.","reason_zh":"能击杀受保护英雄的是斧王的淘汰之刃，薄葬自身没有斩杀效果。"},
+        {"review_id":"3d1c5f16614b7cb8b255","verdict":"holds","quote":"Healing on that ally is also amplified for the duration based on the hero's HP.","reason_zh":"基础薄葬提高友军受到的治疗量，本身没有直接恢复生命。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "death_prophet_carrion_swarm",
+      "rows": [
+        {"review_id":"audit:death_prophet_carrion_swarm:aoe_damage:base","verdict":"holds","quote":"Sends a swarm of winged beasts to savage enemy units in front of Death Prophet.","reason_zh":"一次施放仍可伤害死亡先知前方的多个敌方单位。"},
+        {"review_id":"6f0a47e1ab3b815cdf5f","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"说明描述虫群命中时与技能格挡的交互，技能本身没有为自身或队友提供格挡。"},
+        {"review_id":"5ba243f5d1b62d8fd034","verdict":"holds","quote":"Does not trigger spell block or spell reflect.","reason_zh":"虫群没有把来袭的指向技能反弹给施法者的效果。"},
+        {"review_id":"67407606d8c276af9cfa","verdict":"unclear","quote":"Sends a swarm of winged beasts to savage enemy units in front of Death Prophet.","reason_zh":"前方命中范围和不触发技能格挡都无法确定施放时能否点选敌方单位。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"charges","condition":"shard_upgrade","quote":"Crypt Swarm has %AbilityCharges% charges with a %AbilityCooldown%s cooldown between uses.","reason_zh":"新增魔晶升级提供2点充能，两次使用之间有1秒冷却。"},
+        {"mechanism":"slow","condition":"shard_upgrade","quote":"Crypt Swarm slows enemies by %slow_movement_pct%%% for %slow_duration%s.","reason_zh":"新增魔晶升级使虫群对敌人施加持续0.5秒的100%移动减速。"}
+      ]
+    },
+    {
+      "subject": "death_prophet_exorcism",
+      "rows": [
+        {"review_id":"audit:death_prophet_exorcism:aoe_damage:base","verdict":"holds","quote":"Unleashes evil spirits to drain the life of nearby enemy units and structures.","reason_zh":"一次基础驱使恶灵仍可伤害附近多个敌方单位或建筑。"},
+        {"review_id":"133d4749ffcb45df4f81","verdict":"holds","quote":"Spirit damage isn't reduced by damage block abilities.","reason_zh":"该说明描述恶灵伤害如何结算，没有赋予死亡先知伤害格挡。"},
+        {"review_id":"audit:death_prophet_exorcism:healing:scepter","verdict":"now_wrong","quote":"ability_has_scepter: true→false","reason_zh":"驱使恶灵的A杖升级已移除，原先由升级额外触发的恶灵回血随之失去依据。"},
+        {"review_id":"d88096fd63d70fb63eb3","verdict":"holds","quote":"At the end of the spell's duration, Death Prophet is healed in proportion to the damage dealt.","reason_zh":"基础技能仍在持续时间结束时治疗死亡先知。"},
+        {"review_id":"audit:death_prophet_exorcism:lifesteal:base","verdict":"holds","quote":"At the end of the spell's duration, Death Prophet is healed in proportion to the damage dealt.","reason_zh":"基础技能结束时的自我治疗仍按所造成的伤害计算，符合技能吸血定义。"},
+        {"review_id":"audit:death_prophet_exorcism:lifesteal:scepter","verdict":"now_wrong","quote":"ability_has_scepter: true→false","reason_zh":"A杖额外触发恶灵并回收生命的升级已从驱使恶灵移除。"},
+        {"review_id":"c42db843413c1fb3367b","verdict":"holds","quote":"Unleashes evil spirits to drain the life of nearby enemy units and structures.","reason_zh":"基础技能的恶灵攻击附近目标，没有格挡来袭指向技能的效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "death_prophet_silence",
+      "rows": [
+        {"review_id":"audit:death_prophet_silence:silence:base","verdict":"holds","quote":"prevents enemy units in a target area from casting spells","reason_zh":"冷却时间虽有调整，基础技能仍阻止目标区域内的敌人施法。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "death_prophet_spirit_siphon",
+      "rows": [
+        {"review_id":"6d4a182816cd23fc4131","verdict":"holds","quote":"AbilityChargeRestoreTime.base: [40]→[35]","reason_zh":"基础充能仍会恢复，每点充能的恢复时间从40秒缩短至35秒。"},
+        {"review_id":"991b88a4bed0081d0cb1","verdict":"now_wrong","quote":"ability_has_shard: true→false；shard_fear_duration.shard: [1]→null","reason_zh":"魔晶升级和对应的恐惧时长均已移除。"},
+        {"review_id":"audit:death_prophet_spirit_siphon:healing:base","verdict":"holds","quote":"continuously dealing damage to the enemy and healing herself","reason_zh":"基础连接持续期间仍会为死亡先知自身恢复生命。"},
+        {"review_id":"audit:death_prophet_spirit_siphon:lifesteal:base","verdict":"now_wrong","quote":"Death Prophet's Heal amount is not affected if the damage is mitigated or amplified.","reason_zh":"基础治疗量独立于实际造成的伤害，按目标最大生命值额外汲取的效果只写在A杖升级中。"},
+        {"review_id":"70daded06953157870db","verdict":"holds","quote":"Creates a spirit link between Death Prophet and an enemy unit","reason_zh":"基础技能对一名指定的敌方单位建立连接。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"pierces_debuff_immunity","condition":"base","quote":"immunity: 4→3","reason_zh":"基础免疫交互字段变为3，符合技能无视减益免疫的判据。"},
+        {"mechanism":"attack_slow","condition":"scepter_upgrade","quote":"Spirit Siphon steals %attack_slow% attack speed from each afflicted enemy hero.","reason_zh":"新增A杖升级会从每名受影响的敌方英雄身上偷取120点攻击速度。"}
+      ]
+    },
+    {
+      "subject": "death_prophet_witchcraft",
+      "rows": [
+        {"review_id":"b1dc4f895ff35556557f","verdict":"unclear","quote":"Whenever Death Prophet attacks an enemy, a ghost will fly out and hit the enemy and return to her with life.","reason_zh":"攻击触发恶灵的说明未涉及破坏，材料也未给出 IsBreakable 的取值。"},
+        {"review_id":"b43f1a7ebb2cd37c4183","verdict":"now_wrong","quote":"cooldown_reduction_pct.base: [0]→null","reason_zh":"7.42说明删除了随经验获得法术冷却缩减的效果，对应字段也已删除。"},
+        {"review_id":"b889c9f2d3d0a3927fe8","verdict":"holds","quote":"Death Prophet's occult knowledge deepens with experience, gaining movement speed and Witchcraft spirit damage.","reason_zh":"经验用于提升技能效果，说明没有赋予额外经验或金钱。"},
+        {"review_id":"fe8476a622f929db996e","verdict":"now_wrong","quote":"movement_speed_pct.base: [0.5]→[0]","reason_zh":"虽然说明仍提到移动速度，但基础移速加成已降至零。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"attack_modifier","condition":"base","quote":"Whenever Death Prophet attacks an enemy, a ghost will fly out and hit the enemy","reason_zh":"基础普通攻击新增恶灵追击，对该次攻击的敌人造成额外伤害。"},
+        {"mechanism":"healing","condition":"base","quote":"a ghost will fly out and hit the enemy and return to her with life","reason_zh":"攻击触发的恶灵返回时会为死亡先知恢复生命。"},
+        {"mechanism":"lifesteal","condition":"base","quote":"The spirit has a percentage of Death Prophet's attack damage and heals for %heal_percent%%% of the damage.","reason_zh":"新增恶灵按其伤害的50%为死亡先知回血，符合吸血定义。"}
+      ]
+    },
+    {
+      "subject": "desolator",
+      "rows": [
+        {"review_id":"7db00b701589c46ae98f","verdict":"holds","quote":"Your attacks reduce the target's armor by %corruption_armor% for %corruption_duration% seconds.","reason_zh":"装备黯灭后的攻击仍会降低目标护甲。"},
+        {"review_id":"audit:desolator:attack_modifier:item","verdict":"holds","quote":"Your attacks reduce the target's armor","reason_zh":"减甲由装备者的普通攻击施加，符合攻击特效定义。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "devastator",
+      "rows": [
+        {"review_id":"audit:devastator:attack_modifier:item","verdict":"holds","quote":"Causes your next attack to apply a poison for %slow_duration% seconds","reason_zh":"装备仍使下一次攻击附带中毒效果。"},
+        {"review_id":"5a1b1c0738b742bc0bbd","verdict":"holds","quote":"active_mres_reduction.base: [20]→[15]","reason_zh":"攻击降低敌人魔抗的幅度从20%降至15%，效果仍在。"},
+        {"review_id":"d8a05d30a92fce6a3fca","verdict":"unclear","quote":"Illusions do not apply Witch Blade, but can apply Magic Corruption","reason_zh":"所给说明只描述攻击被动及其交互，材料未列出能验证装备回蓝的属性。"},
+        {"review_id":"3fbd91fe440c4bf01d7b","verdict":"holds","quote":"This attack has True Strike and can affect buildings.","reason_zh":"巫师之刃强化的这次攻击仍有克敌机先。"},
+        {"review_id":"219f1ffa6db0e8a83dfa","verdict":"holds","quote":"apply a poison for %slow_duration% seconds, slowing by %slow%%%","reason_zh":"强化攻击施加的毒素仍降低目标移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "diffusal_blade",
+      "rows": [
+        {"review_id":"audit:diffusal_blade:attack_modifier:item","verdict":"holds","quote":"Each attack burns %feedback_mana_burn% mana from the target, and deals %damage_per_burn% physical damage per burned mana.","reason_zh":"普通攻击仍附带烧蓝，并按烧蓝量造成额外物理伤害。"},
+        {"review_id":"a086c88da96613dced3d","verdict":"holds","quote":"Each attack burns %feedback_mana_burn% mana from the target","reason_zh":"攻击仍会削减目标法力。"},
+        {"review_id":"549793d0e0be7d7dce5e","verdict":"holds","quote":"Targets an enemy, slowing it for %purge_slow_duration% seconds.","reason_zh":"主动效果只写明降低敌人移速，没有施加缠绕。"},
+        {"review_id":"b9b093caabda8faf6ab3","verdict":"holds","quote":"Targets an enemy, slowing it for %purge_slow_duration% seconds.","reason_zh":"主动技能仍会使选中的敌人减速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "disperser",
+      "rows": [
+        {"review_id":"1b796562db0631b42271","verdict":"holds","quote":"Dispels both the wearer and the target. Enemy targets are slowed for %enemy_effect_duration% seconds.","reason_zh":"主动技能仍驱散装备者和目标，说明将其驱散类型标为弱驱散。"},
+        {"review_id":"audit:disperser:attack_modifier:item","verdict":"holds","quote":"Each attack burns %feedback_mana_burn% mana from the target, and deals %damage_per_burn% physical damage per burned mana.","reason_zh":"普通攻击仍附带烧蓝和对应的额外物理伤害。"},
+        {"review_id":"991b029f8c09c8a35d9e","verdict":"holds","quote":"Allied targets gain bonus movespeed and %slow_resist%%% slow resistance for %ally_effect_duration% seconds. Caster is always granted the ally benefit on cast.","reason_zh":"友方目标获得移速加成，施法者每次使用也会获得该加成。"},
+        {"review_id":"41d2d65fac23fce665b9","verdict":"holds","quote":"Each attack burns %feedback_mana_burn% mana from the target","reason_zh":"装备者的攻击仍会消耗目标法力。"},
+        {"review_id":"c479f645256a243a276b","verdict":"unclear","quote":"Both movement speed reduction and increase start at %phase_movement_speed%%% and gradually decrease to 0% over the course of the buff duration.","reason_zh":"该占位符描述移速变化，说明和字段均未交代移动时能否忽略单位碰撞。"},
+        {"review_id":"d862d12d6b81d9e2f15f","verdict":"holds","quote":"Enemy targets are slowed for %enemy_effect_duration% seconds.","reason_zh":"施加给敌人的移动限制是减速，说明没有赋予缠绕效果。"},
+        {"review_id":"d89491e23e101e5b791b","verdict":"holds","quote":"Enemy targets are slowed for %enemy_effect_duration% seconds.","reason_zh":"主动技能仍降低敌方目标的移动速度。"},
+        {"review_id":"50a84ee4bd2a4a09e91d","verdict":"holds","quote":"Allied targets gain bonus movespeed and %slow_resist%%% slow resistance for %ally_effect_duration% seconds.","reason_zh":"友方目标仍获得减速抗性，施法者也享有该友方增益。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "disruptor_electromagnetic_repulsion",
+      "rows": [
+        {"review_id":"eeea276f2899fda81c7a","verdict":"holds","quote":"all nearby enemies within take damage equal to %damage_per_int%x of Disruptor's Intelligence","reason_zh":"一次触发仍会伤害范围内所有敌人。"},
+        {"review_id":"888ec3dcef42674efe9e","verdict":"unclear","quote":"Whenever Disruptor takes more than %damage_threshold% damage from any source within %effect_radius% radius","reason_zh":"说明给出了受伤触发条件，材料未提供 IsBreakable 的取值或破坏交互。"},
+        {"review_id":"audit:disruptor_electromagnetic_repulsion:damage_return:base","verdict":"holds","quote":"Whenever Disruptor takes more than %damage_threshold% damage from any source within %effect_radius% radius, all nearby enemies within take damage","reason_zh":"干扰者受到范围内来源的伤害并超过阈值时，会对附近敌人造成反击伤害。"},
+        {"review_id":"2a4c366bd91bf1fcb968","verdict":"holds","quote":"are pushed back up to a %effect_radius% distance away","reason_zh":"基础效果触发时仍会将附近敌人推开。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "disruptor_kinetic_fence",
+      "rows": [
+        {"review_id":"audit:disruptor_kinetic_fence:ground_zone:shard","verdict":"holds","quote":"creates a wall out of kinetic energy that enemies cannot pass. Enemies touching the wall are struck by Electromagnetic Repulsion","reason_zh":"栅栏形成后会在原处持续阻挡敌人，魔晶还使接触墙体的敌人受到电磁排斥。"},
+        {"review_id":"eac75bc3f9bf68f0b1a0","verdict":"unclear","quote":"Enemies touching the wall are struck by Electromagnetic Repulsion with %strike_knockback_pct_tooltip_only%%% reduced knockback.","reason_zh":"减弱的是击退距离，材料没有说明魔晶是否另行降低敌方移速。"},
+        {"review_id":"audit:disruptor_kinetic_fence:mobility_lock:shard","verdict":"unclear","quote":"creates a wall out of kinetic energy that enemies cannot pass","reason_zh":"说明确认墙体阻挡敌人，但未说明无视地形的单位能否越过，无法据此核实对地形机制的拒绝判断。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"displace_other","condition":"shard_upgrade","quote":"Enemies touching the wall are struck by Electromagnetic Repulsion with %strike_knockback_pct_tooltip_only%%% reduced knockback. | strike_on_touch.shard: [0]→[1]","reason_zh":"魔晶现在会使接触墙体的敌人受到电磁排斥并被击退，击退距离减少50%。"},
+        {"mechanism":"aoe_damage","condition":"shard_upgrade","quote":"Enemies touching the wall are struck by Electromagnetic Repulsion | all nearby enemies within take damage equal to %damage_per_int%x of Disruptor's Intelligence","reason_zh":"结合电磁排斥的伤害说明，一次魔晶栅栏可通过触墙效果伤害多个敌人。"}
+      ]
+    }
+  ]
+}
