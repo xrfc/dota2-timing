@@ -400,6 +400,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+2026-11-20：死亡预警步长比较修正误报分段、阈值搜索与样本一致性检查，见 docs/b2-death-risk-contract.md。
+
 2026-11-20：7.42 修复、候选构建、待决项与发布次序见[补丁执行清单](patch-7.42-plan.md)。
 
 | 线 | 里程碑 | 状态 | 开始 | 完成 |
