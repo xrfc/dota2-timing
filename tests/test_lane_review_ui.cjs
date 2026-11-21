@@ -34,3 +34,31 @@ test('first independent choice survives viewing analysis and reloading before su
   await vm.runInContext("submitReview()", reopened);
   assert.deepEqual([posts[0].choice, posts[0].first, posts[0].previewed], ['retreat','farm',false]);
 });
+
+test('support window is revealed with the outcome and older reports still open', async () => {
+  const nodes = new Map();
+  const urls = [];
+  let outcome = {death_seconds: [], complete: true, lane_last_hits: 1};
+  const element = id => {
+    if (!nodes.has(id)) nodes.set(id, {});
+    return nodes.get(id);
+  };
+  const context = vm.createContext({
+    document: {getElementById: element}, location: {pathname: '/lane/'}, Image: class {},
+    localStorage: {getItem: () => null, setItem: () => {}},
+    fetch: async url => {
+      if (url === '/reviews') return new Promise(() => {});
+      urls.push(url);
+      return {ok: true, json: async () => url.startsWith('actions/') ? {lean: 'unknown'} : outcome};
+    }
+  });
+  vm.runInContext(script, context);
+  vm.runInContext("current = {id:'case'}", context);
+  await vm.runInContext('showAnalysis()', context);
+  assert.deepEqual(urls, ['actions/case.json']);
+  await vm.runInContext('reveal()', context);
+  assert.doesNotMatch(element('outcome').textContent, /再刷六秒/);
+  outcome = {...outcome, walk_hit_window: {now:'both_before_hit', after_six:'after_observed_hits'}};
+  await vm.runInContext('reveal()', context);
+  assert.match(element('outcome').textContent, /立即出发，.*同秒到达.*再刷六秒，.*晚于/);
+});

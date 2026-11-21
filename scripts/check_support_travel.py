@@ -6,8 +6,10 @@ This measures traversal timing on moving segments, not support intent or fight a
 """
 
 import argparse
+import csv
 import gzip
 import json
+import sys
 from collections import Counter
 from itertools import pairwise
 from math import dist
@@ -17,7 +19,7 @@ from statistics import mean, median
 from detect_ganks import match_inputs
 
 from dota_items.data.awareness_split import is_holdout
-from dota_items.data.support_arrival import support_comparison
+from dota_items.data.support_arrival import support_comparison, walk_hit_window
 
 MATCHES = (9080976703, 9081112027, 9081112126)
 START = 900
@@ -88,10 +90,77 @@ def metrics(segments):
     }
 
 
+def review_rows(folder):
+    """Read the decision evidence and the separately revealed outcome of each case."""
+    packet = json.loads((folder / "cases.json").read_text(encoding="utf-8"))
+    mode = packet.get("mode", "lane")
+    if mode not in {"lane", "wave", "jungle"} or packet["schema"] != f"{mode}-decision-review/1":
+        raise ValueError(f"{folder}: unknown decision report")
+    for case in packet["cases"]:
+        mid, hero, t = case["match"], case["hero"], case["t"]
+        if is_holdout(mid):
+            raise ValueError(f"reserved holdout match {mid}")
+        key = ("" if mode == "lane" else mode + "-") + f"{mid}-{hero}-{t}"
+        if key != case["id"] or Path(key).name != key:
+            raise ValueError(f"unexpected case identity in {folder}")
+        row = {"case": key, "mode": mode, "match": mid, "hero": hero, "second": t}
+        target = case.get("support_opportunity")
+        if not target:
+            yield {
+                **row,
+                "reason": "no_target" if "support_opportunity" in case else "missing_evidence",
+            }
+            continue
+        outcome = json.loads((folder / "outcomes" / f"{key}.json").read_text(encoding="utf-8"))
+        walk = case.get("arrival", {}).get("routes", {}).get("walk", {})
+        followup = outcome.get("support_followup")
+        row.update(
+            ally=target["hero"],
+            now_seconds=walk.get("now"),
+            after_six_seconds=walk.get("after_six"),
+        )
+        if followup is None:
+            yield {**row, "reason": "missing_followup"}
+            continue
+        yield {**row, **walk_hit_window(walk, followup), "reason": "" if walk else "missing_route"}
+
+
+def write_review_csv(folders, stream):
+    fields = (
+        "case",
+        "mode",
+        "match",
+        "hero",
+        "second",
+        "ally",
+        "now_seconds",
+        "after_six_seconds",
+        "hit_offsets",
+        "last_hit",
+        "complete",
+        "now",
+        "after_six",
+        "reason",
+    )
+    writer = csv.DictWriter(stream, fieldnames=fields)
+    writer.writeheader()
+    for folder in folders:
+        writer.writerows(review_rows(folder))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path("data/demos-2026-11"))
+    parser.add_argument(
+        "--review-dir",
+        type=Path,
+        nargs="+",
+        help="write retrospective per-case hit-window CSV from existing review reports",
+    )
     args = parser.parse_args()
+    if args.review_dir:
+        write_review_csv(args.review_dir, sys.stdout)
+        return
     all_routes, matches = [], {}
     excluded = Counter()
     for mid in MATCHES:
