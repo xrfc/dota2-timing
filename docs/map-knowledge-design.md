@@ -479,3 +479,5 @@ T1、T2可以现在做，不碰规则、不碰验收。
 `data.map_api.MapKnowledge(path)`（共享底座）：`region_at`、`level_at`、`side_at`（相对某一方是己方、敌方还是中立）、`is_cliff`、`has_tree`、`on_ramp`、`landmarks`、`nearest_landmark`。坐标用回放的格子坐标，和解析器v3一致。落在悬崖或树格子上的位置取两格以内最近的可走格子（回放位置常在格子边上）。
 
 现在读的是`reports/map-regions-draft-2026-11-13-v7/regions-grid.json`（草稿，未跟踪）。用一场录像试过：全部英雄位置都查到了区域。用户确认区域后，按§3把定稿写进`knowledge/map/`，只改路径，接口不变。规则和页面都还没有用它。
+
+树木和悬崖检查验证兵线采集的 schema 与比赛 ID。缺采样的比赛秒从准确率计算中排除，计入 missing_creep_match_seconds；采到的空兵线仍参与评估。
