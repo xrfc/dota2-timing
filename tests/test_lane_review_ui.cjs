@@ -5,6 +5,70 @@ const path = require('node:path');
 const vm = require('node:vm');
 const script = fs.readFileSync(path.join(__dirname, '../scripts/lane_decision_assets/app.js'), 'utf8');
 
+function queuePage(pathname = '/lane/') {
+  const storage = new Map();
+  const nodes = new Map();
+  const context = vm.createContext({
+    document: {getElementById(id) {
+      if (!nodes.has(id)) nodes.set(id, {});
+      return nodes.get(id);
+    }},
+    location: {pathname}, Image: class {},
+    localStorage: {getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value)},
+    fetch: () => new Promise(() => {})
+  });
+  vm.runInContext(script, context);
+  return code => vm.runInContext(code, context);
+}
+
+test('a fixed five-group budget uses decision-time evidence and preserves rare evidence values', () => {
+  const run = queuePage();
+  run(`
+    function example(id, distance, saves, support) {
+      return {id, ready_names: saves, support_opportunity: support, history: [{
+        t: 900, ally: [distance, 'ally'], enemies: [{dead:true, distance:500}, {last_seen:900, distance:2000}]
+      }], get outcome() {throw Error('future accessed')}, get action() {throw Error('action accessed')}};
+    }
+    cases = [example('a',500,[],null), example('b',600,[],null)];
+    for (const d of [500,1200,1800]) {
+      cases.push(example('save'+d,d,['blink'],null), example('target'+d,d,[],{hero:'ally'}));
+    }
+    reviewGroups = selectReviewGroups(cases);
+  `);
+  assert.equal(run('reviewGroups.length'), 5);
+  assert.equal(run('reviewGroups[0].ids.join()'), 'a,b');
+  assert.equal(run('reviewGroups[0].factors[1]'), 'other');
+  assert.equal(run("reviewGroups.some(group => group.factors[2] === 'signal')"), true);
+  assert.equal(run("reviewGroups.some(group => group.factors[3] === 'detected')"), true);
+  assert.equal(run("scenarioFactors({}).join()"), 'unknown,unknown,unknown,unknown');
+});
+
+test('only an independent response completes a group, with explicit portal submission', () => {
+  const run = queuePage();
+  run("reviewer='one'; reviewGroups=[{ids:['a','b']},{ids:['c']}]; cases=[{id:'a'},{id:'b'},{id:'c'}];");
+  run("committed.set('a', {first:'farm',previewed:true}); refreshReviewQueue()");
+  assert.equal(run('nextReviewId'), 'b');
+  run("localStorage.setItem(firstKey('b'),'unknown'); refreshReviewQueue()");
+  assert.equal(run("el('next-review').textContent"), '打开待提交判断');
+  run("committed.set('b',{first:'unknown',previewed:false}); refreshReviewQueue()");
+  assert.equal(run('nextReviewId'), 'c');
+  run("localStorage.setItem(exposureKey('c'),'1'); refreshReviewQueue()");
+  assert.equal(run("el('next-review').disabled"), true);
+  assert.match(run("el('review-progress').textContent"), /独立完成 1 组.*无可盲评片段 1 组/);
+  run("reviewer='two'; committed.clear(); refreshReviewQueue()");
+  assert.equal(run('nextReviewId'), 'a');
+});
+
+test('standalone review accepts a locally saved first opinion and can use an unseen alternate', () => {
+  const run = queuePage('/local-report/');
+  run("reviewGroups=[{ids:['a','b']}]; cases=[{id:'a'},{id:'b'}];");
+  run("localStorage.setItem(storageKey('a'), JSON.stringify({previewed:true})); refreshReviewQueue()");
+  assert.equal(run('nextReviewId'), 'b');
+  run("localStorage.setItem(storageKey('b'), JSON.stringify({first:'unknown'})); refreshReviewQueue()");
+  assert.equal(run("el('next-review').disabled"), true);
+  assert.match(run("el('review-progress').textContent"), /独立完成 1 组/);
+});
+
 test('first independent choice survives viewing analysis and reloading before submission', async () => {
   const storage = new Map();
   const posts = [];

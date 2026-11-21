@@ -7,20 +7,20 @@ let labels = {farm: '继续收线', retreat: '先拉开', unknown: '证据不足
 let cases = [], names = {}, current, revision = 0;
 const zh = hero => names[hero] || hero;
 const map = new Image();
-const storageKey = () => (jungle ? 'jungle-review-v1:' : 'lane-review-v1:') + location.pathname + ':' + current.id;
+const storageKey = id => (jungle ? 'jungle-review-v1:' : 'lane-review-v1:') + location.pathname + ':' + id;
 const portal = /^\/(lane|jungle|wave)\/(?:index\.html)?$/.test(location.pathname);
 const drafts = new Map(), committed = new Map(), sending = new Set(), errors = new Map();
 let reviewer;
-const firstKey = () => 'review-first:'+reviewer+':'+current.id;
-const exposureKey = () => 'review-exposure:'+reviewer+':'+current.id;
-function saved() {
-  if (!portal) return JSON.parse(localStorage.getItem(storageKey()) || '{}');
-  let record = drafts.get(current.id) || committed.get(current.id) || {};
+const firstKey = id => 'review-first:'+reviewer+':'+id;
+const exposureKey = id => 'review-exposure:'+reviewer+':'+id;
+function saved(id = current.id) {
+  if (!portal) return JSON.parse(localStorage.getItem(storageKey(id)) || '{}');
+  let record = drafts.get(id) || committed.get(id) || {};
   if (!record.first) {
-    const first = localStorage.getItem(firstKey());
+    const first = localStorage.getItem(firstKey(id));
     if (first) record = {...record, first, choice:record.choice || first};
   }
-  if (!committed.get(current.id)?.first && !record.previewed && localStorage.getItem(exposureKey()) === '1') {
+  if (!committed.get(id)?.first && !record.previewed && localStorage.getItem(exposureKey(id)) === '1') {
     return {...record, previewed:true};
   }
   return record;
@@ -29,12 +29,86 @@ function save(value) {
   if (!current) return;
   const record = {...saved(), ...value};
   if (portal) {
-    if (record.first && !localStorage.getItem(firstKey())) localStorage.setItem(firstKey(), record.first);
-    if (record.previewed) localStorage.setItem(exposureKey(), '1');
+    if (record.first && !localStorage.getItem(firstKey(current.id))) localStorage.setItem(firstKey(current.id), record.first);
+    if (record.previewed) localStorage.setItem(exposureKey(current.id), '1');
     drafts.set(current.id, record);
     errors.delete(current.id);
     submissionStatus();
-  } else localStorage.setItem(storageKey(), JSON.stringify(record));
+  } else localStorage.setItem(storageKey(current.id), JSON.stringify(record));
+}
+// Each dimension is available before revealing the action or its consequences.
+function scenarioFactors(c) {
+  const frame = c.history?.at(-1);
+  const distance = frame?.ally?.[0];
+  let ally = 'unknown';
+  if (frame?.ally === null) ally = 'unlocated';
+  if (Number.isFinite(distance)) {
+    ally = distance <= 1000 ? 'near' : distance >= 1500 ? 'far' : 'middle';
+  }
+  let threat = 'unknown';
+  if (Array.isArray(frame?.enemies) && frame.enemies.length) {
+    const alive = frame.enemies.filter(enemy => !enemy.dead);
+    const near = alive.some(enemy => Number.isFinite(enemy.distance) && enemy.distance <= 1600);
+    const missing = alive.filter(enemy => enemy.last_seen === null ||
+      (Number.isFinite(enemy.last_seen) && frame.t - enemy.last_seen >= 10)).length;
+    threat = near ? 'near' : missing >= 2 ? 'missing' : 'other';
+  }
+  const support = c.support_opportunity === undefined ? 'unknown' : c.support_opportunity ? 'signal' : 'none';
+  const save = Array.isArray(c.ready_names) ? (c.ready_names.length ? 'detected' : 'none') : 'unknown';
+  return [ally, threat, support, save];
+}
+
+function selectReviewGroups(allCases, limit = 5) {
+  const groups = new Map();
+  for (const c of allCases) {
+    const factors = scenarioFactors(c);
+    const key = factors.join('/');
+    if (!groups.has(key)) groups.set(key, {factors, ids:[]});
+    groups.get(key).ids.push(c.id);
+  }
+  // Start with common situations; then prefer evidence values not yet represented.
+  const remaining = [...groups.values()].sort((a, b) => b.ids.length - a.ids.length);
+  const covered = new Set(), selected = [];
+  while (selected.length < limit && remaining.length) {
+    let best = 0, bestScore = -1;
+    remaining.forEach((group, i) => {
+      const score = group.factors.filter((value, d) => !covered.has(d + ':' + value)).length;
+      if (score > bestScore) { best = i; bestScore = score; }
+    });
+    const [group] = remaining.splice(best, 1);
+    group.factors.forEach((value, d) => covered.add(d + ':' + value));
+    selected.push(group);
+  }
+  return selected;
+}
+
+let reviewGroups = [], nextReviewId;
+function reviewGroupState(group) {
+  let pending, unseen;
+  for (const id of group.ids) {
+    const row = saved(id);
+    const submitted = portal ? committed.get(id) : row;
+    if (submitted?.first && !submitted.previewed) return {state:'done'};
+    if (row.first && !row.previewed) pending ??= id;
+    else if (!row.first && !row.choice && !row.previewed) unseen ??= id;
+  }
+  if (pending) return {state:'pending', id:pending};
+  if (unseen) return {state:'unseen', id:unseen};
+  return {state:'exposed'};
+}
+
+function refreshReviewQueue() {
+  if (!reviewGroups.length) return;
+  const states = reviewGroups.map(reviewGroupState);
+  const count = state => states.filter(row => row.state === state).length;
+  const next = states.find(row => row.state === 'pending') || states.find(row => row.state === 'unseen');
+  nextReviewId = next?.id;
+  el('next-review').disabled = !next;
+  el('next-review').textContent = next?.state === 'pending' ? '打开待提交判断' : '打开下一段抽查';
+  const summary = ['本报告 '+cases.length+' 段，选取 '+states.length+' 组', '独立完成 '+count('done')+' 组'];
+  if (count('pending')) summary.push('待提交 '+count('pending')+' 组');
+  if (count('exposed')) summary.push('无可盲评片段 '+count('exposed')+' 组');
+  el('review-progress').textContent = summary.join(' · ');
 }
 function submissionStatus() {
   if (!portal || !current) return;
@@ -59,7 +133,7 @@ async function submitReview() {
     committed.set(id, record);
     if (drafts.get(id) === row) drafts.delete(id);
   } catch (err) { errors.set(id, err.message); }
-  finally { sending.delete(id); submissionStatus(); }
+  finally { sending.delete(id); submissionStatus(); refreshReviewQueue(); }
 }
 async function read(path) {
   const r = await fetch(path);
@@ -170,6 +244,7 @@ function draw() {
 function judge(choice) {
   const first = saved().first || choice;
   save({choice, first});
+  refreshReviewQueue();
   el('first-choice').hidden = false;
   el('first-choice').textContent = (saved().previewed ? '看过分析后的首次意见：' : '首次独立判断：') + labels[first]; el('review').hidden = true; el('error').textContent = '';
   for (const b of el('choices').querySelectorAll('button')) b.setAttribute('aria-pressed', b.dataset.choice === choice);
@@ -179,7 +254,7 @@ async function showAnalysis() {
   const seq = ++revision;
   const a = await read('actions/' + current.id + '.json');
   if (seq !== revision) return;
-  if (!saved().first) save({previewed:true});
+  if (!saved().first) { save({previewed:true}); refreshReviewQueue(); }
   el('review').hidden = false; el('outcome').textContent = ''; el('reveal').disabled = false;
   el('advice').textContent = (jungle ? '当时的行动依据：' : '事前规则草案：' + labels[a.lean] + '。') + a.reason;
   el('action').textContent = '录像动作：' + a.detail;
@@ -231,6 +306,12 @@ function openCase() {
   submissionStatus(); draw(); if (saved().choice) judge(saved().choice).catch(fail);
 }
 function fail(err) { el('error').textContent = err.message; }
+el('next-review').onclick = () => {
+  refreshReviewQueue();
+  if (!nextReviewId) return;
+  el('cases').value = String(cases.findIndex(c => c.id === nextReviewId));
+  openCase();
+};
 el('cases').onchange = openCase; el('frames').onchange = draw; el('vision').onchange = draw;
 el('notes').oninput = () => save({note: el('notes').value});
 el('choices').onclick = e => { if(e.target.dataset.choice) judge(e.target.dataset.choice).catch(fail); };
@@ -272,6 +353,8 @@ loadPage().then(doc => {
     el('choices').replaceChildren(el('choices').querySelector('legend'), ...buttons);
   }
   cases = doc.cases; names = doc.names;
+  reviewGroups = selectReviewGroups(cases);
+  refreshReviewQueue();
   const option = (c,label) => new Option((label ? label+' · ' : '')+c.match+' · '+zh(c.hero)+' · '+time(c.t), cases.indexOf(c));
   const samples = document.createElement('optgroup');
   samples.label = '可选抽看 · 按当时证据选取';
@@ -290,6 +373,7 @@ loadPage().then(doc => {
   all.append(...cases.map(c => option(c,'')));
   el('cases').replaceChildren(samples,all);
   const linked = cases.findIndex(c => c.id === location.hash.slice(1));
-  if (linked>=0) el('cases').value = String(linked);
+  const startIndex = linked >= 0 ? linked : cases.findIndex(c => c.id === nextReviewId);
+  if (startIndex >= 0) el('cases').value = String(startIndex);
   map.onload = draw; map.src = 'map.jpg'; openCase();
 }).catch(fail);
