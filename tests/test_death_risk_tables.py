@@ -225,3 +225,15 @@ def test_false_alarms_are_counted_per_hour_not_per_sample():
     assert onsets == 2 / (60 / 3600) and share == 3 / 12  # two runs in one minute
     threshold = death_risk_eval.threshold_for_rate(frame, scores, y, mask, 5, 0.0)
     assert threshold > 0.5  # no false alarm at all
+
+
+def test_fight_coverage_includes_unsampled_target_deaths_once():
+    frame = pd.DataFrame({"match_id": [7], "hero": ["v"], "t": [60]})
+    deaths = pd.DataFrame(
+        {"match_id": [7] * 5, "hero": ["v", "v", "v", "w", "other"], "t": [40, 69, 69, 43, 43]}
+    )
+    found = death_risk_eval.fight_alerts(frame, deaths, np.array([0.9]), 0.5, 20, {(7, "w"): []})
+    summary = death_risk_eval.summarize_fight_alerts(found)
+    assert summary["deaths"] == 3 and summary["deaths_with_samples"] == 1
+    assert summary["alerted_before_fight"] == 1 and summary["share_of_all_deaths"] == 0.3333
+    assert found[0]["peak"] is None
