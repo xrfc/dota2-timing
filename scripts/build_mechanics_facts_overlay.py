@@ -67,7 +67,9 @@ def declared_inputs(repo, spec):
     npc = repo / spec["game_npc"]
     heroes = sorted(p.relative_to(repo).as_posix() for p in (npc / "heroes").glob("*.txt"))
     names = [spec[k] for k in ("base", "inputs", "vocabulary", "rules", "enums", "registry")]
-    names += [spec[k] for k in ("item_registry", "extra_abilities") if spec.get(k)]
+    names += [
+        spec[k] for k in ("item_registry", "extra_abilities", "decision_reviews") if spec.get(k)
+    ]
     if spec.get("hero_field_corrections"):
         names.append(spec["hero_field_corrections"])
     names += [f"{spec['game_npc']}/npc_abilities.txt", spec["items_txt"], *heroes]
@@ -187,6 +189,10 @@ def run(spec_path, output, repo=ROOT):
         vocabulary=spec["vocabulary"],
         terms=terms,
         known_subjects=known_subjects(repo, spec, registry),
+        review_source=spec.get("decision_reviews"),
+        reviews=load_json(repo, spec["decision_reviews"])["rows"]
+        if "decision_reviews" in spec
+        else (),
     )
     if spec.get("hero_field_corrections"):
         rebuild_hero_observations(repo, spec, registry, doc)

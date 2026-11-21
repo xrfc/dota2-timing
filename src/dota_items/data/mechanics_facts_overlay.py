@@ -34,7 +34,17 @@ CONDITIONS = (
 DECISIONS = ("accept", "reject")
 
 
-def build_reviewed(base, inputs, *, version, vocabulary, terms, known_subjects=frozenset()):
+def build_reviewed(
+    base,
+    inputs,
+    *,
+    version,
+    vocabulary,
+    terms,
+    known_subjects=frozenset(),
+    reviews=(),
+    review_source=None,
+):
     """Apply an overlay file to a frozen facts document; returns a new document."""
     if inputs.get("schema") != SCHEMA:
         raise ValueError(f"Expected {SCHEMA}")
@@ -45,11 +55,21 @@ def build_reviewed(base, inputs, *, version, vocabulary, terms, known_subjects=f
         "rows": [dict(row) for row in base["rows"]],
         "retired_rows": list(base["retired_rows"]),
     }
+    indexed = {entry["review_id"]: entry for entry in reviews}
+    if len(indexed) != len(reviews):
+        raise ValueError("Duplicate review ID in decision evidence")
     for number, operation in enumerate(inputs["operations"]):
         handler = OPERATIONS.get(operation.get("op"))
         if handler is None:
             raise ValueError(f"Operation {number}: unknown op {operation.get('op')!r}")
         try:
+            if version >= 27 and operation["op"] == "decision_change":
+                evidence = indexed.get(operation["review_id"])
+                if _find(doc, operation)[1]["decision"] != operation["from"]:
+                    raise ValueError("row does not match the change")
+                if not review_source or not evidence:
+                    raise ValueError("Decision change needs versioned review evidence")
+                operation = {**operation, "review": evidence, "source": review_source}
             handler(doc, operation, terms=terms, known_subjects=known_subjects)
         except ValueError as error:
             raise ValueError(f"Operation {number} ({operation['op']}): {error}") from None
@@ -112,8 +132,29 @@ def _decision_change(doc, operation, **_):
     if row["decision"] != operation["from"] or operation["to"] not in DECISIONS:
         raise ValueError(f"{row['review_id']}: row does not match the change")
     _check_basis(operation["basis"])
+    audit = {}
+    if "review" in operation:
+        review = operation["review"]
+        if any(review[k] != row[k] for k in ("subject", "mechanism", "decision")):
+            raise ValueError("Review evidence does not match the original row")
+        if review["codex"] != "now_wrong" or operation["from"] == operation["to"]:
+            raise ValueError("Review evidence does not support this decision change")
+        agreed = review["lane"] == "change_two_ai" and review["claude"] == "同意Codex"
+        if operation["basis"] == "two_ai" and not agreed:
+            raise ValueError("Two-AI change requires agreement from both reviewers")
+        audit = {
+            "prior_review": {
+                "facts_schema": doc["schema"],
+                **{key: row.get(key) for key in ("decision", "basis", "claude", "codex", "quotes")},
+            },
+            "decision_review": {"source": operation["source"], **review},
+            "codex": operation["to"],
+            "claude": operation["to"] if agreed else None,
+            "quotes": [review["codex_quote"]],
+        }
     doc["rows"][index] = {
         **row,
+        **audit,
         "decision": operation["to"],
         "basis": operation["basis"],
         "notes_zh": [*row["notes_zh"], operation["note_zh"]],

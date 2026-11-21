@@ -159,6 +159,12 @@ def test_patch_candidate_pins_registry_and_meepo_grant(tmp_path):
     import build_mechanics_facts_overlay as script
 
     doc, _ = script.run("knowledge/mechanics/reviews/v27-build-draft-001.json", tmp_path / "out")
+    changed = next(r for r in doc["rows"] if r["review_id"] == "f718ffee4caf02179a56")
+    assert changed["claude"] == changed["codex"] == changed["decision"] == "reject"
+    assert changed["prior_review"]["claude"] == "accept"
+    assert changed["quotes"] == [changed["decision_review"]["codex_quote"]]
+    manifest = _load(tmp_path / "out" / "manifest.json")
+    assert changed["decision_review"]["source"] in manifest["input_sha256"]
     meepo = [r for r in doc["rows"] if r["subject"] == "meepo_petrify"]
     assert len(meepo) == 3
     assert all(
