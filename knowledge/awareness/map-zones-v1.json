@@ -1,0 +1,405 @@
+{
+ "schema": "awareness-map-zones/1",
+ "patch": "7.41",
+ "coordinates": "replay cell space (cell*128+vec), same as parser v3 positions",
+ "use": "B0 label rules (U137): which side controls the place where an episode starts",
+ "sources": {
+  "towers": {
+   "what": "22 tower, 2 ancient and 2 fountain positions captured from three local replays by scripts/audit_replay_map_landmarks.py (identical in all three)",
+   "file": "data/map-reference-2026-10-26-v1/landmark-comparison.csv",
+   "sha256": "222344ba9a1548f5e37dcc2c9d5c13b617f673981c644701349068dee2fc475d"
+  },
+  "camps": {
+   "what": "28 neutral camp centres and owning side from whanyu1212/gem-dota@25fb97dd (MIT), camp_zones.json version 4; not certified against local replays",
+   "file": "data/map-reference-2026-10-26-v1/gem/src/gem/data/camp_zones.json",
+   "sha256": "ed5fe29d9d0576fe20e40c47efe77431cd5b59f58004d2ff00eca247263c66ae"
+  }
+ },
+ "notes": "The combat log names both tier-4 towers of a side npc_dota_<side>_tower4; they stand 470 apart, so which of the two fell first does not matter for the nearest-tower rule. The ancients count as standing structures so a side that lost every tower still has a home area.",
+ "towers": [
+  {
+   "name": "npc_dota_goodguys_tower1_bot",
+   "team": 2,
+   "x": 21244,
+   "y": 10005
+  },
+  {
+   "name": "npc_dota_goodguys_tower1_mid",
+   "team": 2,
+   "x": 14840,
+   "y": 14976
+  },
+  {
+   "name": "npc_dota_goodguys_tower1_top",
+   "team": 2,
+   "x": 10048,
+   "y": 18240
+  },
+  {
+   "name": "npc_dota_goodguys_tower2_bot",
+   "team": 2,
+   "x": 16024,
+   "y": 10128
+  },
+  {
+   "name": "npc_dota_goodguys_tower2_mid",
+   "team": 2,
+   "x": 13194,
+   "y": 13458
+  },
+  {
+   "name": "npc_dota_goodguys_tower2_top",
+   "team": 2,
+   "x": 9883,
+   "y": 15512
+  },
+  {
+   "name": "npc_dota_goodguys_tower3_bot",
+   "team": 2,
+   "x": 12432,
+   "y": 10272
+  },
+  {
+   "name": "npc_dota_goodguys_tower3_mid",
+   "team": 2,
+   "x": 11744,
+   "y": 12240
+  },
+  {
+   "name": "npc_dota_goodguys_tower3_top",
+   "team": 2,
+   "x": 9792,
+   "y": 12976
+  },
+  {
+   "name": "npc_dota_goodguys_tower4_bot",
+   "team": 2,
+   "x": 10992,
+   "y": 11192
+  },
+  {
+   "name": "npc_dota_goodguys_tower4_top",
+   "team": 2,
+   "x": 10672,
+   "y": 11520
+  },
+  {
+   "name": "npc_dota_badguys_tower1_bot",
+   "team": 3,
+   "x": 22653,
+   "y": 14144
+  },
+  {
+   "name": "npc_dota_badguys_tower1_mid",
+   "team": 3,
+   "x": 16908,
+   "y": 17036
+  },
+  {
+   "name": "npc_dota_badguys_tower1_top",
+   "team": 3,
+   "x": 11109,
+   "y": 22420
+  },
+  {
+   "name": "npc_dota_badguys_tower2_bot",
+   "team": 3,
+   "x": 22784,
+   "y": 16768
+  },
+  {
+   "name": "npc_dota_badguys_tower2_mid",
+   "team": 3,
+   "x": 18880,
+   "y": 18496
+  },
+  {
+   "name": "npc_dota_badguys_tower2_top",
+   "team": 3,
+   "x": 16256,
+   "y": 22400
+  },
+  {
+   "name": "npc_dota_badguys_tower3_bot",
+   "team": 3,
+   "x": 22720,
+   "y": 19416
+  },
+  {
+   "name": "npc_dota_badguys_tower3_mid",
+   "team": 3,
+   "x": 20656,
+   "y": 20143
+  },
+  {
+   "name": "npc_dota_badguys_tower3_top",
+   "team": 3,
+   "x": 19936,
+   "y": 22160
+  },
+  {
+   "name": "npc_dota_badguys_tower4_bot",
+   "team": 3,
+   "x": 21664,
+   "y": 20816
+  },
+  {
+   "name": "npc_dota_badguys_tower4_top",
+   "team": 3,
+   "x": 21328,
+   "y": 21160
+  }
+ ],
+ "camps": [
+  {
+   "id": 1,
+   "team": 2,
+   "area": "jungle",
+   "type": "large",
+   "x": 8071,
+   "y": 15831
+  },
+  {
+   "id": 2,
+   "team": 2,
+   "area": "jungle",
+   "type": "small",
+   "x": 8361,
+   "y": 14546
+  },
+  {
+   "id": 3,
+   "team": 2,
+   "area": "triangle",
+   "type": "ancient",
+   "x": 11369,
+   "y": 16288
+  },
+  {
+   "id": 4,
+   "team": 3,
+   "area": "jungle",
+   "type": "large",
+   "x": 11560,
+   "y": 20299
+  },
+  {
+   "id": 5,
+   "team": 3,
+   "area": "jungle",
+   "type": "medium",
+   "x": 12176,
+   "y": 24720
+  },
+  {
+   "id": 6,
+   "team": 2,
+   "area": "triangle",
+   "type": "medium",
+   "x": 12371,
+   "y": 17376
+  },
+  {
+   "id": 7,
+   "team": 3,
+   "area": "jungle",
+   "type": "small",
+   "x": 12473,
+   "y": 21213
+  },
+  {
+   "id": 8,
+   "team": 3,
+   "area": "flooded",
+   "type": "flooded_small",
+   "x": 13504,
+   "y": 23760
+  },
+  {
+   "id": 9,
+   "team": 3,
+   "area": "jungle",
+   "type": "medium",
+   "x": 13788,
+   "y": 20234
+  },
+  {
+   "id": 10,
+   "team": 2,
+   "area": "jungle",
+   "type": "medium",
+   "x": 13969,
+   "y": 7982
+  },
+  {
+   "id": 11,
+   "team": 2,
+   "area": "jungle",
+   "type": "medium",
+   "x": 14401,
+   "y": 11569
+  },
+  {
+   "id": 12,
+   "team": 2,
+   "area": "river",
+   "type": "large",
+   "x": 14930,
+   "y": 13028
+  },
+  {
+   "id": 13,
+   "team": 3,
+   "area": "flooded",
+   "type": "flooded_medium",
+   "x": 15532,
+   "y": 21324
+  },
+  {
+   "id": 14,
+   "team": 3,
+   "area": "flooded",
+   "type": "flooded_medium",
+   "x": 16720,
+   "y": 24080
+  },
+  {
+   "id": 15,
+   "team": 2,
+   "area": "flooded",
+   "type": "flooded_medium",
+   "x": 15664,
+   "y": 8688
+  },
+  {
+   "id": 16,
+   "team": 2,
+   "area": "flooded",
+   "type": "flooded_medium",
+   "x": 16570,
+   "y": 11187
+  },
+  {
+   "id": 17,
+   "team": 3,
+   "area": "river",
+   "type": "large",
+   "x": 17448,
+   "y": 18964
+  },
+  {
+   "id": 18,
+   "team": 3,
+   "area": "jungle",
+   "type": "medium",
+   "x": 17608,
+   "y": 20560
+  },
+  {
+   "id": 19,
+   "team": 2,
+   "area": "jungle",
+   "type": "medium",
+   "x": 18306,
+   "y": 12409
+  },
+  {
+   "id": 20,
+   "team": 3,
+   "area": "jungle",
+   "type": "medium",
+   "x": 18400,
+   "y": 24280
+  },
+  {
+   "id": 21,
+   "team": 2,
+   "area": "flooded",
+   "type": "flooded_small",
+   "x": 19152,
+   "y": 8048
+  },
+  {
+   "id": 22,
+   "team": 3,
+   "area": "triangle",
+   "type": "medium",
+   "x": 19776,
+   "y": 14976
+  },
+  {
+   "id": 23,
+   "team": 2,
+   "area": "jungle",
+   "type": "small",
+   "x": 20362,
+   "y": 11357
+  },
+  {
+   "id": 24,
+   "team": 3,
+   "area": "triangle",
+   "type": "ancient",
+   "x": 20736,
+   "y": 16432
+  },
+  {
+   "id": 25,
+   "team": 2,
+   "area": "jungle",
+   "type": "large",
+   "x": 21033,
+   "y": 12685
+  },
+  {
+   "id": 26,
+   "team": 2,
+   "area": "jungle",
+   "type": "medium",
+   "x": 20800,
+   "y": 7952
+  },
+  {
+   "id": 27,
+   "team": 3,
+   "area": "jungle",
+   "type": "large",
+   "x": 24312,
+   "y": 16264
+  },
+  {
+   "id": 28,
+   "team": 3,
+   "area": "jungle",
+   "type": "small",
+   "x": 24814,
+   "y": 17647
+  }
+ ],
+ "forts": [
+  {
+   "name": "npc_dota_goodguys_fort",
+   "team": 2,
+   "x": 10464,
+   "y": 11032
+  },
+  {
+   "name": "npc_dota_badguys_fort",
+   "team": 3,
+   "x": 21912,
+   "y": 21384
+  }
+ ],
+ "fountains": [
+  {
+   "team": 2,
+   "x": 8928,
+   "y": 9446
+  },
+  {
+   "team": 3,
+   "x": 23792,
+   "y": 23232
+  }
+ ]
+}
