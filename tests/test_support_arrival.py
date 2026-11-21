@@ -5,6 +5,7 @@ def test_routes_preserve_delay_and_distinguish_tp_ownership():
     state = {
         "team": 2,
         "move_speed": 300,
+        "mana": 75,
         "pos": [0, 0],
         "items": {"15": {"name": "item_tpscroll", "cd": 0, "charges": 1}},
     }
@@ -12,6 +13,10 @@ def test_routes_preserve_delay_and_distinguish_tp_ownership():
     result = support_comparison(state, [1500, 0], [tower], {})
     assert result["routes"]["walk"] == {"now": [5, 7], "after_six": [11, 13]}
     assert result["routes"]["tp"]["now"] == [4, 4]
+    for mana in (0, 74, None):
+        result = support_comparison(state | {"mana": mana}, [1500, 0], [tower], {})
+        assert "tp" not in result["routes"]
+        assert ("待确认" if mana is None else "不足") in result["summary"]
     assert "tp" not in support_comparison(state, [1500, 0], [tower | {"team": 3}], {})["routes"]
 
 
