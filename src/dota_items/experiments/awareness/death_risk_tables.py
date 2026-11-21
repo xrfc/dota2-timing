@@ -152,6 +152,7 @@ def _checked_files(folder, allow_legacy, holdout, info):
         "schema": schemas.pop(),
         "conditions_digest": expected,
         "verified": verified,
+        "positions": manifest["conditions"]["positions"] if verified else None,
         "params": params,
         "matches": len(paths),
         "note": None

@@ -151,6 +151,7 @@ def build_match(root, mid, means, mode="lane"):
         }
     inventories = {}
     summons = {}
+    match["dead_at"] = {}
     states = {h: {} for h in heroes}
     wanted = {h: set(times) for h, times in hits.items()}
     if mode == "wave":
@@ -163,6 +164,8 @@ def build_match(root, mid, means, mode="lane"):
             summons[row["t"]] = row["world"].get("summons") or ()
             for state in row["heroes"]:
                 h = state["hero"]
+                if state.get("life_state") in (1, 2):
+                    match["dead_at"].setdefault(row["t"], set()).add(h)
                 if state.get("items") is not None:
                     inventories[h, row["t"]] = {
                         slot: item["name"]

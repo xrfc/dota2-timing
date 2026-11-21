@@ -116,3 +116,12 @@ def test_wave_anchor_can_precede_any_last_hit_and_uses_only_current_sight():
     for hits in ([], [902]):
         assert lane.wave_opportunities(match, hero, hits, extras, lambda *args: True) == {900: 1}
     assert lane.wave_opportunities(match, hero, [], extras, lambda *args: False) == {}
+
+
+def test_public_death_state_excludes_dead_enemies_until_respawn():
+    tracks = {"carry": position(2, {900: (0, 0)}), "a": position(3, {}), "b": position(3, {})}
+    dead = lane.evidence_at(tracks, {}, "carry", 900, {"a", "b"})
+    assert all(e["dead"] for e in dead["enemies"])
+    assert lane.assess(dead, {"unit_state_raw": 0})[0] == "unknown"
+    alive = lane.evidence_at(tracks, {}, "carry", 900)
+    assert lane.assess(alive, {"unit_state_raw": 0})[0] == "retreat"

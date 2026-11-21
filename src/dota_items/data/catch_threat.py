@@ -32,6 +32,8 @@ def catch_comparison(evidence, names=None):
     candidates = []
     excluded = []
     for e in frame["enemies"]:
+        if e.get("dead"):
+            continue
         seen = e["last_seen"]
         age = frame["t"] - seen if seen is not None else None
         if age is None or not 0 <= age <= LOOKBACK:

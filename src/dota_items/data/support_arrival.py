@@ -11,6 +11,9 @@ DISTANCE_KEYS = {
 }
 
 
+TP_MANA_COST = 75  # item_tpscroll AbilityManaCost in the 7.41f game snapshot
+
+
 def _route(distance, speed, setup=0):
     # Direct and 30% longer routes are sensitivity scenarios, not confidence bounds.
     low, high = (ceil(setup + distance * factor / speed) for factor in (1, 1.3))
@@ -58,9 +61,15 @@ def support_comparison(state, ally_pos, towers, mobility):
         and scroll.get("cd") == 0
         and (scroll.get("charges") or 0) > 0
     ):
-        target = min(targets, key=lambda b: dist((b["x"], b["y"]), ally_pos))
-        routes["tp"] = _route(dist((target["x"], target["y"]), ally_pos), speed, 3)
-        notes.append(f"假设能传送到最近己方塔、引导 3 秒：{_label(routes['tp'])}。")
+        mana = state.get("mana")
+        if mana is None:
+            notes.append("当前魔法未知，传送卷轴能否使用待确认。")
+        elif mana < TP_MANA_COST:
+            notes.append(f"当前魔法不足 {TP_MANA_COST}，无法立即使用传送卷轴。")
+        else:
+            target = min(targets, key=lambda b: dist((b["x"], b["y"]), ally_pos))
+            routes["tp"] = _route(dist((target["x"], target["y"]), ally_pos), speed, 3)
+            notes.append(f"假设能传送到最近己方塔、引导 3 秒：{_label(routes['tp'])}。")
     else:
         notes.append("未检出就绪卷轴与存活己方塔的组合。")
     notes.append(
