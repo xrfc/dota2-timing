@@ -1,0 +1,6940 @@
+[
+ {
+  "subject": "abyssal_blade",
+  "text_742": {
+   "desc_loc": "Active: Overwhelm Stuns a target enemy unit for %stun_duration% seconds. Pierces Debuff Immunity. Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus physical damage. Bash chance for ranged heroes is %bash_chance_ranged%%%.",
+   "notes_loc": [
+    "The stun is melee range.",
+    "Does not stack with other bashes, and does not grant bash to Clones, Illusions, or Tempest Doubles.",
+    "The following heroes cannot trigger Bash on this item: Spirit Breaker, Faceless Void, Slardar, and Kez while in Sai mode.",
+    "Attack Range bonuses from Dragon Lance and its upgrades do not stack."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Active: Overwhelm Stuns a target enemy unit for %stun_duration% seconds. Pierces Debuff Immunity. Passive: Bash Grants melee heroes a %bash_chance_melee%%% chance on hit to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus physical damage. Bash chance for ranged heroes is %bash_chance_ranged%%%.",
+   "notes_loc": [
+    "The stun is melee range.",
+    "Does not stack with other bashes, and does not grant bash to Clones and Tempest Doubles.",
+    "Multiple sources of damage block do not stack.",
+    "The following heroes cannot trigger Bash on this item: Spirit Breaker, Faceless Void, Slardar, and Kez while in Sai mode."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "cast_ranges",
+    "old": [
+     150
+    ],
+    "new": [
+     175
+    ]
+   },
+   {
+    "field": "item_cost",
+    "old": 6250,
+    "new": 6150
+   },
+   {
+    "field": "AbilityCastRange",
+    "old": {
+     "base": [
+      150
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      175
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "base_attack_range_melee",
+    "old": null,
+    "new": {
+     "base": [
+      25
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "bonus_agility",
+    "old": null,
+    "new": {
+     "base": [
+      15
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "hp_regen_amp",
+    "old": {
+     "base": [
+      16
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "slow_resistance",
+    "old": {
+     "base": [
+      30
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "Recipe changed",
+   "Now requires Dragon Lance (2000) instead of Sange (2100)",
+   "Total cost decreased from 6250g to 6150g",
+   "No longer provides +16% Health Restoration or +30% Slow Resistance",
+   "Now also provides +15 Agility and +25 Attack Range (Melee Only)",
+   "Overwhelm cast range increased from 150 to 175",
+   "Bash chance is now modified by Item Potency"
+  ],
+  "claims": [
+   {
+    "claim_id": "c001",
+    "mechanism": "slow_resistance",
+    "condition": "item"
+   }
+  ]
+ },
+ {
+  "subject": "ancient_apparition_bone_chill",
+  "text_742": {
+   "desc_loc": "When Ancient Apparition deals Magic damage to an enemy Hero with his abilities its Strength is reduced. Multiple instances of this effect stack and have independent durations.",
+   "scepter_loc": "Increases Base Strength Reduction by %tooltip_scepter_bonus%."
+  },
+  "text_741f": {
+   "desc_loc": "When Ancient Apparition deals Magic damage to an enemy with his abilities, it is slowed for a short duration. If the target is a Hero, its Strength is also reduced. Multiple instances of this effect stack and have independent durations.",
+   "scepter_loc": "Increases Base Strength Reduction by %tooltip_scepter_bonus%."
+  },
+  "changed_fields": [
+   {
+    "field": "movement_slow_pct",
+    "old": {
+     "base": [
+      2
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "No longer slows by default"
+  ],
+  "claims": [
+   {
+    "claim_id": "c002",
+    "mechanism": "slow",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "chen_holy_persuasion",
+  "text_742": {
+   "desc_loc": "Chen takes control of an enemy or neutral creep and receives a percentage of its bounty. Chen may globally target his own creep if it has not taken damage in the last %unsummon_time% seconds to unsummon it. Casting Holy Persuasion on Chen teleports all creeps under his control to him after a delay. Taking damage from enemy heroes or their units cancels the teleport.",
+   "notes_loc": [
+    "Persuading a new creep above max unit count causes the oldest persuaded creep to die.",
+    "Can target Ancient creeps when Chen has Aghanim's Shard.",
+    "Fully restores the creep's mana upon converting."
+   ],
+   "shard_loc": "Allows Holy Persuasion to target Ancient creeps. Can control up to 1/2/3 Ancient creeps based on Hand of God's level. Additionally levels up some abilities of creeps by 1 level."
+  },
+  "text_741f": {
+   "desc_loc": "Chen takes control of an enemy or neutral creep and receives a percentage of its bounty. Its maximum health is set to %health_min%. Converted creeps will have increased movement speed and bonus damage. Chen may globally target his own creep if it has not taken damage in the last %unsummon_time% seconds to unsummon it.",
+   "notes_loc": [
+    "Persuading a new creep above max unit count causes the oldest persuaded creep to die.",
+    "Can target Ancient creeps when Chen has Aghanim's Shard.",
+    "The health of creeps already under Chen's control does not update to the new level upon leveling Holy Persuasion further.",
+    "Fully restores the creep's mana upon converting."
+   ],
+   "shard_loc": "Allows Holy Persuasion to target Ancient creeps. Can control up to 1/2/3 Ancient creeps based on Hand of God's level. Additionally levels up some abilities of creeps by 1 level."
+  },
+  "changed_fields": [
+   {
+    "field": "damage_bonus",
+    "old": {
+     "base": [
+      5,
+      10,
+      15,
+      20
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "health_min",
+    "old": {
+     "base": [
+      400
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "movement_speed_bonus",
+    "old": {
+     "base": [
+      5,
+      10,
+      20,
+      30
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "teleport_delay",
+    "old": null,
+    "new": {
+     "base": [
+      6,
+      5,
+      4,
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "No longer provides bonus damage or movement speed to persuaded creeps",
+   "Creep's min health is now set by Zealot innate ability",
+   "Chen may now target himself to teleport all his controlled creeps to himself after a 6/5/4/3 second delay. This places the ability on a 3s cooldown."
+  ],
+  "claims": [
+   {
+    "claim_id": "c003",
+    "mechanism": "haste",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c039",
+    "mechanism": "displace_other",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "chen_zealot",
+  "text_742": {
+   "desc_loc": "Passively provides bonus health, damage and move speed to non-hero units under Chen's control. Chen may Anoint a unit under his control converting it into an Anointed Zealot, giving it bonus base damage and the Martyrdom ability. Anointed Zealots can no longer be killed by abilities that instantly kill creeps otherwise. Activating this ability will respawn his current Anointed Zealot. He begins the game with a melee lane creep as an Anointed Zealot.",
+   "notes_loc": [
+    "Only 1 Zealot may exist at a time."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Whenever Chen respawns, he is joined by a Zealot, a melee warrior creep with the ability to sacrifice itself to heal or deal damage to an enemy. The Zealot receives Holy Persuasion's benefits and scales up with other lane melee creeps as game time increases and gains extra base damage. The Zealot respawns next to Chen. Zealot may be activated to teleport a unit under your control to Chen after a %teleport_delay% second delay. If Chen is targeted, it will teleport all units you control. Taking damage from enemy heroes or their units will cancel the teleport."
+  },
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": "8",
+    "new": "4"
+   },
+   {
+    "field": "target_team",
+    "old": 1,
+    "new": 0
+   },
+   {
+    "field": "target_type",
+    "old": 3,
+    "new": 0
+   },
+   {
+    "field": "flags",
+    "old": 131072,
+    "new": 0
+   },
+   {
+    "field": "immunity",
+    "old": 2,
+    "new": 0
+   },
+   {
+    "field": "dispellable",
+    "old": 2,
+    "new": 0
+   },
+   {
+    "field": "cooldowns",
+    "old": [
+     10
+    ],
+    "new": [
+     60
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": [
+     50
+    ],
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      10
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      60
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "damage_bonus",
+    "old": null,
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "health_min",
+    "old": null,
+    "new": {
+     "base": [
+      400
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "movement_speed_bonus",
+    "old": null,
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "teleport_delay",
+    "old": {
+     "base": [
+      6
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "zealot_respawn_time",
+    "old": {
+     "base": [
+      60
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "Ability Reworked",
+   "Has both passive and active components",
+   "Passive. Can't be Broken",
+   "Increases movespeed, base damage and spell damage of creeps persuaded and dominated by Chen, and sets a minimum threshold for their max health. Each creep gains a special ability that lets Chen anoint this unit as his Zealot. Anointed Zealot is considered a creep-hero, gains additional base attack damage, has Martyrdom ability and can be resurrected. Chen can have only 1 Anointed Zealot at a time, and starts the game with a melee lane creep as a Zealot",
+   "Anointed Zealot's Bonus Base Damage: 2 per hero level",
+   "Controlled Base and Spell Damage Amp: 5% + 2% per hero level",
+   "Controlled Bonus Movespeed: 5 + 2 per hero level",
+   "Controlled Minimum Health: 400 + 50 per hero level",
+   "Active. No-targeted",
+   "No Mana Cost. Cooldown: 60s - 1s per hero level",
+   "Resurrects the anointed Zealot",
+   "Martyrdom is unchanged"
+  ],
+  "claims": [
+   {
+    "claim_id": "c004",
+    "mechanism": "displace_other",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c040",
+    "mechanism": "haste",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "clinkz_wind_walk",
+  "text_742": {
+   "desc_loc": "Clinkz moves invisibly through units until the moment he attacks or uses items. Leaving Skeleton Walk creates Skeleton Archers. Skeleton Archers are immobile and have %skeleton_health_tooltip% pip health. Creeps and illusions deal 25% damage to them. Skeleton Archers deal a percentage of Clinkz' damage, and deal %skeleton_building_damage_reduction%%% less damage to buildings. Attack range is equal to Clinkz' attack range.",
+   "notes_loc": [
+    "Has a fadetime of %fade_time% seconds."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Clinkz moves invisibly through units until the moment he attacks or uses items. Leaving Skeleton Walk creates Skeleton Archers. Skeleton Archers are immobile and die within multiple attacks from a hero or tower. Skeleton Archers deal a percentage of Clinkz' damage, and deal %skeleton_building_damage_reduction%%% less damage to buildings. Attack range is equal to Clinkz' attack range.",
+   "notes_loc": [
+    "Has a fadetime of %fade_time% seconds."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "skeleton_health",
+    "old": {
+     "base": [
+      8
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [],
+  "claims": [
+   {
+    "claim_id": "c005",
+    "mechanism": "damage_block",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "dazzle_innate_weave",
+  "text_742": {
+   "desc_loc": "Dazzle's abilities apply Weave to both allies and enemies they affect, increasing allied armor and reducing enemy armor. Multiple instances of this effect stack.",
+   "notes_loc": [
+    "Break disables the applying of new stacks.",
+    "Break does not disable the bonuses from existing stacks."
+   ],
+   "shard_loc": "Applying a stack of Weave heals an ally for %ally_heal% per stack of Weave."
+  },
+  "text_741f": {
+   "desc_loc": "Dazzle's abilities apply Weave to both allies and enemies they affect, increasing allied armor and reducing enemy armor. Multiple instances of this effect stack.",
+   "shard_loc": "Applying Weave to an ally heals them for %ally_heal% per stack of Weave."
+  },
+  "changed_fields": [
+   {
+    "field": "ability_has_shard",
+    "old": true,
+    "new": false
+   },
+   {
+    "field": "ally_heal",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      60
+     ]
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "Armor change per stack now increases by 0.1 per hero level",
+   "Now partially disabled by Break: disables the gaining of new stacks, but does not remove the effect from existing ones",
+   "Now displays a number in the overhead effect indicating how much armor Weave is adding/removing"
+  ],
+  "claims": [
+   {
+    "claim_id": "c006",
+    "mechanism": "healing",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "death_prophet_exorcism",
+  "text_742": {
+   "desc_loc": "Unleashes evil spirits to drain the life of nearby enemy units and structures. Spirits need to return back to Death Prophet in order to attack again. At the end of the spell's duration, Death Prophet is healed in proportion to the damage dealt. Deals 50% damage to buildings. Lasts %abilityduration% seconds.",
+   "notes_loc": [
+    "Radius represents the area in which the spirits will acquire targets around Death Prophet.",
+    "Spirit damage isn't reduced by damage block abilities."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Unleashes evil spirits to drain the life of nearby enemy units and structures. Spirits need to return back to Death Prophet in order to attack again. At the end of the spell's duration, Death Prophet is healed in proportion to the damage dealt. Deals 50% damage to buildings. Lasts %abilityduration% seconds.",
+   "notes_loc": [
+    "Radius represents the area in which the spirits will acquire targets around Death Prophet.",
+    "Spirit damage isn't reduced by damage block abilities."
+   ],
+   "scepter_loc": "Whenever an enemy is affected by Death Prophet's spells or when she attacks an enemy, a ghost will fly out and hit the enemy for an increased bonus of its usual damage then return to her with life."
+  },
+  "changed_fields": [
+   {
+    "field": "ability_has_scepter",
+    "old": true,
+    "new": false
+   },
+   {
+    "field": "cooldowns",
+    "old": [
+     150
+    ],
+    "new": [
+     145,
+     135,
+     125
+    ]
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      150
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      145,
+      135,
+      125
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "duration_increase_per_kill",
+    "old": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_spirit_bonus_damage",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      60
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_spirit_life_duration",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      20
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "unslowable",
+    "old": null,
+    "new": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Cooldown decreased from 150s to 145/135/125s",
+   "No longer upgraded with Aghanim's Scepter"
+  ],
+  "claims": [
+   {
+    "claim_id": "c007",
+    "mechanism": "healing",
+    "condition": "scepter_upgrade"
+   },
+   {
+    "claim_id": "c008",
+    "mechanism": "lifesteal",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "death_prophet_spirit_siphon",
+  "text_742": {
+   "desc_loc": "Creates a spirit link between Death Prophet and an enemy unit, continuously dealing damage to the enemy and healing herself.",
+   "notes_loc": [
+    "Cannot cast multiple on same target.",
+    "Death Prophet's Heal amount is not affected if the damage is mitigated or amplified."
+   ],
+   "scepter_loc": "Spirit Siphon steals %attack_slow% attack speed from each afflicted enemy hero. Spirit Siphon drains an additional %max_health_damage_pct%%% of the target's maximum health per second."
+  },
+  "text_741f": {
+   "desc_loc": "Creates a spirit link between Death Prophet and an enemy unit, draining health from the enemy.",
+   "notes_loc": [
+    "Cannot cast multiple on same target."
+   ],
+   "shard_loc": "Increases Spirit Siphon charges by %shard_bonus_charges% and causes enemies to be feared for %shard_fear_duration% seconds if they are siphoned for %shard_consecutive_siphon_duration% seconds consecutively."
+  },
+  "changed_fields": [
+   {
+    "field": "immunity",
+    "old": 4,
+    "new": 3
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": false,
+    "new": true
+   },
+   {
+    "field": "ability_has_shard",
+    "old": true,
+    "new": false
+   },
+   {
+    "field": "AbilityChargeRestoreTime",
+    "old": {
+     "base": [
+      40
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      35
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "attack_slow",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      120
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "max_health_damage_pct",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      2
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "movement_slow",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      0
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "shard_bonus_charges",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      1
+     ]
+    },
+    "new": null
+   },
+   {
+    "field": "shard_consecutive_siphon_duration",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      3
+     ]
+    },
+    "new": null
+   },
+   {
+    "field": "shard_fear_duration",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      1
+     ]
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "Base Charge Restore Time decreased from 40s to 35s",
+   "Now upgraded with Aghanim's Scepter instead of Aghanim's Shard",
+   "Additionally drains 2% of target's max health and steals 120 of their attack speed",
+   "Both effects pierce Debuff Immunity",
+   "When cast on creeps, they still lose the attack speed, but Death Prophet doesn't gain any"
+  ],
+  "claims": [
+   {
+    "claim_id": "c009",
+    "mechanism": "fear",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c010",
+    "mechanism": "lifesteal",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c068",
+    "mechanism": "attack_slow",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "death_prophet_witchcraft",
+  "text_742": {
+   "desc_loc": "Whenever Death Prophet attacks an enemy, a ghost will fly out and hit the enemy and return to her with life. The spirit has a percentage of Death Prophet's attack damage and heals for %heal_percent%%% of the damage. Death Prophet's occult knowledge deepens with experience, gaining movement speed and Witchcraft spirit damage.",
+   "notes_loc": [
+    "Spirits do %building_damage_pct%%% damage to buildings."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Death Prophet's occult knowledge deepens with experience, gaining movement speed and spell cooldown reduction."
+  },
+  "changed_fields": [
+   {
+    "field": "attack_damage_pct",
+    "old": null,
+    "new": {
+     "base": [
+      15
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "building_damage_pct",
+    "old": null,
+    "new": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "cooldown_reduction_pct",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "current_damage_tooltip",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "give_up_distance",
+    "old": null,
+    "new": {
+     "base": [
+      1200
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "heal_percent",
+    "old": null,
+    "new": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "max_distance",
+    "old": null,
+    "new": {
+     "base": [
+      2000
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "movement_speed_pct",
+    "old": {
+     "base": [
+      0.5
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "radius",
+    "old": null,
+    "new": {
+     "base": [
+      700
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "spirit_duration",
+    "old": null,
+    "new": {
+     "base": [
+      20
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "spirit_speed",
+    "old": null,
+    "new": {
+     "base": [
+      650
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "spirits",
+    "old": null,
+    "new": {
+     "base": [
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Movement Speed decreased from 0.5% + 0.75% per level to 0.5% per level",
+   "No longer provides 0.75% ability cooldown reduction per hero level",
+   "Now also creates a ghost whenever Death Prophet attacks an enemy. The spirit deals a portion of Death Prophet's attack damage, and then heals her for 50% of the damage dealt upon return",
+   "Ghost's Damage: 15% + 1% per level",
+   "Damage against buildings is reduced by 50%",
+   "Ghost's Speed: 650",
+   "Illusions of Death Prophet also summon ghosts on attack"
+  ],
+  "claims": [
+   {
+    "claim_id": "c011",
+    "mechanism": "cooldown_reduction",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c012",
+    "mechanism": "haste",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c069",
+    "mechanism": "attack_modifier",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c070",
+    "mechanism": "healing",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c071",
+    "mechanism": "lifesteal",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "furion_curse_of_the_forest",
+  "text_742": {
+   "desc_loc": "Nature's Prophet and his treants curse enemies they attack, slowing them and dealing damage per second. Curses from different attackers stack. Each attacker's curse has an independent duration that can be refreshed by further attacks from the same unit that applied it."
+  },
+  "text_741f": {
+   "desc_loc": "Applies a curse on all enemy heroes within %range% range, displaying them in fog, slowing them, and dealing damage over time based on the number of trees within %radius% radius. Treants count as trees for this purpose."
+  },
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": "8589934597",
+    "new": "8589934595"
+   },
+   {
+    "field": "target_type",
+    "old": 1,
+    "new": 19
+   },
+   {
+    "field": "cast_points",
+    "old": [
+     0.2
+    ],
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": [
+     18
+    ],
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": [
+     80
+    ],
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "AbilityCastPoint",
+    "old": {
+     "base": [
+      0.2
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      18
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": {
+     "base": [
+      80
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "damage_per_second",
+    "old": null,
+    "new": {
+     "base": [
+      24
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "damage_per_tree",
+    "old": {
+     "base": [
+      15
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "duration",
+    "old": {
+     "base": [
+      7
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "radius",
+    "old": {
+     "base": [
+      250
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "range",
+    "old": {
+     "base": [
+      900
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "slow",
+    "old": null,
+    "new": {
+     "base": [
+      10
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "slow_per_tree",
+    "old": {
+     "base": [
+      7
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "treant_damage_per_second",
+    "old": null,
+    "new": {
+     "base": [
+      12
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "treant_slow",
+    "old": null,
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Ability Reworked",
+   "Passive. Breakable",
+   "Attacks of Nature's Prophet apply a stacking debuff that deals 24 magic damage per second and slows the target's move speed by 12%. Treants apply a weaker effect with 12 damage per second and 6% slow. Duration: 5s. Each enemy can have only 1 stack per attacker at a time",
+   "Each stack has independent duration"
+  ],
+  "claims": [
+   {
+    "claim_id": "c013",
+    "mechanism": "aoe_damage",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c014",
+    "mechanism": "grant_vision",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c058",
+    "mechanism": "attack_modifier",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "furion_teleportation",
+  "text_742": {
+   "desc_loc": "Teleports to any point on the map.",
+   "notes_loc": [
+    "Mana and cooldown take effect when the cast is completed. Nature's Prophet will not use any mana or waste the cooldown if the spell is interrupted while casting.",
+    "When the cast begins, an effect is created at the target location, which is visible to allies and enemies."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Teleports to any point on the map. Gains a barrier after arriving to its destination.",
+   "notes_loc": [
+    "Mana and cooldown take effect when the cast is completed. Nature's Prophet will not use any mana or waste the cooldown if the spell is interrupted while casting.",
+    "When the cast begins, an effect is created at the target location, which is visible to allies and enemies."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "cooldowns",
+    "old": [
+     65,
+     50,
+     35,
+     20
+    ],
+    "new": [
+     80,
+     60,
+     40,
+     20
+    ]
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      65,
+      50,
+      35,
+      20
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      80,
+      60,
+      40,
+      20
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "barrier",
+    "old": {
+     "base": [
+      70,
+      130,
+      190,
+      250
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "buff_duration",
+    "old": {
+     "base": [
+      15
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "Cooldown increased from 65/50/35/20s to 80/60/40/20s",
+   "No longer grants a 70/130/190/250 health barrier"
+  ],
+  "claims": [
+   {
+    "claim_id": "c015",
+    "mechanism": "damage_block",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "gyrocopter_flak_cannon",
+  "text_742": {
+   "desc_loc": "Gyrocopter's attacks hit all enemy units in an area around it for a limited number of attacks. The additional attacks can proc attack modifiers at reduced effectiveness, except for Lifesteal and Critical Strike. Lasts %abilityduration% seconds or until the attacks are used.",
+   "notes_loc": [
+    "Attack range for the primary attack is unchanged."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Gyrocopter's attacks hit all enemy units in an area around it for a limited number of attacks. Only the main target of attacks will receive attack bonuses such as Critical Strike. Lasts %abilityduration% seconds or until the attacks are used.",
+   "notes_loc": [
+    "Attack range for the primary attack is unchanged."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "attack_effectiveness",
+    "old": null,
+    "new": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "bonus_damage",
+    "old": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "radius",
+    "old": {
+     "base": [
+      1250
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      1050
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Radius decreased from 1250 to 1050",
+   "Now has 50% Item Potency and can proc all attack modifiers, except for Lifesteal and Critical Damage"
+  ],
+  "claims": [
+   {
+    "claim_id": "c016",
+    "mechanism": "attack_modifier",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "heavens_halberd",
+  "text_742": {
+   "desc_loc": "Active: Disarm Prevents a target from attacking for %disarm_melee% seconds."
+  },
+  "text_741f": {
+   "desc_loc": "Active: Disarm Prevents a target from attacking for %disarm_melee% seconds."
+  },
+  "changed_fields": [
+   {
+    "field": "cast_ranges",
+    "old": [
+     750
+    ],
+    "new": [
+     500
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": [
+     25
+    ],
+    "new": [
+     50
+    ]
+   },
+   {
+    "field": "item_cost",
+    "old": 3300,
+    "new": 2400
+   },
+   {
+    "field": "AbilityCastRange",
+    "old": {
+     "base": [
+      750
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      500
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": {
+     "base": [
+      25
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "bonus_armor",
+    "old": {
+     "base": [
+      9
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      4.5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "bonus_evasion",
+    "old": {
+     "base": [
+      25
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "bonus_health_regen",
+    "old": {
+     "base": [
+      6.5
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      4.5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "bonus_strength",
+    "old": null,
+    "new": {
+     "base": [
+      12
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "disarm_melee",
+    "old": {
+     "base": [
+      3.5
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "disarm_range",
+    "old": {
+     "base": [
+      3.5
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Recipe changed",
+   "Now requires Ogre Axe (1000), Helm of Iron Will (975), and a recipe (425)",
+   "Used to require Talisman of Evasion (1300), Splintmail (950), Ring of Health (700) and a recipe (350)",
+   "Total cost decreased from 3300g to 2400g",
+   "No longer provides +25% Evasion",
+   "Armor bonus decreased from +9 to +4.5",
+   "Health Regen bonus decreased from +6.5 to +4.5",
+   "Now also provides +12 Strength",
+   "Disarm cast range decreased from 750 to 500",
+   "Disarm mana cost increased from 25 to 50",
+   "Disarm duration decreased from 3.5s to 3s"
+  ],
+  "claims": [
+   {
+    "claim_id": "c017",
+    "mechanism": "evasion",
+    "condition": "item"
+   }
+  ]
+ },
+ {
+  "subject": "juggernaut_blade_fury",
+  "text_742": {
+   "desc_loc": "Causes a bladestorm of destructive force around Juggernaut, rendering him debuff immune with %immunity_resist%%% magic resistance and dealing damage every %blade_fury_damage_tick%s to nearby enemy units. Applies a basic dispel at the start and end of the spin. DISPEL TYPE: Basic Dispel",
+   "notes_loc": [
+    "You can use items during Blade Fury."
+   ],
+   "scepter_loc": "Allows Juggernaut to attack his enemies during Blade Fury even while moving. These attacks deal %scepter_attack_damage_pct%%% damage and Item Potency."
+  },
+  "text_741f": {
+   "desc_loc": "Causes a bladestorm of destructive force around Juggernaut, rendering him debuff immune with %immunity_resist%%% magic resistance and dealing damage every %blade_fury_damage_tick%s to nearby enemy units. Applies a strong dispel at the end of the spin.",
+   "notes_loc": [
+    "You can use items during Blade Fury.",
+    "Juggernaut can still perform attacks while in Blade Fury. However, only units that are not affected by Blade Fury, such as wards or structures, will take damage from these attacks."
+   ],
+   "scepter_loc": "Increases radius and slows enemies in the area of effect. Juggernaut preforms an attack on affected enemies every %attack_interval%s."
+  },
+  "changed_fields": [
+   {
+    "field": "ability_has_scepter",
+    "old": false,
+    "new": true
+   },
+   {
+    "field": "scepter_attack_damage_pct",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      75
+     ],
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Juggernaut is now fully disarmed during Blade Fury",
+   "Now applies Basic dispel at the end of the spell instead of a Strong one",
+   "Now upgraded with Aghanim's Scepter",
+   "Allows Juggernaut to attack his enemies during Blade Fury even while moving. These attacks deal 75% damage and Item Potency",
+   "Keeps attacking units even if the stop/hold command is issued and while stunned. Buildings are not automatically attacked",
+   "If no attack command is issued, attacks the closest enemy unit first"
+  ],
+  "claims": [
+   {
+    "claim_id": "c018",
+    "mechanism": "applies_strong_dispel",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c038",
+    "mechanism": "applies_basic_dispel",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "kez_falcon_rush",
+  "text_742": {
+   "desc_loc": "Kez gains the ability to rush towards enemy targets to deliver echoing secondary attacks with reduced damage and Item Potency. While in this state, Kez has phased collision and slow resistance.",
+   "notes_loc": [
+    "Does not work on buildings."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Kez gains the ability to rush towards enemy targets to deliver echoing secondary attacks. While in this state, Kez has phased collision and slow resistance.",
+   "notes_loc": [
+    "Does not work on buildings."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": "9007207978895365",
+    "new": "8724154373"
+   },
+   {
+    "field": "echo_proc_chance_reduction",
+    "old": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "No longer has 50% reduced proc chance on echo attacks",
+   "Now has item potency that matches the damage (30/35/40/45%)"
+  ],
+  "claims": [
+   {
+    "claim_id": "c019",
+    "mechanism": "terrain_walk",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "leshrac_greater_lightning_storm",
+  "text_742": {
+   "desc_loc": "Leshrac emits an aura that disarms and constantly dispels nearby enemy units. Leshrac also constantly dispels himself. DISPEL TYPE: Basic Dispel"
+  },
+  "text_741f": {
+   "desc_loc": "Causes Leshrac and all nearby enemies to turn ethereal, preventing them from attacking, slowing them, and making them take more magic damage. Increases Leshrac's speed rather than reducing it. Does not cause Leshrac to take amplified damage."
+  },
+  "changed_fields": [
+   {
+    "field": "target_type",
+    "old": 0,
+    "new": 19
+   },
+   {
+    "field": "dispellable",
+    "old": 2,
+    "new": 3
+   },
+   {
+    "field": "mana_costs",
+    "old": [
+     75
+    ],
+    "new": [
+     125
+    ]
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": {
+     "base": [
+      75
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      125
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "magic_amp",
+    "old": {
+     "base": [
+      30
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "radius",
+    "old": {
+     "base": [
+      500
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      550
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "slow",
+    "old": {
+     "base": [
+      40
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "Ability Reworked",
+   "Non-targeted. Affects enemy units. Doesn't pierce Debuff Immunity. Cannot be Dispelled.",
+   "Mana Cost: 125. Cooldown: 25s",
+   "Disarms nearby enemies, while constantly applying basic dispel to them and Leshrac himself",
+   "Radius: 550; Duration: 4s",
+   "No longer applies Ethereal to Leshrac, so it can be used while Debuff Immune",
+   "Has no linger duration and doesn't work on invulnerable units"
+  ],
+  "claims": [
+   {
+    "claim_id": "c020",
+    "mechanism": "ethereal",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c021",
+    "mechanism": "haste",
+    "condition": "scepter_upgrade"
+   },
+   {
+    "claim_id": "c022",
+    "mechanism": "magic_resist_reduction",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c023",
+    "mechanism": "slow",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c044",
+    "mechanism": "aura",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c045",
+    "mechanism": "applies_basic_dispel",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "lycan_wolf_bite",
+  "text_742": {
+   "desc_loc": "Lycan bites an allied hero or creep-hero, granting them Shapeshift properties. While shapeshifted this way, the target counts as a unit under Lycan's control for Pack Hunter.",
+   "notes_loc": [
+    "Wolf Bite cooldown matches the cooldown of the current level of Shapeshift."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Lycan bites an allied hero or creep-hero, granting them Shapeshift properties. Lycan and the bitten target gain %lifesteal_percent%%% Lifesteal and share the healing effect of Lifesteal with each other as long as they are within %lifesteal_range% range of each other.",
+   "notes_loc": [
+    "Wolf Bite cooldown matches the cooldown of the current level of Shapeshift."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "lifesteal_percent",
+    "old": {
+     "base": [
+      40
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "lifesteal_range",
+    "old": {
+     "base": [
+      1200
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "No longer provides lifesteal when Lycan and the target are near each other",
+   "While shapeshifted, the target counts as a unit under Lycan's control for Pack Hunter"
+  ],
+  "claims": [
+   {
+    "claim_id": "c024",
+    "mechanism": "healing",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c025",
+    "mechanism": "lifesteal",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "meepo_petrify",
+  "text_742": {
+   "desc_loc": "Digs into the ground for a short duration, dispelling Meepo and causing him to become invulnerable and untargetable for %duration%s. Restores %hp_restore%%% of his max health over that duration. DISPEL TYPE: Basic Dispel"
+  },
+  "text_741f": {
+   "desc_loc": "Digs into the ground for a short duration, dispelling Meepo and causing him to become invulnerable and untargetable for %duration%s. Restores %hp_restore%%% of his max health over that duration. DISPEL TYPE: Basic Dispel"
+  },
+  "changed_fields": [
+   {
+    "field": "cast_points",
+    "old": [
+     0.3
+    ],
+    "new": [
+     0.2
+    ]
+   },
+   {
+    "field": "AbilityCastPoint",
+    "old": {
+     "base": [
+      0.3
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      0.2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "duration",
+    "old": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      4
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "hp_restore",
+    "old": {
+     "base": [
+      25
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Now granted with Aghanim's Scepter instead of Aghanim's Shard",
+   "Cast Point improved from 0.3s to 0.2s",
+   "Duration increased from 3s to 4s",
+   "Max HP Restore increased from 25% to 50%"
+  ],
+  "claims": [
+   {
+    "claim_id": "c026",
+    "mechanism": "healing",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "morphling_replicate",
+  "text_742": {
+   "desc_loc": "Morphling changes his form to match the targeted enemy, gaining their basic abilities and changing his primary attribute based on his target. Can be toggled for the duration of the ability.",
+   "notes_loc": [
+    "You can't target yourself with Morph.",
+    "Morph won't copy Shard/Scepter abilities unless Morphling owns the respective item.",
+    "Does not trigger spell reflect."
+   ],
+   "scepter_loc": "While Morph is active, every time Morphling casts a unit-targeted spell, %scepter_echo_count% lesser replicants appear one after another %scepter_echo_cast_delay% seconds apart, and cast it again at a nearby target, or the same target if no other valid targets are available. Every echo is weaker, dealing less damage, healing less health, and applying shorter buffs/debuffs than the previous one."
+  },
+  "text_741f": {
+   "desc_loc": "Morphling changes his form to match the targeted enemy, gaining their basic abilities and changing his primary attribute based on his target. Can be toggled for the duration of the ability.",
+   "notes_loc": [
+    "You can't target yourself with Morph.",
+    "Morph won't copy Shard/Scepter abilities unless Morphling owns the respective item.",
+    "Does not trigger spell reflect."
+   ],
+   "scepter_loc": "Adds an alt-cast to Morph. When enabled, a strong illusion is created of the target hero that can cast all of the hero's basic abilities. If the illusion is alive when Morphling toggles the ability, he will take the place of the illusion, destroying it."
+  },
+  "changed_fields": [
+   {
+    "field": "scepter_additional_stats",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      20
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_attack_speed",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      70
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_echo_appear_distance",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      150
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "scepter_echo_cast_delay",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      0.2
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "scepter_echo_count",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      2
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "scepter_echo_damage_falloff_pct",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      25
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "scepter_echo_damage_outgoing_pct",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      50
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "scepter_echo_damage_second_tooltip_only",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      25
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "scepter_echo_min_model_scale",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      0.25
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "scepter_echo_retarget_radius",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      450
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "scepter_echo_visible_duration",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      0.75
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "scepter_illusion_incoming",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      200
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_illusion_outgoing",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      100
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_spell_amplify",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      25
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_stat_steal",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      20
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_status_resist",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      40
+     ],
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "Aghanim's Scepter reworked",
+   "While Morph is active, every time Morphling casts a unit-targeted spell, 2 lesser replicants appear one after another 0.2 seconds apart, and cast it again at the random enemy within 450 radius from the target. Every echo is weaker, dealing less damage, healing less health and applying shorter buffs/debuffs than the previous one: the first one is 50% weaker, and the second one is also 50% weaker than the previous one (so its 25% of the initial values)",
+   "If no other enemies are found, replicants will cast the spell at the target as well"
+  ],
+  "claims": [
+   {
+    "claim_id": "c027",
+    "mechanism": "illusions",
+    "condition": "scepter_upgrade"
+   },
+   {
+    "claim_id": "c028",
+    "mechanism": "self_mobility",
+    "condition": "scepter_upgrade"
+   },
+   {
+    "claim_id": "c064",
+    "mechanism": "aoe_damage",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "muerta_spectral_slug",
+  "text_742": {
+   "desc_loc": "Muerta shoots a spectral bullet at an enemy, dealing damage, knocking them back, and turning them ethereal for %duration%s - rendering them immune to physical damage and unable to attack. The target is slowed and %bonus_spell_damage_pct%%% more vulnerable to magic damage. Enemies will not be knocked out of Muerta's attack range."
+  },
+  "text_741f": {
+   "desc_loc": "Muerta shoots a spectral bullet at an enemy, dealing damage, knocking them back, and turning them ethereal for %duration%s - rendering them immune to physical damage and unable to attack. The target is slowed and %bonus_spell_damage_pct%%% more vulnerable to magic damage. Enemies will not be knocked out of Muerta's attack range."
+  },
+  "changed_fields": [
+   {
+    "field": "cast_ranges",
+    "old": [
+     500
+    ],
+    "new": [
+     575
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": [
+     12
+    ],
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "AbilityCastRange",
+    "old": {
+     "base": [
+      500
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      575
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityChargeRestoreTime",
+    "old": null,
+    "new": {
+     "base": [
+      12
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityCharges",
+    "old": null,
+    "new": {
+     "base": [
+      2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      12
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "damage",
+    "old": {
+     "base": [
+      225
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      125
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "duration",
+    "old": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      2.25
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Now has 2 ability charges with 12s restore time",
+   "Cast Range increased from 500 to 575",
+   "Debuff Duration decreased from 3s to 2.25s",
+   "Damage decreased from 225 to 125"
+  ],
+  "claims": [
+   {
+    "claim_id": "c029",
+    "mechanism": "displace_other",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c065",
+    "mechanism": "charges",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "nevermore_requiem",
+  "text_742": {
+   "desc_loc": "Shadow Fiend gathers up to %max_soul_release% of his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed reduced for %requiem_fear_duration% seconds, increased by %requiem_duration_per_soul% seconds for each additional soul that hits it. Lines of energy are created for every soul captured through Necromastery. Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.",
+   "notes_loc": [
+    "One line is generated from Shadow Fiend for every %requiem_soul_conversion% soul in his possession.",
+    "Fear and movement slow do not apply if the Requiem was released on death."
+   ],
+   "scepter_loc": "Reduces cooldown and causes Requiem of Souls to return back to Shadow Fiend. The wave back to Shadow Fiend heals him for all the damage it dealt."
+  },
+  "text_741f": {
+   "desc_loc": "Shadow Fiend gathers up to %max_soul_release% of his captured souls to release them as lines of demonic energy. Units near Shadow Fiend when the souls are released can be damaged by several lines of energy. Any unit damaged by Requiem of Souls will be feared and have its movement speed and magic resistance reduced for %requiem_slow_duration% seconds for each line hit up to a maximum of %requiem_slow_duration_max%. Lines of energy are created for every soul captured through Necromastery. Requiem of Souls is automatically cast whenever Shadow Fiend dies, regardless of its cooldown.",
+   "notes_loc": [
+    "One line is generated from Shadow Fiend for every %requiem_soul_conversion% soul in his possession.",
+    "Fear and movement slow do not apply if the Requiem was released on death."
+   ],
+   "scepter_loc": "Reduces cooldown and causes Requiem of Souls to return back to Shadow Fiend. The wave back to Shadow Fiend heals him for all the damage it dealt."
+  },
+  "changed_fields": [
+   {
+    "field": "requiem_duration_per_soul",
+    "old": null,
+    "new": {
+     "base": [
+      0.1
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "requiem_fear_duration",
+    "old": null,
+    "new": {
+     "base": [
+      1.2,
+      1.5,
+      1.8
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "requiem_line_speed",
+    "old": {
+     "base": [
+      700
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      700
+     ],
+     "scepter": [
+      30
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "requiem_reduction_mres",
+    "old": {
+     "base": [
+      -5,
+      -10,
+      -15
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "requiem_slow_duration",
+    "old": {
+     "base": [
+      0.6
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      1.2,
+      1.5,
+      1.8
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "requiem_slow_duration_max",
+    "old": {
+     "base": [
+      2.15
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "No longer reduces enemy Magic Resistance by 5/10/15%",
+   "Now has a base Fear and Slow duration of 1.2/1.5/1.8s and no longer has a max duration",
+   "Fear and Slow duration per soul decreased from 0.6s to 0.1s",
+   "Aghanim's Scepter now also increases soul speed by 30%"
+  ],
+  "claims": [
+   {
+    "claim_id": "c030",
+    "mechanism": "magic_resist_reduction",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "nyx_assassin_burrow",
+  "text_742": {
+   "desc_loc": "Nyx Assassin buries himself beneath the battlefield over a short duration. Once burrowed, Spiked Carapace instantly stuns nearby enemies when cast, the range of Mind Flare and Impale is increased, and Impale's cooldown is decreased. While burrowed, Nyx Assassin is stationary, unable to attack, and invisible. Nyx Assassin gains damage reduction from all damage sources, and Scarab Metabolism is always active at %scarab_metabolism_multiplier%x strength.",
+   "notes_loc": [
+    "Casting Vendetta will cancel burrow."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Nyx Assassin buries himself beneath the battlefield over a short duration. Once burrowed, Spiked Carapace instantly stuns nearby enemies when cast, the range of Mind Flare and Impale is increased, and Impale's cooldown is decreased. While burrowed, Nyx Assassin is stationary, unable to attack, and invisible. Nyx Assassin gains damage reduction from all damage sources.",
+   "notes_loc": [
+    "Casting Vendetta will cancel burrow."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "carapace_radius",
+    "old": {
+     "base": [
+      400
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      350
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "cast_range",
+    "old": {
+     "base": [
+      500
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      400
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "health_regen_rate",
+    "old": {
+     "base": [
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "mana_regen_rate",
+    "old": {
+     "base": [
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scarab_metabolism_multiplier",
+    "old": null,
+    "new": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "No longer provides 1% max health and 1% max mana restoration",
+   "Now provides 3x Scarab Metabolism bonuses that are not cancelled by taking damage",
+   "Burrow Bonus Cast Range decreased from 500 to 400",
+   "Burrow Spiked Carapace Radius decreased from 400 to 350"
+  ],
+  "claims": [
+   {
+    "claim_id": "c031",
+    "mechanism": "mana_gain",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "pugna_life_drain",
+  "text_742": {
+   "desc_loc": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit, healing himself for the damage dealt and granting vision over the target. When cast on an ally, Pugna heals his ally and takes magical damage equal to the amount healed. This damage cannot kill Pugna.",
+   "shard_loc": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed."
+  },
+  "text_741f": {
+   "desc_loc": "CHANNELED - When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target. When cast on an ally, Pugna will drain his own health into his ally.",
+   "scepter_loc": "Reduces cooldown by %abilitycooldown%s. When targeting an enemy hero, Pugna reduces their outgoing spell damage by %spell_amp_drain_rate%%% per second up to a maximum of %spell_amp_drain_max%%% and increases his own, up to a maximum of %max_spell_amp_drain_pct%%%. When draining through a Nether Ward using Shard, the rate of increase/decrease is %spell_amp_drain_rate_ward%%% instead. Debuff lasts %spell_amp_drain_duration% seconds.",
+   "shard_loc": "Life Drain can target your Nether Ward, causing life drain to refract to all enemy heroes within %abilitycastrange% units of the ward for %shard_damage_pct_from_ward%%% of its normal value. The effect is interrupted if the ward is destroyed."
+  },
+  "changed_fields": [
+   {
+    "field": "ability_has_scepter",
+    "old": true,
+    "new": false
+   },
+   {
+    "field": "channel_times",
+    "old": [
+     10
+    ],
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "durations",
+    "old": [
+     0
+    ],
+    "new": [
+     10
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": [
+     115,
+     160,
+     205
+    ],
+    "new": [
+     100,
+     150,
+     200
+    ]
+   },
+   {
+    "field": "AbilityChannelTime",
+    "old": {
+     "base": [
+      10
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      7
+     ],
+     "scepter": [
+      50
+     ],
+     "shard": null
+    },
+    "new": {
+     "base": [
+      7
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityDuration",
+    "old": null,
+    "new": {
+     "base": [
+      10
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": {
+     "base": [
+      115,
+      160,
+      205
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      100,
+      150,
+      200
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "ally_healing",
+    "old": {
+     "base": [
+      150,
+      250,
+      350
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "bonus_heal_pct",
+    "old": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "health_drain",
+    "old": {
+     "base": [
+      150,
+      250,
+      350
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "life_drain",
+    "old": null,
+    "new": {
+     "base": [
+      150,
+      250,
+      350
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "max_spell_amp_drain_pct",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      100
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "spell_amp_drain_duration",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      8
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "spell_amp_drain_max",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      75
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "spell_amp_drain_rate",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      8
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "spell_amp_drain_rate_ward",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      4
+     ],
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "Mana Cost decreased from 115/160/205 to 100/150/200",
+   "Now multiple Life Drains can be active at the same time, but Pugna can't target the same unit with multiple Life Drains",
+   "No longer has separate values for healing and damage, with both depending on damage/healing done to the target",
+   "When cast on enemy, the amount of healing for Pugna is based on the damage dealt",
+   "When cast on ally, Pugna takes magical damage based on the amount of heal bestowed to the target",
+   "As a result, Pugna will no longer take damage when the target ally has full health during the Life Drain cast",
+   "At the same time, Pugna will no longer be healed if Life Drain deals no damage",
+   "Healing on allies is now increased by Pugna's Spell Amplification",
+   "No longer upgraded with Aghanim's Scepter"
+  ],
+  "claims": [
+   {
+    "claim_id": "c032",
+    "mechanism": "spell_amp",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "revenants_brooch",
+  "text_742": {
+   "desc_loc": "Passive: Ghastly Strike Grants each attack a %crit_chance%%% chance to deal an additional %crit_multiplier%%% of the attack's damage as bonus magical damage.",
+   "notes_loc": [
+    "Counts as a critical strike, and so does not stack with other critical strikes.",
+    "Does not work against buildings."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Passive: Phantom Critical Grants each attack a %crit_chance%%% chance to deal an additional %crit_multiplier%%% of the attack's damage as bonus magic damage.",
+   "notes_loc": [
+    "Counts as a Critical Strike for purposes of stacking with other sources of Critical Strike.",
+    "Phantom Critical does not work against buildings."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "damage",
+    "old": 0,
+    "new": 2
+   },
+   {
+    "field": "immunity",
+    "old": 4,
+    "new": 0
+   },
+   {
+    "field": "item_cost",
+    "old": 3300,
+    "new": 0
+   },
+   {
+    "field": "bonus_damage",
+    "old": {
+     "base": [
+      35
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "crit_chance",
+    "old": {
+     "base": [
+      30
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      15
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "crit_multiplier",
+    "old": {
+     "base": [
+      80
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "spell_lifesteal",
+    "old": {
+     "base": [
+      15
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [],
+  "claims": [
+   {
+    "claim_id": "c033",
+    "mechanism": "lifesteal",
+    "condition": "item"
+   }
+  ]
+ },
+ {
+  "subject": "sandking_epicenter",
+  "text_742": {
+   "desc_loc": "After a cast point of %abilitycastpoint% seconds, Sand King sends a disturbance into the earth, causing it to shudder violently. All enemies caught within range will take damage and become slowed. Each subsequent pulse increases the radius of damage dealt.",
+   "notes_loc": [
+    "The pulses are centered on Sand King, not where he first cast the spell."
+   ],
+   "scepter_loc": "When the pulses start, %scepter_explosions_per_pulse% Stinger attack areas are created every %spine_tick_rate%s at random locations, each measuring %scepter_explosion_radius_pct%%% of the Epicenter's current radius, that apply %spine_damage_pct%%% of Stinger damage to enemies hit. Shard pulses cause %shard_explosions_per_pulse% attack(s).",
+   "shard_loc": "Every %shard_interval%s causes a small single Epicenter Pulse around Sand King."
+  },
+  "text_741f": {
+   "desc_loc": "After a cast point of %abilitycastpoint% seconds, Sand King sends a disturbance into the earth, causing it to shudder violently. All enemies caught within range will take damage and become slowed. Each subsequent pulse increases the radius of damage dealt.",
+   "notes_loc": [
+    "The pulses are centered on Sand King, not where he first cast the spell."
+   ],
+   "scepter_loc": "When the pulses start, %scepter_explosions_per_pulse% Stinger attack areas are created every %spine_tick_rate%s at random locations, each measuring %scepter_explosion_radius_pct%%% of the Epicenter's current radius, that apply %spine_damage_pct%%% of Stinger damage to enemies hit. Shard pulses cause %shard_explosions_per_pulse% attack(s).",
+   "shard_loc": "Every %shard_interval%s causes a small single Epicenter Pulse around Sand King."
+  },
+  "changed_fields": [
+   {
+    "field": "ability_has_scepter",
+    "old": true,
+    "new": false
+   },
+   {
+    "field": "scepter_explosion_min_dist",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      120
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_explosion_radius_pct",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      35
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "scepter_explosions_per_pulse",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      3
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "shard_explosions_per_pulse",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      1
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "spine_damage_pct",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      40
+     ],
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "spine_tick_rate",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      0.5
+     ],
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "No longer upgraded with Aghanim's Scepter"
+  ],
+  "claims": [
+   {
+    "claim_id": "c034",
+    "mechanism": "aoe_damage",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "tinker_warp_grenade",
+  "text_742": {
+   "desc_loc": "Throws a flare towards an enemy, dealing damage, teleporting them away, slowing them and reducing their Cast and Attack Range for %debuff_duration% seconds. The target is teleported further the closer they are to Tinker.",
+   "notes_loc": [
+    "Max teleportation distance is %warp_distance_pct_tooltip%%% of Warp Flare's cast range, which decreases down to 0 at max cast range."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Throws a flare towards an enemy, dealing damage, teleporting them away, rooting them and reducing their Cast and Attack Range for %debuff_duration% seconds. The target is teleported further the closer they are to Tinker.",
+   "notes_loc": [
+    "Max teleportation distance is %warp_distance_pct_tooltip%%% of Warp Flare's cast range, which decreases down to 0 at max cast range."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "debuff_duration",
+    "old": {
+     "base": [
+      2
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "movement_slow_pct",
+    "old": null,
+    "new": {
+     "base": [
+      100
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "No longer roots enemies",
+   "Now slows enemy movement speed by 100%",
+   "Debuff Duration increased from 2s to 3s"
+  ],
+  "claims": [
+   {
+    "claim_id": "c035",
+    "mechanism": "root",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c078",
+    "mechanism": "slow",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "troll_warlord_battle_trance",
+  "text_742": {
+   "desc_loc": "Troll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes. Unslowable while attacking. Damage does not kill you during this mode. Grants you bonus lifesteal, attack speed, status resistance, and movement speed. Applies a Basic Dispel. DISPEL TYPE: Basic Dispel",
+   "notes_loc": [
+    "Troll can still use his items and abilities while affected by Battle Trance, but not other commands.",
+    "Troll can still be killed with Axe's Culling Blade.",
+    "Troll is granted vision over the target."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Troll unleashes a powerful battle trance, that forces you to continuously attack the closest enemy unit within %range% range, prioritizing heroes. Damage does not kill you during this mode. Grants you bonus lifesteal, attack speed, slow resistance and movement speed. Applies a Basic Dispel. DISPEL TYPE: Basic Dispel",
+   "notes_loc": [
+    "Troll can still use his items and abilities while affected by Battle Trance, but not other commands.",
+    "Troll can still be killed with Axe's Culling Blade.",
+    "Troll is granted vision over the target."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "slow_resistance",
+    "old": {
+     "base": [
+      35
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "status_resistance",
+    "old": null,
+    "new": {
+     "base": [
+      15,
+      20,
+      25
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "No longer grants 35% Slow Resistance",
+   "Now grants 15/20/25% Status Resistance"
+  ],
+  "claims": [
+   {
+    "claim_id": "c036",
+    "mechanism": "slow_resistance",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c079",
+    "mechanism": "status_resistance",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "sandking_burrowstrike",
+  "text_742": {
+   "desc_loc": "Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Adds Caustic Finale poison to heroes hit Can be put on alt-cast to immediately cast in the desired direction, without walking towards the targeted location.",
+   "notes_loc": [
+    "Does not trigger spell block or spell reflect."
+   ],
+   "scepter_loc": "Increases Cast Range. Sand King leaves behind a trail of spines, that, after a %spine_duration%s delay, create Stinger attack areas along the path, that apply %spine_damage_pct%%% of Stinger damage to enemies hit."
+  },
+  "text_741f": {
+   "desc_loc": "Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Adds Caustic Finale poison to heroes hit Can be put on alt-cast to immediately cast in the desired direction, without walking towards the targeted location.",
+   "notes_loc": [
+    "Does not trigger spell block or spell reflect."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "ability_has_scepter",
+    "old": false,
+    "new": true
+   },
+   {
+    "field": "AbilityCastRange",
+    "old": {
+     "base": [
+      550,
+      625,
+      700,
+      775
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      550,
+      625,
+      700,
+      775
+     ],
+     "scepter": [
+      425
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "burrow_speed",
+    "old": {
+     "base": [
+      2000
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      2000
+     ],
+     "scepter": [
+      1000
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "spine_damage_pct",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      75
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "spine_duration",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      0.8
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "spine_radius",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      175
+     ],
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Now upgraded with Aghanim's Scepter",
+   "Increases Cast Range by 425 (to 975/1050/1125/1200). Sand King leaves behind a trail of spines, that, after a 0.8s delay, create Stinger attack areas along the path, that apply 75% of Stinger damage to enemies hit",
+   "Each Stinger attack has the same bonus as the innermost area"
+  ],
+  "claims": [
+   {
+    "claim_id": "c037",
+    "mechanism": "aoe_damage",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "crimson_guard",
+  "text_742": {
+   "desc_loc": "Active: Guard For %duration% seconds, grant nearby allied heroes and buildings a %block_chance_active%%% chance to block damage equal to %block_damage_active% plus %max_hp_pct%%% of the caster's max health value from each incoming attack. Radius: %bonus_aoe_radius% Passive: Damage Block Grants a %block_chance%%% chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged Passive: Buckler Aura Grants %bonus_aoe_armor% armor to allied player units. Radius: %aura_radius%",
+   "notes_loc": [
+    "Multiple sources of damage block do not stack.",
+    "When the Guard buff is applied to ranged heroes, Guard blocks %block_penalty_ranged% less damage.",
+    "Guard does not affect units that have been affected by Guard within Crimson Guard's cooldown."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Active: Guard For %duration% seconds, grant nearby allied heroes and buildings a %block_chance_active%%% chance to block damage equal to %block_damage_active% plus %max_hp_pct%%% of the caster's max health value from each incoming attack. Radius: %bonus_aoe_radius% Passive: Damage Block Grants a %block_chance%%% chance to block %block_damage_melee% damage from incoming attacks on melee heroes, and %block_damage_ranged% damage on ranged.",
+   "notes_loc": [
+    "Multiple sources of damage block do not stack.",
+    "When the Guard buff is applied to ranged heroes, Guard blocks %block_penalty_ranged% less damage.",
+    "Guard does not affect units that have been affected by Guard within Crimson Guard's cooldown."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "dispellable",
+    "old": 3,
+    "new": 2
+   },
+   {
+    "field": "add_nostack_debuff",
+    "old": null,
+    "new": {
+     "base": [
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "aura_radius",
+    "old": null,
+    "new": {
+     "base": [
+      1200
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "bonus_aoe_armor",
+    "old": null,
+    "new": {
+     "base": [
+      2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "bonus_armor",
+    "old": {
+     "base": [
+      6
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "bonus_health_regen",
+    "old": {
+     "base": [
+      12
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      9
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Recipe changed",
+   "Now also requires Buckler (425)",
+   "Recipe cost decreased from 1050 to 625. Total cost unchanged at 3725",
+   "Armor bonus increased from +4 to +5",
+   "Health Regen bonus decreased from +12 to +9",
+   "Guard is now dispellable",
+   "Now also provides Buckler Aura",
+   "Passive. Grants 2 armor to allied player units. Radius: 1200",
+   "Doesn't stack with Buckler's Buckler Aura. If both are present, Crimson Guard's is used, no matter which one affected the unit first"
+  ],
+  "claims": [
+   {
+    "claim_id": "c041",
+    "mechanism": "aura",
+    "condition": "item"
+   }
+  ]
+ },
+ {
+  "subject": "templar_assassin_psionic_trap",
+  "text_742": {
+   "desc_loc": "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of %movement_speed_min%%% in a %trap_radius% radius. Trap movement slow charges up to %movement_speed_max%%% after %trap_max_charge_duration% seconds. Deals damage after %trap_max_charge_duration%s.",
+   "notes_loc": [
+    "Traps last indefinitely.",
+    "They have invisibility that fades in over %trap_fade_time% seconds and spell immunity. Creeps and illusions deal 25% damage to them.",
+    "Traps have 250/250 vision range and don't prevent neutral camps from spawning.",
+    "Traps have fragile pips: melee heroes and Roshan remove 2 pips per attack."
+   ],
+   "scepter_loc": "When activated, traps now silence affected enemies."
+  },
+  "text_741f": {
+   "desc_loc": "Templar Assassin places mystical traps that invisibly monitor enemy movement. When sprung at her command, they exert a slowing influence of %movement_speed_min%%% in a %trap_radius% radius. Trap movement slow charges up to %movement_speed_max%%% after %trap_max_charge_duration% seconds. Deals damage after %trap_max_charge_duration%s.",
+   "notes_loc": [
+    "Traps last indefinitely.",
+    "They have invisibility that fades in over %trap_fade_time% seconds and spell immunity. They take 2 hits to kill by ranged heroes, 1 by melee heroes, and 4 by creeps.",
+    "Traps have 250/250 vision range and don't prevent neutral camps from spawning."
+   ],
+   "scepter_loc": "When activated, traps now silence affected enemies."
+  },
+  "changed_fields": [
+   {
+    "field": "cast_ranges",
+    "old": [
+     1800
+    ],
+    "new": [
+     1600,
+     1800,
+     2000
+    ]
+   },
+   {
+    "field": "AbilityCastRange",
+    "old": {
+     "base": [
+      1800
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      1600,
+      1800,
+      2000
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "trap_health",
+    "old": null,
+    "new": {
+     "base": [
+      2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Cast Range rescaled from 1800 to 1600/1800/2000",
+   "Now traps have fragile pip health"
+  ],
+  "claims": [
+   {
+    "claim_id": "c042",
+    "mechanism": "damage_block",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "weaver_the_swarm",
+  "text_742": {
+   "desc_loc": "Weaver launches a swarm of %count% young Weavers that latch on any enemy unit in their path, attacking and reducing armor until it is killed.",
+   "notes_loc": [
+    "When a beetle latches on a target, it will remain there until it is killed or the duration expires.",
+    "Beetles are Spell Immune and have %destroy_attacks% pip health. Creeps and illusions deal 25% damage to beetles.",
+    "Beetles provide vision."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Weaver launches a swarm of %count% young Weavers that latch on any enemy unit in their path, attacking and reducing armor until it is killed.",
+   "notes_loc": [
+    "When a beetle latches on a target, it will remain there until it is killed or the duration expires.",
+    "Beetles are Spell Immune, but can be killed in %destroy_attacks% attacks from a unit. Heroes deal double damage to beetles.",
+    "Beetles provide vision."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "destroy_attacks",
+    "old": {
+     "base": [
+      6,
+      7,
+      8,
+      9
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      3,
+      4,
+      4,
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [],
+  "claims": [
+   {
+    "claim_id": "c043",
+    "mechanism": "damage_block",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "life_stealer_infest",
+  "text_742": {
+   "desc_loc": "Lifestealer infests the body of a target unit, becoming undetectable, and healing for a portion of his max hitpoints every second while inside. He can then explode from the host body, dealing damage to nearby enemies. If the infested unit is an enemy creep or a neutral creep, he can take control of the unit's ability to move and attack, and the creep loses a portion of their max hitpoints over time. Does not work on enemy heroes. DISPEL TYPE: Basic Dispel",
+   "notes_loc": [
+    "Lifestealer gains experience while under the effects of Infest.",
+    "Creeps that are controlled while Infested gain Infest's movement speed bonus.",
+    "Infest can be used on Ancient creeps."
+   ],
+   "scepter_loc": "Increases cast range and reduces cooldown to %bonus_AbilityCooldown%s. Infest may target enemy heroes for a short duration, attacking them from the inside while increasing Lifestealer's regeneration rate.",
+   "shard_loc": "Infest explosion applies a %dot_duration%s duration Open Wounds to enemies in the damage radius. Consuming a creep with Infest drenches enemies in blood which deals damage over time based on the host's remaining health."
+  },
+  "text_741f": {
+   "desc_loc": "Lifestealer infests the body of a target unit, becoming undetectable, and healing for a portion of his max hitpoints every second while inside. He can then explode from the host body, dealing damage to nearby enemies. If the infested unit is an enemy creep or a neutral creep, he can take control of the unit's ability to move and attack, and the creep loses a portion of their max hitpoints over time. Does not work on enemy heroes. DISPEL TYPE: Basic Dispel",
+   "notes_loc": [
+    "Lifestealer gains experience while under the effects of Infest.",
+    "Creeps that are controlled while Infested gain Infest's movement speed bonus.",
+    "Does not trigger spell reflect.",
+    "Infest can be used on Ancient creeps."
+   ],
+   "scepter_loc": "Increases cast range and reduces cooldown to %bonus_AbilityCooldown%s. Infest may target enemy heroes for a short duration, attacking them from the inside while increasing Lifestealer's regeneration rate.",
+   "shard_loc": "Consuming a creep with Infest drenches enemies in blood which deals damage over time based on the host's remaining health."
+  },
+  "changed_fields": [
+   {
+    "field": "radius",
+    "old": {
+     "base": [
+      700
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      600
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "self_regen",
+    "old": {
+     "base": [
+      3,
+      4,
+      5
+     ],
+     "scepter": [
+      100
+     ],
+     "shard": null
+    },
+    "new": {
+     "base": [
+      2,
+      3,
+      4
+     ],
+     "scepter": [
+      100
+     ],
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Self Max HP Regen decreased from 3/4/5% to 2/3/4%",
+   "Aghanim's Scepter Self Max HP Regen decreased from 6/8/10% to 4/6/8%",
+   "Damage Radius decreased from 700 to 600",
+   "Aghanim's Shard now also applies a 3s Open Wounds effect to any enemies affected by Infest explosion",
+   "This effect applies to any Infest explosion, while damage over time still applies only on creep consumption",
+   "Aghanim's Scepter can no longer target Debuff Immune enemies and no longer ignores spell reflection"
+  ],
+  "claims": [
+   {
+    "claim_id": "c046",
+    "mechanism": "slow",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c047",
+    "mechanism": "lifesteal",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c048",
+    "mechanism": "healing",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "nevermore_dark_lord",
+  "text_742": {
+   "desc_loc": "Shadow Fiend's presence reduces the armor and magic resistance of nearby enemies.",
+   "notes_loc": [
+    "Stacks fully with other armor reduction abilities and aura."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Shadow Fiend's presence reduces the armor of nearby enemies.",
+   "notes_loc": [
+    "Stacks fully with other armor reduction abilities and aura."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "presence_magic_resistance_reduction",
+    "old": null,
+    "new": {
+     "base": [
+      -4,
+      -6,
+      -8,
+      -10
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Now also reduces enemy Magic Resistance by 4/6/8/10%"
+  ],
+  "claims": [
+   {
+    "claim_id": "c049",
+    "mechanism": "magic_resist_reduction",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "disruptor_kinetic_field",
+  "text_742": {
+   "desc_loc": "After a short formation time, creates a circular barrier of kinetic energy that enemies can't pass.",
+   "notes_loc": [
+    "Debuff Immune units can travel through the field."
+   ],
+   "shard_loc": "Causes enemies that touch the field to be struck by Electromagnetic Repulsion with %strike_knockback_pct_tooltip_only%%% reduced knockback."
+  },
+  "text_741f": {
+   "desc_loc": "After a short formation time, creates a circular barrier of kinetic energy that enemies can't pass.",
+   "notes_loc": [
+    "Debuff Immune units can travel through the field."
+   ],
+   "shard_loc": "Both shapes have an independent cooldown."
+  },
+  "changed_fields": [
+   {
+    "field": "ability_has_shard",
+    "old": false,
+    "new": true
+   },
+   {
+    "field": "strike_knockback_pct_tooltip_only",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      50
+     ]
+    }
+   },
+   {
+    "field": "strike_on_touch",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      0
+     ]
+    },
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      1
+     ]
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Now upgraded with Aghanim's Shard",
+   "Causes enemies that touch the Field to be struck by Electromagnetic Repulsion with 50% reduced knockback",
+   "The same target cannot be hit more often than once per 3s",
+   "Disruptor's own Electromagnetic Repulsion doesn't count and ignores this interval"
+  ],
+  "claims": [
+   {
+    "claim_id": "c050",
+    "mechanism": "displace_other",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "shadow_shaman_mass_serpent_ward",
+  "text_742": {
+   "desc_loc": "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. Creeps and illusions deal 25% damage to the Serpent Ward.",
+   "shard_loc": "Allows to create a Mega Ward using the Urnaconda ability."
+  },
+  "text_741f": {
+   "desc_loc": "Summons %ward_count% Serpent Wards to attack enemy units and structures. The Wards are immune to magic. Creeps deal half damage to the Serpent Ward.",
+   "shard_loc": "Allows to create a Mega Ward using the Urnaconda ability."
+  },
+  "changed_fields": [
+   {
+    "field": "cooldowns",
+    "old": [
+     110,
+     105,
+     100
+    ],
+    "new": [
+     110
+    ]
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      110,
+      105,
+      100
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      110
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "ward_health",
+    "old": {
+     "base": [
+      4
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Cooldown increased from 110/105/100s to 110s"
+  ],
+  "claims": [
+   {
+    "claim_id": "c051",
+    "mechanism": "damage_block",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "abaddon_death_coil",
+  "text_742": {
+   "desc_loc": "Abaddon releases a coil of deathly mist at the cost of Abaddon's health. Friendly units are healed and have their movement speed increased. Enemy units are damaged and slowed. Health cost is %self_damage_pct%%% of the Damage/Heal amount.",
+   "notes_loc": [
+    "Abaddon can not kill himself with this skill.",
+    "Mist Coil's health cost will damage Aphotic Shield and other barriers before using Abaddon's health."
+   ],
+   "scepter_loc": "Mist Coil affects all units in a %effect_radius% radius around the target. When Mist Coil hits enemies, Abaddon deals %damage_percentage_on_perform_attack%%% of his attack damage and applies on-hit effects with %potency%%% Item Potency."
+  },
+  "text_741f": {
+   "desc_loc": "Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit at the cost of some of Abaddon's health.",
+   "notes_loc": [
+    "Abaddon can not kill himself with this skill."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "ability_has_scepter",
+    "old": false,
+    "new": true
+   },
+   {
+    "field": "damage_percentage_on_perform_attack",
+    "old": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      100
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "duration",
+    "old": null,
+    "new": {
+     "base": [
+      0.7,
+      0.8,
+      0.9,
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "effect_radius",
+    "old": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      400
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "movement_speed_pct",
+    "old": null,
+    "new": {
+     "base": [
+      60
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "perform_attack",
+    "old": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      1
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "potency",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      80
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "self_damage",
+    "old": {
+     "base": [
+      40
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "self_damage_enemy_target",
+    "old": {
+     "base": [
+      40
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "self_damage_pct",
+    "old": null,
+    "new": {
+     "base": [
+      40
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "The Self Damage portion of the ability has been replaced with a Health Cost. The value is unchanged",
+   "As a result, the current cost is shown on the ability icon and in the tooltip",
+   "Still damages the Aphotic Shield barrier on cast",
+   "Now also slows/increases movement speed of enemies/allies by 60% for 0.7/0.8/0.9/1s",
+   "Now upgraded with Aghanim's Scepter",
+   "Affects all units in a 400 radius around the target. Each affected enemy is attacked by Abaddon with 100% damage and 80% item potency",
+   "Can't apply Cleave"
+  ],
+  "claims": [
+   {
+    "claim_id": "c052",
+    "mechanism": "haste",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c053",
+    "mechanism": "slow",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c054",
+    "mechanism": "aoe_damage",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "abyssal_underlord_dark_portal",
+  "text_742": {
+   "desc_loc": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side. Portals have to be at least %minimum_distance% away from each other.",
+   "notes_loc": [
+    "Double-click to teleport to your team's base, in front of your fountain"
+   ],
+   "scepter_loc": "Summons a Pit of Malice around the furthermost of the portals. Reduces cooldown."
+  },
+  "text_741f": {
+   "desc_loc": "Opens 2 portals, one next to Underlord and one in the target location. Heroes can channel a portal for %warp_channel_duration% seconds to teleport to the other side. Portals have to be at least %minimum_distance% away from each other.",
+   "notes_loc": [
+    "Double-click to teleport to your team's base, in front of your fountain"
+   ],
+   "scepter_loc": "Summons a Pit of Malice around each of the portals. Reduces cooldown."
+  },
+  "changed_fields": [
+   {
+    "field": "cooldowns",
+    "old": [
+     110,
+     105,
+     100
+    ],
+    "new": [
+     115,
+     105,
+     95
+    ]
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      110,
+      105,
+      100
+     ],
+     "scepter": [
+      20
+     ],
+     "shard": null
+    },
+    "new": {
+     "base": [
+      115,
+      105,
+      95
+     ],
+     "scepter": [
+      20
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "aura_radius",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      1200
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "shot_cooldown",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      0.8
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "shot_damage",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      0
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "shot_movement_speed_pct",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      40
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "shot_slow_duration",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      2.5
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "shot_speed",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      950
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "shot_vision",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      100
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "shot_vision_duration",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      1.5
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "warp_channel_duration",
+    "old": {
+     "base": [
+      3.5
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      3.5,
+      3.25,
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Cooldown rescaled from 110/105/100s to 115/105/95s",
+   "Channel duration decreased from 3.5s to 3.5/3.25/3s",
+   "Aghanim Scepter upgrade now creates a Pit of Malice only at the end portal"
+  ],
+  "claims": [
+   {
+    "claim_id": "c055",
+    "mechanism": "slow",
+    "condition": "scepter_upgrade"
+   },
+   {
+    "claim_id": "c056",
+    "mechanism": "grant_vision",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "ancient_apparition_cold_feet",
+  "text_742": {
+   "desc_loc": "Places a curse on an enemy, dealing damage over time and slowing the target. If the enemy unit doesn't move outside of the given range from the initial location, it will be stunned and frozen in place after %AbilityDuration% seconds.",
+   "notes_loc": [
+    "Deals damage every half second."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Places a curse on an enemy, dealing damage over time. If the enemy unit doesn't move outside of the given range from the initial location, it will be stunned and frozen in place after %AbilityDuration% seconds.",
+   "notes_loc": [
+    "Deals damage every half second."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "leash",
+    "old": null,
+    "new": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "movement_slow",
+    "old": null,
+    "new": {
+     "base": [
+      4,
+      6,
+      8,
+      10
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Now applies a 4/6/8/10% movement slow"
+  ],
+  "claims": [
+   {
+    "claim_id": "c057",
+    "mechanism": "slow",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "meepo_divided_we_stand",
+  "text_742": {
+   "desc_loc": "Meepo summons another Meepo, which levels up and shares items with the main Meepo. Ability cooldowns are independent, but items share cooldowns between Meepos, except Teleport Scrolls. Damage, attack speed, health, mana, regeneration, mana burn, and proc chance bonuses from items are distributed equally among the amount of Meepos, making them %dps_penalty_pct%%% less effective. If any Meepo dies, they all die. Experience gained by any Meepo is decreased proportionally by the number of Meepos that have gained experience in the last %xp_penalty_time%s.",
+   "shard_loc": "Divided We Stand can be cast to pick up the target friendly Meepo or creep, disarming Meepo and disabling them. Use the sub-ability to throw the carried unit at the target, dealing damage and slowing enemies within %radius_tooltip% radius of the impact. If the carried target is a Meepo, it shares damage with the carrier. The carried target will be dropped if not thrown in time."
+  },
+  "text_741f": {
+   "desc_loc": "Meepo summons another Meepo, which levels up and shares items and experience with the main Meepo. Ability cooldowns are independent, but items share cooldowns between Meepos, except Teleport Scrolls. Damage, attack speed, health, mana, regeneration, mana burn, and proc chance bonuses from items are distributed equally among the amount of Meepos, making them %dps_penalty_pct%%% less effective. If any Meepo dies, they all die."
+  },
+  "changed_fields": [
+   {
+    "field": "target_team",
+    "old": 0,
+    "new": 1
+   },
+   {
+    "field": "target_type",
+    "old": 0,
+    "new": 19
+   },
+   {
+    "field": "ability_has_shard",
+    "old": false,
+    "new": true
+   },
+   {
+    "field": "cast_points",
+    "old": [
+     0
+    ],
+    "new": [
+     0.2
+    ]
+   },
+   {
+    "field": "AbilityCastPoint",
+    "old": null,
+    "new": {
+     "base": [
+      0.2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityCastRange",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      250
+     ]
+    }
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      25,
+      20,
+      15,
+      10
+     ]
+    }
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      40
+     ]
+    }
+   },
+   {
+    "field": "radius_tooltip",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      200
+     ]
+    }
+   },
+   {
+    "field": "xp_penalty_pct",
+    "old": null,
+    "new": {
+     "base": [
+      50,
+      66,
+      75,
+      80
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "xp_penalty_time",
+    "old": null,
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Experience penalty reworked",
+   "Instead of a constant percentage reduction based on ability level, experience gained by any Meepo is decreased proportionally by the number of Meepos that have gained experience in the last 5s",
+   "I.e. 5 clones, 2 have gained XP in last 5 seconds = each Meepo penalized by 50%, 5 clones, penalized by 80%, etc.",
+   "Now upgraded with Aghanim's Shard",
+   "Can be cast to pick up the target Meepo or friendly creep, disarming the carrier and disabling the carried unit. Use the Fling sub-ability to throw the carried unit at a target enemy, one of your Meepos, or a location, damaging and slowing enemies within 200 radius of the impact. A carried Meepo shares damage with the carrier. The carried unit is dropped after 5 seconds",
+   "Cast Range: 250; Mana Cost: 40; Cooldown 25/20/15/10s",
+   "Throw Range: 600/700/800/900; Damage: 100/150/200/250",
+   "Movement Slow: 30/40/50/60%; Slow Duration: 1.5/2/2.5/3s"
+  ],
+  "claims": [
+   {
+    "claim_id": "c059",
+    "mechanism": "disarm",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c060",
+    "mechanism": "displace_other",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c061",
+    "mechanism": "aoe_damage",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c062",
+    "mechanism": "slow",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c063",
+    "mechanism": "damage_block",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "death_prophet_carrion_swarm",
+  "text_742": {
+   "desc_loc": "Sends a swarm of winged beasts to savage enemy units in front of Death Prophet.",
+   "notes_loc": [
+    "Can hit units up to 1110 range away.",
+    "Does not trigger spell block or spell reflect."
+   ],
+   "shard_loc": "Crypt Swarm has %AbilityCharges% charges with a %AbilityCooldown%s cooldown between uses. Crypt Swarm slows enemies by %slow_movement_pct%%% for %slow_duration%s."
+  },
+  "text_741f": {
+   "desc_loc": "Sends a swarm of winged beasts to savage enemy units in front of Death Prophet.",
+   "notes_loc": [
+    "Can hit units up to 1110 range away.",
+    "Does not trigger spell block or spell reflect."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "ability_has_shard",
+    "old": false,
+    "new": true
+   },
+   {
+    "field": "cooldowns",
+    "old": [
+     9,
+     8,
+     7,
+     6
+    ],
+    "new": [
+     10,
+     9,
+     8,
+     7
+    ]
+   },
+   {
+    "field": "AbilityChargeRestoreTime",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      10,
+      9,
+      8,
+      7
+     ]
+    }
+   },
+   {
+    "field": "AbilityCharges",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      2
+     ]
+    }
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      9,
+      8,
+      7,
+      6
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      10,
+      9,
+      8,
+      7
+     ],
+     "scepter": null,
+     "shard": [
+      1
+     ]
+    }
+   },
+   {
+    "field": "apply_debuff",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      1
+     ]
+    }
+   },
+   {
+    "field": "slow_duration",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      0.5
+     ]
+    }
+   },
+   {
+    "field": "slow_movement_pct",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      100
+     ]
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Cooldown increased from 9/8/7/6s to 10/9/8/7s",
+   "Now upgraded with Aghanim's Shard",
+   "Grants 2 charges with 1s cooldown between uses and 10/9/8/7s charge restoration time. Crypt Swarm slows movement of affected enemies by 100% for 0.5s"
+  ],
+  "claims": [
+   {
+    "claim_id": "c066",
+    "mechanism": "charges",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c067",
+    "mechanism": "slow",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "disruptor_kinetic_fence",
+  "text_742": {
+   "desc_loc": "After a short formation time, creates a wall out of kinetic energy that enemies cannot pass. Enemies touching the wall are struck by Electromagnetic Repulsion with %strike_knockback_pct_tooltip_only%%% reduced knockback."
+  },
+  "text_741f": {
+   "desc_loc": "After a short formation time, creates a wall out of kinetic energy that enemies cannot pass."
+  },
+  "changed_fields": [
+   {
+    "field": "cooldowns",
+    "old": [
+     14
+    ],
+    "new": [
+     12
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": [
+     70
+    ],
+    "new": [
+     50
+    ]
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      14
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      12
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": {
+     "base": [
+      70
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "formation_time",
+    "old": {
+     "base": [
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      0.5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "strike_knockback_pct_tooltip_only",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      50
+     ]
+    }
+   },
+   {
+    "field": "strike_on_touch",
+    "old": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      0
+     ]
+    },
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": [
+      1
+     ]
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Mana Cost decreased from 70 to 50",
+   "Cooldown decreased from 14s to 12s",
+   "Formation time decreased from 1s to 0.5s",
+   "Now causes enemies that touch the Fence to be struck by Electromagnetic Repulsion with 50% reduced knockback",
+   "Shares strikes restriction with Kinetic Field and also ignored by Disruptor's own Electromagnetic Repulsion"
+  ],
+  "claims": [
+   {
+    "claim_id": "c072",
+    "mechanism": "displace_other",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c073",
+    "mechanism": "aoe_damage",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "phoenix_supernova",
+  "text_742": {
+   "desc_loc": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun has pip health. Creeps and illusions deal 25% damage to the sun. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities. DISPEL TYPE: Strong Dispel",
+   "scepter_loc": "Increases Supernova's pip health and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together."
+  },
+  "text_741f": {
+   "desc_loc": "The Phoenix willingly ends its current life for the chance to be reborn. Transforms into a burning sun that scorches enemies in a huge area. The sun can be destroyed by attacks from enemy Heroes. After %abilityduration% seconds the sun explodes, stunning all nearby enemies while restoring Phoenix to full health and mana with refreshed abilities. DISPEL TYPE: Strong Dispel",
+   "scepter_loc": "Increases number of attacks to destroy Supernova and allows Phoenix to cast Supernova on an allied hero, bringing both into the sun to be reborn together."
+  },
+  "changed_fields": [
+   {
+    "field": "stun_duration",
+    "old": {
+     "base": [
+      1.6,
+      2,
+      2.4
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      1.8,
+      2.1,
+      2.4
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Stun Duration increased from 1.6/2/2.4s to 1.8/2.1/2.4s",
+   "The sun is no longer immune to damage from certain types of units"
+  ],
+  "claims": [
+   {
+    "claim_id": "c074",
+    "mechanism": "damage_block",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "pugna_oblivion_savant",
+  "text_742": {
+   "desc_loc": "Pugna can cast spells and use items while channeling. Pugna receives %tower_scale%%% spell amplification per destroyed tower.",
+   "scepter_loc": "Gains %AbilityCharges% charges with a %AbilityChargeRestoreTime% restore time. Pugna can cast any of his abilities an additional time, consuming an Oblivion Savant charge instead."
+  },
+  "text_741f": {
+   "desc_loc": "Pugna can cast spells and use items while channeling. Pugna receives %tower_scale%%% spell amplification per destroyed tower."
+  },
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": "2",
+    "new": "567347999932419"
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": false,
+    "new": true
+   },
+   {
+    "field": "AbilityChargeRestoreTime",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      20
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityCharges",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      2
+     ],
+     "shard": null
+    }
+   },
+   {
+    "field": "recast_min_cooldown",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": [
+      0.25
+     ],
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Now upgraded with Aghanim's Scepter",
+   "The ability gains charges. Pugna can cast any of his abilities an additional time while they're on cooldown, consuming an Oblivion Savant charge",
+   "Charges: 2. Charge Restore Time: 20s",
+   "Each ability has a 0.25s buffer before the recast is possible not to cast an ability twice by accident"
+  ],
+  "claims": [
+   {
+    "claim_id": "c075",
+    "mechanism": "charges",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "grimstroke_ink_creature",
+  "text_742": {
+   "desc_loc": "Summons a phantom that moves quickly towards the target, latching to it when she arrives. Once latched, the phantom damages and silences. If she survives the full latch duration she rends her victim for heavy damage and refreshes Phantom's Embrace's cooldown. Creeps and illusions deal 25% damage to the phantom.",
+   "notes_loc": [
+    "The phantom falls off if the target becomes invisible or spell immune.",
+    "The phantom will return if the target dies during the latch."
+   ]
+  },
+  "text_741f": {
+   "desc_loc": "Summons a phantom that moves quickly towards the target, latching to it when she arrives. Once latched, the phantom damages and silences. If she survives the full latch duration she rends her victim for heavy damage and refreshes Phantom's Embrace's cooldown. Hero attacks against the phantom count as 3 attacks each.",
+   "notes_loc": [
+    "The phantom falls off if the target becomes invisible or spell immune.",
+    "The phantom will return if the target dies during the latch."
+   ]
+  },
+  "changed_fields": [
+   {
+    "field": "destroy_attacks",
+    "old": {
+     "base": [
+      6,
+      6,
+      9,
+      9
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      2,
+      2,
+      3,
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "hero_attack_multiplier",
+    "old": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [],
+  "claims": [
+   {
+    "claim_id": "c076",
+    "mechanism": "damage_block",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "gyrocopter_homing_missile",
+  "text_742": {
+   "desc_loc": "Fires a homing missile to seek the targeted enemy unit. The missile gains speed over time, dealing damage and stunning when it impacts the target. Enemy units can destroy the missile before it reaches its target.",
+   "notes_loc": [
+    "Creeps and illusions deal 25% damage to the missile.",
+    "The crosshair effect is visible to allies only.",
+    "The missile will follow and hit invisible units."
+   ],
+   "shard_loc": "Homing Missiles now constantly fires the current level of Rocket Barrage in a %shard_radius% area of effect after %shard_delay% second of being cast. This Rocket Barrage prioritizes the Homing Missile target."
+  },
+  "text_741f": {
+   "desc_loc": "Fires a homing missile to seek the targeted enemy unit. The missile gains speed over time, dealing damage and stunning when it impacts the target. Enemy units can destroy the missile before it reaches its target.",
+   "notes_loc": [
+    "Towers do half damage to the missile.",
+    "The crosshair effect is visible to allies only.",
+    "The missile will follow and hit invisible units."
+   ],
+   "shard_loc": "Homing Missiles now constantly fires the current level of Rocket Barrage in a %shard_radius% area of effect after %shard_delay% second of being cast. This Rocket Barrage prioritizes the Homing Missile target."
+  },
+  "changed_fields": [
+   {
+    "field": "hero_damage",
+    "old": {
+     "base": [
+      2
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   },
+   {
+    "field": "hits_to_kill",
+    "old": null,
+    "new": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "tower_hits_to_kill_tooltip",
+    "old": {
+     "base": [
+      6
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": null
+   }
+  ],
+  "patch_notes_742": [
+   "The missile is no longer immune to damage from certain types of units"
+  ],
+  "claims": [
+   {
+    "claim_id": "c077",
+    "mechanism": "damage_block",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "beastmaster_summon_thunderhide",
+  "text_742": {
+   "desc_loc": "Beastmaster calls forth an Ancient Thunderhide to fight alongside him. The Thunderhide can Slam the ground to damage and slow nearby enemies, and beats its Thunderhide Drum as Beastmaster or Beastmaster's units attack, increasing their damage and max health.",
+   "notes_loc": [
+    "A newly summoned Thunderhide's Slam starts on a %thunderhide_slam_spawn_cooldown% second cooldown."
+   ]
+  },
+  "text_741f": {},
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": null,
+    "new": "8589934597"
+   },
+   {
+    "field": "target_team",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "target_type",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "flags",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "damage",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "immunity",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "dispellable",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "ability_has_shard",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "cast_ranges",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cast_points",
+    "old": null,
+    "new": [
+     0.3
+    ]
+   },
+   {
+    "field": "channel_times",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": null,
+    "new": [
+     60
+    ]
+   },
+   {
+    "field": "durations",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "damages",
+    "old": null,
+    "new": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": null,
+    "new": [
+     100
+    ]
+   },
+   {
+    "field": "health_costs",
+    "old": null,
+    "new": []
+   },
+   {
+    "field": "item_cost",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "AbilityCastPoint",
+    "old": null,
+    "new": {
+     "base": [
+      0.3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": null,
+    "new": {
+     "base": [
+      60
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": null,
+    "new": {
+     "base": [
+      100
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "thunderhide_base_damage",
+    "old": null,
+    "new": {
+     "base": [
+      90
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "thunderhide_base_max_health",
+    "old": null,
+    "new": {
+     "base": [
+      2200
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "thunderhide_base_movespeed",
+    "old": null,
+    "new": {
+     "base": [
+      355
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "thunderhide_base_xp_bounty",
+    "old": null,
+    "new": {
+     "base": [
+      124
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "thunderhide_bonus_damage",
+    "old": null,
+    "new": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "thunderhide_slam_spawn_cooldown",
+    "old": null,
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "thunderhide_total_damage_tooltip",
+    "old": null,
+    "new": {
+     "base": [
+      90
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "New ability granted with Aghanim's Scepter",
+   "Active. No target",
+   "Mana Cost: 100. Cooldown: 60s. Cast Point: 0.3s",
+   "Summons an Ancient Thunderhide to fight along with Beastmaster. It has a Slam ability that slows nearby enemies and a passive Thunderhide Drum Aura that increases max health and damage of Beastmaster and his controlled units. Ancient Thunderhide is considered a Creep-Hero and can not be resummoned if one is currently alive and took damage within the last 3 seconds",
+   "Thunderhide Health: 2200. Mana: 400",
+   "Armor: 7. Magic Resistance: 35%",
+   "Damage: 90. Movement Speed: 355. Attack Range: 525",
+   "XP Bounty: 124. Gold Bounty: 175",
+   "Slam: Active. No Target. Magical Damage. Doesn't pierce Debuff Immunity. Dispellable with any Dispels",
+   "Mana Cost: 50. Cooldown: 15s. Cast Point: 0.3s",
+   "The Ancient Thunderhide slams his mammoth foot against the ground 3 times. Shockwaves decrease with each slam, damage nearby enemies by 175 damage and slow their movement by 50% and attack by 50. Duration is 3s for heroes and 4s for other units. Radius: 550 - 100 with each slam. Slam interval: 0.3s",
+   "This ability starts on a 5s cooldown when Thunderhide is summoned",
+   "Thunderhide Drum: Passive. Aura. Affects the owner and their controlled units only. Cannot be dispelled",
+   "Whenever Ancient Thunderhide, its owner or other unit they control within the aura make an attack, the ability gains a stack. Each stack increases the max health and base damage of all affected units. If no attacks are made, Ancient Thunderhide dies or a unit leaves the aura radius, stacks are gradually lost, 1 per second. Also grants 1 stack per Slam's wave that hit an enemy hero",
+   "Aura Radius: 1200. Max Stacks: 20. Max HP and Base Damage per stack: 1%",
+   "The stack-losing timer starts immediately after the last attack was made",
+   "Hitting multiple heroes with a single Slam wave still grants only 1 stack"
+  ],
+  "claims": [
+   {
+    "claim_id": "c080",
+    "mechanism": "summons",
+    "condition": "scepter_upgrade"
+   },
+   {
+    "claim_id": "c081",
+    "mechanism": "slow",
+    "condition": "scepter_upgrade"
+   },
+   {
+    "claim_id": "c082",
+    "mechanism": "aoe_damage",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "chaos_knight_armageddon",
+  "text_742": {
+   "desc_loc": "For each second Chaos Knight keeps moving without stopping or attacking, Armageddon gains bonus movement speed. The bonus drains away while stopping, and lost when attacking. While at least one of Chaos Knight's phantasms is alive, Ahead, Armageddon can be activated to charge over terrain, building up to a max speed before releasing. Chaos Knight and the illusions will attack units they charge over.",
+   "notes_loc": [
+    "Being stunned, hexed, feared, taunted or rooted during the windup cancels the charge.",
+    "Ahead, Armageddon is only available when at least 1 of Chaos Knight's illusions created with the active cast of Phantasm is alive.",
+    "Activation of Ahead, Armageddon will gather all of Chaos Knight's illusions in %illusion_radius% radius regardless of how they were created."
+   ]
+  },
+  "text_741f": {},
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": null,
+    "new": "525328"
+   },
+   {
+    "field": "target_team",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "target_type",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "flags",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "damage",
+    "old": null,
+    "new": 1
+   },
+   {
+    "field": "immunity",
+    "old": null,
+    "new": 3
+   },
+   {
+    "field": "dispellable",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "ability_has_shard",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "cast_ranges",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cast_points",
+    "old": null,
+    "new": [
+     0.4
+    ]
+   },
+   {
+    "field": "channel_times",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": null,
+    "new": [
+     30
+    ]
+   },
+   {
+    "field": "durations",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "damages",
+    "old": null,
+    "new": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": null,
+    "new": [
+     50
+    ]
+   },
+   {
+    "field": "health_costs",
+    "old": null,
+    "new": []
+   },
+   {
+    "field": "item_cost",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "AbilityCastPoint",
+    "old": null,
+    "new": {
+     "base": [
+      0.4
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": null,
+    "new": {
+     "base": [
+      30
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": null,
+    "new": {
+     "base": [
+      50
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "attack_while_charging",
+    "old": null,
+    "new": {
+     "base": [
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "charge_accel_time",
+    "old": null,
+    "new": {
+     "base": [
+      0.5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "charge_decel_time",
+    "old": null,
+    "new": {
+     "base": [
+      0.5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "charge_speed_multiplier",
+    "old": null,
+    "new": {
+     "base": [
+      2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "current_max_charge_speed",
+    "old": null,
+    "new": {
+     "base": [
+      0
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "drain_rate_multiplier",
+    "old": null,
+    "new": {
+     "base": [
+      4
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "formation_jitter",
+    "old": null,
+    "new": {
+     "base": [
+      60
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "formation_spacing",
+    "old": null,
+    "new": {
+     "base": [
+      130
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "formation_width",
+    "old": null,
+    "new": {
+     "base": [
+      100
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "hit_radius",
+    "old": null,
+    "new": {
+     "base": [
+      150
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "illusion_radius",
+    "old": null,
+    "new": {
+     "base": [
+      1300
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "jump_distance",
+    "old": null,
+    "new": {
+     "base": [
+      500
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "jump_height",
+    "old": null,
+    "new": {
+     "base": [
+      160
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "max_bonus_speed",
+    "old": null,
+    "new": {
+     "base": [
+      20
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "max_charge_time",
+    "old": null,
+    "new": {
+     "base": [
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "run_animation_rate",
+    "old": null,
+    "new": {
+     "base": [
+      1.8
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "speed_per_second",
+    "old": null,
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "think_interval",
+    "old": null,
+    "new": {
+     "base": [
+      0.1
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "turn_rate",
+    "old": null,
+    "new": {
+     "base": [
+      25
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "windup_turn_rate",
+    "old": null,
+    "new": {
+     "base": [
+      120
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "New innate ability",
+   "Has Passive and Active components",
+   "Passive. Can be Broken",
+   "Chaos Knight gains 5 move speed for each subsequent second he's been moving without stopping, up to a maximum bonus of 20 + 2 per hero level. Stopping makes Chaos Knight lose speed 4x faster (20 speed per second). Attacking removes the entire bonus",
+   "Active. Point-targeted. Available only when at least 1 Chaos Knight's illusion created with active cast of Phantasm is alive",
+   "Global Cast Range. Mana Cost: 50. Cooldown: 30s. Cast Point: 0.4s",
+   "Chaos Knight prepares for up to 1s to charge towards a pointed location. The longer the preparation is, the bigger movement speed bonus is. After the preparation all Chaos Knight illusions within 1300 range are teleported to him and the charge begins. Chaos Knight and his illusions run at high speed towards the targeted point, going over terrain, destroying trees and hitting enemies on their way. Chaos Knight can slightly turn during the run, and his illusions will follow. Despite being able to turn, the charge will last as long as you'd need to reach the targeted location. The charge will stop if max duration is reached, if Chaos Knight manually cancels it, or casts any other ability. Chaos Knight keeps gained speed for 0.5s after ending the charge",
+   "Max Charge Speed is 2x (Chaos Knight's Movespeed with Max Bonus Speed). Reached after a full 1s preparation",
+   "The preparation can be stopped earlier with Stop/Hold commands to start the charge with a smaller bonus",
+   "Hit radius: 150 (affected by AoE bonuses). Cannot attack buildings",
+   "Chaos Knight gains/loses the max speed over 0.5s as the charge starts/ends",
+   "Only illusions under Chaos Knight's control are charging. This includes Phantasms of teammates (created with Aghanim's Scepter), Illusion Rune, and Manta Style ones",
+   "Cannot be cast while rooted. The charge is cancelled if Chaos Knight is rooted, stunned, hexed, feared or taunted during the preparation or mid-run. Illusions will also stop the charge if the real Chaos Knight is stopped"
+  ],
+  "claims": [
+   {
+    "claim_id": "c083",
+    "mechanism": "haste",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c084",
+    "mechanism": "self_mobility",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c085",
+    "mechanism": "terrain_walk",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c086",
+    "mechanism": "displace_other",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c087",
+    "mechanism": "aoe_damage",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "dazzle_through_the_realm",
+  "text_742": {
+   "desc_loc": "Only active during Nothl Projection. Dazzle pulls his body through the Nothl Realm to his spirit. Nothl Projection ends upon return. Cannot be cast if Dazzle's body is rooted or leashed."
+  },
+  "text_741f": {},
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": null,
+    "new": "8589936709"
+   },
+   {
+    "field": "target_team",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "target_type",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "flags",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "damage",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "immunity",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "dispellable",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "ability_has_shard",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "cast_ranges",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cast_points",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "channel_times",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "durations",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "damages",
+    "old": null,
+    "new": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "health_costs",
+    "old": null,
+    "new": []
+   },
+   {
+    "field": "item_cost",
+    "old": null,
+    "new": 0
+   }
+  ],
+  "patch_notes_742": [
+   "New Nothl Projection Sub-Ability granted with Aghanim's Shard",
+   "Active. No target. No Mana Cost. No Cooldown. No Cast Point, instant",
+   "Dazzle pulls his body through the Nothl Realm to his spirit and ends Nothl Projection as soon as they collide",
+   "The body travels at the speed of 500",
+   "Cannot be cast if the body is rooted or leashed",
+   "Can be cast if the body is stunned, but Dazzle will also be stunned for the remainder of the duration"
+  ],
+  "claims": [
+   {
+    "claim_id": "c088",
+    "mechanism": "self_mobility",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "lycan_pack_hunter",
+  "text_742": {
+   "desc_loc": "Lycan and units under his control mark units on attack for %mark_duration% seconds. When Lycan or a unit under his control attacks a marked unit, it deals bonus damage equal to %bonus_damage%%% of its attack damage per stack, and heals the attacker for %lifesteal%%% of its attack damage per stack.",
+   "notes_loc": [
+    "Each unit can apply 1 mark per enemy.",
+    "Marked units are revealed through fog of war and invisibility.",
+    "Does not pierce Debuff Immunity."
+   ]
+  },
+  "text_741f": {},
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": null,
+    "new": "4398046511106"
+   },
+   {
+    "field": "target_team",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "target_type",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "flags",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "damage",
+    "old": null,
+    "new": 1
+   },
+   {
+    "field": "immunity",
+    "old": null,
+    "new": 4
+   },
+   {
+    "field": "dispellable",
+    "old": null,
+    "new": 2
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "ability_has_shard",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "cast_ranges",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cast_points",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "channel_times",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "durations",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "damages",
+    "old": null,
+    "new": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "health_costs",
+    "old": null,
+    "new": []
+   },
+   {
+    "field": "item_cost",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "bonus_damage",
+    "old": null,
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "lifesteal",
+    "old": null,
+    "new": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "mark_duration",
+    "old": null,
+    "new": {
+     "base": [
+      6
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "New Innate Ability",
+   "Passive. Breakable. Affects Lycan and his controlled units. Physical Damage. Doesn't pierce Debuff Immunity. Cannot be dispelled",
+   "Lycan and units under his control mark enemies on attack, revealing them even if invisible or in fog of war, and have increased damage and lifesteal against marked units. Effect stacks, but each unit may apply only 1 mark per enemy",
+   "Mark Duration: 6s; Lifesteal: 3% + 1% per 3 levels; Bonus Damage: 5%"
+  ],
+  "claims": [
+   {
+    "claim_id": "c089",
+    "mechanism": "attack_modifier",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c090",
+    "mechanism": "lifesteal",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c091",
+    "mechanism": "healing",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c092",
+    "mechanism": "reveal",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c093",
+    "mechanism": "grant_vision",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "meepo_fling_release",
+  "text_742": {
+   "desc_loc": "Throws the Meepo or creep carried by Divided We Stand at the target, dealing damage in a %impact_radius% radius and slowing on impact. If the carried target is a Meepo, it shares damage with the carrier. The carried target will be dropped after %hold_duration% seconds.",
+   "notes_loc": [
+    "Does not trigger spell reflect."
+   ]
+  },
+  "text_741f": {},
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": null,
+    "new": "8589934713"
+   },
+   {
+    "field": "target_team",
+    "old": null,
+    "new": 3
+   },
+   {
+    "field": "target_type",
+    "old": null,
+    "new": 19
+   },
+   {
+    "field": "flags",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "damage",
+    "old": null,
+    "new": 2
+   },
+   {
+    "field": "immunity",
+    "old": null,
+    "new": 4
+   },
+   {
+    "field": "dispellable",
+    "old": null,
+    "new": 2
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "ability_has_shard",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "cast_ranges",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cast_points",
+    "old": null,
+    "new": [
+     0.2
+    ]
+   },
+   {
+    "field": "channel_times",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "durations",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "damages",
+    "old": null,
+    "new": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "health_costs",
+    "old": null,
+    "new": []
+   },
+   {
+    "field": "item_cost",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "AbilityCastPoint",
+    "old": null,
+    "new": {
+     "base": [
+      0.2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "fling_damage",
+    "old": null,
+    "new": {
+     "base": [
+      100,
+      150,
+      200,
+      250
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "fling_movespeed",
+    "old": null,
+    "new": {
+     "base": [
+      1000
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "fling_slow_duration",
+    "old": null,
+    "new": {
+     "base": [
+      1.5,
+      2,
+      2.5,
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "hold_duration",
+    "old": null,
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "impact_radius",
+    "old": null,
+    "new": {
+     "base": [
+      200
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "movement_slow",
+    "old": null,
+    "new": {
+     "base": [
+      -30,
+      -40,
+      -50,
+      -60
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "range",
+    "old": null,
+    "new": {
+     "base": [
+      600,
+      700,
+      800,
+      900
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "vision_radius",
+    "old": null,
+    "new": {
+     "base": [
+      300
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [],
+  "claims": [
+   {
+    "claim_id": "c094",
+    "mechanism": "displace_other",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c095",
+    "mechanism": "aoe_damage",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c096",
+    "mechanism": "slow",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c097",
+    "mechanism": "damage_block",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c098",
+    "mechanism": "grant_vision",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "nyx_assassin_scarab_metabolism",
+  "text_742": {
+   "desc_loc": "After %out_of_combat_time%s without taking damage, Nyx Assassin gains bonus movement speed and regenerates based on his max health and max mana per second."
+  },
+  "text_741f": {},
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": null,
+    "new": "562949953421315"
+   },
+   {
+    "field": "target_team",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "target_type",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "flags",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "damage",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "immunity",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "dispellable",
+    "old": null,
+    "new": 3
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "ability_has_shard",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "cast_ranges",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cast_points",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "channel_times",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "durations",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "damages",
+    "old": null,
+    "new": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "health_costs",
+    "old": null,
+    "new": []
+   },
+   {
+    "field": "item_cost",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "bonus_movement_speed",
+    "old": null,
+    "new": {
+     "base": [
+      5
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "breaks_on_damage",
+    "old": null,
+    "new": {
+     "base": [
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "health_regen_pct",
+    "old": null,
+    "new": {
+     "base": [
+      0.35
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "mana_regen_pct",
+    "old": null,
+    "new": {
+     "base": [
+      0.35
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "multiplier",
+    "old": null,
+    "new": {
+     "base": [
+      1
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "out_of_combat_time",
+    "old": null,
+    "new": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "New Innate Ability",
+   "Passive. Affects the wielder only. Breakable",
+   "After 3s without taking damage, Nyx Assassin gains bonus movement speed, and regenerates portions of max health and mana per second",
+   "Movement Speed: 5 + 1 per hero level",
+   "Max Health Regeneration: 0.35%",
+   "Max Mana Regeneration: 0.35%"
+  ],
+  "claims": [
+   {
+    "claim_id": "c099",
+    "mechanism": "haste",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c100",
+    "mechanism": "healing",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c101",
+    "mechanism": "mana_gain",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "undying_bite",
+  "text_742": {
+   "desc_loc": "Undying sinks his teeth into his target, dealing his attack damage plus bonus physical damage and healing himself for the amount dealt. Biting a hero turns them into a zombie for %zombie_duration%s: becoming melee, silenced, %zombie_slow%%% slowed, and dealing %zombie_damage_reduction%%% less damage. Bitten creeps die and become a controllable zombie for %creep_zombie_duration%s.",
+   "notes_loc": [
+    "Bite has %bonus_attack_range% bonus attack range.",
+    "Bite cannot miss."
+   ]
+  },
+  "text_741f": {},
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": null,
+    "new": "8590065673"
+   },
+   {
+    "field": "target_team",
+    "old": null,
+    "new": 2
+   },
+   {
+    "field": "target_type",
+    "old": null,
+    "new": 19
+   },
+   {
+    "field": "flags",
+    "old": null,
+    "new": 16
+   },
+   {
+    "field": "damage",
+    "old": null,
+    "new": 1
+   },
+   {
+    "field": "immunity",
+    "old": null,
+    "new": 4
+   },
+   {
+    "field": "dispellable",
+    "old": null,
+    "new": 2
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "ability_has_shard",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "cast_ranges",
+    "old": null,
+    "new": [
+     400
+    ]
+   },
+   {
+    "field": "cast_points",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "channel_times",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": null,
+    "new": [
+     18
+    ]
+   },
+   {
+    "field": "durations",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "damages",
+    "old": null,
+    "new": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": null,
+    "new": [
+     70
+    ]
+   },
+   {
+    "field": "health_costs",
+    "old": null,
+    "new": []
+   },
+   {
+    "field": "item_cost",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "AbilityCastRange",
+    "old": null,
+    "new": {
+     "base": [
+      400
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": null,
+    "new": {
+     "base": [
+      18
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": null,
+    "new": {
+     "base": [
+      70
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "bonus_attack_range",
+    "old": null,
+    "new": {
+     "base": [
+      250
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "creep_zombie_duration",
+    "old": null,
+    "new": {
+     "base": [
+      20
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "damage",
+    "old": null,
+    "new": {
+     "base": [
+      250
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "lunge_distance",
+    "old": null,
+    "new": {
+     "base": [
+      250
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "lunge_duration",
+    "old": null,
+    "new": {
+     "base": [
+      0.2
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "miss_distance",
+    "old": null,
+    "new": {
+     "base": [
+      150
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "zombie_bonus_damage",
+    "old": null,
+    "new": {
+     "base": [],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "zombie_damage_reduction",
+    "old": null,
+    "new": {
+     "base": [
+      40
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "zombie_duration",
+    "old": null,
+    "new": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "zombie_health",
+    "old": null,
+    "new": {
+     "base": [
+      3
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "zombie_slow",
+    "old": null,
+    "new": {
+     "base": [
+      25
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "New Ability granted by Aghanim's Shard",
+   "Active. Physical damage. Doesn't pierce Debuff Immunity. Dispellable with Strong Dispel only.",
+   "Cast Range: Attack Range + 250 (400 total). Mana Cost: 70. Cooldown: 18s",
+   "Undying lunges at the target and sinks his teeth in it, landing an attack with damage increased by 250 and healing Undying for the damage dealt. Biting a hero will turn them into a silenced melee zombie that is slowed by 25% and deals 40% less damage for 3s. Biting a non-ancient creep will instantly kill them, summoning a fully controllable zombie in their wake for 20s",
+   "The ability goes on cooldown and spends mana the moment the lunge begins",
+   "The controllable zombie has 3 pips of health. Other stats are shared with Tombstone zombies, including Deathlust ability and damage upgrade from level 15 talent"
+  ],
+  "claims": [
+   {
+    "claim_id": "c102",
+    "mechanism": "lifesteal",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c103",
+    "mechanism": "healing",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c104",
+    "mechanism": "silence",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c105",
+    "mechanism": "slow",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c106",
+    "mechanism": "summons",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c107",
+    "mechanism": "pierce_evasion",
+    "condition": "shard_upgrade"
+   },
+   {
+    "claim_id": "c108",
+    "mechanism": "self_mobility",
+    "condition": "shard_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "weaver_time_lapse_ally",
+  "text_742": {
+   "desc_loc": "Weaver warps an allied Hero backward to whatever position it was in five seconds earlier - restoring the HP and mana it had at that time. Shares a cooldown with Time Lapse. DISPEL TYPE: Strong Dispel",
+   "notes_loc": [
+    "Removes most negative buffs from the target.",
+    "Disjoints projectiles.",
+    "Level matches Time Lapse."
+   ]
+  },
+  "text_741f": {},
+  "changed_fields": [
+   {
+    "field": "behavior",
+    "old": null,
+    "new": "8757968969"
+   },
+   {
+    "field": "target_team",
+    "old": null,
+    "new": 1
+   },
+   {
+    "field": "target_type",
+    "old": null,
+    "new": 1
+   },
+   {
+    "field": "flags",
+    "old": null,
+    "new": 131072
+   },
+   {
+    "field": "damage",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "immunity",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "dispellable",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "ability_has_scepter",
+    "old": null,
+    "new": true
+   },
+   {
+    "field": "ability_has_shard",
+    "old": null,
+    "new": false
+   },
+   {
+    "field": "cast_ranges",
+    "old": null,
+    "new": [
+     500
+    ]
+   },
+   {
+    "field": "cast_points",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "channel_times",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "cooldowns",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "durations",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "damages",
+    "old": null,
+    "new": [
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": null,
+    "new": [
+     0
+    ]
+   },
+   {
+    "field": "health_costs",
+    "old": null,
+    "new": []
+   },
+   {
+    "field": "item_cost",
+    "old": null,
+    "new": 0
+   },
+   {
+    "field": "AbilityCastRange",
+    "old": null,
+    "new": {
+     "base": [
+      500
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [],
+  "claims": [
+   {
+    "claim_id": "c109",
+    "mechanism": "displace_other",
+    "condition": "scepter_upgrade"
+   },
+   {
+    "claim_id": "c110",
+    "mechanism": "applies_strong_dispel",
+    "condition": "scepter_upgrade"
+   },
+   {
+    "claim_id": "c111",
+    "mechanism": "projectile_dodge",
+    "condition": "scepter_upgrade"
+   }
+  ]
+ },
+ {
+  "subject": "clinkz_strafe",
+  "text_742": {
+   "desc_loc": "Clinkz gains attack speed and has bonus attack range. Any current Skeleton Archers within a %strafe_skeleton_radius% radius of Clinkz also gain bonus attack range and %archer_attack_speed_pct%%% of the attack speed bonus. Casting Strafe does not break Skeleton Walk invisibility."
+  },
+  "text_741f": {
+   "desc_loc": "Clinkz gains attack speed and has bonus attack range. Any current Skeleton Archers within a %strafe_skeleton_radius% radius of Clinkz also gain bonus attack range and %archer_attack_speed_pct%%% of the attack speed bonus. Casting Strafe does not break Skeleton Walk invisibility."
+  },
+  "changed_fields": [
+   {
+    "field": "cooldowns",
+    "old": [
+     30,
+     25,
+     20,
+     15
+    ],
+    "new": [
+     24,
+     21,
+     18,
+     15
+    ]
+   },
+   {
+    "field": "mana_costs",
+    "old": [
+     60,
+     70,
+     80,
+     90
+    ],
+    "new": [
+     55,
+     60,
+     65,
+     70
+    ]
+   },
+   {
+    "field": "AbilityCooldown",
+    "old": {
+     "base": [
+      30,
+      25,
+      20,
+      15
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      24,
+      21,
+      18,
+      15
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": {
+     "base": [
+      60,
+      70,
+      80,
+      90
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      55,
+      60,
+      65,
+      70
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Mana Cost decreased from 60/70/80/90 to 55/60/65/70",
+   "Cooldown decreased from 30/25/20/15s to 24/21/18/15s"
+  ],
+  "claims": [
+   {
+    "claim_id": "c112",
+    "mechanism": "blind",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c113",
+    "mechanism": "attack_modifier",
+    "condition": "base"
+   }
+  ]
+ },
+ {
+  "subject": "pugna_nether_ward",
+  "text_742": {
+   "desc_loc": "Pugna places a Nether Ward at the target location. The ward will fire at any enemy hero who casts a spell dealing base damage plus the damage multiplier of the mana spent by the enemy hero. Only one Nether Ward can be active at a time; casting a new one destroys the previous ward.",
+   "notes_loc": [
+    "Nether Ward deals damage before the actual spell is cast, so if the caster dies the spell will have no effect.",
+    "Nether Ward can be decrepified.",
+    "Illusions and creeps deal 25% damage to Nether Ward."
+   ],
+   "shard_loc": "Increases cast range to %AbilityCastRange%."
+  },
+  "text_741f": {
+   "desc_loc": "Pugna places a Nether Ward at the target location. The ward will fire at any enemy hero who casts a spell dealing base damage plus the damage multiplier of the mana spent by the enemy hero.",
+   "notes_loc": [
+    "Nether Ward deals damage before the actual spell is cast, so if the caster dies the spell will have no effect.",
+    "Nether Ward can be decrepified.",
+    "Illusions and creeps deal 25% damage to Nether Ward."
+   ],
+   "shard_loc": "Increases cast range to %AbilityCastRange%."
+  },
+  "changed_fields": [
+   {
+    "field": "mana_costs",
+    "old": [
+     80
+    ],
+    "new": [
+     75,
+     100,
+     125,
+     150
+    ]
+   },
+   {
+    "field": "AbilityManaCost",
+    "old": {
+     "base": [
+      80
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      75,
+      100,
+      125,
+      150
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   },
+   {
+    "field": "attacks_to_destroy",
+    "old": {
+     "base": [
+      4
+     ],
+     "scepter": null,
+     "shard": null
+    },
+    "new": {
+     "base": [
+      3,
+      4,
+      5,
+      6
+     ],
+     "scepter": null,
+     "shard": null
+    }
+   }
+  ],
+  "patch_notes_742": [
+   "Mana Cost rescaled from 80 to 75/100/125/150",
+   "Pip Health rescaled from 4 to 3/4/5/6",
+   "Ward's radius can now be seen by selecting it",
+   "Casting Nether Ward with an existing Ward now destroys it before creating the new one"
+  ],
+  "claims": [
+   {
+    "claim_id": "c114",
+    "mechanism": "aoe_damage",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c115",
+    "mechanism": "healing",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c116",
+    "mechanism": "lifesteal",
+    "condition": "base"
+   },
+   {
+    "claim_id": "c117",
+    "mechanism": "mana_gain",
+    "condition": "base"
+   }
+  ]
+ }
+]

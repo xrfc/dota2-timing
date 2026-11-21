@@ -81,6 +81,14 @@ def _blocks(snapshot):
     blocks = {}
     for path in files:
         tree = game.parse_keyvalues(path.read_text(encoding="utf-8", errors="replace"))
+        if "DOTAHeroes" in tree:
+            for hero, definition in tree["DOTAHeroes"].items():
+                if not isinstance(definition, dict):
+                    continue
+                blocks[hero] = {k: v for k, v in definition.items() if k != "AbilityDefinitions"}
+                for ability, body in definition.get("AbilityDefinitions", {}).items():
+                    blocks[f"{hero}/{ability}"] = body
+            continue
         root = tree.get("DOTAAbilities", tree)
         for name, body in root.items():
             if isinstance(body, dict):
@@ -138,7 +146,10 @@ def _changed_subjects(hero_diff, item_diff_doc, game_diff_doc, hero_abilities=No
         add(change["subject"], f"itemdata: {change['change']} {change.get('fields', [])}")
     for change in (game_diff_doc or {}).get("changes", []):
         name = change["block"]
-        subject = name[5:] if name.startswith("item_") else name
+        if name.startswith("npc_dota_hero_") and "/" not in name:
+            manual.append({"hero": name, "reason": f"game files: {change}"})
+            continue
+        subject = name.split("/")[-1].removeprefix("item_")
         add(subject, f"game files: {change['change']} {change.get('keys', [])}")
     return reasons, manual
 

@@ -1,6 +1,11 @@
 # 文档索引
 
-**先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-08）。
+[行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
+
+
+[一号位兵线意识复盘与取样口径](lane-decision-review.md)
+
+**先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-17）。
 
 **从这里开始**：[开发计划](development-plan-2026-10-30.md)（唯一进度：§7）· [架构](architecture.md) · [决策记录](decisions/README.md) · [变更记录](../CHANGELOG.md)
 
@@ -22,6 +27,7 @@
 | [架构](architecture.md) | **当前架构入口**：层×线、模块归属、依赖规则、迁移策略 |
 | [路线B设计](awareness-track.md) | 差异化分析、三类判断、四层设计、B0–B5、数据工程难点 |
 | [决策记录](decisions/README.md) | U1起每条用户决定 |
+| [路线变更总览](route-changes.md) | 一页看清方向改过哪几次、为什么改、被替代的是什么（每行指向决策记录） |
 | [长期产品目标](long-term-coach-goals.md) | 只做赛前/赛后、不做实时辅助；复盘信息边界原则（历史依据，仍有效） |
 | [单模块维护](modular-maintenance.md) | 各层API细节、10/17–10/28结构整理记录（入口职责已移到架构页） |
 | [技术选型与优化路线](long-term-roadmap.md) | 历史技术参考 |
@@ -35,7 +41,9 @@
 - [机制知识框架](knowledge-framework.md)：事实层→规则层→推导层设计（U26/U27）
 - [MK-T3机制事实：接口、复现与抽查](mechanics-facts.md)
 - [解析器v3设计](parser-v3-design.md)：从demo补全每秒状态（技能和物品冷却、单位状态原始掩码、战斗属性、地图大局、兵线），已实现（U130，2026-11-09）
-- [B0“被抓”规则](b0-gank-rules.md)：U115、U116、U131写成的可执行规则——流程、保命手段清单、三个阈值、第一轮结果（162场），待用户抽查实例后冻结（2026-11-09）
+- [对游戏的理解还缺什么](game-understanding-gaps.md)：上网查加自己数据核对后的缺口清单——视野、定时目标、肉山换坑、野点升级、传送和扫描等，按影响排序（2026-11-13，只是清单）
+- [地图知识设计（草案）](map-knowledge-design.md)：知识库现在只有塔、营地等点位；设计有名字的区域、地标和读取接口，列出其他模块要改什么、哪些要用户决定（U145，2026-11-12，未实现）
+- [B0“被抓”规则](b0-gank-rules.md)：U115、U116、U131写成的可执行规则——流程、保命手段清单、三个阈值、第一轮结果（162场），2D回放抽查页和开雾指标（§9，U136），待用户抽查实例后冻结（2026-11-10）
 - [自动采集demo](demo-collection.md)：自己启动的全量demo采集脚本，怎么跑、看进度、续跑、补采（U128、U129）
 - [知识读取接口](knowledge-api.md)：路线A、B读取机制知识的统一方式和固定含义（U124）
 - [M2b主宰针对装：触发条件与数据验证](m2b-triggers.md)：用户定的触发条件（U123）和在M1训练集上的验证（M2b-T6d、T8）
@@ -67,6 +75,17 @@
 ### 3.1 当前里程碑产物（M1–M2b）
 
 - [M1数据卡：多英雄比赛级数据表](m1-data-card.md)
+- [模型卡：死亡风险基线和死亡代价（路线B第一批模型）](b2-death-risk-baseline.md)
+- [计划§7的历史记录（2026-11-16之前）](plan-history.md)
+- [外部评估（2026-11-17）与处理](external-review-2026-11-17.md)
+- [审查与修复：死亡风险模型（2026-11-18）](review-2026-11-18-death-risk.md)
+- [7.42补丁预案](patch-7.42-plan.md)
+- [用Workshop Tools导出7.42地图数据](map-workshop-export.md)：用户自己导出地图数据的步骤（上游未更新时用）
+- [交接：7.42知识库更新与视野检验（2026-11-20）](handoff/patch-7.42-and-vision-2026-11-20.md)：交给Codex继续开发的入口
+- [7.42影响清单](patch-7.42-impact.md)：7.42对机制知识库的影响，需要用户裁定的部分和AI已定的部分（2026-11-20）
+- [路线B任务契约草稿：预测“接下来会不会死”（U160）](b2-death-risk-contract.md)
+- [重训前清单：死亡风险模型（U170，会改表／只改评估／只改解释）](b2-retrain-checklist.md)
+- [demo数据卡：多英雄demo采集的覆盖（段位、时长、1/5号位英雄）](demo-data-card.md)
 - [M2设计](m2-design.md) · [M2结果](m2-results.md) · [M2模型卡](m2-model-card.md)（出装时间预测，已结案U13）
 - [M2b设计](m2b-design.md) · [M2b结果](m2b-results.md) · [M2b模型卡](m2b-model-card.md)（赛前针对装，暂停于T6c）
 - [英雄特性初步分析（U23）](hero-traits-analysis.md)

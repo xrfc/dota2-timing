@@ -64,10 +64,11 @@ ACTIVE_HASTE_ITEMS = {
     "mask_of_madness",
     "phase_boots",
     "silver_edge",
-    "smoke_of_deceit",
     "solar_crest",
     "swift_blink",
 }
+# U136: Smoke of Deceit is what gankers use, not a way out for the victim.
+NOT_SAVES = {"item_smoke_of_deceit": "U136"}
 TELEPORT_ITEMS = {"item_tpscroll", "item_travel_boots", "item_travel_boots_2"}
 TEAM_SAFELANE = {2: "bot", 3: "top"}  # Radiant bottom, Dire top
 LANE_SECONDS = (60, 600)
@@ -91,6 +92,8 @@ def build_save_means(kb):
                 if mechanism == "haste" and subject not in ACTIVE_HASTE_ITEMS:
                     continue
                 name = f"item_{subject}"
+            if name in NOT_SAVES:
+                continue
             entry = means.setdefault(
                 name,
                 {
@@ -107,7 +110,8 @@ def build_save_means(kb):
                 entry["groups"].append(group)
     return {
         "schema": SAVE_MEANS_SCHEMA,
-        "decision": "U131",
+        "decision": "U131, U136",
+        "not_saves": NOT_SAVES,
         "knowledge": kb.version,
         "mechanisms": SAVE_MECHANISMS,
         "excluded": EXCLUDED_MECHANISMS,
