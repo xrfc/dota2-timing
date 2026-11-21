@@ -809,3 +809,5 @@
 历史代码基线：[b6048eb](https://github.com/xrfc/dota2-item-timing/commit/b6048eba086ede0b2334af612b8bcec9dbb7a042)。
 
 提供本地 Gem 回放导入、压缩输入支持、原始/规范 JSON、SQLite 缓存索引，以及 OpenDota/JSON 购买事实分析和 HTML 报告。该阶段的设计、审查记录已在当前文档中按“历史证据/当前状态”重新归类。
+
+2026-11-21：修复回放缓存的解压摘要校验与跨补丁续采计数；在 10 月 22 日归档索引补齐文档导航。

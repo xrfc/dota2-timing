@@ -84,3 +84,14 @@ def test_every_maintained_doc_is_indexed():
         if path.parent == decisions and path.name != "README.md" and path not in decision_index
     ]
     assert not unlisted, "List these in docs/decisions/README.md:\n" + "\n".join(unlisted)
+
+
+def test_october_archive_navigation_resolves_while_original_bytes_are_preserved():
+    import hashlib
+    import json
+
+    archive = ROOT / "docs/archive/2026-10-22"
+    original = (archive / "README.md").read_bytes()
+    expected = json.loads((archive / "manifest.json").read_text())["README.md"]
+    assert hashlib.sha256(original).hexdigest() == expected
+    assert not list(broken_links(archive / "INDEX.md"))
