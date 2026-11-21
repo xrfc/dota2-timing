@@ -1,5 +1,7 @@
 # 项目架构：共享底座＋两条产品线（2026-11-01）
 
+路线 B 的行动比较、因素表和逐段复核格式见[决策总架构](decision-framework.md)。
+
 本页是**当前唯一的架构入口**，替代[模块维护](modular-maintenance.md)的入口职责（该页保留各层API细节与历史验收）。机器可读的归属表在[`src/dota_items/architecture.py`](../src/dota_items/architecture.py)，由`tests/test_architecture.py`强制执行。执行顺序和进度只看[开发计划](development-plan-2026-10-30.md)§7。
 
 **决定与建议的区分**：分成两条线、把意识决策作为差异化方向，是用户的决定（[U37](decisions/2026-11-01-two-tracks.md)）。下文的模块归属、依赖规则、迁移策略和目录约定是助手的设计，用户没有逐项确认，可以修改。
@@ -55,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 25 / 3 | 38 |
+| `awareness` | 路线B 意识决策 | 26 / 3 | 39 |
 <!-- /track-table -->
 
 依赖规则：

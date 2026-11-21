@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>带线决策复盘</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><h1>带线决策复盘</h1><p>7.41f · 一号位 · 己方视角</p></div>
+  <label class="case-picker"><span>选择片段</span> <select id="cases"></select></label>
+</header>
+
+<main class="workbench">
+  <section class="panel map-panel" aria-labelledby="title">
+    <div class="case-head">
+      <h2 id="title">加载片段中…</h2>
+      <p id="wave"></p>
+    </div>
+    <div class="controls">
+      <label class="frame-pick">查看时刻 <select id="frames"></select></label>
+      <label class="toggle"><input type="checkbox" id="vision" checked> 显示己方估算视野（青色边界）</label>
+    </div>
+    <div class="map-frame">
+      <canvas width="600" height="565" id="map" aria-label="己方英雄和当时可见敌人的位置"></canvas>
+    </div>
+    <p class="legend">
+      <span class="key"><i class="dot self"></i>黄：自己</span>
+      <span class="key"><i class="dot ally"></i>绿：队友</span>
+      <span class="key"><i class="dot enemy"></i>红：可见敌人</span>
+      <span class="key"><i class="sq wave"></i><span id="landmark-label">白方块：己方兵线前沿</span></span><br>
+      <span class="key"><i class="sq obs">观</i>观：己方侦察守卫</span>
+      <span class="key"><i class="sq sen">真</i>真：己方岗哨守卫</span><br>
+      <span class="key wide"><i class="line"></i>浅红线：敌人最后连续可见的走位（最多 12 秒）；空心方块和时间标出最后露头处。</span>
+    </p>
+  </section>
+
+  <section class="panel decision" aria-labelledby="question">
+    <h2 id="question">继续收线，还是先拉开？</h2>
+    <p id="kit"></p>
+    <p id="route-signal" hidden></p>
+    <p id="support-signal" hidden></p>
+
+    <button type="button" id="preview">直接看分析</button>
+    <fieldset id="choices"><legend>自己先判断（可选）</legend><button data-choice="farm">继续收线</button><button data-choice="retreat">先拉开</button><button data-choice="unknown">证据不足</button></fieldset>
+    <p id="first-choice" hidden></p>
+
+    <label for="notes" class="notes-label">判断依据或异议（仅此浏览器保存）</label>
+    <textarea id="notes" rows="2"></textarea>
+
+    <div id="review" hidden>
+      <h3>决策点评</h3>
+      <p id="advice"></p>
+      <p id="action"></p>
+      <p id="assessment"></p>
+      <button id="reveal">揭示之后 20 秒的结果</button>
+      <p id="outcome"></p>
+    </div>
+    <p id="error" role="status"></p>
+  </section>
+
+  <aside class="intel">
+    <section class="panel scout">
+      <h3>敌情与接应</h3>
+      <p id="ally"></p>
+      <ul id="enemies"></ul>
+    </section>
+    <section class="panel equipment">
+      <h3>装备与抓人威胁</h3>
+      <p id="threat"></p>
+      <div class="kits">
+        <div class="kit enemy-side"><h4>敌方上次可见装备</h4><ul id="enemy-kit"></ul></div>
+        <div class="kit ally-side"><h4>己方当前装备</h4><ul id="ally-kit"></ul></div>
+      </div>
+    </section>
+  </aside>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
