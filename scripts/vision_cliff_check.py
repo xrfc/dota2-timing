@@ -14,7 +14,6 @@ be clearly higher within a cell or two of an edge. Holdout matches skipped (U133
 
 import argparse
 import collections
-import gzip
 import json
 import math
 import pickle
@@ -30,6 +29,7 @@ from dota_items.data.vision_sim import (
     Terrain,
     cell_of,
     is_day,
+    read_creep_positions,
     sees,
     team_sources,
 )
@@ -134,13 +134,12 @@ def main():
     by_target = collections.defaultdict(lambda: [0, 0, 0, 0])
     blocked = collections.Counter()
     used = 0
+    missing_creep_seconds = 0
     for mid in ids:
         clip_inputs = load(args.root / "gank-clip-inputs-v1" / f"{mid}.pkl")
         if "wards" not in clip_inputs:
             continue
-        with gzip.open(args.root / "creeps-v1" / f"{mid}.jsonl.gz", "rt") as stream:
-            stream.readline()
-            creeps = {row["t"]: row["creeps"] for row in map(json.loads, stream)}
+        creeps = read_creep_positions(args.root / "creeps-v1" / f"{mid}.jsonl.gz", mid)
         match = load(args.root / "gank-inputs-v2" / f"{mid}.pkl")
         tracks, seen, combat = match["tracks"], match["seen"], match["combat"]
         deaths = tower_deaths(combat)
@@ -148,7 +147,10 @@ def main():
         used += 1
         for second in range(0, match["last"] + 1, args.step):
             towers = standing_towers(zones, deaths, second) + zones["fountains"]
-            alive = creeps.get(second, [])
+            if second not in creeps:
+                missing_creep_seconds += 1
+                continue
+            alive = creeps[second]
             sources = {
                 team: team_sources(
                     team,
@@ -202,6 +204,7 @@ def main():
         "use": "exploration_only",
         "model": f"{MODEL}/high_from_{HIGH}/creeps",
         "matches": used,
+        "missing_creep_match_seconds": missing_creep_seconds,
         "step": args.step,
         "by_target_edge_distance": {k: rates(v) for k, v in sorted(by_target.items())},
         "missed_visible_breakdown": [

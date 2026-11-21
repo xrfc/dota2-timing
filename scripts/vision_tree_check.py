@@ -13,7 +13,6 @@ Holdout matches skipped (U133).
 """
 
 import argparse
-import gzip
 import json
 import math
 import pickle
@@ -22,7 +21,16 @@ from pathlib import Path
 from dota_items.data.awareness_split import is_holdout
 from dota_items.data.gank_depth import standing_towers, tower_deaths
 from dota_items.data.gank_review import smoke_intervals, smoked_at
-from dota_items.data.vision_sim import OFFSET, RANGE, STEP, Terrain, cell_of, is_day, team_sources
+from dota_items.data.vision_sim import (
+    OFFSET,
+    RANGE,
+    STEP,
+    Terrain,
+    cell_of,
+    is_day,
+    read_creep_positions,
+    team_sources,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 MAP = ROOT / "data/map-reference-2026-10-26-v1/coordinates/data"
@@ -124,13 +132,12 @@ def main():
         ids = ids[: args.limit]
     counts = {(half, r): [0, 0, 0, 0] for half in (0, 1) for r in RADII}
     used = 0
+    missing_creep_seconds = 0
     for n, mid in enumerate(ids):
         clip_inputs = load(args.root / "gank-clip-inputs-v1" / f"{mid}.pkl")
         if "wards" not in clip_inputs:
             continue
-        with gzip.open(args.root / "creeps-v1" / f"{mid}.jsonl.gz", "rt") as stream:
-            stream.readline()
-            creeps = {row["t"]: row["creeps"] for row in map(json.loads, stream)}
+        creeps = read_creep_positions(args.root / "creeps-v1" / f"{mid}.jsonl.gz", mid)
         match = load(args.root / "gank-inputs-v2" / f"{mid}.pkl")
         tracks, seen, combat = match["tracks"], match["seen"], match["combat"]
         deaths = tower_deaths(combat)
@@ -139,7 +146,10 @@ def main():
         half = n % 2
         for second in range(0, match["last"] + 1, args.step):
             towers = standing_towers(zones, deaths, second) + zones["fountains"]
-            alive = creeps.get(second, [])
+            if second not in creeps:
+                missing_creep_seconds += 1
+                continue
+            alive = creeps[second]
             sources = {
                 team: team_sources(
                     team,
@@ -168,6 +178,7 @@ def main():
         "tree_geometry": "segment_circle",
         "use": "exploration_only",
         "matches": used,
+        "missing_creep_match_seconds": missing_creep_seconds,
         "step": args.step,
         "halves": {},
     }
