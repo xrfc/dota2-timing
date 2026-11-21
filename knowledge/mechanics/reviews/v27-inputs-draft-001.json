@@ -1,0 +1,700 @@
+{
+ "schema": "mechanics-overlay-inputs/1",
+ "version": 27,
+ "note": "Partial candidate, pending remaining rulings and field rebuild.",
+ "operations": [
+  {
+   "op": "decision_change",
+   "review_id": "audit:abyssal_blade:slow_resistance:item",
+   "subject": "abyssal_blade",
+   "mechanism": "slow_resistance",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "装备原有的 30% 减速抗性已移除。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "f718ffee4caf02179a56",
+   "subject": "ancient_apparition_bone_chill",
+   "mechanism": "slow",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "原有减速数值被清空，7.42 说明也删除了减速，仅保留对敌方英雄的力量削减。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "2ace5e3a23b337b49341",
+   "subject": "chen_holy_persuasion",
+   "mechanism": "haste",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "神圣劝化已移除对受控小兵的移速加成。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "b43f1a7ebb2cd37c4183",
+   "subject": "death_prophet_witchcraft",
+   "mechanism": "cooldown_reduction",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "7.42说明删除了随经验获得法术冷却缩减的效果，对应字段也已删除。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "8c8d355aafc58e4701dd",
+   "subject": "furion_teleportation",
+   "mechanism": "damage_block",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "各级护盾值已清空，到达目的地后获得护盾的说明也已删除。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "audit:heavens_halberd:evasion:item",
+   "subject": "heavens_halberd",
+   "mechanism": "evasion",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "7.42删除了装备的闪避加成。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "522b75b460a924a0a717",
+   "subject": "lycan_wolf_bite",
+   "mechanism": "healing",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "两者在范围内共享吸血治疗的说明和范围字段均已删除，原治疗判断失效。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "f5b35ac237a40b44974b",
+   "subject": "lycan_wolf_bite",
+   "mechanism": "lifesteal",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "原有40%吸血字段及赋予双方吸血的说明均已删除。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "5614558f4d72acbb6188",
+   "subject": "morphling_replicate",
+   "mechanism": "illusions",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "旧A杖创建目标英雄强幻象的说明和幻象伤害字段已移除，新说明只描述短暂出现并重复施法的复制体。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "audit:morphling_replicate:self_mobility:scepter",
+   "subject": "morphling_replicate",
+   "mechanism": "self_mobility",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "A杖已改为复制体重复施法，旧版切换变形时由本体取代幻象位置的效果已删除。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "afd36a90b15294eddcda",
+   "subject": "nevermore_requiem",
+   "mechanism": "magic_resist_reduction",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "减魔抗字段已删除，7.42的命中说明也删去了降低魔法抗性的效果。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "audit:revenants_brooch:lifesteal:item",
+   "subject": "revenants_brooch",
+   "mechanism": "lifesteal",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "7.42 删除了装备原有的技能吸血数值，现行说明也没有其他吸血效果。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "855c0c95b122e6825ef3",
+   "subject": "tinker_warp_grenade",
+   "mechanism": "root",
+   "from": "accept",
+   "to": "reject",
+   "basis": "two_ai",
+   "note_zh": "7.42将原文中的缠绕替换为减速，原先接受缠绕的判断已失效。"
+  },
+  {
+   "op": "retire",
+   "review_ids": [
+    "428ff65afa784c715232",
+    "9e6eeb0b2914822b5051",
+    "509cf3880151f8127b43",
+    "audit:beastmaster_drums_of_slom:lifesteal:scepter"
+   ],
+   "item_status": "removed_in_patch",
+   "note_zh": "7.42删除技能：beastmaster_drums_of_slom"
+  },
+  {
+   "op": "retire",
+   "review_ids": [
+    "39f0debd934ba1422953"
+   ],
+   "item_status": "removed_in_patch",
+   "note_zh": "7.42删除技能：chaos_knight_fundamental_forging"
+  },
+  {
+   "op": "retire",
+   "review_ids": [
+    "audit:juggernaut_swift_slash:aoe_damage:scepter",
+    "63a4caf7b5d4d79bb295",
+    "audit:juggernaut_swift_slash:self_mobility:scepter",
+    "audit:juggernaut_swift_slash:terrain_walk:scepter",
+    "25f7bfaaf96fc665947f"
+   ],
+   "item_status": "removed_in_patch",
+   "note_zh": "7.42删除技能：juggernaut_swift_slash"
+  },
+  {
+   "op": "retire",
+   "review_ids": [
+    "8fbf5f57786435fb79cb"
+   ],
+   "item_status": "removed_in_patch",
+   "note_zh": "7.42删除技能：lycan_apex_predator"
+  },
+  {
+   "op": "retire",
+   "review_ids": [
+    "67fbcd7a1c04008af86f",
+    "36a84f67c5e82246f70d"
+   ],
+   "item_status": "removed_in_patch",
+   "note_zh": "7.42删除技能：meepo_megameepo"
+  },
+  {
+   "op": "retire",
+   "review_ids": [
+    "89a6159db4925eb42ce9",
+    "b19add845ed7aea72bda",
+    "33a83b7d0613eef7fd31",
+    "63445b7dcc8de84bd839"
+   ],
+   "item_status": "removed_in_patch",
+   "note_zh": "7.42删除技能：meepo_megameepo_fling"
+  },
+  {
+   "op": "retire",
+   "review_ids": [
+    "bb2306fad4d76175a317",
+    "db49abe16c6103c2f0e2",
+    "6ff66cde6d8643ad15f6"
+   ],
+   "item_status": "removed_in_patch",
+   "note_zh": "7.42删除技能：nyx_assassin_neuro_sting"
+  },
+  {
+   "op": "condition_change",
+   "review_id": "1ded141b4ca97ab1b964",
+   "subject": "meepo_petrify",
+   "mechanism": "applies_basic_dispel",
+   "from": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": true
+   },
+   "to": {
+    "context": "scepter_upgrade",
+    "requires_scepter": true,
+    "requires_shard": false
+   },
+   "basis": "two_ai",
+   "note_zh": "7.42 掘地由阿哈利姆神杖授予（blind-742-001）。",
+   "condition_notes": [
+    {
+     "text": "需要阿哈利姆神杖授予掘地并施放，被缠绕时无法施放。",
+     "round": 3,
+     "reviewer": "7.42 grant correction"
+    }
+   ]
+  },
+  {
+   "op": "condition_change",
+   "review_id": "audit:meepo_petrify:healing:shard",
+   "subject": "meepo_petrify",
+   "mechanism": "healing",
+   "from": {
+    "context": "shard_upgrade",
+    "requires_scepter": false,
+    "requires_shard": true
+   },
+   "to": {
+    "context": "scepter_upgrade",
+    "requires_scepter": true,
+    "requires_shard": false
+   },
+   "basis": "two_ai",
+   "note_zh": "7.42 掘地由阿哈利姆神杖授予（blind-742-001）。",
+   "condition_notes": []
+  },
+  {
+   "op": "condition_change",
+   "review_id": "4d75fdf84cc7416548d4",
+   "subject": "meepo_petrify",
+   "mechanism": "invulnerable_untargetable",
+   "from": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": true
+   },
+   "to": {
+    "context": "scepter_upgrade",
+    "requires_scepter": true,
+    "requires_shard": false
+   },
+   "basis": "two_ai",
+   "note_zh": "7.42 掘地由阿哈利姆神杖授予（blind-742-001）。",
+   "condition_notes": [
+    {
+     "text": "需要阿哈利姆神杖，施放掘地后持续%duration%秒；被缠绕时无法施放。",
+     "round": 5,
+     "reviewer": "7.42 grant correction"
+    }
+   ]
+  },
+  {
+   "op": "decision_change",
+   "review_id": "48a7f0b307b18016e002",
+   "from": "accept",
+   "to": "reject",
+   "basis": "user:U182",
+   "note_zh": "地震的神杖升级已移除。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "audit:death_prophet_spirit_siphon:lifesteal:base",
+   "from": "accept",
+   "to": "reject",
+   "basis": "user:U187",
+   "note_zh": "伤害和治疗分别计算。"
+  },
+  {
+   "op": "decision_change",
+   "review_id": "62613f1350de1228dd41",
+   "from": "accept",
+   "to": "reject",
+   "basis": "user:U183",
+   "note_zh": "移除旧减速抗性；攻击时的条件效果待实测。"
+  },
+  {
+   "subject": "dazzle_innate_weave",
+   "mechanism": "healing",
+   "basis": "user:U182",
+   "op": "decision_change",
+   "review_id": "799443581e85b1792948",
+   "from": "accept",
+   "to": "reject",
+   "note_zh": "数据字段显示魔晶升级与治疗值已移除，说明文字残留"
+  },
+  {
+   "subject": "chen_holy_persuasion",
+   "mechanism": "displace_other",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c039",
+   "subject_zh": "陈·神圣劝化",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   },
+   "quotes": [
+    "Chen may now target himself to teleport all his controlled creeps to himself"
+   ],
+   "notes_zh": [
+    "对自身施放可把受控小兵传送到陈身边，属于移动其他单位"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "nevermore_dark_lord",
+   "mechanism": "magic_resist_reduction",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c049",
+   "subject_zh": "影魔·魔王降临",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   },
+   "quotes": [
+    "Now also reduces enemy Magic Resistance by 4/6/8/10%"
+   ],
+   "notes_zh": [
+    "新增减魔抗"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "abyssal_underlord_dark_portal",
+   "mechanism": "slow",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c055",
+   "subject_zh": "孽主·恶魔之扉",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "scepter_upgrade",
+    "requires_scepter": true,
+    "requires_shard": false
+   },
+   "quotes": [
+    "shot_movement_speed_pct scepter 40; shot_slow_duration scepter 2.5"
+   ],
+   "notes_zh": [
+    "A杖恶意之坑新增射击减速字段"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "abyssal_underlord_dark_portal",
+   "mechanism": "grant_vision",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c056",
+   "subject_zh": "孽主·恶魔之扉",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "scepter_upgrade",
+    "requires_scepter": true,
+    "requires_shard": false
+   },
+   "quotes": [
+    "shot_vision scepter 100; shot_vision_duration 1.5"
+   ],
+   "notes_zh": [
+    "A杖射击带视野字段"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "ancient_apparition_cold_feet",
+   "mechanism": "slow",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c057",
+   "subject_zh": "远古冰魄·寒霜之足",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   },
+   "quotes": [
+    "Now applies a 4/6/8/10% movement slow"
+   ],
+   "notes_zh": [
+    "新增减速"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "muerta_spectral_slug",
+   "mechanism": "charges",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c065",
+   "subject_zh": "琼英碧灵·幽魂子弹",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   },
+   "quotes": [
+    "Now has 2 ability charges with 12s restore time"
+   ],
+   "notes_zh": [
+    "有2层充能"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "death_prophet_witchcraft",
+   "mechanism": "attack_modifier",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c069",
+   "subject_zh": "死亡先知·巫术精研",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   },
+   "quotes": [
+    "creates a ghost whenever Death Prophet attacks an enemy. The spirit deals a portion of Death Prophet's attack damage"
+   ],
+   "notes_zh": [
+    "攻击时额外放出鬼魂造成额外伤害，属于攻击特效"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "death_prophet_witchcraft",
+   "mechanism": "healing",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c070",
+   "subject_zh": "死亡先知·巫术精研",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   },
+   "quotes": [
+    "heals her for 50% of the damage dealt upon return"
+   ],
+   "notes_zh": [
+    "鬼魂返回时治疗死亡先知"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "death_prophet_witchcraft",
+   "mechanism": "lifesteal",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c071",
+   "subject_zh": "死亡先知·巫术精研",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   },
+   "quotes": [
+    "heals her for 50% of the damage dealt upon return"
+   ],
+   "notes_zh": [
+    "按攻击触发的鬼魂伤害比例回复自身生命"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "disruptor_kinetic_fence",
+   "mechanism": "displace_other",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c072",
+   "subject_zh": "干扰者·动能栅栏",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_scepter": false,
+    "requires_shard": true
+   },
+   "quotes": [
+    "strike_on_touch shard 0 -> 1; strike_knockback_pct_tooltip_only shard 50"
+   ],
+   "notes_zh": [
+    "动能栅栏属魔晶内容，触碰被电磁斥力击退"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "tinker_warp_grenade",
+   "mechanism": "slow",
+   "basis": "two_ai",
+   "op": "add_row",
+   "review_id": "7.42:c078",
+   "subject_zh": "修补匠·折跃耀光",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   },
+   "quotes": [
+    "Now slows enemy movement speed by 100%"
+   ],
+   "notes_zh": [
+    "100%移速减速"
+   ],
+   "claude": "accept",
+   "codex": "accept"
+  },
+  {
+   "subject": "troll_warlord_battle_trance",
+   "mechanism": "status_resistance",
+   "basis": "user:U183",
+   "op": "add_row",
+   "review_id": "7.42:c079",
+   "subject_zh": "巨魔战将·战斗专注",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "base",
+    "requires_scepter": false,
+    "requires_shard": false
+   },
+   "quotes": [
+    "Now grants 15/20/25% Status Resistance"
+   ],
+   "notes_zh": [
+    "新增状态抗性"
+   ]
+  },
+  {
+   "subject": "undying_bite",
+   "mechanism": "self_mobility",
+   "basis": "user:U188",
+   "op": "add_row",
+   "review_id": "7.42:c108",
+   "subject_zh": "不朽尸王·僵尸撕咬",
+   "origin": "patch_review",
+   "decision": "accept",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_scepter": false,
+    "requires_shard": true
+   },
+   "quotes": [
+    "Undying lunges at the target; lunge_distance 250"
+   ],
+   "notes_zh": [
+    "撕咬时向目标突进"
+   ]
+  },
+  {
+   "op": "add_row",
+   "review_id": "7.42:life_stealer_infest:slow:shard",
+   "subject": "life_stealer_infest",
+   "subject_zh": "噬魂鬼·感染",
+   "mechanism": "slow",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_shard": true,
+    "requires_scepter": false
+   },
+   "decision": "accept",
+   "basis": "two_ai",
+   "origin": "patch_review",
+   "claude": "accept",
+   "codex": "accept",
+   "quotes": [
+    "Infest explosion applies a %dot_duration%s duration Open Wounds to enemies in the damage radius."
+   ],
+   "notes_zh": [
+    "魔晶爆炸新增撕裂伤口，按该技能的说明会降低受影响敌人的移动速度。",
+    "blind-742-001：盲审材料不全；复核补入了被触发技能的效果。"
+   ]
+  },
+  {
+   "op": "add_row",
+   "review_id": "7.42:life_stealer_infest:lifesteal:shard",
+   "subject": "life_stealer_infest",
+   "subject_zh": "噬魂鬼·感染",
+   "mechanism": "lifesteal",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_shard": true,
+    "requires_scepter": false
+   },
+   "decision": "accept",
+   "basis": "two_ai",
+   "origin": "patch_review",
+   "claude": "accept",
+   "codex": "accept",
+   "quotes": [
+    "Infest explosion applies a %dot_duration%s duration Open Wounds to enemies in the damage radius."
+   ],
+   "notes_zh": [
+    "魔晶爆炸新增的撕裂伤口使友军对这些敌人造成伤害时按伤害比例吸血。",
+    "blind-742-001：盲审材料不全；复核补入了被触发技能的效果。"
+   ]
+  },
+  {
+   "op": "add_row",
+   "review_id": "7.42:life_stealer_infest:healing:shard",
+   "subject": "life_stealer_infest",
+   "subject_zh": "噬魂鬼·感染",
+   "mechanism": "healing",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_shard": true,
+    "requires_scepter": false
+   },
+   "decision": "accept",
+   "basis": "two_ai",
+   "origin": "patch_review",
+   "claude": "accept",
+   "codex": "accept",
+   "quotes": [
+    "Infest explosion applies a %dot_duration%s duration Open Wounds to enemies in the damage radius."
+   ],
+   "notes_zh": [
+    "现有治疗行记录的是基础感染在宿主体内的自身回复，魔晶新增的撕裂伤口还可为伤害受影响敌人的友军恢复生命。",
+    "blind-742-001：盲审材料不全；复核补入了被触发技能的效果。"
+   ]
+  },
+  {
+   "op": "add_row",
+   "review_id": "7.42:disruptor_kinetic_fence:aoe_damage:shard",
+   "subject": "disruptor_kinetic_fence",
+   "subject_zh": "干扰者·动能栅栏",
+   "mechanism": "aoe_damage",
+   "condition": {
+    "context": "shard_upgrade",
+    "requires_shard": true,
+    "requires_scepter": false
+   },
+   "decision": "accept",
+   "basis": "two_ai",
+   "origin": "patch_review",
+   "claude": "accept",
+   "codex": "accept",
+   "quotes": [
+    "Enemies touching the wall are struck by Electromagnetic Repulsion | all nearby enemies within take damage equal to %damage_per_int%x of Disruptor's Intelligence"
+   ],
+   "notes_zh": [
+    "结合电磁排斥的伤害说明，一次魔晶栅栏可通过触墙效果伤害多个敌人。",
+    "blind-742-001：盲审材料不全；复核补入了被触发技能的效果。"
+   ]
+  }
+ ]
+}

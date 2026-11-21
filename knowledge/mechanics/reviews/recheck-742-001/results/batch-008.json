@@ -1,0 +1,211 @@
+{
+  "objects": [
+    {
+      "subject": "grimstroke_ink_creature",
+      "rows": [
+        {"review_id":"6ea2977ec76a76e488eb","verdict":"holds","quote":"If she survives the full latch duration she rends her victim for heavy damage and refreshes Phantom's Embrace's cooldown.","reason_zh":"戾影附身至持续时间结束并存活时，仍会刷新该技能的冷却。"},
+        {"review_id":"825c10b144da57b58d52","verdict":"holds","quote":"The phantom falls off if the target becomes invisible or spell immune.","reason_zh":"目标获得技能免疫会使戾影脱落，技能本身没有赋予减益免疫的效果。"},
+        {"review_id":"570b216cf41b238de291","verdict":"holds","quote":"The phantom falls off if the target becomes invisible or spell immune.","reason_zh":"目标进入隐身是戾影脱落的条件，戾影本身不会使单位隐身。"},
+        {"review_id":"fddbc861921c4210dcf1","verdict":"holds","quote":"Once latched, the phantom damages and silences.","reason_zh":"戾影附身后仍会沉默目标。"},
+        {"review_id":"d7fcfa8dc215a166867c","verdict":"holds","quote":"destroy_attacks: [6,6,9,9]→[2,2,3,3]","reason_zh":"摧毁戾影所需的攻击次数发生调整，它仍属于召唤物定义排除的按受击次数计算的单位。"},
+        {"review_id":"1fe5a90831f29f5ea568","verdict":"holds","quote":"Summons a phantom that moves quickly towards the target, latching to it when she arrives. Once latched, the phantom damages and silences.","reason_zh":"施放时仍指定一个敌方目标，由戾影追向该目标并附身。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"damage_block","condition":"base","quote":"Creeps and illusions deal 25% damage to the phantom.","reason_zh":"7.42明确规定小兵和幻象对戾影只造成25%的伤害，减伤仅适用于戾影受到的这两类来源的伤害。"}
+      ]
+    },
+    {
+      "subject": "grimstroke_spirit_walk",
+      "rows": [
+        {"review_id":"3cdb058d3f404014d35e","verdict":"holds","quote":"Enemies in range of the allied unit are damaged with inky tendrils over time.","reason_zh":"一次施放仍能持续伤害友方目标周围的多个敌人。"},
+        {"review_id":"a86538c4d467945d6c2b","verdict":"holds","quote":"Ink Swell dispels the allied unit when cast. Causes Ink Swell to deal %shard_bonus_damage_pct%%% more damage and heal the target for %shard_heal_pct%%% of the damage Ink Swell deals. DISPEL TYPE: Basic Dispel","reason_zh":"装备魔晶后，施放墨涌时仍会对友方目标施加弱驱散。"},
+        {"review_id":"audit:grimstroke_spirit_walk:aura:base","verdict":"holds","quote":"Enemies in range of the allied unit are damaged with inky tendrils over time.","reason_zh":"持续伤害以携带墨涌的友方单位为中心，作用于其周围的敌人，符合光环定义。"},
+        {"review_id":"eb027b6f66df90e280c4","verdict":"holds","quote":"Grimstroke shrouds an allied unit in ink, increasing its movement speed.","reason_zh":"基础技能仍提高友方目标的移动速度。"},
+        {"review_id":"997fb8f90cf29995cdf6","verdict":"holds","quote":"heal the target for %shard_heal_pct%%% of the damage Ink Swell deals","reason_zh":"魔晶仍使墨涌按其造成的伤害治疗友方目标。"},
+        {"review_id":"ab6af54f4dda24eafca9","verdict":"holds","quote":"it applies damage and stun in an area around the unit","reason_zh":"墨涌仍会在友方目标周围造成范围眩晕。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "guardian_greaves",
+      "rows": [
+        {"review_id":"2c124b4496b0e89661ca","verdict":"holds","quote":"removes most negative effects from the caster. Radius: %replenish_radius% Dispel Type: Basic Dispel","reason_zh":"主动技能仍会对施放者自身施加弱驱散。"},
+        {"review_id":"fffe110a38a1091ff123","verdict":"holds","quote":"Passive: Guardian Aura Grants %aura_health_regen% health regeneration and %aura_mana_regen% mana regeneration to allied units. Radius: %aura_radius%","reason_zh":"守护光环仍为范围内的友方单位提供生命和法力回复。"},
+        {"review_id":"59a6902103cbbbcd0fdf","verdict":"holds","quote":"bonus_movement: 50→55","reason_zh":"装备提供的移动速度加成从50提高到55。"},
+        {"review_id":"62a813f6e3fa1f91694a","verdict":"holds","quote":"Restores %replenish_health% health and %replenish_mana% mana to nearby allies","reason_zh":"主动技能仍能为附近友军恢复生命值。"},
+        {"review_id":"64dfa12adf518896c095","verdict":"holds","quote":"Guardian Aura Grants %aura_health_regen% health regeneration and %aura_mana_regen% mana regeneration to allied units.","reason_zh":"低血量时的额外生命回复已删除，常规光环仍提供生命回复。"},
+        {"review_id":"352ddc0da611d80080eb","verdict":"holds","quote":"Restores %replenish_health% health and %replenish_mana% mana to nearby allies","reason_zh":"主动技能仍有范围法力回复效果。"},
+        {"review_id":"b0e1cb33818b1a6e36d5","verdict":"holds","quote":"%aura_mana_regen% mana regeneration to allied units","reason_zh":"守护光环仍提供持续法力回复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "gungir",
+      "rows": [
+        {"review_id":"66a4bb8f5866bbc981fa","verdict":"holds","quote":"Roots all enemies in the target area for %duration%s.","reason_zh":"主动技能仍会缠绕目标区域内的所有敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "gyrocopter_afterburner",
+      "rows": [
+        {"review_id":"1de50338bb265c60470f","verdict":"holds","quote":"Gyrocopter gains movement speed for a short duration after damaging an enemy with his attacks or abilities.","reason_zh":"攻击或技能造成伤害是触发加速的条件，加力燃烧器自身没有范围伤害效果。"},
+        {"review_id":"2344af7eacbb461e1bc3","verdict":"unclear","quote":"Break disables the gaining of new stacks. Break does not disable the bonuses from existing stacks.","reason_zh":"新注释明确破坏会阻止获得新层数并保留已有加成，但材料未给出该词条指定的 IsBreakable 字段值。"},
+        {"review_id":"70892279d3524b707add","verdict":"holds","quote":"Gyrocopter gains movement speed for a short duration after damaging an enemy with his attacks or abilities.","reason_zh":"矮人直升机攻击或施法伤害敌人后仍会短暂提高自身移速。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "gyrocopter_call_down",
+      "rows": [
+        {"review_id":"0e4ed3d3e03001f18679","verdict":"holds","quote":"aerial missile strikes that slow and damage enemy units in a target area","reason_zh":"飞弹仍会伤害目标区域内的多个敌人，作用半径由400增至425。"},
+        {"review_id":"348d0e1efd4b96685cf3","verdict":"holds","quote":"aerial missile strikes that slow and damage enemy units in a target area","reason_zh":"飞弹仍会减速目标区域内的敌人。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "gyrocopter_flak_cannon",
+      "rows": [
+        {"review_id":"3366bea3e838d5e55a61","verdict":"holds","quote":"Gyrocopter's attacks hit all enemy units in an area around it for a limited number of attacks.","reason_zh":"作用半径缩小后，每次强化攻击仍能命中范围内的多个敌人。"},
+        {"review_id":"3ac2f189ccf9f8b69402","verdict":"now_wrong","quote":"The additional attacks can proc attack modifiers at reduced effectiveness, except for Lifesteal and Critical Strike.","reason_zh":"7.42使额外攻击可以按降低的效能触发攻击特效，因此原先的否定判断已失效。"},
+        {"review_id":"audit:gyrocopter_flak_cannon:cleave:base","verdict":"holds","quote":"Gyrocopter's attacks hit all enemy units in an area around it for a limited number of attacks.","reason_zh":"一次攻击仍可波及周围所有敌方单位，符合给定的分裂溅射定义。"},
+        {"review_id":"c010bb8217fb3876e2af","verdict":"holds","quote":"The additional attacks can proc attack modifiers at reduced effectiveness, except for Lifesteal and Critical Strike.","reason_zh":"额外攻击可触发的效果明确排除了暴击，技能本身也没有赋予暴击。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "gyrocopter_homing_missile",
+      "rows": [
+        {"review_id":"audit:gyrocopter_homing_missile:aoe_damage:shard","verdict":"holds","quote":"Homing Missiles now constantly fires the current level of Rocket Barrage in a %shard_radius% area of effect after %shard_delay% second of being cast. This Rocket Barrage prioritizes the Homing Missile target.","reason_zh":"魔晶仍使一枚导弹持续向范围内发射火箭弹幕，追踪目标具有优先级。"},
+        {"review_id":"5a90af549b38cde0c6dd","verdict":"holds","quote":"The missile will follow and hit invisible units.","reason_zh":"导弹能追击并命中已经隐身的单位，技能本身没有赋予隐身的效果。"},
+        {"review_id":"9665c4d37f5684ffd5b9","verdict":"holds","quote":"dealing damage and stunning when it impacts the target","reason_zh":"导弹撞击目标时仍会造成眩晕。"},
+        {"review_id":"82187ec539ac9a9806a3","verdict":"holds","quote":"Fires a homing missile to seek the targeted enemy unit.","reason_zh":"施放时仍直接指定一个敌方单位作为追踪目标。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"damage_block","condition":"base","quote":"Creeps and illusions deal 25% damage to the missile.","reason_zh":"7.42新增了针对小兵和幻象的减伤说明，这两类来源对导弹只造成25%的伤害。"}
+      ]
+    },
+    {
+      "subject": "gyrocopter_side_gunner_spawn_ability",
+      "rows": [
+        {"review_id":"2653d77b71ac51c80a3e","verdict":"holds","quote":"Prioritizes furthest unit away within its range.","reason_zh":"侧翼机枪每次在射程内优先选取最远的单位攻击，新增攻击效能数值没有赋予单次攻击范围伤害。"},
+        {"review_id":"b984d31b20d8dc116132","verdict":"unclear","quote":"attack_effectiveness: null→75","reason_zh":"唯一的字段变化是攻击效能，材料未给出核实可被破坏所需的 IsBreakable 值。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "harpoon",
+      "rows": [
+        {"review_id":"audit:harpoon:attack_modifier:item","verdict":"holds","quote":"The double attacks apply a %movement_slow%%% movement slow for %slow_duration% seconds on the first strike.","reason_zh":"近战双击的第一击仍附带移动减速，符合攻击特效定义。"},
+        {"review_id":"ea3a147e74d3fefd74b7","verdict":"holds","quote":"pulls you and the target closer together","reason_zh":"对敌人使用鱼叉时仍会把目标拉向使用者。"},
+        {"review_id":"29524114ea1e9d0de1be","verdict":"holds","quote":"bonus_mana_regen: 2→2.5","reason_zh":"装备提供的法力回复从2提高到2.5。"},
+        {"review_id":"audit:harpoon:self_mobility:item","verdict":"holds","quote":"Targeting a tree always pulls you all the way to that tree.","reason_zh":"使用者可以主动指定一棵树，将自身拉到树旁。"},
+        {"review_id":"47c2206be795a384212f","verdict":"holds","quote":"The double attacks apply a %movement_slow%%% movement slow for %slow_duration% seconds on the first strike.","reason_zh":"近战双击的第一击仍会降低敌人的移动速度。"},
+        {"review_id":"audit:harpoon:terrain_walk:item","verdict":"unclear","quote":"Targeting a tree always pulls you all the way to that tree.","reason_zh":"说明给出了拉向树木的位移终点，未说明使用者移动时能穿过树木和悬崖。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "headdress",
+      "rows": [
+        {"review_id":"c25832388aefc2ef35a0","verdict":"holds","quote":"Passive: Regeneration Aura Grants %aura_health_regen% health regeneration to allied player units. Radius: %aura_radius%","reason_zh":"装备仍提供回复光环，7.42将受益对象明确为范围内的友方玩家单位。"},
+        {"review_id":"b8c8c99076b3d0c29f51","verdict":"holds","quote":"Grants %aura_health_regen% health regeneration to allied player units.","reason_zh":"恢复头巾仍为友方玩家单位提供生命回复。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "heavens_halberd",
+      "rows": [
+        {"review_id":"78dbbc497a3bd53678ea","verdict":"holds","quote":"Active: Disarm Prevents a target from attacking for %disarm_melee% seconds.","reason_zh":"缴械持续时间从3.5秒缩短至3秒，期间仍阻止目标攻击。"},
+        {"review_id":"audit:heavens_halberd:evasion:item","verdict":"now_wrong","quote":"bonus_evasion: 25→null","reason_zh":"7.42删除了装备的闪避加成。"},
+        {"review_id":"audit:heavens_halberd:healing:item","verdict":"holds","quote":"bonus_health_regen: 6.5→4.5","reason_zh":"装备的生命回复降至4.5，仍有正值加成。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "helm_of_the_dominator",
+      "rows": [
+        {"review_id":"f1429b8fc5be43061c17","verdict":"holds","quote":"Grants the caster %bounty_pct%%% of the gold and experience bounty of the dominated creep.","reason_zh":"施放者在支配野怪时即可获得其部分金钱和经验赏金。"},
+        {"review_id":"31c6810518318cb074b0","verdict":"holds","quote":"If a new unit is dominated, the old one will die.","reason_zh":"旧单位死亡由支配新单位触发，技能没有按目标生命阈值斩杀的效果。"},
+        {"review_id":"841d73dbbce0084f6b3a","verdict":"holds","quote":"+%creep_bonus_hp_regen% health regen","reason_zh":"头盔仍为被支配单位提供额外生命回复。"},
+        {"review_id":"0342558056273d648be5","verdict":"holds","quote":"Takes control of one neutral, non-ancient target unit","reason_zh":"装备能夺取一个非远古中立单位的控制权，符合给定的召唤物定义。"},
+        {"review_id":"2967d0d6cdd8356ecbaa","verdict":"holds","quote":"Can also Dominate enemy lane creeps and summoned units.","reason_zh":"头盔也能夺取敌方线上小兵和召唤单位的控制权。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "helm_of_the_overlord",
+      "rows": [
+        {"review_id":"3e43598f60b570e9fa32","verdict":"holds","quote":"Grants the caster the gold and experience bounty of the dominated creep.","reason_zh":"施放者在支配野怪时即可获得该野怪的金钱和经验赏金。"},
+        {"review_id":"da0db8818641c2b5a3f4","verdict":"holds","quote":"it can no longer be killed by abilities that instantly kill creeps otherwise","reason_zh":"说明赋予被支配单位抵御特定即死技能的效果，头盔本身没有按生命阈值斩杀目标的效果。"},
+        {"review_id":"41067bd31b1da3d75367","verdict":"holds","quote":"+%creep_bonus_hp_regen% health regen","reason_zh":"头盔仍提高被支配单位的生命回复。"},
+        {"review_id":"366f91bfbf88067d5fce","verdict":"holds","quote":"Takes control of one neutral target unit","reason_zh":"装备仍可夺取一个中立目标单位的控制权，符合给定的召唤物定义。"},
+        {"review_id":"b1944e5b73c41481ad7d","verdict":"holds","quote":"Can also Dominate enemy lane creeps and summoned units.","reason_zh":"敌方线上小兵和召唤单位也仍可被头盔支配。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "hoodwink_bushwhack",
+      "rows": [
+        {"review_id":"b731fa1d6ae6d7ddac5f","verdict":"holds","quote":"Tosses a net trap that stuns enemies if they are near a tree in the area. Affected enemies take damage over time","reason_zh":"同一张网仍能持续伤害区域内靠近树木的多个敌人。"},
+        {"review_id":"af16518a0fa2aa452c45","verdict":"holds","quote":"are pulled towards the tree nearest to them within the target area","reason_zh":"被网住的敌人仍会被拉向目标区域内离各自最近的树。"},
+        {"review_id":"audit:hoodwink_bushwhack:reduce_vision:base","verdict":"holds","quote":"have their vision reduced to 0 for the duration of the stun","reason_zh":"受影响敌人的视野在眩晕期间仍会降为0。"},
+        {"review_id":"f9cfb0399c4f99c3980e","verdict":"holds","quote":"stuns enemies if they are near a tree in the area","reason_zh":"眩晕时间有所缩短，范围内靠近树木的敌人仍会被眩晕。"},
+        {"review_id":"07ed59bef8f70ea550d6","verdict":"holds","quote":"Units can be freed from the stun by destroying the tree.","reason_zh":"摧毁树木是解除眩晕的方法，技能本身没有砍树效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "hoodwink_hunters_boomerang",
+      "rows": [
+        {"review_id":"647dd73305fe230c9c3c","verdict":"holds","quote":"The boomerang will deal damage as it passes through or hits enemies","reason_zh":"一次投掷仍能伤害旋镖沿途穿过或命中的多个敌人。"},
+        {"review_id":"0797b31b668492985f7f","verdict":"holds","quote":"more vulnerable to spell damage","reason_zh":"易伤限定于技能伤害，未赋予针对物理伤害或全部伤害的加深效果。"},
+        {"review_id":"af3bafb8d066210de34f","verdict":"holds","quote":"spell_amp: 20→15","reason_zh":"敌方目标受到的技能伤害加成从20%降至15%，技能易伤仍然存在。"},
+        {"review_id":"de96e73d336c1ff7795f","verdict":"holds","quote":"causes affected enemies to be slowed","reason_zh":"旋镖施加的减益仍会降低受影响敌人的移动速度。"},
+        {"review_id":"d0134f244996b2e052e7","verdict":"holds","quote":"apply a debuff that causes affected enemies to be slowed and be more vulnerable to spell damage","reason_zh":"数值修饰的是敌方目标承受的技能伤害，技能没有给施法者提供法术放大。"},
+        {"review_id":"981117f873e10ea72359","verdict":"unclear","quote":"Tosses a boomerang in an arc. Upon contact, it returns to Hoodwink.","reason_zh":"说明只给出旋镖的飞行和命中方式，无法确认施放时能否直接选择敌方单位。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "hoodwink_mistwoods_wayfarer",
+      "rows": [
+        {"review_id":"ede6e76a4756d9a46b84","verdict":"unclear","quote":"behavior: 13194139533378→567347999932483","reason_zh":"行为字段发生变化，但材料未给出核实可被破坏所需的 IsBreakable 值。"},
+        {"review_id":"audit:hoodwink_mistwoods_wayfarer:evasion:base","verdict":"holds","quote":"Hoodwink has a chance to redirect enemy attacks to a nearby tree.","reason_zh":"转移概率虽降至10%，敌方攻击仍有概率转向树木而未命中森海飞霞。"},
+        {"review_id":"audit:hoodwink_mistwoods_wayfarer:tree_destroy:base","verdict":"holds","quote":"Trees that take a redirected attack are destroyed.","reason_zh":"承受转移攻击的树木仍会被摧毁。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "hoodwink_scurry",
+      "rows": [
+        {"review_id":"95d4ddb7577687b13971","verdict":"holds","quote":"evasion_multiplier: 2→1","reason_zh":"攻击转移概率的倍率降为1，密林奔走自身不再提高躲过攻击的概率。"},
+        {"review_id":"6dd4323b6f8b16bf9fc5","verdict":"holds","quote":"movement_speed_pct: [15,20,25,30]→[20,24,28,32]","reason_zh":"基础技能在各级仍提供正值移速加成。"},
+        {"review_id":"d229825910a63e3c7242","verdict":"holds","quote":"Hoodwink gains bonus movement speed, phased movement, and tree-walking for a brief time.","reason_zh":"技能仍会短暂赋予森海飞霞相位移动。"},
+        {"review_id":"f4ccc7951e871fc368ca","verdict":"holds","quote":"tree-walking for a brief time","reason_zh":"技能仍让森海飞霞在短时间内穿过树木。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "hoodwink_sharpshooter",
+      "rows": [
+        {"review_id":"15892019f9f677b09ce1","verdict":"holds","quote":"dealing heavy damage, break and slow to an enemy Hero","reason_zh":"基础技能命中敌方英雄时仍会施加破坏。"},
+        {"review_id":"f990071c12149ccf704d","verdict":"holds","quote":"The damage and debuff duration scale up to max after %max_charge_time% seconds","reason_zh":"蓄力时间决定伤害和减益时长，说明没有按次消耗的充能点数。"},
+        {"review_id":"audit:hoodwink_sharpshooter:self_mobility:base","verdict":"holds","quote":"Hoodwink is knocked backwards for a distance of %recoil_distance% from the force of the shot.","reason_zh":"发射弩箭产生的后坐力仍会使森海飞霞向后位移。"},
+        {"review_id":"7fc443168024024ec304","verdict":"holds","quote":"dealing heavy damage, break and slow to an enemy Hero","reason_zh":"基础技能命中敌方英雄时仍会减速。"},
+        {"review_id":"audit:hoodwink_sharpshooter:terrain_walk:base","verdict":"unclear","quote":"Hoodwink is knocked backwards for a distance of %recoil_distance% from the force of the shot.","reason_zh":"说明确认了后坐位移，未说明该位移能穿过树木或越过不可通行地形。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "hurricane_pike",
+      "rows": [
+        {"review_id":"4997b69e9101d1828ef9","verdict":"holds","quote":"Hurricane Pike doesn't interrupt the target's actions.","reason_zh":"说明明确指出推送不会打断目标的动作，原先对打断持续施法的否定判断成立。"},
+        {"review_id":"9b04793b8f7bbf9ae62c","verdict":"holds","quote":"Pushes you and target enemy %enemy_length% units away from each other","reason_zh":"对敌方目标使用时仍会把对方推离使用者。"},
+        {"review_id":"audit:hurricane_pike:self_mobility:item","verdict":"holds","quote":"Can be cast on self or allies to push the target %push_length% units in the direction it is facing.","reason_zh":"使用者仍可对自己施放，沿自身朝向主动位移。"},
+        {"review_id":"audit:hurricane_pike:terrain_walk:item","verdict":"unclear","quote":"push the target %push_length% units in the direction it is facing","reason_zh":"说明只给出推送的方向和距离，未说明目标能在推送中穿过树木或悬崖。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

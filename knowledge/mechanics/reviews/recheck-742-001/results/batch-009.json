@@ -1,0 +1,204 @@
+{
+  "objects": [
+    {
+      "subject": "hydras_breath",
+      "rows": [
+        {"review_id":"bef2580e70476c90b70f","verdict":"holds","quote":"Ranged attacks have a %proc_chance%%% chance to fire additional projectiles at up to %count% nearby enemies","reason_zh":"一次远程攻击仍有概率以额外弹道伤害附近多个敌人，新增说明限定幻象攻击不能触发。"},
+        {"review_id":"audit:hydras_breath:attack_modifier:item","verdict":"holds","quote":"Attacks poison enemies, dealing %poison_damage_per_second%%% of the target's Max HP as Magical Damage per second","reason_zh":"普通攻击仍能使敌人中毒并按其最大生命值造成持续魔法伤害。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "invis_sword",
+      "rows": [
+        {"review_id":"audit:invis_sword:attack_modifier:item","verdict":"holds","quote":"If attacking to end the invisibility, you gain %windwalk_bonus_damage% bonus physical damage on that attack.","reason_zh":"以攻击结束隐身时，该次攻击仍附带额外物理伤害。"},
+        {"review_id":"3bf10f3591d4f181d804","verdict":"holds","quote":"windwalk_movement_speed: 20→16","reason_zh":"隐身期间的移速加成从20%降至16%，仍能使自身加速。"},
+        {"review_id":"9d8f0a023d6085f3f59b","verdict":"holds","quote":"Makes you invisible for %windwalk_duration% seconds, or until you attack or cast a spell.","reason_zh":"主动效果仍使使用者隐身，攻击或施法可提前结束隐身。"},
+        {"review_id":"audit:invis_sword:phased:item","verdict":"holds","quote":"While Shadow Walk is active, you move %windwalk_movement_speed%%% faster and can move through units.","reason_zh":"疾风步期间仍可穿过单位，符合相位移动的定义。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "invoker_chaos_meteor",
+      "rows": [
+        {"review_id":"4dbc82e2a5beaf6c3908","verdict":"holds","quote":"Deals main damage to enemy units under meteor every %damage_interval% seconds and burns enemies for smaller damage over %burn_duration% seconds.","reason_zh":"一次施放仍能伤害陨石下方的多个敌人，各等级的灼烧伤害也都大于零。"},
+        {"review_id":"04727d871819c04b8daa","verdict":"holds","quote":"Upon landing, the meteor rolls forward, constantly dealing damage based on the level of Exort","reason_zh":"向前滚动的是陨石，命中敌人的效果只有伤害和灼烧，原先排除位移他人的判断成立。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "invoker_cold_snap",
+      "rows": [
+        {"review_id":"fd941c2a954388107ee9","verdict":"holds","quote":"Further damage taken in this state will freeze the enemy again, dealing bonus damage.","reason_zh":"后续伤害反复触发同一敌人身上的冻结和额外伤害，说明未赋予多目标伤害。"},
+        {"review_id":"b3be8fbdebf21a072c0b","verdict":"holds","quote":"The freeze stun only triggers on damage greater than %damage_trigger% after reductions.","reason_zh":"说明明确将冻结称为眩晕，并保留了按减免后伤害判断的触发门槛。"},
+        {"review_id":"63121a12d5d009ea2164","verdict":"holds","quote":"Invoker draws the heat from an enemy, chilling them to their very core","reason_zh":"技能仍以一个敌人为施放目标，并在该目标身上施加冻结效果。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "invoker_deafening_blast",
+      "rows": [
+        {"review_id":"dd92dae7ea152be32d64","verdict":"holds","quote":"dealing damage to any enemy unit it collides with","reason_zh":"一次声波仍能对沿途碰到的多个敌方单位造成伤害。"},
+        {"review_id":"7108d88f6f695aca7293","verdict":"holds","quote":"then disarm their attacks for a duration based on the level of Wex","reason_zh":"声波仍在击退后缴械敌人，持续时间取决于雷元素等级。"},
+        {"review_id":"audit:invoker_deafening_blast:displace_other:base","verdict":"holds","quote":"knock those enemy units back for a duration based on the level of Quas","reason_zh":"基础声波仍能击退命中的敌方单位。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"effect_dispellability","condition":"base","quote":"dispellable: 3→2\nThe Knockback is undispellable.","reason_zh":"7.42更改了可驱散性字段，并明确击退部分不可驱散。"}
+      ]
+    },
+    {
+      "subject": "invoker_emp",
+      "rows": [
+        {"review_id":"audit:invoker_emp:aoe_damage:base","verdict":"holds","quote":"The detonation covers an area, draining mana based on the level of Wex . Deals damage for each point of mana drained.","reason_zh":"一次爆炸仍能削减范围内多个敌人的法力，并按削减量造成伤害。"},
+        {"review_id":"cc39b1e1b3ccd75f3542","verdict":"holds","quote":"builds up a charge of electromagnetic energy at a targeted location which automatically detonates after %delay% seconds","reason_zh":"这里的蓄能指目标地点延迟爆炸的过程，说明没有每次施放消耗一点的充能次数。"},
+        {"review_id":"f85315bd6e54db9931f9","verdict":"holds","quote":"Will not affect cycloned units (Tornado or Eul's Scepter of Divinity).","reason_zh":"说明仅指出已被吹起的单位不受脉冲影响，脉冲本身没有施加吹风或放逐的效果。"},
+        {"review_id":"943644663794109c304d","verdict":"holds","quote":"pulls enemy units into the EMP's center at %drag_speed% units per second","reason_zh":"魔晶升级仍能将敌方单位拉向脉冲中心。"},
+        {"review_id":"971771ea5ea6063d5b46","verdict":"holds","quote":"The detonation covers an area, draining mana based on the level of Wex .","reason_zh":"基础爆炸仍按雷元素等级削减目标法力。"},
+        {"review_id":"e3ecc540da945d8df118","verdict":"holds","quote":"Increases damage for each point of mana drained by EMP and pulls enemy units into the EMP's center at %drag_speed% units per second.","reason_zh":"烧蓝已由基础技能提供，魔晶仅提高每点烧蓝造成的伤害并增加牵引，因此排除魔晶单独提供烧蓝的判断成立。"},
+        {"review_id":"cbad3cce63ddbc88aed6","verdict":"holds","quote":"If EMP drains mana from an enemy hero, Invoker gains %self_mana_restore_pct%%% of the mana drained.","reason_zh":"削减敌方英雄的法力时，祈求者仍按削减量的一定比例回蓝。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "invoker_forge_spirit",
+      "rows": [
+        {"review_id":"audit:invoker_forge_spirit:armor_reduction:base","verdict":"holds","quote":"The elemental's scorching attack is capable of melting the armor of enemy heroes.","reason_zh":"熔炉精灵的攻击仍能降低敌方英雄的护甲。"},
+        {"review_id":"audit:invoker_forge_spirit:attack_modifier:base","verdict":"holds","quote":"The elemental's scorching attack is capable of melting the armor of enemy heroes.","reason_zh":"减甲随熔炉精灵的普通攻击施加，符合攻击特效的定义。"},
+        {"review_id":"87effc6084cec0d18eb7","verdict":"holds","quote":"attack range, health, and duration are based on the level of Quas . The elemental's scorching attack is capable of melting the armor of enemy heroes. The number of spirits spawned is determined by the lower level of Quas and Exort .","reason_zh":"技能仍召唤熔炉精灵，且明确说明精灵的生命值取决于冰元素等级。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "invoker_ghost_walk",
+      "rows": [
+        {"review_id":"1cb9f3085c8336d6fb95","verdict":"holds","quote":"Ghost Walk now also applies %ice_wall_damage_multiplier%x the Ice Wall Damage Per Second to enemy heroes in its area of effect.","reason_zh":"魔晶仍对范围内的敌方英雄造成寒冰之墙的每秒伤害，7.42将魔晶伤害倍率设为1.25。"},
+        {"review_id":"audit:invoker_ghost_walk:aura:base","verdict":"holds","quote":"The elemental imbalance created as a consequence slows nearby enemies based on the level of Quas","reason_zh":"减速持续作用于祈求者附近的敌人，仍是以祈求者为中心的敌方减速光环。"},
+        {"review_id":"audit:invoker_ghost_walk:healing:base","verdict":"holds","quote":"rendering his body invisible and gaining health and mana regen","reason_zh":"基础技能仍为祈求者提供生命恢复。"},
+        {"review_id":"64d5297ad3d1982cdb28","verdict":"holds","quote":"rendering his body invisible","reason_zh":"幽灵漫步仍使祈求者自身隐身。"},
+        {"review_id":"bb6d6ad8c9a37329f6db","verdict":"holds","quote":"gaining health and mana regen","reason_zh":"基础技能仍为祈求者提供法力恢复。"},
+        {"review_id":"184fa5a947ef4f4f4b52","verdict":"holds","quote":"slows nearby enemies based on the level of Quas","reason_zh":"基础技能仍降低附近敌人的移动速度，减速幅度取决于冰元素等级。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "invoker_ice_wall",
+      "rows": [
+        {"review_id":"c1dec8c619b837575142","verdict":"holds","quote":"The bitter cold emanating from it greatly slows nearby enemies based on the level of Quas and deals damage each second based on the level of Exort .","reason_zh":"冰墙仍可每秒对其附近的多个敌人造成伤害。"},
+        {"review_id":"audit:invoker_ice_wall:ground_zone:base","verdict":"holds","quote":"Generates a wall of solid ice directly in front of Invoker for a duration based on the level of Quas .","reason_zh":"冰墙仍在施放时的前方位置持续存在，使附近敌人持续受到减速和伤害。"},
+        {"review_id":"a2f3f5bc4639b440bb8b","verdict":"holds","quote":"Enemy heroes in its area for longer than %root_delay% seconds become rooted and take magic damage based on Quas .","reason_zh":"A杖升级仍会缠绕在区域内停留超过指定时间的敌方英雄。"},
+        {"review_id":"f51ce8d127f5248c330e","verdict":"holds","quote":"greatly slows nearby enemies based on the level of Quas","reason_zh":"基础冰墙仍能降低附近敌人的移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "invoker_sun_strike",
+      "rows": [
+        {"review_id":"747592b2d642d3462ddc","verdict":"holds","quote":"this damage is spread evenly over all enemies hit.","reason_zh":"基础伤害数值虽有调整，命中的多个敌人仍会均摊伤害。"},
+        {"review_id":"a78c1c6e9192882ca73a","verdict":"holds","quote":"Creates %cataclysm_count% visible %cataclysm_damage_pct%%% damage Sun Strikes within %cataclysm_min_range%-%cataclysm_max_range% range of each enemy hero.","reason_zh":"A杖触发的大灾变仍在每个敌方英雄附近产生阳炎冲击，一次施放可伤害多个敌人。"},
+        {"review_id":"9b660bb498afb3d3d96e","verdict":"holds","quote":"Invoker gains experience with kills made from Sun Strike, even if made from outside of experience range.","reason_zh":"该效果允许祈求者在经验范围外取得击杀经验，说明没有额外发放经验或金钱。"},
+        {"review_id":"9812505f11ea56b99195","verdict":"holds","quote":"Gives vision of the target area before the strike.","reason_zh":"冲击落下前仍会提供目标区域的视野。"},
+        {"review_id":"audit:invoker_sun_strike:summons:shard","verdict":"holds","quote":"If Sun Strike damages an enemy Hero, a Forge Spirit of current level is created at the location.","reason_zh":"魔晶升级仍在阳炎冲击伤害敌方英雄时，于该处召唤当前等级的熔炉精灵。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "invoker_tornado",
+      "rows": [
+        {"review_id":"audit:invoker_tornado:aoe_damage:base","verdict":"holds","quote":"Units are invulnerable while affected by Tornado, and the damage is dealt when landing.","reason_zh":"一次飓风仍能卷起路径上的多个敌人，并在他们落地时造成伤害。"},
+        {"review_id":"c455bf568f7823d55558","verdict":"holds","quote":"dealing damage based on Wex in a %twister_radius% radius every %twister_tick_rate% seconds","reason_zh":"A杖生成的小旋风仍按固定间隔在指定半径内造成范围伤害。"},
+        {"review_id":"18124be56e922136c173","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"基础技能仍明确施加弱驱散。"},
+        {"review_id":"76eff6b095de27abcfe6","verdict":"holds","quote":"picks up enemy units in its path, suspending them helplessly in the air","reason_zh":"基础飓风仍会将路径上的敌人卷至空中，使其暂时无法行动。"},
+        {"review_id":"audit:invoker_tornado:ground_zone:scepter","verdict":"holds","quote":"Tornado spawns twisters along its path. They persist for Tornado's duration plus additional time based on Quas , dealing damage based on Wex in a %twister_radius% radius every %twister_tick_rate% seconds.","reason_zh":"A杖仍沿路径留下持续存在的小旋风，在各自的作用半径内周期性造成伤害。"},
+        {"review_id":"20136efe598bc5601f28","verdict":"holds","quote":"Units are invulnerable while affected by Tornado, and the damage is dealt when landing.","reason_zh":"被飓风卷起的单位在空中仍处于无敌状态。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "jakiro_double_trouble",
+      "rows": [
+        {"review_id":"audit:jakiro_double_trouble:attack_modifier:base","verdict":"holds","quote":"Jakiro's attacks launch an attack from each head, but deal less damage each.","reason_zh":"每次普攻仍由两个头各发动一次攻击，单次攻击的伤害折减从51%调为50%。"},
+        {"review_id":"bdd9d699b862f68ff0ac","verdict":"unclear","quote":"attack_damage_reduction: 51→50","reason_zh":"材料只给出攻击伤害折减的变化，缺少判定能否被破坏所需的IsBreakable字段值。"},
+        {"review_id":"1cf9056a0b39a73b1927","verdict":"holds","quote":"The second attack ignores Damage Block.","reason_zh":"第二次攻击能无视伤害格挡，技能本身没有赋予承伤方护盾或减伤。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "jakiro_macropyre",
+      "rows": [
+        {"review_id":"a88d82585f1d2c31a1d5","verdict":"holds","quote":"deals damage per second to any enemy units caught in the fire.","reason_zh":"调整后各等级伤害仍大于零，火焰仍可同时伤害区域内多个敌人。"},
+        {"review_id":"audit:jakiro_macropyre:ground_zone:base","verdict":"holds","quote":"Jakiro exhales a wide line of lasting flames, which deals damage per second to any enemy units caught in the fire.","reason_zh":"基础技能仍在地面留下持续燃烧的火带，对其中的敌人逐秒造成伤害。"},
+        {"review_id":"audit:jakiro_macropyre:ground_zone:scepter","verdict":"holds","quote":"Jakiro emits two walls of ice along the edges of the Macropyre that slow any enemies trying to cross them by %ice_edge_movement_slow%%%.","reason_zh":"A杖升级仍沿火带两侧生成冰墙，敌人穿越这些区域时会受到减速。"},
+        {"review_id":"2b8ea9c77fd1f5ef174d","verdict":"holds","quote":"slow any enemies trying to cross them by %ice_edge_movement_slow%%%","reason_zh":"A杖冰墙仍会降低试图穿越它的敌人的移动速度。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "javelin",
+      "rows": [
+        {"review_id":"audit:javelin:attack_modifier:item","verdict":"holds","quote":"Grants each attack a %bonus_chance%%% chance to pierce through evasion and deal %bonus_chance_damage% bonus magical damage.","reason_zh":"标枪仍有概率使普通攻击附带额外魔法伤害。"},
+        {"review_id":"5c264e13ddd9d4f7ad3e","verdict":"holds","quote":"deal %bonus_chance_damage% bonus magical damage","reason_zh":"触发时直接造成额外魔法伤害，说明没有降低目标魔抗或增加其后续受到的魔法伤害。"},
+        {"review_id":"a581d07de7956f6aa2cc","verdict":"holds","quote":"a %bonus_chance%%% chance to pierce through evasion","reason_zh":"每次攻击仍有概率触发无视闪避。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "juggernaut_blade_fury",
+      "rows": [
+        {"review_id":"7408fd0f3da3a40cff1f","verdict":"holds","quote":"dealing damage every %blade_fury_damage_tick%s to nearby enemy units","reason_zh":"基础剑刃风暴仍周期性伤害主宰周围的多个敌方单位。"},
+        {"review_id":"f326696738e9506b9b76","verdict":"now_wrong","quote":"Applies a basic dispel at the start and end of the spin. DISPEL TYPE: Basic Dispel","reason_zh":"7.41f结束时的强驱散已改为开始和结束时各施加一次弱驱散。"},
+        {"review_id":"e34f0441ca6b11791787","verdict":"holds","quote":"rendering him debuff immune with %immunity_resist%%% magic resistance","reason_zh":"旋转期间主宰仍获得减益免疫。"}
+      ],
+      "new_mechanisms": [
+        {"mechanism":"applies_basic_dispel","condition":"base","quote":"Applies a basic dispel at the start and end of the spin.","reason_zh":"7.42的基础技能在旋转开始和结束时都会施加弱驱散。"}
+      ]
+    },
+    {
+      "subject": "juggernaut_healing_ward",
+      "rows": [
+        {"review_id":"audit:juggernaut_healing_ward:aura:base","verdict":"holds","quote":"Summons a Healing Ward which heals all nearby allied units, based on their max health. The Healing Ward moves at %healing_ward_movespeed_tooltip% movement speed after being summoned.","reason_zh":"治疗以可移动的守卫为中心，持续作用于守卫附近的所有友方单位。"},
+        {"review_id":"c20f8d937ae4e0dae860","verdict":"holds","quote":"heals all nearby allied units, based on their max health","reason_zh":"守卫仍按附近友方单位各自的最大生命值提供治疗。"},
+        {"review_id":"49fd3157811306c89414","verdict":"unclear","quote":"Summons a Healing Ward which heals all nearby allied units, based on their max health.","reason_zh":"基础说明确认会召出守卫，但没有交代守卫按生命值还是受攻击次数判定死亡，无法核实原排除判断。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "juggernaut_omni_slash",
+      "rows": [
+        {"review_id":"a31aebe8d8c97f75d245","verdict":"holds","quote":"Juggernaut continues to jump slash nearby random enemies (including the previously slashed enemy)","reason_zh":"一次施放仍能连续跳斩附近不同的敌人，符合多目标伤害的定义。"},
+        {"review_id":"60c8259359829a6b58ab","verdict":"holds","quote":"DISPEL TYPE: Basic Dispel","reason_zh":"7.42说明仍明确标注弱驱散。"},
+        {"review_id":"ecd599b5d2d6763c1d61","verdict":"holds","quote":"Juggernaut is invulnerable and has increased attack speed during Omnislash.","reason_zh":"主宰在无敌斩持续期间仍处于无敌状态。"},
+        {"review_id":"t5:juggernaut_omni_slash:pierces_debuff_immunity","verdict":"unclear","quote":"Juggernaut leaps towards the target enemy unit and then slashes it.","reason_zh":"说明确认可以跳斩敌方单位，但材料没有给出判定能否无视减益免疫所需的immunity字段值。"},
+        {"review_id":"d5c51bbe075846ce968b","verdict":"holds","quote":"Juggernaut leaps towards the target enemy unit and then slashes it.","reason_zh":"施放无敌斩仍会使主宰主动跃向目标，改变自身位置。"},
+        {"review_id":"audit:juggernaut_omni_slash:terrain_walk:base","verdict":"unclear","quote":"Juggernaut continues to jump slash nearby random enemies (including the previously slashed enemy)","reason_zh":"说明确认可以在敌人间跳斩，但未说明移动能否无视悬崖、树木等地形阻挡。"},
+        {"review_id":"21a89dfcc604949f819f","verdict":"holds","quote":"Juggernaut leaps towards the target enemy unit and then slashes it.","reason_zh":"施放时仍选择一个敌方单位作为首次跳斩目标。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "kaya",
+      "rows": [
+        {"review_id":"3c4d15cec20660fda248","verdict":"unclear","quote":"Multiple instances of this item do not stack.","reason_zh":"说明只交代同一物品不能叠加，所给字段也未列出任何回蓝数值，无法独立确认回蓝效果。"},
+        {"review_id":"b23ed9599099223fcc0d","verdict":"holds","quote":"spell_amp: 10→6","reason_zh":"法术放大从10降至6，仍有正值加成。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "kaya_and_sange",
+      "rows": [
+        {"review_id":"9ce58b76e83e3dbc4a31","verdict":"holds","quote":"mana_regen_multiplier: 30→25","reason_zh":"法力恢复倍率加成从30降至25，仍能提高自身回蓝。"},
+        {"review_id":"audit:kaya_and_sange:slow_resistance:item","verdict":"unclear","quote":"","reason_zh":"7.42没有提供装备说明，变化字段也未列出减速抗性，无法独立确认该属性。"},
+        {"review_id":"7815a5440e64441f63a8","verdict":"holds","quote":"spell_amp: 12→10","reason_zh":"法术放大从12降至10，仍能提高技能伤害。"}
+      ],
+      "new_mechanisms": []
+    },
+    {
+      "subject": "keeper_of_the_light_illuminate",
+      "rows": [
+        {"review_id":"401291ef4e383d8f2675","verdict":"holds","quote":"Once released, a wave is sent forth that deals damage and gives vision in its path.","reason_zh":"释放后的冲击波仍沿路径造成伤害，一次施放可伤及路径上的多个敌人。"},
+        {"review_id":"294f6bc7e9bb1f3b7700","verdict":"holds","quote":"CHANNELED - Channels light energy, building power the longer it's channeled.","reason_zh":"技能仍明确要求持续引导，引导时间决定冲击波的威力。"},
+        {"review_id":"cf692909ba900489e775","verdict":"holds","quote":"Gives increasing vision over the channeling time.","reason_zh":"引导期间提供的视野仍会逐渐扩大，释放后的冲击波也会提供路径视野。"}
+      ],
+      "new_mechanisms": []
+    }
+  ]
+}

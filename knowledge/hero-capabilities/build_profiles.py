@@ -1,8 +1,10 @@
 """Build evidence-backed dossiers. Text matches are review candidates, not ratings."""
 
+import argparse
 import hashlib
 import html
 import json
+import os
 import re
 from collections import Counter
 from pathlib import Path
@@ -71,29 +73,62 @@ def plain(value):
     return html.unescape(re.sub(r"<[^>]*>", "", value or "")).strip()
 
 
-def load_hero(hero_id, language):
+def load_hero(hero_id, language, snapshot):
     return json.loads(
-        (ROOT / "sources" / f"hero-{hero_id}-{language}.json").read_text(encoding="utf-8")
+        (snapshot / "sources" / f"hero-{hero_id}-{language}.json").read_text(encoding="utf-8")
     )["result"]["data"]["heroes"][0]
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--snapshot", type=Path)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--target-patch")
+    args = parser.parse_args()
+    if any((args.snapshot, args.output, args.target_patch)) and not all(
+        (args.snapshot, args.output, args.target_patch)
+    ):
+        parser.error("--snapshot, --output and --target-patch must be supplied together")
+    snapshot, output = args.snapshot or ROOT, args.output or ROOT
     manifest = json.loads((ROOT / "source-manifest.json").read_text(encoding="utf-8"))
     if manifest["errors"] or len(manifest["records"]) != manifest["expected_detail_files"]:
         raise ValueError("Incomplete source snapshot")
-    for record in manifest["records"] + manifest["catalog_files"]:
-        if hashlib.sha256((ROOT / record["file"]).read_bytes()).hexdigest() != record["sha256"]:
+    records = manifest["records"] + manifest["catalog_files"]
+    if args.snapshot:
+        receipt = json.loads((snapshot / "manifest.json").read_text(encoding="utf-8"))
+        if receipt["schema"] != "hero-source-manifest/2":
+            raise ValueError("Unexpected snapshot schema")
+        records = receipt["records"]
+        catalog = "sources/opendota-heroes.json"
+        entry = next(r for r in manifest["catalog_files"] if r["file"] == catalog)
+        if hashlib.sha256((ROOT / catalog).read_bytes()).hexdigest() != entry["sha256"]:
+            raise ValueError("Catalog fingerprint mismatch")
+        manifest["target_patch"] = args.target_patch
+    for record in records:
+        if hashlib.sha256((snapshot / record["file"]).read_bytes()).hexdigest() != record["sha256"]:
             raise ValueError(f"Source fingerprint mismatch: {record['file']}")
-    heroes = json.loads((ROOT / "sources/herolist-english.json").read_text(encoding="utf-8"))[
+    heroes = json.loads((snapshot / "sources/herolist-english.json").read_text(encoding="utf-8"))[
         "result"
     ]["data"]["heroes"]
     od = json.loads((ROOT / "sources/opendota-heroes.json").read_text(encoding="utf-8"))
+    source_prefix = Path(os.path.relpath(snapshot, ROOT)).as_posix() + "/" if args.snapshot else ""
+    source_links = Path(os.path.relpath(snapshot / "sources", output / "heroes")).as_posix()
     dossiers, coverage = [], []
-    (ROOT / "heroes").mkdir(exist_ok=True)
+    if args.snapshot:
+        required = {
+            f"sources/hero-{h['id']}-{lang}.json"
+            for h in heroes
+            for lang in ("english", "schinese")
+        }
+        required.add("sources/herolist-english.json")
+        if len(heroes) != receipt["heroes"] or not required <= {r["file"] for r in records}:
+            raise ValueError("Incomplete snapshot")
+        output.mkdir(exist_ok=False, parents=True)
+    (output / "heroes").mkdir(exist_ok=True)
     missing_desc, locale_missing, ability_count = [], [], 0
     for hero in heroes:
         hid = hero["id"]
-        en, zh = load_hero(hid, "english"), load_hero(hid, "schinese")
+        en, zh = load_hero(hid, "english", snapshot), load_hero(hid, "schinese", snapshot)
         if en["id"] != zh["id"] or en["name"] != zh["name"]:
             raise ValueError("Locale hero identity conflict")
         od_hero = od.get(str(hid))
@@ -101,7 +136,7 @@ def main():
         if not od_agreement:
             raise ValueError(f"Catalog identity conflict for {hid}")
         skills, signals = [], []
-        for collection in ("abilities", "facet_abilities"):
+        for collection in ("abilities",) if args.snapshot else ("abilities", "facet_abilities"):
             en_rows, zh_rows = en.get(collection, []), zh.get(collection, [])
             # Unknown source structure cannot silently be ignored.
             if not isinstance(en_rows, list) or not isinstance(zh_rows, list):
@@ -136,8 +171,8 @@ def main():
                         key: {"en": plain(ability.get(key)), "zh": plain(cn.get(key))}
                         for key in ("scepter_loc", "shard_loc")
                     },
-                    "facet_text_en": ability.get("facets_loc", []),
-                    "facet_text_zh": cn.get("facets_loc", []),
+                    "facet_text_en": [] if args.snapshot else ability.get("facets_loc", []),
+                    "facet_text_zh": [] if args.snapshot else cn.get("facets_loc", []),
                     "cast_ranges": ability.get("cast_ranges"),
                     "cooldowns": ability.get("cooldowns"),
                     "mana_costs": ability.get("mana_costs"),
@@ -170,7 +205,7 @@ def main():
                                 "ability": ability["name"],
                                 "matched_text": match.group(0),
                                 "evidence_description_en": desc,
-                                "source_file": f"sources/hero-{hid}-english.json",
+                                "source_file": f"{source_prefix}sources/hero-{hid}-english.json",
                                 "source_pointer": ref + "/desc_loc",
                                 "status": "text_signal_needs_review",
                                 "availability": "conditional_not_currently_available",
@@ -213,11 +248,11 @@ def main():
             },
             "abilities": skills,
             "talents_raw": en.get("talents", []),
-            "facets_raw": en.get("facets", []),
+            "facets_raw": [] if args.snapshot else en.get("facets", []),
             "capability_review_signals": signals,
             "source_files": [
-                f"sources/hero-{hid}-english.json",
-                f"sources/hero-{hid}-schinese.json",
+                f"{source_prefix}sources/hero-{hid}-english.json",
+                f"{source_prefix}sources/hero-{hid}-schinese.json",
             ],
             "open_questions": [
                 "Exact patch correspondence",
@@ -228,7 +263,7 @@ def main():
             ],
         }
         dossiers.append(profile)
-        (ROOT / "heroes" / f"{hid}.json").write_text(
+        (output / "heroes" / f"{hid}.json").write_text(
             json.dumps(profile, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
         lines = [
@@ -255,8 +290,8 @@ def main():
                 "",
                 s["description_zh"] or s["description_en"],
                 "",
-                f"来源：[中文原文](../sources/hero-{hid}-schinese.json)；"
-                f"[英文原文](../sources/hero-{hid}-english.json) `{s['source_pointer']}`。",
+                f"来源：[中文原文]({source_links}/hero-{hid}-schinese.json)；"
+                f"[英文原文]({source_links}/hero-{hid}-english.json) `{s['source_pointer']}`。",
                 "",
                 f"先天标记：{s['innate']}；神杖授予：{s['granted_by_scepter']}；魔晶授予：{s['granted_by_shard']}。",
                 "",
@@ -289,7 +324,7 @@ def main():
             f"完整数值、英文限制、天赋原文和证据见 [{hid}.json]({hid}.json)。",
         ]
         markdown = "\n".join(line.rstrip() for line in "\n".join(lines).splitlines()) + "\n"
-        (ROOT / "heroes" / f"{hid}.md").write_text(markdown, encoding="utf-8")
+        (output / "heroes" / f"{hid}.md").write_text(markdown, encoding="utf-8")
         coverage.append(
             {
                 "hero_id": hid,
@@ -309,7 +344,7 @@ def main():
         "dimensions": {k: v[0] for k, v in DIMENSIONS.items()},
         "heroes": dossiers,
     }
-    (ROOT / "hero-registry.json").write_text(
+    (output / "hero-registry.json").write_text(
         json.dumps(registry, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     checks = {
@@ -325,10 +360,10 @@ def main():
         "patch_verified": False,
         "heroes": coverage,
     }
-    (ROOT / "coverage.json").write_text(
+    (output / "coverage.json").write_text(
         json.dumps(checks, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    (ROOT / "HEROES.md").write_text(
+    (output / "HEROES.md").write_text(
         "# 全英雄档案索引\n\n官方当前快照；版本对应与机制解释待核验。\n\n"
         "| ID | 英雄 | 技能条目 | 档案 |\n|---|---|---|---|\n"
         + "\n".join(
