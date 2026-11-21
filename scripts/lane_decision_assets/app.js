@@ -170,6 +170,7 @@ function drawEquipment(frame) {
 function draw() {
   if (!current) return;
   const f = current.history[Number(el('frames').value)];
+  el('vision-coverage').hidden = !el('vision').checked || f.vision?.extras_sampled !== false;
   drawEquipment(f);
   el('ally').textContent = '最近存活队友：' + (f.ally ? zh(f.ally[1]) + '，距离 ' + f.ally[0] : '无位置记录');
   el('enemies').replaceChildren(...f.enemies.map(e => {
