@@ -129,6 +129,7 @@ def main() -> int:
                     [node, "--check", "scripts/gank_review_assets/app.js"],
                     [node, "--check", "scripts/lane_decision_assets/app.js"],
                     [node, "--test", "tests/test_coach_app_ui.cjs"],
+                    [node, "--test", "tests/test_lane_review_ui.cjs"],
                 ]
             )
         else:

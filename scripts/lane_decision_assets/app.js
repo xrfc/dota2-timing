@@ -11,11 +11,16 @@ const storageKey = () => (jungle ? 'jungle-review-v1:' : 'lane-review-v1:') + lo
 const portal = /^\/(lane|jungle|wave)\/(?:index\.html)?$/.test(location.pathname);
 const drafts = new Map(), committed = new Map(), sending = new Set(), errors = new Map();
 let reviewer;
+const firstKey = () => 'review-first:'+reviewer+':'+current.id;
 const exposureKey = () => 'review-exposure:'+reviewer+':'+current.id;
 function saved() {
   if (!portal) return JSON.parse(localStorage.getItem(storageKey()) || '{}');
-  const record = drafts.get(current.id) || committed.get(current.id) || {};
-  if (!record.first && !record.previewed && localStorage.getItem(exposureKey()) === '1') {
+  let record = drafts.get(current.id) || committed.get(current.id) || {};
+  if (!record.first) {
+    const first = localStorage.getItem(firstKey());
+    if (first) record = {...record, first, choice:record.choice || first};
+  }
+  if (!committed.get(current.id)?.first && !record.previewed && localStorage.getItem(exposureKey()) === '1') {
     return {...record, previewed:true};
   }
   return record;
@@ -24,6 +29,7 @@ function save(value) {
   if (!current) return;
   const record = {...saved(), ...value};
   if (portal) {
+    if (record.first && !localStorage.getItem(firstKey())) localStorage.setItem(firstKey(), record.first);
     if (record.previewed) localStorage.setItem(exposureKey(), '1');
     drafts.set(current.id, record);
     errors.delete(current.id);
