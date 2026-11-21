@@ -102,3 +102,12 @@ def test_route_from_lane_uses_latest_strictly_prior_hit_and_exact_circle():
     assert lane.route_from_lane(track, [954, 1000], 1000, camps) is None
     assert lane.route_from_lane(track, [955, 998], 1000, camps) is None
     assert lane.route_from_lane(track, [955], 999, camps) is None
+
+
+def test_public_death_state_excludes_dead_enemies_until_respawn():
+    tracks = {"carry": position(2, {900: (0, 0)}), "a": position(3, {}), "b": position(3, {})}
+    dead = lane.evidence_at(tracks, {}, "carry", 900, {"a", "b"})
+    assert all(e["dead"] for e in dead["enemies"])
+    assert lane.assess(dead, {"unit_state_raw": 0})[0] == "unknown"
+    alive = lane.evidence_at(tracks, {}, "carry", 900)
+    assert lane.assess(alive, {"unit_state_raw": 0})[0] == "retreat"

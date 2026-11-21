@@ -48,7 +48,7 @@ def lane_at(fronts, team, point):
     return None
 
 
-def evidence_at(tracks, visibility, hero, t):
+def evidence_at(tracks, visibility, hero, t, dead=()):
     """Only read enemy coordinates at seconds when visible to the player's team."""
     own = tracks[hero]
     here = own["pos"].get(t)
@@ -72,6 +72,7 @@ def evidence_at(tracks, visibility, hero, t):
         enemies.append(
             {
                 "hero": name,
+                **({"dead": True} if name in dead else {}),
                 "last_seen": last,
                 "distance": round(dist(here, location)) if location is not None else None,
             }
@@ -96,10 +97,9 @@ def assess(frame, state):
     states = decode(state.get("unit_state_raw"))
     if states is None or {"stunned", "hexed", "rooted"} & set(states):
         return "unknown", "移动状态缺失或受到控制，无法确认可以安全转身。"
-    nearby = [e for e in frame["enemies"] if e["distance"] is not None and e["distance"] <= 1600]
-    missing = sum(
-        e["last_seen"] is None or frame["t"] - e["last_seen"] >= 10 for e in frame["enemies"]
-    )
+    threats = [e for e in frame["enemies"] if not e.get("dead")]
+    nearby = [e for e in threats if e["distance"] is not None and e["distance"] <= 1600]
+    missing = sum(e["last_seen"] is None or frame["t"] - e["last_seen"] >= 10 for e in threats)
     ally = frame["ally"]
     if nearby and (not ally or ally[0] >= 1500):
         return (
@@ -118,11 +118,11 @@ def assess(frame, state):
         and ally[0] <= 1000
         and not nearby
         and len(frame["enemies"]) == 5
-        and all(e["distance"] is not None for e in frame["enemies"])
+        and all(e["distance"] is not None for e in threats)
     ):
         return (
             "farm",
-            "1000 内有存活队友，五名敌人当前都有可见位置，当前没有看到 1600 内的敌人。"
+            "1000 内有存活队友，存活敌人当前都有可见位置，当前没有看到 1600 内的敌人。"
             "短留收线有视野和支援依据。",
         )
     return "unknown", "当前可见敌情和队友距离不足以区分短留与后撤的收益。"
@@ -153,7 +153,12 @@ def _context(match, mid, hero, t, visibility, state, means):
     history = [
         frame
         for sec in (t - 10, t - 5, t)
-        if (frame := evidence_at(match["tracks"], visibility, hero, sec)) is not None
+        if (
+            frame := evidence_at(
+                match["tracks"], visibility, hero, sec, match.get("dead_at", {}).get(sec, ())
+            )
+        )
+        is not None
     ]
     for frame in history:
         frame["wards"] = [
@@ -239,7 +244,7 @@ def jungle_seconds(events, hero):
 
 
 def _jungle_reason(frame):
-    missing = sum(e["distance"] is None for e in frame["enemies"])
+    missing = sum(e["distance"] is None for e in frame["enemies"] if not e.get("dead"))
     ally = frame["ally"]
     support = f"最近队友相距 {ally[0]}。" if ally else "当前没有存活队友的位置记录。"
     markers = frame["markers"]

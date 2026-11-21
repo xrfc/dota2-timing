@@ -131,6 +131,7 @@ def build_match(root, mid, means, mode="lane"):
     del events
     inventories = {}
     summons = {}
+    match["dead_at"] = {}
     states = {h: {} for h in heroes}
     wanted = {h: set(times) for h, times in hits.items()}
     with gzip.open(root / "state-v3" / f"{mid}.jsonl.gz", "rt") as stream:
@@ -141,6 +142,8 @@ def build_match(root, mid, means, mode="lane"):
             summons[row["t"]] = row["world"].get("summons") or ()
             for state in row["heroes"]:
                 h = state["hero"]
+                if state.get("life_state") in (1, 2):
+                    match["dead_at"].setdefault(row["t"], set()).add(h)
                 if state.get("items") is not None:
                     inventories[h, row["t"]] = {
                         slot: item["name"]
