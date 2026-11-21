@@ -62,6 +62,22 @@ PYTHONPATH=src .venv/bin/python scripts/lane_decision_review.py --mode jungle --
 
 行动比较使用同一决策秒。支援估算比较立即出发与多刷六秒，列出固定目的地下直线和多绕三成两种距离情景；有明确位移资料或可用卷轴与己方塔时另列条件。敌方接触按最近露头及简化移动情景，列明可见装备与己方应对。发育以此前二十秒补刀、己方兵线和附近营地描述可能去向。营地存量、下件装备目标、每刀金币与击杀概率仍缺少依据。队友后续受击、实际补刀只在结果中揭示，最近受击秒不能独立确定交战结束。
 
+## 邀请朋友在线评审
+
+在本机以 scripts/friend_review_server.py 启动独立门户。三个 action-comparison 报告目录名使用生成版本 -001；部署时将 scripts/lane_decision_assets 中的 HTML、JS 和 CSS 同步至三个站点。服务只监听回环地址，通过能保留 Host 的 HTTPS 反向代理转发门户端口。每位朋友单独分发一个邀请码；重复使用同一码会进入同一评审身份。点击提交后保存到服务端，受邀者只能读取自己的记录。数据库与邀请码只放在忽略版本控制的私有目录。
+
+```bash
+.venv/bin/python scripts/friend_review_server.py --db reports/friend-review-private/reviews.sqlite3 --port 8798 serve
+.venv/bin/python scripts/friend_review_server.py --db reports/friend-review-private/reviews.sqlite3 issue
+.venv/bin/python scripts/friend_review_server.py --db reports/friend-review-private/reviews.sqlite3 export
+```
+
+步行耗时核验可运行 PYTHONPATH=src .venv/bin/python scripts/check_support_travel.py。固定八秒终点的 119 段中，39 段落入直线与多绕三成之间。按每段实际终点回看，只校验移动尺度。结果阶段另列玩家是否靠近决策秒的队友位置。
+
+119 段连续移动中，以起点移速换算，每秒坐标连线比首尾直线多出的耗时中位数为 1.46 秒。实际八秒减去连线估时的有符号差值中位数为 +0.07 秒；正负偏差可抵消。直线与绕行三成的平均绝对误差分别为 2.55 和 2.94 秒。 逐秒连线会漏掉秒内转向；残差还包含移速变化。终点取自事后录像，只用于核验。
+
 兵线判断使用本秒公开的阵亡状态。仍在复活倒计时的敌人从失踪与接近威胁计数中排除；只有坐标缺失时，继续按视野记录估算。
 
 7.41f 的回城卷轴消耗 75 魔法。支援估算只在当前魔法足够时给出立即传送时间；魔法缺失时页面提示待确认。
+
+在线页面按评审者和片段在当前浏览器保存首次选择与提前看过分析的标记，刷新后可继续编辑当前意见。点击“提交本段评审”才会写入服务端。
