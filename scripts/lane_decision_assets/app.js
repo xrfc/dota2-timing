@@ -196,6 +196,16 @@ async function reveal() {
     : o.complete ? '随后 20 秒内没有死亡记录。' : '录像结束，后续观察窗口不完整。';
   el('outcome').textContent += jungle ? ' 观察窗内亲自击杀野怪 '+o.jungle_last_hits+' 个。' : ' 观察窗内记录到 ' + o.lane_last_hits + ' 个敌方线上小兵补刀。';
   for (const data of [o.support_followup,o.farm_value]) if (data?.summary) el('outcome').textContent += ' '+data.summary;
+  if (o.walk_hit_window) {
+    const labels = {
+      both_before_hit: '两种步行估时均能赶在一次已记录受击之前或同秒到达',
+      direct_only: '仅直线路线能赶在一次已记录受击之前或同秒到达',
+      after_observed_hits: '两种步行估时均晚于窗内最后一次受击',
+      unknown: '证据不足'
+    };
+    const check = o.walk_hit_window;
+    el('outcome').textContent += ' 按队友决策秒的位置核对：立即出发，'+labels[check.now]+'；再刷六秒，'+labels[check.after_six]+'。实际能否施救仍未知。';
+  }
   el('reveal').disabled = true;
 }
 function openCase() {

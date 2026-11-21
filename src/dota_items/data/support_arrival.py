@@ -135,3 +135,28 @@ def observed_approach(track, t, last, target):
         "first_entry_offset": first_entry,
         "summary": f"队友决策位置周围 {radius} 单位：{text}实际施救情况需核对交战记录。",
     }
+
+
+def walk_hit_window(walk, followup):
+    """Compare fixed-position walking scenarios with observable future ally damage."""
+    hits = followup["hit_offsets"]
+    complete = followup["complete"]
+    last_hit = hits[-1] if hits else None
+
+    def classify(interval):
+        if not interval or last_hit is None:
+            return "unknown"
+        low, high = interval
+        if high <= last_hit:
+            return "both_before_hit"
+        if low <= last_hit:
+            return "direct_only"
+        return "after_observed_hits" if complete else "unknown"
+
+    return {
+        "last_hit": last_hit,
+        "hit_offsets": hits,
+        "complete": complete,
+        "now": classify(walk.get("now")),
+        "after_six": classify(walk.get("after_six")),
+    }

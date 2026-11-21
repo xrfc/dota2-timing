@@ -32,7 +32,12 @@ from dota_items.data.lane_decisions import (
     route_from_lane,
     wave_opportunities,
 )
-from dota_items.data.support_arrival import observed_approach, support_comparison, support_followup
+from dota_items.data.support_arrival import (
+    observed_approach,
+    support_comparison,
+    support_followup,
+    walk_hit_window,
+)
 from dota_items.data.vision_sim import RANGE, Terrain, extra_sources, is_day, sees, team_sources
 from dota_items.storage import read_json, write_json
 
@@ -210,6 +215,9 @@ def build_match(root, mid, means, mode="lane"):
                     states[h][t], match["tracks"][ally]["pos"][t], buildings, mobility
                 )
                 outcome["support_followup"] = support_followup(damage, ally, t, match["last"])
+                outcome["walk_hit_window"] = walk_hit_window(
+                    evidence["arrival"]["routes"].get("walk", {}), outcome["support_followup"]
+                )
                 outcome["observed_approach"] = observed_approach(
                     match["tracks"][h]["pos"], t, match["last"], match["tracks"][ally]["pos"][t]
                 )

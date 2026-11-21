@@ -81,3 +81,16 @@ PYTHONPATH=src .venv/bin/python scripts/lane_decision_review.py --mode jungle --
 7.41f 的回城卷轴消耗 75 魔法。支援估算只在当前魔法足够时给出立即传送时间；魔法缺失时页面提示待确认。
 
 在线页面按评审者和片段在当前浏览器保存首次选择与提前看过分析的标记，刷新后可继续编辑当前意见。点击“提交本段评审”才会写入服务端。
+
+## 事后核对支援步行耗时
+
+揭示结果时，页面将直线和绕行三成两种步行估时，分别与同一个支援对象在随后 20 秒内实际受到敌方英雄伤害的秒点对照。等六秒的情景沿用决策时的位置、移速和目的地，将两种到场估时各加六秒。估时等于受击秒计为同秒到达。结果只描述到队友原位置的条件，队友可能移动，能够到场也不能证明可以施救。
+
+已有同格式报告可以直接导出逐段 CSV，无需重新解析 demo。在项目根目录运行以下命令，参数替换为本地已有报告目录。
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/check_support_travel.py \
+  --review-dir reports/lane-decisions-local reports/jungle-review-local > support-windows.csv
+```
+
+每行保留比赛、英雄、决策秒、支援对象、两个出发方案的步行耗时、实际受击秒点以及观察窗是否完整。`both_before_hit` 表示两个步行情景都能在某次受击之前或同秒到达；`direct_only` 表示仅直线情景满足；`after_observed_hits` 表示两种估时都晚于完整观察窗内的最后一次受击。没有后续受击或缺少路线时记为 `unknown`。录像提前结束时，已经看到的受击仍可用作正向证据，推断会错过后续受击则保留未知。没有支援对象或旧报告缺字段的片段仍占一行，原因写入 `reason`。表中无草案评分或训练标签。
