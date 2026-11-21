@@ -25,13 +25,19 @@ LOGIN = """<!doctype html><html lang="zh-CN"><meta charset=utf-8>
 <title>录像复盘</title><h1>录像复盘</h1><form method=post action="/login">
 <label>邀请码 <input name=code type=password required maxlength=128></label>
 <button>进入复盘</button></form></html>"""
-HOME = """<!doctype html><html lang="zh-CN"><meta charset=utf-8><title>选择复盘</title>
-<h1>选择复盘</h1><p><a href="/lane/">带线</a> · <a href="/jungle/">打野</a> ·
-<a href="/wave/">补刀前的兵线取舍</a></p></html>"""
+MODE_LABELS = {"lane": "带线", "jungle": "打野", "wave": "补刀前的兵线取舍"}
+UI_DIR = Path(__file__).with_name("lane_decision_assets")
 
 
 def digest(value):
     return hashlib.sha256(value.encode()).hexdigest()
+
+
+def case_sha256(case):
+    """Fingerprint the decision-time case object as stored in cases.json."""
+    return digest(
+        json.dumps(case, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    )
 
 
 def initialize(db):
@@ -46,6 +52,10 @@ def initialize(db):
         CREATE TABLE IF NOT EXISTS reviews (
             reviewer TEXT NOT NULL, case_id TEXT NOT NULL, choice TEXT, first TEXT,
             previewed INTEGER NOT NULL, note TEXT NOT NULL, PRIMARY KEY(reviewer,case_id));
+        CREATE TABLE IF NOT EXISTS review_versions (
+            reviewer TEXT NOT NULL, case_id TEXT NOT NULL, case_sha256 TEXT NOT NULL,
+            choice TEXT, first TEXT, previewed INTEGER NOT NULL, note TEXT NOT NULL,
+            PRIMARY KEY(reviewer,case_id,case_sha256));
         CREATE TABLE IF NOT EXISTS failures (at INTEGER NOT NULL);
         """)
 
@@ -61,25 +71,53 @@ def issue(db):
     return code
 
 
-def catalogue(root):
-    assets, cases = {}, {}
-    for mode in MODES:
-        folder = (root / f"action-comparison-{mode}-001").resolve()
+def catalogue(folders, current_ui, eligible_ids):
+    assets, cases, packets, versions = {}, {}, {}, {}
+    if not folders or not set(folders) <= set(MODES):
+        raise ValueError("expected lane, jungle or wave reports")
+    for mode, folder in folders.items():
+        folder = Path(folder).resolve()
         base = f"/{mode}/"
         files = ["index.html", "map.jpg", "app.js", "style.css", "cases.json"]
-        for case in json.loads((folder / "cases.json").read_text(encoding="utf-8"))["cases"]:
+        packet = json.loads((folder / "cases.json").read_text(encoding="utf-8"))
+        if packet.get("mode", "lane") != mode:
+            raise ValueError(f"{folder}: wrong report mode")
+        if eligible_ids is not None:
+            packet["cases"] = [
+                case
+                for case in packet["cases"]
+                if isinstance(case, dict)
+                and isinstance(case.get("id"), str)
+                and case["id"] in eligible_ids
+            ]
+            if not packet["cases"]:
+                continue
+        packet_versions = {}
+        for case in packet["cases"]:
             key = case["id"]
             if not re.fullmatch(r"[a-zA-Z0-9_-]+", key) or key in cases:
                 raise ValueError("invalid or duplicate case id")
             cases[key] = mode
+            packet_versions[key] = case_sha256(case)
             files += [f"actions/{key}.json", f"outcomes/{key}.json"]
+        versions.update(packet_versions)
+        # Serve this very snapshot; replacing reports on disk takes effect after restart.
+        packet["case_versions"] = packet_versions
+        packets[base + "cases.json"] = json.dumps(packet, ensure_ascii=False).encode()
         for name in files:
+            if current_ui and name in ("index.html", "app.js", "style.css"):
+                assets[base + name] = UI_DIR / name
+                continue
             path = folder / name
             if path.resolve().parent not in (folder, folder / "actions", folder / "outcomes"):
                 raise ValueError("report asset outside expected directory")
-            assets[base + name] = path
+            if name.startswith(("actions/", "outcomes/")):
+                if path.is_file():
+                    packets[base + name] = path.read_bytes()
+            else:
+                assets[base + name] = path
         assets[base] = assets[base + "index.html"]
-    return assets, cases
+    return assets, cases, packets, versions
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -127,25 +165,69 @@ class Handler(BaseHTTPRequestHandler):
             reviewer = self.session(conn)
             if path == "/":
                 return self.respond(
-                    200, (HOME if reviewer else LOGIN).encode(), "text/html; charset=utf-8"
+                    200,
+                    (self.server.home if reviewer else LOGIN).encode(),
+                    "text/html; charset=utf-8",
                 )
             if reviewer is None:
                 return self.respond(401)
             if path == "/reviews":
+                if self.headers.get("X-Review-Version") == "1":
+                    rows = conn.execute(
+                        "SELECT case_id,case_sha256,choice,first,previewed,note "
+                        "FROM review_versions WHERE reviewer=? ORDER BY case_id",
+                        (reviewer,),
+                    )
+                    current, previously_seen = [], set()
+                    for key, sha, choice, first, previewed, note in rows:
+                        if self.server.versions.get(key) == sha:
+                            current.append(
+                                dict(
+                                    case_id=key,
+                                    case_sha256=sha,
+                                    choice=choice,
+                                    first=first,
+                                    previewed=bool(previewed),
+                                    note=note,
+                                )
+                            )
+                        elif first or previewed:
+                            previously_seen.add(key)
+                    previously_seen.update(
+                        row[0]
+                        for row in conn.execute(
+                            "SELECT case_id FROM reviews WHERE reviewer=? "
+                            "AND (first IS NOT NULL OR previewed=1)",
+                            (reviewer,),
+                        )
+                    )
+                    return self.json(
+                        dict(
+                            reviewer=reviewer,
+                            reviews=current,
+                            previously_seen=sorted(previously_seen.intersection(self.server.cases)),
+                        )
+                    )
                 rows = conn.execute(
                     "SELECT case_id,choice,first,previewed,note FROM reviews "
                     "WHERE reviewer=? ORDER BY case_id",
                     (reviewer,),
                 )
                 return self.json(
-                    {
-                        "reviewer": reviewer,
-                        "reviews": [
+                    dict(
+                        reviewer=reviewer,
+                        reviews=[
                             dict(case_id=k, choice=c, first=f, previewed=bool(p), note=n)
                             for k, c, f, p, n in rows
+                            if k in self.server.cases
                         ],
-                    }
+                    )
                 )
+        if path in self.server.packets:
+            expected = self.headers.get("X-Case-SHA256")
+            if expected is not None and expected != self.server.versions.get(Path(path).stem):
+                return self.respond(409)
+            return self.respond(200, self.server.packets[path], "application/json")
         asset = self.server.assets.get(path)
         if asset is None or not asset.is_file():
             return self.respond(404)
@@ -238,26 +320,94 @@ class Handler(BaseHTTPRequestHandler):
             note.encode("utf-8")
         except UnicodeError:
             return self.respond(400)
-        conn.execute(
-            """
-        INSERT INTO reviews VALUES (?,?,?,?,?,?)
-        ON CONFLICT(reviewer,case_id) DO UPDATE SET choice=excluded.choice,
-        first=coalesce(reviews.first,excluded.first),
-        previewed=CASE WHEN reviews.first IS NULL THEN max(reviews.previewed,excluded.previewed)
-                       ELSE reviews.previewed END, note=excluded.note
-        """,
-            (reviewer, key, choice, first or choice, previewed, note),
-        )
+        sha = row.get("case_sha256")
+        if self.headers.get("X-Review-Version") == "1" or "case_sha256" in row:
+            if sha != self.server.versions[key]:
+                return self.respond(409)
+            conn.execute("BEGIN IMMEDIATE")
+            seen_earlier = conn.execute(
+                "SELECT 1 FROM reviews WHERE reviewer=? AND case_id=? "
+                "AND (first IS NOT NULL OR previewed=1) "
+                "UNION ALL SELECT 1 FROM review_versions WHERE reviewer=? AND case_id=? "
+                "AND case_sha256<>? AND (first IS NOT NULL OR previewed=1) LIMIT 1",
+                (reviewer, key, reviewer, key, sha),
+            ).fetchone()
+            conn.execute(
+                """
+                INSERT INTO review_versions VALUES (?,?,?,?,?,?,?)
+                ON CONFLICT(reviewer,case_id,case_sha256) DO UPDATE SET choice=excluded.choice,
+                first=coalesce(review_versions.first,excluded.first),
+                previewed=CASE WHEN review_versions.first IS NULL
+                               THEN max(review_versions.previewed,excluded.previewed)
+                               ELSE review_versions.previewed END, note=excluded.note
+                """,
+                (
+                    reviewer,
+                    key,
+                    sha,
+                    choice,
+                    first or choice,
+                    previewed or bool(seen_earlier),
+                    note,
+                ),
+            )
+            final_first, final_previewed = conn.execute(
+                "SELECT first,previewed FROM review_versions "
+                "WHERE reviewer=? AND case_id=? AND case_sha256=?",
+                (reviewer, key, sha),
+            ).fetchone()
+            conn.commit()
+            return self.json({"ok": True, "first": final_first, "previewed": bool(final_previewed)})
+        else:
+            # Legacy clients cannot attest which report they opened.
+            conn.execute(
+                """
+                INSERT INTO reviews VALUES (?,?,?,?,?,?)
+                ON CONFLICT(reviewer,case_id) DO UPDATE SET choice=excluded.choice,
+                first=coalesce(reviews.first,excluded.first),
+                previewed=CASE WHEN reviews.first IS NULL
+                               THEN max(reviews.previewed,excluded.previewed)
+                               ELSE reviews.previewed END, note=excluded.note
+                """,
+                (reviewer, key, choice, first or choice, previewed, note),
+            )
         conn.commit()
         self.json({"ok": True})
 
 
-def make_server(root, db, port=0):
+def make_server(root, db, port=0, *, folders=None, current_ui=False, eligible_ids=None):
+    if folders is None:
+        folders = {mode: root / f"action-comparison-{mode}-001" for mode in MODES}
+    assets, cases, packets, versions = catalogue(folders, current_ui, eligible_ids)
     initialize(db)
     server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    server.assets, server.cases = catalogue(root)
+    server.assets, server.cases, server.packets, server.versions = assets, cases, packets, versions
+    links = " · ".join(
+        f'<a href="/{mode}/">{MODE_LABELS[mode]}</a>' for mode in folders if f"/{mode}/" in assets
+    )
+    server.home = (
+        '<!doctype html><html lang="zh-CN"><meta charset=utf-8><title>选择复盘</title>'
+        f"<h1>选择复盘</h1><p>{links}</p></html>"
+    )
     server.db = db
     return server
+
+
+def read_reviews(db):
+    """Read both historical and version-bound opinions without mutating an older database."""
+    with closing(sqlite3.connect(db.resolve().as_uri() + "?mode=ro", uri=True)) as conn:
+        conn.row_factory = sqlite3.Row
+        query = (
+            "SELECT reviewer,case_id,NULL AS case_sha256,choice,first,previewed,note FROM reviews"
+        )
+        if conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='review_versions'"
+        ).fetchone():
+            query += (
+                " UNION ALL SELECT reviewer,case_id,case_sha256,choice,first,previewed,note "
+                "FROM review_versions"
+            )
+        return [dict(row) for row in conn.execute(query + " ORDER BY reviewer,case_id,case_sha256")]
 
 
 def main():
@@ -270,10 +420,7 @@ def main():
     if args.command == "issue":
         print(issue(args.db))
     elif args.command == "export":
-        with closing(sqlite3.connect(args.db.resolve().as_uri() + "?mode=ro", uri=True)) as conn:
-            conn.row_factory = sqlite3.Row
-            rows = conn.execute("SELECT * FROM reviews ORDER BY reviewer,case_id")
-            print(json.dumps([dict(row) for row in rows], ensure_ascii=False, indent=2))
+        print(json.dumps(read_reviews(args.db), ensure_ascii=False, indent=2))
     else:
         with make_server(args.root, args.db, args.port) as server:
             server.serve_forever()

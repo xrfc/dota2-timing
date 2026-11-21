@@ -83,12 +83,12 @@ test('first independent choice survives viewing analysis and reloading before su
       localStorage: {getItem:k => storage.get(k), setItem:(k,v) => storage.set(k,v)},
       fetch:async (url, options) => {
         if (url === '/reviews' && !options) return new Promise(() => {});
-        if (options) posts.push(JSON.parse(options.body));
+        if (options?.method === 'POST') posts.push(JSON.parse(options.body));
         return {ok:true, json:async () => ({ok:true})};
       }
     });
     vm.runInContext(script, context);
-    vm.runInContext("current={id:'case'};reviewer='a';", context);
+    vm.runInContext("current={id:'case'};reviewer='a';caseVersions.case='sha';", context);
     return context;
   }
   await vm.runInContext("judge('farm')", page());
@@ -125,4 +125,15 @@ test('support window is revealed with the outcome and older reports still open',
   outcome = {...outcome, walk_hit_window: {now:'both_before_hit', after_six:'after_observed_hits'}};
   await vm.runInContext('reveal()', context);
   assert.match(element('outcome').textContent, /立即出发，.*同秒到达.*再刷六秒，.*晚于/);
+});
+
+test('changing case evidence cannot restore a previous version as a fresh blind choice', () => {
+  const run = queuePage();
+  run("reviewer='a'; current={id:'k'}; caseVersions.k='old'; save({choice:'farm',first:'farm'});");
+  run("localStorage.setItem(lastAnalysisKey('k'), 'old'); drafts.clear(); caseVersions.k='new';");
+  assert.equal(run("saved('k').first"), undefined);
+  assert.equal(run("saved('k').previewed"), true);
+  run("localStorage.setItem('review-first:a:legacy','farm'); caseVersions.legacy='new';");
+  assert.equal(run("saved('legacy').first"), undefined);
+  assert.equal(run("saved('legacy').previewed"), true);
 });

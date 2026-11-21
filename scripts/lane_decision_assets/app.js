@@ -11,8 +11,12 @@ const storageKey = id => (jungle ? 'jungle-review-v1:' : 'lane-review-v1:') + lo
 const portal = /^\/(lane|jungle|wave)\/(?:index\.html)?$/.test(location.pathname);
 const drafts = new Map(), committed = new Map(), sending = new Set(), errors = new Map();
 let reviewer;
-const firstKey = id => 'review-first:'+reviewer+':'+id;
-const exposureKey = id => 'review-exposure:'+reviewer+':'+id;
+let caseVersions = {};
+const previouslySeen = new Set();
+const reviewerKey = id => reviewer + ':' + id;
+const firstKey = id => 'review-first:' + reviewerKey(id) + ':' + caseVersions[id];
+const exposureKey = id => 'review-exposure:' + reviewerKey(id) + ':' + caseVersions[id];
+const lastAnalysisKey = id => 'review-last-analysis:' + reviewerKey(id);
 function saved(id = current.id) {
   if (!portal) return JSON.parse(localStorage.getItem(storageKey(id)) || '{}');
   let record = drafts.get(id) || committed.get(id) || {};
@@ -20,7 +24,12 @@ function saved(id = current.id) {
     const first = localStorage.getItem(firstKey(id));
     if (first) record = {...record, first, choice:record.choice || first};
   }
-  if (!committed.get(id)?.first && !record.previewed && localStorage.getItem(exposureKey(id)) === '1') {
+  const lastVersion = localStorage.getItem(lastAnalysisKey(id));
+  const legacySeen = localStorage.getItem('review-first:' + reviewerKey(id)) ||
+    localStorage.getItem('review-exposure:' + reviewerKey(id));
+  const seenEarlier = previouslySeen.has(id) || legacySeen || (lastVersion && lastVersion !== caseVersions[id]);
+  if (!committed.get(id)?.first && !record.previewed &&
+      (seenEarlier || localStorage.getItem(exposureKey(id)) === '1')) {
     return {...record, previewed:true};
   }
   return record;
@@ -122,21 +131,26 @@ function submissionStatus() {
 async function submitReview() {
   const id = current.id, row = saved();
   if (sending.has(id)) return;
-  const record = {case_id:id, choice:row.choice || null, first:row.first || null,
+  const record = {case_id:id, case_sha256:caseVersions[id], choice:row.choice || null, first:row.first || null,
     previewed:Boolean(row.previewed), note:row.note || ''};
   sending.add(id); errors.delete(id); submissionStatus();
   try {
     const r = await fetch('/reviews', {method:'POST', headers:{
-      'Content-Type':'application/json', 'X-Review-Reviewer':reviewer}, body:JSON.stringify(record)});
-    if (r.status === 401 || r.status === 409) throw Error('登录状态已变更，请重新进入评审页。');
-    if (!r.ok || !(await r.json()).ok) throw Error('提交未成功，请重试。');
-    committed.set(id, record);
+      'Content-Type':'application/json', 'X-Review-Reviewer':reviewer, 'X-Review-Version':'1'}, body:JSON.stringify(record)});
+    if (r.status === 401 || r.status === 409) throw Error('登录状态或片段版本已变更，请刷新评审页。');
+    if (!r.ok) throw Error('提交未成功，请重试。');
+    const acknowledgment = await r.json();
+    if (!acknowledgment.ok) throw Error('提交未成功，请重试。');
+    committed.set(id, {...record, first: acknowledgment.first, previewed: acknowledgment.previewed});
     if (drafts.get(id) === row) drafts.delete(id);
   } catch (err) { errors.set(id, err.message); }
   finally { sending.delete(id); submissionStatus(); refreshReviewQueue(); }
 }
 async function read(path) {
-  const r = await fetch(path);
+  const key = /^(?:actions|outcomes)\/([a-zA-Z0-9_-]+)\.json$/.exec(path);
+  const r = portal && key && caseVersions[key[1]]
+    ? await fetch(path, {headers:{'X-Case-SHA256':caseVersions[key[1]]}}) : await fetch(path);
+  if (r.status === 409) throw Error('片段版本已变更，请刷新评审页。');
   if (!r.ok) throw Error('读取失败：' + path);
   return r.json();
 }
@@ -170,6 +184,7 @@ function drawEquipment(frame) {
 function draw() {
   if (!current) return;
   const f = current.history[Number(el('frames').value)];
+  el('vision-coverage').hidden = !el('vision').checked || f.vision?.extras_sampled !== false;
   drawEquipment(f);
   el('ally').textContent = '最近存活队友：' + (f.ally ? zh(f.ally[1]) + '，距离 ' + f.ally[0] : '无位置记录');
   el('enemies').replaceChildren(...f.enemies.map(e => {
@@ -255,6 +270,7 @@ async function showAnalysis() {
   const a = await read('actions/' + current.id + '.json');
   if (seq !== revision) return;
   if (!saved().first) { save({previewed:true}); refreshReviewQueue(); }
+  if (portal) localStorage.setItem(lastAnalysisKey(current.id), caseVersions[current.id]);
   el('review').hidden = false; el('outcome').textContent = ''; el('reveal').disabled = false;
   el('advice').textContent = (jungle ? '当时的行动依据：' : '事前规则草案：' + labels[a.lean] + '。') + a.reason;
   el('action').textContent = '录像动作：' + a.detail;
@@ -328,18 +344,28 @@ el('choices').onclick = e => { if(e.target.dataset.choice) judge(e.target.datase
 el('preview').onclick = () => showAnalysis().catch(fail);
 el('reveal').onclick = () => reveal().catch(fail);
 async function loadPage() {
-  if (portal) {
-    const r = await fetch('/reviews', {cache:'no-store'});
-    if (!r.ok) throw Error('无法读取个人评审，请返回邀请入口重新登录。');
-    const snapshot = await r.json();
-    reviewer = snapshot.reviewer;
-    if (!reviewer || !Array.isArray(snapshot.reviews)) throw Error('个人评审响应不完整，请刷新。');
-    for (const row of snapshot.reviews) committed.set(row.case_id, row);
-    el('online-review').hidden = false;
-    el('submit-review').onclick = submitReview;
-    document.querySelector('label[for=notes]').textContent = '判断依据或异议（点提交后交给组织者）';
+  if (!portal) return read('cases.json');
+  const r = await fetch('/reviews', {cache:'no-store', headers:{'X-Review-Version':'1'}});
+  if (!r.ok) throw Error('无法读取个人评审，请返回邀请入口重新登录。');
+  const snapshot = await r.json();
+  reviewer = snapshot.reviewer;
+  if (!reviewer || !Array.isArray(snapshot.reviews) || !Array.isArray(snapshot.previously_seen)) {
+    throw Error('门户版本或个人评审响应不匹配，请更新报告页面后刷新。');
   }
-  return read('cases.json');
+  const packet = await read('cases.json');
+  caseVersions = packet.case_versions;
+  if (!caseVersions || packet.cases.some(c => !/^[a-f0-9]{64}$/.test(caseVersions[c.id]))) {
+    throw Error('无法确认片段证据版本，请刷新评审页。');
+  }
+  for (const id of snapshot.previously_seen) previouslySeen.add(id);
+  for (const row of snapshot.reviews) {
+    if (caseVersions[row.case_id] === row.case_sha256) committed.set(row.case_id, row);
+    else if (row.previewed || row.first) previouslySeen.add(row.case_id);
+  }
+  el('online-review').hidden = false;
+  el('submit-review').onclick = submitReview;
+  document.querySelector('label[for=notes]').textContent = '判断依据或异议（点提交后交给组织者）';
+  return packet;
 }
 loadPage().then(doc => {
   if (doc.mode==='wave') {
