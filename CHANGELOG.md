@@ -1,5 +1,7 @@
 # 变更记录
 
+2026-11-22 U191：取消人工评审，改由录像实际结果训练；Codex任务书见 docs/handoff/codex-outcome-autotrain-2026-11-22.md。
+
 2026-11-21：新增逐段支援步行估时与队友实际受击秒点的事后对照，复盘页和 CSV 使用同一判定。
 
 已核验三场录像的步行耗时误差，细分结果见 docs/lane-decision-review.md。

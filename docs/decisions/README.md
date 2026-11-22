@@ -4,6 +4,7 @@
 
 | 编号 | 文件 |
 |---|---|
+| U191 | [取消人工评审，改由录像实际结果训练](2026-11-22-no-human-review.md) |
 | U190 | [行动判断总架构与项目决策留档](2026-11-20-decision-framework.md) |
 | U189 | [项目产品目标](2026-11-20-project-goal.md) |
 | U1 | [取消10/31前瞻采集](2026-10-30-cancel-collection-window.md) |
