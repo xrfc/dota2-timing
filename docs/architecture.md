@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 51 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 53 |
 <!-- /track-table -->
 
 依赖规则：
@@ -149,3 +149,5 @@ scripts/lane_outcome_evaluation.py 属路线 B，消费补刀前报告并进行�
 U191 的路线 B 结果标签和行动价值研究沿用整场比赛划分。数据、训练和留出入口见[研究记录](outcome-autotrain.md)。
 
 路线 B 的 `scripts/outcome_match_report.py` 是 U191 开发集预测的只读报告入口，依赖冻结的分层诊断和预测指纹。
+
+路线 B 的 `new_replay_inputs` 提取只读本地录像，`new_replay_outcomes` 用 U191 冻结模型计算三类行动结果，`outcome_match_report` 统一呈现开发样本和新录像。

@@ -1,4 +1,4 @@
-"""Render U191 development out-of-fold predictions for one match as a local Markdown report."""
+"""Render an archived development match or infer from a local replay using frozen U191 models."""
 
 import argparse
 import hashlib
@@ -120,17 +120,68 @@ def render(match, cases, names):
     return "\n".join(lines) + "\n"
 
 
+def from_demo(demo, inputs, expected_id, map_dir):
+    from new_replay_inputs import prepare
+    from new_replay_outcomes import infer
+
+    if inputs.exists():
+        provenance = read_json(inputs / "replay-provenance.json")
+        with demo.open("rb") as stream:
+            digest = hashlib.file_digest(stream, "sha256").hexdigest()
+        if digest != provenance["source_sha256"]:
+            raise ValueError("输入目录对应其他录像；请指定新的 --inputs 目录")
+    else:
+        provenance = prepare(demo, inputs, expected_id)
+    mid = provenance["match_id"]
+    if expected_id is not None and mid != expected_id:
+        raise ValueError("录像内比赛编号与 --match 不符")
+    cases, diagnostics = infer(inputs, mid, map_dir)
+    return mid, cases, diagnostics
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--match", required=True, type=int)
-    parser.add_argument("--predictions", type=Path, default=ROOT / "reports/outcome-values")
+    parser.add_argument("--match", type=int, help="development match ID or expected demo ID")
+    parser.add_argument("--predictions", type=Path, help="development prediction directories")
+    parser.add_argument("--demo", type=Path, help="raw local replay for new-match inference")
+    parser.add_argument("--inputs", type=Path, help="private prepared inputs for --demo")
+    parser.add_argument("--map-dir", type=Path, help="frozen terrain asset directory for --demo")
     parser.add_argument("--out", required=True, type=Path, help="new local Markdown file")
     args = parser.parse_args()
+    if args.out.exists():
+        parser.error("choose a new output file")
+    if args.demo and (not args.inputs or not args.map_dir or args.predictions):
+        parser.error("--demo requires --inputs and --map-dir and cannot use --predictions")
+    if not args.demo and (args.match is None or args.inputs or args.map_dir):
+        parser.error("use --match for development predictions or --demo for new replays")
     try:
-        cases = match_cases(args.match, args.predictions, read_json(EVIDENCE))
+        diagnostics = None
+        if args.demo:
+            mid, cases, diagnostics = from_demo(args.demo, args.inputs, args.match, args.map_dir)
+        else:
+            mid = args.match
+            cases = match_cases(
+                mid, args.predictions or ROOT / "reports/outcome-values", read_json(EVIDENCE)
+            )
         from gank_review import names
 
-        report = render(args.match, cases, names())
+        report = render(mid, cases, names())
+        if diagnostics is not None:
+            heading, body = report.split("\n", 1)
+            coverage = ["| 场景 | 取样机会 | 可复盘 | 可比较两种动作 |", "|---|---:|---:|---:|"]
+            for domain, (label, _) in DOMAINS.items():
+                counts = diagnostics["by_domain"][domain]
+                coverage.append(
+                    f"| {label} | {counts['opportunities']} | {counts['eligible']} |"
+                    f" {counts['balanced']} |"
+                )
+            report = (
+                heading + "\n\n本场采用 U191 冻结模型推理。训练比赛有平均段位门槛，"
+                "本地录像的对局平均段位未经核实，估计值供探索性复盘使用。\n\n"
+                + "\n".join(coverage)
+                + "\n"
+                + body
+            )
         args.out.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.NamedTemporaryFile(dir=args.out.parent, mode="w", encoding="utf-8") as temp:
             temp.write(report)
@@ -139,6 +190,8 @@ def main():
     except (OSError, ValueError) as err:
         parser.exit(1, f"{err}\n")
     print(f"{args.out} ({len(cases)} 个片段)")
+    if diagnostics is not None:
+        print(json.dumps(diagnostics, ensure_ascii=False, allow_nan=False))
 
 
 if __name__ == "__main__":

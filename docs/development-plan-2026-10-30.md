@@ -400,6 +400,9 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+2026-11-22：B5 已用一场独立的 Steam 原始录像跑通解析、冻结模型推理和单场报告，取得 21 个可评片段，7 个有双动作估计。正式玩家试用待反馈。详见[新录像接入](outcome-autotrain.md#7-新录像接入)。
+
+
 2026-11-22：B5 已能按开发集比赛号导出三场景统一的单场报告，原三场共 77 段。U191 冻结产物只读。待完成新录像推理与实际使用反馈。见[单场报告](outcome-autotrain.md#6-b5-单场复盘入口)。
 
 

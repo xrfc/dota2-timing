@@ -56,3 +56,33 @@ def test_reserved_match_rejected_before_file_access(tmp_path):
 
     with pytest.raises(ValueError, match="留出集"):
         match_cases(next(n for n in range(100) if is_holdout(n)), tmp_path, {})
+
+
+def test_existing_inputs_match_exact_demo_and_embedded_id(tmp_path, monkeypatch):
+    import sys
+    from types import SimpleNamespace
+
+    from scripts.outcome_match_report import from_demo
+
+    demo = tmp_path / "local.dem"
+    demo.write_bytes(b"sample replay")
+    cache = tmp_path / "inputs"
+    cache.mkdir()
+    manifest = cache / "replay-provenance.json"
+    manifest.write_text(
+        json.dumps(
+            {"source_sha256": hashlib.sha256(demo.read_bytes()).hexdigest(), "match_id": 123}
+        )
+    )
+    monkeypatch.setitem(sys.modules, "new_replay_inputs", SimpleNamespace(prepare=None))
+    monkeypatch.setitem(
+        sys.modules,
+        "new_replay_outcomes",
+        SimpleNamespace(infer=lambda root, mid, map_dir: ([], {"match": mid})),
+    )
+    assert from_demo(demo, cache, None, tmp_path) == (123, [], {"match": 123})
+    with pytest.raises(ValueError, match="比赛编号"):
+        from_demo(demo, cache, 124, tmp_path)
+    demo.write_bytes(b"other")
+    with pytest.raises(ValueError, match="其他录像"):
+        from_demo(demo, cache, None, tmp_path)
