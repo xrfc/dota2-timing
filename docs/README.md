@@ -149,3 +149,5 @@
 [结果标签汇总](acceptance/outcome-labels-dev.json) · [建表脚本](../scripts/outcome_labels.py) · [标签边界测试](../tests/test_outcome_labels.py)
 
 [开发集行动价值汇总](acceptance/outcome-values-dev.json) · [加权估计脚本](../scripts/outcome_values.py) · [估计器测试](../tests/test_outcome_values.py)
+
+[打野与支援脚本](../scripts/outcome_domains.py) · [动作和到场边界测试](../tests/test_outcome_domains.py)

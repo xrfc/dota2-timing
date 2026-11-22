@@ -49,7 +49,7 @@ def fold_for(mid):
     return int.from_bytes(hashlib.sha256(f"lane-study-v1:{mid}".encode()).digest(), "big") % 5
 
 
-def candidates(root):
+def candidates(root, *, min_rank=70):
     ready = []
     extra = []
     for receipt in sorted((root / "receipts").glob("*.json")):
@@ -59,7 +59,7 @@ def candidates(root):
         if is_holdout(mid):
             continue
         rc = read_json(receipt)
-        if rc.get("status") != "parsed" or (rc.get("avg_rank_tier") or 0) < 70:
+        if rc.get("status") != "parsed" or (rc.get("avg_rank_tier") or 0) < min_rank:
             continue
         meta = read_json(root / "meta" / receipt.name)
         if not (
@@ -202,10 +202,8 @@ def sample(e, a, y, end):
     )
 
 
-def match_rows(job):
-    mid, root, map_dir, extras_root = job
-    if is_holdout(mid):
-        raise ValueError("reserved match")
+def readonly_match(root, mid):
+    """Reuse a valid replay cache without writing into the source worktree."""
     cached = root / "gank-inputs-v2" / f"{mid}.pkl"
     match = None
     if cached.is_file():
@@ -213,6 +211,14 @@ def match_rows(job):
             match = pickle.load(stream)
     if not match or match["key"] != source_key(root, mid):
         match = read_match(root, mid)
+    return match
+
+
+def match_rows(job):
+    mid, root, map_dir, extras_root = job
+    if is_holdout(mid):
+        raise ValueError("reserved match")
+    match = readonly_match(root, mid)
     duration = normalized_end(root / "parsed" / f"{mid}.normalized.json.gz", mid)
     end = min(match["last"], duration)
     heroes = sorted(h for h, p in match["positions"].items() if p == 1)
@@ -288,7 +294,8 @@ def sources(root, extras_root, mid):
             ("gank-inputs-v2", "pkl"),
         ]
     ]
-    paths.append(extras_root / "extras-v1" / f"{mid}.jsonl.gz")
+    if extras_root is not None:
+        paths.append(extras_root / "extras-v1" / f"{mid}.jsonl.gz")
     return {f"{p.parent.name}/{p.name}": file_hash(p) for p in paths if p.is_file()}
 
 
