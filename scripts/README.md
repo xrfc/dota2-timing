@@ -146,3 +146,5 @@
 ### MK-T3双AI交叉复核交接
 
 `scripts/mechanics_cross_review.py build --output NEWDIR`导出完整清单、上下文、空白Claude模板与既有判断；`verify --packet DIR`核验输入及包文件；`compare --packet DIR --review RETURN.jsonl --output NEWDIR [--require-complete]`生成逐项对照，识别未审、独有判断、标签分歧和用户冲突，不修改事实。命令需`PYTHONPATH=src`；完整操作见[Claude交接](../docs/handoff/mk-claude-cross-review.md)。
+
+结果标签用 `outcome_labels.py`，按英雄和确切秒点连接金钱、经验与生命状态。 [U191 命令和结果](../docs/outcome-autotrain.md)

@@ -145,3 +145,5 @@
 ## 一号位补刀前学习研究
 
 [三阶段实测结果](lane-study-results.md) · [数据和复现协议](lane-study-protocol.md) · [监督学习模型卡](lane-study-baseline.md) · [行为参照模型卡](lane-study-behavior.md) · [时序模型卡](lane-study-sequence.md)
+
+[结果标签汇总](acceptance/outcome-labels-dev.json) · [建表脚本](../scripts/outcome_labels.py) · [标签边界测试](../tests/test_outcome_labels.py)

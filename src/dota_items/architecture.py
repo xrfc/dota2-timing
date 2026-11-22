@@ -389,6 +389,7 @@ SCRIPTS = {
     "lane_study_baselines": _B,
     "lane_study_data": _B,
     "lane_study_sequence": _B,
+    "outcome_labels": _B,
     "check_support_travel": _B,
     "friend_review_server": _B,
     "vision_check": _B,

@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 46 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 47 |
 <!-- /track-table -->
 
 依赖规则：
@@ -145,3 +145,5 @@ B线的硬约束（继承U2、U6和`long-term-coach-goals.md`§5）：评价某�
 scripts/lane_outcome_evaluation.py 属路线 B，消费补刀前报告并进行按场验证。
 
 路线 B 补刀前研究使用 `lane_study_data` 冻结己方视角样本；`lane_study` 按固定比赛折调用 `lane_study_baselines` 和 `lane_study_sequence`，并验证每个模型重载后的折外预测。命令及数据接口见[复现协议](lane-study-protocol.md)。
+
+U191 的路线 B 结果标签和行动价值研究沿用整场比赛划分。数据、训练和留出入口见[研究记录](outcome-autotrain.md)。
