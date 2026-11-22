@@ -152,3 +152,5 @@
 行动价值用 `outcome_values.py`，按比赛做五折交叉验证，输出实际行动误差、两动作后果及覆盖。 [U191 命令和结果](../docs/outcome-autotrain.md)
 
 打野与支援取样用 `outcome_domains.py`，重现原打野报告的锚点后，与补刀前任务共用标签和加权估计器。 [U191 命令和结果](../docs/outcome-autotrain.md)
+
+U191 的模型封存、留出准备和单次计分在 `outcome_final.py`。[冻结清单](../docs/outcome-freeze.md)

@@ -1,0 +1,877 @@
+{
+  "compat": {
+    "gem/__init__.py": "298f281e0e607c45e53a9a969507d351f683118fc2e0dd4d1f7edcdf88e493b1",
+    "gem/__main__.py": "5267462a3b16fb199e3eab5f9102b54b391d49a274a201fb663934210f2d8a59",
+    "gem/analysis/__init__.py": "89e027b2cd11c0b81423b8b8949136c56647b95ebac19858b2d07fae80591464",
+    "gem/analysis/_shared.py": "085f62035e2162b8edbfaa5c3b4a7ccd2d283d56daca7e0ef0690ae60ab776ec",
+    "gem/analysis/_territory.py": "0bb0511fee6254caedbed80c03e003a5b10a17e5d3323e85048e239a5f44d32e",
+    "gem/analysis/abilities.py": "fbda2e9abcdb961fc6fb2b9ef9f3a177ada2672ae4adda6d2d6e4c46b1e0b602",
+    "gem/analysis/bundle.py": "dd0accb37f3322a1f5327149bfbb3719ee421e16d3bb5fcf1cdca37d397f9cb5",
+    "gem/analysis/combat.py": "885aabe2846233ca3ce7a866b46f665b7d657eacadcd9c8a932907ab3a676b9d",
+    "gem/analysis/farming.py": "a13dd590c45822b08936b145f88e035601688879d8e24b4ba58a279a3af19790",
+    "gem/analysis/farming_context.py": "608564ffa6159028bd14bedcb0b4618b5d9b4de80f1a2ca4822623d31c34afd1",
+    "gem/analysis/formatting.py": "26c1bad3548f0f3bddb0f3691cb1db647fea7e97caa0959b44d0a736f20b8c45",
+    "gem/analysis/map_context.py": "5efcaef5a1ebf0d332226ca19b4d8d09dc4cce8997a3cc0a37d752eecf9589c1",
+    "gem/analysis/roshan.py": "bcf6704802def24313a5be882b7e62a8893db1e69f40cf021d85fd8b091455ed",
+    "gem/analysis/smoke.py": "664a7a3d77a5effed5661565039caa2aa9602a56d4f49c50bd5766f0d04bc95f",
+    "gem/analysis/smoke_fight.py": "bbb048e72013ec1e37f4b353f2a5531ffc67eef5394b50c4327c1b4df40855f4",
+    "gem/analysis/spatial.py": "3d04969a6e6b487aa87fb3d8b29a99353750b6d630ace437d8555480ff1a3226",
+    "gem/analysis/teamfight_positioning.py": "31776a57b0a84d92151cb1ee36620d7f8f45edf4409cd3605c8a7ccfb2b9d399",
+    "gem/analysis/vision.py": "fe039105d01e6e808f8a2fcb491e92094009d041491a60d638faa1300c0a2751",
+    "gem/api.py": "1b25b3233f912f957768d57606b5e648443c710cd0d7d7b524c4643f19c38912",
+    "gem/binary/__init__.py": "005628746c51b4de447fcb6cc505f2e995affcddbe9e6a874e0047b11764bc9c",
+    "gem/binary/reader.py": "536ed63c47217938d42cf5210fa759f44376256fac526ac710845cdc6862d92e",
+    "gem/binary/stream.py": "aa9f22e39b2b8327231d89745b01d83b7d0d73ec5bfbcd0a8c2e88ad250f25f3",
+    "gem/catalog/__init__.py": "5a4489be200dfb0c4a684a4f3f67672e1a62f1b1aa73c0de815bb2f2f4b263e0",
+    "gem/catalog/abilities.py": "2d3afdcc194f66f2f07aaa301b8264cef818c6a80272e2f210014b449f5bb74d",
+    "gem/catalog/heroes.py": "0f9a21bb418e867d3a0f6b832870c31ceeb23c6bb31dd13a82a6ea3de1a78f86",
+    "gem/catalog/items.py": "79aa8c82cb048d6c06262d5dbfb573ee13b44f7c5dac9fb5f9873793087cd37a",
+    "gem/catalog/leagues.py": "f331f88403723940ff60268561e3daa5535756af28057c3e4f742f470d113628",
+    "gem/catalog/map.py": "a60dec8cb3db3649e0ef1f65c2fe09bdf268d44933efe278bbceb0b598f42a61",
+    "gem/catalog/resources.py": "28d7c8903268e85814ac0d6f9350fb62646b180813c4d4083fefc966de51ce45",
+    "gem/catalog/units.py": "8bab22fa6894c41a48eaf4a85c1d43fdff3452a65884a939d64d01edb23010a9",
+    "gem/catalog/xp.py": "a6e8e94c27fad26db79dce5b402c3ce60b786d4762894f6cc1dd8e3d39dc0437",
+    "gem/cli.py": "c208f46266e974cda51f35a6d995f8ce7c33618f9f7060c2fcdd1335113edaae",
+    "gem/combat/__init__.py": "06042b738f7dd23c36b4f18aaa0b3242d7773511e6340688fa3122546880730e",
+    "gem/combat/aggregator.py": "9c6fa3fbae39e29a0b8218b12eea887e800210d4474f1f93737563a05b78264b",
+    "gem/combat/log.py": "f2a69e29d42b9921239c8c590089c82a5f49cf2292ef059d4610ed5781d94191",
+    "gem/constants.py": "c3dab0eebe16b748829f1b810eb966d6db7208d0cb788400ba1ea99c172e7560",
+    "gem/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gem/extractors/__init__.py": "f1e1896450f0f3066daf8c5f623d1d982d492e2bb104559f707543d3bb366700",
+    "gem/extractors/_snapshots.py": "3aec8564595be4b182e26ecb8ec8ea1c541b50c9f2b629b1cb520a32101d7b74",
+    "gem/extractors/courier.py": "c9e829cf437240818bab7b9d75a1eff001a8e22d30af17d67be338da3b4c2bfe",
+    "gem/extractors/draft.py": "f333c5caf5f38c3a152334866d9c713bbbbdaa5049797812be5566541faf6592",
+    "gem/extractors/intervals.py": "99321f0a07d487f92e71fc7a5fe77ed839d033107d8a0649cd054f7d68707f62",
+    "gem/extractors/lane.py": "b919aa39de42273165e1258ce633bf6dade293ff94dff6bda380798b17a96de9",
+    "gem/extractors/objectives.py": "f5b7016f54869dcc004cdbfeff612bfea84ec84e0b9c4585a8c62524c287a439",
+    "gem/extractors/players.py": "095cdae4b687dfc3cccfa8adc9d32aee011ae08476db5a8fcec018f3f1189989",
+    "gem/extractors/smoke_vision.py": "ec72f5cf8aff4d5e4c34b15e36d7709e0fdbcdeeadfe8a13d1197e27322a8d1e",
+    "gem/extractors/teamfights.py": "5e431def0963cffbf63ca1d68564ae1d520c302c034909b999795b843664ad58",
+    "gem/extractors/visibility.py": "6e6ebf5b6b038bc3415ad2e19e73844b9e7752884d9e1fa315983e1fd377ab1e",
+    "gem/extractors/wards.py": "67687183acba96e7eb9b70c20a507137e82132c092326493f690fabee5043dff",
+    "gem/parser.py": "59fd1a01241be3ef6e9082c0c0fa23aa97434fe28a3e48c8a381e9a76e283b8e",
+    "gem/proto/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gem/proto/base_gcmessages_pb2.py": "4689b73d2adcae113da006d0c875a513b4e1b2ce1b3b6217dbaf21a6543ccdba",
+    "gem/proto/c_peer2peer_netmessages_pb2.py": "6e1e1e333146a3f6821d985aee8cd1457d95a25b0a5a4ba90dbaf2f40f3d41d3",
+    "gem/proto/clientmessages_pb2.py": "320eb2de1ba4031d2e37dc109e093768b3d024190588b7218931d0d8199665af",
+    "gem/proto/connectionless_netmessages_pb2.py": "8f25803a20e9c101802d77d677f4eaa929cb8c7512ee9583cd30963813454dda",
+    "gem/proto/demo_pb2.py": "7a6cb4705c5721a18de1422684c15e9bf638c87138f644402be0b50d48b11589",
+    "gem/proto/dota_broadcastmessages_pb2.py": "a2d273cec5967c256ce4afdf359505ced270d107d8b2a6bb97ca2856c9973816",
+    "gem/proto/dota_client_enums_pb2.py": "2adce745fcbc1fe1553b39c6458f794f2fc29cb2d4b17bed21cb900d939353e7",
+    "gem/proto/dota_clientmessages_pb2.py": "dd0a8977e60c8fcd438c343e95b64a9ce86607e02b4debca2b2c2922a6597d2e",
+    "gem/proto/dota_commonmessages_pb2.py": "92a96cba7c1151f2b4e92eedbff5ce3e0d9ac933719541e59fd58f02ebbefa47",
+    "gem/proto/dota_fighting_game_p2p_messages_pb2.py": "4af1d3b88d63e7f15eea64350a42b0c037762fba3f3617454ba64cfa44e3b89f",
+    "gem/proto/dota_gcmessages_client_bingo_pb2.py": "b8bb773d9a7a85a480693a2199637cca47bf70b378c7a5b8dfd76c1497f06ab3",
+    "gem/proto/dota_gcmessages_client_candy_shop_pb2.py": "13b0f2defafe1747d85de6566bdba2e16489736ca1a430922b2463a3bc6d3882",
+    "gem/proto/dota_gcmessages_client_chat_pb2.py": "bb143163ecb0416acf104068abc55d094cf5b389f0d8bad87c912209a31357d2",
+    "gem/proto/dota_gcmessages_client_coaching_pb2.py": "209e744626e06697d19e95b7cb2baa97dfc3d5b8fa0bd4fe04d76d0edf6dcf0b",
+    "gem/proto/dota_gcmessages_client_craftworks_pb2.py": "6f5c06bd6577b212f9572134990120984d487daba95a453a80ffb1e56bfb77b9",
+    "gem/proto/dota_gcmessages_client_fantasy_pb2.py": "b1581289f4def81a3593dd75f27f04bbe933871d8a9c22549192e89cf8ec93b8",
+    "gem/proto/dota_gcmessages_client_guild_events_pb2.py": "5d4ac56ba26edfce35f2d0fc1a7c0dff5d0c62772f7e5e496d9a35c94d5c54ca",
+    "gem/proto/dota_gcmessages_client_guild_pb2.py": "320f41a98056d6e698478b97b23bb11788ddabbc2c05fba55b338ca121c0f3a8",
+    "gem/proto/dota_gcmessages_client_match_management_pb2.py": "fb446ce75947474894a897034935640dd11a92d834f404ea9a195e22d6d08e36",
+    "gem/proto/dota_gcmessages_client_pb2.py": "b9709cd4dd06b6a765ef8e8ff2adac90ecd7ad2f4cfe6cc4b0944d983388b7bc",
+    "gem/proto/dota_gcmessages_client_showcase_pb2.py": "862007671ec99c46b08259fede643b019d0d8f7bb0bd4a44210451c85a00158b",
+    "gem/proto/dota_gcmessages_client_team_pb2.py": "6feca06ae35a7c7a044d32aac559faac8abd02c0bb7f226356020175bbb62ce1",
+    "gem/proto/dota_gcmessages_client_tournament_pb2.py": "cf1cac804c404583d294e9fe2350b9739b58324b5427b91c947dab6b0aa16261",
+    "gem/proto/dota_gcmessages_client_watch_pb2.py": "f69dd543c4d1b9ae2c45abd9f9ca73812f0d6f8a92dcdb3f4f8e519877baf99d",
+    "gem/proto/dota_gcmessages_common_battle_report_pb2.py": "265705c282345a12a879ae619c3a32dd6f5b65b9e64969e28e080cdf8b141015",
+    "gem/proto/dota_gcmessages_common_bot_script_pb2.py": "2da1717d1a0cbee3158ae1a7423cd164ff0799ed3edf3b0b2f85492f9556cd81",
+    "gem/proto/dota_gcmessages_common_craftworks_pb2.py": "66fc04ffeafff7d7e127f513366a2826b666f29ea7ed43de9654dfcd87fb2122",
+    "gem/proto/dota_gcmessages_common_fighting_game_pb2.py": "943f9d0329fa00c2f582eeb86eb0790b6f8fbffcb1b538abd406594eb37f3d74",
+    "gem/proto/dota_gcmessages_common_item_battler_pb2.py": "a3bcdae2e755b10aaa1089ef3dcbb9430ffaedfbccd7239cc80b254e3dddc407",
+    "gem/proto/dota_gcmessages_common_league_pb2.py": "60906eb70e1a335039452c941caad1e4b242cc527cf81794105917d7c060b1bb",
+    "gem/proto/dota_gcmessages_common_lobby_pb2.py": "2200d79b190a533455f7e264370109a9d652b5bb547414279c5d929106f56636",
+    "gem/proto/dota_gcmessages_common_match_management_pb2.py": "ac256cdc1f762a707037a43840e1b3ee364d07890bdcc21153e1c11851947b29",
+    "gem/proto/dota_gcmessages_common_monster_hunter_pb2.py": "5272c396885a6bcd1a34b1fc6c1f3246464f9e9698e999f559d1150b1b9acbb7",
+    "gem/proto/dota_gcmessages_common_overworld_pb2.py": "d6a91e120a581c51f3b75f459c8c356925acd48d0a703f36d5bff0e02e60d04b",
+    "gem/proto/dota_gcmessages_common_pb2.py": "d7aa8b93f010bbbeb2f11fb2c833b4ea7fc086772ebdd2a921fd1472a4a778fb",
+    "gem/proto/dota_gcmessages_common_survivors_pb2.py": "b6f18a1d8c4afc2978c3b8d9b1b116d01941065ab16ea0c30c4afb69906a55c5",
+    "gem/proto/dota_gcmessages_msgid_pb2.py": "ce461d7d6e1ae32770e83946a0796118fc2b1312d225e953615a74aa5f52a1ce",
+    "gem/proto/dota_gcmessages_server_pb2.py": "a7f91bf0266be00a3e178eaeccdd2ef8fdbe8155544eb2ae52fb9f818136a371",
+    "gem/proto/dota_gcmessages_webapi_pb2.py": "a545af3c4c9cd9b82ebd00e31ec6925e15a894c7f23a37f540c9a223f1133574",
+    "gem/proto/dota_hud_types_pb2.py": "9c2cf94b9d4d26fe7e37e08f0ce6f8a0c45220f7545909a3edca3bb071ab3d60",
+    "gem/proto/dota_match_metadata_pb2.py": "f7a3c5951cc1a1abe8c41031a035e8e2156f07ce760e5588cdbbd1df92efafc2",
+    "gem/proto/dota_modifiers_pb2.py": "8191852eac7ddffc47f2dd4564274c0ad03f34bee6f53aafc375c6b850614566",
+    "gem/proto/dota_scenariomessages_pb2.py": "c762abbaf373b764bc98b9ba4987442cfd74a50518e313995686347dc09d033d",
+    "gem/proto/dota_shared_enums_pb2.py": "f182e4be568e9fdcf11d8053b668e0e4a46fee3f0989c6f2dc464625cd09cb54",
+    "gem/proto/dota_usercmd_pb2.py": "f1ede7e95a9269989a9c0d2bfb5196104698d4f5889e696b6b3484af74e3140f",
+    "gem/proto/dota_usermessages_pb2.py": "d2195bad38bd7bc98f53f83803f609ca8245b11d5c0ae966af595c8f9bfa4a1c",
+    "gem/proto/econ_gcmessages_pb2.py": "c81ca05e9b641c3a8452f6dbf818810549b6f398bd7771ea63e7accdb1efccd1",
+    "gem/proto/econ_shared_enums_pb2.py": "961136eeec0f4594e9e36e90c5ea6edd31aa62c5f6f237b7f61a435f70133c79",
+    "gem/proto/engine_gcmessages_pb2.py": "292a1a05fd2710363ae13cae60733cd014c3ffcb21efd7cb13e7002d896879a5",
+    "gem/proto/enums_clientserver_pb2.py": "377703b8a067732de67389b379a599e130ec123f4cbf6deb0508b5d157716108",
+    "gem/proto/event_gcmessages_client_pb2.py": "d19971f0c67be2df52f150a2e8669189d25597af364591dd473373b55f76727d",
+    "gem/proto/event_gcmessages_common_pb2.py": "3fbe5eac446dc1e7235b8a6118fcce78bc9c20b4c28de37c4a7d0ce9e9ae9736",
+    "gem/proto/event_gcmessages_server_pb2.py": "d85de97c440f1d30b9f015f866f7b686b9c20a8ac4cc580b7129998730c8fb67",
+    "gem/proto/events_pb2.py": "2226f6489e8c5d9e2539655e761210c3c071eed17b7db3fc92439aa910769b89",
+    "gem/proto/gameevents_pb2.py": "df2ad874a430ffdb539e2f9170849268ed9b162808c0ddf019bf5579da49f447",
+    "gem/proto/gcsdk_gcmessages_pb2.py": "1b835802e336ebfa037f456a12462c5ddcd42a11eaef3d4a2d573247fa4e6b8f",
+    "gem/proto/gcsystemmsgs_pb2.py": "8d640ac52c5670488476bf7e0974c88540d9c958d91b52b3dadaa1b68e941eda",
+    "gem/proto/netmessages_pb2.py": "690b4d12c0f222ca97da7534826c169a683c795c6d8e543738842265d8cca2c3",
+    "gem/proto/network_connection_pb2.py": "838478788974abb4362131b92adaa0b3cd3ada6f34c66dcd47714bacfc1f96bd",
+    "gem/proto/networkbasetypes_pb2.py": "21bdc35f8f9577afead17f16cf3911967ad684eb3ab70ebb5354c7d8084e598e",
+    "gem/proto/networksystem_protomessages_pb2.py": "90870af5d347e5597ab5a9f94573fc2e32bad9d5a81ce3633689b102959b7948",
+    "gem/proto/prediction_events_pb2.py": "fc73fd559f9f4015ddab387d566745dcb3f41af6612ad7430f1486a656191f31",
+    "gem/proto/source2_steam_stats_pb2.py": "099126fd888dda9a8d6acf3489cf6c6b36d23793998121c6d06df596b62bd0b3",
+    "gem/proto/steamdatagram_messages_auth_pb2.py": "fa0ac2bc665071146d8bf4ba3492669826c2b490fa6c0d17acb571c5c196ef3f",
+    "gem/proto/steamdatagram_messages_sdr_pb2.py": "30d435c3dd1d9d9bfbdc66fc56b3629b4b64a5291fc6ac021eae61b138767f71",
+    "gem/proto/steammessages_base_pb2.py": "eb44cf8538ebb6dd97bfc13cd4853149a80e9baa1a35ef3374d91362e0d94b91",
+    "gem/proto/steammessages_cloud/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gem/proto/steammessages_cloud/steamworkssdk_pb2.py": "ed12ee4e94547e37836b92e418af11ec141e2d60f1716a0d4de41d5ccc636254",
+    "gem/proto/steammessages_gamenetworkingui_pb2.py": "f25e167cc307ee8c304c2e865f89be91a1043015b25bf46e6f4581bdb7f1b6aa",
+    "gem/proto/steammessages_helprequest/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gem/proto/steammessages_helprequest/steamworkssdk_pb2.py": "b5e6b63b338aa1bc5e9187a30d8726dff15148aa6c01e310169b2a21cd1c0e74",
+    "gem/proto/steammessages_int_pb2.py": "a95da65d417cd72858c8b56984dd96f63fd8ac332754bbb9d6ff8bbdffed7334",
+    "gem/proto/steammessages_oauth/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gem/proto/steammessages_oauth/steamworkssdk_pb2.py": "61769d6ce3438ddf59e439d90f97c896a0a9b2cf5e30512dcd0785a24ff84657",
+    "gem/proto/steammessages_pb2.py": "690291fdad09a87f117e69c73602532550435216353c2c7337494abb0f5cd7ce",
+    "gem/proto/steammessages_player/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gem/proto/steammessages_player/steamworkssdk_pb2.py": "e8bb3117272eba4c8f9fb9aa17f54005546f77a07075c827767404493bffeacb",
+    "gem/proto/steammessages_publishedfile/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gem/proto/steammessages_publishedfile/steamworkssdk_pb2.py": "e41b91489f11da5fada148faaaad8af7345a4cbe25f42534c2af56be3eafe2fb",
+    "gem/proto/steammessages_steamlearn/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gem/proto/steammessages_steamlearn/steamworkssdk_pb2.py": "32d1461a4270344500e5fbc367d9f9f97b087d0445a9a570bfe3714b6b98deb1",
+    "gem/proto/steammessages_unified_base/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gem/proto/steammessages_unified_base/steamworkssdk_pb2.py": "c12d1099514443e116642adc5da4ca85b5152f771fd66c839f0a128843adaa9c",
+    "gem/proto/steamnetworkingsockets_messages_certs_pb2.py": "6ea4b282db146bdfd18f6524bd181b0774aeb5751daae8cb56628008e87c0c28",
+    "gem/proto/steamnetworkingsockets_messages_pb2.py": "da8b7cd346587501d798187a466627e341600541a2fc3d4bd6b28e7a1044285b",
+    "gem/proto/steamnetworkingsockets_messages_udp_pb2.py": "1670726ca3aea4bc80a72d4b4092f959558b3a921ed93ac34abdf988f648947d",
+    "gem/proto/te_pb2.py": "f6cecfd8d63a1048c239b8f4b0f514904b7f4d24ce6fbf17a35800e63d0f8995",
+    "gem/proto/uifontfile_format_pb2.py": "d3ca23a50fec73a88c415795d304844a0aa71975baa4d10c83dabd330c8b38f2",
+    "gem/proto/usercmd_pb2.py": "a4fe0e934bfefba2e7bd08c52af9da4a508f0cf52a77ece89c573d712202264b",
+    "gem/proto/usermessages_pb2.py": "2577234f1ed505d2c8044cc9bb373221383a8eaf1fbb08700a2fc3bf81c402aa",
+    "gem/proto/valveextensions_pb2.py": "547e94d4a9b6efda75bdfbf3af3e4dee059df5888754b2cdae884f99bf539b77",
+    "gem/replays/__init__.py": "d110effa1834eac22063cb81f00d16129766ec94f0f75570183afd96c7de1e99",
+    "gem/replays/batch.py": "4268f36cdf9c68def6ec279999f1c5262a11d6f05815c2bc00ca6ef27d71a824",
+    "gem/replays/fetch.py": "45879d1b5d60d0f35f6e517077be4b49a42ba691885114fb6eb991f897d2d5c0",
+    "gem/reports/__init__.py": "0cb985cde2ffe54ae5d618b738090ca384bccce91bbfebd0c5ba00a747da30e6",
+    "gem/reports/_formatting.py": "1c51430a3e6eaeaac0b786209b12241695cb0fa2c3815fbc1a0a0b9d23e2a3f5",
+    "gem/reports/_movement.py": "077468ddb13c5dcc0241f98aba67ade407e29a9d45d9b527141da3309baa673d",
+    "gem/reports/_sections.py": "0494de42e9a11aa075d7d85d8cb5cc273d4b1b711ca6d1e3fe47b7d3ac5df84a",
+    "gem/reports/asset_cache.py": "3a52c8ecd9d95da1e9d6b8ec76469696e46de7bfd725d09e838e0f2208d9b643",
+    "gem/reports/assets.py": "613f3f43aedbbef969aa542c709a15eddafb81fa550557cdd3b6c6b66bc44258",
+    "gem/reports/builder.py": "41109ffebe80e9029fa3e2c8cf97e33a2811e28f1044e5376516f9d41a7b9ce0",
+    "gem/reports/player_names.py": "c9620b7af74c2c429f39e4a5967e4ac46228c8d2a4eadfa7329d2509c3489fc9",
+    "gem/reports/sections/__init__.py": "0b3ce2fea1c9a5ebf2cf2ba9eea279aec79fe7b1643a15e3b5d5f4fb5a1c2bfb",
+    "gem/reports/sections/_shared.py": "756054bcd621b9bd088c4eef66825c4955c7f5f8de6cc42131f83b418d00e0d1",
+    "gem/reports/sections/combat.py": "28ce323a212789f5df74cb8c846bd427588d9eac1aa7d78819965696b458bdff",
+    "gem/reports/sections/economy.py": "71735fc587055a6eba14a3fef7acea9bf60ba329a8869fab7687afcd2e1321f3",
+    "gem/reports/sections/match.py": "8a6d47296a3bcbf3294694df57a3acc2a32995a91f525c8399dfc1f8ec2b2777",
+    "gem/reports/sections/vision.py": "0d38715bf529b09968671e317cc80a849a4f73fe0882c52de75fecc7947a3959",
+    "gem/reports/styles.py": "504c12f8d058e394f32ca3bebff2d3d38e73a881e9a59248aac5c52503f48ed3",
+    "gem/results/__init__.py": "b2b3ce0926d424bf3150e479531ae6abc12d1a3835371237a21073562de68a99",
+    "gem/results/assembly.py": "eafc2e436cab72d0938aa8ce5aa9061982e822577f700267a736a25d2907db25",
+    "gem/results/dataframes.py": "9699f239160869a80adefd6aa02a95c6d96d090082ee8eed33f310a280aa4563",
+    "gem/results/derived.py": "3596af6cda7049f23d683a9893b58ffc5719b0288beca73f7127bccfed158256",
+    "gem/results/models.py": "1a69fbf3da25be11cf26e8381060e162c2d2c1d8081f0ed4d6d9874cc6878ea4",
+    "gem/results/permanent_buffs.py": "d4f26d18e509adf2b336bfba773a387c9983adc343b4886783fa3261b8988b3d",
+    "gem/results/serialization.py": "dee5ba82a4caf3bcd708c440ce56859dadbdf02dc4f5bad7a541e0f8de5a8f42",
+    "gem/schema/__init__.py": "3151a5f78228abbf053526ba55da532abe234cf4d2e2dd667d79f265ce7b6d53",
+    "gem/schema/field_decoder/__init__.py": "ff567b2792996cf85bf681f6eeab5007405e3d5494100495fc41b7edfb10c16e",
+    "gem/schema/field_decoder/composite_codecs.py": "4a4ff0cbeed5e6b1ff84b4bb8f4b5ea2a86fd90ac402806a923986b9aa090e71",
+    "gem/schema/field_decoder/contracts.py": "94159cbda767f20076e58823a9bb6ae894c46e8800983c92cf78cad737947a50",
+    "gem/schema/field_decoder/quantized_float.py": "a5a84b26913e6aede971585fd094d4b8a904e5656981032bcb308a3d1db065c2",
+    "gem/schema/field_decoder/scalar_codecs.py": "1a561887e08a9535f9d75eb91b39a16364a124885c1c9e7ba57f75778ccc405e",
+    "gem/schema/field_decoder/type_resolver.py": "98e12772ae5f2cecdaf5160950c2c5e4bc02e82d32b898547460da212356968d",
+    "gem/schema/field_path/__init__.py": "abeee6175aa3069e34cc66bfd7fb23f8e63ab6dde8eaf4e0c80d1a6fb57d094f",
+    "gem/schema/field_path/huffman.py": "22c16f77885d48eb4ab12bab17ee61a5cbb91b97c9ef236580d2209c750bc2cf",
+    "gem/schema/field_path/models.py": "85a452e42eb32a24ba3059077617aaf40a266a73988f3d252cf03c2582e93393",
+    "gem/schema/field_path/operations.py": "c1268d151f38fd645d80dd0e8e029e1214c2d299b316b84000e47f4661433b75",
+    "gem/schema/field_path/path_sequence.py": "e123d1b620369f4d8193bb550fc42dd11320ebc3794a6d8dcfc5e6b4f1cc4c9e",
+    "gem/schema/field_reader.py": "8491bae51f476f84f5d495a605fd17d6175d79b4487c2653e09100c125c94bad",
+    "gem/schema/field_state.py": "29a877dc1f4954c5d5525c658546eb79599bcfbb55aca1f873ebe238c55ebd0c",
+    "gem/schema/sendtable/__init__.py": "9ea4d35b6d02b6d47159b530db4d61ec50cfae93cb6ed244425d6d716d8d9cdc",
+    "gem/schema/sendtable/models.py": "64f6859c5347b5fd5790241386dfe932e8efe5fa638156401d11909c77f5ee25",
+    "gem/schema/sendtable/parser.py": "b0233243fc135f2059afa5c24a9292dc9f14679a256c68764961adf3c13365f8",
+    "gem/schema/sendtable/patches.py": "df3dbf6742542b8640cc678727b21f0d1a6861abdfd19792784195af60c8859e",
+    "gem/state/__init__.py": "62a3b3c5f02ced69717564d5fb39216ce3df33b50517ffeee732decc37dc3d98",
+    "gem/state/entities.py": "e5092c0e77d3953b21786dce6c99f29f268e8d89f5ee5b0277cbb343365f9ab0",
+    "gem/state/game_clock.py": "c744b7a0c534169289e3bbab827449d6d9813a9c427c313e514be4e9334bcba1",
+    "gem/state/game_events.py": "d31844aeab0c31920dfec9d61cf50cf8c8af7ba67cbff40c91ff7b9ecf05c8ee",
+    "gem/state/string_table.py": "80ef66664ac2c700b5b4d61b9c708660b7dd96b08acba377e3f41562b1f7d8af",
+    "manifest.json": "3f6e9ee2c222869adce45c6dfef757e719c9576bfdde82927e76d6868c47403d"
+  },
+  "decision": "U191",
+  "development": {
+    "jungle": {
+      "balanced_strata_rankings": {
+        "tradeoff": 3869
+      },
+      "eligible": 7587,
+      "expected": {
+        "dead_seconds": {
+          "continue_jungle": 0.15224653203368022,
+          "leave_camp": 0.20289089019777654,
+          "paired_cases": 7296
+        },
+        "death": {
+          "continue_jungle": 0.026943467064375125,
+          "leave_camp": 0.035639856717982546,
+          "paired_cases": 7296
+        },
+        "gold": {
+          "continue_jungle": -29.633735122902365,
+          "leave_camp": -10.500755734460773,
+          "paired_cases": 7296
+        },
+        "hits": {
+          "continue_jungle": 1.9068951468844046,
+          "leave_camp": 1.3703038730325285,
+          "paired_cases": 7296
+        },
+        "xp": {
+          "continue_jungle": 196.02325129186406,
+          "leave_camp": 219.44773867800063,
+          "paired_cases": 7296
+        }
+      },
+      "factual": {
+        "dead_seconds": {
+          "all": {
+            "action_mean": 0.2727796038587415,
+            "metric": "mae",
+            "n": 7296,
+            "value": 0.2705984660058589
+          },
+          "continue_jungle": {
+            "action_mean": 0.23677192918085518,
+            "metric": "mae",
+            "n": 4443,
+            "value": 0.2296685833301407
+          },
+          "leave_camp": {
+            "action_mean": 0.32885464717940355,
+            "metric": "mae",
+            "n": 2853,
+            "value": 0.3343389036953843
+          }
+        },
+        "death": {
+          "all": {
+            "action_mean": 0.02393326242821123,
+            "metric": "brier",
+            "n": 7296,
+            "value": 0.023893917413092144
+          },
+          "continue_jungle": {
+            "action_mean": 0.021148080370586308,
+            "metric": "brier",
+            "n": 4443,
+            "value": 0.02111515030952004
+          },
+          "leave_camp": {
+            "action_mean": 0.02827064899744625,
+            "metric": "brier",
+            "n": 2853,
+            "value": 0.028221313922440507
+          }
+        },
+        "gold": {
+          "all": {
+            "action_mean": 324.0768458558017,
+            "metric": "mae",
+            "n": 7296,
+            "value": 324.47666955148594
+          },
+          "continue_jungle": {
+            "action_mean": 314.467426553472,
+            "metric": "mae",
+            "n": 4443,
+            "value": 314.25334195860626
+          },
+          "leave_camp": {
+            "action_mean": 339.04167234029194,
+            "metric": "mae",
+            "n": 2853,
+            "value": 340.39754038750567
+          }
+        },
+        "hits": {
+          "all": {
+            "action_mean": 1.735067072446412,
+            "metric": "mae",
+            "n": 7296,
+            "value": 1.7041495434888203
+          },
+          "continue_jungle": {
+            "action_mean": 1.678950477864513,
+            "metric": "mae",
+            "n": 4443,
+            "value": 1.664287198455784
+          },
+          "leave_camp": {
+            "action_mean": 1.8224578995502951,
+            "metric": "mae",
+            "n": 2853,
+            "value": 1.766227496163822
+          }
+        },
+        "xp": {
+          "all": {
+            "action_mean": 147.06056994858943,
+            "metric": "mae",
+            "n": 6217,
+            "value": 146.06381773474544
+          },
+          "continue_jungle": {
+            "action_mean": 129.71958197133205,
+            "metric": "mae",
+            "n": 3794,
+            "value": 129.6859255510666
+          },
+          "leave_camp": {
+            "action_mean": 174.2135655679516,
+            "metric": "mae",
+            "n": 2423,
+            "value": 171.70877148830613
+          }
+        }
+      },
+      "matches": 1287,
+      "rows_sha256": "a577147b56f2b1cafe52740a9230e04f6f53b8c5fc81f0e81a7604ab2cfb3602",
+      "unsupported_fraction": 0.03835508105970742
+    },
+    "support": {
+      "balanced_strata_rankings": {
+        "tradeoff": 5549
+      },
+      "eligible": 15900,
+      "expected": {
+        "arrival": {
+          "approach": 0.14696492548907855,
+          "paired_cases": 15875,
+          "stay": 0.08232922889322247
+        },
+        "dead_seconds": {
+          "approach": 0.5774919139243112,
+          "paired_cases": 15875,
+          "stay": 0.4455816252555089
+        },
+        "death": {
+          "approach": 0.0974355526370086,
+          "paired_cases": 15875,
+          "stay": 0.07164874872170314
+        },
+        "gold": {
+          "approach": 58.27240147244769,
+          "paired_cases": 15875,
+          "stay": 51.04748444531308
+        },
+        "hits": {
+          "approach": 1.5096573951751366,
+          "paired_cases": 15875,
+          "stay": 2.258859355678773
+        },
+        "xp": {
+          "approach": 273.4178271242307,
+          "paired_cases": 15875,
+          "stay": 256.3375657838129
+        }
+      },
+      "factual": {
+        "arrival": {
+          "all": {
+            "action_mean": 0.09954101169994332,
+            "metric": "brier",
+            "n": 15863,
+            "value": 0.09719880240609817
+          },
+          "approach": {
+            "action_mean": 0.11005051900941738,
+            "metric": "brier",
+            "n": 7392,
+            "value": 0.10783285026124928
+          },
+          "stay": {
+            "action_mean": 0.09037016079312804,
+            "metric": "brier",
+            "n": 8471,
+            "value": 0.08791927439933662
+          }
+        },
+        "dead_seconds": {
+          "all": {
+            "action_mean": 0.9128391981428498,
+            "metric": "mae",
+            "n": 15875,
+            "value": 0.8954164360738952
+          },
+          "approach": {
+            "action_mean": 0.790788729671804,
+            "metric": "mae",
+            "n": 7397,
+            "value": 0.7839788498243764
+          },
+          "stay": {
+            "action_mean": 1.019327440096179,
+            "metric": "mae",
+            "n": 8478,
+            "value": 0.9926450071387325
+          }
+        },
+        "death": {
+          "all": {
+            "action_mean": 0.07604350939018208,
+            "metric": "brier",
+            "n": 15875,
+            "value": 0.07479646469167985
+          },
+          "approach": {
+            "action_mean": 0.0737464219205144,
+            "metric": "brier",
+            "n": 7397,
+            "value": 0.07249563822144303
+          },
+          "stay": {
+            "action_mean": 0.07804770330538989,
+            "metric": "brier",
+            "n": 8478,
+            "value": 0.07680392086062796
+          }
+        },
+        "gold": {
+          "all": {
+            "action_mean": 307.955074366907,
+            "metric": "mae",
+            "n": 15875,
+            "value": 309.9595440863431
+          },
+          "approach": {
+            "action_mean": 290.9877265292727,
+            "metric": "mae",
+            "n": 7397,
+            "value": 293.6418427538589
+          },
+          "stay": {
+            "action_mean": 322.7589752816252,
+            "metric": "mae",
+            "n": 8478,
+            "value": 324.196632639821
+          }
+        },
+        "hits": {
+          "all": {
+            "action_mean": 1.9781929033880281,
+            "metric": "mae",
+            "n": 15875,
+            "value": 1.9458308358797656
+          },
+          "approach": {
+            "action_mean": 1.8313428421763256,
+            "metric": "mae",
+            "n": 7397,
+            "value": 1.8216972089847432
+          },
+          "stay": {
+            "action_mean": 2.106318629123221,
+            "metric": "mae",
+            "n": 8478,
+            "value": 2.0541366200437756
+          }
+        },
+        "xp": {
+          "all": {
+            "action_mean": 259.35600674130967,
+            "metric": "mae",
+            "n": 13038,
+            "value": 259.55459734697104
+          },
+          "approach": {
+            "action_mean": 276.0858032928206,
+            "metric": "mae",
+            "n": 6005,
+            "value": 275.86732328526165
+          },
+          "stay": {
+            "action_mean": 245.0715721768531,
+            "metric": "mae",
+            "n": 7033,
+            "value": 245.6262709912999
+          }
+        }
+      },
+      "matches": 1306,
+      "rows_sha256": "8ead2f587aba1430b319c24f1eef089496a85830261e27e007fe75e075726d4e",
+      "unsupported_fraction": 0.0015723270440252124
+    },
+    "wave": {
+      "balanced_strata_rankings": {
+        "tradeoff": 8394
+      },
+      "eligible": 10652,
+      "expected": {
+        "dead_seconds": {
+          "farm": 0.30905341850944423,
+          "paired_cases": 8668,
+          "retreat": 0.36018126206384676
+        },
+        "death": {
+          "farm": 0.04789362106272854,
+          "paired_cases": 8668,
+          "retreat": 0.06360256453202276
+        },
+        "gold": {
+          "farm": -15.34102915924531,
+          "paired_cases": 8668,
+          "retreat": 73.58048000379631
+        },
+        "hits": {
+          "farm": 1.3664201378938938,
+          "paired_cases": 8668,
+          "retreat": 1.3251054042802304
+        },
+        "xp": {
+          "farm": 213.01883401739425,
+          "paired_cases": 8668,
+          "retreat": 241.7995035990913
+        }
+      },
+      "factual": {
+        "dead_seconds": {
+          "all": {
+            "action_mean": 0.5903926721999165,
+            "metric": "mae",
+            "n": 8668,
+            "value": 0.5897112498634769
+          },
+          "farm": {
+            "action_mean": 0.5015224243857929,
+            "metric": "mae",
+            "n": 6776,
+            "value": 0.5072482216004967
+          },
+          "retreat": {
+            "action_mean": 0.9086721643714297,
+            "metric": "mae",
+            "n": 1892,
+            "value": 0.8850439557355451
+          }
+        },
+        "death": {
+          "all": {
+            "action_mean": 0.04797150660555568,
+            "metric": "brier",
+            "n": 8668,
+            "value": 0.04722422840480272
+          },
+          "farm": {
+            "action_mean": 0.04043780454137922,
+            "metric": "brier",
+            "n": 6776,
+            "value": 0.0396586744975674
+          },
+          "retreat": {
+            "action_mean": 0.07495267213772255,
+            "metric": "brier",
+            "n": 1892,
+            "value": 0.07431946797955245
+          }
+        },
+        "gold": {
+          "all": {
+            "action_mean": 349.59347570233484,
+            "metric": "mae",
+            "n": 8668,
+            "value": 348.3605302758343
+          },
+          "farm": {
+            "action_mean": 363.1359891667859,
+            "metric": "mae",
+            "n": 6776,
+            "value": 361.1456044189964
+          },
+          "retreat": {
+            "action_mean": 301.0923809691846,
+            "metric": "mae",
+            "n": 1892,
+            "value": 302.5721252049748
+          }
+        },
+        "hits": {
+          "all": {
+            "action_mean": 1.7324387043339597,
+            "metric": "mae",
+            "n": 8668,
+            "value": 1.7042069182509008
+          },
+          "farm": {
+            "action_mean": 1.7401114831875784,
+            "metric": "mae",
+            "n": 6776,
+            "value": 1.7047690663899506
+          },
+          "retreat": {
+            "action_mean": 1.704959449834955,
+            "metric": "mae",
+            "n": 1892,
+            "value": 1.7021936435203497
+          }
+        },
+        "xp": {
+          "all": {
+            "action_mean": 195.40959866490056,
+            "metric": "mae",
+            "n": 7513,
+            "value": 195.37672579184792
+          },
+          "farm": {
+            "action_mean": 177.62667395796586,
+            "metric": "mae",
+            "n": 5920,
+            "value": 177.44836660979027
+          },
+          "retreat": {
+            "action_mean": 261.4955461005903,
+            "metric": "mae",
+            "n": 1593,
+            "value": 262.0031453510327
+          }
+        }
+      },
+      "matches": 1166,
+      "rows_sha256": "f2f1254c33158b6923fa7185dd1454414fc8483baaa7c8f69d5cf88d6eb395ca",
+      "unsupported_fraction": 0.18625610214044308
+    }
+  },
+  "development_wave_reference": {
+    "action_mean": {
+      "actions": {
+        "farm": 8686,
+        "retreat": 1966
+      },
+      "calibration": [
+        {
+          "count": 10652,
+          "from": 0.0,
+          "observed": 0.047502816372512205,
+          "predicted": 0.04749283096721704
+        }
+      ],
+      "cases": 10652,
+      "death_ap": 0.057575051172678256,
+      "death_brier": 0.04502828201463201,
+      "deaths": 506,
+      "false_alerts_per_represented_match": 0.0,
+      "hits_mae": 1.7423687330656488,
+      "matches": 1166
+    },
+    "frequency": {
+      "actions": {
+        "farm": 8723,
+        "retreat": 2001
+      },
+      "cases": 10724,
+      "farm_recall": 1.0,
+      "log_loss": 0.4813257706572828,
+      "matches": 1166,
+      "retreat_recall": 0.0
+    },
+    "last_frame_nn": {
+      "actions": {
+        "farm": 8686,
+        "retreat": 1966
+      },
+      "calibration": [
+        {
+          "count": 10636,
+          "from": 0.0,
+          "observed": 0.04729221511846559,
+          "predicted": 0.04721486099375505
+        },
+        {
+          "count": 16,
+          "from": 0.2,
+          "observed": 0.1875,
+          "predicted": 0.21584670879530826
+        }
+      ],
+      "cases": 10652,
+      "death_ap": 0.12128054192729118,
+      "death_brier": 0.04381310640305073,
+      "deaths": 506,
+      "false_alerts_per_represented_match": 0.0,
+      "hits_mae": 1.7172968667371802,
+      "matches": 1166
+    },
+    "last_frame_tree": {
+      "actions": {
+        "farm": 8686,
+        "retreat": 1966
+      },
+      "calibration": [
+        {
+          "count": 10351,
+          "from": 0.0,
+          "observed": 0.04472997777992464,
+          "predicted": 0.03616687160390652
+        },
+        {
+          "count": 251,
+          "from": 0.2,
+          "observed": 0.10756972111553785,
+          "predicted": 0.2645779201822614
+        },
+        {
+          "count": 40,
+          "from": 0.4,
+          "observed": 0.3,
+          "predicted": 0.4722075891449139
+        },
+        {
+          "count": 10,
+          "from": 0.6,
+          "observed": 0.4,
+          "predicted": 0.6953615231995178
+        }
+      ],
+      "cases": 10652,
+      "death_ap": 0.10752838412375766,
+      "death_brier": 0.04505687820403929,
+      "deaths": 506,
+      "false_alerts_per_represented_match": 0.012006861063464836,
+      "hits_mae": 1.6934310572181894,
+      "matches": 1166
+    },
+    "logistic": {
+      "actions": {
+        "farm": 8723,
+        "retreat": 2001
+      },
+      "cases": 10724,
+      "farm_recall": 0.9642324888226528,
+      "log_loss": 0.40168920681632564,
+      "matches": 1166,
+      "retreat_recall": 0.1969015492253873
+    },
+    "temporal_nn": {
+      "actions": {
+        "farm": 8686,
+        "retreat": 1966
+      },
+      "calibration": [
+        {
+          "count": 10646,
+          "from": 0.0,
+          "observed": 0.047435656584632724,
+          "predicted": 0.04737914531146858
+        },
+        {
+          "count": 6,
+          "from": 0.2,
+          "observed": 0.16666666666666666,
+          "predicted": 0.2152741464081416
+        }
+      ],
+      "cases": 10652,
+      "death_ap": 0.10000135501846023,
+      "death_brier": 0.04430733623237764,
+      "deaths": 506,
+      "false_alerts_per_represented_match": 0.0,
+      "hits_mae": 1.6938766660354252,
+      "matches": 1166
+    },
+    "three_frame_tree": {
+      "actions": {
+        "farm": 8686,
+        "retreat": 1966
+      },
+      "calibration": [
+        {
+          "count": 10350,
+          "from": 0.0,
+          "observed": 0.044154589371980676,
+          "predicted": 0.03390435657004162
+        },
+        {
+          "count": 256,
+          "from": 0.2,
+          "observed": 0.15625,
+          "predicted": 0.2683177530007861
+        },
+        {
+          "count": 37,
+          "from": 0.4,
+          "observed": 0.21621621621621623,
+          "predicted": 0.46907277904123296
+        },
+        {
+          "count": 9,
+          "from": 0.6,
+          "observed": 0.1111111111111111,
+          "predicted": 0.7051424223305864
+        }
+      ],
+      "cases": 10652,
+      "death_ap": 0.10356428976410689,
+      "death_brier": 0.04519470090631874,
+      "deaths": 506,
+      "false_alerts_per_represented_match": 0.015437392795883362,
+      "hits_mae": 1.6612595377067678,
+      "matches": 1166
+    }
+  },
+  "frozen_at_utc": "2026-11-22T05:20:33.270126+00:00",
+  "holdout": {
+    "jungle_support_min_rank": 60,
+    "once_marker": "reports/outcome-final-u191/evaluation-started.json",
+    "parsed_games": 337,
+    "split": "U133",
+    "wave_min_rank": 70
+  },
+  "map": {
+    "elevationdata.json": "01b7898deba8a5ff2d853a721765372d847d9cfdd24604aed38be564816182fc",
+    "mapdata.json": "33d7ce9109cb940e0a72e1d96235b315b63a05879f4c7e224413f48375a59076"
+  },
+  "metrics": {
+    "balanced_strata": "rank counts at max absolute postweight training SMD <= 0.25",
+    "behavior": "log loss and per-action recall",
+    "comparison": "held minus development OOF, same domain, target and estimator",
+    "factual": "Brier for death and arrival; MAE otherwise, on supported observations",
+    "overlap": "unsupported / outcome-eligible opportunities",
+    "reference": "hits MAE, death Brier/AP"
+  },
+  "models": {
+    "jungle.joblib": "2ccdf7b38a5a50b2d484d9512e0d06adc6345ee3a55fd1cccbf83fd5f4846d0e",
+    "support.joblib": "9621944c34ae9b7e94b00dad1f22cbb3ab5b735d7436fac7a676fe39b5bc8122",
+    "wave-reference.joblib": "17bd51cdc485bef417553611bee68502f56a6e188f3081cd4c4f08b083d96106",
+    "wave.joblib": "5c472c9fc477787222bf9910a5dfdef71b3f46fad057136ce27f191f611186bc"
+  },
+  "schema": "u191-final/1",
+  "sources": {
+    "knowledge/awareness/map-zones-v1.json": "29dbbd094a0fa5f93b4659480776305fcdeefb2d567b6791ab548e2955beebed",
+    "knowledge/awareness/save-means-v2.json": "8124039a4cfb836c898151c5e181a405857a956fe704854ea161b9f531614e9d",
+    "scripts/detect_ganks.py": "6717b56d0c10672cc7b85794d88cf84073782a905991f37ff6ef14b31ffc58ea",
+    "scripts/extract_creeps.py": "aa80620404700e522a2546527909891ca57e3b08980e77728a7568bab7d652f6",
+    "scripts/lane_decision_review.py": "ebf2e65ce8f14212a8fa839e0bf6f41c6319ad0ccae8b0d91df8a3db0c9eb27d",
+    "scripts/lane_study.py": "a62d53584e1188f4709c167b29ec03fab8986cdb09a15e7d0a1dda3234a8711d",
+    "scripts/lane_study_baselines.py": "aef8c05c6c23ed4262d335808c34c15f6b61f5598a9b9976525b5fb71a976941",
+    "scripts/lane_study_data.py": "0fff74e170847d600272d2cbde018442b60dffb19987fc82ef7f5272ccb95fd5",
+    "scripts/lane_study_sequence.py": "a36a94838a96f6a9686773d45cfd9b30c542d041718bf6d04642baae0cbdfde0",
+    "scripts/outcome_domains.py": "309ec83399adb52192139ced933a5468bcea7fc5951ad47e1d662ecd65bfb453",
+    "scripts/outcome_final.py": "6e252a4b10186de7a2d17efbd6855b812241507b1bfd38b65d7a27ba3be6ac5e",
+    "scripts/outcome_labels.py": "0222863eaa9cfe681fb4e373c52839e6014c2c274c934f314e03b0359446efea",
+    "scripts/outcome_values.py": "a29e5abbedf8a27eb5065b5ebd11e0ef477d6f05ae6b9e884b1005ecc240f1c9",
+    "src/dota_items/data/awareness_split.py": "08382a1e624cd6d7ad7db4a0f9a2a6c01f5cd8c183835f3c0f5ceee13affaae9",
+    "src/dota_items/data/death_risk.py": "48019907d56b9db49539c64a8c69e0084670077bb596679d0efb9843198f8aba",
+    "src/dota_items/data/gank_depth.py": "c805fd836f8c3b9089209c10bdfb91346554a95d7c802f50f17a7bf9585ce319",
+    "src/dota_items/data/gank_events.py": "530d788c3705d5381ecf9ef9ac71ef0ead97e1ff1fa664ea24a4c73d7af5324a",
+    "src/dota_items/data/lane_decisions.py": "d07652abe914bd122cfa23d17adcabfebf3ddcba940aca7a8a1188d5b6063f89",
+    "src/dota_items/data/unit_state.py": "127a8c6f77fc2d0f0d7e742e308071e7a4d857ea5c1db078ccc681f3aba7eaa0",
+    "src/dota_items/data/vision_sim.py": "0df29d6a41fa3d0810ab51531fd0a40eb1c9a46d7de218937056a772b8086b7e",
+    "src/dota_items/sources/gem_capture.py": "99e6845f0275286d3a902a802665d989345d3ab1cc3f0bda54810f7ccab3f2fc",
+    "src/dota_items/sources/gem_capture_creeps.py": "809408dbb98c686f93b1b8cf8eed67214c35d42786d2aa65073eb418f8d5bef1",
+    "src/dota_items/sources/gem_capture_extras.py": "101a6c8219a1df6f0325e25844615730c2af881035902f7218f5ad7579fe9688",
+    "src/dota_items/sources/gem_capture_v3.py": "e8ebeb2c52b6568d56979c7854a685fdb1e658acd4e7848515b12e3d597a040e",
+    "src/dota_items/sources/gem_replay.py": "7a7826955552a0a9bf9b94477c9499c679025e0beb48450ea9c4e4fe12ec32a8",
+    "src/dota_items/storage.py": "bafb163eae7a2a9bcfc7a606cb54ffdc339b5f7e32bbe0f8d89b2bf9cb58fe45"
+  },
+  "versions": {
+    "gem-dota": "0.10.0",
+    "joblib": "1.6.0",
+    "numpy": "2.5.4",
+    "python": "3.12.3",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1"
+  }
+}

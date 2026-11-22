@@ -151,3 +151,7 @@
 [开发集行动价值汇总](acceptance/outcome-values-dev.json) · [加权估计脚本](../scripts/outcome_values.py) · [估计器测试](../tests/test_outcome_values.py)
 
 [打野与支援脚本](../scripts/outcome_domains.py) · [动作和到场边界测试](../tests/test_outcome_domains.py)
+
+[留出评估冻结清单](outcome-freeze.md) · [模型指纹](acceptance/outcome-u191-freeze.json) · [一次评估入口](../scripts/outcome_final.py) · [防重复评分测试](../tests/test_outcome_final.py)
+
+[单次留出评估的机器可读结果](acceptance/outcome-holdout-u191.json)

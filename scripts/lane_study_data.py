@@ -49,14 +49,14 @@ def fold_for(mid):
     return int.from_bytes(hashlib.sha256(f"lane-study-v1:{mid}".encode()).digest(), "big") % 5
 
 
-def candidates(root, *, min_rank=70):
+def candidates(root, *, min_rank=70, holdout=False):
     ready = []
     extra = []
     for receipt in sorted((root / "receipts").glob("*.json")):
         if not receipt.stem.isdigit():
             continue
         mid = int(receipt.stem)
-        if is_holdout(mid):
+        if is_holdout(mid) != holdout:
             continue
         rc = read_json(receipt)
         if rc.get("status") != "parsed" or (rc.get("avg_rank_tier") or 0) < min_rank:
@@ -214,10 +214,10 @@ def readonly_match(root, mid):
     return match
 
 
-def match_rows(job):
+def match_rows(job, *, holdout=False):
     mid, root, map_dir, extras_root = job
-    if is_holdout(mid):
-        raise ValueError("reserved match")
+    if is_holdout(mid) != holdout:
+        raise ValueError("reserved match or wrong partition")
     match = readonly_match(root, mid)
     duration = normalized_end(root / "parsed" / f"{mid}.normalized.json.gz", mid)
     end = min(match["last"], duration)

@@ -400,6 +400,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+U191 五步已完成。已按冻结模型对 337 场留出录像进行一次最终评估，按任务报告实际行动预测误差、双动作覆盖和开发差距。 [冻结清单](outcome-freeze.md) · [研究报告](outcome-autotrain.md)
+
 U191 第 4 步完成打野、支援的全开发集样本、结果标签与双动作价值估计，按对局平均段位分报。 [结果与局限](outcome-autotrain.md)
 
 U191 第 3 步完成收线与后撤的折外加权比较，可评片段中 18.63% 缺乏动作重叠。 [结果与局限](outcome-autotrain.md)
