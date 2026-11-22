@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 41 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 42 |
 <!-- /track-table -->
 
 依赖规则：
@@ -141,3 +141,5 @@ B线的硬约束（继承U2、U6和`long-term-coach-goals.md`§5）：评价某�
 - 归属表只检查导入关系，不检查数据用途：A线脚本读取B线产物的文件，测试发现不了，靠评审把关。
 - `maintenance`状态是助手判断，没有逐项问用户。
 - 本次没有改任何模块的行为；`architecture.py`以外的代码改动只有检查脚本把新测试加进共享集合。
+
+scripts/lane_outcome_evaluation.py 属路线 B，消费补刀前报告并进行按场验证。
