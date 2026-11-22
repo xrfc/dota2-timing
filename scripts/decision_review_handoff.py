@@ -12,8 +12,7 @@ from threading import Thread
 
 from audit_decision_reports import audit_reports
 from check_support_travel import MATCHES
-from friend_review_server import MODES, has_active_invite, make_server, read_reviews
-from friend_review_server import issue as issue_invite
+from local_review_server import MODES, make_server, read_reviews
 from review_judgments import CHOICES, build_queue
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -200,10 +199,10 @@ def run(args):
         if args.json:
             print(json.dumps(result, ensure_ascii=False, indent=2))
         else:
-            show(result, args.portal_url)
+            show(result, f"http://127.0.0.1:{args.port}")
         return int(bool(result["material_issues"]))
     if not result["judgments"]["queue"]:
-        show(result, args.portal_url)
+        show(result, f"http://127.0.0.1:{args.port}")
         return int(bool(result["material_issues"]))
     if not sys.stdin.isatty():
         raise ValueError("--serve 需要可交互终端；批处理请使用 --json。")
@@ -213,11 +212,7 @@ def run(args):
         if manifest_stamps(folders) != stamps:
             raise ValueError("门户启动期间报告已更换，请重新运行。")
         origin = f"http://127.0.0.1:{server.server_port}"
-        print(f"登录评审：{origin}/")
-        if not has_active_invite(db):
-            print(f"新登录邀请码：{issue_invite(db)}")
-        else:
-            print("请使用已有邀请码；每个评审人使用自己的邀请码。")
+        print(f"本机评审：{origin}/")
         Thread(target=server.serve_forever, daemon=True).start()
         try:
             while True:
@@ -225,14 +220,10 @@ def run(args):
                 tasks = result["judgments"]["queue"]
                 if not tasks:
                     break
-                answer = input(
-                    "门户提交后按回车刷新；输入编号裁定，i 签发另一位评审人的邀请码，q 退出："
-                ).strip()
+                answer = input("门户提交后按回车刷新；输入编号裁定，q 退出：").strip()
                 if answer.lower() == "q":
                     break
-                if answer.lower() == "i":
-                    print(f"新评审人的邀请码：{issue_invite(db)}")
-                elif answer.isdecimal() and 1 <= int(answer) <= len(tasks):
+                if answer.isdecimal() and 1 <= int(answer) <= len(tasks):
                     task = tasks[int(answer) - 1]
                     if task.get("evidence_sha256"):
                         labels = {
@@ -281,9 +272,6 @@ def main():
     parser.add_argument("--ledger", type=Path, help="organizer's private adjudication database")
     parser.add_argument("--limit", type=int, default=5)
     parser.add_argument("--json", action="store_true")
-    parser.add_argument(
-        "--portal-url", default="http://127.0.0.1:8798", help="link origin for an existing portal"
-    )
     parser.add_argument(
         "--serve", action="store_true", help="open an interactive local organizer session"
     )

@@ -390,7 +390,7 @@ SCRIPTS = {
     "audit_patch742_inputs": _B,
     "review_judgments": _B,
     "decision_review_handoff": _B,
-    "friend_review_server": _B,
+    "local_review_server": _B,
     "vision_check": _B,
     "vision_cliff_check": _B,
     "vision_tree_check": _B,

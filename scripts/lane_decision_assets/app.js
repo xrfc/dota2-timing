@@ -137,7 +137,7 @@ async function submitReview() {
   try {
     const r = await fetch('/reviews', {method:'POST', headers:{
       'Content-Type':'application/json', 'X-Review-Reviewer':reviewer, 'X-Review-Version':'1'}, body:JSON.stringify(record)});
-    if (r.status === 401 || r.status === 409) throw Error('登录状态或片段版本已变更，请刷新评审页。');
+    if (r.status === 401 || r.status === 409) throw Error('评审状态或片段版本已变更，请刷新评审页。');
     if (!r.ok) throw Error('提交未成功，请重试。');
     const acknowledgment = await r.json();
     if (!acknowledgment.ok) throw Error('提交未成功，请重试。');
@@ -346,7 +346,7 @@ el('reveal').onclick = () => reveal().catch(fail);
 async function loadPage() {
   if (!portal) return read('cases.json');
   const r = await fetch('/reviews', {cache:'no-store', headers:{'X-Review-Version':'1'}});
-  if (!r.ok) throw Error('无法读取个人评审，请返回邀请入口重新登录。');
+  if (!r.ok) throw Error('无法读取个人评审，请重新打开本地评审页。');
   const snapshot = await r.json();
   reviewer = snapshot.reviewer;
   if (!reviewer || !Array.isArray(snapshot.reviews) || !Array.isArray(snapshot.previously_seen)) {

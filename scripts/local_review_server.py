@@ -1,4 +1,4 @@
-"""Serve an invite-only replay review portal behind a same-origin HTTPS reverse proxy."""
+"""Serve decision reviews on the local loopback interface."""
 
 import argparse
 import hashlib
@@ -6,25 +6,14 @@ import json
 import mimetypes
 import os
 import re
-import secrets
 import sqlite3
-import time
 from contextlib import closing
-from http import HTTPStatus
-from http.cookies import CookieError, SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import parse_qs, urlsplit
 
 MODES = ("lane", "jungle", "wave")
-WEEK = 7 * 86400
-COOKIE = "friend_review"
+LOCAL_REVIEWER = "local"
 BODY_LIMIT = 16 * 1024
-LOGIN = """<!doctype html><html lang="zh-CN"><meta charset=utf-8>
-<meta name=viewport content="width=device-width, initial-scale=1">
-<title>录像复盘</title><h1>录像复盘</h1><form method=post action="/login">
-<label>邀请码 <input name=code type=password required maxlength=128></label>
-<button>进入复盘</button></form></html>"""
 MODE_LABELS = {"lane": "带线", "jungle": "打野", "wave": "补刀前的兵线取舍"}
 UI_DIR = Path(__file__).with_name("lane_decision_assets")
 
@@ -45,10 +34,6 @@ def initialize(db):
     os.close(os.open(db, os.O_CREAT | os.O_RDWR, 0o600))
     with closing(sqlite3.connect(db)) as conn:
         conn.executescript("""
-        CREATE TABLE IF NOT EXISTS invites (
-            digest TEXT PRIMARY KEY, reviewer TEXT UNIQUE NOT NULL, expires INTEGER NOT NULL);
-        CREATE TABLE IF NOT EXISTS sessions (
-            digest TEXT PRIMARY KEY, reviewer TEXT NOT NULL, expires INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS reviews (
             reviewer TEXT NOT NULL, case_id TEXT NOT NULL, choice TEXT, first TEXT,
             previewed INTEGER NOT NULL, note TEXT NOT NULL, PRIMARY KEY(reviewer,case_id));
@@ -56,30 +41,7 @@ def initialize(db):
             reviewer TEXT NOT NULL, case_id TEXT NOT NULL, case_sha256 TEXT NOT NULL,
             choice TEXT, first TEXT, previewed INTEGER NOT NULL, note TEXT NOT NULL,
             PRIMARY KEY(reviewer,case_id,case_sha256));
-        CREATE TABLE IF NOT EXISTS failures (at INTEGER NOT NULL);
         """)
-
-
-def has_active_invite(db):
-    """Check an initialized portal database against the same deadline as login."""
-    with closing(sqlite3.connect(db)) as conn:
-        return (
-            conn.execute(
-                "SELECT 1 FROM invites WHERE expires > ? LIMIT 1", (int(time.time()),)
-            ).fetchone()
-            is not None
-        )
-
-
-def issue(db):
-    initialize(db)
-    code = secrets.token_urlsafe(24)
-    with closing(sqlite3.connect(db)) as conn, conn:
-        conn.execute(
-            "INSERT INTO invites VALUES (?,?,?)",
-            (digest(code), secrets.token_hex(12), int(time.time()) + WEEK),
-        )
-    return code
 
 
 def catalogue(folders, current_ui, eligible_ids):
@@ -133,7 +95,7 @@ def catalogue(folders, current_ui, eligible_ids):
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, fmt, *args):
-        # Do not log paths, headers or submitted invite codes.
+        # Do not log paths or headers.
         pass
 
     def respond(self, status, data=b"", kind="application/json", headers=()):
@@ -156,32 +118,25 @@ class Handler(BaseHTTPRequestHandler):
     def json(self, payload):
         self.respond(200, json.dumps(payload, ensure_ascii=False).encode())
 
-    def session(self, conn):
-        cookies = SimpleCookie()
-        try:
-            cookies.load(self.headers.get("Cookie", ""))
-        except CookieError:
-            return None
-        if COOKIE not in cookies:
-            return None
-        row = conn.execute(
-            "SELECT reviewer FROM sessions WHERE digest=? AND expires>?",
-            (digest(cookies[COOKIE].value), int(time.time())),
-        ).fetchone()
-        return row[0] if row else None
+    def local_request(self):
+        port = self.server.server_port
+        return self.headers.get("Host") in (f"127.0.0.1:{port}", f"localhost:{port}") and not any(
+            header.lower() == "forwarded" or header.lower().startswith("x-forwarded-")
+            for header in self.headers
+        )
 
     def do_GET(self):
+        if not self.local_request():
+            return self.respond(403)
         path = self.path.partition("?")[0]
         with closing(sqlite3.connect(self.server.db)) as conn:
-            reviewer = self.session(conn)
+            reviewer = LOCAL_REVIEWER
             if path == "/":
                 return self.respond(
                     200,
-                    (self.server.home if reviewer else LOGIN).encode(),
+                    self.server.home.encode(),
                     "text/html; charset=utf-8",
                 )
-            if reviewer is None:
-                return self.respond(401)
             if path == "/reviews":
                 if self.headers.get("X-Review-Version") == "1":
                     rows = conn.execute(
@@ -251,10 +206,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         host = self.headers.get("Host", "")
         origin = self.headers.get("Origin", "")
-        if origin not in ("https://" + host, "http://" + host) or not host:
-            return self.respond(403)
-        local = urlsplit(origin).hostname in ("localhost", "127.0.0.1", "::1")
-        if not local and not origin.startswith("https://"):
+        if not self.local_request() or origin != "http://" + host:
             return self.respond(403)
         try:
             length = int(self.headers.get("Content-Length", "-1"))
@@ -264,15 +216,9 @@ class Handler(BaseHTTPRequestHandler):
             return self.respond(413)
         body = self.rfile.read(length)
         with closing(sqlite3.connect(self.server.db)) as conn, conn:
-            if self.path == "/login":
-                if self.headers.get_content_type() != "application/x-www-form-urlencoded":
-                    return self.respond(415)
-                return self.login(conn, body, origin.startswith("https://"))
             if self.path != "/reviews":
                 return self.respond(404)
-            reviewer = self.session(conn)
-            if not reviewer:
-                return self.respond(401)
+            reviewer = LOCAL_REVIEWER
             if self.headers.get("X-Review-Reviewer") != reviewer:
                 return self.respond(409)
             if self.headers.get_content_type() != "application/json":
@@ -282,31 +228,6 @@ class Handler(BaseHTTPRequestHandler):
             except (ValueError, UnicodeError, RecursionError):
                 return self.respond(400)
             self.review(conn, reviewer, record)
-
-    def login(self, conn, body, secure):
-        try:
-            code = parse_qs(body.decode(), max_num_fields=4).get("code", [""])[0]
-        except ValueError:
-            return self.respond(400)
-        now = int(time.time())
-        conn.execute("BEGIN IMMEDIATE")
-        conn.execute("DELETE FROM failures WHERE at<=?", (now - 60,))
-        if conn.execute("SELECT COUNT(*) FROM failures").fetchone()[0] >= 20:
-            return self.respond(HTTPStatus.TOO_MANY_REQUESTS)
-        row = conn.execute(
-            "SELECT reviewer,expires FROM invites WHERE digest=? AND expires>?", (digest(code), now)
-        ).fetchone()
-        if not row:
-            conn.execute("INSERT INTO failures VALUES (?)", (now,))
-            return self.respond(403)
-        token = secrets.token_urlsafe(32)
-        conn.execute("DELETE FROM sessions WHERE expires<=?", (now,))
-        conn.execute("INSERT INTO sessions VALUES (?,?,?)", (digest(token), *row))
-        conn.commit()
-        flags = f"Path=/; HttpOnly; SameSite=Strict; Max-Age={row[1] - now}"
-        if secure:
-            flags += "; Secure"
-        self.respond(303, headers=(("Location", "/"), ("Set-Cookie", f"{COOKIE}={token}; {flags}")))
 
     def review(self, conn, reviewer, row):
         if not isinstance(row, dict) or not isinstance(row.get("case_id"), str):
@@ -426,14 +347,12 @@ def main():
     parser.add_argument("--db", required=True, type=Path)
     parser.add_argument("--root", default=Path("reports"), type=Path)
     parser.add_argument("--port", default=8796, type=int)
-    parser.add_argument("command", choices=("serve", "issue", "export"), default="serve", nargs="?")
+    parser.add_argument("command", choices=("serve", "export"), default="serve", nargs="?")
     args = parser.parse_args()
-    if args.command == "issue":
-        print(issue(args.db))
-    elif args.command == "export":
+    if args.command == "export":
         print(json.dumps(read_reviews(args.db), ensure_ascii=False, indent=2))
     else:
-        with make_server(args.root, args.db, args.port) as server:
+        with make_server(args.root, args.db, args.port, current_ui=True) as server:
             server.serve_forever()
 
 

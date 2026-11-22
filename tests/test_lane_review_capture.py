@@ -156,7 +156,7 @@ def test_generated_report_runs_through_handoff_and_reopens_on_new_evidence(
     report_inputs, tmp_path, mode
 ):
     from decision_review_handoff import prepare, read_ledger, record
-    from friend_review_server import case_sha256
+    from local_review_server import case_sha256
 
     generator, mid, _, _ = report_inputs
     [(case, action, outcome)] = generator.build_match(tmp_path, mid, {}, mode)

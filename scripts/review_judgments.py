@@ -8,7 +8,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from friend_review_server import case_sha256
+from local_review_server import case_sha256
 
 from dota_items.data.awareness_split import is_holdout
 from dota_items.storage import json_bytes, read_json
@@ -142,7 +142,7 @@ def collect_reviews(reviews, modes, versions):
         raise ValueError("expected an exported review array")
     for row in reviews:
         if not isinstance(row, dict):
-            raise ValueError("expected records from friend_review_server.py export")
+            raise ValueError("expected records from local_review_server.py export")
         key, reviewer = row.get("case_id"), row.get("reviewer")
         if not isinstance(key, str) or not isinstance(reviewer, str) or not reviewer.strip():
             raise ValueError("review must identify a case and reviewer")
@@ -325,7 +325,7 @@ def build_queue(folders, reviews=(), limit=5, eligible_ids=None, adjudications=N
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--review-dir", type=Path, nargs="+", required=True)
-    parser.add_argument("--reviews", type=Path, help="JSON from friend_review_server.py export")
+    parser.add_argument("--reviews", type=Path, help="JSON from local_review_server.py export")
     parser.add_argument(
         "--adjudications", type=Path, help="private, completed adjudication template"
     )
