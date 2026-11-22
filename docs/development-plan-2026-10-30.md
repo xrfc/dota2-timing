@@ -400,6 +400,9 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+2026-11-22：B5 已能按开发集比赛号导出三场景统一的单场报告，原三场共 77 段。U191 冻结产物只读。待完成新录像推理与实际使用反馈。见[单场报告](outcome-autotrain.md#6-b5-单场复盘入口)。
+
+
 U191 五步已完成。已按冻结模型对 337 场留出录像进行一次最终评估，按任务报告实际行动预测误差、双动作覆盖和开发差距。 [冻结清单](outcome-freeze.md) · [研究报告](outcome-autotrain.md)
 
 U191 第 4 步完成打野、支援的全开发集样本、结果标签与双动作价值估计，按对局平均段位分报。 [结果与局限](outcome-autotrain.md)

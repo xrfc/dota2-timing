@@ -391,6 +391,7 @@ SCRIPTS = {
     "lane_study_sequence": _B,
     "outcome_labels": _B,
     "outcome_values": _B,
+    "outcome_match_report": _B,
     "outcome_domains": _B,
     "outcome_final": _B,
     "check_support_travel": _B,
