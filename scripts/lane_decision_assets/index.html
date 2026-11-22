@@ -24,7 +24,16 @@
     </div>
     <p id="vision-coverage" hidden>本秒缺少额外采样。小兵视野仅参考可用的兵线前沿，守望者归属未知。</p>
     <div class="map-frame">
-      <canvas width="600" height="565" id="map" aria-label="己方英雄和当时可见敌人的位置"></canvas>
+      <div class="map-stage">
+        <canvas width="600" height="565" id="map" aria-label="己方英雄和当时可见敌人的位置；滚轮缩放，拖动平移，双击复位"></canvas>
+        <div class="map-tools" role="group" aria-label="地图缩放">
+          <button type="button" id="zoom-in" title="放大">＋</button>
+          <span id="zoom-level" aria-live="polite">1.0×</span>
+          <button type="button" id="zoom-out" title="缩小">－</button>
+          <button type="button" id="zoom-reset" title="复位（或双击地图）">⟲</button>
+        </div>
+        <p class="map-hint">滚轮缩放 · 拖动平移 · 双击复位</p>
+      </div>
     </div>
     <p class="legend">
       <span class="key"><i class="dot self"></i>黄：自己</span>

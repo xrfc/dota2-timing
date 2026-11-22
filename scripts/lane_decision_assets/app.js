@@ -193,14 +193,86 @@ function draw() {
     li.textContent = zh(e.hero) + ' · ' + (e.distance == null ? seen : '可见，距离 ' + e.distance);
     return li;
   }));
-  const c = el('map'), g = c.getContext('2d');
-  g.clearRect(0, 0, c.width, c.height);
-  if (map.naturalWidth) g.drawImage(map, 0, 0, c.width, c.height);
-  const project = ([x,y]) => [
-    (261 + (x - 7487) * 8356 / 18322) * c.width / 8878,
-    (26015 - y) * c.height / 18322
-  ];
-  g.font = 'bold 12px sans-serif';
+  drawMap(f);
+}
+// 地图：滚轮以光标为中心缩放、拖动平移、双击复位；标记与文字保持屏幕尺寸，放大后自然分散。
+const MAP_W = 600, MAP_H = 565, MAX_ZOOM = 8;
+const view = {k: 1, x: 0, y: 0};
+const SIDE_COLOR = {self: '#ffd353', ally: '#91ee9f', enemy: '#ff685b'};
+function clampView() {
+  view.k = Math.min(MAX_ZOOM, Math.max(1, view.k));
+  view.x = Math.min(MAP_W - MAP_W / view.k, Math.max(0, view.x));
+  view.y = Math.min(MAP_H - MAP_H / view.k, Math.max(0, view.y));
+}
+function zoomAt(factor, mx = MAP_W / 2, my = MAP_H / 2) {
+  const px = view.x + mx / view.k, py = view.y + my / view.k;
+  view.k *= factor; clampView();
+  view.x = px - mx / view.k; view.y = py - my / view.k; clampView();
+  drawMap();
+}
+function resetView() { view.k = 1; view.x = 0; view.y = 0; }
+function pillPath(g, x, y, w, h, r) {
+  g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
+  g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+}
+const overlap = (a, b) => Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x)) *
+  Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
+// 贪心放置：先试紧贴标记的八个方位，再试外圈（带引线），都冲突时取重叠面积最小处。
+function placeLabels(g, labels, obstacles) {
+  const placed = [];
+  for (const l of labels) {
+    const w = g.measureText(l.text).width + 10, h = 17, gap = l.r + 3;
+    let best = null;
+    for (const ring of [0, 1, 2]) {
+      const d = gap + ring * 16;
+      const spots = [
+        [d, -h - 2 + gap * .3], [d, 2 - gap * .3], [-d - w, -h - 2 + gap * .3], [-d - w, 2 - gap * .3],
+        [-w / 2, -d - h], [-w / 2, d], [d, -h / 2], [-d - w, -h / 2]
+      ];
+      for (const [dx, dy] of spots) {
+        const box = {x: l.x + dx, y: l.y + dy, w, h};
+        let cost = 0;
+        if (box.x < 1 || box.y < 1 || box.x + w > MAP_W - 1 || box.y + h > MAP_H - 1) cost += 1e6;
+        for (const o of placed) cost += overlap(box, o) * 4;
+        for (const o of obstacles) if (o.owner !== l) cost += overlap(box, o);
+        cost += ring * 30;
+        if (!best || cost < best.cost) best = {...box, cost, ring};
+      }
+      if (best.cost <= ring * 30) break;
+    }
+    placed.push(best); l.box = best;
+  }
+  for (const l of labels) {
+    const b = l.box;
+    if (b.ring) {
+      const tx = Math.min(Math.max(l.x, b.x), b.x + b.w), ty = Math.min(Math.max(l.y, b.y), b.y + b.h);
+      g.strokeStyle = l.color; g.globalAlpha = .7; g.lineWidth = 1;
+      g.beginPath(); g.moveTo(l.x, l.y); g.lineTo(tx, ty); g.stroke(); g.globalAlpha = 1;
+    }
+    pillPath(g, b.x, b.y, b.w, b.h, 5);
+    g.fillStyle = l.ghost ? 'rgba(40,20,20,.72)' : 'rgba(9,16,17,.84)'; g.fill();
+    g.strokeStyle = l.color; g.lineWidth = l.ghost ? 1 : 1.5;
+    if (l.ghost) g.setLineDash([3, 2]);
+    g.stroke(); g.setLineDash([]);
+    g.fillStyle = l.ghost ? '#ffd5d0' : '#f4fbf9';
+    g.fillText(l.text, b.x + 5, b.y + b.h / 2 + 4);
+  }
+}
+function drawMap(f = current && current.history[Number(el('frames').value)]) {
+  const c = el('map');
+  if (!f || !c.getContext) return;
+  const g = c.getContext('2d');
+  const rect = c.getBoundingClientRect ? c.getBoundingClientRect() : {width: MAP_W};
+  const dpr = (globalThis.devicePixelRatio || 1), cssW = rect.width || MAP_W;
+  const bw = Math.round(cssW * dpr), bh = Math.round(cssW * MAP_H / MAP_W * dpr);
+  if (c.width !== bw || c.height !== bh) { c.width = bw; c.height = bh; }
+  const base = bw / MAP_W;
+  g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, bw, bh);
+  // 底图与视野按缩放绘制
+  g.setTransform(base * view.k, 0, 0, base * view.k, -view.x * view.k * base, -view.y * view.k * base);
+  g.imageSmoothingQuality = 'high';
+  if (map.naturalWidth) g.drawImage(map, 0, 0, MAP_W, MAP_H);
+  const project = ([x,y]) => [(261 + (x - 7487) * 8356 / 18322) * MAP_W / 8878, (26015 - y) * MAP_H / 18322];
   if (f.vision && el('vision').checked) {
     const {origin,step,width,bits} = f.vision;
     const mask = atob(bits);
@@ -209,53 +281,101 @@ function draw() {
       const i = y*width+x;
       return Boolean(mask.charCodeAt(i>>3) & (1<<(i%8)));
     };
-    const size = step*c.height/18322;
-    g.beginPath();
+    const size = step*MAP_H/18322;
+    g.beginPath(); g.fillStyle = 'rgba(119,235,226,0.18)';
     for (let y=0;y<width;y++) for (let x=0;x<width;x++) {
       if (!inside(x,y)) continue;
       const [a,b] = project([origin+x*step,origin+(y+1)*step]);
-      g.fillStyle = 'rgba(119,235,226,0.20)'; g.fillRect(a,b,size,size);
+      g.fillRect(a,b,size+.05,size+.05);
       if (!inside(x-1,y)) {g.moveTo(a,b);g.lineTo(a,b+size);}
       if (!inside(x+1,y)) {g.moveTo(a+size,b);g.lineTo(a+size,b+size);}
       if (!inside(x,y+1)) {g.moveTo(a,b);g.lineTo(a+size,b);}
       if (!inside(x,y-1)) {g.moveTo(a,b+size);g.lineTo(a+size,b+size);}
     }
-    g.strokeStyle = 'rgba(140,255,241,0.85)'; g.lineWidth = 1; g.stroke();
+    g.strokeStyle = 'rgba(140,255,241,0.85)'; g.lineWidth = 1.2 / view.k; g.stroke();
   }
+  // 以下元素用屏幕尺寸绘制（逻辑 600×565 坐标）
+  g.setTransform(base, 0, 0, base, 0, 0);
+  const screen = p => { const [x,y] = project(p); return [(x - view.x) * view.k, (y - view.y) * view.k]; };
+  const labels = [], obstacles = [];
+  g.lineJoin = 'round'; g.lineCap = 'round';
   for (const enemy of f.enemies) {
     const trail = enemy.trail || [];
     if (enemy.dead || !trail.length) continue;
-    const path = trail.map(([,x,y]) => project([x,y]));
-    g.strokeStyle = '#ffada8'; g.lineWidth = 2; g.beginPath();
-    path.forEach(([x,y],i) => i ? g.lineTo(x,y) : g.moveTo(x,y)); g.stroke();
+    const path = trail.map(([,x,y]) => screen([x,y]));
+    g.strokeStyle = 'rgba(255,173,168,.9)'; g.lineWidth = 2; g.setLineDash([5, 3]); g.beginPath();
+    path.forEach(([x,y],i) => i ? g.lineTo(x,y) : g.moveTo(x,y)); g.stroke(); g.setLineDash([]);
     if (enemy.last_seen < f.t) {
       const [x,y] = path[path.length-1];
-      g.strokeRect(x-3,y-3,6,6);
-      g.fillStyle = '#ffe1dd';
-      g.fillText(zh(enemy.hero)+' · '+(f.t-enemy.last_seen)+'秒前', x+5,y+12);
+      g.strokeStyle = '#ffada8'; g.lineWidth = 1.5; g.strokeRect(x-4,y-4,8,8);
+      labels.push({text: zh(enemy.hero)+' · '+(f.t-enemy.last_seen)+'秒前', x, y, r: 5, color: '#ffada8', ghost: true, rank: 3});
     }
   }
-  g.lineWidth = 1;
+  g.font = 'bold 10px sans-serif'; g.lineWidth = 1;
   for (const ward of f.wards || []) {
-    const [x,y] = project(ward.pos);
-    g.fillStyle = ward.type === 'observer' ? '#ffe56d' : '#83caff';
-    g.fillRect(x-7,y-7,14,14); g.fillStyle = '#101818';
-    g.fillText(ward.type === 'observer' ? '观' : '真',x-6,y+5);
+    const [x,y] = screen(ward.pos);
+    pillPath(g, x-7, y-7, 14, 14, 3);
+    g.fillStyle = ward.type === 'observer' ? '#ffe56d' : '#83caff'; g.fill();
+    g.strokeStyle = '#101818'; g.stroke();
+    g.fillStyle = '#101818'; g.textAlign = 'center';
+    g.fillText(ward.type === 'observer' ? '观' : '真', x, y+3.5); g.textAlign = 'left';
+    obstacles.push({x: x-7, y: y-7, w: 14, h: 14});
   }
   const landmark = jungle ? f.camp : f.wave;
   if (landmark) {
-    const [x,y] = project(landmark);
-    g.fillStyle = '#fff'; g.fillRect(x-4, y-4, 8, 8);
+    const [x,y] = screen(landmark);
+    g.fillStyle = '#fff'; g.strokeStyle = '#172424'; g.lineWidth = 1.5;
+    g.fillRect(x-4, y-4, 8, 8); g.strokeRect(x-4, y-4, 8, 8);
+    obstacles.push({x: x-5, y: y-5, w: 10, h: 10});
   }
+  const rank = {self: 0, enemy: 1, ally: 2};
   for (const m of f.markers) {
-    const [x,y] = project(m.pos);
-    g.beginPath(); g.arc(x, y, m.side === 'self' ? 7 : 5, 0, 2 * Math.PI);
-    g.fillStyle = {self:'#ffd353', ally:'#91ee9f', enemy:'#ff685b'}[m.side]; g.fill();
-    g.strokeStyle = '#172424'; g.stroke();
-    g.font = 'bold 12px sans-serif'; g.lineWidth = 3; g.strokeText(zh(m.hero), x+7, y-4);
-    g.fillStyle = '#fff'; g.fillText(zh(m.hero), x+7, y-4); g.lineWidth = 1;
+    const [x,y] = screen(m.pos), r = m.side === 'self' ? 7 : 5.5;
+    g.beginPath(); g.arc(x, y, r + 2.5, 0, 2 * Math.PI); g.fillStyle = 'rgba(8,14,15,.75)'; g.fill();
+    g.beginPath(); g.arc(x, y, r, 0, 2 * Math.PI);
+    g.fillStyle = SIDE_COLOR[m.side]; g.fill();
+    if (m.side === 'self') { g.strokeStyle = '#fff'; g.lineWidth = 1.5; g.stroke(); }
+    const label = {text: zh(m.hero), x, y, r: r + 2, color: SIDE_COLOR[m.side], rank: rank[m.side]};
+    labels.push(label); obstacles.push({x: x-r-2, y: y-r-2, w: 2*r+4, h: 2*r+4, owner: label});
   }
+  g.font = 'bold 11.5px system-ui, "Microsoft YaHei UI", "PingFang SC", "Noto Sans CJK SC", sans-serif';
+  labels.sort((a, b) => a.rank - b.rank);
+  placeLabels(g, labels.filter(l => l.x > -40 && l.y > -40 && l.x < MAP_W + 40 && l.y < MAP_H + 40), obstacles);
+  const zoom = el('zoom-level');
+  if (zoom) zoom.textContent = view.k.toFixed(1) + '×';
 }
+(function bindMapView() {
+  const c = el('map');
+  if (!c || !('onwheel' in c || c.addEventListener)) return;
+  const local = e => {
+    const r = c.getBoundingClientRect();
+    return [(e.clientX - r.left) * MAP_W / r.width, (e.clientY - r.top) * MAP_H / r.height];
+  };
+  c.onwheel = e => {
+    e.preventDefault();
+    const [mx, my] = local(e);
+    zoomAt(Math.exp(-Math.max(-120, Math.min(120, e.deltaY)) * 0.0022), mx, my);
+  };
+  let drag = null;
+  c.onpointerdown = e => {
+    if (e.button !== 0) return;
+    drag = {id: e.pointerId, p: local(e), x: view.x, y: view.y};
+    c.setPointerCapture?.(e.pointerId); c.classList?.add('dragging');
+  };
+  c.onpointermove = e => {
+    if (!drag || drag.id !== e.pointerId) return;
+    const [mx, my] = local(e);
+    view.x = drag.x - (mx - drag.p[0]) / view.k; view.y = drag.y - (my - drag.p[1]) / view.k;
+    clampView(); drawMap();
+  };
+  c.onpointerup = c.onpointercancel = () => { drag = null; c.classList?.remove('dragging'); };
+  c.ondblclick = () => { resetView(); drawMap(); };
+  const button = (id, fn) => { const b = el(id); if (b) b.onclick = fn; };
+  button('zoom-in', () => zoomAt(1.5));
+  button('zoom-out', () => zoomAt(1 / 1.5));
+  button('zoom-reset', () => { resetView(); drawMap(); });
+  if (globalThis.ResizeObserver && c.nodeType) new ResizeObserver(() => drawMap()).observe(c);
+})();
 function judge(choice) {
   const first = saved().first || choice;
   save({choice, first});
@@ -300,7 +420,7 @@ async function reveal() {
   el('reveal').disabled = true;
 }
 function openCase() {
-  ++revision; current = cases[Number(el('cases').value)];
+  ++revision; current = cases[Number(el('cases').value)]; resetView();
   history.replaceState(null, '', '#' + current.id);
   el('first-choice').hidden = true;
   el('title').textContent = zh(current.hero) + ' · ' + (jungle ? '野区' : lanes[current.lane]) + ' · ' + time(current.t);
