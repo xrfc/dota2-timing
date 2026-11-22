@@ -1,5 +1,6 @@
 """Apply the frozen U191 action-value models to a newly prepared, independent replay."""
 
+import gzip
 import hashlib
 import json
 from collections import Counter, defaultdict
@@ -18,6 +19,37 @@ from dota_items.storage import read_json
 FREEZE_SHA256 = "ed7655af753a2e8fe4fbb99646fec649837433587aea4708bc60d26776487720"
 
 
+def _check_development_cohort(mid, frozen):
+    """Check the full candidate roster, including rejected and zero-opportunity games."""
+    folder = REPORTS / "outcome-domains"
+    payload = (folder / "manifest.json").read_bytes()
+    digest = hashlib.sha256(payload).hexdigest()
+    for domain in ("jungle", "support"):
+        summary = read_json(folder / domain / "summary.json")
+        if (
+            summary.get("domain") != domain
+            or summary.get("split") != "development"
+            or summary.get("rows_sha256") != frozen["development"][domain]["rows_sha256"]
+            or summary.get("cohort_sha256") != digest
+        ):
+            raise ValueError(f"cannot verify {domain} development cohort")
+    # The dataset receipts bind the historical manifest, including its build-time source hash.
+    # _frozen checks the inference source against the later U191 freeze separately.
+    manifest = json.loads(payload)
+    matches = manifest["matches"]
+    expected = read_json(ROOT / "docs/acceptance/outcome-full-lane.json")["flow"]["development"]
+    if (
+        not isinstance(matches, list)
+        or len(matches) != expected
+        or any(type(m) is not int or m <= 0 or is_holdout(m) for m in matches)
+        or matches != sorted(set(matches))
+        or {str(m) for m in matches} != set(manifest["inputs_sha256"])
+    ):
+        raise ValueError("incomplete or inconsistent development candidate roster")
+    if mid in matches:
+        raise ValueError("match previously appeared in the development cohort")
+
+
 def _frozen(mid, map_dir):
     if type(mid) is not int or mid <= 0 or is_holdout(mid):
         raise ValueError("requires a new non-reserved match")
@@ -29,6 +61,7 @@ def _frozen(mid, map_dir):
     verify(WORK, frozen["models"])
     if versions() != frozen["versions"]:
         raise ValueError("frozen runtime versions changed")
+    _check_development_cohort(mid, frozen)
     # The frozen dataset digest binds the full development rows, including excluded opportunities.
     for domain in DOMAINS:
         directory = REPORTS / (
@@ -43,6 +76,38 @@ def _frozen(mid, map_dir):
         if digest.hexdigest() != frozen["development"][domain]["rows_sha256"]:
             raise ValueError(f"cannot establish independence from {domain} development")
     return frozen
+
+
+def _normalized_mode(path):
+    # The frozen producer places scalar fields before the potentially very large players array.
+    with gzip.open(path, "rt", encoding="utf-8") as stream:
+        prefix = stream.read(4096)
+    header, marker, _ = prefix.partition('"players"')
+    if not marker:
+        raise ValueError("missing normalized players header")
+    return json.loads(header.rstrip().removesuffix(",") + "}").get("game_mode")
+
+
+def _capture_coverage(root, mid, name, schema, field, duration):
+    """Count actual per-second samples; diagnostics never select or score opportunities."""
+    first = last = None
+    start = domains.START_SECOND
+    next_second = start
+    missing = []
+    for frame in domains.capture(root, name, mid, schema):
+        second = frame["t"]
+        if type(second) is not int or not isinstance(frame.get(field), list):
+            raise ValueError(f"{mid}: invalid {name} sample")
+        if start <= second <= duration:
+            if second > next_second:
+                missing.append((next_second, second - 1))
+            if first is None:
+                first = second
+            last = second
+            next_second = second + 1
+    if next_second <= duration:
+        missing.append((next_second, duration))
+    return dict(start=start, end=duration, first=first, last=last, missing=missing)
 
 
 def _input_info(root, mid):
@@ -63,7 +128,7 @@ def _input_info(root, mid):
     if not (
         meta["patch_window"] == "7.41f"
         and PATCH_WINDOW[0] <= start <= end < PATCH_WINDOW[1]
-        and meta["game_mode"] == 22
+        and meta["game_mode"] == _normalized_mode(norm) == 22
         and duration >= 900
         and meta["duration"] == duration
         and end - start == duration
@@ -72,7 +137,15 @@ def _input_info(root, mid):
     slots = sorted(player["player_slot"] for player in players(norm, mid))
     if slots != [0, 1, 2, 3, 4, 128, 129, 130, 131, 132]:
         raise ValueError("expected ten standard player slots")
-    return meta
+    channels = (
+        ("state-v3", "gem-state-capture/3", "heroes"),
+        ("extras-v1", "gem-extras-capture/1", "creeps"),
+    )
+    coverage = {
+        name: _capture_coverage(root, mid, name, schema, field, duration)
+        for name, schema, field in channels
+    }
+    return {**meta, "capture_coverage": coverage}
 
 
 def _other_rows(root, mid):
@@ -182,7 +255,10 @@ def infer(root, mid, map_dir):
         eligible = [r for r in rows if r["outcome_eligible"]]
         model = joblib.load(WORK / f"{domain}.joblib")
         supported = balanced = 0
-        for row in score(model, eligible):
+        for source, row in zip(eligible, score(model, eligible), strict=True):
+            row["label_exclusions"] = dict(source.get("label_exclusions", {}))
+            if domain == "support" and "arrival" in source and source["arrival"] is None:
+                row["label_exclusions"]["arrival"] = "missing_hit_positions"
             after = None
             if row["overlap_reason"] is None:
                 after = model["strata"][row["stratum"]]["balance"]["after"]
@@ -191,6 +267,18 @@ def infer(root, mid, map_dir):
             cases.append((domain, row, after))
         stats[domain] = dict(
             opportunities=len(rows),
+            excluded=[
+                {
+                    "hero": r["hero"],
+                    "t": r["t"],
+                    "action": r["action"],
+                    "unknown_action": r["action"] not in DOMAINS[domain][0],
+                    "early_death": r["early_death"],
+                    "incomplete_window": not r["window_complete"],
+                }
+                for r in rows
+                if not r["outcome_eligible"]
+            ],
             eligible=len(eligible),
             balanced=balanced,
             supported=supported,
@@ -211,6 +299,7 @@ def infer(root, mid, map_dir):
         lobby_type=meta.get("lobby_type"),
         patch_window=meta["patch_window"],
         game_mode=meta["game_mode"],
+        capture_coverage=meta["capture_coverage"],
         population_verified=False,
     )
     return cases, diagnostics
