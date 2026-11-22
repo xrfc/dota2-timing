@@ -1,5 +1,7 @@
 # 文档索引
 
+[一号位发育与支援的全量录像后果研究](outcome-autotrain.md) · [补刀前三阶段的全量指标](acceptance/outcome-full-lane.json)
+
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 

@@ -9,6 +9,7 @@ import pickle
 import subprocess
 import sys
 import tempfile
+import time
 from collections import Counter
 from concurrent.futures import ProcessPoolExecutor
 from functools import lru_cache
@@ -341,6 +342,40 @@ def derive_batch(root, batch_root, batch, workers, compat):
     return good, rejected
 
 
+def cache_batch(root, batch, wait_seconds):
+    """Consume completed receipts from an independent local extractor."""
+    folder = root / "extras-v1"
+    deadline = time.monotonic() + wait_seconds
+    ready, rejected = [], {}
+    for mid in batch:
+        receipt = folder / "receipts" / f"{mid}.json"
+        while True:
+            try:
+                record = read_json(receipt)
+                break
+            except (FileNotFoundError, json.JSONDecodeError):
+                if time.monotonic() >= deadline:
+                    raise
+                time.sleep(2)
+        if record["match_id"] != mid:
+            raise ValueError(f"{mid}: incorrect expansion receipt")
+        if record["status"] == "failed":
+            rejected[mid] = record["error"]
+        elif record["status"] == "extracted" and (folder / f"{mid}.jsonl.gz").is_file():
+            ready.append(mid)
+        else:
+            raise ValueError(f"{mid}: incomplete expansion")
+    return ready, rejected
+
+
+def cohort_batches(ready, missing, *, full, has_support):
+    yield ready
+    for i in range(0, len(missing), 100):
+        if not full and has_support():
+            return
+        yield missing[i : i + 100]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, required=True)
@@ -350,7 +385,24 @@ def main():
     parser.add_argument(
         "--expansion-compat", type=Path, help="existing compatible Gem import directory"
     )
+    parser.add_argument(
+        "--full", action="store_true", help="continue through every eligible development match"
+    )
+    parser.add_argument(
+        "--extras-cache",
+        type=Path,
+        help="read precomputed expansion extras from DIR/extras-v1 (requires every expansion)",
+    )
+    parser.add_argument(
+        "--wait-for-extras",
+        type=int,
+        default=0,
+        metavar="SECONDS",
+        help="maximum time per expansion batch to wait for an in-progress extras cache",
+    )
     args = parser.parse_args()
+    if args.wait_for_extras < 0 or (args.wait_for_extras and not args.extras_cache):
+        parser.error("--wait-for-extras requires an extras cache and a nonnegative timeout")
     if args.workers < 1:
         parser.error("workers must be positive")
     if args.out.exists():
@@ -366,12 +418,16 @@ def main():
     compat = args.expansion_compat or args.root.parent / "replay-pilot-2026-10-22" / "compat-v1"
     with tempfile.TemporaryDirectory(dir=args.out.parent) as temp:
         for batch_no, batch in enumerate(
-            [ready, *(extra[i : i + 100] for i in range(0, len(extra), 100))]
+            cohort_batches(ready, extra, full=args.full, has_support=lambda: supported(rows))
         ):
             attempted.extend(batch)
             batches.append(batch)
             batch_root = args.root
-            if batch_no:
+            if batch_no and args.extras_cache:
+                batch_root = args.extras_cache
+                batch, rejected = cache_batch(batch_root, batch, args.wait_for_extras)
+                failures.update(rejected)
+            elif batch_no:
                 batch_root = Path(temp) / f"batch-{batch_no}"
                 batch, rejected = derive_batch(args.root, batch_root, batch, args.workers, compat)
                 failures.update(rejected)
@@ -388,8 +444,6 @@ def main():
                     rows.extend(result)
                     input_hashes[job[0]] = sources(args.root, batch_root, job[0])
                     print(i, job[0], len(result), flush=True)
-            if supported(rows):
-                break
     repo = Path(__file__).resolve().parents[1]
     code = [
         repo / name
@@ -406,6 +460,7 @@ def main():
     ]
     manifest = dict(
         schema="lane-study/1",
+        cohort_mode="full" if args.full else "pilot",
         matches=attempted,
         folds={m: fold_for(m) for m in attempted},
         batches=batches,
