@@ -138,3 +138,7 @@
 - [历史阶段文档](archive/history/README.md)（2026-11-01起归档，含4份2026-10-10设计文档：[阵容推荐规划](archive/history/development-mainline.md)、[模块边界](archive/history/module-boundaries.md)、[文档盘点](archive/history/documentation-inventory.md)、[工程设计](archive/history/engineering-design.md)）
 - [整理前原文快照（2026-10-22）](archive/2026-10-22/INDEX.md) · [2026-10-26整理前入口](archive/2026-10-26/INDEX.md)
 - 其余10/13–10/28日期记录（采集、队列、录像试点、整局实验等）均在[历史阶段文档](archive/history/README.md)中列出。
+
+## 一号位补刀前学习研究
+
+[三阶段实测结果](lane-study-results.md) · [数据和复现协议](lane-study-protocol.md) · [监督学习模型卡](lane-study-baseline.md) · [行为参照模型卡](lane-study-behavior.md) · [时序模型卡](lane-study-sequence.md)
