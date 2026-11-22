@@ -12,7 +12,7 @@ from threading import Thread
 
 from audit_decision_reports import audit_reports
 from check_support_travel import MATCHES
-from friend_review_server import MODES, make_server, read_reviews
+from friend_review_server import MODES, has_active_invite, make_server, read_reviews
 from friend_review_server import issue as issue_invite
 from review_judgments import CHOICES, build_queue
 
@@ -214,10 +214,8 @@ def run(args):
             raise ValueError("门户启动期间报告已更换，请重新运行。")
         origin = f"http://127.0.0.1:{server.server_port}"
         print(f"登录评审：{origin}/")
-        with closing(sqlite3.connect(db)) as conn:
-            has_invite = conn.execute("SELECT 1 FROM invites LIMIT 1").fetchone()
-        if not has_invite:
-            print(f"首次登录邀请码：{issue_invite(db)}")
+        if not has_active_invite(db):
+            print(f"新登录邀请码：{issue_invite(db)}")
         else:
             print("请使用已有邀请码；每个评审人使用自己的邀请码。")
         Thread(target=server.serve_forever, daemon=True).start()

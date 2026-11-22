@@ -70,6 +70,18 @@ def login(port, code):
     return cookie, json.loads(body)["reviewer"]
 
 
+def test_organizer_checks_for_unexpired_invites(service, monkeypatch):
+    module, _, db = service
+    module.initialize(db)
+    assert not module.has_active_invite(db)
+    monkeypatch.setattr(module.time, "time", lambda: 100)
+    module.issue(db)
+    monkeypatch.setattr(module.time, "time", lambda: 100 + module.WEEK)
+    assert not module.has_active_invite(db)
+    module.issue(db)
+    assert module.has_active_invite(db)
+
+
 def test_only_authenticated_report_assets_are_readable(service):
     module, root, db = service
     (root / "action-comparison-lane-001/private.txt").write_text("outside public asset set")

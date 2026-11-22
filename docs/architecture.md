@@ -1,5 +1,7 @@
 # 项目架构：共享底座＋两条产品线（2026-11-01）
 
+路线 B 的本地交接脚本负责串联材料核验和抽查队列。邀请码的有效期查询与登录校验均归邀请门户维护。
+
 路线 B 的行动比较、因素表和逐段复核格式见[决策总架构](decision-framework.md)。
 
 本页是**当前唯一的架构入口**，替代[模块维护](modular-maintenance.md)的入口职责（该页保留各层API细节与历史验收）。机器可读的归属表在[`src/dota_items/architecture.py`](../src/dota_items/architecture.py)，由`tests/test_architecture.py`强制执行。执行顺序和进度只看[开发计划](development-plan-2026-10-30.md)§7。

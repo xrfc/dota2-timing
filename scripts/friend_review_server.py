@@ -60,6 +60,17 @@ def initialize(db):
         """)
 
 
+def has_active_invite(db):
+    """Check an initialized portal database against the same deadline as login."""
+    with closing(sqlite3.connect(db)) as conn:
+        return (
+            conn.execute(
+                "SELECT 1 FROM invites WHERE expires > ? LIMIT 1", (int(time.time()),)
+            ).fetchone()
+            is not None
+        )
+
+
 def issue(db):
     initialize(db)
     code = secrets.token_urlsafe(24)
