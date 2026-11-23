@@ -158,3 +158,5 @@ U191 的模型封存、留出准备和单次计分在 `outcome_final.py`。[冻�
 `outcome_match_report.py --match MATCH --out REPORT.md` 从本地 U191 折外预测生成单场复盘，命令与三场验证见[录像后果研究](../docs/outcome-autotrain.md#6-b5-单场复盘入口)。
 
 新比赛使用 `outcome_match_report.py --demo`。输入构建、冻结依赖、缓存复用及输出示例见[新录像接入](../docs/outcome-autotrain.md#7-新录像接入)。
+
+运行 `.venv/bin/python scripts/outcome_viewer.py` 浏览三场 B5 复盘。比赛、时间线、排除原因及双动作估计均在本机读取。[查看与重启](../docs/outcome-autotrain.md#本机复盘页面)

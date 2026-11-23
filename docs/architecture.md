@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 53 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 54 |
 <!-- /track-table -->
 
 依赖规则：
@@ -151,3 +151,5 @@ U191 的路线 B 结果标签和行动价值研究沿用整场比赛划分。数
 路线 B 的 `scripts/outcome_match_report.py` 是 U191 开发集预测的只读报告入口，依赖冻结的分层诊断和预测指纹。
 
 路线 B 的 `new_replay_inputs` 提取只读本地录像，`new_replay_outcomes` 用 U191 冻结模型计算三类行动结果，`outcome_match_report` 统一呈现开发样本和新录像。
+
+路线 B 的 `scripts/outcome_viewer.py` 将已经生成的 B5 新录像报告提供给本机浏览器。页面和静态样式位于 `scripts/outcome_viewer_assets/`。

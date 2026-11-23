@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>一号位行动复盘 · Dota 2</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#review">跳到片段复盘</a>
+  <header class="top">
+    <div class="wrap top-inner">
+      <div class="wordmark"><span class="brand-mark" aria-hidden="true"></span><strong>DOTA 2</strong><span class="brand-divider"></span><span>复盘工作台</span></div>
+      <span class="local"><i aria-hidden="true"></i>本机服务</span>
+    </div>
+  </header>
+  <main class="wrap">
+    <p id="status" class="status" role="status">正在载入本机复盘…</p>
+    <div id="app" hidden>
+      <section class="hero-banner" aria-labelledby="page-title">
+        <div class="hero-content">
+          <h1 id="page-title">一号位行动复盘</h1>
+          <div class="picker"><label for="matches">对局</label><select id="matches"></select></div>
+          <div class="stats" id="stats"></div>
+        </div>
+        <div class="hero-art" id="hero-art" aria-label="本场一号位"></div>
+      </section>
+      <div class="workbench" id="review">
+        <section class="panel timeline" aria-labelledby="timeline-title">
+          <div class="timeline-head"><h2 id="timeline-title">片段时间线</h2><span class="count" id="clip-count"></span></div>
+          <div class="filters" id="filters" role="group" aria-label="筛选场景"></div>
+          <div class="clip-list" id="clips" aria-label="片段列表"></div>
+        </section>
+        <section class="panel detail" aria-label="当前片段复盘">
+          <div id="detail" aria-live="polite"></div>
+        </section>
+      </div>
+      <details class="panel coverage" id="coverage">
+        <summary>本场覆盖与排除说明</summary><div id="coverage-content"></div>
+      </details>
+    </div>
+  </main>
+</body>
+</html>

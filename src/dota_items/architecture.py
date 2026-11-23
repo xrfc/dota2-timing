@@ -392,6 +392,7 @@ SCRIPTS = {
     "outcome_labels": _B,
     "outcome_values": _B,
     "outcome_match_report": _B,
+    "outcome_viewer": _B,
     "new_replay_inputs": _B,
     "new_replay_outcomes": _B,
     "outcome_domains": _B,
