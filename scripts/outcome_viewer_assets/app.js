@@ -210,6 +210,51 @@ function comparison(clip, estimates) {
   return section;
 }
 
+function clipReading(clip, estimates, comparisonNotes) {
+  const question = {
+    "兵线": "继续收线，还是后撤？",
+    "打野": "继续打野，还是离开这片营地？",
+    "支援": "要不要向受击的队友靠近？",
+  };
+  const section = element("section", "clip-reading");
+  section.append(element("h3", "", question[clip.domain]));
+  const observed = clip.rows[0].values;
+  const death = observed[clip.metrics.indexOf("死亡")];
+  const facts = [clip.metrics[0] + " " + observed[0]];
+  if (death === "是") facts.push("发生了死亡");
+  if (death === "否") facts.push("没有死亡");
+  if (clip.domain === "支援") {
+    const arrival = observed[clip.metrics.indexOf("队友受击时到场")];
+    if (arrival === "是") facts.push("队友受击时已在场");
+    if (arrival === "否") facts.push("未记录到与队友受击同秒到场");
+  }
+  section.append(element("p", "", `前 6 秒观察到的动作是「${clip.action}」。第 7–20 秒，${facts.join("，")}。`));
+  if (estimates.length === 2) {
+    const metric = clip.domain === "支援" ? "队友受击时到场" : clip.metrics[0];
+    const first = clip.metrics.indexOf(metric), risk = clip.metrics.indexOf("死亡");
+    const label = clip.domain === "支援" ? "队友受击时到场率" : metric + "数";
+    const lines = estimates.map((row) => {
+      const action = row.label.replace(/估计$/, "");
+      return `「${action}」的${label}为 ${row.values[first]}，自身死亡概率为 ${row.values[risk]}`;
+    });
+    section.append(element("p", "", "根据相似历史局面估计，" + lines.join("。另一种选择") + "。"));
+  } else {
+    const reason = comparisonNotes.join(" ");
+    let why = "当前历史样本不足以可靠比较两种动作。";
+    if (reason.includes("一种动作极少出现")) {
+      why = "模型估计，这种局面下玩家选择其中一种动作的概率低于 5%，可作对照的样本太少。";
+    } else if (reason.includes("加权后最大标准化均值差")) {
+      why = "历史上采取两种动作的玩家面对的局势仍有明显差别，难以公平比较。";
+    } else if (reason.includes("共同覆盖")) {
+      why = "这次局势超出了两组历史样本都覆盖的范围。";
+    } else if (reason.includes("有效样本不足")) {
+      why = "相似局面里，至少一种动作缺少足够的有效样本。";
+    }
+    section.append(element("p", "reading-limit", why + "因此，这段录像只能核对实际结果，无法判断换个动作会怎样。"));
+  }
+  return section;
+}
+
 function detail() {
   const target = byId("detail");
   clearPerspective();
@@ -227,19 +272,15 @@ function detail() {
   const nav = element("div", "nav");
   nav.append(stepButton("prev", indices[offset - 1]), stepButton("next", indices[offset + 1]));
   header.append(heading, nav);
-  const observed = element("div", "observed");
-  const action = element("div");
-  action.append(element("small", "", "实际动作"), element("strong", "", clip.action));
-  observed.append(action, element("span", "window", "决策后 1–6 秒"));
-  target.append(header, observed);
-  mountPerspective(target, current.id, clip);
   const estimates = clip.rows.slice(1);
   const comparisonNotes = clip.notes.filter((note) => note.startsWith("双动作比较证据不足。"));
+  target.append(header, clipReading(clip, estimates, comparisonNotes));
+  mountPerspective(target, current.id, clip);
   if (estimates.length === 2) {
     target.append(comparison(clip, estimates));
   } else if (comparisonNotes.length) {
-    const evidence = element("aside", "evidence");
-    evidence.append(element("h3", "", "本段仅展示录像实况"));
+    const evidence = element("details", "evidence");
+    evidence.append(element("summary", "", "查看模型的比较门槛"));
     for (const note of comparisonNotes) {
       const reason = note.replace("双动作比较证据不足。", "");
       evidence.append(element("p", "", reason));
