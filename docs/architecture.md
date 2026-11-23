@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 54 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 55 |
 <!-- /track-table -->
 
 依赖规则：
@@ -152,4 +152,4 @@ U191 的路线 B 结果标签和行动价值研究沿用整场比赛划分。数
 
 路线 B 的 `new_replay_inputs` 提取只读本地录像，`new_replay_outcomes` 用 U191 冻结模型计算三类行动结果，`outcome_match_report` 统一呈现开发样本和新录像。
 
-路线 B 的 `scripts/outcome_viewer.py` 将已经生成的 B5 新录像报告提供给本机浏览器。页面和静态样式位于 `scripts/outcome_viewer_assets/`。
+路线 B 的 `scripts/outcome_viewer.py` 将已经生成的 B5 新录像报告提供给本机浏览器。页面和静态样式位于 `scripts/outcome_viewer_assets/`。 `scripts/outcome_perspective_map.py` 从本场已核验输入生成分阵营、分时刻的地图快照；服务把快照和创建时的报告指纹配对。

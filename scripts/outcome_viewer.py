@@ -1,6 +1,7 @@
 """Serve verified B5 match reports as a read-only, local timeline."""
 
 import argparse
+import hashlib
 import json
 import re
 from collections import Counter
@@ -10,6 +11,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = Path(__file__).with_name("outcome_viewer_assets")
+MAP_IMAGE = ROOT / "data/map-reference-2026-10-26-v1/gem/assets/maps/Game_map_7.41.jpg"
 DOMAINS = ("兵线", "打野", "支援")
 COUNT_KEYS = ("opportunities", "eligible", "supported", "balanced")
 TIME = r"[0-9]+:[0-5][0-9]"
@@ -116,7 +118,8 @@ def parse_clip(section):
 
 def parse_report(path):
     match_id = path.parent.name
-    overview, *sections = path.read_text(encoding="utf-8").split("\n## ")
+    source = path.read_bytes()
+    overview, *sections = source.decode("utf-8").replace("\r\n", "\n").split("\n## ")
     lines = overview.splitlines()
     if not lines or lines[0] != f"# 对局 {match_id} · 一号位行动复盘":
         raise ValueError("报告标题与比赛目录不一致")
@@ -143,7 +146,13 @@ def parse_report(path):
             balanced[d],
         ):
             raise ValueError(f"{d} 的片段明细与汇总不符")
-    return dict(id=match_id, **data, clips=clips, coverage=coverage)
+    return dict(
+        id=match_id,
+        report_sha256=hashlib.sha256(source).hexdigest(),
+        **data,
+        clips=clips,
+        coverage=coverage,
+    )
 
 
 def load_reports(root):
@@ -160,13 +169,36 @@ def load_reports(root):
     return {"matches": matches}
 
 
-def handler_for(reports, hero_dir):
+def read_map(path, match):
+    payload = path.read_bytes()
+    bundle = json.loads(payload)
+    if (
+        not isinstance(bundle, dict)
+        or bundle.get("schema") != "b5-perspective-map/1"
+        or bundle.get("match") != match["id"]
+        or bundle.get("report_sha256") != match["report_sha256"]
+    ):
+        raise ValueError("地图与当前报告不匹配")
+    return payload
+
+
+def handler_for(reports, hero_dir, report_root=None):
     body = json.dumps(reports, ensure_ascii=False).encode("utf-8")
+    maps = (
+        {
+            f"/api/map/{m['id']}": (report_root / m["id"] / "perspective-map.json", m)
+            for m in reports["matches"]
+        }
+        if report_root is not None
+        else {}
+    )
     files = {
         "/": (ASSETS / "index.html", "text/html; charset=utf-8"),
         "/index.html": (ASSETS / "index.html", "text/html; charset=utf-8"),
         "/style.css": (ASSETS / "style.css", "text/css; charset=utf-8"),
         "/app.js": (ASSETS / "app.js", "text/javascript; charset=utf-8"),
+        "/perspective.js": (ASSETS / "perspective.js", "text/javascript; charset=utf-8"),
+        "/map.jpg": (MAP_IMAGE, "image/jpeg"),
         **{f"/heroes/{slug}.png": (hero_dir / f"{slug}.png", "image/png") for slug in PORTRAITS},
     }
 
@@ -179,6 +211,16 @@ def handler_for(reports, hero_dir):
             path = urlsplit(self.path).path
             if path == "/api/reports":
                 data, mime = body, "application/json; charset=utf-8"
+            elif path in maps:
+                source, match = maps[path]
+                try:
+                    data, mime = read_map(source, match), "application/json; charset=utf-8"
+                except FileNotFoundError:
+                    self.send_error(404)
+                    return
+                except (ValueError, OSError):
+                    self.send_error(409)
+                    return
             elif path in files and files[path][0].is_file():
                 source, mime = files[path]
                 data = source.read_bytes()
@@ -188,7 +230,9 @@ def handler_for(reports, hero_dir):
             self.send_response(200)
             self.send_header("Content-Type", mime)
             self.send_header("Content-Length", str(len(data)))
-            self.send_header("Cache-Control", "no-store")
+            self.send_header(
+                "Cache-Control", "private, max-age=3600" if path == "/map.jpg" else "no-store"
+            )
             self.send_header("X-Content-Type-Options", "nosniff")
             self.end_headers()
             self.wfile.write(data)
@@ -207,7 +251,7 @@ def main():
     try:
         reports = load_reports(args.report_root)
         with ThreadingHTTPServer(
-            ("127.0.0.1", args.port), handler_for(reports, args.hero_dir)
+            ("127.0.0.1", args.port), handler_for(reports, args.hero_dir, args.report_root)
         ) as server:
             print(f"B5 单场复盘 http://127.0.0.1:{server.server_port}/", flush=True)
             server.serve_forever()

@@ -212,6 +212,7 @@ function comparison(clip, estimates) {
 
 function detail() {
   const target = byId("detail");
+  clearPerspective();
   target.replaceChildren();
   if (active < 0) {
     target.append(element("p", "empty", "当前筛选下没有片段。可在时间线切换场景。"));
@@ -231,6 +232,7 @@ function detail() {
   action.append(element("small", "", "实际动作"), element("strong", "", clip.action));
   observed.append(action, element("span", "window", "决策后 1–6 秒"));
   target.append(header, observed);
+  mountPerspective(target, current.id, clip);
   const estimates = clip.rows.slice(1);
   const comparisonNotes = clip.notes.filter((note) => note.startsWith("双动作比较证据不足。"));
   if (estimates.length === 2) {

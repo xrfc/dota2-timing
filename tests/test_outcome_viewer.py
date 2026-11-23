@@ -6,7 +6,7 @@ from threading import Thread
 import pytest
 
 from scripts.outcome_match_report import render, render_input_coverage
-from scripts.outcome_viewer import handler_for, load_reports
+from scripts.outcome_viewer import handler_for, load_reports, read_map
 
 
 @pytest.fixture
@@ -87,13 +87,23 @@ def test_inconsistent_report_is_rejected(report, old, new):
 def test_local_routes_keep_private_files_inaccessible(report):
     root = report.parent.parent
     reports = load_reports(root)
-    with ThreadingHTTPServer(("127.0.0.1", 0), handler_for(reports, root)) as server:
+    bundle = dict(
+        schema="b5-perspective-map/1",
+        match="123",
+        report_sha256=reports["matches"][0]["report_sha256"],
+        clips=[],
+    )
+    report.with_name("perspective-map.json").write_text(json.dumps(bundle))
+    with ThreadingHTTPServer(("127.0.0.1", 0), handler_for(reports, root, root)) as server:
         serving = Thread(target=server.serve_forever)
         serving.start()
         try:
             for path, host, status in [
                 ("/api/reports", f"localhost:{server.server_port}", 200),
                 ("/api/reports", "other.invalid", 403),
+                ("/api/map/123", f"localhost:{server.server_port}", 200),
+                ("/api/map/999", f"localhost:{server.server_port}", 404),
+                ("/api/map/123", "other.invalid", 403),
                 ("/123/match-report.md", f"127.0.0.1:{server.server_port}", 404),
                 ("/heroes/../123/match-report.md", f"127.0.0.1:{server.server_port}", 404),
             ]:
@@ -103,9 +113,25 @@ def test_local_routes_keep_private_files_inaccessible(report):
                     response = conn.getresponse()
                     assert response.status == status
                     if status == 200:
-                        assert json.loads(response.read()) == reports
+                        assert json.loads(response.read()) == (
+                            bundle if path == "/api/map/123" else reports
+                        )
                 finally:
                     conn.close()
         finally:
             server.shutdown()
             serving.join()
+
+
+@pytest.mark.parametrize(
+    "change", [{"match": "321"}, {"report_sha256": "stale"}, {"schema": "old"}]
+)
+def test_map_must_belong_to_loaded_report(report, change):
+    match = load_reports(report.parent.parent)["matches"][0]
+    bundle = dict(
+        schema="b5-perspective-map/1", match=match["id"], report_sha256=match["report_sha256"]
+    )
+    path = report.with_name("perspective-map.json")
+    path.write_text(json.dumps(bundle | change))
+    with pytest.raises(ValueError, match="不匹配"):
+        read_map(path, match)

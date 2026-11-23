@@ -9,7 +9,7 @@
 
 **先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-17）。
 
-[打开 B5 本机单场复盘](outcome-autotrain.md#本机复盘页面)。
+[打开 B5 本机单场复盘](outcome-autotrain.md#本机复盘页面) · [查看一号位视角的片段地图](outcome-autotrain.md#片段地图)。
 
 **从这里开始**：[开发计划](development-plan-2026-10-30.md)（唯一进度：§7）· [架构](architecture.md) · [决策记录](decisions/README.md) · [变更记录](../CHANGELOG.md)
 
