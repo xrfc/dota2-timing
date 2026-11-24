@@ -1,5 +1,7 @@
 # 文档索引
 
+[B5 本机玩家试用记录页](b5-trial-notebook.md) · [长程开发提示词](handoff/long-development-prompt.md)
+
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 

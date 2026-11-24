@@ -376,6 +376,7 @@ SCRIPTS = {
     "audit_replay_map_landmarks": _B,
     "audit_replay_semantics": _B,
     "audit_replay_tracks": _B,
+    "b5_trial_notebook": _B,
     "build_decision_comparisons": _B,
     "detect_ganks": _B,
     "build_map_knowledge": _S,

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>B5 玩家试用记录</title>
+  <style>
+    :root { color-scheme: light; font: 1rem/1.55 system-ui, sans-serif; color: #202e30; background: #f5f6f1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 50rem; margin: 2rem auto; padding: 0 1rem 2rem; }
+    h1 { margin: 0 0 .3rem; font-size: clamp(1.7rem, 5vw, 2.4rem); }
+    h2 { margin: 0 0 .6rem; font-size: 1.2rem; }
+    p { margin: .4rem 0 1rem; }
+    section { margin: 1rem 0; padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid #c9d3cd; border-radius: .6rem; background: white; }
+    .fields { display: grid; grid-template-columns: 2fr 3fr; gap: 1rem; }
+    label { display: block; font-weight: 650; margin-bottom: .3rem; }
+    select, textarea, button { font: inherit; }
+    select, textarea { width: 100%; padding: .55rem; border: 1px solid #889691; border-radius: .35rem; color: inherit; background: white; }
+    textarea { min-height: 7rem; resize: vertical; }
+    button, .action { display: inline-block; cursor: pointer; border: 1px solid #275e53; padding: .45rem .85rem; border-radius: .35rem; color: #17473e; background: #fff; text-decoration: none; }
+    .primary { background: #245e51; color: white; }
+    button:disabled { opacity: .55; cursor: default; }
+    :focus-visible { outline: 3px solid #5186c9; outline-offset: 2px; }
+    [hidden] { display: none !important; }
+    #open { margin: .8rem 0 1.2rem; }
+    #progress { padding-left: 1.4rem; }
+    #storage { color: #803a0f; }
+    @media (max-width: 34rem) { .fields { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>B5 玩家试用记录</h1>
+    <p>选择一个片段，打开本机工作台复盘，再回来写下你在这个时刻遇到的问题或观察。</p>
+    <section aria-label="记录片段反馈">
+      <div class="fields">
+        <div><label for="match">比赛</label><select id="match"></select></div>
+        <div><label for="clip">游戏时刻 · 英雄 · 场景</label><select id="clip"></select></div>
+      </div>
+      <p id="empty" hidden></p>
+      <div id="editor" hidden>
+        <a class="action" id="open" target="_blank" rel="noopener noreferrer">在本机工作台打开此片段 ↗</a>
+        <label for="feedback">我的反馈</label>
+        <textarea id="feedback"></textarea>
+        <button class="primary" id="save" type="button">保存反馈</button>
+        <span id="status" role="status"></span>
+      </div>
+    </section>
+    <section aria-labelledby="progress-title">
+      <h2 id="progress-title">各场已保存的反馈</h2>
+      <ul id="progress"></ul>
+      <p id="drafts" role="status"></p>
+      <button type="button" id="export">导出已保存反馈（JSON）</button>
+      <p id="storage" role="status"></p>
+      <small>记录保存在当前浏览器。更换浏览器、移动此页面或清理浏览数据前，请先导出。</small>
+    </section>
+    <noscript>请启用 JavaScript 以选择片段和保存反馈。</noscript>
+  </main>
+  <script type="application/json" id="catalog">__B5_CATALOG_JSON__</script>
+  <script>
+    "use strict";
+    const byId = (id) => document.getElementById(id);
+    const {matches} = JSON.parse(byId("catalog").textContent);
+    const matchSelect = byId("match");
+    const clipSelect = byId("clip");
+    const feedback = byId("feedback");
+    const saved = new Map();
+    const drafts = new Map();
+    const sessionOnly = new Set();
+
+    function keyFor(match, clip) {
+      return "b5-trial-feedback/1:" + JSON.stringify([match.id, match.report_sha256, clip.hero, clip.domain, clip.seconds]);
+    }
+
+    for (const match of matches) {
+      matchSelect.add(new Option(match.id + " · " + match.clips.length + " 个片段", match.id));
+      for (const clip of match.clips) {
+        const key = keyFor(match, clip);
+        try {
+          const text = localStorage.getItem(key);
+          if (text && text.trim()) saved.set(key, text);
+        } catch {
+          byId("storage").textContent = "浏览器未允许读取本地记录。如需保留本次反馈，请在关闭前导出。";
+        }
+      }
+    }
+
+    function selectedMatch() {
+      return matches[matchSelect.selectedIndex];
+    }
+
+    function selectedClip() {
+      return selectedMatch()?.clips[clipSelect.selectedIndex];
+    }
+
+    function selectedKey() {
+      return keyFor(selectedMatch(), selectedClip());
+    }
+
+    function refreshProgress() {
+      const list = byId("progress");
+      list.replaceChildren();
+      for (const match of matches) {
+        const count = match.clips.filter((clip) => saved.has(keyFor(match, clip))).length;
+        const pending = match.clips.filter((clip) => drafts.has(keyFor(match, clip))).length;
+        const item = document.createElement("li");
+        item.textContent = "比赛 " + match.id + " · " + (count ? count + " 段有反馈" : "尚无反馈")
+          + (pending ? " · " + pending + " 段草稿" : "");
+        list.append(item);
+      }
+      byId("drafts").textContent = drafts.size ? "有 " + drafts.size + " 段草稿，仅保留到关闭页面。逐段保存后可导出。" : "";
+      byId("export").disabled = saved.size === 0;
+    }
+
+    function refreshStatus() {
+      const key = selectedKey();
+      const dirty = drafts.has(key);
+      byId("save").disabled = !dirty || !feedback.value.trim();
+      let status = "";
+      if (dirty) status = "有未保存的修改";
+      else if (sessionOnly.has(key)) status = "本页已暂存，请导出";
+      else if (saved.has(key)) status = "已保存";
+      byId("status").textContent = status;
+      clipSelect.options[clipSelect.selectedIndex].textContent = clipLabel(selectedMatch(), selectedClip());
+    }
+
+    function clipLabel(match, clip) {
+      const key = keyFor(match, clip);
+      const label = [clip.time, clip.hero, clip.domain];
+      if (drafts.has(key)) label.push("草稿");
+      else if (saved.has(key)) label.push("有反馈");
+      return label.join(" · ");
+    }
+
+    function refreshEditor() {
+      const clip = selectedClip();
+      byId("editor").hidden = !clip;
+      byId("empty").hidden = Boolean(clip);
+      if (!clip) {
+        byId("empty").textContent = selectedMatch() ? "这场比赛没有可试用的片段。" : "本页没有载入比赛。";
+        return;
+      }
+      const key = selectedKey();
+      byId("open").href = clip.url;
+      feedback.value = drafts.get(key) ?? saved.get(key) ?? "";
+      refreshStatus();
+    }
+
+    function refreshClips() {
+      clipSelect.replaceChildren();
+      const match = selectedMatch();
+      for (const clip of match?.clips ?? []) {
+        clipSelect.add(new Option(clipLabel(match, clip)));
+      }
+      clipSelect.disabled = !clipSelect.options.length;
+      refreshEditor();
+    }
+
+    matchSelect.disabled = !matches.length;
+    matchSelect.addEventListener("change", refreshClips);
+    clipSelect.addEventListener("change", refreshEditor);
+    feedback.addEventListener("input", () => {
+      const key = selectedKey();
+      if (feedback.value === (saved.get(key) ?? "")) drafts.delete(key);
+      else drafts.set(key, feedback.value);
+      refreshStatus();
+      refreshProgress();
+    });
+
+    byId("save").addEventListener("click", () => {
+      const key = selectedKey();
+      const text = feedback.value;
+      if (!text.trim()) return;
+      try {
+        localStorage.setItem(key, text);
+        sessionOnly.delete(key);
+      } catch {
+        sessionOnly.add(key);
+        byId("storage").textContent = "浏览器未能写入本地记录。当前页仍可查看反馈，请在关闭前导出。";
+      }
+      saved.set(key, text);
+      drafts.delete(key);
+      refreshEditor();
+      refreshProgress();
+    });
+
+    byId("export").addEventListener("click", () => {
+      const records = [];
+      for (const match of matches) {
+        for (const clip of match.clips) {
+          const key = keyFor(match, clip);
+          if (saved.has(key)) records.push({
+            match: match.id, report_sha256: match.report_sha256,
+            hero: clip.hero, domain: clip.domain, time: clip.time, seconds: clip.seconds,
+            feedback: saved.get(key)
+          });
+        }
+      }
+      const payload = JSON.stringify({schema: "b5-trial-feedback/1", records}, null, 2);
+      const url = URL.createObjectURL(new Blob([payload + "\n"], {type: "application/json;charset=utf-8"}));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "b5-trial-feedback.json";
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    window.addEventListener("beforeunload", (event) => {
+      if (drafts.size || sessionOnly.size) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    });
+    refreshClips();
+    refreshProgress();
+  </script>
+</body>
+</html>

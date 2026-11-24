@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 41 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 42 |
 <!-- /track-table -->
 
 依赖规则：
@@ -92,6 +92,8 @@
 | scripts | 环境、检查、录像入库、MK构建与复核 | 8780 coach_app、训练/快照/采集 | 回放器、决策评审页（8768–8770）、状态探针、tick对齐 |
 
 ### 3.1 已知的归属取舍
+
+`scripts/b5_trial_notebook.py` 属路线 B 的展示层。它读取本机工作台的报告标识和片段目录，为浏览器生成一个可离线填写的 HTML 文件。反馈通过浏览器本地存储和文件导出保存。[命令和数据字段](b5-trial-notebook.md)
 
 - **MK机制知识放在共享底座**：A线用它推导针对装触发条件，B线用它判断敌方抓人能力与逃生手段。
 - **录像解析与清洗（`sources.gem_*`、`data.cleaning/context/observer/pipeline`）放在共享底座**：B线是主要使用者，但coach工作区和A线也能消费；`decision_*`、`replay_*`才是B线专属。

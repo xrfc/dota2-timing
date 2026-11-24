@@ -53,6 +53,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 | 编号 | 决定 | 日期 |
 |---|---|---|
+| U194 | [本轮由执行者选择开发方向和技术，调用子 agent，维护文档并推送 PR](decisions/2026-11-24-long-development.md) | 2026-11-24 |
 | U65 | 提升治疗量才算治疗，治疗增强不算 | 2026-11-04 |
 | U105、U106 | 英雄特性存数量；硬控只算禁用物品、没法自解的控制；R12例外增至25个 | 2026-11-06 |
 | U104 | 规则按条件计算（方案B），不拆A杖技能 | 2026-11-06 |
@@ -400,6 +401,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+2026-11-24，接续 B5 三场独立录像的玩家试用。执行者选用工作台的本机只读接口和独立 HTML，提供按比赛、报告指纹、英雄、场景、决策秒定位的文字反馈。当前分支从 main 开出，B5 工作台来自 [PR #40](https://github.com/xrfc/dota2-timing/pull/40)。本轮的技术选择与交付流程见[执行记录](decisions/2026-11-24-long-development.md)和[使用说明](b5-trial-notebook.md)。
+
 已完成三场录像的步行耗时误差分解。2026-11-21 已实现逐段步行估时与受击秒点的事后对照及 CSV 导出，详见[兵线复盘](lane-decision-review.md)。回归样例覆盖同秒到达、出发延迟和观察截断。三场 7.41f 的真实片段复核暂缓。
 
 朋友可用独立邀请码在线提交评审。移动耗时核验与邀请门户命令见 docs/lane-decision-review.md。
@@ -434,6 +437,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 **U37（2026-11-01）双线重构**：计划改为共享底座＋路线A＋路线B；新增[架构](architecture.md)与`src/dota_items/architecture.py`（全部130个模块（含新增的architecture.py）、77个脚本登记线与状态，测试强制跨线依赖规则，首次扫描0处违规）；原M6改为路线B（[设计](awareness-track.md)）；新增文档链接检查；4份2026-10-10历史设计文档归档。代码行为未改，冻结产物未动。当前任务仍是MK-T3（见下）；Q11–Q16待用户回答。
 
 ### 下一步（接手从这里开始）
+
+B5 下一项是玩家试用第二、三场。收到反馈后记录原话和对应片段，再决定需要调整哪项说明。此前的工作台、三场工程验收和首场反馈见[上轮试用记录](https://github.com/xrfc/dota2-timing/blob/171e42d/docs/outcome-autotrain.md#三场玩家试用)。接手开发可复用[长程开发提示词](handoff/long-development-prompt.md)。
 
 2026-11-20，X1 单场复盘按战斗日志死亡时刻生成片段；数据覆盖及限制见[重训前清单](b2-retrain-checklist.md)。下一步抽查可见证据和误报片段，再定提示筛选。
 
