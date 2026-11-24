@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 41 |
+| `awareness` | 路线B 意识决策 | 30 / 3 | 42 |
 <!-- /track-table -->
 
 依赖规则：
@@ -135,6 +135,8 @@ B线的硬约束（继承U2、U6和`long-term-coach-goals.md`§5）：评价某�
 
 - 全量检查不变：`scripts/check.py --scope all`。新增的`test_docs_links.py`检查所有非归档Markdown的相对链接（`data/`、`reports/`等本地证据路径除外），和`test_architecture.py`一起进入各scope的共享测试。
 - 运行入口：路线A `scripts/coach_app.py`（8780）；路线B `scripts/replay_viewer.py`、`scripts/decision_review.py`（8768–8770，历史评审包）、`scripts/gank_review.py`（8771，B0抽查回放页）。
+
+B5 的动作主张由 `modeling.awareness.decision_score` 评分，`scripts/score_b5_decisions.py` 核对冻结输入并汇总各场景。两者均属路线 B。[命令与评测口径](b5-decision-scoring.md)
 
 ## 7. 局限
 

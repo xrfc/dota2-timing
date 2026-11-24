@@ -184,6 +184,7 @@ MODULES = {
     "modeling._validation": (_S, "active"),
     "modeling.evaluation": (_S, "active"),
     "modeling.awareness": (_B, "active"),
+    "modeling.awareness.decision_score": (_B, "active"),
     "modeling.awareness.death_risk_eval": (_B, "active"),
     # modeling: track A
     "modeling.artifacts": (_A, "active"),
@@ -384,6 +385,7 @@ SCRIPTS = {
     "gank_foresight": _B,
     "gank_review": _B,
     "lane_decision_review": _B,
+    "score_b5_decisions": _B,
     "check_support_travel": _B,
     "friend_review_server": _B,
     "vision_check": _B,

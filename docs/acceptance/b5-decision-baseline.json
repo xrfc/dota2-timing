@@ -1,0 +1,240 @@
+{
+  "schema": "b5-decision-score/1",
+  "frozen": {
+    "producer_commit": "7ca2ae3d14edae67042634f820a9456827d78ce1",
+    "domains": {
+      "wave": {
+        "rows_sha256": "f2f1254c33158b6923fa7185dd1454414fc8483baaa7c8f69d5cf88d6eb395ca",
+        "model_sha256": "5c472c9fc477787222bf9910a5dfdef71b3f46fad057136ce27f191f611186bc",
+        "predictions_sha256": "3332a4f8f2cbf7c3208c5a648381ec0efa9ace76ab609951ca2228cf252576c0",
+        "summary_sha256": "c79563bc581d65ae5c9c8cfce563306237cbe70bd4291c671389e246d9363f6c"
+      },
+      "jungle": {
+        "rows_sha256": "a577147b56f2b1cafe52740a9230e04f6f53b8c5fc81f0e81a7604ab2cfb3602",
+        "model_sha256": "2ccdf7b38a5a50b2d484d9512e0d06adc6345ee3a55fd1cccbf83fd5f4846d0e",
+        "predictions_sha256": "690e3e71cbcf4cc9b7c9f98fccdea7c9bf04f2ef3009a4514371f549f15f7bb9",
+        "summary_sha256": "7cedf4965b5c64e511e2c38123bd28aae061dd8513a1b820e76101183486d656"
+      },
+      "support": {
+        "rows_sha256": "8ead2f587aba1430b319c24f1eef089496a85830261e27e007fe75e075726d4e",
+        "model_sha256": "9621944c34ae9b7e94b00dad1f22cbb3ab5b735d7436fac7a676fe39b5bc8122",
+        "predictions_sha256": "fec69567e2c545c06a42e1a53908500936a5bab9980a8027650156867afa6268",
+        "summary_sha256": "e33d759f7ec45f31f9671062b1a3f0a2b7dfc26d0b8f49c05298562f5aed17db"
+      }
+    }
+  },
+  "domains": {
+    "wave": {
+      "opportunities": 15005,
+      "eligible": 10652,
+      "matches": 1169,
+      "exclusion_flags": {
+        "unknown_action": 4281,
+        "early_death": 335,
+        "truncated": 109
+      },
+      "comparison_exclusions": {
+        "extreme_propensity": 1968,
+        "insufficient_balance": 274,
+        "sparse_training_arm": 12,
+        "outside_training_common_range": 4
+      },
+      "comparable": 8394,
+      "verdicts": {
+        "deferred": 10593,
+        "insufficient_balance": 59
+      },
+      "conditional": 0,
+      "unscored": 4353,
+      "evidence_coverage": 0.0,
+      "explicit": 59,
+      "unsupported": 59,
+      "unsupported_rate": 1.0,
+      "factual": {
+        "hits": {
+          "metric": "mae",
+          "n": 8394,
+          "missing_among_comparable": 0,
+          "value": 1.7075618216869832
+        },
+        "gold": {
+          "metric": "mae",
+          "n": 8394,
+          "missing_among_comparable": 0,
+          "value": 347.0197368398844
+        },
+        "xp": {
+          "metric": "mae",
+          "n": 7291,
+          "missing_among_comparable": 1103,
+          "value": 188.74664079612506
+        },
+        "death": {
+          "metric": "brier",
+          "n": 8394,
+          "missing_among_comparable": 0,
+          "value": 0.04465509537105476
+        },
+        "dead_seconds": {
+          "metric": "mae",
+          "n": 8394,
+          "missing_among_comparable": 0,
+          "value": 0.5542858532657974
+        }
+      },
+      "first_failure": {
+        "insufficient_balance": {
+          "match": 9081170175,
+          "hero": "npc_dota_hero_obsidian_destroyer",
+          "t": 2583,
+          "proposal": {
+            "kind": "recommend",
+            "action": "retreat"
+          },
+          "balance_after": 0.35287134408771764
+        }
+      },
+      "seals_sha256": "45f2d90f64f5f995af445562e7deb86876444450cbd6d9b3474bdaaef8cbb426"
+    },
+    "jungle": {
+      "opportunities": 21379,
+      "eligible": 7587,
+      "matches": 1306,
+      "exclusion_flags": {
+        "unknown_action": 13777,
+        "early_death": 119,
+        "truncated": 29
+      },
+      "comparison_exclusions": {
+        "insufficient_balance": 3427,
+        "extreme_propensity": 291
+      },
+      "comparable": 3869,
+      "verdicts": {
+        "deferred": 5052,
+        "insufficient_balance": 2535
+      },
+      "conditional": 0,
+      "unscored": 13792,
+      "evidence_coverage": 0.0,
+      "explicit": 2535,
+      "unsupported": 2535,
+      "unsupported_rate": 1.0,
+      "factual": {
+        "hits": {
+          "metric": "mae",
+          "n": 3869,
+          "missing_among_comparable": 0,
+          "value": 1.6007438816119623
+        },
+        "gold": {
+          "metric": "mae",
+          "n": 3869,
+          "missing_among_comparable": 0,
+          "value": 313.7585206115894
+        },
+        "xp": {
+          "metric": "mae",
+          "n": 3320,
+          "missing_among_comparable": 549,
+          "value": 137.97100348670264
+        },
+        "death": {
+          "metric": "brier",
+          "n": 3869,
+          "missing_among_comparable": 0,
+          "value": 0.0193043392639417
+        },
+        "dead_seconds": {
+          "metric": "mae",
+          "n": 3869,
+          "missing_among_comparable": 0,
+          "value": 0.22716513095478905
+        }
+      },
+      "first_failure": {
+        "insufficient_balance": {
+          "match": 9080976691,
+          "hero": "npc_dota_hero_antimage",
+          "t": 1023,
+          "proposal": {
+            "kind": "recommend",
+            "action": "leave_camp"
+          },
+          "balance_after": 0.6867657237931947
+        }
+      },
+      "seals_sha256": "b17c92183776518020ac91826f774d2b64e9d9e2b4fff74f1d2c8ede35e3c27d"
+    },
+    "support": {
+      "opportunities": 22350,
+      "eligible": 15900,
+      "matches": 1308,
+      "exclusion_flags": {
+        "unknown_action": 6228,
+        "early_death": 755,
+        "truncated": 291
+      },
+      "comparison_exclusions": {
+        "insufficient_balance": 10326,
+        "outside_training_common_range": 15,
+        "extreme_propensity": 10
+      },
+      "comparable": 5549,
+      "verdicts": {
+        "deferred": 15900
+      },
+      "conditional": 0,
+      "unscored": 6450,
+      "evidence_coverage": 0.0,
+      "explicit": 0,
+      "unsupported": 0,
+      "unsupported_rate": null,
+      "factual": {
+        "hits": {
+          "metric": "mae",
+          "n": 5549,
+          "missing_among_comparable": 0,
+          "value": 1.9611393508667287
+        },
+        "gold": {
+          "metric": "mae",
+          "n": 5549,
+          "missing_among_comparable": 0,
+          "value": 296.39114066696135
+        },
+        "xp": {
+          "metric": "mae",
+          "n": 4492,
+          "missing_among_comparable": 1057,
+          "value": 271.00974466372037
+        },
+        "death": {
+          "metric": "brier",
+          "n": 5549,
+          "missing_among_comparable": 0,
+          "value": 0.07754121877554283
+        },
+        "dead_seconds": {
+          "metric": "mae",
+          "n": 5549,
+          "missing_among_comparable": 0,
+          "value": 0.7955368550546593
+        },
+        "arrival": {
+          "metric": "brier",
+          "n": 5542,
+          "missing_among_comparable": 7,
+          "value": 0.102991619879404
+        }
+      },
+      "first_failure": {},
+      "seals_sha256": "45a5d0f444819253a08d502bbebdd077bea3c9af9bdd26cb50196b1f93d53d3a"
+    }
+  },
+  "scorer_sha256": {
+    "score_b5_decisions.py": "f6142e7e7d18897df525237aaf955811df4b766235051c8d7a3eede984517f60",
+    "decision_score.py": "3debe2103f6f1fa5321aa9d92f01fedf432e8a2a0f5e09a21b25025987fc9d66",
+    "awareness_split.py": "08382a1e624cd6d7ad7db4a0f9a2a6c01f5cd8c183835f3c0f5ceee13affaae9"
+  }
+}
