@@ -400,6 +400,10 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+2026-11-24，B5 三场试用进入反馈交接。主线基线为 #29，独立录像报告、工作台和反馈导出分别在 #35–#41 评审。本轮沿用 U194 的开发分工，由执行者选择实现离线反馈核对。接到导出后，可以从玩家原话定位原报告的具体行号。[核对命令](b5-feedback-verification.md) · [执行授权](https://github.com/xrfc/dota2-timing/blob/6ee5a538317cfd6c510d48f1e91d4abba18e932c/docs/decisions/2026-11-24-long-development.md)
+
+19 项 CLI 专项回归通过。三场真实报告配合合成意见演练，65 个标题行全部核对一致。改动最后一份报告副本后，命令因指纹不符拒绝整批。专项和全量验收材料位于本机 `reports/b5-feedback-verification-20261124/`。
+
 已完成三场录像的步行耗时误差分解。2026-11-21 已实现逐段步行估时与受击秒点的事后对照及 CSV 导出，详见[兵线复盘](lane-decision-review.md)。回归样例覆盖同秒到达、出发延迟和观察截断。三场 7.41f 的真实片段复核暂缓。
 
 朋友可用独立邀请码在线提交评审。移动耗时核验与邀请门户命令见 docs/lane-decision-review.md。
@@ -434,6 +438,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 **U37（2026-11-01）双线重构**：计划改为共享底座＋路线A＋路线B；新增[架构](architecture.md)与`src/dota_items/architecture.py`（全部130个模块（含新增的architecture.py）、77个脚本登记线与状态，测试强制跨线依赖规则，首次扫描0处违规）；原M6改为路线B（[设计](awareness-track.md)）；新增文档链接检查；4份2026-10-10历史设计文档归档。代码行为未改，冻结产物未动。当前任务仍是MK-T3（见下）；Q11–Q16待用户回答。
 
 ### 下一步（接手从这里开始）
+
+B5 等待第二、三场玩家使用后的具体反馈。收到导出后核对报告和行号，再根据原话决定是否调整展示。首场已有的反馈见[三场试用记录](https://github.com/xrfc/dota2-timing/blob/171e42dea59254d1dd774b027962425f6d172fd7/docs/outcome-autotrain.md#三场玩家试用)。
 
 2026-11-20，X1 单场复盘按战斗日志死亡时刻生成片段；数据覆盖及限制见[重训前清单](b2-retrain-checklist.md)。下一步抽查可见证据和误报片段，再定提示筛选。
 

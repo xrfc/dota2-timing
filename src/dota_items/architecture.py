@@ -401,6 +401,7 @@ SCRIPTS = {
     "replay_viewer": _B,
     "report_replay_identity": _B,
     "revise_decision_review": _B,
+    "verify_b5_feedback": _B,
     "run_replay_pilot": _B,
 }
 

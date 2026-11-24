@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 41 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 42 |
 <!-- /track-table -->
 
 依赖规则：
@@ -99,6 +99,8 @@
 - **`scripts/coach_app.py`（8780）目前归A线**：B线页面要并入统一外壳时，需要先把外壳（路由、静态资源、安全设置）抽成共享模块，再由两条线各自注册页面。这一步排在B线有第一张可展示的页面时做（计划§8）。
 
 ## 4. 数据流
+
+B5 试用反馈的消费端是路线 B 脚本 `verify_b5_feedback.py`。输入为本机导出和它引用的原报告，输出保留片段身份并给出 Markdown 标题行号。该脚本可独立于工作台进程运行。[接口说明](b5-feedback-verification.md)
 
 ```text
 路线A：OpenDota比赛JSON ─ source_io ─→ match_table（M1快照，10人×比赛）─→ modeling（item_timing、situational_*）─→ 8780赛前页 / 复盘出装对照
