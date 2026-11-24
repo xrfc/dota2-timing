@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 41 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 42 |
 <!-- /track-table -->
 
 依赖规则：
@@ -130,6 +130,8 @@ B线的硬约束（继承U2、U6和`long-term-coach-goals.md`§5）：评价某�
 | `scripts/decision_review.py`拆出build与HTTP | 用例与入口同文件（10-28已登记的脚本债务） | 兼容导出与实现指纹清单 |
 | 统一外壳从`coach_app.py`抽到共享模块 | B线页面并入 | B线有第一张页面时 |
 | `modeling.foundation`兼容门面退役 | 只剩旧导入路径 | 确认本地无旧调用方 |
+
+路线 B 的 `scripts/audit_b5_farm_gold.py` 使用已登记的原始录像、Gem 兼容版本及归一化输入核验金币来源。[双通道审查](b5-farm-gold.md)
 
 ## 6. 检查与入口
 

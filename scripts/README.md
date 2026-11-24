@@ -6,6 +6,8 @@
 
 > 2026-10-27目标同步：当前计划见[开发计划](../docs/development-plan-2026-10-30.md)（原总路线已替代）。replay_viewer.py仅供证据复盘，尚无保守/激进建议CLI；不能以旧训练脚本直接启动新任务。时点证据、案例、契约与模型按阶段开发，旧命令/冻结输入不变。
 
+`audit_b5_farm_gold.py` 可在本机复算三场已登记录像的小兵与野怪金币。[命令及证据](../docs/b5-farm-gold.md)
+
 保留现有CLI路径，不为分类搬迁哈希绑定的生产者。正式业务模块在`src/dota_items/`；部分固定审计脚本仍包含编排实现，不声称已经全部薄CLI化。
 
 从仓库根目录执行，复用`.venv`。一般使用`PYTHONPATH=src .venv/bin/python scripts/名称.py --help`；Windows先设置`$env:PYTHONPATH = "src"`，再用`.venv\Scripts\python.exe`。`--help`不是执行真实任务许可；少数历史批处理入口没有通用help，先阅读相应说明和脚本。
