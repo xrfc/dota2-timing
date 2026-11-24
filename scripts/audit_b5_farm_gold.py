@@ -32,7 +32,7 @@ def require_hash(path, expected):
         raise ValueError(f"input fingerprint mismatch: {path}")
 
 
-def capture(path, cases):
+def capture(path, cases, offsets=(6, 7, 20, 21)):
     import gem
     from gem.extractors.players import PlayerExtractor
     from gem.parser import ReplayParser
@@ -46,7 +46,7 @@ def capture(path, cases):
     parser = ReplayParser(str(path))
     players = PlayerExtractor()
     players.attach(parser)
-    needed = {(hero, t + offset) for hero, t in cases for offset in (6, 7, 20, 21)}
+    needed = {(hero, t + offset) for hero, t in cases for offset in offsets}
     boundaries, final, recipients, events = {}, {}, {}, []
     types = Counter()
     last = None

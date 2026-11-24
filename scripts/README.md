@@ -1,5 +1,7 @@
 # 脚本职责导航
 
+`review_b5_farm_routes.py` 重算单场走位与双窗口，`render_b5_farm_routes.py` 输出三场总表并可安装至本机工作台。[输入、窗口与命令](../docs/b5-farm-gold.md)
+
 生成一号位兵线或打野决策复盘页使用 lane_decision_review.py（打野用 --mode jungle），见[口径与命令](../docs/lane-decision-review.md)。
 
 > 2026-10-27对照包增量：当前8769改为两例[支援/刷钱对照与试标草稿](../docs/decision-comparison-2026-10-27.md)，新增双方同刻可见血量、队友库存、TP到场条件拆解与草稿下载。蓝量已定位schema版本初始化导致范围65536→8192的问题，但未修正旧数据/生产者；敌方装备/CD、完整施放、合法落点/路径及数值收益仍未齐。旧包/旧结果保留，非盲评、非正式标签，不授权训练；后文旧状态按原阶段解释。

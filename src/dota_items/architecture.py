@@ -385,6 +385,8 @@ SCRIPTS = {
     "gank_review": _B,
     "lane_decision_review": _B,
     "audit_b5_farm_gold": _B,
+    "review_b5_farm_routes": _B,
+    "render_b5_farm_routes": _B,
     "check_support_travel": _B,
     "friend_review_server": _B,
     "vision_check": _B,

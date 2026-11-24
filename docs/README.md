@@ -7,7 +7,7 @@
 
 **先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-17）。
 
-[B5 原始录像的真实发育金币核验](b5-farm-gold.md)
+[B5 收线与转野的走位和双窗口实收金币](b5-farm-gold.md)
 
 **从这里开始**：[开发计划](development-plan-2026-10-30.md)（唯一进度：§7）· [架构](architecture.md) · [决策记录](decisions/README.md) · [变更记录](../CHANGELOG.md)
 
