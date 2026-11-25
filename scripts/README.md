@@ -146,3 +146,6 @@
 ### MK-T3双AI交叉复核交接
 
 `scripts/mechanics_cross_review.py build --output NEWDIR`导出完整清单、上下文、空白Claude模板与既有判断；`verify --packet DIR`核验输入及包文件；`compare --packet DIR --review RETURN.jsonl --output NEWDIR [--require-complete]`生成逐项对照，识别未审、独有判断、标签分歧和用户冲突，不修改事实。命令需`PYTHONPATH=src`；完整操作见[Claude交接](../docs/handoff/mk-claude-cross-review.md)。
+
+
+B5 开发动作覆盖：`inventory_b5_routes.py --out reports/<新目录>`，固定 U191 开发机会全集，按前六秒走位统计收线／转野，保留未知及独立比赛计数。[口径与命令](../docs/b5-route-coverage.md)

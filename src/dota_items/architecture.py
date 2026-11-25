@@ -384,6 +384,7 @@ SCRIPTS = {
     "gank_foresight": _B,
     "gank_review": _B,
     "lane_decision_review": _B,
+    "inventory_b5_routes": _B,
     "check_support_travel": _B,
     "friend_review_server": _B,
     "vision_check": _B,
