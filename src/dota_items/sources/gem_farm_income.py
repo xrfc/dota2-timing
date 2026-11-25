@@ -1,7 +1,8 @@
-"""Read actual lane/neutral income at frozen decision endpoints from a raw replay.
+"""Read actual creep/neutral income at frozen decision endpoints from a raw replay.
 
 This producer is independent of action labels. Its output contains observed income,
 not features available at the decision second and not counterfactual rewards.
+The game's creep category can include summoned units; it is not pure lane income.
 """
 
 import json
@@ -12,11 +13,13 @@ from ..storage import file_hash
 from .gem_capture import require_complete_parse
 from .gem_capture_v3 import _name
 
-SCHEMA = "gem-farm-income/1"
+SCHEMA = "gem-farm-income/2"
 COMPAT_SHA256 = "3f6e9ee2c222869adce45c6dfef757e719c9576bfdde82927e76d6868c47403d"
 OFFSETS = (0, 20, 30)
 GOLD_KINDS = {13: "creep", 14: "neutral"}
 COUNTER_FIELDS = {"creep": "m_iCreepKillGold", "neutral": "m_iNeutralKillGold"}
+HANDLE_INDEX_BITS = 14
+NULL_HANDLE = 0xFFFFFF
 
 
 def verify_compatibility(root):
@@ -60,8 +63,54 @@ def _amount(value):
     return value
 
 
-def _collect(parser, players, needed):
+def _selected_heroes(em):
+    """Read ownership from PlayerResource, independent of controller reconnects.
+
+    Gem's registered schema uses 14 entity-index bits and the remaining handle
+    bits for the entity serial. A missing/stale selection is unavailable; it must
+    never fall back to a controller that may temporarily belong to another PID.
+    """
+    resource = em.find_by_class_name("CDOTA_PlayerResource")
+    if resource is None:
+        return
+    slots = set()
+    for index in range(30):  # Same PlayerResource scan range as registered Gem.
+        team = resource.get(f"m_vecPlayerData.{index:04d}.m_iPlayerTeam")
+        slot = resource.get(f"m_vecPlayerTeamData.{index:04d}.m_iTeamSlot")
+        # Registered Gem treats negative slots as unassigned resource rows.
+        if team not in (2, 3) or slot is None or (type(slot) is int and slot < 0):
+            continue
+        if type(team) is not int or type(slot) is not int or not 0 <= slot < 5:
+            raise ValueError("invalid farm income roster team-slot")
+        if (team, slot) in slots:
+            raise ValueError("duplicate farm income roster team-slot")
+        slots.add((team, slot))
+        handle = resource.get(f"m_vecPlayerTeamData.{index:04d}.m_hSelectedHero")
+        if handle is None or handle == NULL_HANDLE:
+            continue
+        if type(handle) is not int or not 0 <= handle <= 0xFFFFFFFF:
+            raise ValueError("invalid farm income selected hero handle")
+        entity = em.find_by_handle(handle)
+        if entity is None:
+            continue
+        if (
+            entity.get_index() != handle & ((1 << HANDLE_INDEX_BITS) - 1)
+            or entity.get_serial() != handle >> HANDLE_INDEX_BITS
+        ):
+            raise ValueError("farm income selected hero handle identity mismatch")
+        if not entity.get_class_name().startswith("CDOTA_Unit_Hero_"):
+            raise ValueError("farm income selected entity is not a hero")
+        entity_team = entity.get("m_iTeamNum")
+        if entity_team is None:
+            continue
+        if entity_team != team:
+            raise ValueError("farm income selected hero disagrees with roster team")
+        yield index, entity, team, slot
+
+
+def _collect(parser, _players, needed):
     boundaries, recipients, previous, events = {}, {}, {}, []
+    roster_history = {}
     event_counts = Counter()
     last = None
 
@@ -87,21 +136,19 @@ def _collect(parser, players, needed):
         if names is None:
             return
         seen = set()
-        for pid in range(10):
-            entity = players._canonical_hero_entity(pid)
-            if entity is None:
-                continue
+        for resource_index, entity, team, slot in _selected_heroes(em):
             hero = _name(entity, names)
-            team = entity.get("m_iTeamNum")
-            slot = players._player_team_slot.get(pid)
-            if not hero or slot is None or teams.get(team) is None:
+            if not hero or teams.get(team) is None:
                 continue
-            if type(slot) is not int or not 0 <= slot < 5 or hero in seen:
+            if hero in seen:
                 raise ValueError("invalid or duplicate farm income recipient")
             seen.add(hero)
-            identity = dict(team=team, slot=slot)
+            identity = dict(team=team, slot=slot, resource_index=resource_index)
             if recipients.setdefault(hero, identity) != identity:
                 raise ValueError("farm income recipient team-slot identity changed")
+            roster_entry = dict(hero=hero, team=team, slot=slot)
+            if roster_history.setdefault(resource_index, roster_entry) != roster_entry:
+                raise ValueError("farm income selected hero roster identity changed")
             values = {
                 kind: _amount(teams[team].get(f"m_vecDataTeam.{slot:04d}.{field}"))
                 for kind, field in COUNTER_FIELDS.items()
@@ -183,6 +230,7 @@ def _collect(parser, players, needed):
         schema=SCHEMA,
         match_id=parser.match_id,
         sampling="first_tick_start_before_entity_updates",
+        ownership="player_resource_selected_hero_and_team_slot",
         endpoint_ticks="tick is replay tick; net_tick is engine tick",
         window_convention="integer game seconds [t,t+seconds)",
         last_observed_second=last,
@@ -196,8 +244,9 @@ def _collect(parser, players, needed):
 def capture_farm_income(raw_demo_path, cases):
     """Capture requested (hero, second) anchors at offsets 0, 20 and 30.
 
-    ``raw_demo_path`` must be an unpacked .dem. All ten canonical hero recipients
-    must map bijectively to team slots. Missing endpoint values remain null.
+    ``raw_demo_path`` must be an unpacked .dem. All ten PlayerResource-selected
+    hero recipients must map bijectively to roster team slots. Missing or stale
+    selected-hero handles leave endpoint values null; controllers are not used.
     ``last_observed_second`` is stream coverage, not the match's actual duration.
     The caller verifies the expected match ID and source file identity.
     """

@@ -292,3 +292,16 @@ def test_replay_bytes_changed_during_capture_cannot_publish_result(batch, execut
     with pytest.raises(ValueError, match="raw replay changed during extraction"):
         batch.execute_match(match, data, output, bound)
     assert not (output / "123.json").exists()
+
+
+def test_parse_failure_identifies_match_and_preserves_original_cause(batch, execution, monkeypatch):
+    match, data, output, bound, _ = execution
+
+    def fail_capture(*args):
+        raise ValueError("recipient identity changed at tick 1234")
+
+    monkeypatch.setattr(farm, "capture_farm_income", fail_capture)
+    with pytest.raises(ValueError, match="farm income match 123: recipient identity") as failure:
+        batch.execute_match(match, data, output, bound)
+    assert "tick 1234" in str(failure.value.__cause__)
+    assert not (output / "123.json").exists()

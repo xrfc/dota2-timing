@@ -183,6 +183,13 @@ def verify_result(record, match, bound):
 
 
 def execute_match(match, data_root, output, bound):
+    try:
+        return _execute_match(match, data_root, output, bound)
+    except Exception as error:
+        raise ValueError(f"farm income match {match['match']}: {error}") from error
+
+
+def _execute_match(match, data_root, output, bound):
     import gem
 
     from dota_items.sources.gem_farm_income import capture_farm_income, verify_compatibility

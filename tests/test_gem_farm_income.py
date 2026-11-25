@@ -9,6 +9,30 @@ import pytest
 from dota_items.sources import gem_farm_income as farm
 
 
+def handle(pid, serial=1):
+    return (serial << 14) | (pid + 100)
+
+
+class Entity(dict):
+    def __init__(self, pid, fields):
+        super().__init__(
+            {
+                "m_pEntity.m_nameStringTableIndex": fields.get((pid, "name"), pid),
+                "m_iTeamNum": fields.get((pid, "team"), 2 if pid < 5 else 3),
+            }
+        )
+        self.pid, self.fields = pid, fields
+
+    def get_index(self):
+        return self.pid + 100
+
+    def get_serial(self):
+        return self.fields.get((self.pid, "serial"), 1)
+
+    def get_class_name(self):
+        return "CDOTA_Unit_Hero_Test"
+
+
 class Parser:
     def __init__(self, frames, events=None, clock=None):
         self.frames = frames
@@ -48,10 +72,29 @@ class Parser:
                 }
                 for team in (2, 3)
             }
+            resource = {}
+            entities = {}
+            for pid in range(10):
+                index = pid + fields.get("resource_offset", 0)
+                resource[f"m_vecPlayerData.{index:04d}.m_iPlayerTeam"] = fields.get(
+                    (pid, "roster_team"), 2 if pid < 5 else 3
+                )
+                resource[f"m_vecPlayerTeamData.{index:04d}.m_iTeamSlot"] = fields.get(
+                    (pid, "slot"), pid % 5
+                )
+                resource[f"m_vecPlayerTeamData.{index:04d}.m_hSelectedHero"] = fields.get(
+                    (pid, "selected_handle"), handle(pid)
+                )
+                if pid not in fields.get("missing_players", ()):
+                    entities[handle(pid)] = Entity(pid, fields)
+            classes = {
+                "CDOTA_DataRadiant": teams[2],
+                "CDOTA_DataDire": teams[3],
+                "CDOTA_PlayerResource": None if fields.get("no_resource") else resource,
+            }
             self.entity_manager = SimpleNamespace(
-                find_by_class_name=lambda name, teams=teams: teams[
-                    2 if name == "CDOTA_DataRadiant" else 3
-                ]
+                find_by_class_name=classes.get,
+                find_by_handle=entities.get,
             )
             if fields.get("no_entities"):
                 self.entity_manager = None
@@ -113,7 +156,9 @@ def test_first_tick_endpoints_and_event_clock_are_distinct(monkeypatch):
     assert result["gold_event_counts"] == {"1": 1, "13": 2, "14": 1}
     assert result["last_observed_second"] == 30
     assert result["compat_manifest_sha256"] == farm.COMPAT_SHA256
-    assert result["recipients"]["hero_9"] == {"team": 3, "slot": 4}
+    assert result["schema"] == "gem-farm-income/2"
+    assert result["ownership"] == "player_resource_selected_hero_and_team_slot"
+    assert result["recipients"]["hero_9"] == {"team": 3, "slot": 4, "resource_index": 9}
     assert json.loads(json.dumps(result)) == result
 
 
@@ -135,11 +180,81 @@ def test_missing_fields_and_missing_endpoints_never_become_zero(monkeypatch):
     }
 
 
+@pytest.mark.parametrize("slot", [None, -1])
+def test_unassigned_roster_slot_keeps_missing_endpoint_until_resolved(monkeypatch, slot):
+    parser = Parser([(0, 1, 101, {(0, "slot"): slot}), (20, 201, 301), (30, 301, 401)])
+    result = capture(monkeypatch, parser)
+    start, middle, end = result["boundaries"]
+    assert start["status"] == "missing_endpoint"
+    assert start["creep"] is None and start["neutral"] is None
+    assert middle["status"] == end["status"] == "observed"
+    assert result["recipients"]["hero_0"] == dict(team=2, slot=0, resource_index=0)
+
+
 def test_missing_opening_tick_is_not_replaced_by_later_same_second(monkeypatch):
     parser = Parser([(0, 1, 101, {"no_entities": True}), (0, 2, 102), (20, 201, 301)])
     result = capture(monkeypatch, parser)
     assert result["boundaries"][0]["status"] == "missing_endpoint"
     assert result["boundaries"][0]["tick"] is None
+
+
+def test_controller_reassigned_to_teammate_does_not_change_gold_ownership(monkeypatch):
+    # Reconnect left Gem cache[0] and cache[1] pointing at player 1's controller.
+    monkeypatch.setattr(Players, "_canonical_hero_entity", lambda self, pid: Entity(1, {}))
+    parser = Parser(
+        [
+            (0, 1, 101, {(2, 0, "creep"): 10, (2, 1, "creep"): 1000}),
+            (20, 201, 301, {(2, 0, "creep"): 15, (2, 1, "creep"): 1005}),
+        ]
+    )
+    result = capture(monkeypatch, parser)
+    assert [r["creep"] for r in result["boundaries"]] == [10, 15, None]
+    assert result["recipients"]["hero_0"] == {"team": 2, "slot": 0, "resource_index": 0}
+
+
+@pytest.mark.parametrize("selection", [None, farm.NULL_HANDLE, handle(0, serial=2)])
+def test_missing_or_stale_selection_keeps_endpoint_null_without_controller_fallback(
+    monkeypatch, selection
+):
+    parser = Parser([(0, 1, 101, {(0, "selected_handle"): selection}), (20, 201, 301)])
+    result = capture(monkeypatch, parser)
+    assert result["boundaries"][0]["status"] == "missing_endpoint"
+    assert result["boundaries"][0]["creep"] is None
+    assert result["boundaries"][1]["creep"] == 120
+
+
+def test_resolver_returning_reused_index_with_wrong_serial_is_rejected(monkeypatch):
+    with pytest.raises(ValueError, match="selected hero handle identity mismatch"):
+        capture(monkeypatch, Parser([(0, 1, 101, {(0, "serial"): 2})]))
+
+
+def test_missing_player_resource_is_not_replaced_by_controller(monkeypatch):
+    result = capture(monkeypatch, Parser([(0, 1, 101, {"no_resource": True}), (20, 201, 301)]))
+    assert result["boundaries"][0]["status"] == "missing_endpoint"
+
+
+def test_resource_indices_need_not_equal_logical_player_ids(monkeypatch):
+    result = capture(monkeypatch, Parser([(0, 1, 101, {"resource_offset": 1})]))
+    assert result["recipients"]["hero_0"]["resource_index"] == 1
+    assert result["recipients"]["hero_9"]["resource_index"] == 10
+
+
+def test_duplicate_roster_slot_is_rejected(monkeypatch):
+    with pytest.raises(ValueError, match="duplicate farm income roster team-slot"):
+        capture(monkeypatch, Parser([(0, 1, 101, {(1, "slot"): 0})]))
+
+
+def test_actual_roster_slot_change_is_rejected(monkeypatch):
+    parser = Parser([(0, 1, 101), (20, 201, 301, {(0, "slot"): 1, (1, "slot"): 0})])
+    with pytest.raises(ValueError, match="team-slot identity changed"):
+        capture(monkeypatch, parser)
+
+
+def test_actual_selected_hero_change_is_rejected(monkeypatch):
+    parser = Parser([(0, 1, 101), (20, 201, 301, {(0, "name"): 10})])
+    parser.names.items[10] = ("replacement_hero", None)
+    with pytest.raises(ValueError, match="selected hero roster identity changed"):
+        capture(monkeypatch, parser)
 
 
 @pytest.mark.parametrize("second", [None, 1, False, 0.0])
@@ -193,9 +308,9 @@ def test_missing_match_identity_is_rejected(monkeypatch, match_id):
     ("frames", "message"),
     [
         ([(0, 1, 101, {"missing_players": [9]})], "incomplete gold recipient"),
-        ([(0, 1, 101, {(9, "team"): 2})], "incomplete gold recipient"),
+        ([(0, 1, 101, {(9, "team"): 2})], "disagrees with roster team"),
         ([(0, 1, 101, {(9, "name"): 8})], "duplicate farm income recipient"),
-        ([(0, 1, 101), (20, 201, 301, {(0, "team"): 3})], "team-slot identity changed"),
+        ([(0, 1, 101), (20, 201, 301, {(0, "team"): 3})], "disagrees with roster team"),
         ([(0, 1, 101), (20, 201, 301, {(2, 0, "creep"): 90})], "cumulative farm income decreased"),
         ([(20, 201, 301), (19, 202, 302)], "clock moved backwards"),
     ],
