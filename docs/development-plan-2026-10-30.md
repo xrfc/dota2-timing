@@ -503,6 +503,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 8. 待办池（不在当前里程碑执行）
 
+- **7.42 地图上游核验更新（2026-11-25）**：按用户本次要求核验，Gem 已有 7.42 底图、营地和泉水，现用 leamare 高度/通行/树木仍为 7.41，Gem 河道轮廓亦未更新。已有资产可按固定提交建立独立候选，营地 v5 必须按补丁筛成 28 个；几何资产继续标未验证，不能因 v0.15.0 发布整体切换。来源和迁移边界见[补丁计划最新记录](patch-7.42-plan.md#2026-11-25-地图上游核验部分-742-资产已更新)。下方 U178 的等待事项据此按资产解释。
+
 - **7.42地图也可由用户用Workshop Tools导出**（2026-11-20，步骤`docs/map-workshop-export.md`）；导出后替代demo反推。
 - **TODO 7.42地图坐标改用上游（U178，2026-11-19）**：7.42地图先从demo反推门、塔、野点坐标（方案B，demo工作恢复后做）；`leamare/dota-map-coordinates`出7.42版本后改用上游数据，与反推结果对照。查法：`gh api repos/leamare/dota-map-coordinates/commits`（2026-11-19最新仍是`f793787e`“7.41”）。
 
