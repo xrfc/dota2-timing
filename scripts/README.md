@@ -149,3 +149,5 @@
 
 
 B5 开发动作覆盖：`inventory_b5_routes.py --out reports/<新目录>`，固定 U191 开发机会全集，按前六秒走位统计收线／转野，保留未知及独立比赛计数。[口径与命令](../docs/b5-route-coverage.md)
+
+B5 未知动作诊断：`audit_b5_route_labels.py --out reports/<新目录>`，校验既有覆盖收据和输入指纹，重放全部标签并说明未知原因。[口径](../docs/b5-route-coverage.md#未知动作诊断)

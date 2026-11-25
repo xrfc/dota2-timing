@@ -57,7 +57,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 42 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 43 |
 <!-- /track-table -->
 
 依赖规则：
@@ -144,3 +144,5 @@ B线的硬约束（继承U2、U6和`long-term-coach-goals.md`§5）：评价某�
 
 
 2026-11-25：路线 B 的 `scripts/inventory_b5_routes.py` 为只读开发覆盖审计；读取公共 `data.source_io`、冻结机会表及 state-v3，仅把本人前六秒位置作为动作标签。事前字段白名单仅含本人、己方兵线和静态营地几何。按比赛分组统计，不拟合、不消费旧留出集。[口径](b5-route-coverage.md)
+
+路线 B 的 `scripts/audit_b5_route_labels.py` 读取已冻结的覆盖收据，通过公共读取接口核对来源指纹，复用原动作判定并补充诊断；不修改冻结生产者、标签或阈值。[接口与限制](b5-route-coverage.md#未知动作诊断)
