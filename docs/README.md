@@ -1,5 +1,7 @@
 # 文档索引
 
+[B5 开发集分类实收提取与对账](b5-farm-income-batch.md)
+
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 
