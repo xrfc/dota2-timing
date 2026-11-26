@@ -1,6 +1,6 @@
 # 7.42补丁预案（2026-11-17，助手起草）
 
-现在所有数据和知识都对应7.41f。外部评估提到7.42可能在2026年11–12月到（追踪站的估计，不是官方消息）。本页写补丁到来后做什么；补丁没到之前不执行。联网检查和采集每次要用户授权。
+7.42 已发布，正式机制入口仍为 7.41f，7.42 机制候选等待裁定。本页保留 11-17 起的预案与执行记录。2026-11-26 起用户已授权获取少量新 demo 并改进采集/解析；五场试采见 [PR #54](https://github.com/xrfc/dota2-timing/pull/54)，精确版本流程与后续真实验证见[新版解析记录](replay-pipeline-v2.md)。解析、地图与模型的支持证据分开，不将数字 patch 编号等同于精确字母补丁或真实 build。
 
 ## 1. 先判断补丁有多大
 
@@ -17,7 +17,7 @@
 | 机制知识库（事实v26、词表v15、规则v13） | 按既有流程找变化、复核、出新版本 | [补丁更新流程](mechanics-patch-update.md)，`scripts/check_patch_knowledge.py`、`scripts/patch_update.py` |
 | 保命手段清单、英雄机动能力 | 从新的机制知识重新生成 | `scripts/detect_ganks.py save-means`、`scripts/build_hero_mobility.py` |
 | 地图知识（区域草稿v7、定时目标、塔和野点坐标） | 没改地图：核对定时目标的时间；改了地图：重新取上游地图数据、重画区域、重新让用户确认 | `scripts/build_map_knowledge.py`，[地图知识设计](map-knowledge-design.md) |
-| 解析器（gem-dota 0.10.0） | 新demo先试解析5场；失败就等解析库更新，不改采集规模 | `scripts/collect_demos.py`试采，[解析器v3设计](parser-v3-design.md) |
+| 解析器（gem-dota 0.10.0＋固定兼容目录） | 五场试采后，新增一次解码/多通道及跨版本工程回归；不自动升级解析库或扩大采集规模 | [新版流程与实测](replay-pipeline-v2.md)、[解析器v3设计](parser-v3-design.md) |
 | demo数据（1678场，7.41f） | 保留，标明补丁；新补丁另开一个目录重采，不混在一起 | [自动采集demo](demo-collection.md) |
 | 路线A的出装统计和针对装触发 | 新补丁数据到了以后重验；在那之前页面注明数据来自7.41f | [M2b触发条件](m2b-triggers.md) |
 | 死亡风险基线、胜率模型 | 旧模型在新补丁的200–300场上先测一次（不重训），看平均精度和校准掉多少；掉得多再用新数据重训 | [模型卡](b2-death-risk-baseline.md) |

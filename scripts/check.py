@@ -37,6 +37,7 @@ def module_paths(scope):
         "test_check_scopes.py",
         "test_docs_links.py",
         "test_task_contracts.py",
+        "test_replay_collection_contract.py",
     }
     selected = {
         "modeling": model_tests | shared,

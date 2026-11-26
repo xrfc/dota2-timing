@@ -4,6 +4,7 @@
 
 | 编号 | 文件 |
 |---|---|
+| 2026-11-27（日期记录） | [按五项建议改进采集/解析并节约空间](2026-11-27-replay-pipeline-storage.md) |
 | U190 | [行动判断总架构与项目决策留档](2026-11-20-decision-framework.md) |
 | U189 | [项目产品目标](2026-11-20-project-goal.md) |
 | U1 | [取消10/31前瞻采集](2026-10-30-cancel-collection-window.md) |

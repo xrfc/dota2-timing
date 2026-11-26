@@ -2,6 +2,27 @@
 
 > **2026-11-01（U37）**：架构入口改为[架构](architecture.md)（层×线、模块归属、迁移策略）。本页保留各层API细节与10/17–10/28的结构整理记录；“当前工程结构入口”等说法以架构页为准。
 
+## 2026-11-27：精确补丁录像流水线 API
+
+新增模块和命令见[采集、解析与压缩存储](replay-pipeline-v2.md)，授权及工程选择见[决策记录](decisions/2026-11-27-replay-pipeline-storage.md)。以下八个库模块都登记为共享底座；`scripts/replay_pipeline.py` 登记为 B 线，由 CLI 注入既有 U133 工程排除策略，共享库不导入 B 线划分模块。原冻结生产者及产物保持原路径、原字节，新输出使用 `replay-bundle/1`。
+
+| 模块 | 主要 API | 职责与边界 |
+|---|---|---|
+| `contracts.replay_collection` | `PatchWindow.from_snapshot`、`from_dict`、`to_dict`、`discovery_bounds`、`match_time_reasons`；`validate_match_metadata` | 标准库版本与元数据契约，不读文件、不导入 data，不决定留出或模型支持 |
+| `sources.replay_collection_io` | `clients`、`discovery_sql`、`explorer`、`get_json`、`download` | 请求额度、公开来源、时间/字节上限和完整下载；不导入 data/workflow |
+| `sources.replay_capture_bundle` | `parser_identity`、`capture_bundle(..., emit_state=..., emit_extras=...)` | 固定兼容解析器身份，一次解码驱动基础、state、extras；通过回调交付旁路行，不负责质量准入 |
+| `data.replay_bundle` | `BundleWriter`、`verify_bundle`、`read_json_artifact`、`iter_channel`、`pack_files` | 不可覆盖的 gzip 包、双摘要、清单与来源校验、公共读取和无损归档；不导入 workflow |
+| `data.replay_quality` | `inspect_base`、`ChannelAudit`、`quality_result` | 基础身份/结束证据、逐秒覆盖、十英雄核心字段及质量原因，不实现采集或模型策略 |
+| `data.replay_bundle_quality` | `verify_quality_bundle(root, *, expected_identity=..., expected_producer=...)` | 从实际压缩产物重算质量；缓存接纳入口，不凭 manifest 的状态字符串批准 |
+| `workflow.replay_collection` | `discover`、`make_plan`、`load_plan`、`run_stages` | 冻结计划、来源/排除策略、阶段恢复、资源预算与失败收据 |
+| `workflow.replay_processing` | `producer_identity`、`process_request` | 独立进程单场解析，绑定请求路径与来源引用，组合采集、质量与包写入 |
+
+版本身份保留精确补丁名（含字母后缀）、官方原始快照 SHA、取得时间、发布起点、下一次发布上界及边界余量；最新补丁的上界取原快照取得时间。`from_dict` 校验记录形状，原快照摘要及与窗口的一致性仍须由编排层读取原快照后重建比对；摘要不是来源真实性的签名证明。OpenDota 数字 patch 可显式核对，实际 parser build 独立记录，均不能自动映射成模型支持。在线发现的年龄条件只约束比赛开始时间，补丁窗口同时约束结束时间；本地 `seed` 保留补丁与元数据校验，不重复施加在线年龄筛选。
+
+**严格缓存边界：**调用者用当前期望 identity/producer 执行 `verify_quality_bundle`，核验原始来源、实际请求路径、完整文件清单及压缩/解压双摘要，再重算基础和通道质量；`verify_bundle` 仅做存储与声明完整性校验，不能替代质量准入。坏缓存保留并记录拒绝原因，后续有效 attempt 仍可检查；显式 `--retry-failed` 才在新 attempt 重建，不修改原包或把旧生产者当成当前实现。质量通过仍不认证地图/视野语义、模型效果或训练许可。
+
+**流式与归档边界：**state/extras 按秒写 gzip，消费端通过 `iter_channel` 逐行读取；基础 Gem 事件仍会在内存累积，不能据此声称整场恒定内存。`pack_files` 保留指定源文件的原字节摘要，归档成功只证明字节完整；CLI 的 `--match` 是调用者声明，不认证文件内容属于该比赛，也不继承旧解析生产者。纯归档可显式关闭 `verify_bundle` 的来源存在性检查，但此模式不能用于解析缓存准入。旧消费者需显式迁移到新读取 API，旧产物及失败证据不自动删除。实测结果统一记在新版流程与计划中，本页不复制尚未完成的验收结论。
+
 ## 2026-10-28架构整理原则
 
 保持模块化单体，不拆微服务、不按文件行数机械搬迁。当前职责分为：

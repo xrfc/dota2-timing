@@ -400,6 +400,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+**2026-11-27，精确版本采集、单次解析与节约空间。** 按用户对五项建议的开发要求，新增 contracts/sources/data/workflow 分层和 `replay_pipeline.py` 入口；固定官方补丁窗口、元数据与真实 build，分别记录下载/解析/质量状态，复用缓存时核验来源、生产者、双摘要并重新计算质量。一次解码写出 raw、normalized、state-v3、extras-v1 的压缩 bundle；原 demo 引用且保留，旧产物未删除。真实五场 7.42 与 7.41f 朗戈长局的结果、空间对账和剩余限制见[实施记录](replay-pipeline-v2.md)，授权边界见[本轮决定](decisions/2026-11-27-replay-pipeline-storage.md)。下一项为新补丁边界/新增实体的真实样本覆盖及下游消费者显式接入；7.42a 在线发现本次受 OpenDota 400 阻断。地图和模型效果另行验收，不把解析成功当成新版本模型支持。
+
 已完成三场录像的步行耗时误差分解。2026-11-21 已实现逐段步行估时与受击秒点的事后对照及 CSV 导出，详见[兵线复盘](lane-decision-review.md)。回归样例覆盖同秒到达、出发延迟和观察截断。三场 7.41f 的真实片段复核暂缓。
 
 朋友可用独立邀请码在线提交评审。移动耗时核验与邀请门户命令见 docs/lane-decision-review.md。
@@ -506,7 +508,7 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 - **7.42地图也可由用户用Workshop Tools导出**（2026-11-20，步骤`docs/map-workshop-export.md`）；导出后替代demo反推。
 - **TODO 7.42地图坐标改用上游（U178，2026-11-19）**：7.42地图先从demo反推门、塔、野点坐标（方案B，demo工作恢复后做）；`leamare/dota-map-coordinates`出7.42版本后改用上游数据，与反推结果对照。查法：`gh api repos/leamare/dota-map-coordinates/commits`（2026-11-19最新仍是`f793787e`“7.41”）。
 
-- **TODO 7.42 demo解析与处理（U178，2026-11-19暂缓）**：恢复后按[7.42预案](patch-7.42-plan.md)先试解析5场，再做地图反推、旧模型在新补丁上的检验。
+- **7.42 demo解析与处理（U178历史暂停，2026-11-26起按后续请求恢复）**：五场试采记录见 [PR #54](https://github.com/xrfc/dota2-timing/pull/54)，分层管线、单次解析及跨版本工程验证见[实施记录](replay-pipeline-v2.md)。剩余地图和旧模型效果不能由解析通过推定；训练权限不变。
 
 - **TODO 单位状态位解码（U130，2026-11-09）**：解析器v3每秒只保留英雄的原始状态掩码`m_nUnitState64`。以后用战斗日志的控制事件（眩晕、沉默、妖术、开黑皇杖等`MODIFIER_ADD/REMOVE`）逐位对照，确认每一位的含义后再输出“被眩晕：是/否”这类字段；未确认的位不使用。设计见`docs/parser-v3-design.md`§3、§6。
 
