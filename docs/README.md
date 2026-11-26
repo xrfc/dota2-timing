@@ -1,5 +1,7 @@
 # 文档索引
 
+[行动模型M1：版本契约与纯推理](action-model-m1.md)：多版本身份/兼容矩阵/支持周期、无拟合模型、合成旧新对照和后续边界。
+
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 

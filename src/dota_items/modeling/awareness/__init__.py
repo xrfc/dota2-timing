@@ -1,4 +1,5 @@
-"""Track B models (D2 onwards, docs/architecture.md section 5): training and evaluation only.
+"""Track B state, inference, training and evaluation modules (docs/architecture.md).
 
 No imports from data or sources; inputs arrive as validated tables (contracts).
+Modules are selected explicitly; importing this package does not load training.
 """
