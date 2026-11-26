@@ -400,6 +400,16 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+2026-11-26 最新接续：用户要求按 D5 建议设计兼容迁移。已完成[行动模型迁移设计](action-model-migration-design.md)：两代并存、显式无拟合转换、模型/编排/CLI分层、旧源码与制品身份保留、分步交付和合成验收。**本轮仅设计，迁移尚未实施或激活**；下一项是 M1 契约与纯推理的合成实现，先核验 M0 固定来源。没有训练、真实模型加载或原337场重评。
+
+[阶段评审 PR #51](https://github.com/xrfc/dota2-timing/pull/51) 尚未合并；其整理后的状态/历史归档与护栏保持独立。本分支只同步本设计入口，合并时保留两者，不用下方旧记录覆盖新进度。路线A仍按U166暂缓；原337场已评分，不是新的独立测试集。下方旧“当前/下一步/留出未用”只对应其记录日期。
+
+- [x] D5 / M0：兼容迁移设计、7个固定head各26份来源核验、5类状态清单与未激活设计基线；[用户要求](decisions/2026-11-26-action-model-migration-design.md)。
+- [ ] D5 / M1：按设计实现契约与纯推理，先做合成 parity 和导入边界测试；不直接改旧脚本为门面，不替换旧模型。
+- [ ] M2–M4：训练/编排分离（仅合成回归）、制品与迁移桥、应用接入；逐项通过设计矩阵后再推进。真实训练和新研究口径仍单独决定；D4投影唯一性为另一个主题。
+
+以下为当前主线尚未被PR #51归档的历史进度，不能解释为本轮任务。
+
 已完成三场录像的步行耗时误差分解。2026-11-21 已实现逐段步行估时与受击秒点的事后对照及 CSV 导出，详见[兵线复盘](lane-decision-review.md)。回归样例覆盖同秒到达、出发延迟和观察截断。三场 7.41f 的真实片段复核暂缓。
 
 朋友可用独立邀请码在线提交评审。移动耗时核验与邀请门户命令见 docs/lane-decision-review.md。
@@ -502,6 +512,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 ---
 
 ## 8. 待办池（不在当前里程碑执行）
+
+- **2026-11-26 D5**：[模型兼容迁移设计](action-model-migration-design.md)已完成，实施按§7逐步推进。旧门面退役为可选M5，须另行提出并保留精确旧生产者；不放宽public-reader/1，不借结构迁移更换U191动作/结果。
 
 - **7.42地图也可由用户用Workshop Tools导出**（2026-11-20，步骤`docs/map-workshop-export.md`）；导出后替代demo反推。
 - **TODO 7.42地图坐标改用上游（U178，2026-11-19）**：7.42地图先从demo反推门、塔、野点坐标（方案B，demo工作恢复后做）；`leamare/dota-map-coordinates`出7.42版本后改用上游数据，与反推结果对照。查法：`gh api repos/leamare/dota-map-coordinates/commits`（2026-11-19最新仍是`f793787e`“7.41”）。

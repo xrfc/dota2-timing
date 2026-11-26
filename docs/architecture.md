@@ -1,5 +1,7 @@
 # 项目架构：共享底座＋两条产品线（2026-11-01）
 
+2026-11-26：新增[行动模型兼容迁移设计](action-model-migration-design.md)，目标为contracts/只读输入/modeling/experiments/CLI分层，保留原冻结生产者，使用显式迁移桥。**尚未实施，新路径不登记为active，下面的模块统计仍对应当前源码。** PR #44评分核实际属于`modeling.awareness.decision_score`；此前评审误写为data的路径已在设计中更正。
+
 路线 B 的行动比较、因素表和逐段复核格式见[决策总架构](decision-framework.md)。
 
 本页是**当前唯一的架构入口**，替代[模块维护](modular-maintenance.md)的入口职责（该页保留各层API细节与历史验收）。机器可读的归属表在[`src/dota_items/architecture.py`](../src/dota_items/architecture.py)，由`tests/test_architecture.py`强制执行。执行顺序和进度只看[开发计划](development-plan-2026-10-30.md)§7。
