@@ -26,6 +26,19 @@ MODEL_TESTS = {
     "test_experiment_structure.py",
 }
 
+# These suites exercise model APIs and data/application adapters together. Keep
+# their existing data coverage while also running them in the modeling scope.
+DATA_MODEL_TESTS = {
+    "test_coach_app.py",
+    "test_death_risk_tables.py",
+    "test_item_timing.py",
+    "test_random_cohort_snapshot.py",
+    "test_situational_items.py",
+    "test_situational_reference.py",
+    "test_situational_triggers.py",
+    "test_whole_log_snapshot.py",
+}
+
 
 def module_paths(scope):
     """Explicit ownership for existing suites; unknown suites conservatively join data."""
@@ -39,9 +52,9 @@ def module_paths(scope):
         "test_task_contracts.py",
     }
     selected = {
-        "modeling": model_tests | shared,
+        "modeling": model_tests | DATA_MODEL_TESTS | shared,
         "recommendation": recommendation | shared,
-        "data": (set(all_tests) - model_tests - recommendation) | shared,
+        "data": (set(all_tests) - model_tests - recommendation) | DATA_MODEL_TESTS | shared,
     }[scope]
     source = {
         "modeling": [

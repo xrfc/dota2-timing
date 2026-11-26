@@ -4,12 +4,12 @@
 
 - 唯一工作目录：`/home/node/.openclaw/workspace/work/dota2-timing`。
 - `src/dota_items/data/`与`src/dota_items/modeling/`为并列模块；不再使用独立`dota2-timing-model` worktree。
-- 2026-10-30按用户要求清理已合并分支后，当前共享分支为`main`，跟踪`origin/main`；旧数据/模型分支已合并并删除。保留单worktree，不自动切分支或重建worktree；清理证据见`docs/git-maintenance-2026-10-30.md`。
+- 2026-10-30清理旧分支的证据见`docs/git-maintenance-2026-10-30.md`；其中“只用main、不切分支”已由U135取代。本地按功能分支＋PR工作，仍保留单worktree和共享index，不自动重建worktree。
 - 数据agent维护data模块、数据脚本/测试；模型agent维护modeling模块、模型脚本/测试。共享文件改动须协调，禁止覆盖其他agent未提交文件。
 - Git index、工作目录与环境现已共享：不并行执行切分支、提交、清理、依赖安装或全库自动格式化。
 - 复用现有`.venv`，先检查依赖，不按旧独立工作区说明重建/覆盖环境。
 - 旧双分支交接文档仅作历史；最新入口为`docs/handoff/single-workspace-2026-10-16.md`。
-- 合并目录不授权真实训练、截距对照、新数据用途或划分变更，不推送/远端合并。
+- 合并目录不授权真实训练、截距对照、新数据用途或划分变更。功能分支提交/推送和PR按U135；合并PR、推送main、删分支仍须用户同意。
 
 ## 并行开发与串行集成（2026-10-16 用户明确决定）
 
@@ -26,7 +26,7 @@
 - 本项目工作区内新增、修改文件不需要逐文件征求同意。
 - 修改 OpenClaw 自身文件或其他目录的文件，仍需先获得用户同意。
 - 本规则替代继承规则中的“项目文件修改必须逐文件确认”，不扩大删除、重启、对外发送或发布权限。
-- 当前开发在本地完成，不自动合并远程 PR 或推送。
+- 当前开发在本地完成；按U135推送功能分支并开PR，不自动合并PR或推送main。
 
 其余协作约定继续遵循上级工作区规则及用户当前指令。
 
@@ -56,7 +56,7 @@
 
 - 一页当前状态：`docs/current-status.md`（先看它）。唯一执行计划：`docs/development-plan-2026-10-30.md`（共享底座MK＋路线A推荐M0–M5＋路线B意识决策B0–B5）。接手先读其§0与§7，只做当前任务的下一个未勾选项；两条线不分主次；先做完共享底座MK，之后两线各自推进（U38）。
 - 架构入口：`docs/architecture.md`。每个模块/脚本须在`src/dota_items/architecture.py`登记线与状态；共享底座不导入任一线，A、B两线互不导入（测试强制）。冻结产物指纹记录源码路径，**不搬迁文件**，物理整理须先登记生产者迁移并单独提出。
-- U67、U73、U113：MK-T3、MK-T4已结束，MK已结束（U122，2026-11-07；R8、R15移到B1）；当前多英雄demo采集（U128、U129，`docs/demo-collection.md`）与M2b-T10页面评审，之后U124第③步和B0；知识统一入口`knowledge/mechanics/current.json`；入口`docs/handoff/mk-handoff-2026-11-05.md`，事实`knowledge/mechanics/extractions/v26/`、词表`vocabulary-v15.json`、规则`rules-v13.json`；`basis`不是`user*`的条目不算用户批准。
+- MK已结束（U122；R8、R15移到B1），路线A按U166暂缓，当前路线B为B5证据与局部实验准备；阶段结果及未合并版本见`docs/reviews/2026-11-26-stage-and-architecture.md`，实时顺序只看计划§7。原337场已正式评分，不再是全新独立测试集。知识统一入口`knowledge/mechanics/current.json`仍为7.41f；事实v26、词表v15、规则v13；`basis`不是`user*`的条目不算用户批准。
 - 用户决定记录在`docs/decisions/`；计划§2“待决”项必须先问用户。
 - 账号ID只在未跟踪的`configs/user.local.json`，不得写入跟踪文件或推送。
 

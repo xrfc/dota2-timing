@@ -1,5 +1,7 @@
 # 脚本职责导航
 
+**2026-11-26 检查入口整理**：`check.py --scope modeling` 与 `--scope data` 共同包含 8 套模型/跨层测试；未知测试仍保守归 data，显式导入 modeling/experiments 的套件由回归检查要求进入 modeling。最终必须 `--scope all`；架构护栏覆盖脚本导入与静态循环，动态装载/文件交接的限制见[阶段评审](../docs/reviews/2026-11-26-stage-and-architecture.md)。
+
 生成一号位兵线或打野决策复盘页使用 lane_decision_review.py（打野用 --mode jungle），见[口径与命令](../docs/lane-decision-review.md)。
 
 > 2026-10-27对照包增量：当前8769改为两例[支援/刷钱对照与试标草稿](../docs/decision-comparison-2026-10-27.md)，新增双方同刻可见血量、队友库存、TP到场条件拆解与草稿下载。蓝量已定位schema版本初始化导致范围65536→8192的问题，但未修正旧数据/生产者；敌方装备/CD、完整施放、合法落点/路径及数值收益仍未齐。旧包/旧结果保留，非盲评、非正式标签，不授权训练；后文旧状态按原阶段解释。

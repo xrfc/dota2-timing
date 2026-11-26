@@ -1,5 +1,7 @@
 # 数据卡：多英雄demo采集（`data/demos-2026-11`，2026-11-16）
 
+**2026-11-26 时效说明**：原 337 场已在 [U191 / PR #34](https://github.com/xrfc/dota2-timing/pull/34) 正式评分，不能再作为新的独立验收集。下方旧“留出未用/最后评估”描述只对原记录日期有效，当前任务与研究权限以[计划 §7](development-plan-2026-10-30.md#7-状态表唯一进度来源)为准；本次整理不读取留出内容或启动训练。
+
 统计由`scripts/demo_data_card.py`（登记在路线B，因为位置用路线B的回放读取）生成，结果在`reports/demo-data-card-2026-11-16/stats.json`（未跟踪，不推送）。它只读本地文件，不联网。采集方法见[demo-collection.md](demo-collection.md)（U128、U129）。
 
 ```bash
