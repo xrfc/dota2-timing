@@ -310,6 +310,7 @@ SCRIPTS = {
     "check_patch_knowledge": _S,
     "collect_demos": _S,
     "collect_b5_farm_income": _B,
+    "audit_b5_farm_income": _B,
     "build_death_risk_table": _B,
     "train_death_risk": _B,
     "death_importance": _B,

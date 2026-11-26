@@ -80,3 +80,31 @@ PYTHONPATH=src .venv/bin/python scripts/collect_b5_farm_income.py report \
 最终实现的五场小跑、复用、全量检查与文件指纹分别记录在 `final-smoke.log`、`final-resume.log`、`check-roster-final.log`、`check-roster-{before,after}.txt`。长批次结束后自动生成 `full-run-2/status.json` 和 `summary.json`，区分是否完整提取、未知端点及金额差额。当前不把部分已完成结果当成全量完成。
 
 第③步后续是完成全体同窗金币对账，核验事前营地条件的可观测性，归类异常。第④步才登记并验证一个改法，使用同一目标的简单基线和按整场折外比较。动作定义变更、跨场景收益权重及新独立验收来源仍需用户决定。
+
+### 2026-11-26：恢复运行与独立审计
+
+用户要求继续开发。原 `full-run-2` 日志最后更新于北京时间 11 月 26 日 00:53，管理会话已不存在，宿主进程检查也没有该提取器；状态文件仍写着 running，不能据此宣称进程活着。确认后将旧锁移存到 `recovery-20261126/`，保留原日志和状态，用同一 b354e19 源码副本恢复到 `full-run-3`。已完成比赛仍验证录像字节和产物，未换生产者或覆盖旧结果。具体中断原因尚不能确认。
+
+续跑前固定快照的审计结果为 623 场、7,903 个机会。31,612 个金额格中，31,143 对平、304 因比赛结束截断为 null、165 非零；无 missing_endpoint/missing_counter。差额涉及 91 场、105 个机会，均为正数，creep 为 3/6/9/12，neutral 为 2–12；这些只是分布，不能由金额相似自动归因为同一种日志缺失。旧 13 格精确延续，新增 152 格仍须核查。全部窗口由冻结 capture 重算一致，审计前后输入哈希一致；证据在本机 `reports/b5-farm-income-audit-20261126/`。
+
+本轮再定向重放三场、四个机会、七个差额格：幽鬼 creep +12 与主宰 +6 分别对应四次、两次术士小恶魔死亡同期的 +3；敌法师 neutral +12、水人 +10 集中在巨魔骷髅死亡的 tick。后两者保留同 tick 聚合残差，不按怪数分摊赏金。4,565 个 tick-start 时钟一致，原始端点、事件、窗口及来源全部重放一致；记录在 `reports/b5-farm-income-discrepancy-20261126/{REPORT.md,validation.json}`。这是按较大差额和 event=0 选取的诊断，不是随机验收。623 场快照现有 20 格具备逐 tick 证据、145 格仍待查，续跑新增差额另算。
+
+独立只读入口 `scripts/audit_b5_farm_income.py` 固定审计开始时已发布的比赛文件列表，校验计划、冻结生产者、产物载荷和窗口重算，输出覆盖及逐格差额。提取中后来发布的文件留待下一份快照；审计不改原输出、不接管写锁，不导入 `--producer` 指向的代码。当前批次的原生产者文件保持不变。
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/audit_b5_farm_income.py \
+  --plan reports/b5-farm-income-20261125/plan.json \
+  --batch reports/b5-farm-income-20261125/batch-roster-v2-final \
+  --producer reports/b5-farm-income-20261125/producer-roster-v2-final \
+  --out reports/b5-farm-income-audit-20261126-verified
+```
+
+每次审计使用新的输出目录。这个检查证明保存值与冻结输入的一致性，不等于原始游戏语义已全部解释；逐 tick 证据与尚待核查的差额应另行登记。全量提取结束时还须重新生成完整快照，不能沿用部分完成数。
+
+审计专项 29 项通过，覆盖未完成、零与缺失、负差、重算后的丢行/重复/改值、输入删除与漂移、生产者失配、同批新发布文件和输出覆盖拒绝。真实最终审计记录在 `reports/b5-farm-income-audit-20261126-final/`：652 场、8,268 机会全部重算一致，33,072 金额格中 32,581 对平、320 截断为空、171 非零；无负差、缺端点或缺计数。这里的 final 指本轮审计实现验收，不是全体提取结束。串行全量检查与前后含未跟踪源码的文件指纹记录在 `reports/b5-farm-income-20261125/check-audit-20261126.log` 和 `check-audit-20261126-{before,after}.txt`。冻结提取器的八个绑定文件未修改。
+
+### 下一项的可行性：事前可见中立单位
+
+只读源码核查表明，compat-v1 已能从 `CDOTADataRadiant/Dire.m_bNPCVisibleState` 按实体 index 读取双方实际可见性；缺 word 为 unknown，不能用 `m_nFoWTeam` 替代。当前 state-v3 排除了 `CDOTA_BaseNPC_Creep_Neutral`，已有可见事件又缺位置与生命，所以仍需新来源采样。拟在决策秒首个 tick-start 同时读取位置、生命、实体 index/serial 和可见位图，与金币端点保持同一边界；包末可见事件可能含同 tick 后续更新，不能直接拼到包前状态。
+
+这只是后续实现建议，尚未真实补提或构造训练特征。首版仅投影己方当时可见单位，保留字段缺失；隐藏单位出生位置、未来死亡不能用来推断事前营地归属。可见单位为零不能证明空营，最近静态营地也不证明实际归属、可达或清营耗时。具体字段覆盖、被控制/召唤单位和生命周期仍须在既有开发录像小跑核验。

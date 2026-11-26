@@ -2,6 +2,8 @@
 
 2026-11-25：共享来源 `sources.gem_farm_income` 从原始录像读取分类收入、端点和事件，不接触动作/划分；路线 B 的 `collect_b5_farm_income.py` 负责固定人口与批次对账。[接口与数据边界](b5-farm-income-batch.md)
 
+2026-11-26：路线 B 的 `audit_b5_farm_income.py` 只读验证已发布批次，固定文件快照、重算窗口并保留差额；与冻结提取器分开维护。
+
 路线 B 的行动比较、因素表和逐段复核格式见[决策总架构](decision-framework.md)。
 
 本页是**当前唯一的架构入口**，替代[模块维护](modular-maintenance.md)的入口职责（该页保留各层API细节与历史验收）。机器可读的归属表在[`src/dota_items/architecture.py`](../src/dota_items/architecture.py)，由`tests/test_architecture.py`强制执行。执行顺序和进度只看[开发计划](development-plan-2026-10-30.md)§7。
@@ -59,7 +61,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 89 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 42 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 43 |
 <!-- /track-table -->
 
 依赖规则：
