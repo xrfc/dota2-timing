@@ -1,5 +1,7 @@
 # 文档索引
 
+[可信模型还差哪些验收](model-trust-status.md) · [B5 营地条件与静态连通诊断](b5-camp-conditions.md)
+
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 

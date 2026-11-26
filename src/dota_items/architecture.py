@@ -98,6 +98,7 @@ MODULES = {
     "data.mechanics_traits_v3": (_S, "active"),
     "data.mechanics_current": (_S, "active"),
     "data.map_api": (_S, "active"),
+    "data.static_map_connectivity": (_S, "active"),
     "data.mechanics_api": (_S, "active"),
     "data.position_rule": (_S, "active"),
     "data.knowledge_superseded": (_S, "active"),
@@ -163,6 +164,7 @@ MODULES = {
     "data.gank_foresight": (_B, "active"),
     "data.catch_threat": (_B, "active"),
     "data.farm_value": (_B, "active"),
+    "data.camp_conditions": (_B, "active"),
     "data.support_arrival": (_B, "active"),
     "data.lane_decisions": (_B, "active"),
     "data.gank_review": (_B, "active"),
@@ -247,6 +249,7 @@ MODULES = {
 
 # scripts/<name>.py -> track (scripts are entry points; layer rules do not apply)
 SCRIPTS = {
+    "audit_b5_camp_conditions": _B,
     # shared: environment, checks, collection plumbing, replay ingestion, knowledge
     "bootstrap": _S,
     "check": _S,
