@@ -1,6 +1,6 @@
 # 文档索引
 
-[行动模型兼容迁移设计](action-model-migration-design.md)：D5的版本边界、模块/API、无拟合转换、合成验收与分步实施。设计不等于迁移已完成；阶段总结见尚未合并的[PR #51](https://github.com/xrfc/dota2-timing/pull/51)。
+[行动模型兼容迁移设计](action-model-migration-design.md)：D5的版本身份、兼容矩阵、支持周期、模块/API、无拟合转换、合成验收与分步实施。设计不等于迁移已完成；阶段总结见尚未合并的[PR #51](https://github.com/xrfc/dota2-timing/pull/51)。
 
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 

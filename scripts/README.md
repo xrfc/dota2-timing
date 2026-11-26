@@ -1,5 +1,7 @@
 # 脚本职责导航
 
+2026-11-26：多版本支持设计见[迁移设计§5.4](../docs/action-model-migration-design.md)。M1仅实现契约与纯推理，不新增迁移/训练CLI；旧入口保持不变。
+
 2026-11-26：[行动模型迁移设计](../docs/action-model-migration-design.md)规定旧命令保持原字节，新只读核验/显式转换/预测入口另建。**这些新入口目前尚未实现，不能按设计中的API或名称直接运行。**
 
 生成一号位兵线或打野决策复盘页使用 lane_decision_review.py（打野用 --mode jungle），见[口径与命令](../docs/lane-decision-review.md)。
