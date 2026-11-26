@@ -1,5 +1,7 @@
 # 文档索引
 
+[7.42 demo 试采、分层适配状态与采集/解析审查](demo-742-pilot-2026-11-26.md) · [本轮采集授权](decisions/2026-11-26-demo-742-pilot.md)
+
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 
