@@ -1,5 +1,7 @@
 # 文档索引
 
+[B5 营地事前可见证据](b5-camp-evidence.md)：固定开发机会的中立单位来源、己方可见投影和缺失边界。
+
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 
