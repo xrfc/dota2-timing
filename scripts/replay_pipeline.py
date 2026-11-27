@@ -7,13 +7,16 @@ from pathlib import Path
 
 from dota_items.data.awareness_split import describe, is_holdout
 from dota_items.data.replay_bundle import pack_files
+from dota_items.data.replay_bundle_input import create_reference
 from dota_items.storage import file_hash
 from dota_items.workflow.replay_collection import (
     DEFAULT_COMPAT,
+    current_producer,
     discover,
     load_json,
     make_plan,
     run_stages,
+    write_new,
 )
 
 
@@ -94,6 +97,11 @@ def main(argv=None):
     p.add_argument("--files", type=Path, required=True, help="JSON object role -> source path")
     space = sub.add_parser("space", help="Read-only directory space inventory")
     space.add_argument("--root", type=Path, required=True)
+    reference = sub.add_parser("reference", help="Verify a bundle and pin it for a consumer")
+    reference.add_argument("--bundle", type=Path, required=True)
+    reference.add_argument("--match", type=int, required=True)
+    reference.add_argument("--output", type=Path, required=True)
+    reference.add_argument("--compat", type=Path, default=DEFAULT_COMPAT)
     args = parser.parse_args(argv)
     exclusion = engineering_exclusion()
     if args.command == "discover":
@@ -148,6 +156,17 @@ def main(argv=None):
             {"cli_sha256": file_hash(Path(__file__))},
         )
         print(json.dumps({"output": str(args.output), "quality": result["quality"]}))
+    elif args.command == "reference":
+        if args.match <= 0 or is_holdout(args.match):
+            raise ValueError("Reserved/invalid match rejected before bundle access")
+        value = create_reference(
+            args.bundle,
+            match_id=args.match,
+            expected_producer=current_producer(args.compat),
+            match_allowed=lambda mid: not is_holdout(mid),
+        )
+        write_new(args.output, value)
+        print(json.dumps({"reference": str(args.output), "match_id": args.match}))
     else:
         print(json.dumps(space_inventory(args.root), ensure_ascii=False, indent=2))
     return 0

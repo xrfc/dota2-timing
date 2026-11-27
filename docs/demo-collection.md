@@ -2,6 +2,8 @@
 
 ## 2026-11-27：精确版本的新入口
 
+验收通过的 bundle 可用 `replay_pipeline.py reference` 创建固定摘要的来源引用，再交给 `lane_decision_review.py --bundle-reference`。当前复盘地图仅接受精确 7.41f，7.42 读取成功不自动开启地图分析；详见[下游接入与命令](replay-bundle-consumption.md)。
+
 新任务使用 `scripts/replay_pipeline.py`，明确 `--patch`，冻结官方快照与起止边界；`discover/seed` 制订计划，`run --stage download/parse/verify` 分阶段执行并设上限。一次解析产出基础数据、含冷却的 state-v3 和含小兵的 extras，压缩直写、来源摘要校验、质量复验后才接纳缓存。命令、真实回归和空间对账见[新版流程](replay-pipeline-v2.md)。旧文件仍保留；新 bundle 需要下游显式读取，不替换旧 manifest。
 
 以下为旧 `collect_demos.py` 操作说明，用于已有任务维护。其“当前补丁”动态取最新版，不能用于要求精确 `7.42` 或某一字母补丁的新采集。

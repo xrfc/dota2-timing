@@ -4,6 +4,8 @@
 
 ## 2026-11-27：精确补丁录像流水线 API
 
+下游新增 `data.replay_bundle_input.create_reference/open_bundle_input/load_reference`：显式比赛政策、精确补丁集合、当前预期生产者与外部 manifest SHA 都是准入条件，`normalized/metadata/rows/verify/receipt` 提供受核验读取；流必须读到 EOF，报告发布前再次 `verify`。它属于共享底座，不导入 B 线划分或 workflow。B 线 `data.replay_review_input.project_match(parsed, state_rows, *, source_key)` 复用既有位置/可见性规则，按游戏窗口流式投影；不读取磁盘或脚本。命令、收据及旧指纹解释见[下游接入](replay-bundle-consumption.md)。
+
 新增模块和命令见[采集、解析与压缩存储](replay-pipeline-v2.md)，授权及工程选择见[决策记录](decisions/2026-11-27-replay-pipeline-storage.md)。以下八个库模块都登记为共享底座；`scripts/replay_pipeline.py` 登记为 B 线，由 CLI 注入既有 U133 工程排除策略，共享库不导入 B 线划分模块。原冻结生产者及产物保持原路径、原字节，新输出使用 `replay-bundle/1`。
 
 | 模块 | 主要 API | 职责与边界 |

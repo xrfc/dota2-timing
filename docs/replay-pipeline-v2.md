@@ -1,5 +1,7 @@
 # 精确补丁采集、单次解析与压缩存储（2026-11-27）
 
+后续已增加[下游显式读取与复盘接入](replay-bundle-consumption.md)：来源引用固定 manifest，复盘输入不再展开成旧目录。下文保留本轮解析/压缩实测；旧长局指纹差异的原因已补充溯源，原待审报告未覆盖。
+
 本轮按用户要求实现[五项采集/解析建议](https://github.com/xrfc/dota2-timing/pull/54)，并回答解析结果如何节约空间。实现入口为 `scripts/replay_pipeline.py`；原冻结生产者作为回归基线保留，新产物使用 `replay-bundle/1`，不冒充旧 `demo-import/1.1`。
 
 ## 1. 分层与已实现能力

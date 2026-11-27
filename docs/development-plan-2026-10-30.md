@@ -400,6 +400,8 @@ env -u http_proxy -u https_proxy -u HTTP_PROXY -u HTTPS_PROXY NO_PROXY='*' no_pr
 
 ## 7. 状态表（唯一进度来源）
 
+**2026-11-27，压缩包下游显式接入。** 按“进行下一步开发”，继续完成同一采集/解析主题 PR #55 的消费链：共享 `replay_bundle_input` 验证固定 manifest 与当前生产者，B 线 `replay_review_input` 投影既有轨迹/视野/位置/战斗结构；复盘 CLI 直接读取压缩通道，不生成旧目录副本或复用旧 pickle。新增来源引用和报告来源/输出收据，发布前复核漂移。只允许精确 7.41f 进入现有地图复盘；保持赛前视野初始化，将状态与观察终点限于游戏窗口。旧指纹差异已定位为缓存校验代码变化，未放宽旧产物准入。[实现与实测](replay-bundle-consumption.md)、[本轮决定](decisions/2026-11-27-replay-bundle-consumption.md)。下一项仍为 7.42 地图/机制依赖的显式绑定与实测，以及新补丁/新增实体样本覆盖；工程读取成功不替代这些验收。
+
 **2026-11-27，精确版本采集、单次解析与节约空间。** 按用户对五项建议的开发要求，新增 contracts/sources/data/workflow 分层和 `replay_pipeline.py` 入口；固定官方补丁窗口、元数据与真实 build，分别记录下载/解析/质量状态，复用缓存时核验来源、生产者、双摘要并重新计算质量。一次解码写出 raw、normalized、state-v3、extras-v1 的压缩 bundle；原 demo 引用且保留，旧产物未删除。真实五场 7.42 与 7.41f 朗戈长局的结果、空间对账和剩余限制见[实施记录](replay-pipeline-v2.md)，授权边界见[本轮决定](decisions/2026-11-27-replay-pipeline-storage.md)。下一项为新补丁边界/新增实体的真实样本覆盖及下游消费者显式接入；7.42a 在线发现本次受 OpenDota 400 阻断。地图和模型效果另行验收，不把解析成功当成新版本模型支持。
 
 已完成三场录像的步行耗时误差分解。2026-11-21 已实现逐段步行估时与受击秒点的事后对照及 CSV 导出，详见[兵线复盘](lane-decision-review.md)。回归样例覆盖同秒到达、出发延迟和观察截断。三场 7.41f 的真实片段复核暂缓。

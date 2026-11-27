@@ -54,6 +54,8 @@
 
 ### 2.2 来源、契约与数据管线
 
+- [压缩录像包的下游读取与复盘接入](replay-bundle-consumption.md)：显式来源引用、精确补丁门禁、发布前复核；旧适配器指纹溯源。
+
 - [公共来源读取接口与生产者迁移](public-source-reader.md)
 - [数据与模型接口契约](data-contracts.md)
 - [版本化任务契约](task-contracts.md)

@@ -29,6 +29,7 @@
 | 前瞻采集 | `collect_evaluation_cohort.py` | 冻结协议、预算与窗口；[执行方案](../docs/evaluation-execution-proposal-2026-10-23.md)；本次整理不执行run |
 | 录像tick导出 | `align_replay_ticks.py` | 原始/cleaned/manifest及冻结Gem兼容目录；[质量报告](../docs/replay-quality-2026-10-26.md) |
 | 精确补丁录像流水线 | `replay_pipeline.py` | 显式补丁、工程排除策略、固定Gem兼容目录；[版本、质量与存储说明](../docs/replay-pipeline-v2.md) |
+| 压缩包接入复盘 | `replay_pipeline.py reference` → `lane_decision_review.py --bundle-reference` | 固定manifest摘要、当前生产者、精确7.41f；[命令及验收](../docs/replay-bundle-consumption.md) |
 | 大文件恢复 | `recover_large_replay_cleaning.py` | 已有缓存，512 MiB显式上限，clean-only，无样本/训练 |
 | 地标重读 | `audit_replay_map_landmarks.py` | 已下载录像、收据、兼容目录，独立输出 |
 | 原始通道 | `export_raw_replay_channels.py` | 与清洗导出分开，不默认消除重复tick |
