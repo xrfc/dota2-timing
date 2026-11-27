@@ -1,5 +1,7 @@
 # 脚本职责导航
 
+2026-11-27：`capture_viewer_wire.py`只收参数，运行逻辑在B线experiments；`build_viewer_membership.py`经严格来源复验生成去重协议成员表。命令及准入边界见[说明](../docs/viewer-wire-and-tree-identity.md)。
+
 2026-11-27最新：`build_mechanics_evidence_assets.py --spec <JSON> --output <新目录>`从登记基线及14条补证生成新准入和保守派生，拒绝未登记基线、来源漂移和覆盖发布。命令、输出及局限见[工程证据准入](../docs/mechanics-evidence-admission.md#接口运行与验收)。
 
 2026-11-27当前工程入口：`build_patch_decision_audit.py --spec <显式JSON> --output <新目录>`复用固定八场补证，生成当时观察卡片、时序/扰动验证、营地诊断与机制附件，原子发布且拒绝覆盖。命令与spec选择见[决策时证据](../docs/patch-decision-evidence.md#验证与工程探针)；不评分、不切换正式知识入口。
