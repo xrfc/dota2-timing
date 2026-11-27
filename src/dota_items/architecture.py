@@ -72,6 +72,7 @@ MODULES = {
     "sources.map_visibility_capture": (_B, "active"),
     "sources.map_objective_evidence": (_B, "active"),
     "sources.map_vision_evidence": (_B, "active"),
+    "sources.map_tree_probe": (_B, "active"),
     # data: shared foundation (reading, replay cleaning, knowledge)
     "data": (_S, "active"),
     "data.acceptance": (_S, "active"),
@@ -112,6 +113,7 @@ MODULES = {
     "data.patch_asset_evidence": (_S, "active"),
     "data.patch_objectives": (_S, "active"),
     "data.patch_evidence_io": (_S, "active"),
+    "data.map_tree_probe_io": (_S, "active"),
     "data.patch_camp_semantics": (_S, "active"),
     "data.patch_objective_cycles": (_S, "active"),
     "data.patch_vision_evidence": (_S, "active"),
@@ -407,6 +409,7 @@ SCRIPTS = {
     "capture_map_landmarks": _B,
     "capture_map_runtime": _B,
     "capture_patch_evidence": _B,
+    "capture_tree_probe": _B,
     "build_patch_evidence": _B,
     "build_patch_decision_audit": _B,
     "build_mechanics_evidence_assets": _S,

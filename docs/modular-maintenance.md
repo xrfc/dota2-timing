@@ -1,5 +1,7 @@
 # 单模块维护与长期扩展（2026-10-17）
 
+2026-11-27树索引API：`map_tree_probe.capture(path, *, expected_match_id, expected_game_build)`保留原始证据；`map_tree_probe_io.open_tree_anchor`与`read_tree_probe`负责来源及精确清单校验。CLI单独管理私有解析器、解压校验和原子发布；见[探针说明](patch-tree-probe.md)。
+
 2026-11-27当前增量：[新机制准入与投影](mechanics-evidence-admission.md)重算14条证据，保持既有用户依据和旧生产者。投影重新验证新准入全文，档案/图/特性明细与计数均携条件；与模型、workflow无依赖。
 
 2026-11-27当前API：`patch_decision_source`固定来源，`VisionDecisionIndex`执行双时间/观察者查询，`DecisionContextIndex`只组合静态触发区域；独立validation和两个共享补证模块不依赖模型或workflow。签名、返回字段及未知策略见[决策时证据](patch-decision-evidence.md)。

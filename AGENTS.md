@@ -56,7 +56,7 @@
 
 - 一页当前状态：`docs/current-status.md`（先看它）。唯一执行计划：`docs/development-plan-2026-10-30.md`（共享底座MK＋路线A推荐M0–M5＋路线B意识决策B0–B5）。接手先读其§0与§7最新记录，只做当前任务下一项。U38为历史双线次序；最新U166暂缓路线A，U167/U190当前推进一号位行动复盘，MK补丁维护独立推进。
 - 架构入口：`docs/architecture.md`。每个模块/脚本须在`src/dota_items/architecture.py`登记线与状态；共享底座不导入任一线，A、B两线互不导入（测试强制）。冻结产物指纹记录源码路径，**不搬迁文件**，物理整理须先登记生产者迁移并单独提出。
-- U67、U73、U113：MK-T3、MK-T4已结束，MK已结束（U122，2026-11-07；R8、R15移到B1）；多英雄采集和M2b页面评审为历史阶段；7.42来源绑定、地图几何、候选行动资产及营地/长局复活/视野补证已实测；有界3场长局补采已获准并结束；新增八场决策时证据接口、营地诊断与机制补证，14条工程证据已进入独立新准入与保守派生（2496可用/700排除/96未准入）；当前继续有效视距来源、树索引、阶段规则及剩余机制/交互条件，详见计划§7和`docs/mechanics-evidence-admission.md`；知识统一入口`knowledge/mechanics/current.json`；入口`docs/handoff/mk-handoff-2026-11-05.md`，事实`knowledge/mechanics/extractions/v26/`、词表`vocabulary-v15.json`、规则`rules-v13.json`；`basis`不是`user*`的条目不算用户批准。
+- U67、U73、U113：MK-T3、MK-T4已结束，MK已结束（U122，2026-11-07；R8、R15移到B1）；多英雄采集和M2b页面评审为历史阶段；7.42来源绑定、地图几何、候选行动资产及营地/长局复活/视野补证已实测；有界3场长局补采已获准并结束；新增八场决策时证据接口、营地诊断与机制补证，14条工程证据已进入独立新准入与保守派生（2496可用/700排除/96未准入）；已有录像原始树/世界/视野源探针与八场独立原消息扫描已完成，当前继续完整树索引空间映射、临时viewer单位/类型/时效、有登记的昼夜来源解码迁移、阶段规则及剩余机制/交互条件，详见计划§7和`docs/mechanics-evidence-admission.md`；知识统一入口`knowledge/mechanics/current.json`；入口`docs/handoff/mk-handoff-2026-11-05.md`，事实`knowledge/mechanics/extractions/v26/`、词表`vocabulary-v15.json`、规则`rules-v13.json`；`basis`不是`user*`的条目不算用户批准。
 - 用户决定记录在`docs/decisions/`；计划§2“待决”项必须先问用户。
 - 账号ID只在未跟踪的`configs/user.local.json`，不得写入跟踪文件或推送。
 

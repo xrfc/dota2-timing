@@ -58,6 +58,8 @@ PYTHONPATH=src .venv/bin/python scripts/build_mechanics_evidence_assets.py \
 
 ## 并行核查的视野与营地缺口
 
+以下是本轮准入时的历史字段调查；后续[原始树与视距探针](patch-tree-probe.md)已补原生栖树字段、完整schema和视野候选源，HeroID_t获得固定上游signed实现依据。旧捕获不覆盖；完整空间映射和有效范围仍未认证。
+
 这些发现用于明确后续需要什么证据，没有修改解析器或把猜测写成规则。
 
 - 八场捕获保留的104类NPC schema均没有`m_iCurrentVisionRange`；927026个驻留状态没有当前有效视距值。基础昼夜范围不等于带修饰器后的当前范围，仅重复读取同字段无法补齐。

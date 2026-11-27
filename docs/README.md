@@ -1,5 +1,7 @@
 # 文档索引
 
+当前7.42原始字段补证：[树事件、树索引与视距来源](patch-tree-probe.md) · [本轮授权](decisions/2026-11-27-tree-probe.md)。
+
 当前7.42机制消费：[工程证据准入与保守派生](mechanics-evidence-admission.md) · [本轮授权范围](decisions/2026-11-27-mechanics-evidence-admission.md)。
 
 当前7.42时点消费与验证：[决策时可知证据](patch-decision-evidence.md) · [机制工程补证](patch742-engineering-evidence-followup.md) · [本轮授权](decisions/2026-11-27-decision-evidence.md)。

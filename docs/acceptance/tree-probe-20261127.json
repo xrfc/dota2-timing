@@ -1,0 +1,160 @@
+{
+  "schema": "tree-probe-acceptance/1",
+  "date": "2026-11-27",
+  "exact_patch": "7.42",
+  "game_build": 6993,
+  "match_id": 9103395615,
+  "receipt": {
+    "path": "/home/node/.openclaw/workspace/work/dota2-timing/reports/patch742-tree-probe-20261127/probe-final-r3/9103395615/receipt.json",
+    "sha256": "88a901e78cc39f8c03134e98b8aedc999252ca6d53dd118f6996b1a3535afd21"
+  },
+  "capture": {
+    "path": "/home/node/.openclaw/workspace/work/dota2-timing/reports/patch742-tree-probe-20261127/probe-final-r3/9103395615/capture.json",
+    "sha256": "279f321b987b4accae9c76b9e12bb056601d7c9e8afb381b19a9fccf550d5235",
+    "bytes": 94253072
+  },
+  "input_files": 240,
+  "capture_counts": {
+    "packets": 44150,
+    "entity_changes": 84534,
+    "entity_events": 447,
+    "tree_word_changes": 3727,
+    "raw_tree_cut_events": 0,
+    "class_schemas": 451,
+    "send_tables_raw": 1,
+    "unresolved_packet_records": 0
+  },
+  "parse_elapsed_seconds": 397.69476489700173,
+  "process_peak_rss_kib": 505156,
+  "raw_scan": {
+    "reference": {
+      "path": "/home/node/.openclaw/workspace/work/dota2-timing/reports/patch742-tree-probe-20261127/independent-raw-scan.json",
+      "sha256": "93bc2c292dc45035f2e9ba1f574394f56e6c97f96935eb1d4046f67325fdb38d"
+    },
+    "matches": 8,
+    "s2_messages": 493510,
+    "before_post_game_tick": 489012,
+    "at_post_game_tick": 236,
+    "after_post_game_tick": 4262,
+    "tree_cut_type35": 0,
+    "bulk_messages": 0,
+    "s1_supported": false
+  },
+  "formal_current": {
+    "path": "/home/node/.openclaw/workspace/work/dota2-timing/knowledge/mechanics/current.json",
+    "sha256": "1490c5dcf0d7e39dee928604d3d229635c26c5d004906b3d7e2be4078994381a"
+  },
+  "training_allowed": false,
+  "action_review_allowed": false,
+  "new_collection_performed": false,
+  "dependencies_changed": false,
+  "specialist_tests": 100,
+  "related_tests": 35,
+  "full_check_receipt_path": "/home/node/.openclaw/workspace/work/dota2-timing/reports/patch742-tree-probe-20261127/full-check.json",
+  "raw_perched_indices_observed": 150,
+  "local_geometry": {
+    "conflicting_nearest_points_for_same_index": 0,
+    "distinct_raw_indices": 86,
+    "euclidean_distance_range": [
+      0.9732757188998398,
+      33.1528921485366
+    ],
+    "exact_function": "hero_q64(v) = 64 * round(v / 64) independently for x and y, Python ties-to-even, origin 0; compare with unchanged raw mapdata XY. Every examined map tree XY already lies on this 64 lattice. This is not grid-cell rounding relative to worldMin.",
+    "exact_raw_xy_matches": 0,
+    "independently_recomputed_in_this_audit": true,
+    "map_tree_rows": 2394,
+    "matching_order": "Select unique nearest static tree independently by raw hero XY Euclidean distance; then test hero q64 equality and zero-based row-index equality. No array zip is used to select the spatial match.",
+    "minimum_nearest_vs_next_margin": 71.92470817244194,
+    "one_based_index_matches": 0,
+    "parameters_are": "Engineering audit choices, not new user decisions or asserted native engine rules.",
+    "q64_matches": 87,
+    "retrospective_selection": true,
+    "stable_runs": 87,
+    "status": "observed_local_association_not_verified_global_mapping",
+    "untested_tree_rows": 2308,
+    "zero_based_index_matches": 87
+  },
+  "geometry_audit": {
+    "path": "/home/node/.openclaw/workspace/work/dota2-timing/reports/patch742-tree-probe-20261127/tree-probe-independent-r3.json",
+    "sha256": "5a964f87c6ad9f0ce907f7adb7ee004816f9b83c823c4db7aade120f00c63e57"
+  },
+  "storage_same_content_projection": {
+    "actual_capture_bytes": 94253072,
+    "actual_fields_raw_compact_bytes": 53332583,
+    "method": "Keep this exact final capture and every row flag/ref/other field; replace each fields_raw delta with all previously known fields for that same index+serial, redundantly re-sending unchanged keys. The expanded representation is a byte-count reference with the same selected raw information, not a second directly consumable delta-protocol artifact. Exact compact UTF-8 JSON byte arithmetic; no comparison with earlier captures having different field sets.",
+    "same_information_expanded_capture_bytes": 1076153388,
+    "same_information_redundantly_expanded_fields_raw_bytes": 1035232899,
+    "saved_bytes": 981900316,
+    "saved_fraction": 0.9124166935206453
+  },
+  "storage_checks": {
+    "top_level_storage_full_records": 20,
+    "transmitted_top_level_storage_rows": 29128,
+    "removed_top_level_storage_rows": 0,
+    "reconstructed_top_level_storage_rows": 523736,
+    "storage_observations": 154147,
+    "nonempty_storage_observations": 154147,
+    "stored_row_occurrences": 912761,
+    "primitive_stored_value_occurrences": 448,
+    "table_stored_row_occurrences": 912313,
+    "top_level_storage_delta_records": 24482,
+    "entity_identities_with_storage": 83
+  },
+  "snapshot_checks": {
+    "frames": 2941,
+    "candidate_packets_at_frame_ticks": 2950,
+    "frames_with_multiple_packets_at_same_tick": 1,
+    "frames_matching_both_at_same_packet": 2941,
+    "frames_with_unique_matching_packet": 2940,
+    "frames_with_multiple_matching_packets": 1,
+    "tree_observations": 32340,
+    "tree_observations_matching_some_packet": 32340,
+    "tree_observations_with_multiple_matching_packets": 0,
+    "rules_frames": 2940,
+    "rules_fields": 26460,
+    "rules_frames_matching_some_packet": 2940
+  },
+  "snapshot_mismatches": [],
+  "independent_check": {
+    "path": "/home/node/.openclaw/workspace/work/dota2-timing/reports/patch742-tree-probe-20261127/independent-final-r3-check.json",
+    "sha256": "815906e9737df96acb9aec44499d7fe4ccebdcfbfabb65c23168157ed8edf9db"
+  },
+  "independent_verified_inputs": 337,
+  "vision_audit": {
+    "path": "/home/node/.openclaw/workspace/work/dota2-timing/reports/patch742-tree-probe-20261127/vision-source-final-r3-audit.json",
+    "sha256": "959297ade1c04d71a28bc3998701ea46bae66e7abb052c7a43af61b59cd5fa50"
+  },
+  "vision_reference_checks": {
+    "files": 309,
+    "json_pointers": 167,
+    "text_lines": 23,
+    "upstream_git_blobs": 7
+  },
+  "vision_findings": {
+    "observed_classes": 451,
+    "schema_unknown_markers": {},
+    "hero_id_observed_storage_multisets_match": true,
+    "hero_id_player_slot_mapping_verified": false,
+    "hero_id_current_vector_membership_verified": false,
+    "temporary_viewer_entity_identities": 10,
+    "effective_hero_range_verified": false,
+    "temporary_viewer_units_enum_and_visibility_semantics_verified": false,
+    "remaining_top_level_missing_container_observations": 4,
+    "missing_container_fields": "CDOTA_NPC_BaseBlocker.m_vecAbilities: length_raw=None at tick4178; not an empty-vector assertion",
+    "non_fieldstate_model4_stored_rows": 0
+  },
+  "raw_perched_coordinates_are_retrospective": true,
+  "rejected_run": {
+    "log": {
+      "path": "/home/node/.openclaw/workspace/work/dota2-timing/reports/patch742-tree-probe-20261127/final-r2.log",
+      "sha256": "be3b24b6e91f071daf43afe9c7a6695ebebff65e2860cc41fab787c80e1fdaf7"
+    },
+    "reason": "Encoded capture exceeded 256 MiB; no output published",
+    "peak_rss_kib": 2017220
+  },
+  "accepted_producer_files": {
+    "src/dota_items/sources/map_tree_probe.py": "9cd619a6f36ed4fbd8cc509d2944326cd751a93183cf3a0a5d9e16ceb505c0e3",
+    "src/dota_items/data/map_tree_probe_io.py": "0949cc9a1a386219e5dc8710427ae696656674985e10d1269534c5e5433837e1",
+    "scripts/capture_tree_probe.py": "faf0df51649290322d1bc4a9845e58a2318a2e9093b8930ecda41d50cf138a62"
+  }
+}
