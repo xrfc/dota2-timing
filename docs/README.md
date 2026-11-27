@@ -1,5 +1,7 @@
 # 文档索引
 
+本轮7.42补证与复现：[营地、目标复活及视野证据](patch-evidence-followup.md) · [已执行的长局采集方案](patch742-evidence-collection-plan.md)。
+
 2026-11-27续：[7.42候选行动资产](patch-review-assets.md)（营地、动态目标、地形/视野、机制派生） · [机制待决清单](patch742-open-decisions.md)。
 
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)

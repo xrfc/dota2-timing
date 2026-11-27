@@ -1,5 +1,7 @@
 # 脚本职责导航
 
+2026-11-27再续：`capture_patch_evidence.py`捕获独立目标/完整视野字段，`build_patch_evidence.py`发布营地/复活/视野补证；spec与复验见[说明](../docs/patch-evidence-followup.md)。
+
 2026-11-27续：`capture_map_runtime.py --spec ... --output <新目录>`捕获动态或视野事实；`build_patch_review_assets.py --spec ... --output <新目录>`统一发布版本固定的候选资产。配置与边界见[候选行动资产](../docs/patch-review-assets.md)。
 
 7.42候选适配：`inspect_patch_assets.py --spec <固定输入清单> --output <新目录>`只做地图/机制来源与录像几何诊断；不开放行动排序或训练。配置与API见[说明](../docs/patch-asset-binding.md)。
