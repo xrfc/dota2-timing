@@ -1,5 +1,9 @@
 # 脚本职责导航
 
+7.42候选适配：`inspect_patch_assets.py --spec <固定输入清单> --output <新目录>`只做地图/机制来源与录像几何诊断；不开放行动排序或训练。配置与API见[说明](../docs/patch-asset-binding.md)。
+
+静态地标补提取：`capture_map_landmarks.py --replay-manifest <固定manifest> --manifest-sha256 <SHA> --patch 7.42 --compat <已有兼容目录> --output <新目录>`。只读取已有非留出demo，产出`capture.json`与来源回执，当前需Linux无覆盖原子发布支持。
+
 生成一号位兵线或打野决策复盘页使用 lane_decision_review.py（打野用 --mode jungle），见[口径与命令](../docs/lane-decision-review.md)。
 
 > 2026-10-27对照包增量：当前8769改为两例[支援/刷钱对照与试标草稿](../docs/decision-comparison-2026-10-27.md)，新增双方同刻可见血量、队友库存、TP到场条件拆解与草稿下载。蓝量已定位schema版本初始化导致范围65536→8192的问题，但未修正旧数据/生产者；敌方装备/CD、完整施放、合法落点/路径及数值收益仍未齐。旧包/旧结果保留，非盲评、非正式标签，不授权训练；后文旧状态按原阶段解释。

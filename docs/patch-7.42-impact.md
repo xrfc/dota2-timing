@@ -1,5 +1,7 @@
 # 7.42影响清单（2026-11-20，待用户裁定）
 
+2026-11-27：本页的影响证据与用户裁定保留；地图已恢复适配并已有本地Workshop导出及五场录像，旧A7“暂缓/等待demo”已被[当前绑定与验证](patch-asset-binding.md)替代。未知语义仍保留，不因工程验证自动通过。
+
 7.42对机制知识库的影响，按[U179](decisions/2026-11-19-patch-7.42.md)分成“需要你裁定”和“AI已定、可抽查”两部分。正式入口 `current.json` 仍为 7.41f。独立候选已构建，含 3,292 行事实；新增补核的 42 行见[执行清单](patch-7.42-plan.md)。
 
 - 复核方式（U180）：Codex `gpt-6.2-astra`（推理强度high，只读、空目录、不存会话）看7.41f和7.42官方英文说明、变化的字段、现有行，逐行判断是否仍成立，23批约80万tokens（[recheck-742-001](../knowledge/mechanics/reviews/recheck-742-001/README.md)）；新技能另做一次完整抽取（[new-abilities-742-001](../knowledge/mechanics/reviews/new-abilities-742-001/)，约3万tokens）。
