@@ -1,5 +1,7 @@
 # 文档索引
 
+近期开发全景：[阶段总结与架构复核（2026-11-27）](development-review-2026-11-27.md)。
+
 当前7.42原始字段补证：[树事件、树索引与视距来源](patch-tree-probe.md) · [本轮授权](decisions/2026-11-27-tree-probe.md)。
 
 当前7.42机制消费：[工程证据准入与保守派生](mechanics-evidence-admission.md) · [本轮授权范围](decisions/2026-11-27-mechanics-evidence-admission.md)。

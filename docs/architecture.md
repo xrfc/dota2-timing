@@ -1,16 +1,6 @@
-# 项目架构：共享底座＋两条产品线（2026-11-01）
+# 项目架构：共享底座＋两条产品线（更新于2026-11-27）
 
-2026-11-27树索引补证：B线新增独立`map_tree_probe`与捕获CLI，共享`map_tree_probe_io`只校验登记来源及回执，不导入捕获器。原始证据与空间/玩法解释分离，旧生产者不改；见[接口](patch-tree-probe.md#分层与来源边界)。
-
-2026-11-27最新：共享层新增`mechanics_evidence_source`、`mechanics_evidence_admission`与`mechanics_evidence_projection`，分离固定来源、证据重算与派生条件传播；CLI独立发布。旧冻结生产者保留；[接口与边界](mechanics-evidence-admission.md#接口运行与验收)。
-
-2026-11-27当前增量：B线按来源读取、纯时点投影、静态区域组合、独立核验、CLI发布分层；营地诊断和机制补证为共享纯模块。来源/用途与双时间边界见[决策时证据API](patch-decision-evidence.md#接口与低耦合边界)，不搬迁或修改旧冻结生产者。
-
-2026-11-27再续：新增补充捕获回执、营地分阶段语义、目标生命周期核对和视野证据模块；旧冻结生产者保持原路径/字节。接口与边界见[补证说明](patch-evidence-followup.md)。
-
-2026-11-27续：新增共享`patch_asset_evidence`、`patch_objectives`、`patch_terrain`、`mechanics_source_equivalence`与`mechanics_action_assets`；B线新增动态/视野来源捕获和两个CLI。来源读取、纯计算、版本准入与发布分离，接口见[候选行动资产](patch-review-assets.md)。
-
-2026-11-27：新增地图快照、机制候选、版本资产绑定和录像几何诊断模块；共享data接口接收显式身份，B线CLI注入留出排除。旧冻结生产者/全局知识入口保持原字节；新接口仅批准诊断能力，详见[绑定设计](patch-asset-binding.md)。
+当前产品优先级：路线B一号位意识决策复盘；路线A暂停，保留代码和历史能力。近期代码、证据成果及结构评审集中见[2026-11-27阶段总结](development-review-2026-11-27.md)。本页描述当前结构，历史每轮验收保留在各专项文档。
 
 路线 B 的行动比较、因素表和逐段复核格式见[决策总架构](decision-framework.md)。
 
@@ -79,7 +69,7 @@
 3. 每个`src/dota_items`模块和每个`scripts/*.py`都必须在`architecture.py`里登记；新增文件没登记，测试会失败。
 4. `architecture.py`只用标准库，业务代码不得导入它（它是规则，不是运行时依赖）。
 
-对现有代码的首次扫描结果：**0处跨线导入**。说明原有分层基本按两条线自然分开，这次是把隐含的边界写成可检查的规则。
+依赖测试覆盖静态导入（含相对导入和函数内部导入）；动态按路径加载、产物读取和用途传播另需审查，不能把静态检查通过解释为所有耦合都已消除。
 
 ### 2.3 状态：active / maintenance
 
@@ -103,12 +93,24 @@
 | workflow | coach工作区（prepare/observe/doctor） | — | — |
 | scripts | 环境、检查、录像入库、MK构建与复核 | 8780 coach_app、训练/快照/采集 | 回放器、决策评审页（8768–8770）、状态探针、tick对齐 |
 
-### 3.1 已知的归属取舍
+### 3.1 7.42候选证据链（当前实现）
+
+| 职责 | 当前代码入口 | 输出与边界 |
+|---|---|---|
+| 原始捕获（B） | `sources/map_*capture.py`、`map_objective_evidence.py`、`map_vision_evidence.py`、`map_tree_probe.py` | 保留实体、tick、完成包序号、原始字段；不把观测直接认定为机制 |
+| 身份和来源（共享） | `data/source_io.py`、`patch_asset_evidence.py`、`patch_evidence_io.py`、`map_tree_probe_io.py` | 有界读取、摘要/依赖集合校验；调用方注入留出与用途门禁 |
+| 地图与机制（共享） | `data/patch_camp_semantics.py`、`patch_objective_cycles.py`、`patch_terrain.py`、`mechanics_evidence_{source,admission,projection}.py` | 候选区域、阶段、区间和带条件派生；正式知识仍7.41f |
+| 决策时视图（B） | `data/patch_decision_{source,view,context,validation}.py` | 来源→观察者/time/tick投影→静态区域组合→核验；不能注入未来动态营地状态 |
+| 编排和发布（捕获/时点属B，机制属共享） | `scripts/capture_tree_probe.py`、`capture_patch_evidence.py`、`build_patch_decision_audit.py`、`build_mechanics_evidence_assets.py` | 固定输入、调用下层、发布独立产物；目前仍有动态复用旧CLI的债务 |
+
+API与专项验收依次见[绑定](patch-asset-binding.md)、[行动资产](patch-review-assets.md)、[补证](patch-evidence-followup.md)、[时点接口](patch-decision-evidence.md)、[机制准入](mechanics-evidence-admission.md)、[原始探针](patch-tree-probe.md)。这些是不同能力的证据链，不能因最后一个环节通过就自动开放7.42模型。
+
+### 3.2 已知的归属取舍
 
 - **MK机制知识放在共享底座**：A线用它推导针对装触发条件，B线用它判断敌方抓人能力与逃生手段。
 - **录像解析与清洗（`sources.gem_*`、`data.cleaning/context/observer/pipeline`）放在共享底座**：B线是主要使用者，但coach工作区和A线也能消费；`decision_*`、`replay_*`才是B线专属。
 - **英雄特性v1（`data.hero_traits`）归A线**：它服务M2b的交叉检查；MK-T5推导出v2后，通用的英雄机制档案应放共享底座。
-- **`scripts/coach_app.py`（8780）目前归A线**：B线页面要并入统一外壳时，需要先把外壳（路由、静态资源、安全设置）抽成共享模块，再由两条线各自注册页面。这一步排在B线有第一张可展示的页面时做（计划§8）。
+- **`scripts/coach_app.py`（8780）目前归A线**：B线页面要并入统一外壳时，需要先把外壳（路由、静态资源、安全设置）抽成共享模块，再由两条线各自注册页面。B线已有独立页面，但统一外壳尚未完成；保留为计划§8的集成债务，不再使用“等待第一张页面”的旧触发条件。
 
 ## 4. 数据流
 
@@ -133,14 +135,14 @@ B线的硬约束（继承U2、U6和`long-term-coach-goals.md`§5）：评价某�
 把文件挪到`recommend/`、`awareness/`这样的新目录，会让本地已冻结的模型、快照、收据全部校验失败，按项目规则也不能靠忽略哈希来绕过。所以这次重构采用**原地归类**：
 
 1. 目录不动，用`architecture.py`登记每个文件的线和状态，并用测试强制执行依赖规则。
-2. **新代码**：按层放进现有包，并在`architecture.py`登记归属。B线开始建模（D2）时，在`modeling/`下新建子包（暂定`modeling/awareness/`），而不是混进A线文件。
+2. **新代码**：按层放进现有包，并在`architecture.py`登记归属。B线已有`modeling/awareness/death_risk_eval.py`评估子包，后续模型按职责扩展，不混进A线文件；这不表示行动比较模型已完成。
 3. **真正需要搬迁的文件**（候选见下表），必须先在`producer_migration`登记旧指纹到新实现的迁移，再搬；这类搬迁每次单独提出，不批量做。
 
 | 物理整理候选（未执行） | 原因 | 前提 |
 |---|---|---|
 | `mechanics_facts` v1–v7合并为一个版本化模块 | 版本多，逻辑分散（v4起是叠加层） | v1/v2冻结包的生产者迁移登记 |
 | `scripts/decision_review.py`拆出build与HTTP | 用例与入口同文件（10-28已登记的脚本债务） | 兼容导出与实现指纹清单 |
-| 统一外壳从`coach_app.py`抽到共享模块 | B线页面并入 | B线有第一张页面时 |
+| 统一外壳从`coach_app.py`抽到共享模块 | B线页面并入 | 外壳契约、兼容路由和来源迁移先明确 |
 | `modeling.foundation`兼容门面退役 | 只剩旧导入路径 | 确认本地无旧调用方 |
 
 ## 6. 检查与入口
@@ -152,4 +154,4 @@ B线的硬约束（继承U2、U6和`long-term-coach-goals.md`§5）：评价某�
 
 - 归属表只检查导入关系，不检查数据用途：A线脚本读取B线产物的文件，测试发现不了，靠评审把关。
 - `maintenance`状态是助手判断，没有逐项问用户。
-- 本次没有改任何模块的行为；`architecture.py`以外的代码改动只有检查脚本把新测试加进共享集合。
+- 本次整理只更新文档，没有搬迁源码或修改冻结生产者；近期业务改动和验收见阶段总结。
