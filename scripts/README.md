@@ -1,5 +1,7 @@
 # 脚本职责导航
 
+2026-11-27续：`capture_map_runtime.py --spec ... --output <新目录>`捕获动态或视野事实；`build_patch_review_assets.py --spec ... --output <新目录>`统一发布版本固定的候选资产。配置与边界见[候选行动资产](../docs/patch-review-assets.md)。
+
 7.42候选适配：`inspect_patch_assets.py --spec <固定输入清单> --output <新目录>`只做地图/机制来源与录像几何诊断；不开放行动排序或训练。配置与API见[说明](../docs/patch-asset-binding.md)。
 
 静态地标补提取：`capture_map_landmarks.py --replay-manifest <固定manifest> --manifest-sha256 <SHA> --patch 7.42 --compat <已有兼容目录> --output <新目录>`。只读取已有非留出demo，产出`capture.json`与来源回执，当前需Linux无覆盖原子发布支持。

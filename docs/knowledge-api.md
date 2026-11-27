@@ -1,5 +1,7 @@
 # 知识读取接口（U124第②步，2026-11-07）
 
+2026-11-27续：新增机制候选逐行准入、档案、克制图、12特性与保命/机动派生，见[候选行动资产](patch-review-assets.md)。来源证明另由`mechanics_source_equivalence.verify_source_equivalence`生成，绑定完整旧新事实及固定快照；只证明来源/字段，不补造用户认可。 这些产物不通过默认`Knowledge`入口读取，不替换正式7.41f。
+
 2026-11-27：正式消费仍走下述7.41f `Knowledge`接口。7.42候选新增独立`verify_mechanics_candidate`与显式资产绑定，仅用于校验和诊断，不切换全局入口；完整API见[候选绑定](patch-asset-binding.md#2-分层与api)。旧`Knowledge`额外读取默认英雄注册表，后续跨版本迁移须连同该表一起固定，不能只替换current。
 
 路线A、路线B读取机制知识都通过`dota_items.data.mechanics_api.Knowledge`，不直接解析知识库内部的JSON。内部文件格式以后可以变，这个接口的含义不变（`API_VERSION = "mechanics-api/1"`）。
