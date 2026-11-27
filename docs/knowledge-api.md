@@ -1,5 +1,7 @@
 # 知识读取接口（U124第②步，2026-11-07）
 
+2026-11-27当前增量：[决策时证据API](patch-decision-evidence.md#接口与低耦合边界)读取固定7.42候选，仅产出观察上下文；[机制工程证据](patch742-engineering-evidence-followup.md)附条件与关联证明，不改写旧admission。正式`Knowledge`仍用原7.41f入口。
+
 2026-11-27再续：补证模块提供独立的营地阶段、目标复活区间及目标可见标签API；所有候选保持显式绑定，不替换正式`Knowledge`，见[补证API](patch-evidence-followup.md#模块命令与复验)。
 
 2026-11-27续：新增机制候选逐行准入、档案、克制图、12特性与保命/机动派生，见[候选行动资产](patch-review-assets.md)。来源证明另由`mechanics_source_equivalence.verify_source_equivalence`生成，绑定完整旧新事实及固定快照；只证明来源/字段，不补造用户认可。 这些产物不通过默认`Knowledge`入口读取，不替换正式7.41f。

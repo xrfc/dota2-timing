@@ -25,7 +25,7 @@
 | `scripts/decision_review.py`（8768–8770） | B | R1两个支援/刷钱案例的评审包 | 人工案例，非训练标签 |
 | `knowledge/mechanics/` | 共享 | 机制词表v15、复核后事实v26、规则v13、派生层v17（档案、克制关系候选，草稿），统一入口`current.json`、交叉复核记录 | 初版已完成；正式入口仍为7.41f，7.42候选待验收 |
 
-7.42候选地图与行动资产见[适配说明](docs/patch-review-assets.md)，营地、目标复活及视野的最新实测和剩余条件见[补证说明](docs/patch-evidence-followup.md)；候选生成不等于完整7.42复盘支持。
+7.42候选地图与行动资产见[适配说明](docs/patch-review-assets.md)，八场营地、目标复活与视野见[补证说明](docs/patch-evidence-followup.md)。最新[决策时证据接口与工程报告](docs/patch-decision-evidence.md)按实际时间/tick和观察队伍过滤信息，另附营地诊断与机制补证；正式7.42完整复盘仍未开放。
 
 模型和冻结数据不随Git分发（`data/`、`reports/`是本地证据），干净克隆不能直接复现真实预测。
 

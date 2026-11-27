@@ -1,5 +1,7 @@
 # 单模块维护与长期扩展（2026-10-17）
 
+2026-11-27当前API：`patch_decision_source`固定来源，`VisionDecisionIndex`执行双时间/观察者查询，`DecisionContextIndex`只组合静态触发区域；独立validation和两个共享补证模块不依赖模型或workflow。签名、返回字段及未知策略见[决策时证据](patch-decision-evidence.md)。
+
 2026-11-27再续：补充捕获IO和纯营地/目标/视野分析API见[补证说明](patch-evidence-followup.md)，来源collector与CLI仍归B线，共享层不导入B线。
 
 2026-11-27续：7.42候选资产API和完整依赖复验见[候选行动资产](patch-review-assets.md)；旧冻结模块仍可原样复现。

@@ -1,5 +1,7 @@
 # 脚本职责导航
 
+2026-11-27当前工程入口：`build_patch_decision_audit.py --spec <显式JSON> --output <新目录>`复用固定八场补证，生成当时观察卡片、时序/扰动验证、营地诊断与机制附件，原子发布且拒绝覆盖。命令与spec选择见[决策时证据](../docs/patch-decision-evidence.md#验证与工程探针)；不评分、不切换正式知识入口。
+
 2026-11-27再续：`capture_patch_evidence.py`捕获独立目标/完整视野字段，`build_patch_evidence.py`发布营地/复活/视野补证；spec与复验见[说明](../docs/patch-evidence-followup.md)。
 
 2026-11-27续：`capture_map_runtime.py --spec ... --output <新目录>`捕获动态或视野事实；`build_patch_review_assets.py --spec ... --output <新目录>`统一发布版本固定的候选资产。配置与边界见[候选行动资产](../docs/patch-review-assets.md)。

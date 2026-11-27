@@ -1,5 +1,7 @@
 # 7.42营地、复活与视野补证
 
+后续消费已接到[决策时证据接口与工程报告](patch-decision-evidence.md)，复用本页八场固定产物，另做隐藏/未来扰动、营地句柄诊断与机制条件补证。本页保留捕获阶段事实；获准最多3场成功样本已完成，不表示API或流量配额耗尽。
+
 本轮在[候选资产](patch-review-assets.md)基础上继续补证。执行范围和新增长局授权见[决定记录](decisions/2026-11-27-patch-evidence-followup.md)及[采集方案](patch742-evidence-collection-plan.md)。正式机制入口仍为7.41f；没有新增训练或最终留出用途。
 
 ## 营地语义

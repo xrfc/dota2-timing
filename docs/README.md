@@ -1,5 +1,7 @@
 # 文档索引
 
+当前7.42时点消费与验证：[决策时可知证据](patch-decision-evidence.md) · [机制工程补证](patch742-engineering-evidence-followup.md) · [本轮授权](decisions/2026-11-27-decision-evidence.md)。
+
 本轮7.42补证与复现：[营地、目标复活及视野证据](patch-evidence-followup.md) · [已执行的长局采集方案](patch742-evidence-collection-plan.md)。
 
 2026-11-27续：[7.42候选行动资产](patch-review-assets.md)（营地、动态目标、地形/视野、机制派生） · [机制待决清单](patch742-open-decisions.md)。
@@ -48,7 +50,7 @@
 - [MK-T3机制事实：接口、复现与抽查](mechanics-facts.md)
 - [解析器v3设计](parser-v3-design.md)：从demo补全每秒状态（技能和物品冷却、单位状态原始掩码、战斗属性、地图大局、兵线），已实现（U130，2026-11-09）
 - [对游戏的理解还缺什么](game-understanding-gaps.md)：上网查加自己数据核对后的缺口清单——视野、定时目标、肉山换坑、野点升级、传送和扫描等，按影响排序（2026-11-13，只是清单）
-- [地图知识设计（草案）](map-knowledge-design.md)：知识库现在只有塔、营地等点位；设计有名字的区域、地标和读取接口，列出其他模块要改什么、哪些要用户决定（U145，2026-11-12，未实现）
+- [地图知识设计](map-knowledge-design.md)：地图快照、静态路径及观察者区域组合已实现；战术区域语义、动态规则和完整FOW仍待验收，旧草案按顶部更新阅读。
 - [B0“被抓”规则](b0-gank-rules.md)：U115、U116、U131写成的可执行规则——流程、保命手段清单、三个阈值、第一轮结果（162场），2D回放抽查页和开雾指标（§9，U136），待用户抽查实例后冻结（2026-11-10）
 - [自动采集demo](demo-collection.md)：自己启动的全量demo采集脚本，怎么跑、看进度、续跑、补采（U128、U129）
 - [知识读取接口](knowledge-api.md)：路线A、B读取机制知识的统一方式和固定含义（U124）
