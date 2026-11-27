@@ -1,5 +1,7 @@
 # 文档索引
 
+当前7.42机制消费：[工程证据准入与保守派生](mechanics-evidence-admission.md) · [本轮授权范围](decisions/2026-11-27-mechanics-evidence-admission.md)。
+
 当前7.42时点消费与验证：[决策时可知证据](patch-decision-evidence.md) · [机制工程补证](patch742-engineering-evidence-followup.md) · [本轮授权](decisions/2026-11-27-decision-evidence.md)。
 
 本轮7.42补证与复现：[营地、目标复活及视野证据](patch-evidence-followup.md) · [已执行的长局采集方案](patch742-evidence-collection-plan.md)。

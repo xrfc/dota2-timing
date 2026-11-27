@@ -1,5 +1,7 @@
 # 决策记录
 
+- [2026-11-27：继续7.42工程证据准入](2026-11-27-mechanics-evidence-admission.md)。
+
 - [2026-11-27：沿现有路线开发决策时证据接口](2026-11-27-decision-evidence.md)。
 
 - [2026-11-27：7.42补证与有界长局采集授权](2026-11-27-patch-evidence-followup.md)。

@@ -1,5 +1,7 @@
 # 知识读取接口（U124第②步，2026-11-07）
 
+2026-11-27最新：独立`mechanics-evidence-admission/1`及派生schema消费14条补证；保持旧事实basis，显式附结构化条件，不能被旧只认识升级标志的消费者当成正式知识。接口和运行见[新准入](mechanics-evidence-admission.md)，全局`Knowledge`入口未切换。
+
 2026-11-27当前增量：[决策时证据API](patch-decision-evidence.md#接口与低耦合边界)读取固定7.42候选，仅产出观察上下文；[机制工程证据](patch742-engineering-evidence-followup.md)附条件与关联证明，不改写旧admission。正式`Knowledge`仍用原7.41f入口。
 
 2026-11-27再续：补证模块提供独立的营地阶段、目标复活区间及目标可见标签API；所有候选保持显式绑定，不替换正式`Knowledge`，见[补证API](patch-evidence-followup.md#模块命令与复验)。
