@@ -4,6 +4,10 @@
 
 2026-11-26：新增路线 B 的 `data.camp_conditions` 与 `audit_b5_camp_conditions`，独立消费已验收公开证据，输出生命/阵营事实和未确认条件；共享 `data.static_map_connectivity` 只给冻结静态四邻接图事实，真实可达与 ETA 保留未知。接口与来源边界见[营地条件](b5-camp-conditions.md)。原生产者和产物不搬迁、不覆盖。
 
+2026-11-26 接续授权：用户要求先补齐版本身份、兼容矩阵和支持周期，再继续M1并自行校验。设计§5.4已补齐：原生产者与消费运行时身份分开、按完整组合与能力验证、支持/仅复现/退役及到期撤销；真实兼容矩阵仍为空。下一步M1在独立主题PR实现标准库契约和纯推理，保持原研究语义，不执行真实训练或迁移。
+
+2026-11-26：新增[行动模型兼容迁移设计](action-model-migration-design.md)，目标为contracts/只读输入/modeling/experiments/CLI分层，保留原冻结生产者，使用显式迁移桥。**尚未实施，新路径不登记为active，下面的模块统计仍对应当前源码。** PR #44评分核实际属于`modeling.awareness.decision_score`；此前评审误写为data的路径已在设计中更正。
+
 路线 B 的行动比较、因素表和逐段复核格式见[决策总架构](decision-framework.md)。
 
 2026-11-26：新增共享来源 `sources.gem_camp_evidence` 和路线 B 的 `data.camp_evidence`、`collect_b5_camp_evidence`。原始全知快照仅供审计；数据层只投影己方当前可见单位，批处理保存固定人口及来源绑定。首回调和缺失边界见[营地证据](b5-camp-evidence.md)。不搬迁或修改旧冻结解析器，也不依赖未合并的金币模块。

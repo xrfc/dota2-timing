@@ -1,5 +1,7 @@
 # 公共来源读取接口与生产者迁移（2026-10-17）
 
+2026-11-26：D5[行动模型迁移设计](action-model-migration-design.md)沿用严格默认和精确登记原则，但另设B线制品契约；不扩展本文`public-reader/1`，也不让modeling反向导入`data.producer_migration`。当前迁移实现未变。
+
 
 2026-10-20：来源读取与历史迁移规则保持不变。新增 /2 快照生产者独立于历史
 生产者，仅显式启用；见[任务契约与命令](task-contracts.md)。下文既有 /1 包和
