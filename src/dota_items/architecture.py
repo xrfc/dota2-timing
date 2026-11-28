@@ -57,6 +57,7 @@ MODULES = {
     "sources": (_S, "active"),
     "sources.collection_history": (_S, "active"),
     "sources.gem_capture": (_S, "active"),
+    "sources.gem_camp_evidence": (_S, "active"),
     "sources.gem_capture_creeps": (_S, "active"),
     "sources.gem_capture_extras": (_S, "active"),
     "sources.gem_capture_v3": (_S, "active"),
@@ -164,6 +165,7 @@ MODULES = {
     "data.gank_foresight": (_B, "active"),
     "data.catch_threat": (_B, "active"),
     "data.farm_value": (_B, "active"),
+    "data.camp_evidence": (_B, "active"),
     "data.support_arrival": (_B, "active"),
     "data.lane_decisions": (_B, "active"),
     "data.gank_review": (_B, "active"),
@@ -310,138 +312,4 @@ SCRIPTS = {
     "collect_build_survey": _S,
     "check_patch_knowledge": _S,
     "collect_demos": _S,
-    "collect_b5_farm_income": _B,
-    "audit_b5_farm_income": _B,
-    "build_death_risk_table": _B,
-    "train_death_risk": _B,
-    "death_importance": _B,
-    "death_risk_by_reason": _B,
-    "death_risk_ceiling": _B,  # U165: diagnostic only, omniscient inputs
-    "compare_death_risk_steps": _B,  # U174, U176: equal false alarms per hour
-    "demo_data_card": _B,  # reads positions with the track B replay reader
-    "extract_creeps": _S,
-    "extract_state_v3": _S,
-    "architecture_stats": _S,
-    "patch_update": _S,
-    "build_mechanics_current": _S,
-    "build_mechanics_profiles": _S,
-    "build_stale_upgrade_text": _S,
-    "fetch_game_files_snapshot": _S,
-    "check_break_against_game_files": _S,
-    "audit_mechanics_against_game_files": _S,
-    "build_retired_items": _S,
-    "mechanics_cross_review": _S,
-    # track A
-    "analyze_cohort_splits": _A,
-    "audit_evaluation_feasibility": _A,
-    "audit_purchase_cohorts": _A,
-    "audit_purchase_observations": _A,
-    "build_match_table": _A,
-    "build_situational_reference": _A,
-    "build_m2b_triggers": _A,
-    "coach_app": _A,
-    "collect_evaluation_cohort": _A,
-    "collect_purchase_additional": _A,
-    "collect_purchase_candidates": _A,
-    "collect_purchase_latest": _A,
-    "collect_purchase_until_daily": _A,
-    "compare_purchase_sensitivity": _A,
-    "diagnose_purchase_baseline": _A,
-    "diagnose_whole_log_experiment": _A,
-    "hero_trait_crosscheck": _A,
-    "lineup_analysis": _A,
-    "lineup_comparison": _A,
-    "model_foundation": _A,
-    "package_purchase_handoff": _A,
-    "prepare_purchase_preview": _A,
-    "prepare_purchase_snapshot": _A,
-    "prepare_random_cohort": _A,
-    "prepare_whole_log_cohort": _A,
-    "probe_evaluation_sources": _A,
-    "render_purchase_sensitivity": _A,
-    "report_purchase_cohorts": _A,
-    "report_whole_log_regularization": _A,
-    "run_whole_log_experiment": _A,
-    "run_whole_log_regularization": _A,
-    "summarize_purchase_collection": _A,
-    "train_item_timing": _A,
-    "train_purchase_baseline": _A,
-    "train_situational_items": _A,
-    "verify_whole_log_handoff": _A,
-    "whole_log_experiment": _A,
-    "whole_log_regularization": _A,
-    # track B
-    "align_replay_ticks": _B,
-    "attach_decision_mana": _B,
-    "attach_team_state": _B,
-    "audit_decision_mana": _B,
-    "audit_replay_identity": _B,
-    "audit_replay_jump_events": _B,
-    "audit_replay_map_landmarks": _B,
-    "audit_replay_semantics": _B,
-    "audit_replay_tracks": _B,
-    "b5_trial_notebook": _B,
-    "build_decision_comparisons": _B,
-    "detect_ganks": _B,
-    "build_map_knowledge": _S,
-    "awareness_events": _B,
-    "build_hero_mobility": _B,
-    "gank_foresight": _B,
-    "gank_review": _B,
-    "lane_decision_review": _B,
-    "inventory_b5_routes": _B,
-    "audit_b5_route_labels": _B,
-    "check_support_travel": _B,
-    "friend_review_server": _B,
-    "vision_check": _B,
-    "vision_cliff_check": _B,
-    "vision_tree_check": _B,
-    "build_decision_state_cards": _B,
-    "collect_replay_expansion": _B,
-    "decision_review": _B,
-    "enhance_decision_cases": _B,
-    "export_raw_replay_channels": _B,
-    "probe_decision_state": _B,
-    "probe_team_state": _B,
-    "render_replay_semantics": _B,
-    "repair_decision_mana": _B,
-    "replay_viewer": _B,
-    "report_replay_identity": _B,
-    "revise_decision_review": _B,
-    "run_replay_pilot": _B,
-}
-
-# importer track -> tracks it must not import
-FORBIDDEN_TRACK_IMPORTS = {
-    SHARED: (RECOMMEND, AWARENESS),
-    RECOMMEND: (AWARENESS,),
-    AWARENESS: (RECOMMEND,),
-}
-
-
-def track_of(module):
-    """Track of a dotted module name inside dota_items (most specific entry wins)."""
-    name = module.removeprefix("dota_items").removeprefix(".")
-    while name:
-        if name in MODULES:
-            return MODULES[name][0]
-        name = name.rpartition(".")[0]
-    if module == "dota_items":
-        return MODULES[""][0]
-    raise KeyError(module)  # unclassified modules never fall back to the package root
-
-
-def modules_in(track):
-    return sorted(name for name, (owner, _) in MODULES.items() if owner == track)
-
-
-def track_table():
-    """Markdown rows for docs/architecture.md §2.2, computed from this registry (U124 step 3)."""
-    names = {SHARED: "共享底座", RECOMMEND: "路线A 推荐", AWARENESS: "路线B 意识决策"}
-    lines = ["| 线 | 名称 | 模块数（活跃/仅维护） | 脚本数 |", "|---|---|---|---|"]
-    for track in (SHARED, RECOMMEND, AWARENESS):
-        active = sum(1 for t, s in MODULES.values() if t == track and s == "active")
-        kept = sum(1 for t, s in MODULES.values() if t == track and s == "maintenance")
-        scripts = sum(1 for t in SCRIPTS.values() if t == track)
-        lines.append(f"| `{track}` | {names[track]} | {active} / {kept} | {scripts} |")
-    return "\n".join(lines)
+    "collect_b5_camp_evidence": _B,
