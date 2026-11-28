@@ -1,11 +1,15 @@
 # 文档索引
 
+[一号位发育与支援的全量录像后果研究](outcome-autotrain.md) · [补刀前三阶段的全量指标](acceptance/outcome-full-lane.json)
+
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 
 [一号位兵线意识复盘与取样口径](lane-decision-review.md)
 
 **先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-17）。
+
+[打开 B5 本机单场复盘](outcome-autotrain.md#本机复盘页面) · [查看一号位视角的片段地图](outcome-autotrain.md#片段地图)。
 
 **从这里开始**：[开发计划](development-plan-2026-10-30.md)（唯一进度：§7）· [架构](architecture.md) · [决策记录](decisions/README.md) · [变更记录](../CHANGELOG.md)
 
@@ -82,6 +86,7 @@
 - [7.42补丁预案](patch-7.42-plan.md)
 - [用Workshop Tools导出7.42地图数据](map-workshop-export.md)：用户自己导出地图数据的步骤（上游未更新时用）
 - [交接：7.42知识库更新与视野检验（2026-11-20）](handoff/patch-7.42-and-vision-2026-11-20.md)：交给Codex继续开发的入口
+- [Codex任务书：无人工评审的结果驱动训练（U191，2026-11-22）](handoff/codex-outcome-autotrain-2026-11-22.md)
 - [7.42影响清单](patch-7.42-impact.md)：7.42对机制知识库的影响，需要用户裁定的部分和AI已定的部分（2026-11-20）
 - [路线B任务契约草稿：预测“接下来会不会死”（U160）](b2-death-risk-contract.md)
 - [重训前清单：死亡风险模型（U170，会改表／只改评估／只改解释）](b2-retrain-checklist.md)
@@ -138,3 +143,17 @@
 - [历史阶段文档](archive/history/README.md)（2026-11-01起归档，含4份2026-10-10设计文档：[阵容推荐规划](archive/history/development-mainline.md)、[模块边界](archive/history/module-boundaries.md)、[文档盘点](archive/history/documentation-inventory.md)、[工程设计](archive/history/engineering-design.md)）
 - [整理前原文快照（2026-10-22）](archive/2026-10-22/INDEX.md) · [2026-10-26整理前入口](archive/2026-10-26/INDEX.md)
 - 其余10/13–10/28日期记录（采集、队列、录像试点、整局实验等）均在[历史阶段文档](archive/history/README.md)中列出。
+
+## 一号位补刀前学习研究
+
+[三阶段实测结果](lane-study-results.md) · [数据和复现协议](lane-study-protocol.md) · [监督学习模型卡](lane-study-baseline.md) · [行为参照模型卡](lane-study-behavior.md) · [时序模型卡](lane-study-sequence.md)
+
+[结果标签汇总](acceptance/outcome-labels-dev.json) · [建表脚本](../scripts/outcome_labels.py) · [标签边界测试](../tests/test_outcome_labels.py)
+
+[开发集行动价值汇总](acceptance/outcome-values-dev.json) · [加权估计脚本](../scripts/outcome_values.py) · [估计器测试](../tests/test_outcome_values.py)
+
+[打野与支援脚本](../scripts/outcome_domains.py) · [动作和到场边界测试](../tests/test_outcome_domains.py)
+
+[留出评估冻结清单](outcome-freeze.md) · [模型指纹](acceptance/outcome-u191-freeze.json) · [一次评估入口](../scripts/outcome_final.py) · [防重复评分测试](../tests/test_outcome_final.py)
+
+[单次留出评估的机器可读结果](acceptance/outcome-holdout-u191.json)

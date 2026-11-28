@@ -146,3 +146,19 @@
 ### MK-T3双AI交叉复核交接
 
 `scripts/mechanics_cross_review.py build --output NEWDIR`导出完整清单、上下文、空白Claude模板与既有判断；`verify --packet DIR`核验输入及包文件；`compare --packet DIR --review RETURN.jsonl --output NEWDIR [--require-complete]`生成逐项对照，识别未审、独有判断、标签分歧和用户冲突，不修改事实。命令需`PYTHONPATH=src`；完整操作见[Claude交接](../docs/handoff/mk-claude-cross-review.md)。
+
+结果标签用 `outcome_labels.py`，按英雄和确切秒点连接金钱、经验与生命状态。 [U191 命令和结果](../docs/outcome-autotrain.md)
+
+行动价值用 `outcome_values.py`，按比赛做五折交叉验证，输出实际行动误差、两动作后果及覆盖。 [U191 命令和结果](../docs/outcome-autotrain.md)
+
+打野与支援取样用 `outcome_domains.py`，重现原打野报告的锚点后，与补刀前任务共用标签和加权估计器。 [U191 命令和结果](../docs/outcome-autotrain.md)
+
+U191 的模型封存、留出准备和单次计分在 `outcome_final.py`。[冻结清单](../docs/outcome-freeze.md)
+
+`outcome_match_report.py --match MATCH --out REPORT.md` 从本地 U191 折外预测生成单场复盘，命令与三场验证见[录像后果研究](../docs/outcome-autotrain.md#6-b5-单场复盘入口)。
+
+新比赛使用 `outcome_match_report.py --demo`。输入构建、冻结依赖、缓存复用及输出示例见[新录像接入](../docs/outcome-autotrain.md#7-新录像接入)。
+
+运行 `.venv/bin/python scripts/outcome_viewer.py` 浏览三场 B5 复盘。比赛、时间线、排除原因及双动作估计均在本机读取。[查看与重启](../docs/outcome-autotrain.md#本机复盘页面)
+
+`outcome_perspective_map.py --report MATCH_REPORT --inputs VERIFIED_INPUTS` 为本机 B5 复盘生成一方视角地图。见[片段地图](../docs/outcome-autotrain.md#片段地图)。

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>一号位行动复盘 · Dota 2</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/perspective.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#review">跳到片段复盘</a>
+  <header class="top">
+    <div class="wrap top-inner">
+      <div class="wordmark"><span class="brand-mark" aria-hidden="true"></span><strong>DOTA 2</strong><span class="brand-divider"></span><span>复盘工作台</span></div>
+      <span class="local"><i aria-hidden="true"></i>本机服务</span>
+    </div>
+  </header>
+  <main class="wrap">
+    <p id="status" class="status" role="status">正在载入本机复盘…</p>
+    <div id="app" hidden>
+      <section class="hero-banner" aria-labelledby="page-title">
+        <div class="hero-content">
+          <h1 id="page-title">一号位行动复盘</h1>
+          <div class="picker"><label for="matches">对局</label><select id="matches"></select></div>
+          <div class="stats" id="stats"></div>
+        </div>
+        <div class="hero-art" id="hero-art" aria-label="本场一号位"></div>
+      </section>
+      <div class="workbench" id="review">
+        <section class="panel timeline" aria-labelledby="timeline-title">
+          <div class="timeline-head"><h2 id="timeline-title">片段时间线</h2><span class="count" id="clip-count"></span></div>
+          <div class="filters" id="filters" role="group" aria-label="筛选场景"></div>
+          <div class="clip-list" id="clips" aria-label="片段列表"></div>
+        </section>
+        <section class="panel detail" aria-label="当前片段复盘">
+          <div id="detail" aria-live="polite"></div>
+        </section>
+      </div>
+      <details class="panel coverage" id="coverage">
+        <summary>本场覆盖与排除说明</summary><div id="coverage-content"></div>
+      </details>
+    </div>
+  </main>
+  <template id="map-panel">
+    <section class="perspective" id="perspective" aria-label="片段战术地图">
+      <div class="map-head"><h3>战术地图</h3><span class="map-team"></span></div>
+      <p class="map-loading" role="status">载入本场地图信息…</p>
+      <div class="map-body" hidden>
+        <div class="map-toolbar">
+          <div class="map-frames" role="group" aria-label="地图片段时刻">
+            <button type="button" data-offset="-10">前 10 秒</button>
+            <button type="button" data-offset="-5">前 5 秒</button>
+            <button type="button" data-offset="0">决策时</button>
+          </div>
+          <time class="map-time"></time>
+        </div>
+        <p class="map-warning" role="status" hidden></p>
+        <div class="map-grid">
+          <div>
+            <div class="map-surface">
+              <canvas class="map-canvas" aria-label="所选一号位阵营的英雄、敌人最后露头与己方眼位"></canvas>
+              <p class="map-image-status" hidden></p>
+              <div class="map-zoom" role="group" aria-label="地图缩放">
+                <button type="button" data-zoom="out" aria-label="缩小地图">−</button>
+                <output aria-label="缩放倍数">1×</output>
+                <button type="button" data-zoom="in" aria-label="放大地图">＋</button>
+                <button type="button" data-zoom="reset">复位</button>
+              </div>
+            </div>
+            <div class="map-legend" aria-label="地图图例">
+              <span class="self">本人</span><span class="ally">队友</span><span class="enemy">可见敌人</span><span class="ghost">最后露头</span>
+              <span class="ward">侦察守卫</span><span class="sentry">岗哨守卫</span>
+            </div>
+          </div>
+          <aside class="map-intel">
+            <h4>敌方情报</h4><ul class="map-enemies"></ul>
+            <label class="map-vision"><input type="checkbox" class="map-vision-toggle" checked> 估算普通视野</label>
+            <p class="map-vision-note"></p>
+          </aside>
+        </div>
+        <details class="map-kit"><summary>已知装备</summary><div></div></details>
+      </div>
+    </section>
+  </template>
+</body>
+</html>

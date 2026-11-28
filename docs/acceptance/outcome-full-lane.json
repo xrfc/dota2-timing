@@ -1,0 +1,887 @@
+{
+  "schema": "lane-study-full-aggregate/1",
+  "inputs": {
+    "rows.jsonl": "15dcbd9619f900d460940f0a92c42d60fd35d77db68d2067a2b9be8ea9c678b0",
+    "manifest.json": "23ef60e1dedb97de966d5f438061a5fcb9465b8b5831ae12ff06de8d0933d6b1"
+  },
+  "flow": {
+    "development": 1341,
+    "below_rank": 142,
+    "attempted": 1199,
+    "rejected": {
+      "non-increasing extras-v1 clock": 24
+    },
+    "empty": 6,
+    "represented": 1169,
+    "total": 15005,
+    "actions": {
+      "farm": 8723,
+      "retreat": 2001,
+      "unknown": 4281
+    },
+    "behavior": 10724,
+    "outcome": 10652,
+    "deaths": 506,
+    "early_death": 335,
+    "truncated": 109,
+    "pilot_rows_verified": 1003
+  },
+  "stages": {
+    "baseline": {
+      "inputs": {
+        "rows.jsonl": "15dcbd9619f900d460940f0a92c42d60fd35d77db68d2067a2b9be8ea9c678b0",
+        "manifest.json": "23ef60e1dedb97de966d5f438061a5fcb9465b8b5831ae12ff06de8d0933d6b1"
+      },
+      "metrics": {
+        "action_mean": {
+          "all": {
+            "cases": 10652,
+            "matches": 1166,
+            "actions": {
+              "farm": 8686,
+              "retreat": 1966
+            },
+            "deaths": 506,
+            "hits_mae": 1.7423687330656488,
+            "death_brier": 0.04502828201463201,
+            "death_ap": 0.057575051172678256,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 10652,
+                "predicted": 0.04749283096721704,
+                "observed": 0.047502816372512205
+              }
+            ]
+          },
+          "farm": {
+            "cases": 8686,
+            "matches": 1164,
+            "actions": {
+              "farm": 8686
+            },
+            "deaths": 347,
+            "hits_mae": 1.7509605081060724,
+            "death_brier": 0.03835670352640522,
+            "death_ap": 0.038243226158001103,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8686,
+                "predicted": 0.0399599611214892,
+                "observed": 0.03994934377158646
+              }
+            ]
+          },
+          "retreat": {
+            "cases": 1966,
+            "matches": 882,
+            "actions": {
+              "retreat": 1966
+            },
+            "deaths": 159,
+            "hits_mae": 1.7044093444587718,
+            "death_brier": 0.0745040351930338,
+            "death_ap": 0.0709058915894143,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 1966,
+                "predicted": 0.08077386223883048,
+                "observed": 0.08087487283825025
+              }
+            ]
+          },
+          "no_recent_damage": {
+            "cases": 8932,
+            "matches": 1166,
+            "actions": {
+              "farm": 7512,
+              "retreat": 1420
+            },
+            "deaths": 337,
+            "hits_mae": 1.7489509306417157,
+            "death_brier": 0.03641803851839229,
+            "death_ap": 0.04163146662912905,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8932,
+                "predicted": 0.04643365407374937,
+                "observed": 0.0377295118674429
+              }
+            ]
+          }
+        },
+        "last_frame_tree": {
+          "all": {
+            "cases": 10652,
+            "matches": 1166,
+            "actions": {
+              "farm": 8686,
+              "retreat": 1966
+            },
+            "deaths": 506,
+            "hits_mae": 1.6934310572181894,
+            "death_brier": 0.04505687820403929,
+            "death_ap": 0.10752838412375766,
+            "false_alerts_per_represented_match": 0.012006861063464836,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 10351,
+                "predicted": 0.03616687160390652,
+                "observed": 0.04472997777992464
+              },
+              {
+                "from": 0.2,
+                "count": 251,
+                "predicted": 0.2645779201822614,
+                "observed": 0.10756972111553785
+              },
+              {
+                "from": 0.4,
+                "count": 40,
+                "predicted": 0.4722075891449139,
+                "observed": 0.3
+              },
+              {
+                "from": 0.6,
+                "count": 10,
+                "predicted": 0.6953615231995178,
+                "observed": 0.4
+              }
+            ]
+          },
+          "farm": {
+            "cases": 8686,
+            "matches": 1164,
+            "actions": {
+              "farm": 8686
+            },
+            "deaths": 347,
+            "hits_mae": 1.7001846744274791,
+            "death_brier": 0.03851411383279468,
+            "death_ap": 0.08092549712053711,
+            "false_alerts_per_represented_match": 0.005154639175257732,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8539,
+                "predicted": 0.03315928290844564,
+                "observed": 0.038646211500175665
+              },
+              {
+                "from": 0.2,
+                "count": 124,
+                "predicted": 0.2596676533004208,
+                "observed": 0.08064516129032258
+              },
+              {
+                "from": 0.4,
+                "count": 20,
+                "predicted": 0.46968279638240207,
+                "observed": 0.3
+              },
+              {
+                "from": 0.6,
+                "count": 3,
+                "predicted": 0.6460942281005787,
+                "observed": 0.3333333333333333
+              }
+            ]
+          },
+          "retreat": {
+            "cases": 1966,
+            "matches": 882,
+            "actions": {
+              "retreat": 1966
+            },
+            "deaths": 159,
+            "hits_mae": 1.6635928481236362,
+            "death_brier": 0.07396351672318004,
+            "death_ap": 0.1670010833769911,
+            "false_alerts_per_represented_match": 0.009070294784580499,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 1812,
+                "predicted": 0.05034005034040789,
+                "observed": 0.07339955849889625
+              },
+              {
+                "from": 0.2,
+                "count": 127,
+                "predicted": 0.26937219650783795,
+                "observed": 0.13385826771653545
+              },
+              {
+                "from": 0.4,
+                "count": 20,
+                "predicted": 0.4747323819074257,
+                "observed": 0.3
+              },
+              {
+                "from": 0.6,
+                "count": 7,
+                "predicted": 0.7164760782419203,
+                "observed": 0.42857142857142855
+              }
+            ]
+          },
+          "no_recent_damage": {
+            "cases": 8932,
+            "matches": 1166,
+            "actions": {
+              "farm": 7512,
+              "retreat": 1420
+            },
+            "deaths": 337,
+            "hits_mae": 1.7084196468328279,
+            "death_brier": 0.036550865026017405,
+            "death_ap": 0.0658070399480608,
+            "false_alerts_per_represented_match": 0.0017152658662092624,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8831,
+                "predicted": 0.03228379207646366,
+                "observed": 0.03702864907711471
+              },
+              {
+                "from": 0.2,
+                "count": 95,
+                "predicted": 0.2545676087745302,
+                "observed": 0.08421052631578947
+              },
+              {
+                "from": 0.4,
+                "count": 6,
+                "predicted": 0.4970818387744223,
+                "observed": 0.3333333333333333
+              }
+            ]
+          }
+        }
+      },
+      "paired": {},
+      "seed": 20261122,
+      "models": {
+        "action_mean-fold0.joblib": "0d254df7e9e3535f14ad40946b094e1c5c4e3607c8f5aee8e185b5267d334c73",
+        "last_frame_tree-fold0.joblib": "a5e6d630aa0a74cbb3ec4f86308e5e20f68a1ec1d18dae941174e4ba7d17e5fa",
+        "action_mean-fold1.joblib": "b2da94a503363636ae43b36aa36991dedc1553fc679f369dea3bcd7b3fb8bea2",
+        "last_frame_tree-fold1.joblib": "e617c0d46cef082aa42c1650b3b7f889680019508ad2301014b08ae8369fadee",
+        "action_mean-fold2.joblib": "87ba79dcd2fd12b1972089c7eca6ba044259ccba885778669006c78b4544f46f",
+        "last_frame_tree-fold2.joblib": "4591ce17838d84b5b3e3560b738a306dd7c79fc91904110752e020ecc23c9494",
+        "action_mean-fold3.joblib": "e3d583c11dbfa15c24845ae1d6b97ba2cea10dd4f8591c6e5755ea78b8552a21",
+        "last_frame_tree-fold3.joblib": "e3b3340ddd597855a205ba1103eb6125cf1d8beb91b3c6926f250f5f1c7818e2",
+        "action_mean-fold4.joblib": "19ca05444141b445b350f5cadea7d3e9745e00a38dc77f9b1b0e00e2d101b0a2",
+        "last_frame_tree-fold4.joblib": "8614dc3f533f6739086f0ae6d1ba2f530a892c56b85ecd6c3f041c35bd7bb8ea"
+      },
+      "unsupported": {},
+      "versions": {
+        "python": "3.12.3",
+        "sklearn": "1.9.1",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1"
+      },
+      "sources": {
+        "lane_study.py": "a62d53584e1188f4709c167b29ec03fab8986cdb09a15e7d0a1dda3234a8711d",
+        "lane_study_baselines.py": "aef8c05c6c23ed4262d335808c34c15f6b61f5598a9b9976525b5fb71a976941"
+      }
+    },
+    "behavior": {
+      "inputs": {
+        "rows.jsonl": "15dcbd9619f900d460940f0a92c42d60fd35d77db68d2067a2b9be8ea9c678b0",
+        "manifest.json": "23ef60e1dedb97de966d5f438061a5fcb9465b8b5831ae12ff06de8d0933d6b1"
+      },
+      "metrics": {
+        "frequency": {
+          "all": {
+            "cases": 10724,
+            "matches": 1166,
+            "actions": {
+              "farm": 8723,
+              "retreat": 2001
+            },
+            "log_loss": 0.4813257706572828,
+            "farm_recall": 1.0,
+            "retreat_recall": 0.0
+          },
+          "farm": {
+            "cases": 8723,
+            "matches": 1165,
+            "actions": {
+              "farm": 8723
+            },
+            "log_loss": 0.20663227520286798,
+            "farm_recall": 1.0,
+            "retreat_recall": null
+          },
+          "retreat": {
+            "cases": 2001,
+            "matches": 888,
+            "actions": {
+              "retreat": 2001
+            },
+            "log_loss": 1.6788027126107365,
+            "farm_recall": null,
+            "retreat_recall": 0.0
+          },
+          "no_recent_damage": {
+            "cases": 8971,
+            "matches": 1166,
+            "actions": {
+              "farm": 7537,
+              "retreat": 1434
+            },
+            "log_loss": 0.4419632859991138,
+            "farm_recall": 1.0,
+            "retreat_recall": 0.0
+          }
+        },
+        "logistic": {
+          "all": {
+            "cases": 10724,
+            "matches": 1166,
+            "actions": {
+              "farm": 8723,
+              "retreat": 2001
+            },
+            "log_loss": 0.40168920681632564,
+            "farm_recall": 0.9642324888226528,
+            "retreat_recall": 0.1969015492253873
+          },
+          "farm": {
+            "cases": 8723,
+            "matches": 1165,
+            "actions": {
+              "farm": 8723
+            },
+            "log_loss": 0.1859793111449279,
+            "farm_recall": 0.9642324888226528,
+            "retreat_recall": null
+          },
+          "retreat": {
+            "cases": 2001,
+            "matches": 888,
+            "actions": {
+              "retreat": 2001
+            },
+            "log_loss": 1.3420377425192755,
+            "farm_recall": null,
+            "retreat_recall": 0.1969015492253873
+          },
+          "no_recent_damage": {
+            "cases": 8971,
+            "matches": 1166,
+            "actions": {
+              "farm": 7537,
+              "retreat": 1434
+            },
+            "log_loss": 0.37098595509912724,
+            "farm_recall": 0.9838131882711955,
+            "retreat_recall": 0.1192468619246862
+          }
+        }
+      },
+      "paired": {},
+      "seed": 20261122,
+      "models": {
+        "frequency-fold0.joblib": "51d1c8815828b16dd308267173b92d19134b1829c14960a996c8f56bf26f3b9a",
+        "logistic-fold0.joblib": "ac739288f6b6b21c38332bb8e7d4dde5ee1c4650d5a97b891633b3aa05929f3e",
+        "frequency-fold1.joblib": "7499dbfa8f5d2318c06947387e15e0cc5ba66887338ab63af09aea1b713f596c",
+        "logistic-fold1.joblib": "c9fe3da900c25b69658cb7d069eb47e8e7103d530d4c9a663192710042a650bc",
+        "frequency-fold2.joblib": "7fc7f2d1f5f5c250a1eee8438ad38a214886983c3c20587d6ec7616a3986ecdd",
+        "logistic-fold2.joblib": "8fc94a9535a3d28bf960503b8499f4b529b1af5607d4194422f46da0097fade8",
+        "frequency-fold3.joblib": "9cfa181fc239d52a5dc3b796fb301dd8630e00bf736f6b13f195238af1c99210",
+        "logistic-fold3.joblib": "c178cf0d8afd35c1fefd050ffc558abe0446bf837e39112c8b34786da94b2c20",
+        "frequency-fold4.joblib": "582602f3567c4a4c9d3d0e26a0fb7c7ace29154ac5f5aa0dc67aa9d87771c4e2",
+        "logistic-fold4.joblib": "fb0427b54ba48dfdbb25cc43c636d250891c0838e02219039b6c7d03f7bd6be0"
+      },
+      "unsupported": {},
+      "versions": {
+        "python": "3.12.3",
+        "sklearn": "1.9.1",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1"
+      },
+      "sources": {
+        "lane_study.py": "a62d53584e1188f4709c167b29ec03fab8986cdb09a15e7d0a1dda3234a8711d",
+        "lane_study_baselines.py": "aef8c05c6c23ed4262d335808c34c15f6b61f5598a9b9976525b5fb71a976941"
+      }
+    },
+    "sequence": {
+      "inputs": {
+        "rows.jsonl": "15dcbd9619f900d460940f0a92c42d60fd35d77db68d2067a2b9be8ea9c678b0",
+        "manifest.json": "23ef60e1dedb97de966d5f438061a5fcb9465b8b5831ae12ff06de8d0933d6b1"
+      },
+      "metrics": {
+        "three_frame_tree": {
+          "all": {
+            "cases": 10652,
+            "matches": 1166,
+            "actions": {
+              "farm": 8686,
+              "retreat": 1966
+            },
+            "deaths": 506,
+            "hits_mae": 1.6612595377067678,
+            "death_brier": 0.04519470090631874,
+            "death_ap": 0.10356428976410689,
+            "false_alerts_per_represented_match": 0.015437392795883362,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 10350,
+                "predicted": 0.03390435657004162,
+                "observed": 0.044154589371980676
+              },
+              {
+                "from": 0.2,
+                "count": 256,
+                "predicted": 0.2683177530007861,
+                "observed": 0.15625
+              },
+              {
+                "from": 0.4,
+                "count": 37,
+                "predicted": 0.46907277904123296,
+                "observed": 0.21621621621621623
+              },
+              {
+                "from": 0.6,
+                "count": 9,
+                "predicted": 0.7051424223305864,
+                "observed": 0.1111111111111111
+              }
+            ]
+          },
+          "farm": {
+            "cases": 8686,
+            "matches": 1164,
+            "actions": {
+              "farm": 8686
+            },
+            "deaths": 347,
+            "hits_mae": 1.653376582256618,
+            "death_brier": 0.0383995807849664,
+            "death_ap": 0.08344607259966713,
+            "false_alerts_per_represented_match": 0.006872852233676976,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8542,
+                "predicted": 0.031264164393312116,
+                "observed": 0.03816436431749005
+              },
+              {
+                "from": 0.2,
+                "count": 123,
+                "predicted": 0.26829401115949214,
+                "observed": 0.13008130081300814
+              },
+              {
+                "from": 0.4,
+                "count": 17,
+                "predicted": 0.46205134423849614,
+                "observed": 0.23529411764705882
+              },
+              {
+                "from": 0.6,
+                "count": 4,
+                "predicted": 0.6998655275145564,
+                "observed": 0.25
+              }
+            ]
+          },
+          "retreat": {
+            "cases": 1966,
+            "matches": 882,
+            "actions": {
+              "retreat": 1966
+            },
+            "deaths": 159,
+            "hits_mae": 1.6960872849295567,
+            "death_brier": 0.07521627434175435,
+            "death_ap": 0.1479672358873923,
+            "false_alerts_per_represented_match": 0.011337868480725623,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 1808,
+                "predicted": 0.046378096378461665,
+                "observed": 0.07245575221238938
+              },
+              {
+                "from": 0.2,
+                "count": 133,
+                "predicted": 0.26833970974123084,
+                "observed": 0.18045112781954886
+              },
+              {
+                "from": 0.4,
+                "count": 20,
+                "predicted": 0.4750409986235592,
+                "observed": 0.2
+              },
+              {
+                "from": 0.6,
+                "count": 5,
+                "predicted": 0.7093639381834105,
+                "observed": 0.0
+              }
+            ]
+          },
+          "no_recent_damage": {
+            "cases": 8932,
+            "matches": 1166,
+            "actions": {
+              "farm": 7512,
+              "retreat": 1420
+            },
+            "deaths": 337,
+            "hits_mae": 1.6704562836559713,
+            "death_brier": 0.036711561036605465,
+            "death_ap": 0.06647351797759293,
+            "false_alerts_per_represented_match": 0.004288164665523156,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8817,
+                "predicted": 0.030207667467266646,
+                "observed": 0.037087444709084726
+              },
+              {
+                "from": 0.2,
+                "count": 107,
+                "predicted": 0.2589911550721293,
+                "observed": 0.07476635514018691
+              },
+              {
+                "from": 0.4,
+                "count": 5,
+                "predicted": 0.48819896884489544,
+                "observed": 0.4
+              },
+              {
+                "from": 0.6,
+                "count": 3,
+                "predicted": 0.7291385411729481,
+                "observed": 0.0
+              }
+            ]
+          }
+        },
+        "last_frame_nn": {
+          "all": {
+            "cases": 10652,
+            "matches": 1166,
+            "actions": {
+              "farm": 8686,
+              "retreat": 1966
+            },
+            "deaths": 506,
+            "hits_mae": 1.7172968667371802,
+            "death_brier": 0.04381310640305073,
+            "death_ap": 0.12128054192729118,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 10636,
+                "predicted": 0.04721486099375505,
+                "observed": 0.04729221511846559
+              },
+              {
+                "from": 0.2,
+                "count": 16,
+                "predicted": 0.21584670879530826,
+                "observed": 0.1875
+              }
+            ]
+          },
+          "farm": {
+            "cases": 8686,
+            "matches": 1164,
+            "actions": {
+              "farm": 8686
+            },
+            "deaths": 347,
+            "hits_mae": 1.723083652710511,
+            "death_brier": 0.03763704023786419,
+            "death_ap": 0.09445164055940139,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8686,
+                "predicted": 0.042132106082221676,
+                "observed": 0.03994934377158646
+              }
+            ]
+          },
+          "retreat": {
+            "cases": 1966,
+            "matches": 882,
+            "actions": {
+              "retreat": 1966
+            },
+            "deaths": 159,
+            "hits_mae": 1.6917302222995654,
+            "death_brier": 0.07109963270559919,
+            "death_ap": 0.1772500705116729,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 1950,
+                "predicted": 0.06985527594841087,
+                "observed": 0.08
+              },
+              {
+                "from": 0.2,
+                "count": 16,
+                "predicted": 0.21584670879530826,
+                "observed": 0.1875
+              }
+            ]
+          },
+          "no_recent_damage": {
+            "cases": 8932,
+            "matches": 1166,
+            "actions": {
+              "farm": 7512,
+              "retreat": 1420
+            },
+            "deaths": 337,
+            "hits_mae": 1.7338771043760477,
+            "death_brier": 0.035924442845307755,
+            "death_ap": 0.07453654489304581,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8932,
+                "predicted": 0.038511687506404074,
+                "observed": 0.0377295118674429
+              }
+            ]
+          }
+        },
+        "temporal_nn": {
+          "all": {
+            "cases": 10652,
+            "matches": 1166,
+            "actions": {
+              "farm": 8686,
+              "retreat": 1966
+            },
+            "deaths": 506,
+            "hits_mae": 1.6938766660354252,
+            "death_brier": 0.04430733623237764,
+            "death_ap": 0.10000135501846023,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 10646,
+                "predicted": 0.04737914531146858,
+                "observed": 0.047435656584632724
+              },
+              {
+                "from": 0.2,
+                "count": 6,
+                "predicted": 0.2152741464081416,
+                "observed": 0.16666666666666666
+              }
+            ]
+          },
+          "farm": {
+            "cases": 8686,
+            "matches": 1164,
+            "actions": {
+              "farm": 8686
+            },
+            "deaths": 347,
+            "hits_mae": 1.6931032793126102,
+            "death_brier": 0.037966508308300444,
+            "death_ap": 0.07257059617725903,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8686,
+                "predicted": 0.042844141688472094,
+                "observed": 0.03994934377158646
+              }
+            ]
+          },
+          "retreat": {
+            "cases": 1966,
+            "matches": 882,
+            "actions": {
+              "retreat": 1966
+            },
+            "deaths": 159,
+            "hits_mae": 1.6972935719735593,
+            "death_brier": 0.07232179775248673,
+            "death_ap": 0.15027504917726178,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 1960,
+                "predicted": 0.06747661544889076,
+                "observed": 0.08061224489795918
+              },
+              {
+                "from": 0.2,
+                "count": 6,
+                "predicted": 0.2152741464081416,
+                "observed": 0.16666666666666666
+              }
+            ]
+          },
+          "no_recent_damage": {
+            "cases": 8932,
+            "matches": 1166,
+            "actions": {
+              "farm": 7512,
+              "retreat": 1420
+            },
+            "deaths": 337,
+            "hits_mae": 1.707326134789906,
+            "death_brier": 0.03608879217797507,
+            "death_ap": 0.0615813282402605,
+            "false_alerts_per_represented_match": 0.0,
+            "calibration": [
+              {
+                "from": 0.0,
+                "count": 8932,
+                "predicted": 0.03868605053726926,
+                "observed": 0.0377295118674429
+              }
+            ]
+          }
+        }
+      },
+      "paired": {
+        "temporal_nn minus last_frame_nn": {
+          "hits_mae": {
+            "difference": -0.025074958105414238,
+            "ci95": [
+              -0.030784938699288177,
+              -0.018912407097886323
+            ]
+          },
+          "death_brier": {
+            "difference": 0.0004014182619736533,
+            "ci95": [
+              0.00023773243064593885,
+              0.000558993625298608
+            ]
+          }
+        },
+        "temporal_nn minus three_frame_tree": {
+          "hits_mae": {
+            "difference": 0.02942627235302055,
+            "ci95": [
+              0.020571175079970604,
+              0.03850250157134945
+            ]
+          },
+          "death_brier": {
+            "difference": -0.0010429598979415876,
+            "ci95": [
+              -0.0017233558705208676,
+              -0.00036798995544625905
+            ]
+          }
+        },
+        "temporal_nn minus last_frame_tree": {
+          "hits_mae": {
+            "difference": -0.006806291266185697,
+            "ci95": [
+              -0.016691805365894367,
+              0.0030680558204516993
+            ]
+          },
+          "death_brier": {
+            "difference": -0.0007581101292686927,
+            "ci95": [
+              -0.0014226093423357782,
+              -6.041730837864374e-05
+            ]
+          }
+        },
+        "three_frame_tree minus last_frame_tree": {
+          "hits_mae": {
+            "difference": -0.03623256361920625,
+            "ci95": [
+              -0.046183399200872666,
+              -0.026291985786418004
+            ]
+          },
+          "death_brier": {
+            "difference": 0.0002848497686728949,
+            "ci95": [
+              -0.0004397881337566556,
+              0.0010294474230576136
+            ]
+          }
+        },
+        "last_frame_tree minus action_mean": {
+          "hits_mae": {
+            "difference": -0.049568499261442765,
+            "ci95": [
+              -0.059200159798073984,
+              -0.04028283890550892
+            ]
+          },
+          "death_brier": {
+            "difference": -4.0912827862361173e-05,
+            "ci95": [
+              -0.0009291127354873923,
+              0.0007282096579148803
+            ]
+          }
+        }
+      },
+      "seed": 20261122,
+      "models": {
+        "three_frame_tree-fold0.joblib": "7b9348ed724a64d94edcad13a82fd5de7add98f5a9d3bd1d7370286ebc396ca9",
+        "last_frame_nn-fold0.joblib": "8028c6b0361450329bb45a388fca1ae87a7132f8f43fa929e76ec089e423ab7a",
+        "temporal_nn-fold0.joblib": "999f11bb3ec80b543ca53b83d21f2ec9585e7776883d461897979e92d541658a",
+        "three_frame_tree-fold1.joblib": "1981002c75af44250a893002d1709185257bf88a58c2010e1f68b0c2f16f7e4e",
+        "last_frame_nn-fold1.joblib": "1f8dd756a6d46736269fb6ea7d2b035692b689c5139b4a4e23655098a9779a87",
+        "temporal_nn-fold1.joblib": "8e37218ace122c0f6a0f6fecac8dbe9e91eda3e6d70db6552baeb8ee81730341",
+        "three_frame_tree-fold2.joblib": "a1c3134a7402e50e49e0006eaf1df94d8e90a5d25e26bed30b812f2b40cac0cc",
+        "last_frame_nn-fold2.joblib": "edf037c9a8eb491cda3e1acf335756c61cae06874080ef2d4d1b8ed40812cc1f",
+        "temporal_nn-fold2.joblib": "a9309822db26c8f7a713fae0efff5541639b9cee1b63dbeef6c02be2570ae470",
+        "three_frame_tree-fold3.joblib": "1c9231b6ed87227b7b7f13961f881f1b0e9df6e29fabb9b46e646e98e36dc8aa",
+        "last_frame_nn-fold3.joblib": "5a40f0acbd205cca48e76a4e7d07da59e7040c18d4f9babb317a5fd1cab43d26",
+        "temporal_nn-fold3.joblib": "1fa7b9e5c08eb84b8a804f988b338d0e32b86241683c1727e9e1cd74c8611ca8",
+        "three_frame_tree-fold4.joblib": "c74b29e84a0f85f83cf98ff469bedf3f9e08dd33d407b8b00919dcb8c568599d",
+        "last_frame_nn-fold4.joblib": "0183ce9c782775435efc27e9e857bc3a21e4d133ea0a0eb33f705fe1ee5c4c41",
+        "temporal_nn-fold4.joblib": "8d6ff449bd3a8cfd37fa570fca5f8f73aa5ae7f23ee621117582e92ae8afcfed"
+      },
+      "unsupported": {},
+      "versions": {
+        "python": "3.12.3",
+        "sklearn": "1.9.1",
+        "numpy": "2.5.4",
+        "scipy": "1.18.1"
+      },
+      "sources": {
+        "lane_study.py": "a62d53584e1188f4709c167b29ec03fab8986cdb09a15e7d0a1dda3234a8711d",
+        "lane_study_sequence.py": "a36a94838a96f6a9686773d45cfd9b30c542d041718bf6d04642baae0cbdfde0",
+        "lane_study_baselines.py": "aef8c05c6c23ed4262d335808c34c15f6b61f5598a9b9976525b5fb71a976941"
+      }
+    }
+  }
+}

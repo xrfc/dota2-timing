@@ -193,28 +193,20 @@ def _context(match, mid, hero, t, visibility, state, means):
     }
 
 
-def wave_opportunities(match, hero, hits, extras, can_see, *, coverage=None):
+def wave_opportunities(match, hero, hits, extras, can_see):
     """Sample before a last hit; test proximity and reconstructed sight at this second only."""
     own = match["tracks"][hero]
     next_time = START_SECOND
     candidates = {}
-    sampled = missing = 0
-    last = match.get("last")
     for t, point in sorted(own["pos"].items()):
-        if last is not None and t > last:
-            break
         if t < next_time or bisect_right(hits, t) != bisect_left(hits, t - 6):
             continue
         wave = lane_at(match["fronts"].get(t) or {}, own["team"], point)
         if wave is None:
             continue
-        if t not in extras:
-            missing += 1
-            continue
-        sampled += 1
         enemies = [
             (x, y)
-            for side, x, y in extras[t]["creeps"]
+            for side, x, y in extras.get(t, {}).get("creeps", ())
             if side == 5 - own["team"]
             and dist(point, (x, y)) <= 800
             and dist(wave[1], (x, y)) <= 1000
@@ -223,8 +215,6 @@ def wave_opportunities(match, hero, hits, extras, can_see, *, coverage=None):
         if enemies:
             candidates[t] = len(enemies)
             next_time = t + REPEAT_SECONDS
-    if coverage is not None:
-        coverage.update(sampled_hero_seconds=sampled, missing_hero_seconds=missing)
     return candidates
 
 
@@ -241,7 +231,7 @@ def make_cases(match, mid, hero, hits, visibility, states, means, deaths, *, opp
     }
     next_time = START_SECOND
     for t in hits if opportunities is None else opportunities:
-        if t > match["last"] or t < next_time or t not in track or t not in states:
+        if t < next_time or t not in track or t not in states:
             continue
         if opportunities is None and any(s in recent_hits for s in range(t - 4, t + 1)):
             continue
@@ -259,12 +249,8 @@ def make_cases(match, mid, hero, hits, visibility, states, means, deaths, *, opp
             own_wave = waves.get(f"{LANE_TEAM[team]}_{lane}") or {}
             frame["wave"] = own_wave.get("front")
         lean, reason = assess(evidence["history"][-1], states[t])
-        full_action_window = t + ACTION_SECONDS <= match["last"]
-        if full_action_window:
-            action, detail = observe_action(track, hits, team, t, front)
-        else:
-            action, detail = "unknown", "可观察比赛时间不足六秒，无法确认完整动作。"
-        if opportunities is not None and full_action_window:
+        action, detail = observe_action(track, hits, team, t, front)
+        if opportunities is not None:
             # Crossing the wave laterally can also forgo the last hit.
             path = [track.get(sec) for sec in range(t, t + ACTION_SECONDS + 1)]
             if (
@@ -275,10 +261,11 @@ def make_cases(match, mid, hero, hits, visibility, states, means, deaths, *, opp
                 no_hit = bisect_right(hits, t + ACTION_SECONDS) == bisect_right(hits, t)
                 if no_hit and dist(path[-1], front) - dist(path[0], front) >= 350:
                     action, detail = "retreat", "随后六秒没有线上补刀，并与原兵线前沿拉开至少 350。"
-        end = min(t + OUTCOME_SECONDS, match["last"])
+        evidence["recent_hero_damage"] = any(s in recent_hits for s in range(t - 3, t + 1))
         later = {
-            "lane_last_hits": bisect_right(hits, end) - bisect_right(hits, t),
-            "death_seconds": [s for s in deaths if t < s <= end],
+            "lane_last_hits": bisect_right(hits, t + OUTCOME_SECONDS) - bisect_right(hits, t),
+            "action_window_hits": bisect_right(hits, t + ACTION_SECONDS) - bisect_right(hits, t),
+            "death_seconds": [s for s in deaths if t < s <= t + OUTCOME_SECONDS],
             "complete": match["last"] >= t + OUTCOME_SECONDS,
         }
         yield evidence, {"action": action, "detail": detail, "lean": lean, "reason": reason}, later
@@ -354,7 +341,7 @@ def make_jungle_cases(match, mid, hero, hits, visibility, states, means, deaths,
     track = match["tracks"][hero]["pos"]
     next_time = START_SECOND
     for t in hits:
-        if t > match["last"] or t < next_time or t not in track or t not in states:
+        if t < next_time or t not in track or t not in states:
             continue
         next_time = t + REPEAT_SECONDS
         evidence = _context(match, mid, hero, t, visibility, states[t], means)
@@ -363,21 +350,19 @@ def make_jungle_cases(match, mid, hero, hits, visibility, states, means, deaths,
         point = [camp["x"], camp["y"]]
         evidence.update(kind="jungle", camp_id=camp["id"], camp_distance=round(dist(here, point)))
         evidence["history"][-1]["camp"] = point
+        count = bisect_right(hits, t + ACTION_SECONDS) - bisect_right(hits, t)
+        detail = f"随后六秒内记录到 {count} 次野怪补刀。"
         if match["last"] < t + ACTION_SECONDS:
-            detail = "可观察比赛时间不足六秒，无法确认完整动作。"
-        else:
-            count = bisect_right(hits, t + ACTION_SECONDS) - bisect_right(hits, t)
-            detail = f"随后六秒内记录到 {count} 次野怪补刀。"
+            detail = "录像结束，六秒动作窗不完整。"
         action = {
             "action": "unknown",
             "lean": "unknown",
             "detail": detail,
             "reason": _jungle_reason(evidence["history"][-1]),
         }
-        end = min(t + OUTCOME_SECONDS, match["last"])
         outcome = {
-            "jungle_last_hits": bisect_right(hits, end) - bisect_right(hits, t),
-            "death_seconds": [s for s in deaths if t < s <= end],
+            "jungle_last_hits": bisect_right(hits, t + OUTCOME_SECONDS) - bisect_right(hits, t),
+            "death_seconds": [s for s in deaths if t < s <= t + OUTCOME_SECONDS],
             "complete": match["last"] >= t + OUTCOME_SECONDS,
         }
         yield evidence, action, outcome
