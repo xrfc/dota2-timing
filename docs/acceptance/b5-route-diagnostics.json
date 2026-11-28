@@ -1,0 +1,163 @@
+{
+  "unknown": 7594,
+  "matches": 1158,
+  "kinds": {
+    "geometry": 5963,
+    "jump": 1350,
+    "not_alive": 281
+  },
+  "lane_failures": {
+    "endpoint_outside_800": 254,
+    "endpoint_outside_800 + lane_gap_gain_above_150": 2565,
+    "fewer_than_four_near_positions": 134,
+    "fewer_than_four_near_positions + endpoint_outside_800": 223,
+    "fewer_than_four_near_positions + endpoint_outside_800 + lane_gap_gain_above_150": 1434,
+    "fewer_than_four_near_positions + lane_gap_gain_above_150": 11,
+    "lane_gap_gain_above_150": 1342
+  },
+  "jungle_min_failed": {
+    "1": 3111,
+    "2": 1196,
+    "3": 1017,
+    "4": 534,
+    "5": 105
+  },
+  "jump_by_hero": {
+    "npc_dota_hero_alchemist": 1,
+    "npc_dota_hero_antimage": 304,
+    "npc_dota_hero_arc_warden": 2,
+    "npc_dota_hero_bloodseeker": 5,
+    "npc_dota_hero_chaos_knight": 5,
+    "npc_dota_hero_clinkz": 1,
+    "npc_dota_hero_dragon_knight": 11,
+    "npc_dota_hero_drow_ranger": 12,
+    "npc_dota_hero_ember_spirit": 2,
+    "npc_dota_hero_faceless_void": 70,
+    "npc_dota_hero_furion": 8,
+    "npc_dota_hero_gyrocopter": 1,
+    "npc_dota_hero_huskar": 1,
+    "npc_dota_hero_juggernaut": 100,
+    "npc_dota_hero_kez": 31,
+    "npc_dota_hero_legion_commander": 2,
+    "npc_dota_hero_leshrac": 1,
+    "npc_dota_hero_life_stealer": 23,
+    "npc_dota_hero_lina": 1,
+    "npc_dota_hero_luna": 79,
+    "npc_dota_hero_magnataur": 1,
+    "npc_dota_hero_marci": 2,
+    "npc_dota_hero_medusa": 1,
+    "npc_dota_hero_meepo": 1,
+    "npc_dota_hero_mirana": 1,
+    "npc_dota_hero_monkey_king": 45,
+    "npc_dota_hero_morphling": 49,
+    "npc_dota_hero_muerta": 8,
+    "npc_dota_hero_necrolyte": 10,
+    "npc_dota_hero_nevermore": 5,
+    "npc_dota_hero_night_stalker": 3,
+    "npc_dota_hero_obsidian_destroyer": 15,
+    "npc_dota_hero_phantom_assassin": 60,
+    "npc_dota_hero_phantom_lancer": 97,
+    "npc_dota_hero_pudge": 3,
+    "npc_dota_hero_queenofpain": 6,
+    "npc_dota_hero_razor": 3,
+    "npc_dota_hero_riki": 24,
+    "npc_dota_hero_silencer": 3,
+    "npc_dota_hero_skeleton_king": 16,
+    "npc_dota_hero_slark": 73,
+    "npc_dota_hero_spectre": 13,
+    "npc_dota_hero_storm_spirit": 3,
+    "npc_dota_hero_sven": 120,
+    "npc_dota_hero_techies": 1,
+    "npc_dota_hero_templar_assassin": 24,
+    "npc_dota_hero_terrorblade": 2,
+    "npc_dota_hero_tidehunter": 1,
+    "npc_dota_hero_tinker": 4,
+    "npc_dota_hero_tiny": 15,
+    "npc_dota_hero_ursa": 54,
+    "npc_dota_hero_vengefulspirit": 7,
+    "npc_dota_hero_viper": 1,
+    "npc_dota_hero_weaver": 4,
+    "npc_dota_hero_windrunner": 13,
+    "npc_dota_hero_wisp": 2
+  },
+  "jungle_failed_predicates": {
+    "camp_gain_below_450": 1427,
+    "camp_gap_above_1200": 5520,
+    "fewer_than_three_approaches": 481,
+    "lane_gap_below_850": 1679,
+    "lane_gap_gain_below_350": 2108
+  },
+  "jump_distance_counts": {
+    "700_to_1200": 685,
+    "1200_to_3000": 602,
+    "above_3000": 63
+  },
+  "examples": {
+    "geometry": {
+      "match": 9080976703,
+      "hero": "npc_dota_hero_phantom_assassin",
+      "t": 1576,
+      "previous_reason": "ambiguous_geometry",
+      "diagnostic": {
+        "kind": "geometry",
+        "lane_failed": [
+          "fewer_than_four_near_positions",
+          "endpoint_outside_800",
+          "lane_gap_gain_above_150"
+        ],
+        "lane_distances": [
+          120.503,
+          193.992,
+          466.897,
+          830.923,
+          1227.502,
+          1456.803,
+          1758.241
+        ],
+        "jungle_min_failed": 1,
+        "jungle_witness": {
+          "second": 4,
+          "camp": 27,
+          "failed": [
+            "camp_gap_above_1200"
+          ]
+        }
+      }
+    },
+    "jump": {
+      "match": 9080976703,
+      "hero": "npc_dota_hero_slark",
+      "t": 919,
+      "previous_reason": "jump_before_commitment",
+      "diagnostic": {
+        "kind": "jump",
+        "second": 3,
+        "distance": 725.526,
+        "prior_speed": 300,
+        "current_speed": 300
+      }
+    },
+    "not_alive": {
+      "match": 9081103876,
+      "hero": "npc_dota_hero_kez",
+      "t": 1715,
+      "previous_reason": "interrupted_before_commitment",
+      "diagnostic": {
+        "kind": "not_alive",
+        "second": 4
+      }
+    }
+  },
+  "schema": "b5-route-diagnostics/1",
+  "labels_reproduced": 15005,
+  "census_outputs_sha256": {
+    "summary.json": "e811cfe59b16ff64fb3904ec071410391de6ccfde05093d42f51d1965f4881a6",
+    "rows.json": "fcc370fdcedaa19440d5a72bdd90a6743883710495894232ffaacb746415bda2",
+    "regression.json": "957a5d1ab2bb6f69e143f7a1078dbe525540bb2175e221379e74f1a5d75bc512"
+  },
+  "implementation_sha256": "38eafa81d9dbfb9948629f356132a2a65ca476bc87f9d578d2bb9480848be677",
+  "outputs_sha256": {
+    "summary.json": "2b06c5326772e4d8b88b8173ebb66152983a5efbb7729da8e36acf2a55927bbf",
+    "details.json": "ceb7ea96838e8681e1df6c4186710bea2a1d2b7cc7532e330fbb571c0c5430f5"
+  }
+}

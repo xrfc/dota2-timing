@@ -56,7 +56,7 @@
 
 - 一页当前状态：`docs/current-status.md`（先看它）。唯一执行计划：`docs/development-plan-2026-10-30.md`（共享底座MK＋路线A推荐M0–M5＋路线B意识决策B0–B5）。接手先读其§0与§7，只做当前任务的下一个未勾选项；两条线不分主次；先做完共享底座MK，之后两线各自推进（U38）。
 - 架构入口：`docs/architecture.md`。每个模块/脚本须在`src/dota_items/architecture.py`登记线与状态；共享底座不导入任一线，A、B两线互不导入（测试强制）。冻结产物指纹记录源码路径，**不搬迁文件**，物理整理须先登记生产者迁移并单独提出。
-- U67、U73、U113：MK-T3、MK-T4已结束，MK已结束（U122，2026-11-07；R8、R15移到B1）；当前多英雄demo采集（U128、U129，`docs/demo-collection.md`）与M2b-T10页面评审，之后U124第③步和B0；知识统一入口`knowledge/mechanics/current.json`；入口`docs/handoff/mk-handoff-2026-11-05.md`，事实`knowledge/mechanics/extractions/v26/`、词表`vocabulary-v15.json`、规则`rules-v13.json`；`basis`不是`user*`的条目不算用户批准。
+- 当前执行进度（2026-11-25）：MK 已结束；路线 A 暂缓（U166），路线 B 推进 B5，第③步覆盖及未知原因诊断已完成，下一核验几何边界与真实收益读取；不据诊断直接调整标签阈值。原 337 场已正式评分，三场仅回归；新独立验收来源待确认。历史多英雄采集、M2b-T10 和 B0 顺序已被替代。唯一进度见计划§7，知识正式版本见 `knowledge/mechanics/current.json`；`basis` 不是 `user*` 的条目不算用户批准。
 - 用户决定记录在`docs/decisions/`；计划§2“待决”项必须先问用户。
 - 账号ID只在未跟踪的`configs/user.local.json`，不得写入跟踪文件或推送。
 
