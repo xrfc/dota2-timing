@@ -8,7 +8,7 @@ works the same way with its own folder.
 Every lane creep's position per second (U153).
 
     PYTHONPATH=data/replay-pilot-2026-10-22/compat-v1:src .venv/bin/python \
-        scripts/extract_creeps.py run --root data/demos-2026-11 --with-wards --workers 6
+        scripts/extract_creeps_review_v2.py run --root data/demos-2026-11 --with-wards --workers 6
 
 Reads `<root>/demos/<id>.dem.bz2`, writes `<root>/creeps-v1/<id>.jsonl.gz` (a header line,
 then one JSON object per game second: `{"t", "creeps": [[team, x, y], ...]}`) and a
