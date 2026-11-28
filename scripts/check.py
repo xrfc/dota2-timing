@@ -132,6 +132,7 @@ def main() -> int:
                     [node, "--check", "scripts/outcome_viewer_assets/perspective.js"],
                     [node, "--test", "tests/test_coach_app_ui.cjs"],
                     [node, "--test", "tests/test_lane_review_ui.cjs"],
+                    [node, "--test", "tests/test_b5_trial_notebook_ui.cjs"],
                 ]
             )
         else:
