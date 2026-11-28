@@ -385,17 +385,58 @@ SCRIPTS = {
     "gank_foresight": _B,
     "gank_review": _B,
     "lane_decision_review": _B,
-    "lane_outcome_evaluation": _B,
-    "lane_study": _B,
-    "lane_study_baselines": _B,
-    "lane_study_data": _B,
-    "lane_study_sequence": _B,
-    "outcome_labels": _B,
-    "outcome_values": _B,
-    "outcome_match_report": _B,
-    "outcome_viewer": _B,
-    "outcome_perspective_map": _B,
-    "new_replay_inputs": _B,
-    "new_replay_outcomes": _B,
-    "outcome_domains": _B,
-    "outcome_final": _B,
+    "check_support_travel": _B,
+    "friend_review_server": _B,
+    "vision_check": _B,
+    "vision_cliff_check": _B,
+    "vision_tree_check": _B,
+    "build_decision_state_cards": _B,
+    "collect_replay_expansion": _B,
+    "decision_review": _B,
+    "enhance_decision_cases": _B,
+    "export_raw_replay_channels": _B,
+    "probe_decision_state": _B,
+    "probe_team_state": _B,
+    "render_replay_semantics": _B,
+    "repair_decision_mana": _B,
+    "replay_viewer": _B,
+    "report_replay_identity": _B,
+    "revise_decision_review": _B,
+    "verify_b5_feedback": _B,
+    "run_replay_pilot": _B,
+}
+
+# importer track -> tracks it must not import
+FORBIDDEN_TRACK_IMPORTS = {
+    SHARED: (RECOMMEND, AWARENESS),
+    RECOMMEND: (AWARENESS,),
+    AWARENESS: (RECOMMEND,),
+}
+
+
+def track_of(module):
+    """Track of a dotted module name inside dota_items (most specific entry wins)."""
+    name = module.removeprefix("dota_items").removeprefix(".")
+    while name:
+        if name in MODULES:
+            return MODULES[name][0]
+        name = name.rpartition(".")[0]
+    if module == "dota_items":
+        return MODULES[""][0]
+    raise KeyError(module)  # unclassified modules never fall back to the package root
+
+
+def modules_in(track):
+    return sorted(name for name, (owner, _) in MODULES.items() if owner == track)
+
+
+def track_table():
+    """Markdown rows for docs/architecture.md §2.2, computed from this registry (U124 step 3)."""
+    names = {SHARED: "共享底座", RECOMMEND: "路线A 推荐", AWARENESS: "路线B 意识决策"}
+    lines = ["| 线 | 名称 | 模块数（活跃/仅维护） | 脚本数 |", "|---|---|---|---|"]
+    for track in (SHARED, RECOMMEND, AWARENESS):
+        active = sum(1 for t, s in MODULES.values() if t == track and s == "active")
+        kept = sum(1 for t, s in MODULES.values() if t == track and s == "maintenance")
+        scripts = sum(1 for t in SCRIPTS.values() if t == track)
+        lines.append(f"| `{track}` | {names[track]} | {active} / {kept} | {scripts} |")
+    return "\n".join(lines)

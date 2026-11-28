@@ -104,6 +104,8 @@
 
 ## 4. 数据流
 
+B5 试用反馈的消费端是路线 B 脚本 `verify_b5_feedback.py`。输入为本机导出和它引用的原报告，输出保留片段身份并给出 Markdown 标题行号。该脚本可独立于工作台进程运行。[接口说明](b5-feedback-verification.md)
+
 ```text
 路线A：OpenDota比赛JSON ─ source_io ─→ match_table（M1快照，10人×比赛）─→ modeling（item_timing、situational_*）─→ 8780赛前页 / 复盘出装对照
 路线B：录像.dem ─ Gem解析 ─→ cleaning/context（共享）─→ 全知/天辉/夜魇时间线 ─ tick_alignment ─→ decision_evidence/state（当时可知）─→ 决策点与客观标签（D0起）─→ 风险/结果模型与行为参照（D2起）─→ 复盘页

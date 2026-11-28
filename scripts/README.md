@@ -26,6 +26,7 @@
 
 | 用途 | 入口 | 前提/文档 |
 |---|---|---|
+| B5 玩家反馈核对 | [verify_b5_feedback.py](verify_b5_feedback.py) | 本机已导出的 JSON 和对应的原报告。[命令及错误处理](../docs/b5-feedback-verification.md) |
 | 完整验收 | `check.py` | 单写者窗口；模块scope不代替all |
 | 单阵容/A-B | `lineup_analysis.py` / `lineup_comparison.py` | 本地冻结模型/快照；[案例说明](../docs/lineup-comparison-review-2026-10-25.md) |
 | 前瞻采集 | `collect_evaluation_cohort.py` | 冻结协议、预算与窗口；[执行方案](../docs/evaluation-execution-proposal-2026-10-23.md)；本次整理不执行run |
