@@ -21,19 +21,43 @@ from detect_ganks import match_inputs
 from dota_items.data.awareness_split import is_holdout
 from dota_items.data.support_arrival import support_comparison, walk_hit_window
 
-MATCHES = (9080976703, 9081112027, 9081112126)
+# OpenDota match metadata, checked 2026-11-21. See docs/lane-decision-review.md.
+MATCH_START_TIMES_741F = {9080976703: 1794102760, 9081112027: 1794114835, 9081112126: 1794114815}
+MATCHES = tuple(MATCH_START_TIMES_741F)
+PATCH_741F_WINDOW = (1789455600, 1794988800)
 START = 900
 WINDOW = 8
 MIN_STEP = 50
 JUMP_FACTOR = 1.35
 
 
+def check_review_metadata(root, mid):
+    path = root / "meta" / f"{mid}.json"
+    try:
+        meta = json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        if mid not in MATCH_START_TIMES_741F:
+            raise
+        meta = {"match_id": mid, "patch": 60, "start_time": MATCH_START_TIMES_741F[mid]}
+    if not isinstance(meta, dict) or meta.get("match_id") != mid or meta.get("patch") != 60:
+        raise ValueError(f"{mid}: unexpected metadata match or patch")
+    start = meta.get("start_time")
+    if start is not None and not (
+        type(start) is int and PATCH_741F_WINDOW[0] <= start < PATCH_741F_WINDOW[1]
+    ):
+        raise ValueError(f"{mid}: start_time outside the 7.41f patch window")
+
+
 def audit_match(root, mid):
     if is_holdout(mid):
         raise ValueError(f"reserved holdout match {mid}")
-    meta = json.loads((root / "meta" / f"{mid}.json").read_text())
-    if meta["match_id"] != mid or meta["patch"] != 60:
-        raise ValueError(f"{mid}: unexpected match metadata")
+    check_review_metadata(root, mid)
+    with gzip.open(root / "parsed" / f"{mid}.normalized.json.gz", "rt", encoding="utf-8") as stream:
+        parsed = json.load(stream)
+        duration = parsed.get("duration")
+        if parsed.get("match_id") != mid or type(duration) is not int or duration < 0:
+            raise ValueError(f"{mid}: unexpected normalized match or duration")
+    del parsed
     match = match_inputs(root, mid, root / "gank-inputs-v2")
     tracks = {h: {} for h, role in match["positions"].items() if role == 1}
     with gzip.open(root / "state-v3" / f"{mid}.jsonl.gz", "rt") as stream:
@@ -49,7 +73,7 @@ def audit_match(root, mid):
     reasons = Counter()
     scenarios = []
     for track in tracks.values():
-        for t in range(START, match["last"] - WINDOW + 1, WINDOW):
+        for t in range(START, min(duration, match["last"]) - WINDOW + 1, WINDOW):
             segment = [track.get(s) for s in range(t, t + WINDOW + 1)]
             if None in segment:
                 reasons["missing_or_dead"] += 1

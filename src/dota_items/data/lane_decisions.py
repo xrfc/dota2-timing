@@ -261,8 +261,10 @@ def make_cases(match, mid, hero, hits, visibility, states, means, deaths, *, opp
                 no_hit = bisect_right(hits, t + ACTION_SECONDS) == bisect_right(hits, t)
                 if no_hit and dist(path[-1], front) - dist(path[0], front) >= 350:
                     action, detail = "retreat", "随后六秒没有线上补刀，并与原兵线前沿拉开至少 350。"
+        evidence["recent_hero_damage"] = any(s in recent_hits for s in range(t - 3, t + 1))
         later = {
             "lane_last_hits": bisect_right(hits, t + OUTCOME_SECONDS) - bisect_right(hits, t),
+            "action_window_hits": bisect_right(hits, t + ACTION_SECONDS) - bisect_right(hits, t),
             "death_seconds": [s for s in deaths if t < s <= t + OUTCOME_SECONDS],
             "complete": match["last"] >= t + OUTCOME_SECONDS,
         }

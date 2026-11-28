@@ -27,6 +27,21 @@ MODEL_TESTS = {
 }
 
 
+# These suites exercise model APIs and data/application adapters together. Keep
+# their existing data coverage while also running them in the modeling scope.
+DATA_MODEL_TESTS = {
+    "test_viewer_wire.py",
+    "test_coach_app.py",
+    "test_death_risk_tables.py",
+    "test_item_timing.py",
+    "test_random_cohort_snapshot.py",
+    "test_situational_items.py",
+    "test_situational_reference.py",
+    "test_situational_triggers.py",
+    "test_whole_log_snapshot.py",
+}
+
+
 def module_paths(scope):
     """Explicit ownership for existing suites; unknown suites conservatively join data."""
     all_tests = sorted(path.name for path in (ROOT / "tests").glob("test_*.py"))
@@ -37,11 +52,14 @@ def module_paths(scope):
         "test_check_scopes.py",
         "test_docs_links.py",
         "test_task_contracts.py",
+        "test_artifact_versions.py",
+        "test_action_outcomes_contract.py",
+        "test_replay_collection_contract.py",
     }
     selected = {
-        "modeling": model_tests | shared,
+        "modeling": model_tests | DATA_MODEL_TESTS | shared,
         "recommendation": recommendation | shared,
-        "data": (set(all_tests) - model_tests - recommendation) | shared,
+        "data": (set(all_tests) - model_tests - recommendation) | DATA_MODEL_TESTS | shared,
     }[scope]
     source = {
         "modeling": [
@@ -130,6 +148,7 @@ def main() -> int:
                     [node, "--check", "scripts/lane_decision_assets/app.js"],
                     [node, "--test", "tests/test_coach_app_ui.cjs"],
                     [node, "--test", "tests/test_lane_review_ui.cjs"],
+                    [node, "--test", "tests/test_b5_trial_notebook_ui.cjs"],
                 ]
             )
         else:

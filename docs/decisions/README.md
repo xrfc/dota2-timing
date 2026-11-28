@@ -1,9 +1,20 @@
 # 决策记录
 
+- [2026-11-27：树身份、视野来源与相关耦合](2026-11-27-viewer-wire.md)。
+
+- [2026-11-27：已有录像树索引与视距补证](2026-11-27-tree-probe.md)。
+
+- [2026-11-27：继续7.42工程证据准入](2026-11-27-mechanics-evidence-admission.md)。
+
+- [2026-11-27：沿现有路线开发决策时证据接口](2026-11-27-decision-evidence.md)。
+
+- [2026-11-27：7.42补证与有界长局采集授权](2026-11-27-patch-evidence-followup.md)。
+
 每条用户决定一个文件：`YYYY-MM-DD-主题.md`，含背景、选项、决定、后果、来源。规则见[开发计划§5.3](../development-plan-2026-10-30.md)。
 
 | 编号 | 文件 |
 |---|---|
+| 2026-11-27 | [统一路线状态并继续7.42适配](2026-11-27-roadmap-and-patch-binding.md) |
 | U190 | [行动判断总架构与项目决策留档](2026-11-20-decision-framework.md) |
 | U189 | [项目产品目标](2026-11-20-project-goal.md) |
 | U1 | [取消10/31前瞻采集](2026-10-30-cancel-collection-window.md) |
@@ -137,3 +148,29 @@
 | U132 | [B0只评1号位，被抓死是主要结果；5号位留待办](2026-11-09-b0-gank-rules.md) |
 | U131 | [B0“被抓”：保命手段（A组＋加速、弱驱散、幻象、林肯；护盾不算）、队友救下也算、阈值和间隔先按建议](2026-11-09-b0-gank-rules.md) |
 | U130 | [解析器v3范围：P0＋P1，P2先做兵线前沿和召唤物；每秒采样](../parser-v3-design.md) |
+
+2026-11-27续：[7.42候选行动资产工程授权](2026-11-27-patch-review-assets.md)；机制待决项仍由用户裁定。
+
+
+## 2026-11-28集成补全入口
+
+- [本地评审方式](2026-11-22-local-review.md)
+- [U191 取消人工评审，改由录像实际结果训练](2026-11-22-no-human-review.md)
+- [补刀前自动行动后果评估](2026-11-22-offline-lane-outcomes.md)
+- [U192　B5 用本机页面交付试用](2026-11-23-b5-local-viewer.md)
+- [U193　B5 显示一方已知的局势地图](2026-11-23-b5-perspective-map.md)
+- [B5 优先核对真实金币](2026-11-24-b5-real-farm-gold.md)
+- [将路线 B 的决策自评纳入开发计划](2026-11-24-b5-rsi-plan.md)
+- [U194 本轮长程开发与交付](2026-11-24-long-development.md)
+- [长程开发与自行校验（2026-11-25）](2026-11-25-long-development.md)
+- [先维护路线文档，再继续 B5 开发](2026-11-25-route-focus.md)
+- [多版本设计后继续M1（2026-11-26）](2026-11-26-action-m1-implementation.md)
+- [设计行动模型兼容迁移（2026-11-26）](2026-11-26-action-model-migration-design.md)
+- [多版本设计与M1实施（2026-11-26）](2026-11-26-action-model-multiversion-m1.md)
+- [先完成金币对账，再补营地事前证据](2026-11-26-camp-evidence.md)
+- [2026-11-26：先获取少量 7.42 demo，并审查采集和解析](2026-11-26-demo-742-pilot.md)
+- [说明可信模型的距离，并按现有计划继续](2026-11-26-model-trust-and-camp-conditions.md)
+- [阶段总结、文档整理与架构评审（2026-11-26）](2026-11-26-stage-review.md)
+- [2026-11-27：继续压缩包的下游接入](2026-11-27-replay-bundle-consumption.md)
+- [2026-11-27：按五项建议改进采集/解析并节约空间](2026-11-27-replay-pipeline-storage.md)
+- [2026-11-28 文档收尾与全部PR集成](2026-11-28-integration-closeout.md)

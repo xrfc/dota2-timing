@@ -1,5 +1,19 @@
 # 单模块维护与长期扩展（2026-10-17）
 
+2026-11-28：当前工程复盘入口为 `scripts/lane_decision_review_v2.py`，旧入口及U191的26源码保留冻结；新旧入口精确摘要、调用方和限制见[集成总结](integration-closeout-2026-11-28.md)。行动模型M1已完成，后续M2–M4仍待实现。
+
+2026-11-27树索引API：`map_tree_probe.capture(path, *, expected_match_id, expected_game_build)`保留原始证据；`map_tree_probe_io.open_tree_anchor`与`read_tree_probe`负责来源及精确清单校验。CLI单独管理私有解析器、解压校验和原子发布；见[探针说明](patch-tree-probe.md)。
+
+2026-11-27当前增量：[新机制准入与投影](mechanics-evidence-admission.md)重算14条证据，保持既有用户依据和旧生产者。投影重新验证新准入全文，档案/图/特性明细与计数均携条件；与模型、workflow无依赖。
+
+2026-11-27当前API：`patch_decision_source`固定来源，`VisionDecisionIndex`执行双时间/观察者查询，`DecisionContextIndex`只组合静态触发区域；独立validation和两个共享补证模块不依赖模型或workflow。签名、返回字段及未知策略见[决策时证据](patch-decision-evidence.md)。
+
+2026-11-27再续：补充捕获IO和纯营地/目标/视野分析API见[补证说明](patch-evidence-followup.md)，来源collector与CLI仍归B线，共享层不导入B线。
+
+2026-11-27续：7.42候选资产API和完整依赖复验见[候选行动资产](patch-review-assets.md)；旧冻结模块仍可原样复现。
+
+2026-11-27新增API：[地图与机制版本绑定](patch-asset-binding.md#2-分层与api)。源校验、纯几何计算和B线编排分离；旧入口维护方式不代表新补丁已获支持。
+
 > **2026-11-01（U37）**：架构入口改为[架构](architecture.md)（层×线、模块归属、迁移策略）。本页保留各层API细节与10/17–10/28的结构整理记录；“当前工程结构入口”等说法以架构页为准。
 
 ## 2026-10-28架构整理原则

@@ -24,7 +24,6 @@ nothing is uploaded. Repeat `--hero <id>` to top up rare heroes later.
 """
 
 import argparse
-import fcntl
 import gzip
 import hashlib
 import json
@@ -334,6 +333,8 @@ def clients(route, budget):
 
 
 def run(args):
+    import fcntl
+
     root = args.root.resolve()
     root.mkdir(parents=True, exist_ok=True)
     if os.environ.get("OPENDOTA_API_KEY"):

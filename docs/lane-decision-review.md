@@ -1,5 +1,7 @@
 # 一号位兵线复盘：继续收线还是后撤
 
+2026-11-26：B5 已为固定 1,169 场、15,005 个机会补齐[营地事前可见证据](b5-camp-evidence.md)，完整提取与独立核验通过。这是独立证据产物，尚未接入旧复盘页；页面上的最近营地仍仅作地标，不能解释为事前已知有野、可达或能清营。
+
 页面允许直接看分析，也保留先独立判断的入口。直接看分析仅记录已看过；此后提交的意见标记为看过分析后的意见。可选抽看的三个场景仅使用当时装备、队友距离取样。全部片段保留以便查阅，无逐条评分要求。
 
 
@@ -32,7 +34,7 @@
 输出目录须为新目录，保留既有报告。使用项目根目录和现有环境：
 
 ```bash
-PYTHONPATH=src .venv/bin/python scripts/lane_decision_review.py --matches 9080976703 9081112027 9081112126 --out reports/lane-decisions-local
+PYTHONPATH=src .venv/bin/python scripts/lane_decision_review_v2.py --matches 9080976703 9081112027 9081112126 --out reports/lane-decisions-local
 .venv/bin/python -m http.server 8792 --bind 127.0.0.1 --directory reports/lane-decisions-local
 ```
 
@@ -56,7 +58,7 @@ PYTHONPATH=src .venv/bin/python scripts/lane_decision_review.py --matches 908097
 同一个生成器支持单独构建打野页面。带线仍是默认模式。打野案例用独立的案例 ID 和浏览器笔记键。
 
 ```bash
-PYTHONPATH=src .venv/bin/python scripts/lane_decision_review.py --mode jungle --matches 9080976703 9081112027 9081112126 --out reports/jungle-review-local
+PYTHONPATH=src .venv/bin/python scripts/lane_decision_review_v2.py --mode jungle --matches 9080976703 9081112027 9081112126 --out reports/jungle-review-local
 .venv/bin/python -m http.server 8794 --bind 127.0.0.1 --directory reports/jungle-review-local
 ```
 

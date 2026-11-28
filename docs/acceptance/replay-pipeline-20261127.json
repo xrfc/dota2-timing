@@ -1,0 +1,764 @@
+{
+  "schema": "replay-pipeline-real-acceptance/1",
+  "date": "2026-11-27",
+  "purpose": "engineering_validation_only",
+  "training_allowed": false,
+  "holdout_read": false,
+  "dependencies_upgraded": false,
+  "old_artifacts_deleted": false,
+  "producer": {
+    "dependencies": {
+      "gem-dota": "0.10.0",
+      "protobuf": "7.36.2",
+      "zstandard": "0.25.0"
+    },
+    "parser": {
+      "base_version": "0.10.0",
+      "compat_path": "/home/node/.openclaw/workspace/work/dota2-timing/data/replay-pilot-2026-10-22/compat-v1",
+      "distribution_version": "0.10.0",
+      "manifest_sha256": "3f6e9ee2c222869adce45c6dfef757e719c9576bfdde82927e76d6868c47403d",
+      "module_path": "/home/node/.openclaw/workspace/work/dota2-timing/data/replay-pilot-2026-10-22/compat-v1/gem/__init__.py",
+      "parser_path": "/home/node/.openclaw/workspace/work/dota2-timing/data/replay-pilot-2026-10-22/compat-v1/gem/parser.py",
+      "schema": "replay-parser-identity/1",
+      "verified_python_files": 190
+    },
+    "python": "3.12.3",
+    "schema": "replay-processing-producer/1",
+    "sources": {
+      "contracts.numeric": {
+        "path": "src/dota_items/contracts/numeric.py",
+        "sha256": "ff2ac5a047f3bf0181161f89d4c1fdc79bce956bd58deff9f9ac825da3795231"
+      },
+      "contracts.replay_collection": {
+        "path": "src/dota_items/contracts/replay_collection.py",
+        "sha256": "bba074058bb847e22020612da486e8a406fd3614802876e5fe1be4b6772957dd"
+      },
+      "contracts.replay_context": {
+        "path": "src/dota_items/contracts/replay_context.py",
+        "sha256": "e20e682e0ea89f932c9098ac3b137d39ec590c6181ae136a356f94271ae9a0ea"
+      },
+      "data.replay_bundle": {
+        "path": "src/dota_items/data/replay_bundle.py",
+        "sha256": "87bf1b3ddf5084fc42e029cea95a4f6a516e5a8e65fa1a6aca24209519f1900c"
+      },
+      "data.replay_bundle_quality": {
+        "path": "src/dota_items/data/replay_bundle_quality.py",
+        "sha256": "dfce764cf708d8a07d3a17c31e948c61ca1b995d01abef4313c0e6bee5258f0b"
+      },
+      "data.replay_quality": {
+        "path": "src/dota_items/data/replay_quality.py",
+        "sha256": "fc8e01ba99900709de4eb1a96906aa35b9cfa746193f952728fd606a338a3776"
+      },
+      "data.source_io": {
+        "path": "src/dota_items/data/source_io.py",
+        "sha256": "3ffdfb6e5f3799444d2a0956f03330eed5df35eb35d8104bb2f7d52292a5db9e"
+      },
+      "domain": {
+        "path": "src/dota_items/domain.py",
+        "sha256": "4a78c82bbba7933b8dbb99090ef5e11a8b2d132bdb6b06590d4fbe084a8ce0d0"
+      },
+      "normalize": {
+        "path": "src/dota_items/normalize.py",
+        "sha256": "4def13b6ccdabc5ffd70e75f2280a31032e870bd2126c831ca7f6488e010c6a2"
+      },
+      "sources.gem_capture": {
+        "path": "src/dota_items/sources/gem_capture.py",
+        "sha256": "99e6845f0275286d3a902a802665d989345d3ab1cc3f0bda54810f7ccab3f2fc"
+      },
+      "sources.gem_capture_creeps": {
+        "path": "src/dota_items/sources/gem_capture_creeps.py",
+        "sha256": "809408dbb98c686f93b1b8cf8eed67214c35d42786d2aa65073eb418f8d5bef1"
+      },
+      "sources.gem_capture_extras": {
+        "path": "src/dota_items/sources/gem_capture_extras.py",
+        "sha256": "101a6c8219a1df6f0325e25844615730c2af881035902f7218f5ad7579fe9688"
+      },
+      "sources.gem_capture_v3": {
+        "path": "src/dota_items/sources/gem_capture_v3.py",
+        "sha256": "e8ebeb2c52b6568d56979c7854a685fdb1e658acd4e7848515b12e3d597a040e"
+      },
+      "sources.gem_observations": {
+        "path": "src/dota_items/sources/gem_observations.py",
+        "sha256": "60ccf5a93d9573708f13c7cb89973cccd29f5d20bf795c13aaaf3358f45205a7"
+      },
+      "sources.gem_replay": {
+        "path": "src/dota_items/sources/gem_replay.py",
+        "sha256": "7a7826955552a0a9bf9b94477c9499c679025e0beb48450ea9c4e4fe12ec32a8"
+      },
+      "sources.replay_capture_bundle": {
+        "path": "src/dota_items/sources/replay_capture_bundle.py",
+        "sha256": "9b8d92532c50a40bf218e5aae3b27a30f0050acd28ef83f291d874faf9be5a38"
+      },
+      "storage": {
+        "path": "src/dota_items/storage.py",
+        "sha256": "bafb163eae7a2a9bcfc7a606cb54ffdc339b5f7e32bbe0f8d89b2bf9cb58fe45"
+      },
+      "workflow.replay_processing": {
+        "path": "src/dota_items/workflow/replay_processing.py",
+        "sha256": "6ddb6db6d27ec62c38e49f92afd9a379f955b1b45e64a7ebd5f896709b64c6fb"
+      }
+    }
+  },
+  "matches": [
+    {
+      "match_id": 9103408009,
+      "patch": "7.42",
+      "game_build": 6993,
+      "duration_seconds": 1373,
+      "quality": "passed",
+      "state_rows": 1374,
+      "extras_rows": 1374,
+      "excluded_state_rows": 145,
+      "excluded_extras_rows": 145,
+      "ten_hero_rows": 1374,
+      "bundle_bytes": 10848698,
+      "manifest_sha256": "12493432acb00bd305e797bfbe3f22ac6d5b44c4848bd4aa86f95a34cc25084f",
+      "manifest_path": "data/replay-bundles-742-20261127/jobs/9103408009/attempts/af96a6934d06452aaf3f0e69c0d20855/bundle/manifest.json",
+      "artifacts": {
+        "extras": {
+          "codec": "gzip",
+          "compressed_bytes": 279680,
+          "compressed_sha256": "bb87716f0dfb05cc9ceafdde457fef4a8c0de3ccd39719befbf24fa032f26fc5",
+          "format": "jsonl",
+          "path": "extras-v1.jsonl.gz",
+          "uncompressed_bytes": 1940951,
+          "uncompressed_sha256": "de8126273691eb377d03675afcbab5da6c4d1c1333c8643dc6bb1bc5137ae5ae"
+        },
+        "normalized": {
+          "codec": "gzip",
+          "compressed_bytes": 2488052,
+          "compressed_sha256": "41877bcd1c62f8c157d72404ab61ac2154b7a205c4bbe0e8f8b68f64edbe0ccc",
+          "format": "json",
+          "path": "normalized.json.gz",
+          "uncompressed_bytes": 64435973,
+          "uncompressed_sha256": "459dff24894af4c39fe110e2ce494ed11d2584b5d77c46ef4e70a83ec5a9adfc"
+        },
+        "raw": {
+          "codec": "gzip",
+          "compressed_bytes": 2170372,
+          "compressed_sha256": "ad756ffa5d7b2d66b79fefda76934d84a124c6062bf1886f34e83fb5cddc1bf2",
+          "format": "json",
+          "path": "raw-gem.json.gz",
+          "uncompressed_bytes": 66392849,
+          "uncompressed_sha256": "b8ce8ad2f95ec10f5765b4969a50fe92bdc4c9cb310d82819325f4fb70635fdc"
+        },
+        "state": {
+          "codec": "gzip",
+          "compressed_bytes": 5797963,
+          "compressed_sha256": "58033425a2fa315f48b0656fb65a8c9f0670e87370bb31c58689f070672dc087",
+          "format": "jsonl",
+          "path": "state-v3.jsonl.gz",
+          "uncompressed_bytes": 54086182,
+          "uncompressed_sha256": "34ff23038553aa2a7bf8ab00ea150c893f1ffbb4e14fdeacb311137e14ddf561"
+        }
+      },
+      "demo_source": {
+        "size_bytes": 26808790,
+        "sha256": "d8f4c7f5040d4e1d2da243ba741767e96f71771bcb4ac80b4a7375cdc9e0dbf7"
+      }
+    },
+    {
+      "match_id": 9103407326,
+      "patch": "7.42",
+      "game_build": 6993,
+      "duration_seconds": 1272,
+      "quality": "passed",
+      "state_rows": 1273,
+      "extras_rows": 1273,
+      "excluded_state_rows": 146,
+      "excluded_extras_rows": 146,
+      "ten_hero_rows": 1273,
+      "bundle_bytes": 11055584,
+      "manifest_sha256": "916fa8e9a6a801b21263da1732df7c795b2078c9f6f0f66d2ffeb69c098c0d63",
+      "manifest_path": "data/replay-bundles-742-20261127/jobs/9103407326/attempts/8b73166a245745e1940672394157f95f/bundle/manifest.json",
+      "artifacts": {
+        "extras": {
+          "codec": "gzip",
+          "compressed_bytes": 253440,
+          "compressed_sha256": "9eba652dc084d56dc185239baff12e5dba9fccf186d851ddd592258ddc1be566",
+          "format": "jsonl",
+          "path": "extras-v1.jsonl.gz",
+          "uncompressed_bytes": 1743416,
+          "uncompressed_sha256": "03ee3bd81b0e3e9552a4dd8939489928c5752e62b79dc209eb3f6e76c246a245"
+        },
+        "normalized": {
+          "codec": "gzip",
+          "compressed_bytes": 2754706,
+          "compressed_sha256": "b45a7c63e12217e3e7e8a3943ae50d23202b9306d4b6ccf230c92b0fc02f104d",
+          "format": "json",
+          "path": "normalized.json.gz",
+          "uncompressed_bytes": 76704697,
+          "uncompressed_sha256": "0fa66621cf845d84b2d5ad76a857ee168f81acc7b6d257508c85873d65f01a99"
+        },
+        "raw": {
+          "codec": "gzip",
+          "compressed_bytes": 2349955,
+          "compressed_sha256": "88fe3b22e4952d72e15723efb261147f65aabdda2f10f0ecf09d082aac4ab9fe",
+          "format": "json",
+          "path": "raw-gem.json.gz",
+          "uncompressed_bytes": 74885477,
+          "uncompressed_sha256": "e8398e7b07ecbc4dbc23f9ad2981434f652eb20fe1c4acb54b489e735dcd7655"
+        },
+        "state": {
+          "codec": "gzip",
+          "compressed_bytes": 5585976,
+          "compressed_sha256": "1ee4eccbb43796a5c2d6e696aae14acd89b0d43917a0513a4cf727f1f157a6e2",
+          "format": "jsonl",
+          "path": "state-v3.jsonl.gz",
+          "uncompressed_bytes": 54683968,
+          "uncompressed_sha256": "8817a56a97942a0f188dc05c82ce513edd2b23b5135c9ffb5410569078c5a784"
+        }
+      },
+      "demo_source": {
+        "size_bytes": 30996532,
+        "sha256": "4e22815abcd5a27057dd33022c93022b816669f655d9574e874b69eee8993555"
+      }
+    },
+    {
+      "match_id": 9103406760,
+      "patch": "7.42",
+      "game_build": 6993,
+      "duration_seconds": 1156,
+      "quality": "passed",
+      "state_rows": 1157,
+      "extras_rows": 1157,
+      "excluded_state_rows": 146,
+      "excluded_extras_rows": 146,
+      "ten_hero_rows": 1157,
+      "bundle_bytes": 8026810,
+      "manifest_sha256": "76f8609e9ab5f30097352c7a6ecec9c09875e685054c24eccfc49c0c1a9d4285",
+      "manifest_path": "data/replay-bundles-742-20261127/jobs/9103406760/attempts/07d08a0702354cefa2cad37775e0a2b8/bundle/manifest.json",
+      "artifacts": {
+        "extras": {
+          "codec": "gzip",
+          "compressed_bytes": 219394,
+          "compressed_sha256": "10f81b763b21270ec49db625c9b3f41be4ab9aeca209550f59f2d6c612424671",
+          "format": "jsonl",
+          "path": "extras-v1.jsonl.gz",
+          "uncompressed_bytes": 1510249,
+          "uncompressed_sha256": "c7a620fa5f6b7aed46957d4314659c2edc5794bda6030d601bffdf8da0cd32ef"
+        },
+        "normalized": {
+          "codec": "gzip",
+          "compressed_bytes": 1732979,
+          "compressed_sha256": "bd386e7d3ecf1defdc5445ded109113a9afc06e229e5bffea10e2f388e02bcc2",
+          "format": "json",
+          "path": "normalized.json.gz",
+          "uncompressed_bytes": 44887499,
+          "uncompressed_sha256": "007daf12de66b7a49009ad1bc73444c14abf5cc7d0fbea77dd7d4d62bf847ce7"
+        },
+        "raw": {
+          "codec": "gzip",
+          "compressed_bytes": 1502200,
+          "compressed_sha256": "c5daec7f96d7e1727c686792ef1b46f1a505827e62d04d7049c081eaf3e38717",
+          "format": "json",
+          "path": "raw-gem.json.gz",
+          "uncompressed_bytes": 46860888,
+          "uncompressed_sha256": "fb7f2fb02b160895f5b5da052c712acdaa2d52770405cb2231b87cec7831a3f4"
+        },
+        "state": {
+          "codec": "gzip",
+          "compressed_bytes": 4460730,
+          "compressed_sha256": "d02aca3e85f910795da4a0032c20081dc075d5736d76a8e9ccfb8d28f70bd1e7",
+          "format": "jsonl",
+          "path": "state-v3.jsonl.gz",
+          "uncompressed_bytes": 40439121,
+          "uncompressed_sha256": "012f37a6c3673744ea56e9e5646a793fe5cb538f298f4a2332e9ae00852cb401"
+        }
+      },
+      "demo_source": {
+        "size_bytes": 19378724,
+        "sha256": "8e6fd64eca8806932d121f1a607fd4918bf4d5e26d725df6991bc12e597a500b"
+      }
+    },
+    {
+      "match_id": 9103406692,
+      "patch": "7.42",
+      "game_build": 6993,
+      "duration_seconds": 1444,
+      "quality": "passed",
+      "state_rows": 1445,
+      "extras_rows": 1445,
+      "excluded_state_rows": 146,
+      "excluded_extras_rows": 146,
+      "ten_hero_rows": 1445,
+      "bundle_bytes": 11336820,
+      "manifest_sha256": "71bc2b0eee003740aad5b7e6a276b95b01fff7a98364f29bf69d245e5018a919",
+      "manifest_path": "data/replay-bundles-742-20261127/jobs/9103406692/attempts/3a0ea08ed7fd48469af01db1ac0c5474/bundle/manifest.json",
+      "artifacts": {
+        "extras": {
+          "codec": "gzip",
+          "compressed_bytes": 287126,
+          "compressed_sha256": "6d3ed2feefcf510162a7f687b9474c2a77b8dd8f8ed8d13665b39882b1db78d0",
+          "format": "jsonl",
+          "path": "extras-v1.jsonl.gz",
+          "uncompressed_bytes": 1953423,
+          "uncompressed_sha256": "48d8640ba93ec2ec94ea14d825d59136b44a6ca312d0d4f999579600214fe9ef"
+        },
+        "normalized": {
+          "codec": "gzip",
+          "compressed_bytes": 2714028,
+          "compressed_sha256": "1d05db0fdc1fb6a2491ec3c2dc7a04c8a3ff7b0943af4d1ed1228123cfa8b05e",
+          "format": "json",
+          "path": "normalized.json.gz",
+          "uncompressed_bytes": 74416599,
+          "uncompressed_sha256": "7536d86062c7ee91499cb4ad3b2b0b6d79e6796ffcf409df9bef4f9319ef8551"
+        },
+        "raw": {
+          "codec": "gzip",
+          "compressed_bytes": 2441320,
+          "compressed_sha256": "a7ad84d2aef95a375baf8ae40bd6a5253c3de179929de130af55923c38867372",
+          "format": "json",
+          "path": "raw-gem.json.gz",
+          "uncompressed_bytes": 81539147,
+          "uncompressed_sha256": "42def2b5e782c2acac0689b3eb569d3eeebb33139682ad532c12d1f4730e7fd5"
+        },
+        "state": {
+          "codec": "gzip",
+          "compressed_bytes": 5782839,
+          "compressed_sha256": "6f369f75aa07d580958362cb589ad97b4aa46642193a2a52290774a3ca02cf42",
+          "format": "jsonl",
+          "path": "state-v3.jsonl.gz",
+          "uncompressed_bytes": 53284409,
+          "uncompressed_sha256": "b055e7d9b2d7ea8b241613b2a3276b0ca7d48ee6f45728ea62cd1fdc07bbfcad"
+        }
+      },
+      "demo_source": {
+        "size_bytes": 27673481,
+        "sha256": "5624e72ef24f50d07e06b494977e946050824d2313f7dc0807a183a525b292f4"
+      }
+    },
+    {
+      "match_id": 9103406291,
+      "patch": "7.42",
+      "game_build": 6993,
+      "duration_seconds": 1518,
+      "quality": "passed",
+      "state_rows": 1519,
+      "extras_rows": 1519,
+      "excluded_state_rows": 145,
+      "excluded_extras_rows": 145,
+      "ten_hero_rows": 1519,
+      "bundle_bytes": 12087643,
+      "manifest_sha256": "2b026fb2b38bc6728dde06e5ff068afafe6aed2ed4dfa93273f8b42fd0f6c072",
+      "manifest_path": "data/replay-bundles-742-20261127/jobs/9103406291/attempts/4b44687b0d8d45908aa4aad364878214/bundle/manifest.json",
+      "artifacts": {
+        "extras": {
+          "codec": "gzip",
+          "compressed_bytes": 309935,
+          "compressed_sha256": "9ee7937b15ae0540bb2cae4c8c3828bc156e9b3448f606530d592549f1bc0f41",
+          "format": "jsonl",
+          "path": "extras-v1.jsonl.gz",
+          "uncompressed_bytes": 2129275,
+          "uncompressed_sha256": "19324be8ab93cb6a630c2db35180a300fc1547605ed6c9f99cb5665949cada20"
+        },
+        "normalized": {
+          "codec": "gzip",
+          "compressed_bytes": 2953917,
+          "compressed_sha256": "72711492a2404b4742dccd826b6a412a19fe21722b06a81356417610703cf0e3",
+          "format": "json",
+          "path": "normalized.json.gz",
+          "uncompressed_bytes": 79172990,
+          "uncompressed_sha256": "4965ebd40f532fe2778ba32af5e32324a32aabff41bad1563d1e110b8664e5c8"
+        },
+        "raw": {
+          "codec": "gzip",
+          "compressed_bytes": 2539844,
+          "compressed_sha256": "2f93c7290ab0da3cfb61a9a0326a0924cd15bb2533e61d7a393f1d05db2c87ba",
+          "format": "json",
+          "path": "raw-gem.json.gz",
+          "uncompressed_bytes": 79002210,
+          "uncompressed_sha256": "b7b33f88b3662ac8466541b5e4693ccb4f8f77c191d45029a0895f66a6ef95ff"
+        },
+        "state": {
+          "codec": "gzip",
+          "compressed_bytes": 6172476,
+          "compressed_sha256": "7e29c668379de8e4ca662a702c82f251e629a7d8bfa03f9312e056d9c204a9e3",
+          "format": "jsonl",
+          "path": "state-v3.jsonl.gz",
+          "uncompressed_bytes": 56382223,
+          "uncompressed_sha256": "0b03b1c57f54e23c9a63c0688548148899361495efcfa3f73eba02eb8e0629a3"
+        }
+      },
+      "demo_source": {
+        "size_bytes": 31645359,
+        "sha256": "815997f71f6c467a205ec8a9b54c011d8381c79d2b30b15a314a727519383be8"
+      }
+    },
+    {
+      "match_id": 9081264566,
+      "patch": "7.41f",
+      "game_build": 6972,
+      "duration_seconds": 3604,
+      "quality": "passed",
+      "state_rows": 3605,
+      "extras_rows": 3605,
+      "excluded_state_rows": 145,
+      "excluded_extras_rows": 145,
+      "ten_hero_rows": 3605,
+      "bundle_bytes": 29944296,
+      "manifest_sha256": "671bbbce30cfbdd83ed5874d3525fc734101426f1d0572aa589f59735c6ced7b",
+      "manifest_path": "data/replay-bundles-741f-largo-20261127/jobs/9081264566/attempts/f4f07c0987914966b4339557ae4ccea3/bundle/manifest.json",
+      "artifacts": {
+        "extras": {
+          "codec": "gzip",
+          "compressed_bytes": 946630,
+          "compressed_sha256": "24b5a00e4aeb2d55891730a3b3601b9ea038146fccb37d21f51559e06814a833",
+          "format": "jsonl",
+          "path": "extras-v1.jsonl.gz",
+          "uncompressed_bytes": 6264174,
+          "uncompressed_sha256": "cdcf743f6b57b64d60cb7f201c4f462f5b06534e979b745f63e8c3b41e0920ec"
+        },
+        "normalized": {
+          "codec": "gzip",
+          "compressed_bytes": 6713252,
+          "compressed_sha256": "8fc14949f69e5776cf4f688a4d7c1c3d382cbe991d493497e5e18d27f1574f2f",
+          "format": "json",
+          "path": "normalized.json.gz",
+          "uncompressed_bytes": 190544400,
+          "uncompressed_sha256": "81d0e41f97a8f8006731547cb903aab6e6e5a7f6362ab529f559fcd23b6a6b9a"
+        },
+        "raw": {
+          "codec": "gzip",
+          "compressed_bytes": 6093028,
+          "compressed_sha256": "cc9db23210e899dbffd35ef3a062b15d839cd6011b1b3f8dba9ce0bc3e5604ee",
+          "format": "json",
+          "path": "raw-gem.json.gz",
+          "uncompressed_bytes": 217827275,
+          "uncompressed_sha256": "9ec81744c88b25a3d00ca94090c1b17cb901cdc95e7846888f5f64b7ca698921"
+        },
+        "state": {
+          "codec": "gzip",
+          "compressed_bytes": 16081052,
+          "compressed_sha256": "9c56ff20441ed22ae603f4fa01b6d997448e9a187f4c5ca411bd4d86024c5c34",
+          "format": "jsonl",
+          "path": "state-v3.jsonl.gz",
+          "uncompressed_bytes": 145484367,
+          "uncompressed_sha256": "c038309e6edaaeaab57d67095222f90fc17197c969504b08ef80804fbaa95d71"
+        }
+      },
+      "demo_source": {
+        "size_bytes": 76555857,
+        "sha256": "b962316f74aeba4ccc2b1f182c62ed20ee3f0db0634fcaefdf45bbe31f6585f7"
+      }
+    }
+  ],
+  "real_run_seconds": {
+    "five_742": 289.573,
+    "one_741f_long_largo": 155.725
+  },
+  "space": {
+    "metric": "logical_file_bytes",
+    "old_five_match_root": 3416902284,
+    "old_work_directory": 3241572147,
+    "new_five_bundles_with_manifests": 53355555,
+    "original_five_demo_archives": 136502886,
+    "new_bundles_plus_original_archives": 189858441,
+    "reduction_fraction_vs_old_root": 0.9444355075973252,
+    "disk_freed_bytes": 0,
+    "scope": "New footprint counts final bundles and original demos; excludes retained old/failed attempts, logs and plan/metadata receipts.",
+    "equivalent_old_normalized_and_state_bytes": 36508261,
+    "equivalent_new_normalized_and_state_bytes": 40443666,
+    "compressed_equivalent_change_fraction": 0.10779491797760521
+  },
+  "network_discovery": {
+    "patch": "7.42a",
+    "intended_regression": "duration>=3600; hero 155",
+    "status": "blocked_at_anchor",
+    "http_status": 400,
+    "response_error": "AggregateError",
+    "same_route_diagnostic": "same_response",
+    "metadata_requests": 0,
+    "demo_downloads": 0
+  },
+  "validation_logs": [
+    "reports/replay-pipeline-20261127/final-real-runs.log",
+    "reports/replay-pipeline-20261127/check-final.log",
+    "reports/replay-pipeline-20261127/real-comparison.log",
+    "reports/replay-pipeline-20261127/cache-verification.json"
+  ],
+  "limitations": [
+    "Engineering quality does not certify map or model support",
+    "7.42a discovery and a newly added selectable hero have not been validated on real samples",
+    "Pinned Gem 0.10.0 compatibility source retained; no new parser dependency certification",
+    "Old complete and failed attempts retained; measured savings are prospective",
+    "Local hashes/cache verification have no interruptible hard wall-clock limit"
+  ],
+  "independent_comparison": {
+    "report_path": "reports/replay-pipeline-20261127/real-comparison.json",
+    "report_sha256": "7d406799dbaf7b3a844df50cdf42aefa29f93c8e5fd1edcd8032b19cb0f61bf9",
+    "verifier_sha256": "cb97df78053b875e6e35c4ea91228288059bbc07b120c19e2d7c8701f82d744a",
+    "elapsed_seconds": 42.595,
+    "input_files": 419,
+    "input_drift": [],
+    "status_counts": {
+      "verified_comparable_outputs": 5,
+      "comparison_requires_review": 1
+    },
+    "matches": [
+      {
+        "match_id": 9103408009,
+        "status": "verified_comparable_outputs",
+        "normalized": {
+          "strict_equal_excluding_only": [
+            "evidence_source",
+            "evidence_sha256"
+          ],
+          "strict_equal": true,
+          "top_level_differences": {},
+          "identity_differences": {},
+          "differences_confined_to_producer_identity": false,
+          "legacy_producer_certification": "not_claimed_by_content_equality",
+          "evidence_binding": {
+            "old": {
+              "evidence_source": "raw-gem.json",
+              "evidence_sha256": "b8ce8ad2f95ec10f5765b4969a50fe92bdc4c9cb310d82819325f4fb70635fdc"
+            },
+            "new": {
+              "evidence_source": "raw-gem.json.gz",
+              "evidence_sha256": "b8ce8ad2f95ec10f5765b4969a50fe92bdc4c9cb310d82819325f4fb70635fdc"
+            }
+          }
+        },
+        "raw_status": "byte_identical",
+        "state_status": "equal_in_game_rows",
+        "state_in_game_rows": 1374,
+        "extras_status": "not_compared_no_legacy_channel"
+      },
+      {
+        "match_id": 9103407326,
+        "status": "verified_comparable_outputs",
+        "normalized": {
+          "strict_equal_excluding_only": [
+            "evidence_source",
+            "evidence_sha256"
+          ],
+          "strict_equal": true,
+          "top_level_differences": {},
+          "identity_differences": {},
+          "differences_confined_to_producer_identity": false,
+          "legacy_producer_certification": "not_claimed_by_content_equality",
+          "evidence_binding": {
+            "old": {
+              "evidence_source": "raw-gem.json",
+              "evidence_sha256": "e8398e7b07ecbc4dbc23f9ad2981434f652eb20fe1c4acb54b489e735dcd7655"
+            },
+            "new": {
+              "evidence_source": "raw-gem.json.gz",
+              "evidence_sha256": "e8398e7b07ecbc4dbc23f9ad2981434f652eb20fe1c4acb54b489e735dcd7655"
+            }
+          }
+        },
+        "raw_status": "byte_identical",
+        "state_status": "equal_in_game_rows",
+        "state_in_game_rows": 1273,
+        "extras_status": "not_compared_no_legacy_channel"
+      },
+      {
+        "match_id": 9103406760,
+        "status": "verified_comparable_outputs",
+        "normalized": {
+          "strict_equal_excluding_only": [
+            "evidence_source",
+            "evidence_sha256"
+          ],
+          "strict_equal": true,
+          "top_level_differences": {},
+          "identity_differences": {},
+          "differences_confined_to_producer_identity": false,
+          "legacy_producer_certification": "not_claimed_by_content_equality",
+          "evidence_binding": {
+            "old": {
+              "evidence_source": "raw-gem.json",
+              "evidence_sha256": "fb7f2fb02b160895f5b5da052c712acdaa2d52770405cb2231b87cec7831a3f4"
+            },
+            "new": {
+              "evidence_source": "raw-gem.json.gz",
+              "evidence_sha256": "fb7f2fb02b160895f5b5da052c712acdaa2d52770405cb2231b87cec7831a3f4"
+            }
+          }
+        },
+        "raw_status": "byte_identical",
+        "state_status": "equal_in_game_rows",
+        "state_in_game_rows": 1157,
+        "extras_status": "not_compared_no_legacy_channel"
+      },
+      {
+        "match_id": 9103406692,
+        "status": "verified_comparable_outputs",
+        "normalized": {
+          "strict_equal_excluding_only": [
+            "evidence_source",
+            "evidence_sha256"
+          ],
+          "strict_equal": true,
+          "top_level_differences": {},
+          "identity_differences": {},
+          "differences_confined_to_producer_identity": false,
+          "legacy_producer_certification": "not_claimed_by_content_equality",
+          "evidence_binding": {
+            "old": {
+              "evidence_source": "raw-gem.json",
+              "evidence_sha256": "42def2b5e782c2acac0689b3eb569d3eeebb33139682ad532c12d1f4730e7fd5"
+            },
+            "new": {
+              "evidence_source": "raw-gem.json.gz",
+              "evidence_sha256": "42def2b5e782c2acac0689b3eb569d3eeebb33139682ad532c12d1f4730e7fd5"
+            }
+          }
+        },
+        "raw_status": "byte_identical",
+        "state_status": "equal_in_game_rows",
+        "state_in_game_rows": 1445,
+        "extras_status": "not_compared_no_legacy_channel"
+      },
+      {
+        "match_id": 9103406291,
+        "status": "verified_comparable_outputs",
+        "normalized": {
+          "strict_equal_excluding_only": [
+            "evidence_source",
+            "evidence_sha256"
+          ],
+          "strict_equal": true,
+          "top_level_differences": {},
+          "identity_differences": {},
+          "differences_confined_to_producer_identity": false,
+          "legacy_producer_certification": "not_claimed_by_content_equality",
+          "evidence_binding": {
+            "old": {
+              "evidence_source": "raw-gem.json",
+              "evidence_sha256": "b7b33f88b3662ac8466541b5e4693ccb4f8f77c191d45029a0895f66a6ef95ff"
+            },
+            "new": {
+              "evidence_source": "raw-gem.json.gz",
+              "evidence_sha256": "b7b33f88b3662ac8466541b5e4693ccb4f8f77c191d45029a0895f66a6ef95ff"
+            }
+          }
+        },
+        "raw_status": "byte_identical",
+        "state_status": "equal_in_game_rows",
+        "state_in_game_rows": 1519,
+        "extras_status": "not_compared_no_legacy_channel"
+      },
+      {
+        "match_id": 9081264566,
+        "status": "comparison_requires_review",
+        "normalized": {
+          "strict_equal_excluding_only": [
+            "evidence_source",
+            "evidence_sha256"
+          ],
+          "strict_equal": false,
+          "top_level_differences": {
+            "adapter_fingerprint": [
+              {
+                "path": "adapter_fingerprint",
+                "kind": "value"
+              }
+            ]
+          },
+          "identity_differences": {
+            "adapter_fingerprint": {
+              "old": "e498fe53677507e33ba1e2ed7190c32c5d34a7c593092bbbed98b84226698d77",
+              "new": "f4bf6993de0a30737c771abec40edeb47addfc343df556b3988c5d2e5104419a"
+            }
+          },
+          "differences_confined_to_producer_identity": true,
+          "legacy_producer_certification": "not_established",
+          "evidence_binding": {
+            "old": {
+              "evidence_source": "raw-gem.json",
+              "evidence_sha256": "9ec81744c88b25a3d00ca94090c1b17cb901cdc95e7846888f5f64b7ca698921"
+            },
+            "new": {
+              "evidence_source": "raw-gem.json.gz",
+              "evidence_sha256": "9ec81744c88b25a3d00ca94090c1b17cb901cdc95e7846888f5f64b7ca698921"
+            }
+          }
+        },
+        "raw_status": "unknown_no_legacy_raw",
+        "state_status": "equal_in_game_rows",
+        "state_in_game_rows": 3605,
+        "extras_status": "not_compared_no_legacy_channel"
+      }
+    ]
+  },
+  "real_download_smoke": {
+    "match_id": 9103408009,
+    "size_bytes": 26808790,
+    "sha256": "d8f4c7f5040d4e1d2da243ba741767e96f71771bcb4ac80b4a7375cdc9e0dbf7",
+    "matches_original_archive": true
+  },
+  "cache_verification": [
+    {
+      "label": "pilot",
+      "returncode": 0,
+      "seconds": 15.037,
+      "attempts_before": 7,
+      "attempts_after": 7,
+      "attempts_unchanged": true,
+      "succeeded": 5,
+      "statuses": [
+        "verified",
+        "verified",
+        "verified",
+        "verified",
+        "verified"
+      ]
+    },
+    {
+      "label": "old-long",
+      "returncode": 0,
+      "seconds": 8.868,
+      "attempts_before": 1,
+      "attempts_after": 1,
+      "attempts_unchanged": true,
+      "succeeded": 1,
+      "statuses": [
+        "verified"
+      ]
+    }
+  ],
+  "patch_window_742": {
+    "boundary_buffer_seconds": 3600,
+    "patch": "7.42",
+    "release_timestamp": 1794988800,
+    "retrieved_at": "2026-11-26T14:50:23.752178+00:00",
+    "snapshot_sha256": "5e330517771f89b44c080e643bc9ea1bcd515053dbbe2a243d47f559e4de4218",
+    "source_url": "https://www.dota2.com/datafeed/patchnoteslist?language=english",
+    "upper_exclusive": 1795507200,
+    "upper_kind": "next_release"
+  },
+  "single_state_compression_benchmark": {
+    "match_id": 9103407326,
+    "report_path": "reports/replay-pipeline-20261127/state-storage-9103407326/report.json",
+    "sha256": "5ca4f33a8bde4e6c6e1ad3766a86e46cc7c4d18bccff36b1602e29833c5fa550",
+    "rows_including_header": 1274,
+    "all_row_semantics_equal": true,
+    "cases": [
+      {
+        "method": "gzip6_original_bytes",
+        "bytes": 5585976,
+        "seconds": 0.69
+      },
+      {
+        "method": "gzip9_original_bytes",
+        "bytes": 5172892,
+        "seconds": 2.11
+      },
+      {
+        "method": "gzip6_compact_json",
+        "bytes": 5301669,
+        "seconds": 1.44
+      },
+      {
+        "method": "gzip9_compact_json",
+        "bytes": 5010402,
+        "seconds": 2.05
+      }
+    ],
+    "production_changed": false,
+    "limits": "Single bounded recompression benchmark, not whole replay decode timing; existing bundles retained."
+  }
+}

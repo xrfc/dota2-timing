@@ -1,6 +1,20 @@
 # 脚本职责导航
 
-生成一号位兵线或打野决策复盘页使用 lane_decision_review.py（打野用 --mode jungle），见[口径与命令](../docs/lane-decision-review.md)。
+2026-11-27：`capture_viewer_wire.py`只收参数，运行逻辑在B线experiments；`build_viewer_membership.py`经严格来源复验生成去重协议成员表。命令及准入边界见[说明](../docs/viewer-wire-and-tree-identity.md)。
+
+2026-11-27最新：`build_mechanics_evidence_assets.py --spec <JSON> --output <新目录>`从登记基线及14条补证生成新准入和保守派生，拒绝未登记基线、来源漂移和覆盖发布。命令、输出及局限见[工程证据准入](../docs/mechanics-evidence-admission.md#接口运行与验收)。
+
+2026-11-27当前工程入口：`build_patch_decision_audit.py --spec <显式JSON> --output <新目录>`复用固定八场补证，生成当时观察卡片、时序/扰动验证、营地诊断与机制附件，原子发布且拒绝覆盖。命令与spec选择见[决策时证据](../docs/patch-decision-evidence.md#验证与工程探针)；不评分、不切换正式知识入口。
+
+2026-11-27再续：`capture_patch_evidence.py`捕获独立目标/完整视野字段，`build_patch_evidence.py`发布营地/复活/视野补证；spec与复验见[说明](../docs/patch-evidence-followup.md)。
+
+2026-11-27续：`capture_map_runtime.py --spec ... --output <新目录>`捕获动态或视野事实；`build_patch_review_assets.py --spec ... --output <新目录>`统一发布版本固定的候选资产。配置与边界见[候选行动资产](../docs/patch-review-assets.md)。
+
+7.42候选适配：`inspect_patch_assets.py --spec <固定输入清单> --output <新目录>`只做地图/机制来源与录像几何诊断；不开放行动排序或训练。配置与API见[说明](../docs/patch-asset-binding.md)。
+
+静态地标补提取：`capture_map_landmarks.py --replay-manifest <固定manifest> --manifest-sha256 <SHA> --patch 7.42 --compat <已有兼容目录> --output <新目录>`。只读取已有非留出demo，产出`capture.json`与来源回执，当前需Linux无覆盖原子发布支持。
+
+生成一号位兵线或打野决策复盘页使用 lane_decision_review_v2.py（打野用 --mode jungle），见[口径与命令](../docs/lane-decision-review.md)。
 
 > 2026-10-27对照包增量：当前8769改为两例[支援/刷钱对照与试标草稿](../docs/decision-comparison-2026-10-27.md)，新增双方同刻可见血量、队友库存、TP到场条件拆解与草稿下载。蓝量已定位schema版本初始化导致范围65536→8192的问题，但未修正旧数据/生产者；敌方装备/CD、完整施放、合法落点/路径及数值收益仍未齐。旧包/旧结果保留，非盲评、非正式标签，不授权训练；后文旧状态按原阶段解释。
 

@@ -1,6 +1,6 @@
 import copy
 
-from dota_items.data import lane_decisions as lane
+from dota_items.data import lane_decisions_review_v2 as lane
 
 
 def position(team, points):

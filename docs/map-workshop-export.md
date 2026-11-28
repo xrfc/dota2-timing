@@ -1,5 +1,7 @@
 # 用Workshop Tools导出7.42地图数据（用户自己操作）
 
+2026-11-27：本地已收到2026-11-23导出，目录`data/workshop-map-742-build26825343`，client 6989、Steam build 26825343；不需要重复导出。五文件校验和新旧对比见[7.42绑定](patch-asset-binding.md)。以下操作步骤保留给后续版本使用，上游最新版本的旧查询仅代表当时结果。
+
 上游`leamare/dota-map-coordinates`最新仍是7.41（2026-11-20查）。它的数据是在Dota 2的Workshop Tools里跑一个自定义游戏导出的，用户可以自己在7.42上跑一遍。按工作区规则，助手不操作用户的Dota 2客户端，所以本页的步骤都由用户来做；导出的文件交给助手后，后面的处理不用联网。
 
 上游README写得很简（[README](https://github.com/leamare/dota-map-coordinates#readme)），下面的步骤按README和它的脚本整理，**助手没有亲自跑过**，第一次做可能会遇到README没写到的问题，遇到了把报错发给助手。

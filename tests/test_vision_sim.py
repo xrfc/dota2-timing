@@ -1,4 +1,4 @@
-from dota_items.data import vision_sim as v
+from dota_items.data import vision_samples_review_v2 as v
 
 ORIGIN = v.OFFSET
 

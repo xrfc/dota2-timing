@@ -15,14 +15,19 @@ to correct. Everything here is a draft
 """
 
 import argparse
+import hashlib
 import json
 import math
+import os
+import tempfile
 from collections import Counter, deque
 from pathlib import Path
+from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "data/map-reference-2026-10-26-v1/coordinates/data"
-MAP_IMAGE = ROOT / "data/map-reference-2026-10-26-v1/gem/assets/maps/Game_map_7.41.jpg"
+REFERENCE_DIR = ROOT / "data/map-reference-2026-10-26-v1"
+SOURCE = REFERENCE_DIR / "coordinates/data"
+MAP_IMAGE = REFERENCE_DIR / "gem/assets/maps/Game_map_7.41.jpg"
 FONT = Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc")
 FONT_FALLBACK = Path("/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc")
 CELL = 64
@@ -562,6 +567,72 @@ def draft(args):
         print(f"  {row['id']:24} {row['name_zh']:12} {row['cells']}")
 
 
+# SHA-256 of the raw blobs at the repository's two original map reference commits.
+COORDINATES_SOURCE = (
+    "https://raw.githubusercontent.com/leamare/dota-map-coordinates/"
+    "f793787ecf402f52c9e698da260b02f041256898"
+)
+GEM_MAP_SOURCE = (
+    "https://raw.githubusercontent.com/whanyu1212/gem-dota/25fb97dd90973b92e53fcbf05880a4cfe469f329"
+)
+REVIEW_MAP_FILES = {
+    "coordinates/data/mapdata.json": (
+        f"{COORDINATES_SOURCE}/data/mapdata.json",
+        111925,
+        "33d7ce9109cb940e0a72e1d96235b315b63a05879f4c7e224413f48375a59076",
+    ),
+    "coordinates/data/elevationdata.json": (
+        f"{COORDINATES_SOURCE}/data/elevationdata.json",
+        251406,
+        "01b7898deba8a5ff2d853a721765372d847d9cfdd24604aed38be564816182fc",
+    ),
+    "gem/assets/maps/Game_map_7.41.jpg": (
+        f"{GEM_MAP_SOURCE}/assets/maps/Game_map_7.41.jpg",
+        9298474,
+        "9fb56fc131acc161fb904f6c7189c6f37c57705bac752ccf9a47e01b1b079764",
+    ),
+}
+
+
+def verify_map_file(path, size, expected):
+    if not path.is_file() or path.stat().st_size != size:
+        raise ValueError(f"unexpected 7.41 map file or size: {path}")
+    with path.open("rb") as stream:
+        if hashlib.file_digest(stream, "sha256").hexdigest() != expected:
+            raise ValueError(f"7.41 map SHA-256 mismatch: {path}")
+
+
+def prepare_741_map(reference_dir=REFERENCE_DIR, *, fetch=False):
+    """Verify the three review-map originals; fetch missing files only when requested."""
+    missing = []
+    for relative, (_, size, expected) in REVIEW_MAP_FILES.items():
+        path = reference_dir / relative
+        if path.exists() or path.is_symlink():
+            verify_map_file(path, size, expected)
+        else:
+            missing.append(relative)
+    if missing and not fetch:
+        raise FileNotFoundError("missing 7.41 review map files: " + ", ".join(missing))
+    for relative in missing:
+        url, size, expected = REVIEW_MAP_FILES[relative]
+        with urlopen(url, timeout=60) as source:
+            data = source.read(size + 1)
+        if len(data) != size or hashlib.sha256(data).hexdigest() != expected:
+            raise ValueError(f"download differs from fixed 7.41 map source: {url}")
+        path = reference_dir / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=path.parent) as staging:
+            verified = Path(staging) / "verified"
+            verified.write_bytes(data)
+            try:
+                os.link(
+                    verified, path
+                )  # Publish a complete file without replacing a concurrent writer.
+            except FileExistsError:
+                verify_map_file(path, size, expected)
+    return {relative: sha for relative, (_, _, sha) in REVIEW_MAP_FILES.items()}
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -569,8 +640,24 @@ def main():
     sub = parser.add_subparsers(dest="command", required=True)
     d = sub.add_parser("draft")
     d.add_argument("--out", type=Path, required=True)
+    maps = sub.add_parser(
+        "prepare-review-map", help="verify or retrieve the pinned 7.41 review map files"
+    )
+    maps.add_argument("--reference-dir", type=Path, default=REFERENCE_DIR)
+    maps.add_argument(
+        "--fetch-741-map",
+        action="store_true",
+        help="retrieve missing map files from pinned upstream commits",
+    )
     args = parser.parse_args()
-    draft(args)
+    if args.command == "draft":
+        draft(args)
+        return
+    try:
+        verified = prepare_741_map(args.reference_dir, fetch=args.fetch_741_map)
+    except (ValueError, OSError) as exc:
+        parser.exit(1, f"7.41 map preparation failed: {exc}\n")
+    print(json.dumps(verified, indent=2))
 
 
 if __name__ == "__main__":

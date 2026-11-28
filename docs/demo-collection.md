@@ -1,5 +1,13 @@
 # 自动采集demo（U128、U129）
 
+## 2026-11-27：精确版本的新入口
+
+验收通过的 bundle 可用 `replay_pipeline.py reference` 创建固定摘要的来源引用，再交给 `lane_decision_review.py --bundle-reference`。当前复盘地图仅接受精确 7.41f，7.42 读取成功不自动开启地图分析；详见[下游接入与命令](replay-bundle-consumption.md)。
+
+新任务使用 `scripts/replay_pipeline.py`，明确 `--patch`，冻结官方快照与起止边界；`discover/seed` 制订计划，`run --stage download/parse/verify` 分阶段执行并设上限。一次解析产出基础数据、含冷却的 state-v3 和含小兵的 extras，压缩直写、来源摘要校验、质量复验后才接纳缓存。命令、真实回归和空间对账见[新版流程](replay-pipeline-v2.md)。旧文件仍保留；新 bundle 需要下游显式读取，不替换旧 manifest。
+
+以下为旧 `collect_demos.py` 操作说明，用于已有任务维护。其“当前补丁”动态取最新版，不能用于要求精确 `7.42` 或某一字母补丁的新采集。
+
 `scripts/collect_demos.py`可以自己启动、自己跑，不需要和助手对话。它会一场一场地：找对局 → 向OpenDota要比赛信息 → 从Valve下载demo → 本地解析 → 压缩保存，直到达到目标场数。
 
 ## 启动
@@ -57,7 +65,7 @@ PYTHONPATH=src .venv/bin/python scripts/collect_demos.py report --root data/demo
 - 每场保留：OpenDota比赛信息`meta/<id>.json`；原始demo`demos/<id>.dem.bz2`（约40–50MB，U112）；全部解析通道压缩后`parsed/<id>.normalized.json.gz`（含逐秒位置、视野、血蓝装备快照、经济、购买、战斗日志、眼位，U129）；回执`receipts/<id>.json`。
 - 解析器每场会产生约0.8GB的中间文件（同一份数据的多份未压缩JSON），压缩副本读回校验一致后，删掉这一场的中间文件；想保留就加`--keep-workspace`（磁盘会很快不够）。
 - 1500场预计（按试采实测：demo 41–52MB、压缩解析结果约6.5MB、每场94–127秒）：demo约70GB＋解析结果约10GB；全部约50小时；OpenDota请求约1,600次（发现对局＋每场1次）。机器内存只有5GB，所以一次只解析一场。
-- 技能冷却解析器目前没有导出（试采确认），路线B需要时再补提取；demo保留着，可以重新解析。
+- 旧采集的基础通道不含技能冷却，后续由解析器 v3 补提取；新 pipeline 同一次解析直接产出 state-v3，无需再解码一遍。
 
 ## 冷门英雄补采
 
