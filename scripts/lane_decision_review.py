@@ -15,6 +15,7 @@ from functools import lru_cache
 from math import dist
 from pathlib import Path
 
+from check_support_travel import check_review_metadata
 from detect_ganks import match_inputs
 from gank_review import MAP, names
 
@@ -38,7 +39,15 @@ from dota_items.data.support_arrival import (
     support_followup,
     walk_hit_window,
 )
-from dota_items.data.vision_sim import RANGE, Terrain, extra_sources, is_day, sees, team_sources
+from dota_items.data.vision_sim import (
+    RANGE,
+    Terrain,
+    extra_sources,
+    is_day,
+    read_creep_samples,
+    sees,
+    team_sources,
+)
 from dota_items.storage import read_json, write_json
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -120,18 +129,25 @@ def support_opportunity(tracks, hits, hero, t):
     return {"hero": ally, "seconds_ago": t - recent[ally], "distance": round(distance)}
 
 
-def build_match(root, mid, means, mode="lane"):
+def build_match(root, mid, means, mode="lane", *, wave_coverage=None):
     if is_holdout(mid):
         raise ValueError(f"{mid} is reserved for holdout evaluation")
-    meta = read_json(root / "meta" / f"{mid}.json")
-    if meta.get("match_id") != mid or meta.get("patch") != 60:
-        raise ValueError(f"{mid}: expected the patch-60 cohort used for the 7.41f analysis")
+    check_review_metadata(root, mid)
     match = match_inputs(root, mid, root / "gank-inputs-v2")
     damage = hero_hits_by_second(match)
     heroes = sorted(h for h, pos in match["positions"].items() if pos == 1)
     visibility = {key: sorted(times) for key, times in match["seen"].items()}
     with gzip.open(root / "parsed" / f"{mid}.normalized.json.gz", "rt") as stream:
-        channels = json.load(stream)["context"]["channels"]
+        parsed = json.load(stream)
+        if parsed.get("match_id") != mid:
+            raise ValueError(f"{mid}: unexpected match in normalized replay")
+        duration = parsed.get("duration")
+        if type(duration) is not int or duration < 0:
+            raise ValueError(f"{mid}: missing or invalid normalized match duration")
+        last_state_second = match["last"]
+        match["last"] = min(duration, last_state_second)
+        channels = parsed["context"]["channels"]
+        del parsed
         events = channels["combat_log"]
         match["wards"] = ward_spans(channels["wards"])
         del channels
@@ -142,18 +158,21 @@ def build_match(root, mid, means, mode="lane"):
     extras = {}
     path = root / "extras-v1" / f"{mid}.jsonl.gz"
     if path.exists():
-        with gzip.open(path, "rt") as stream:
-            next(stream)
-            extras = {row["t"]: row for row in map(json.loads, stream)}
+        extras = {row["t"]: row for row in read_creep_samples(path, mid, "gem-extras-capture/1")}
     opportunities = {}
     if mode == "wave":
 
         def can_see(origin, target, sec):
             return sees(origin, target, "hero", sec, terrain_map(), "sight")
 
-        opportunities = {
-            h: wave_opportunities(match, h, lane_hits[h], extras, can_see) for h in heroes
-        }
+        by_hero = {}
+        for h in heroes:
+            by_hero[h] = {}
+            opportunities[h] = wave_opportunities(
+                match, h, lane_hits[h], extras, can_see, coverage=by_hero[h]
+            )
+        if wave_coverage is not None:
+            wave_coverage.update(extras_file_present=path.is_file(), heroes=by_hero)
     inventories = {}
     summons = {}
     match["dead_at"] = {}
@@ -201,6 +220,7 @@ def build_match(root, mid, means, mode="lane"):
             else make_cases(*inputs, opportunities=opportunities.get(h))
         )
         for evidence, action, outcome in cases:
+            outcome.update(match_duration=duration, last_state_second=last_state_second)
             if mode == "jungle":
                 evidence["route_from_lane"] = route_from_lane(
                     match["tracks"][h]["pos"], lane_hits[h], evidence["t"], zones["camps"]
@@ -254,6 +274,7 @@ def build_match(root, mid, means, mode="lane"):
                 )
                 sources += extra_sources(team, row.get("watchers", ()), summons.get(sec, ()))
                 frame["vision"] = vision_grid(sources, sec)
+                frame["vision"]["extras_sampled"] = sec in extras
             evidence["catch"] = catch_comparison(evidence, display_names)
             yield evidence, action, outcome
 
@@ -278,8 +299,12 @@ def main():
         (folder / "actions").mkdir()
         (folder / "outcomes").mkdir()
         cases = []
+        wave_sampling = {}
         for mid in sorted(set(args.matches)):
-            for evidence, action, outcome in build_match(args.root, mid, means, args.mode):
+            coverage = wave_sampling.setdefault(mid, {}) if args.mode == "wave" else None
+            for evidence, action, outcome in build_match(
+                args.root, mid, means, args.mode, wave_coverage=coverage
+            ):
                 key = f"{mid}-{evidence['hero']}-{evidence['t']}"
                 if args.mode != "lane":
                     key = args.mode + "-" + key
@@ -287,12 +312,26 @@ def main():
                 write_json(folder / "actions" / f"{key}.json", action)
                 write_json(folder / "outcomes" / f"{key}.json", outcome)
         if not cases:
+            if wave_sampling:
+                missing = sum(
+                    hero["missing_hero_seconds"]
+                    for match in wave_sampling.values()
+                    for hero in match["heroes"].values()
+                )
+                absent = [
+                    mid for mid, match in wave_sampling.items() if not match["extras_file_present"]
+                ]
+                parser.error(
+                    f"no eligible wave decisions; {missing} near-wave hero-seconds lack creep "
+                    f"samples; matches without extras-v1: {absent}"
+                )
             parser.error("no eligible decisions in these matches")
         write_json(
             folder / "cases.json",
             {
                 "schema": f"{args.mode}-decision-review/1",
                 "mode": args.mode,
+                **({"wave_sampling": wave_sampling} if wave_sampling else {}),
                 "names": names(),
                 "cases": sorted(cases, key=lambda c: (c["match"], c["t"], c["hero"])),
             },

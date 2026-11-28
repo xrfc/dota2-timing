@@ -78,6 +78,7 @@ def capture_extras(path, start_time=-90.0):
     require_complete_parse(parser)
     header = {
         "schema": CAPTURE_VERSION,
+        "match_id": parser.match_id,
         "gem_version": version("gem-dota"),
         "seconds": len(rows),
         "omniscient": True,

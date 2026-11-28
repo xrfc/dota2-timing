@@ -4,6 +4,7 @@
 
 | 编号 | 文件 |
 |---|---|
+| 2026-11-22 | [本地评审方式](2026-11-22-local-review.md) |
 | U190 | [行动判断总架构与项目决策留档](2026-11-20-decision-framework.md) |
 | U189 | [项目产品目标](2026-11-20-project-goal.md) |
 | U1 | [取消10/31前瞻采集](2026-10-30-cancel-collection-window.md) |

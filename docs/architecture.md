@@ -1,5 +1,7 @@
 # 项目架构：共享底座＋两条产品线（2026-11-01）
 
+路线 B 的本地交接脚本负责串联材料核验和抽查队列。本地服务使用固定评审身份，监听 127.0.0.1，接收同源的评审提交。
+
 路线 B 的行动比较、因素表和逐段复核格式见[决策总架构](decision-framework.md)。
 
 本页是**当前唯一的架构入口**，替代[模块维护](modular-maintenance.md)的入口职责（该页保留各层API细节与历史验收）。机器可读的归属表在[`src/dota_items/architecture.py`](../src/dota_items/architecture.py)，由`tests/test_architecture.py`强制执行。执行顺序和进度只看[开发计划](development-plan-2026-10-30.md)§7。
@@ -57,7 +59,7 @@
 |---|---|---|---|
 | `shared` | 共享底座 | 88 / 23 | 73 |
 | `recommend` | 路线A 推荐 | 18 / 36 | 38 |
-| `awareness` | 路线B 意识决策 | 29 / 3 | 41 |
+| `awareness` | 路线B 意识决策 | 29 / 3 | 46 |
 <!-- /track-table -->
 
 依赖规则：
