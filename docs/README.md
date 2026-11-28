@@ -56,10 +56,13 @@
 
 ### 2.2 来源、契约与数据管线
 
+- [压缩录像包的下游读取与复盘接入](replay-bundle-consumption.md)：显式来源引用、精确补丁门禁、发布前复核；旧适配器指纹溯源。
+
 - [公共来源读取接口与生产者迁移](public-source-reader.md)
 - [数据与模型接口契约](data-contracts.md)
 - [版本化任务契约](task-contracts.md)
 - [Demo到训练样本的数据管线](data-pipeline.md)
+- [精确补丁采集、单次解析与压缩存储](replay-pipeline-v2.md)：分阶段续跑、统一质量、严格缓存及旧文件无损归档；工程验收不等于模型或地图版本认证
 - [教练工作流：训练前后基础设施](coach-workflow.md)
 - [真实回放采集与准入](real-data-acceptance.md)
 - [训练准入与桌面核验交接](training-admission.md)

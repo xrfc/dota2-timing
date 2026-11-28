@@ -1,0 +1,123 @@
+{
+  "schema": "replay-adapter-source-provenance/1",
+  "date": "2026-11-27",
+  "purpose": "Explain an existing adapter fingerprint difference using exact Git source bytes",
+  "status": "source_difference_explained_only",
+  "source_snapshots": {
+    "old": {
+      "commit": "5fe660bf8ac5858ff0dcc859e1195474b4cc941e",
+      "commit_date": "2026-10-23",
+      "subject": "feat: integrate whole-log experiments and replay semantic audits",
+      "adapter_fingerprint": "e498fe53677507e33ba1e2ed7190c32c5d34a7c593092bbbed98b84226698d77"
+    },
+    "new": {
+      "commit": "a0fa861548aa7a60feb885f4661d1e12334478c8",
+      "commit_date": "2026-11-21",
+      "subject": "Verify cached replay identity against an independent digest",
+      "adapter_fingerprint": "f4bf6993de0a30737c771abec40edeb47addfc343df556b3988c5d2e5104419a"
+    }
+  },
+  "fingerprint_algorithm": "SHA256 of the ASCII concatenation of five lowercase SHA256 hex digests, in the listed path order",
+  "components_in_fingerprint_order": [
+    {
+      "path": "src/dota_items/sources/gem_replay.py",
+      "old_sha256": "5b1028e410fb44f340b2e7ded9294b252c3aac4f404bb275e255193292c32cbb",
+      "new_sha256": "7a7826955552a0a9bf9b94477c9499c679025e0beb48450ea9c4e4fe12ec32a8",
+      "bytes_equal": false
+    },
+    {
+      "path": "src/dota_items/sources/gem_capture.py",
+      "old_sha256": "99e6845f0275286d3a902a802665d989345d3ab1cc3f0bda54810f7ccab3f2fc",
+      "new_sha256": "99e6845f0275286d3a902a802665d989345d3ab1cc3f0bda54810f7ccab3f2fc",
+      "bytes_equal": true
+    },
+    {
+      "path": "src/dota_items/sources/gem_observations.py",
+      "old_sha256": "60ccf5a93d9573708f13c7cb89973cccd29f5d20bf795c13aaaf3358f45205a7",
+      "new_sha256": "60ccf5a93d9573708f13c7cb89973cccd29f5d20bf795c13aaaf3358f45205a7",
+      "bytes_equal": true
+    },
+    {
+      "path": "src/dota_items/contracts/replay_context.py",
+      "old_sha256": "e20e682e0ea89f932c9098ac3b137d39ec590c6181ae136a356f94271ae9a0ea",
+      "new_sha256": "e20e682e0ea89f932c9098ac3b137d39ec590c6181ae136a356f94271ae9a0ea",
+      "bytes_equal": true
+    },
+    {
+      "path": "src/dota_items/contracts/numeric.py",
+      "old_sha256": "ff2ac5a047f3bf0181161f89d4c1fdc79bce956bd58deff9f9ac825da3795231",
+      "new_sha256": "ff2ac5a047f3bf0181161f89d4c1fdc79bce956bd58deff9f9ac825da3795231",
+      "bytes_equal": true
+    }
+  ],
+  "working_tree_components_match_new_snapshot": true,
+  "changed_paths": [
+    "src/dota_items/sources/gem_replay.py"
+  ],
+  "ast_comparison": {
+    "algorithm": "ast.dump(include_attributes=False)",
+    "same_top_level_function_names": true,
+    "changed_functions": [
+      "ingest_demo"
+    ],
+    "unchanged_functions": [
+      "adapter_fingerprint",
+      "_copy_bounded",
+      "prepared_demo",
+      "_player_slot",
+      "canonicalize_match",
+      "_initialize_index",
+      "_write_json"
+    ],
+    "changed_top_level_statements": [
+      "assignment:SCHEMA_SQL",
+      "function:ingest_demo"
+    ]
+  },
+  "fresh_parse_to_manifest_block": {
+    "path": "src/dota_items/sources/gem_replay.py",
+    "start_marker": "    try:\n        import gem\n",
+    "end_marker_inclusive": "    _write_json(manifest_path, manifest)",
+    "bytes_equal": true,
+    "size_bytes": 2621,
+    "sha256": "16964c1c68d8f892937d9c1c83fac082bbbe034e008e6407c71d7534f38f2ee5"
+  },
+  "reviewed_source_changes": [
+    "Add replay_digests SQLite table for the independently computed unpacked replay SHA256",
+    "Validate cached manifest demo_sha256 against source replay or independently stored digest",
+    "Write unpacked replay digest to the index after fresh parsing"
+  ],
+  "original_comparison": {
+    "path": "docs/acceptance/replay-pipeline-20261127.json",
+    "sha256": "0a1558fdb84b56ed8481d04791eb9005271d3a772b5067a084b8d38e66b107fd",
+    "match_id": 9081264566,
+    "status_preserved": "comparison_requires_review",
+    "legacy_producer_certification": "not_established",
+    "raw_status": "unknown_no_legacy_raw",
+    "state_status": "equal_in_game_rows",
+    "extras_status": "not_compared_no_legacy_channel"
+  },
+  "migration_registered": false,
+  "legacy_cache_admission_allowed": false,
+  "old_reports_overwritten": false,
+  "training_allowed": false,
+  "real_replays_read_or_reparsed": false,
+  "limits": [
+    "A matching source snapshot does not establish the actual commit used by the historical run",
+    "Source-level equivalence of this block does not authenticate historical runtime dependencies or all produced artifacts",
+    "The legacy long-match raw file is unavailable; a stored matching digest is not a fresh byte verification of that original file",
+    "This supplemental explanation neither registers a producer migration nor changes strict default identity checks",
+    "Only current independently verified bundles may be consumed without a separate legacy migration decision and implementation"
+  ],
+  "generator": {
+    "path": "reports/replay-consumer-20261127/adapter_provenance.py",
+    "sha256": "ef1e1fd1be7eaeb19a884e8002aedbf6987f28f1d46c1cd8d69af79b42ba5de5",
+    "data_inputs": [
+      "docs/acceptance/replay-pipeline-20261127.json"
+    ],
+    "git_inputs": [
+      "5fe660bf8ac5858ff0dcc859e1195474b4cc941e",
+      "a0fa861548aa7a60feb885f4661d1e12334478c8"
+    ]
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "schema": "replay-bundle-consumption-acceptance/1",
+  "date": "2026-11-27",
+  "purpose": "engineering_review_only",
+  "training_allowed": false,
+  "holdout_read": false,
+  "new_demo_collection": false,
+  "original_demo_redecoded": false,
+  "parse_producer_files_unchanged": 18,
+  "real_runs": [
+    {
+      "stage": "reference-742",
+      "returncode": 0,
+      "seconds": 3.024
+    },
+    {
+      "stage": "reject-742",
+      "returncode": 1,
+      "seconds": 0.124
+    },
+    {
+      "stage": "review-final",
+      "returncode": 0,
+      "seconds": 28.305
+    }
+  ],
+  "comparison": {
+    "match_id": 9081264566,
+    "patch": "7.41f",
+    "duration": 3604,
+    "elapsed_seconds": 34.275,
+    "status": "passed",
+    "old_original": {
+      "last": 3749,
+      "heroes": 10,
+      "track_position_seconds": 32626,
+      "front_seconds": 3750,
+      "front_min_second": 0,
+      "front_max_second": 3749,
+      "visible_hero_team_seconds": 52864,
+      "visible_keys": 20,
+      "combat_events": 47658,
+      "position_counts": {
+        "5": 2,
+        "None": 6,
+        "1": 2
+      }
+    },
+    "old_explicit_game_window": {
+      "last": 3604,
+      "heroes": 10,
+      "track_position_seconds": 31714,
+      "front_seconds": 3605,
+      "front_min_second": 0,
+      "front_max_second": 3604,
+      "visible_hero_team_seconds": 49070,
+      "visible_keys": 20,
+      "combat_events": 47658,
+      "position_counts": {
+        "5": 2,
+        "None": 6,
+        "1": 2
+      }
+    },
+    "new_bundle_projection": {
+      "last": 3604,
+      "heroes": 10,
+      "track_position_seconds": 31714,
+      "front_seconds": 3605,
+      "front_min_second": 0,
+      "front_max_second": 3604,
+      "visible_hero_team_seconds": 49070,
+      "visible_keys": 20,
+      "combat_events": 47658,
+      "position_counts": {
+        "5": 2,
+        "None": 6,
+        "1": 2
+      }
+    },
+    "fields": {
+      "tracks": {
+        "equal": true,
+        "legacy_game_window_sha256": "b37823151b5a4d236c859437afb4264d10988f328f3817d3c37533e3c355ea25",
+        "bundle_sha256": "b37823151b5a4d236c859437afb4264d10988f328f3817d3c37533e3c355ea25",
+        "differences": []
+      },
+      "seen": {
+        "equal": true,
+        "legacy_game_window_sha256": "3228ce630c75d53d84b573915d32ee4bc1aa4de276c00481133b078fd7ae3b4c",
+        "bundle_sha256": "3228ce630c75d53d84b573915d32ee4bc1aa4de276c00481133b078fd7ae3b4c",
+        "differences": []
+      },
+      "positions": {
+        "equal": true,
+        "legacy_game_window_sha256": "9875c387525d380e5179a4fe0907d435ab29384727ea055664cec18e7ea15cb6",
+        "bundle_sha256": "9875c387525d380e5179a4fe0907d435ab29384727ea055664cec18e7ea15cb6",
+        "differences": []
+      },
+      "combat": {
+        "equal": true,
+        "legacy_game_window_sha256": "a882031e84e2d4c415f8e20c5a0e53e94bf272a6336bf3f68091d21e75298509",
+        "bundle_sha256": "a882031e84e2d4c415f8e20c5a0e53e94bf272a6336bf3f68091d21e75298509",
+        "differences": []
+      },
+      "fronts": {
+        "equal": true,
+        "legacy_game_window_sha256": "5f9f02952908b3129f3d9149bbfd40288564f7c676cb5c0c8522768e1135c1dd",
+        "bundle_sha256": "5f9f02952908b3129f3d9149bbfd40288564f7c676cb5c0c8522768e1135c1dd",
+        "differences": []
+      },
+      "last": {
+        "equal": true,
+        "legacy_game_window_sha256": "f292eb5d860b62311a379cc0fae45c9b5c72b48d8a6e9cb529ac9047b6a9fd96",
+        "bundle_sha256": "f292eb5d860b62311a379cc0fae45c9b5c72b48d8a6e9cb529ac9047b6a9fd96",
+        "differences": []
+      }
+    },
+    "excluded_from_equality": [
+      "key"
+    ],
+    "report": {
+      "directory": "/home/node/.openclaw/workspace/work/dota2-timing/reports/replay-consumer-20261127/jungle-9081264566-final",
+      "mode": "jungle",
+      "cases": 31,
+      "case_seconds_min": 900,
+      "case_seconds_max": 3335,
+      "by_hero": {
+        "npc_dota_hero_life_stealer": 15,
+        "npc_dota_hero_sven": 16
+      },
+      "all_case_and_history_seconds_within_game": true,
+      "input_receipt_matches": true,
+      "consumer_identity_matches": true,
+      "output_inventory_and_hashes_verified": true,
+      "output_files": 67,
+      "input_receipt_sha256": "0eb9c0c0ff445b65b4e74924b07a40a725fef500de329246b137d33fb8ff821f",
+      "cases_sha256": "711248e7cba5fd115c0c2af61cfaa65ef8f30e376d478b535406dce0e4e586f7"
+    },
+    "input_drift": [],
+    "limits": [
+      "Legacy tracks/seen/combat/fronts clipped to 0..duration; last reset to duration",
+      "Empty visibility sets removed after clipping; positions remain the legacy inference",
+      "No equality claim for the original untrimmed legacy outputs",
+      "No parser rerun, pickle, training, holdout read or map/model certification"
+    ]
+  },
+  "comparison_report_sha256": "5e8c5c48f2b948725343d69eb4f73979f262a15d43b653a93ad679449ddbd792",
+  "comparison_report": "reports/replay-consumer-20261127/projection-comparison-final.json",
+  "compared_input_files": 444,
+  "consumer_inputs": 156,
+  "consumer_receipt_sha256": "0eb9c0c0ff445b65b4e74924b07a40a725fef500de329246b137d33fb8ff821f",
+  "consumer_code": {
+    "scripts/detect_ganks.py": "6717b56d0c10672cc7b85794d88cf84073782a905991f37ff6ef14b31ffc58ea",
+    "scripts/gank_review.py": "8402789c7b3c8339317002936beb812021e345206906f0c8f3336211c8442963",
+    "scripts/lane_decision_review.py": "1e58d0fee45e1c26b1306935768e0f874f257ac1a871a8508b37c2c2fc4bb457",
+    "src/dota_items/contracts/death_risk.py": "301016e0abc99de1f5eaf289703dab6f5b8effa878ca36ad2d8c7f907f33421b",
+    "src/dota_items/data/awareness_split.py": "08382a1e624cd6d7ad7db4a0f9a2a6c01f5cd8c183835f3c0f5ceee13affaae9",
+    "src/dota_items/data/catch_threat.py": "abef632ccc4bfc4efba8c98279147a625c63878ff6a92a72abab3f2028f0e9f8",
+    "src/dota_items/data/death_risk.py": "48019907d56b9db49539c64a8c69e0084670077bb596679d0efb9843198f8aba",
+    "src/dota_items/data/farm_value.py": "93334610254175a12928934584820696910b6b407d71ed559268424c022272e9",
+    "src/dota_items/data/gank_depth.py": "c805fd836f8c3b9089209c10bdfb91346554a95d7c802f50f17a7bf9585ce319",
+    "src/dota_items/data/gank_events.py": "530d788c3705d5381ecf9ef9ac71ef0ead97e1ff1fa664ea24a4c73d7af5324a",
+    "src/dota_items/data/gank_review.py": "d60049bcaf4a06e282bed708bc2c20aafbd502c2db5ecd60e51ff7caece63dc4",
+    "src/dota_items/data/lane_decisions.py": "b4e730faa57ffaa0583425199200c4e9a7929c84576855288020757af3333c0c",
+    "src/dota_items/data/position_rule.py": "02a1215bc093bd52365b8d2acb1da06d0821f90f9959ceee475cfd1195f7722b",
+    "src/dota_items/data/replay_bundle_input.py": "a47cc8bce46ad9f5ac04fb9e546eb5762f1f216d5648c8ee6c0679170616f015",
+    "src/dota_items/data/replay_review_input.py": "224ef9ce29492887163e551e4700f5926dd85c429481a7c233c5c8e36f08ce9e",
+    "src/dota_items/data/support_arrival.py": "b9d4c7534ce1e9aea387de72891459a982752686c58e4ab72c9e9380c6dd1cf5",
+    "src/dota_items/data/unit_state.py": "127a8c6f77fc2d0f0d7e742e308071e7a4d857ea5c1db078ccc681f3aba7eaa0",
+    "src/dota_items/data/vision_sim.py": "0df29d6a41fa3d0810ab51531fd0a40eb1c9a46d7de218937056a772b8086b7e",
+    "src/dota_items/storage.py": "bafb163eae7a2a9bcfc7a606cb54ffdc339b5f7e32bbe0f8d89b2bf9cb58fe45"
+  },
+  "rejected_742_output_exists": false,
+  "provenance_evidence": "docs/acceptance/replay-adapter-provenance-20261127.json",
+  "legacy_migration_registered": false,
+  "repository_check_log": "reports/replay-consumer-20261127/check-final.log",
+  "limitations": [
+    "31 cases verify pipeline/report integration, not decision accuracy",
+    "Existing consumer supports exact 7.41f only; 7.42 map/mechanics not certified",
+    "Legacy root input keeps its historical cache behavior; strict guarantees apply to bundle mode",
+    "Reference and output digests are integrity records, not authentication signatures"
+  ]
+}

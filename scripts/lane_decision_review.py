@@ -33,12 +33,15 @@ from dota_items.data.lane_decisions import (
     route_from_lane,
     wave_opportunities,
 )
+from dota_items.data.replay_bundle_input import load_reference, open_bundle_input
+from dota_items.data.replay_review_input import project_match
 from dota_items.data.support_arrival import (
     observed_approach,
     support_comparison,
     support_followup,
     walk_hit_window,
 )
+<<<<<<< HEAD
 from dota_items.data.vision_sim import (
     RANGE,
     Terrain,
@@ -49,6 +52,11 @@ from dota_items.data.vision_sim import (
     team_sources,
 )
 from dota_items.storage import read_json, write_json
+=======
+from dota_items.data.vision_sim import RANGE, Terrain, extra_sources, is_day, sees, team_sources
+from dota_items.storage import file_hash, read_json, write_json
+from dota_items.workflow.replay_collection import DEFAULT_COMPAT, current_producer
+>>>>>>> 3f1de6ba6b3b1e93b391c2b93938f8e9e09138be
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = Path(__file__).with_name("lane_decision_assets")
@@ -129,6 +137,7 @@ def support_opportunity(tracks, hits, hero, t):
     return {"hero": ally, "seconds_ago": t - recent[ally], "distance": round(distance)}
 
 
+<<<<<<< HEAD
 def build_match(root, mid, means, mode="lane", *, wave_coverage=None):
     if is_holdout(mid):
         raise ValueError(f"{mid} is reserved for holdout evaluation")
@@ -151,14 +160,57 @@ def build_match(root, mid, means, mode="lane", *, wave_coverage=None):
         events = channels["combat_log"]
         match["wards"] = ward_spans(channels["wards"])
         del channels
+=======
+def legacy_state_rows(root, mid):
+    with gzip.open(root / "state-v3" / f"{mid}.jsonl.gz", "rt") as stream:
+        header = json.loads(next(stream))
+        if header.get("match_id") != mid or header.get("schema") != "gem-state-capture/3":
+            raise ValueError(f"{mid}: unexpected state header")
+        yield from map(json.loads, stream)
+
+
+def build_match(root, mid, means, mode="lane", *, source=None):
+    if is_holdout(mid):
+        raise ValueError(f"{mid} is reserved for holdout evaluation")
+    meta = source.metadata() if source else read_json(root / "meta" / f"{mid}.json")
+    if meta.get("match_id") != mid or meta.get("patch") != 60:
+        raise ValueError(f"{mid}: expected the patch-60 cohort used for the 7.41f analysis")
+    if source:
+        reference = source.receipt()["reference"]
+        if reference["match_id"] != mid or reference["patch"] != "7.41f":
+            raise ValueError("This review consumer supports exact patch 7.41f only")
+        parsed = source.normalized()
+        match = project_match(parsed, source.rows("state"), source_key=reference)
+        channels = parsed["context"]["channels"]
+        del parsed
+    else:
+        match = match_inputs(root, mid, root / "gank-inputs-v2")
+        with gzip.open(root / "parsed" / f"{mid}.normalized.json.gz", "rt") as stream:
+            channels = json.load(stream)["context"]["channels"]
+    damage = hero_hits_by_second(match)
+    heroes = sorted(h for h, pos in match["positions"].items() if pos == 1)
+    visibility = {key: sorted(times) for key, times in match["seen"].items()}
+    events = channels["combat_log"]
+    match["wards"] = ward_spans(channels["wards"])
+    del channels
+>>>>>>> 3f1de6ba6b3b1e93b391c2b93938f8e9e09138be
     lane_hits = {h: farm_seconds(events, h, match["tracks"][h]["team"]) for h in heroes}
     jungle_hits = {h: jungle_seconds(events, h) for h in heroes}
     hits = jungle_hits if mode == "jungle" else lane_hits
     del events
     extras = {}
     path = root / "extras-v1" / f"{mid}.jsonl.gz"
+<<<<<<< HEAD
     if path.exists():
         extras = {row["t"]: row for row in read_creep_samples(path, mid, "gem-extras-capture/1")}
+=======
+    if source:
+        extras = {row["t"]: row for row in source.rows("extras")}
+    elif path.exists():
+        with gzip.open(path, "rt") as stream:
+            next(stream)
+            extras = {row["t"]: row for row in map(json.loads, stream)}
+>>>>>>> 3f1de6ba6b3b1e93b391c2b93938f8e9e09138be
     opportunities = {}
     if mode == "wave":
 
@@ -180,24 +232,21 @@ def build_match(root, mid, means, mode="lane", *, wave_coverage=None):
     wanted = {h: set(times) for h, times in hits.items()}
     if mode == "wave":
         wanted = opportunities
-    with gzip.open(root / "state-v3" / f"{mid}.jsonl.gz", "rt") as stream:
-        header = json.loads(next(stream))
-        if header.get("match_id") != mid or header.get("schema") != "gem-state-capture/3":
-            raise ValueError(f"{mid}: unexpected state header")
-        for row in map(json.loads, stream):
-            summons[row["t"]] = row["world"].get("summons") or ()
-            for state in row["heroes"]:
-                h = state["hero"]
-                if state.get("life_state") in (1, 2):
-                    match["dead_at"].setdefault(row["t"], set()).add(h)
-                if state.get("items") is not None:
-                    inventories[h, row["t"]] = {
-                        slot: item["name"]
-                        for slot, item in state["items"].items()
-                        if int(slot) in (*range(9), 15, 16) and item.get("name")
-                    }
-                if h in wanted and row["t"] in wanted[h]:
-                    states[h][row["t"]] = state
+    rows = source.rows("state") if source else legacy_state_rows(root, mid)
+    for row in rows:
+        summons[row["t"]] = row["world"].get("summons") or ()
+        for state in row["heroes"]:
+            h = state["hero"]
+            if state.get("life_state") in (1, 2):
+                match["dead_at"].setdefault(row["t"], set()).add(h)
+            if state.get("items") is not None:
+                inventories[h, row["t"]] = {
+                    slot: item["name"]
+                    for slot, item in state["items"].items()
+                    if int(slot) in (*range(9), 15, 16) and item.get("name")
+                }
+            if h in wanted and row["t"] in wanted[h]:
+                states[h][row["t"]] = state
     zones = read_json(ROOT / "knowledge/awareness/map-zones-v1.json")
     mobility = read_json(ROOT / "knowledge/awareness/hero-mobility-v1.json")
     display_names = names()
@@ -279,9 +328,78 @@ def build_match(root, mid, means, mode="lane", *, wave_coverage=None):
             yield evidence, action, outcome
 
 
+def open_review_sources(matches, reference_paths, compat):
+    """Preflight the complete selection before any replay payload is opened."""
+    if any(type(mid) is not int or mid <= 0 or is_holdout(mid) for mid in matches):
+        raise ValueError("Invalid/holdout matches are excluded before bundle access")
+    references = [load_reference(path) for path in reference_paths]
+    ids = [reference["match_id"] for reference in references]
+    if len(ids) != len(set(ids)) or set(ids) != set(matches):
+        raise ValueError("Provide exactly one bundle reference for each requested match")
+    if any(reference["patch"] != "7.41f" for reference in references):
+        raise ValueError("This review's map and mechanics support exact patch 7.41f only")
+    producer = current_producer(compat)
+    sources = {
+        reference["match_id"]: open_bundle_input(
+            reference,
+            match_id=reference["match_id"],
+            allowed_patches=("7.41f",),
+            expected_producer=producer,
+            match_allowed=lambda mid: not is_holdout(mid),
+        )
+        for reference in references
+    }
+    return sources, producer
+
+
+def consumer_identity():
+    """Bind the review implementation, knowledge, map and displayed assets."""
+    modules = (
+        "awareness_split",
+        "catch_threat",
+        "death_risk",
+        "farm_value",
+        "gank_depth",
+        "gank_events",
+        "gank_review",
+        "lane_decisions",
+        "position_rule",
+        "replay_bundle_input",
+        "replay_review_input",
+        "support_arrival",
+        "unit_state",
+        "vision_sim",
+    )
+    paths = {
+        Path(__file__),
+        Path(__file__).with_name("detect_ganks.py"),
+        Path(__file__).with_name("gank_review.py"),
+        ROOT / "src/dota_items/storage.py",
+        ROOT / "src/dota_items/contracts/death_risk.py",
+        MAP,
+        ROOT / "knowledge/awareness/save-means-v2.json",
+        ROOT / "knowledge/awareness/map-zones-v1.json",
+        ROOT / "knowledge/awareness/hero-mobility-v1.json",
+        ROOT / "knowledge/items/item-registry.json",
+        ROOT / "data/map-reference-2026-10-26-v1/coordinates/data/mapdata.json",
+        ROOT / "data/map-reference-2026-10-26-v1/coordinates/data/elevationdata.json",
+        *(ROOT / "src/dota_items/data" / f"{module}.py" for module in modules),
+        *(ROOT / "knowledge/hero-capabilities/heroes").glob("*.json"),
+        *(path for path in ASSETS.rglob("*") if path.is_file()),
+    }
+    return {
+        "schema": "lane-review-consumer/1",
+        "supported_patch": "7.41f",
+        "sources": {str(path.relative_to(ROOT)): file_hash(path) for path in sorted(paths)},
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", type=Path, default=ROOT / "data/demos-2026-11")
+    source_args = parser.add_mutually_exclusive_group()
+    source_args.add_argument("--root", type=Path, default=ROOT / "data/demos-2026-11")
+    source_args.add_argument("--bundle-reference", type=Path, action="append", default=[])
+    parser.add_argument("--compat", type=Path, default=DEFAULT_COMPAT)
     parser.add_argument("--matches", nargs="+", required=True, type=int)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--mode", choices=("lane", "jungle", "wave"), default="lane")
@@ -290,6 +408,12 @@ def main():
         parser.error("choose a new output directory")
     if any(is_holdout(mid) for mid in args.matches):
         parser.error("holdout matches are excluded")
+    sources, producer = (
+        open_review_sources(args.matches, args.bundle_reference, args.compat)
+        if args.bundle_reference
+        else ({}, None)
+    )
+    consumer = consumer_identity() if sources else None
     means = read_json(ROOT / "knowledge/awareness/save-means-v2.json")["means"]
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(dir=args.out.parent) as staging:
@@ -301,9 +425,14 @@ def main():
         cases = []
         wave_sampling = {}
         for mid in sorted(set(args.matches)):
+<<<<<<< HEAD
             coverage = wave_sampling.setdefault(mid, {}) if args.mode == "wave" else None
             for evidence, action, outcome in build_match(
                 args.root, mid, means, args.mode, wave_coverage=coverage
+=======
+            for evidence, action, outcome in build_match(
+                args.root, mid, means, args.mode, source=sources.get(mid)
+>>>>>>> 3f1de6ba6b3b1e93b391c2b93938f8e9e09138be
             ):
                 key = f"{mid}-{evidence['hero']}-{evidence['t']}"
                 if args.mode != "lane":
@@ -336,6 +465,28 @@ def main():
                 "cases": sorted(cases, key=lambda c: (c["match"], c["t"], c["hero"])),
             },
         )
+        if sources:
+            receipts = [sources[mid].verify() for mid in sorted(sources)]
+            if current_producer(args.compat) != producer or consumer_identity() != consumer:
+                raise ValueError("Producer, review code or knowledge changed during consumption")
+            write_json(
+                folder / "input-receipt.json",
+                {
+                    "schema": "lane-review-inputs/1",
+                    "mode": args.mode,
+                    "inputs": receipts,
+                    "consumer": consumer,
+                    "outputs": {
+                        str(path.relative_to(folder)): file_hash(path)
+                        for path in sorted(folder.rglob("*"))
+                        if path.is_file()
+                    },
+                    "training_allowed": False,
+                    "limits": "Engineering replay review; not model/map validation",
+                },
+            )
+        if args.out.exists():
+            raise FileExistsError("Output appeared during review; refusing to replace it")
         folder.rename(args.out)
     print(f"{len(cases)} decisions in {args.out}")
 
