@@ -50,6 +50,8 @@ def module_paths(scope):
         "test_check_scopes.py",
         "test_docs_links.py",
         "test_task_contracts.py",
+        "test_artifact_versions.py",
+        "test_action_outcomes_contract.py",
     }
     selected = {
         "modeling": model_tests | DATA_MODEL_TESTS | shared,

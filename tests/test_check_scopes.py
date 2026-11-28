@@ -53,3 +53,19 @@ def test_module_checks_include_script_static_analysis():
         assert set(sources + tests) <= set(paths)
         assert "scripts" in paths
         assert all((ROOT / path).exists() for path in paths)
+
+
+def test_action_contracts_and_pure_inference_have_explicit_scope_coverage():
+    contracts = {
+        "tests/test_artifact_versions.py",
+        "tests/test_action_outcomes_contract.py",
+    }
+    for scope in ("data", "modeling", "recommendation"):
+        assert contracts <= set(check.module_paths(scope)[1])
+    # Successors of lane_study_baselines/sequence/outcome_values are model suites
+    # even though their immutable oracle sources are legacy scripts.
+    assert {
+        "tests/test_model_action_models.py",
+        "tests/test_model_action_values.py",
+        "tests/test_model_action_architecture.py",
+    } <= set(check.module_paths("modeling")[1])
