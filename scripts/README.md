@@ -12,6 +12,8 @@
 
 从仓库根目录执行，复用`.venv`。一般使用`PYTHONPATH=src .venv/bin/python scripts/名称.py --help`；Windows先设置`$env:PYTHONPATH = "src"`，再用`.venv\Scripts\python.exe`。`--help`不是执行真实任务许可；少数历史批处理入口没有通用help，先阅读相应说明和脚本。
 
+路线 B 的 `score_b5_decisions.py` 可检查单条事前建议，或复算三类场景的折外基线。[命令与输入](../docs/b5-decision-scoring.md)
+
 ## 按线归属（2026-11-01，U37）
 
 每个脚本的线登记在[`src/dota_items/architecture.py`](../src/dota_items/architecture.py)的`SCRIPTS`，`tests/test_architecture.py`检查覆盖完整且不跨线导入。新增脚本须先登记。设计见[架构](../docs/architecture.md)。

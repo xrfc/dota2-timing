@@ -1,5 +1,7 @@
 # 文档索引
 
+[B5 决策自评、命令与开发集基线](b5-decision-scoring.md)
+
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 
