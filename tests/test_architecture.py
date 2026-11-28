@@ -4,6 +4,7 @@ import ast
 import importlib.util
 import subprocess
 import sys
+from graphlib import CycleError, TopologicalSorter
 from pathlib import Path
 
 import pytest
@@ -164,15 +165,133 @@ def _cross_track_violations(paths, owner_of):
     violations = []
     for path, owner in paths:
         for name in owner_of(path):
-            if name != "dota_items" and not name.startswith("dota_items."):
-                continue
-            try:
-                target = architecture.track_of(name)
-            except KeyError:
+            script = _script_name(name, architecture.SCRIPTS)
+            if script:
+                target = architecture.SCRIPTS[script]
+            elif name == "dota_items" or name.startswith("dota_items."):
+                try:
+                    target = architecture.track_of(name)
+                except KeyError:
+                    continue
+            else:
                 continue
             if target in architecture.FORBIDDEN_TRACK_IMPORTS[owner]:
                 violations.append(f"{path.relative_to(ROOT)} ({owner}) -> {name} ({target})")
     return violations
+
+
+def _script_name(name, scripts):
+    """Resolve CLI-style bare imports and package-style script imports."""
+    first = name.removeprefix("scripts.").split(".")[0]
+    return first if first in scripts else None
+
+
+@pytest.mark.parametrize(
+    "statement",
+    [
+        "import lane_decision_review",
+        "from lane_decision_review import build",
+        "import scripts.lane_decision_review as review",
+        "from scripts import lane_decision_review",
+        "from .lane_decision_review import build",
+        "def f():\n    import lane_decision_review",
+    ],
+)
+def test_cross_track_guard_rejects_shared_script_importing_awareness_script(statement):
+    path = ROOT / "scripts" / "synthetic.py"
+    violations = _cross_track_violations(
+        [(path, "shared")], lambda _: imports(statement, "scripts")
+    )
+    assert violations
+    assert "lane_decision_review" in "\n".join(violations)
+
+
+def test_cross_track_guard_accepts_same_track_script_and_shared_module():
+    path = ROOT / "scripts" / "synthetic.py"
+    assert not _cross_track_violations(
+        [(path, "awareness")],
+        lambda _: imports("import detect_ganks\nfrom dota_items import storage", "scripts"),
+    )
+
+
+def _script_imports(names):
+    from dota_items import architecture
+
+    return {
+        name
+        for name in names
+        if name == "scripts"
+        or name.startswith("scripts.")
+        or _script_name(name, architecture.SCRIPTS)
+    }
+
+
+@pytest.mark.parametrize(
+    "statement", ["import scripts", "from scripts import check", "import detect_ganks"]
+)
+def test_package_to_script_guard_recognizes_script_imports(statement):
+    assert _script_imports(imports(statement, "dota_items.data"))
+
+
+def test_package_modules_do_not_import_entrypoint_scripts():
+    violations = {
+        path.relative_to(ROOT).as_posix(): sorted(names)
+        for path in PACKAGE.rglob("*.py")
+        if (names := _script_imports(module_imports(path)))
+    }
+    assert not violations
+
+
+def _local_dependencies(names, modules, scripts):
+    """Map imported symbols to real local modules, never execute their code."""
+    targets = set()
+    for name in names:
+        script = _script_name(name, scripts)
+        if script:
+            targets.add("scripts." + script)
+            continue
+        while name:
+            if name in modules:
+                targets.add(name)
+                break
+            name = name.rpartition(".")[0]
+    return targets
+
+
+def _dependency_graph():
+    modules = {
+        "dota_items" + ("." + name if name else ""): path
+        for path in PACKAGE.rglob("*.py")
+        for name in [_module_name(path)]
+    }
+    scripts = {path.stem: path for path in (ROOT / "scripts").glob("*.py")}
+    graph = {}
+    for name, path in modules.items():
+        graph[name] = _local_dependencies(module_imports(path), modules, scripts) - {name}
+    for name, path in scripts.items():
+        node = "scripts." + name
+        names = imports(path.read_text(encoding="utf-8"), "scripts")
+        graph[node] = _local_dependencies(names, modules, scripts) - {node}
+    return graph
+
+
+def test_local_dependency_resolution_and_cycle_detection():
+    modules = {"dota_items.data.a", "dota_items.data.b"}
+    assert _local_dependencies(
+        {"dota_items.data.a.helper", "check.main", "httpx.Client"}, modules, {"check"}
+    ) == {"dota_items.data.a", "scripts.check"}
+    a, b = "dota_items.data.a", "dota_items.data.b"
+    graph = {a: _local_dependencies({b}, modules, {}), b: set()}
+    assert list(TopologicalSorter(graph).static_order()) == [b, a]
+    graph[b] = _local_dependencies({a}, modules, {})
+    with pytest.raises(CycleError):
+        TopologicalSorter(graph).prepare()
+
+
+def test_local_static_import_graph_is_acyclic():
+    # Include function-local imports conservatively. Dynamic loaders and file
+    # handoffs are outside this AST graph and still require code review.
+    TopologicalSorter(_dependency_graph()).prepare()
 
 
 def test_tracks_do_not_import_each_other_and_shared_imports_no_track():
