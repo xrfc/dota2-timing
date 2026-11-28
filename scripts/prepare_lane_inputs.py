@@ -73,7 +73,7 @@ def _archive(root, mid):
 def _derive(root, stage, mid, kinds):
     # Load producer dependencies only in the worker with the isolated Gem on its path.
     from collect_demos import compress
-    from extract_creeps import extract as extract_extras
+    from extract_creeps_review_v2 import extract as extract_extras
     from extract_state_v3 import extract as extract_state
 
     from dota_items.sources.gem_replay import ingest_demo

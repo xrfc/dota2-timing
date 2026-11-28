@@ -44,33 +44,19 @@ RANGE = {
 }
 
 
-def read_creep_samples(path, match_id, schema):
-    """Yield checked per-second records from a creep-only or extras capture."""
+def read_creep_positions(path, match_id):
+    """Read matched capture samples. An absent second has unknown creep positions."""
     with gzip.open(path, "rt", encoding="utf-8") as stream:
         header = json.loads(stream.readline())
-        if not isinstance(header, dict) or (header.get("schema"), header.get("match_id")) != (
-            schema,
-            match_id,
-        ):
+        if header.get("schema") != "gem-creep-capture/1" or header.get("match_id") != match_id:
             raise ValueError(f"{path}: unexpected creep capture schema or match")
-        seconds = set()
+        positions = {}
         for row in map(json.loads, stream):
-            second = row.get("t") if isinstance(row, dict) else None
-            if (
-                type(second) is not int
-                or second in seconds
-                or not isinstance(row.get("creeps"), list)
-            ):
+            second = row["t"]
+            if second in positions or not isinstance(row["creeps"], list):
                 raise ValueError(f"{path}: invalid creep sample at {second}")
-            seconds.add(second)
-            yield row
-
-
-def read_creep_positions(path, match_id):
-    """An absent second has unknown creep positions."""
-    return {
-        row["t"]: row["creeps"] for row in read_creep_samples(path, match_id, "gem-creep-capture/1")
-    }
+            positions[second] = row["creeps"]
+    return positions
 
 
 def is_day(second):

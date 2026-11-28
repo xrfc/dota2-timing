@@ -15,7 +15,7 @@ MID = 9081264566
 @pytest.fixture
 def review(monkeypatch):
     monkeypatch.syspath_prepend(str(ROOT / "scripts"))
-    return importlib.import_module("lane_decision_review")
+    return importlib.import_module("lane_decision_review_v2")
 
 
 def fail(*args, **kwargs):
@@ -105,7 +105,8 @@ def test_projected_end_truncates_six_and_twenty_second_observation_windows(revie
             [{"id": 1, "x": 22384, "y": 10384}],
         )
     )
-    assert "不完整" in action["detail"]
+    assert action["action"] == "unknown"
+    assert "六秒" in action["detail"]
     assert outcome["complete"] is False
     _, farm = review.farm_comparison(match, "hero0", 900, [], [], [])
     assert farm["next_6s"]["observed_seconds"] == 3
@@ -133,7 +134,7 @@ def publication(review, monkeypatch, tmp_path):
     monkeypatch.setattr(review, "match_inputs", fail)
     calls = []
 
-    def build(root, mid, means, mode, *, source):
+    def build(root, mid, means, mode, *, source, wave_coverage=None):
         calls.append(source)
         yield {"match": mid, "hero": "hero", "t": 900}, {"action": "farm"}, {"result": "known"}
 
@@ -142,7 +143,7 @@ def publication(review, monkeypatch, tmp_path):
         sys,
         "argv",
         [
-            "lane_decision_review.py",
+            "lane_decision_review_v2.py",
             "--bundle-reference",
             "ref.json",
             "--matches",
@@ -169,6 +170,9 @@ def test_consumer_identity_includes_indirect_control_and_contract_code(review, m
     monkeypatch.setattr(review, "file_hash", lambda path: "hash")
     identity = review.consumer_identity()
     assert "src/dota_items/data/unit_state.py" in identity["sources"]
+    assert "scripts/check_support_travel.py" in identity["sources"]
+    assert "src/dota_items/data/lane_decisions_review_v2.py" in identity["sources"]
+    assert "src/dota_items/data/vision_samples_review_v2.py" in identity["sources"]
     assert "src/dota_items/contracts/death_risk.py" in identity["sources"]
 
 
@@ -196,7 +200,7 @@ def test_legacy_root_and_bundle_mode_are_mutually_exclusive(review, monkeypatch,
         sys,
         "argv",
         [
-            "lane_decision_review.py",
+            "lane_decision_review_v2.py",
             "--root",
             "old",
             "--bundle-reference",

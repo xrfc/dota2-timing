@@ -15,7 +15,7 @@
 | 返回的读取会话 | `verify()`、`receipt()` | `verify` 必须在通道迭代完整结束后执行并重新校验；`receipt` 只返回来源说明，不能代替复验 |
 | B 线 `data.replay_review_input` | `project_match(parsed, state_rows, *, source_key)` | 把已验收基础数据及单次使用的状态流投影为轨迹、可见秒点、位置推断、战斗事件和兵线前沿；纯数据转换，不读文件、不批准来源或训练 |
 | `scripts/replay_pipeline.py reference` | CLI | 注入 U133 非留出策略和当前固定兼容解析器身份，把验证后的引用写到新文件 |
-| `scripts/lane_decision_review.py --bundle-reference` | CLI | 复盘入口，注入精确补丁门禁，组织读取、投影、页面构建和发布前复验 |
+| `scripts/lane_decision_review_v2.py --bundle-reference` | CLI | 复盘入口，注入精确补丁门禁，组织读取、投影、页面构建和发布前复验 |
 
 共享读取模块不导入 workflow，也不导入 B 线的留出划分。调用方必须提供 `expected_producer` 和策略函数，不能直接拿待验 manifest 自称的 producer 充当可信期望值。实际 CLI 使用 `workflow.replay_collection.current_producer` 从当前代码及固定兼容目录计算生产者身份。接入层属于消费者，不改写已冻结 bundle 的生产者。
 
@@ -54,7 +54,7 @@ PYTHONPATH=src .venv/bin/python scripts/replay_pipeline.py reference \
   --match 9081264566 \
   --output reports/replay-consumer-example/reference-9081264566.json
 
-PYTHONPATH=src .venv/bin/python scripts/lane_decision_review.py \
+PYTHONPATH=src .venv/bin/python scripts/lane_decision_review_v2.py \
   --bundle-reference reports/replay-consumer-example/reference-9081264566.json \
   --matches 9081264566 \
   --mode jungle \

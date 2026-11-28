@@ -15,7 +15,7 @@ def write_capture(path, records):
 @pytest.fixture
 def report_inputs(tmp_path, monkeypatch):
     monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "scripts"))
-    import lane_decision_review as report
+    import lane_decision_review_v2 as report
 
     mid = 9080976703
     (tmp_path / "meta").mkdir()

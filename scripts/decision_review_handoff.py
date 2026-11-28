@@ -127,7 +127,7 @@ def generate_missing(demo_root, folders, fetch_map=False):
         subprocess.run(
             [
                 sys.executable,
-                str(ROOT / "scripts/lane_decision_review.py"),
+                str(ROOT / "scripts/lane_decision_review_v2.py"),
                 "--mode",
                 mode,
                 "--root",

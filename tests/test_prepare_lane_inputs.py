@@ -89,7 +89,7 @@ def test_wrong_inputs_are_preserved_and_rejected_before_any_work(prep, tmp_path,
 
 
 def test_failed_step_is_retried_without_replacing_published_inputs(prep, tmp_path, monkeypatch):
-    import extract_creeps
+    import extract_creeps_review_v2 as extract_creeps
     import extract_state_v3
 
     from dota_items.sources import gem_replay
@@ -156,7 +156,7 @@ def test_failed_step_is_retried_without_replacing_published_inputs(prep, tmp_pat
 
 
 def test_extraction_refuses_filename_mismatched_with_decoded_replay_id(prep, tmp_path, monkeypatch):
-    import extract_creeps
+    import extract_creeps_review_v2 as extract_creeps
     import extract_state_v3
 
     mid = prep.MATCHES[0]

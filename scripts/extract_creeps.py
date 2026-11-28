@@ -51,11 +51,9 @@ def extract(root, mid, kind="creeps"):
     started = time.time()
     with prepared_demo(root / "demos" / f"{mid}.dem.bz2", out_dir / ".unpack" / str(mid)) as raw:
         header, rows = capture(raw)
-    if header.get("match_id") != mid:
-        raise ValueError(f"{mid}: {kind} capture belongs to match {header.get('match_id')}")
     part = target.with_name(target.name + ".part")
     with gzip.open(part, "wt", encoding="utf-8") as stream:
-        stream.write(json.dumps(header) + "\n")
+        stream.write(json.dumps({**header, "match_id": mid}) + "\n")
         for row in rows:
             stream.write(json.dumps(row, separators=(",", ":")) + "\n")
     part.replace(target)

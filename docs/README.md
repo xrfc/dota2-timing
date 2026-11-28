@@ -1,17 +1,29 @@
 # 文档索引
 
-[7.42 demo 试采、分层适配状态与采集/解析审查](demo-742-pilot-2026-11-26.md) · [本轮采集授权](decisions/2026-11-26-demo-742-pilot.md)
+最新补证：[树身份与临时视野协议成员](viewer-wire-and-tree-identity.md)。
+
+近期开发全景：[阶段总结与架构复核（2026-11-27）](development-review-2026-11-27.md)。
+
+当前7.42原始字段补证：[树事件、树索引与视距来源](patch-tree-probe.md) · [本轮授权](decisions/2026-11-27-tree-probe.md)。
+
+当前7.42机制消费：[工程证据准入与保守派生](mechanics-evidence-admission.md) · [本轮授权范围](decisions/2026-11-27-mechanics-evidence-admission.md)。
+
+当前7.42时点消费与验证：[决策时可知证据](patch-decision-evidence.md) · [机制工程补证](patch742-engineering-evidence-followup.md) · [本轮授权](decisions/2026-11-27-decision-evidence.md)。
+
+本轮7.42补证与复现：[营地、目标复活及视野证据](patch-evidence-followup.md) · [已执行的长局采集方案](patch742-evidence-collection-plan.md)。
+
+2026-11-27续：[7.42候选行动资产](patch-review-assets.md)（营地、动态目标、地形/视野、机制派生） · [机制待决清单](patch742-open-decisions.md)。
 
 [行动比较框架](decision-framework.md) · [带线决策复核记录](lane-decision-audit.md)
 
 
 [一号位兵线意识复盘与取样口径](lane-decision-review.md)
 
-**先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-17）。
+**先看[当前状态](current-status.md)**：做完了什么、正在跑什么、接下来做什么（2026-11-27）。
 
 **从这里开始**：[开发计划](development-plan-2026-10-30.md)（唯一进度：§7）· [架构](architecture.md) · [决策记录](decisions/README.md) · [变更记录](../CHANGELOG.md)
 
-更新：2026-11-01（U37双线重构）。项目分为**共享底座**、**路线A 推荐**（阵容、出装、针对装、对线；比赛级机器学习）和**路线B 意识决策**（防被抓、参团、集合抓人；当时可知的录像证据）。下面按这三部分组织；每个主题只有一个当前入口，其余是接口参考、日期证据或历史。
+更新：2026-11-01（U37双线重构）。项目分为**共享底座**、**路线A 推荐**（阵容、出装、针对装、对线；比赛级机器学习）和**路线B 意识决策**（防被抓、参团、集合抓人；当时可知的录像证据）。A线当前暂停，B线当前推进一号位行动复盘；旧阶段选型只作参考。下面按这三部分组织；每个主题只有一个当前入口，其余是接口参考、日期证据或历史。
 
 ## 如何读
 
@@ -38,13 +50,15 @@
 
 ## 2. 共享底座
 
-### 2.1 MK机制知识（当前进行中）
+- [7.42地图与机制候选绑定](patch-asset-binding.md)：来源、能力矩阵、接口、实测和未决项。
+
+### 2.1 MK机制知识（初版完成，补丁维护中）
 
 - [机制知识框架](knowledge-framework.md)：事实层→规则层→推导层设计（U26/U27）
 - [MK-T3机制事实：接口、复现与抽查](mechanics-facts.md)
 - [解析器v3设计](parser-v3-design.md)：从demo补全每秒状态（技能和物品冷却、单位状态原始掩码、战斗属性、地图大局、兵线），已实现（U130，2026-11-09）
 - [对游戏的理解还缺什么](game-understanding-gaps.md)：上网查加自己数据核对后的缺口清单——视野、定时目标、肉山换坑、野点升级、传送和扫描等，按影响排序（2026-11-13，只是清单）
-- [地图知识设计（草案）](map-knowledge-design.md)：知识库现在只有塔、营地等点位；设计有名字的区域、地标和读取接口，列出其他模块要改什么、哪些要用户决定（U145，2026-11-12，未实现）
+- [地图知识设计](map-knowledge-design.md)：地图快照、静态路径及观察者区域组合已实现；战术区域语义、动态规则和完整FOW仍待验收，旧草案按顶部更新阅读。
 - [B0“被抓”规则](b0-gank-rules.md)：U115、U116、U131写成的可执行规则——流程、保命手段清单、三个阈值、第一轮结果（162场），2D回放抽查页和开雾指标（§9，U136），待用户抽查实例后冻结（2026-11-10）
 - [自动采集demo](demo-collection.md)：自己启动的全量demo采集脚本，怎么跑、看进度、续跑、补采（U128、U129）
 - [知识读取接口](knowledge-api.md)：路线A、B读取机制知识的统一方式和固定含义（U124）
@@ -56,13 +70,10 @@
 
 ### 2.2 来源、契约与数据管线
 
-- [压缩录像包的下游读取与复盘接入](replay-bundle-consumption.md)：显式来源引用、精确补丁门禁、发布前复核；旧适配器指纹溯源。
-
 - [公共来源读取接口与生产者迁移](public-source-reader.md)
 - [数据与模型接口契约](data-contracts.md)
 - [版本化任务契约](task-contracts.md)
 - [Demo到训练样本的数据管线](data-pipeline.md)
-- [精确补丁采集、单次解析与压缩存储](replay-pipeline-v2.md)：分阶段续跑、统一质量、严格缓存及旧文件无损归档；工程验收不等于模型或地图版本认证
 - [教练工作流：训练前后基础设施](coach-workflow.md)
 - [真实回放采集与准入](real-data-acceptance.md)
 - [训练准入与桌面核验交接](training-admission.md)
@@ -77,12 +88,12 @@
 
 ## 3. 路线A：推荐（比赛级机器学习）
 
-### 3.1 当前里程碑产物（M1–M2b）
+### 3.1 既有里程碑产物（M1–M2b；路线A暂停）
 
 - [M1数据卡：多英雄比赛级数据表](m1-data-card.md)
 - [模型卡：死亡风险基线和死亡代价（路线B第一批模型）](b2-death-risk-baseline.md)
 - [计划§7的历史记录（2026-11-16之前）](plan-history.md)
-- [外部评估（2026-11-17）与处理](external-review-2026-11-17.md)
+- [外部评估（2026-11-27）与处理](external-review-2026-11-17.md)
 - [审查与修复：死亡风险模型（2026-11-18）](review-2026-11-18-death-risk.md)
 - [7.42补丁预案](patch-7.42-plan.md)
 - [用Workshop Tools导出7.42地图数据](map-workshop-export.md)：用户自己导出地图数据的步骤（上游未更新时用）
@@ -112,7 +123,8 @@
 
 ## 4. 路线B：意识决策（录像证据）
 
-- [路线B设计](awareness-track.md)：**当前入口**
+- [行动判断总架构](decision-framework.md)：**当前产品设计入口**
+- [路线B早期设计](awareness-track.md)：历史阶段与选型参考
 - [录像质量补齐、地图校准与阵营时间线](replay-quality-2026-10-26.md)
 - [视野、战斗与英雄状态接入](observer-context.md)
 - [教练任务字段核查：视野、装备、技能与战斗](coach-field-audit.md)
@@ -143,3 +155,33 @@
 - [历史阶段文档](archive/history/README.md)（2026-11-01起归档，含4份2026-10-10设计文档：[阵容推荐规划](archive/history/development-mainline.md)、[模块边界](archive/history/module-boundaries.md)、[文档盘点](archive/history/documentation-inventory.md)、[工程设计](archive/history/engineering-design.md)）
 - [整理前原文快照（2026-10-22）](archive/2026-10-22/INDEX.md) · [2026-10-26整理前入口](archive/2026-10-26/INDEX.md)
 - 其余10/13–10/28日期记录（采集、队列、录像试点、整局实验等）均在[历史阶段文档](archive/history/README.md)中列出。
+
+
+## 2026-11-28集成补全入口
+
+- [行动模型 M1：版本契约与纯推理](action-model-m1.md)
+- [行动模型兼容迁移设计](action-model-migration-design.md)
+- [B5 营地条件：从可见单位到可确认范围](b5-camp-conditions.md)
+- [B5：营地事前可见证据](b5-camp-evidence.md)
+- [B5 决策自评与开发集基线](b5-decision-scoring.md)
+- [三场 B5 原始录像的发育金币核验](b5-farm-gold.md)
+- [B5 开发集分类实收：可恢复提取与对账](b5-farm-income-batch.md)
+- [从玩家反馈定位 B5 原报告](b5-feedback-verification.md)
+- [B5 收线／转野的开发覆盖盘点](b5-route-coverage.md)
+- [记录 B5 玩家试用反馈](b5-trial-notebook.md)
+- [7.42 demo 小批量采集与解析审查（2026-11-26）](demo-742-pilot-2026-11-26.md)
+- [短期总结与PR集成（2026-11-28）](integration-closeout-2026-11-28.md)
+- [阶段一模型卡：补刀前实际动作的短期后果](lane-study-baseline.md)
+- [阶段二模型卡：补刀前的行为参照](lane-study-behavior.md)
+- [一号位补刀前的离线学习实验](lane-study-protocol.md)
+- [一号位补刀前留线与后撤的三阶段研究](lane-study-results.md)
+- [补刀前复盘 · 时序模型挑战结果](lane-study-sequence.md)
+- [距离可信意识复盘模型还有什么缺口](model-trust-status.md)
+- [一号位发育与支援的录像后果研究](outcome-autotrain.md)
+- [U191 留出评估冻结清单](outcome-freeze.md)
+- [从压缩录像包生成决策复盘（2026-11-27）](replay-bundle-consumption.md)
+- [精确补丁采集、单次解析与压缩存储（2026-11-27）](replay-pipeline-v2.md)
+
+- [U191交接](handoff/codex-outcome-autotrain-2026-11-22.md)
+- [长程开发交接](handoff/long-development-prompt.md)
+- [11月26日架构评审](reviews/2026-11-26-stage-and-architecture.md)

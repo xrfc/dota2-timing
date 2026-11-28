@@ -1,4 +1,4 @@
-from dota_items.sources import gem_capture_creeps as c
+from dota_items.sources import gem_capture_creeps_review_v2 as c
 
 
 class Entity:
@@ -34,7 +34,7 @@ def test_creep_rows_keep_living_lane_and_siege_creeps_only():
 
 
 def test_extras_row_reads_watcher_holders_outposts_and_scan():
-    from dota_items.sources import gem_capture_extras as x
+    from dota_items.sources import gem_capture_extras_review_v2 as x
 
     class Rules:
         def get(self, field):

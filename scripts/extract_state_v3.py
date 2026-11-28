@@ -19,7 +19,11 @@ from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 
-from dota_items.sources.gem_capture_v3 import CAPTURE_VERSION, capture_state_v3, check_cooldowns
+from dota_items.sources.gem_capture_v3_review_v2 import (
+    CAPTURE_VERSION,
+    capture_state_v3,
+    check_cooldowns,
+)
 from dota_items.sources.gem_replay import prepared_demo
 
 

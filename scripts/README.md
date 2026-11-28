@@ -1,6 +1,20 @@
 # 脚本职责导航
 
-生成一号位兵线或打野决策复盘页使用 lane_decision_review.py（打野用 --mode jungle），见[口径与命令](../docs/lane-decision-review.md)。
+2026-11-27：`capture_viewer_wire.py`只收参数，运行逻辑在B线experiments；`build_viewer_membership.py`经严格来源复验生成去重协议成员表。命令及准入边界见[说明](../docs/viewer-wire-and-tree-identity.md)。
+
+2026-11-27最新：`build_mechanics_evidence_assets.py --spec <JSON> --output <新目录>`从登记基线及14条补证生成新准入和保守派生，拒绝未登记基线、来源漂移和覆盖发布。命令、输出及局限见[工程证据准入](../docs/mechanics-evidence-admission.md#接口运行与验收)。
+
+2026-11-27当前工程入口：`build_patch_decision_audit.py --spec <显式JSON> --output <新目录>`复用固定八场补证，生成当时观察卡片、时序/扰动验证、营地诊断与机制附件，原子发布且拒绝覆盖。命令与spec选择见[决策时证据](../docs/patch-decision-evidence.md#验证与工程探针)；不评分、不切换正式知识入口。
+
+2026-11-27再续：`capture_patch_evidence.py`捕获独立目标/完整视野字段，`build_patch_evidence.py`发布营地/复活/视野补证；spec与复验见[说明](../docs/patch-evidence-followup.md)。
+
+2026-11-27续：`capture_map_runtime.py --spec ... --output <新目录>`捕获动态或视野事实；`build_patch_review_assets.py --spec ... --output <新目录>`统一发布版本固定的候选资产。配置与边界见[候选行动资产](../docs/patch-review-assets.md)。
+
+7.42候选适配：`inspect_patch_assets.py --spec <固定输入清单> --output <新目录>`只做地图/机制来源与录像几何诊断；不开放行动排序或训练。配置与API见[说明](../docs/patch-asset-binding.md)。
+
+静态地标补提取：`capture_map_landmarks.py --replay-manifest <固定manifest> --manifest-sha256 <SHA> --patch 7.42 --compat <已有兼容目录> --output <新目录>`。只读取已有非留出demo，产出`capture.json`与来源回执，当前需Linux无覆盖原子发布支持。
+
+生成一号位兵线或打野决策复盘页使用 lane_decision_review_v2.py（打野用 --mode jungle），见[口径与命令](../docs/lane-decision-review.md)。
 
 > 2026-10-27对照包增量：当前8769改为两例[支援/刷钱对照与试标草稿](../docs/decision-comparison-2026-10-27.md)，新增双方同刻可见血量、队友库存、TP到场条件拆解与草稿下载。蓝量已定位schema版本初始化导致范围65536→8192的问题，但未修正旧数据/生产者；敌方装备/CD、完整施放、合法落点/路径及数值收益仍未齐。旧包/旧结果保留，非盲评、非正式标签，不授权训练；后文旧状态按原阶段解释。
 
@@ -18,7 +32,7 @@
 |---|---|
 | 共享底座 | `accept_replays`、`audit_saved_replays`、`bootstrap`、`build_item_registry`、`build_mechanics_facts`、`build_mechanics_facts_v2`、`build_mechanics_facts_v3`、`build_mechanics_facts_v4`、`build_mechanics_facts_v5`、`build_mechanics_facts_v6`、`build_mechanics_facts_v7`、`build_mechanics_facts_v8`、`build_mechanics_facts_v9`、`build_mechanics_facts_v10`、`build_mechanics_derived`、`check_mechanics_recall`、`build_mechanics_profiles`、`fetch_game_files_snapshot`、`check_break_against_game_files`、`audit_mechanics_against_game_files`、`build_retired_items`、`build_replay_compat`、`build_stale_upgrade_text`、`check`、`collect_purchase_guarded`、`export_collection_table`、`mechanics_cross_review`、`recover_large_replay_cleaning`、`refresh_hero_datafeed`、`run_purchase_additional`、`verify_context_replays` |
 | 路线A 推荐 | `analyze_cohort_splits`、`audit_evaluation_feasibility`、`audit_purchase_cohorts`、`audit_purchase_observations`、`build_match_table`、`build_situational_reference`、`coach_app`、`collect_evaluation_cohort`、`collect_purchase_additional`、`collect_purchase_candidates`、`collect_purchase_latest`、`collect_purchase_until_daily`、`compare_purchase_sensitivity`、`diagnose_purchase_baseline`、`diagnose_whole_log_experiment`、`hero_trait_crosscheck`、`lineup_analysis`、`lineup_comparison`、`model_foundation`、`package_purchase_handoff`、`prepare_purchase_preview`、`prepare_purchase_snapshot`、`prepare_random_cohort`、`prepare_whole_log_cohort`、`probe_evaluation_sources`、`render_purchase_sensitivity`、`report_purchase_cohorts`、`report_whole_log_regularization`、`run_whole_log_experiment`、`run_whole_log_regularization`、`summarize_purchase_collection`、`train_item_timing`、`train_purchase_baseline`、`train_situational_items`、`verify_whole_log_handoff`、`whole_log_experiment`、`whole_log_regularization` |
-| 路线B 意识决策 | `align_replay_ticks`、`attach_decision_mana`、`attach_team_state`、`audit_decision_mana`、`audit_replay_identity`、`audit_replay_jump_events`、`audit_replay_map_landmarks`、`audit_replay_semantics`、`audit_replay_tracks`、`build_decision_comparisons`、`build_decision_state_cards`、`collect_replay_expansion`、`decision_review`、`enhance_decision_cases`、`export_raw_replay_channels`、`probe_decision_state`、`probe_team_state`、`render_replay_semantics`、`repair_decision_mana`、`replay_pipeline`、`replay_viewer`、`report_replay_identity`、`revise_decision_review`、`run_replay_pilot` |
+| 路线B 意识决策 | `align_replay_ticks`、`attach_decision_mana`、`attach_team_state`、`audit_decision_mana`、`audit_replay_identity`、`audit_replay_jump_events`、`audit_replay_map_landmarks`、`audit_replay_semantics`、`audit_replay_tracks`、`build_decision_comparisons`、`build_decision_state_cards`、`collect_replay_expansion`、`decision_review`、`enhance_decision_cases`、`export_raw_replay_channels`、`probe_decision_state`、`probe_team_state`、`render_replay_semantics`、`repair_decision_mana`、`replay_viewer`、`report_replay_identity`、`revise_decision_review`、`run_replay_pilot` |
 
 ## 常用入口及前提
 
@@ -28,8 +42,6 @@
 | 单阵容/A-B | `lineup_analysis.py` / `lineup_comparison.py` | 本地冻结模型/快照；[案例说明](../docs/lineup-comparison-review-2026-10-25.md) |
 | 前瞻采集 | `collect_evaluation_cohort.py` | 冻结协议、预算与窗口；[执行方案](../docs/evaluation-execution-proposal-2026-10-23.md)；本次整理不执行run |
 | 录像tick导出 | `align_replay_ticks.py` | 原始/cleaned/manifest及冻结Gem兼容目录；[质量报告](../docs/replay-quality-2026-10-26.md) |
-| 精确补丁录像流水线 | `replay_pipeline.py` | 显式补丁、工程排除策略、固定Gem兼容目录；[版本、质量与存储说明](../docs/replay-pipeline-v2.md) |
-| 压缩包接入复盘 | `replay_pipeline.py reference` → `lane_decision_review.py --bundle-reference` | 固定manifest摘要、当前生产者、精确7.41f；[命令及验收](../docs/replay-bundle-consumption.md) |
 | 大文件恢复 | `recover_large_replay_cleaning.py` | 已有缓存，512 MiB显式上限，clean-only，无样本/训练 |
 | 地标重读 | `audit_replay_map_landmarks.py` | 已下载录像、收据、兼容目录，独立输出 |
 | 原始通道 | `export_raw_replay_channels.py` | 与清洗导出分开，不默认消除重复tick |
@@ -67,7 +79,6 @@
 ### 录像采集、解析与审计
 
 - [replay_viewer.py](replay_viewer.py)：本地地图播放器；[说明](../docs/replay-viewer.md)。静态页面在`replay_viewer_assets/`。
-- [replay_pipeline.py](replay_pipeline.py)：精确补丁发现、本地计划、下载/解析/校验、无损归档与只读空间盘点；[命令与限制](../docs/replay-pipeline-v2.md)。
 
 - [accept_replays.py](accept_replays.py)
 - [align_replay_ticks.py](align_replay_ticks.py)
@@ -85,10 +96,6 @@
 - [report_replay_identity.py](report_replay_identity.py)
 - [run_replay_pilot.py](run_replay_pilot.py)
 - [verify_context_replays.py](verify_context_replays.py)
-
-`replay_pipeline.py`（2026-11-27）是 B 线 CLI，只负责参数和注入既有 U133 留出排除策略；八个新增库模块属于共享底座，模块 API 见[维护说明](../docs/modular-maintenance.md)。`discover` 冻结精确补丁和有上限的在线候选，`seed` 冻结显式本地来源，`run --stage download|parse|verify|all` 分阶段执行。`--max-attempts` 按访问比赛数计入缓存检查，失败后的解析须显式 `--retry-failed` 写新 attempt；原计划与旧产物不覆盖。
-
-`seed` 仍校验补丁窗口和元数据，但不套用在线发现的 2–96 小时年龄筛选。`pack` 只将指定旧文件无损压缩到新目录，不认证文件内比赛身份、解析质量或旧生产者，也不删除源文件；`space` 只读取文件大小等元信息。解析缓存须核对当前来源、生产者与双摘要，并重算实际通道质量。新格式不自动兼容旧消费者，工程通过不代表地图、模型已适配该补丁；完整前提和命令以[新版流程](../docs/replay-pipeline-v2.md)为准。
 
 ### 购买数据、评估采集与审计
 

@@ -1,6 +1,6 @@
 # 行动模型兼容迁移设计
 
-2026-11-26；回应用户“按你的建议设计”，承接 [PR #51 的 D5 评审](https://github.com/xrfc/dota2-timing/blob/ef9c898b1e37dc4d14b035c973e3ebd7a1db6ee2/docs/reviews/2026-11-26-stage-and-architecture.md)。**状态：设计完成后待实施；本页 API、路径、schema 和迁移 ID 均为助手方案，尚未实现或激活。** 本轮不移动生产代码、不加载真实模型、不训练或重评原 337 场。
+2026-11-26；回应用户“按你的建议设计”，承接 [PR #51 的 D5 评审](https://github.com/xrfc/dota2-timing/blob/ef9c898b1e37dc4d14b035c973e3ebd7a1db6ee2/docs/reviews/2026-11-26-stage-and-architecture.md)。**状态更新（2026-11-28）：设计与M1已实现并纳入本批集成；M2–M4仍待实施，真实迁移未激活。** 具体M1实现见[action-model-m1.md](action-model-m1.md)；下文标作拟议的后续接口仍是方案。 本轮不移动生产代码、不加载真实模型、不训练或重评原 337 场。
 
 ## 1. 推荐方案及理由
 
@@ -66,7 +66,7 @@ flowchart TD
 
 `modeling` 不依赖 data/sources/workflow/scripts；`data` 不依赖 modeling/experiments；新业务包不加载旧 CLI。迁移 CLI 是唯一有意保留的旧→新桥，放入口层，完成后也不作为模型或应用的运行依赖。
 
-| 拟议文件（均未创建） | 责任与主要 API | 原职责来源 |
+| 设计目标文件（M1部分已创建，见M1实现页） | 责任与主要 API | 原职责来源 |
 |---|---|---|
 | `contracts/action_outcomes.py` | 标准库的任务/列序/动作/结果/迁移记录校验；`DecisionInput`、`ObservedOutcome` 分开 | 固定任务参数和字段顺序；不搬入任何读取/拟合 |
 | `data/action_outcome_inputs.py` | `read_development_bundle(path, expected_identity)`；检查 schema、全文摘要、重复键、match/fold/eligibility 后返回样本与来源 | `outcome_values.read_dataset` 等读取部分；使用 source_io，保留全部机会的清单统计 |

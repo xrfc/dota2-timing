@@ -26,9 +26,11 @@ MODEL_TESTS = {
     "test_experiment_structure.py",
 }
 
+
 # These suites exercise model APIs and data/application adapters together. Keep
 # their existing data coverage while also running them in the modeling scope.
 DATA_MODEL_TESTS = {
+    "test_viewer_wire.py",
     "test_coach_app.py",
     "test_death_risk_tables.py",
     "test_item_timing.py",
@@ -144,8 +146,6 @@ def main() -> int:
                     [node, "--check", "scripts/coach_app_assets/app.js"],
                     [node, "--check", "scripts/gank_review_assets/app.js"],
                     [node, "--check", "scripts/lane_decision_assets/app.js"],
-                    [node, "--check", "scripts/outcome_viewer_assets/app.js"],
-                    [node, "--check", "scripts/outcome_viewer_assets/perspective.js"],
                     [node, "--test", "tests/test_coach_app_ui.cjs"],
                     [node, "--test", "tests/test_lane_review_ui.cjs"],
                     [node, "--test", "tests/test_b5_trial_notebook_ui.cjs"],
